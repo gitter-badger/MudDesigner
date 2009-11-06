@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual C# Express 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudDesigner", "MudDesigner\MudDesigner.csproj", "{F782C36B-5A00-4BC9-BE4E-B631729DA40E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudHub", "MudDesigner\MudHub.csproj", "{F782C36B-5A00-4BC9-BE4E-B631729DA40E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MUDEngine", "MUDEngine\MUDEngine.csproj", "{33828B3B-F227-4726-8FCD-3D9D780E643D}"
 EndProject

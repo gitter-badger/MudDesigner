@@ -31,19 +31,19 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.comRealms = new System.Windows.Forms.ComboBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.lstZones = new System.Windows.Forms.ListBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.lstRooms = new System.Windows.Forms.ListBox();
+            this.lstZones = new System.Windows.Forms.CheckedListBox();
+            this.lstRooms = new System.Windows.Forms.CheckedListBox();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -83,6 +83,26 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Initial Room Setup";
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.lstRooms);
+            this.groupBox4.Location = new System.Drawing.Point(158, 16);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(149, 186);
+            this.groupBox4.TabIndex = 2;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Available Rooms";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.lstZones);
+            this.groupBox3.Location = new System.Drawing.Point(6, 64);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(149, 138);
+            this.groupBox3.TabIndex = 1;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Available Zones";
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.comRealms);
@@ -103,16 +123,7 @@
             this.comRealms.Name = "comRealms";
             this.comRealms.Size = new System.Drawing.Size(146, 21);
             this.comRealms.TabIndex = 0;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.lstZones);
-            this.groupBox3.Location = new System.Drawing.Point(6, 64);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(149, 138);
-            this.groupBox3.TabIndex = 1;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Available Zones";
+            this.comRealms.SelectedIndexChanged += new System.EventHandler(this.comRealms_SelectedIndexChanged);
             // 
             // lstZones
             // 
@@ -120,18 +131,9 @@
             this.lstZones.FormattingEnabled = true;
             this.lstZones.Location = new System.Drawing.Point(3, 16);
             this.lstZones.Name = "lstZones";
-            this.lstZones.Size = new System.Drawing.Size(143, 108);
+            this.lstZones.Size = new System.Drawing.Size(143, 109);
             this.lstZones.TabIndex = 0;
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.lstRooms);
-            this.groupBox4.Location = new System.Drawing.Point(158, 16);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(149, 186);
-            this.groupBox4.TabIndex = 2;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Available Rooms";
+            this.lstZones.ThreeDCheckBoxes = true;
             // 
             // lstRooms
             // 
@@ -139,8 +141,9 @@
             this.lstRooms.FormattingEnabled = true;
             this.lstRooms.Location = new System.Drawing.Point(3, 16);
             this.lstRooms.Name = "lstRooms";
-            this.lstRooms.Size = new System.Drawing.Size(143, 160);
-            this.lstRooms.TabIndex = 0;
+            this.lstRooms.Size = new System.Drawing.Size(143, 154);
+            this.lstRooms.TabIndex = 1;
+            this.lstRooms.ThreeDCheckBoxes = true;
             // 
             // frmMain
             // 
@@ -159,9 +162,9 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -174,9 +177,9 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ComboBox comRealms;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.ListBox lstZones;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.ListBox lstRooms;
+        private System.Windows.Forms.CheckedListBox lstRooms;
+        private System.Windows.Forms.CheckedListBox lstZones;
 
     }
 }

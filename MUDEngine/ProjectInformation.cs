@@ -21,7 +21,7 @@ namespace MUDEngine
         }
 
         #region ====== Public Enumerators, Structures & Properties ======
-                [Category("Company Information")]
+        [Category("Company Information")]
         /// <summary>
         /// Gets or Sets the name of the company
         /// </summary>
@@ -63,7 +63,9 @@ namespace MUDEngine
         [Description("Sets the amount that the base currency is valued at.")]
         public uint BaseCurrencyAmount { get; set; }
 
-        public uint BaseCurrencyName { get; set; }
+
+        [Category("Project Information")]
+        public string BaseCurrencyName { get; set; }
 
         [Browsable(false)]
         public List<CurrencyInfo> CurrencyList { get; set; }

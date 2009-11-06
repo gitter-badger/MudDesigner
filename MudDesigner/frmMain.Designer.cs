@@ -72,7 +72,7 @@
             this.btnLogo.Name = "btnLogo";
             this.btnLogo.Size = new System.Drawing.Size(627, 154);
             this.btnLogo.TabIndex = 0;
-            this.btnLogo.Text = "MUD Designer \r\nBeta 1.0\r\n";
+            this.btnLogo.Text = "MUD Designer HUB \r\nBeta 1.0\r\n";
             this.btnLogo.UseVisualStyleBackColor = false;
             // 
             // flowLayoutPanel1

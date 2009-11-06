@@ -45,5 +45,43 @@ namespace Project_Manager
                 comRealms.SelectedIndex = 0;
             }
         }
+
+        private void comRealms_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lstZones.Items.Clear();
+
+            //Check if we have any realms first.
+            if (comRealms.Items.Count == 0)
+                return;
+
+            string[] zones = System.IO.Directory.GetFiles(Application.StartupPath + @"\Data\Zones");
+
+            //Add each zone found into the list box.
+            foreach (string zone in zones)
+            {
+                MUDEngine.Environment.Zone newZone = new MUDEngine.Environment.Zone();
+                //De-serialize the current zone.
+                newZone = (MUDEngine.Environment.Zone)MUDEngine.XmlSerialization.Load(zone, newZone);
+                //Add it to the available zones list box
+                lstZones.Items.Add(newZone.Name);
+            }
+
+            //Check if we have an existing realm that's set as our startup.
+            if (Program.project.InitialLocation.Realm != null)
+            {
+                //Check if we have the Initial realm selected, if so we need to check the initial Zone as well
+                if (comRealms.SelectedItem.ToString() == Program.project.InitialLocation.Realm.Name)
+                {
+                    //We have an initial zone, so lets check it in the list box
+                    if (Program.project.InitialLocation.Zone != null)
+                    {
+                        if (lstZones.Items.Contains(Program.project.InitialLocation.Zone.Name))
+                        {
+                            lstZones.SelectedIndex = lstZones.Items.IndexOf(Program.project.InitialLocation.Zone.Name);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
