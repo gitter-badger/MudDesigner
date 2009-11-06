@@ -20,9 +20,9 @@ namespace Project_Manager
             MUDEngine.Engine.ValidateProjectPath(Application.StartupPath);
 
             //check if a project file exists, or use the new instance
-            if (System.IO.File.Exists(Application.StartupPath + @"\project.xml"))
+            if (System.IO.File.Exists(Application.StartupPath + @"\Data\project.xml"))
             {
-                project = (MUDEngine.ProjectInformation)MUDEngine.XmlSerialization.Load(Application.StartupPath + @"\project.xml", project);
+                project = (MUDEngine.ProjectInformation)MUDEngine.XmlSerialization.Load(Application.StartupPath + @"\Data\project.xml", project);
             }
 
             //run the app

@@ -74,6 +74,7 @@ namespace MUDEngine
         //TODO: Add Party support.
         #endregion
 
+        [Browsable(false)]
         public StartingLocation InitialLocation
         {
             get;

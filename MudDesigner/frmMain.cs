@@ -15,13 +15,11 @@ namespace MudDesigner
         public const int VersionMinor = 0;
         public const int VersionRevision = 0;
         public string version = VersionMajor.ToString() + "." + VersionMinor.ToString() + "." + VersionRevision.ToString();
+
         public frmMain()
         {
             InitializeComponent();
             this.Text = "Mud Designer Beta " + version;
-
-            if (!System.IO.Directory.Exists(Application.StartupPath + "\\Data"))
-                System.IO.Directory.CreateDirectory(Application.StartupPath + "\\Data");
         }
 
         private void btnProjectManager_Click(object sender, EventArgs e)
