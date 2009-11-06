@@ -1,0 +1,14 @@
+﻿Project Manager
+Curreny Editor
+Race Builder
+Class Editor
+Realm Editor
+Zone Builder
+Room Designer
+Equipment Builder
+Item Designer
+Skill Designer
+Book Editor
+NPC Manager
+Quest Builder
+Monster Creator
