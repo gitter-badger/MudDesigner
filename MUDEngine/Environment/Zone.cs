@@ -8,11 +8,7 @@ namespace MUDEngine.Environment
     /// <summary>
     /// Zones contain an unlimited number of Rooms.
     /// </summary>
-    public class Zone
+    public class Zone : Realm
     {
-        /// <summary>
-        /// The name of the Zone.
-        /// </summary>
-        public string Name { get; set; }
     }
 }

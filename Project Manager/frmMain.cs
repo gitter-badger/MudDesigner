@@ -11,20 +11,24 @@ namespace Project_Manager
 {
     public partial class frmMain : Form
     {
+        List<MUDEngine.Environment.Zone> zones;
+        List<MUDEngine.Environment.Room> rooms;
+
         public frmMain()
         {
             InitializeComponent();
-
-            propertyGrid1.SelectedObject = Program.project;
         }
 
         private void frmMain_Load(object sender, EventArgs e)
         {
             //Get all of the realms currently created.
-            string[] realms = System.IO.Directory.GetFiles(Application.StartupPath + @"\Data\Realms");
+            string[] files = System.IO.Directory.GetFiles(Application.StartupPath + @"\Data\Realms");
+
+            //Aquire the project settings and show them.
+            propertyGrid1.SelectedObject = Program.project;
 
             //Add each realm found into the combo box of available realms.
-            foreach (string realm in realms)
+            foreach (string realm in files)
             {
                 //Instance a new realm
                 MUDEngine.Environment.Realm newRealm = new MUDEngine.Environment.Realm();
@@ -44,7 +48,7 @@ namespace Project_Manager
             {
                 comRealms.SelectedIndex = 0;
             }
-        }
+        }//End frmMain_Load
 
         private void comRealms_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -54,16 +58,17 @@ namespace Project_Manager
             if (comRealms.Items.Count == 0)
                 return;
 
-            string[] zones = System.IO.Directory.GetFiles(Application.StartupPath + @"\Data\Zones");
+            string[] files = System.IO.Directory.GetFiles(Application.StartupPath + @"\Data\Zones");
 
             //Add each zone found into the list box.
-            foreach (string zone in zones)
+            foreach (string zone in files)
             {
                 MUDEngine.Environment.Zone newZone = new MUDEngine.Environment.Zone();
                 //De-serialize the current zone.
                 newZone = (MUDEngine.Environment.Zone)MUDEngine.FileSystem.FileSystem.Load(zone, newZone);
                 //Add it to the available zones list box
                 lstZones.Items.Add(newZone.Name);
+                zones.Add(newZone);
             }
 
             //Check if we have an existing realm that's set as our startup.
@@ -80,6 +85,47 @@ namespace Project_Manager
                             lstZones.SelectedIndex = lstZones.Items.IndexOf(Program.project.InitialLocation.Zone.Name);
                         }
                     }
+                }
+            }
+        }//End comRealms
+
+        private void lstZones_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string realm = comRealms.SelectedItem.ToString();
+            string zone = lstZones.SelectedItem.ToString();
+
+            lstRooms.Items.Clear();
+
+            //Check if we have any realms first.
+            if (comRealms.Items.Count == 0)
+                return;
+
+            string[] files = System.IO.Directory.GetFiles(Application.StartupPath + @"\Data\Rooms");
+
+            //Add each room found into the list box.
+            foreach (string room in files)
+            {
+                MUDEngine.Environment.Room newRoom = new MUDEngine.Environment.Room();
+                //De-serialize the current Room.
+                newRoom = (MUDEngine.Environment.Room)MUDEngine.FileSystem.FileSystem.Load(room, newRoom);
+                //Add it to the available rooms list box
+                lstRooms.Items.Add(newRoom.Name);
+                rooms.Add(newRoom);
+            }
+
+            //Now select the initial room if its listed.
+            string selectedRealm = comRealms.SelectedItem.ToString();
+            string selectedZone = lstZones.SelectedItem.ToString();
+            string initialRealm = Program.project.InitialLocation.Realm.Name;
+            string initialZone = Program.project.InitialLocation.Zone.Name;
+
+            //The realm and zone that matches the initial are selected, so lets select the initial room next.
+            if ((initialRealm == selectedRealm) && (initialZone == selectedZone))
+            {
+                foreach (MUDEngine.Environment.Room room in rooms)
+                {
+                    if (lstRooms.Items.Contains(room.Name))
+                        lstRooms.SelectedIndex = lstRooms.Items.IndexOf(room.Name);
                 }
             }
         }

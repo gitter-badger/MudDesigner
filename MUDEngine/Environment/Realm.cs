@@ -18,5 +18,14 @@ namespace MUDEngine.Environment
             get;
             set;
         }
+        
+        /// <summary>
+        /// Description of the Realm.
+        /// </summary>
+        public string Description
+        {
+            get;
+            set;
+        }
     }
 }
