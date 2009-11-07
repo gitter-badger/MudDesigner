@@ -29,7 +29,7 @@ namespace Project_Manager
                 //Instance a new realm
                 MUDEngine.Environment.Realm newRealm = new MUDEngine.Environment.Realm();
                 //De-serialize the current realm.
-                newRealm = (MUDEngine.Environment.Realm)MUDEngine.XmlSerialization.Load(realm, newRealm);
+                newRealm = (MUDEngine.Environment.Realm)MUDEngine.FileSystem.FileSystem.Load(realm, newRealm);
                 //Add it to the available realms combo box.
                 comRealms.Items.Add(newRealm.Name);
             }
@@ -61,7 +61,7 @@ namespace Project_Manager
             {
                 MUDEngine.Environment.Zone newZone = new MUDEngine.Environment.Zone();
                 //De-serialize the current zone.
-                newZone = (MUDEngine.Environment.Zone)MUDEngine.XmlSerialization.Load(zone, newZone);
+                newZone = (MUDEngine.Environment.Zone)MUDEngine.FileSystem.FileSystem.Load(zone, newZone);
                 //Add it to the available zones list box
                 lstZones.Items.Add(newZone.Name);
             }

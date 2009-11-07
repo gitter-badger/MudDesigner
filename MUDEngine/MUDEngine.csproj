@@ -54,7 +54,8 @@
     <Compile Include="Environment\Realm.cs" />
     <Compile Include="Environment\Room.cs" />
     <Compile Include="Environment\Zone.cs" />
-    <Compile Include="XmlSerialization.cs" />
+    <Compile Include="FileSystem\FileSystem.cs" />
+    <Compile Include="FileSystem\XmlSerialization.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

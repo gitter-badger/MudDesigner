@@ -15,14 +15,16 @@ namespace Project_Manager
         [STAThread]
         static void Main()
         {
-            project = new MUDEngine.ProjectInformation();
             //Make sure all our paths are created before we start working with the editor.
             MUDEngine.Engine.ValidateProjectPath(Application.StartupPath);
+            MUDEngine.FileSystem.FileSystem.FileType = MUDEngine.FileSystem.FileSystem.OutputFormats.XML;
+
+            project = new MUDEngine.ProjectInformation();
 
             //check if a project file exists, or use the new instance
             if (System.IO.File.Exists(Application.StartupPath + @"\Data\project.xml"))
             {
-                project = (MUDEngine.ProjectInformation)MUDEngine.XmlSerialization.Load(Application.StartupPath + @"\Data\project.xml", project);
+                project = (MUDEngine.ProjectInformation)MUDEngine.FileSystem.FileSystem.Load(Application.StartupPath + @"\Data\project.xml", project);
             }
 
             //run the app
@@ -30,7 +32,7 @@ namespace Project_Manager
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain());
 
-            MUDEngine.XmlSerialization.Save(Application.StartupPath + @"\Data\project.xml", project);
+            MUDEngine.FileSystem.FileSystem.Save(Application.StartupPath + @"\Data\project.xml", project);
         }
     }
 }
