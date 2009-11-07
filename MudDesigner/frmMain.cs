@@ -27,6 +27,11 @@ namespace MudDesigner
             ExecuteApp("Project Manager.exe");
         }
 
+        private void btnCurrencyEditor_Click(object sender, EventArgs e)
+        {
+            ExecuteApp("Currency Editor.exe");
+        }
+
         private void ExecuteApp(string appName)
         {
             System.Diagnostics.Process process = new System.Diagnostics.Process();
@@ -64,12 +69,6 @@ namespace MudDesigner
             info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
             info.WorkingDirectory = Application.StartupPath;
 
-            //If running in debug mode we dont want the apps saving stuff outside of its debug folder
-#if DEBUG
-            info.Arguments = ""; 
-#else
-            info.Arguments = Application.StartupPath + "\Data\";
-#endif
             process.StartInfo = info;
             try
             {
@@ -77,17 +76,15 @@ namespace MudDesigner
                 this.Hide();
                 process.WaitForExit();
             }
-            catch { }
+            catch(Exception ex)
+            {
+                MessageBox.Show("ERROR:\n" + ex.Message, "Editor HUB", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             finally
             {
                 process = null;
                 this.Show();
             }
-        }
-
-        private void btnCurrencyEditor_Click(object sender, EventArgs e)
-        {
-            ExecuteApp("Currency Editor.exe");
         }
     }
 }
