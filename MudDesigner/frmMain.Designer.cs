@@ -33,6 +33,7 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnProjectManager = new System.Windows.Forms.Button();
             this.btnCurrencyEditor = new System.Windows.Forms.Button();
+            this.btnRoomDesigner = new System.Windows.Forms.Button();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -80,6 +81,7 @@
             // 
             this.flowLayoutPanel1.Controls.Add(this.btnProjectManager);
             this.flowLayoutPanel1.Controls.Add(this.btnCurrencyEditor);
+            this.flowLayoutPanel1.Controls.Add(this.btnRoomDesigner);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -110,6 +112,18 @@
             this.btnCurrencyEditor.UseVisualStyleBackColor = true;
             this.btnCurrencyEditor.Click += new System.EventHandler(this.btnCurrencyEditor_Click);
             // 
+            // btnRoomDesigner
+            // 
+            this.btnRoomDesigner.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRoomDesigner.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRoomDesigner.Location = new System.Drawing.Point(309, 3);
+            this.btnRoomDesigner.Name = "btnRoomDesigner";
+            this.btnRoomDesigner.Size = new System.Drawing.Size(147, 55);
+            this.btnRoomDesigner.TabIndex = 2;
+            this.btnRoomDesigner.Text = "Room Designer";
+            this.btnRoomDesigner.UseVisualStyleBackColor = true;
+            this.btnRoomDesigner.Click += new System.EventHandler(this.btnRoomDesigner_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -137,6 +151,7 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button btnProjectManager;
         private System.Windows.Forms.Button btnCurrencyEditor;
+        private System.Windows.Forms.Button btnRoomDesigner;
     }
 }
 

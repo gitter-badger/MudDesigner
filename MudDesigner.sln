@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project Manager", "Project 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyEditor", "CurrencyEditor\CurrencyEditor.csproj", "{FF28EB1C-F811-40CF-91B1-1D9F5EB5A233}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomDesigner", "RoomDesigner\RoomDesigner.csproj", "{12C01373-5788-4404-A69F-ADC366F1FFB7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{FF28EB1C-F811-40CF-91B1-1D9F5EB5A233}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF28EB1C-F811-40CF-91B1-1D9F5EB5A233}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF28EB1C-F811-40CF-91B1-1D9F5EB5A233}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12C01373-5788-4404-A69F-ADC366F1FFB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12C01373-5788-4404-A69F-ADC366F1FFB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12C01373-5788-4404-A69F-ADC366F1FFB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12C01373-5788-4404-A69F-ADC366F1FFB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
