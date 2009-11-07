@@ -55,7 +55,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.flowLayoutPanel1);
-            this.splitContainer1.Size = new System.Drawing.Size(627, 383);
+            this.splitContainer1.Size = new System.Drawing.Size(615, 383);
             this.splitContainer1.SplitterDistance = 154;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -72,7 +72,7 @@
             this.btnLogo.ForeColor = System.Drawing.Color.Gray;
             this.btnLogo.Location = new System.Drawing.Point(0, 0);
             this.btnLogo.Name = "btnLogo";
-            this.btnLogo.Size = new System.Drawing.Size(627, 154);
+            this.btnLogo.Size = new System.Drawing.Size(615, 154);
             this.btnLogo.TabIndex = 0;
             this.btnLogo.Text = "MUD Designer HUB \r\nBeta 1.0\r\n";
             this.btnLogo.UseVisualStyleBackColor = false;
@@ -85,7 +85,7 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(627, 225);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(615, 225);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // btnProjectManager
@@ -128,7 +128,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(627, 383);
+            this.ClientSize = new System.Drawing.Size(615, 383);
             this.Controls.Add(this.splitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
