@@ -21,6 +21,11 @@ namespace MUDEngine.FileSystem
             set;
         }
 
+        /// <summary>
+        /// Saves the object using the specified output format
+        /// </summary>
+        /// <param name="Filename"></param>
+        /// <param name="o"></param>
         public static void Save(string Filename, object o)
         {
             if (FileType == OutputFormats.XML)
@@ -29,6 +34,12 @@ namespace MUDEngine.FileSystem
             }
         }
 
+        /// <summary>
+        /// Loads the object using the specified FileType format
+        /// </summary>
+        /// <param name="Filename"></param>
+        /// <param name="o"></param>
+        /// <returns></returns>
         public static object Load(string Filename, object o)
         {
             if (FileType == OutputFormats.XML)
