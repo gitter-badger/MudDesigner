@@ -7,18 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+//MudEngine
+using MUDEngine.FileSystem;
+using MUDEngine.Objects;
+using MUDEngine.Objects.Environment;
+
 namespace Project_Manager
 {
     public partial class frmMain : Form
     {
-        List<MUDEngine.Environment.Zone> zones;
-        List<MUDEngine.Environment.Room> rooms;
+        List<Zone> zones;
+        List<Room> rooms;
 
         public frmMain()
         {
             InitializeComponent();
-            zones = new List<MUDEngine.Environment.Zone>();
-            rooms = new List<MUDEngine.Environment.Room>();
+            zones = new List<Zone>();
+            rooms = new List<Room>();
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -34,9 +39,9 @@ namespace Project_Manager
             foreach (string realm in files)
             {
                 //Instance a new realm
-                MUDEngine.Environment.Realm newRealm = new MUDEngine.Environment.Realm();
+                Realm newRealm = new Realm();
                 //De-serialize the current realm.
-                newRealm = (MUDEngine.Environment.Realm)MUDEngine.FileSystem.FileSystem.Load(realm, newRealm);
+                newRealm = (Realm)FileSystem.Load(realm, newRealm);
                 //Add it to the available realms combo box.
                 comRealms.Items.Add(newRealm.Name);
             }
@@ -66,9 +71,9 @@ namespace Project_Manager
             //Add each zone found into the list box.
             foreach (string zone in files)
             {
-                MUDEngine.Environment.Zone newZone = new MUDEngine.Environment.Zone();
+                Zone newZone = new Zone();
                 //De-serialize the current zone.
-                newZone = (MUDEngine.Environment.Zone)MUDEngine.FileSystem.FileSystem.Load(zone, newZone);
+                newZone = (Zone)FileSystem.Load(zone, newZone);
                 //Add it to the available zones list box
                 lstZones.Items.Add(newZone.Name);
                 zones.Add(newZone);
@@ -108,9 +113,9 @@ namespace Project_Manager
             //Add each room found into the list box.
             foreach (string room in files)
             {
-                MUDEngine.Environment.Room newRoom = new MUDEngine.Environment.Room();
+                Room newRoom = new Room();
                 //De-serialize the current Room.
-                newRoom = (MUDEngine.Environment.Room)MUDEngine.FileSystem.FileSystem.Load(room, newRoom);
+                newRoom = (Room)FileSystem.Load(room, newRoom);
                 //Add it to the available rooms list box
                 lstRooms.Items.Add(newRoom.Name);
                 rooms.Add(newRoom);
@@ -125,7 +130,7 @@ namespace Project_Manager
             //The realm and zone that matches the initial are selected, so lets select the initial room next.
             if ((initialRealm == selectedRealm) && (initialZone == selectedZone))
             {
-                foreach (MUDEngine.Environment.Room room in rooms)
+                foreach (Room room in rooms)
                 {
                     if (lstRooms.Items.Contains(room.Name))
                         lstRooms.SelectedIndex = lstRooms.Items.IndexOf(room.Name);

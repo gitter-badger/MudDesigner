@@ -7,6 +7,11 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Xml;
 
+//MudEngine
+using MUDEngine.Objects;
+using MUDEngine.Objects.Environment;
+using MUDEngine.FileSystem;
+
 namespace MUDEngine
 {
     [XmlInclude(typeof(StartingLocation))]
@@ -15,17 +20,9 @@ namespace MUDEngine
 
         public struct StartingLocation
         {
-            public Environment.Room Room;
-            public Environment.Zone Zone;
-            public Environment.Realm Realm;
-        }
-
-        public struct CurrencyInfo
-        {
-            public uint Amount;
-            public string Name;
-            public string Description;
-            public uint BaseValue;
+            public Room Room;
+            public Zone Zone;
+            public Realm Realm;
         }
 
         public enum TimeOfDayOptions
@@ -101,7 +98,7 @@ namespace MUDEngine
 
         //TODO: Add Party support.
         [Browsable(false)]
-        public List<CurrencyInfo> CurrencyList { get; set; }
+        public List<Currency> CurrencyList { get; set; }
 
         [Browsable(false)]
         public string ProjectPath { get; set; }

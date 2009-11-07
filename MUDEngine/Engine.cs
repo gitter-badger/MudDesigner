@@ -19,7 +19,7 @@ namespace MUDEngine
                 System.IO.Directory.CreateDirectory(dataPath);
 
             //begin checking directories
-            string[] paths = { "Rooms", "Zones", "Realms" };
+            string[] paths = { "Rooms", "Zones", "Realms", "Currency" };
 
             foreach (var path in paths)
             {

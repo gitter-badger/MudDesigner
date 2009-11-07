@@ -35,7 +35,29 @@ namespace MudDesigner
             //If running in debug mode we need to hard-code the paths as during normal running of the apps
             //all of the apps are running within the Apps directory.
 #if DEBUG
-            info.FileName = @"C:\CodePlex\MudDesigner\Project Manager\bin\Debug\" + appName;
+            string[] apps = System.IO.Directory.GetFiles(@"C:\CodePlex\MudDesigner\", "*.exe", System.IO.SearchOption.AllDirectories);
+            List<string> legalApps = new List<string>();
+
+            foreach(string app in apps)
+            {
+                if ((!app.EndsWith(".vshost.exe")) 
+                    && (!app.EndsWith(".vshost.exe.manifest"))
+                    && System.IO.Directory.GetParent(app).Name == "Debug"
+                    && System.IO.Directory.GetParent(app).Parent.Name == "bin")
+                {
+                    legalApps.Add(app);
+                }
+            }
+            string filename = "" ;
+            foreach(string app in legalApps)
+            {
+                if (System.IO.Path.GetFileName(app).ToLower() == appName.ToLower())
+                {
+                    filename = app;
+                    break;
+                }
+            }
+            info.FileName = filename;
 #else
             info.FileName = appName;
 #endif
@@ -49,12 +71,23 @@ namespace MudDesigner
             info.Arguments = Application.StartupPath + "\Data\";
 #endif
             process.StartInfo = info;
-            process.Start();
-            this.Hide();
-            process.WaitForExit();
+            try
+            {
+                process.Start();
+                this.Hide();
+                process.WaitForExit();
+            }
+            catch { }
+            finally
+            {
+                process = null;
+                this.Show();
+            }
+        }
 
-            process = null;
-            this.Show();
+        private void btnCurrencyEditor_Click(object sender, EventArgs e)
+        {
+            ExecuteApp("Currency Editor.exe");
         }
     }
 }

@@ -50,12 +50,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine.cs" />
-    <Compile Include="Environment\Door.cs" />
-    <Compile Include="Environment\Realm.cs" />
-    <Compile Include="Environment\Room.cs" />
-    <Compile Include="Environment\Zone.cs" />
+    <Compile Include="Objects\BaseObject.cs" />
+    <Compile Include="Objects\Environment\Door.cs" />
+    <Compile Include="Objects\Environment\Realm.cs" />
+    <Compile Include="Objects\Environment\Room.cs" />
+    <Compile Include="Objects\Environment\Zone.cs" />
     <Compile Include="FileSystem\FileSystem.cs" />
     <Compile Include="FileSystem\XmlSerialization.cs" />
+    <Compile Include="Objects\Currency.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

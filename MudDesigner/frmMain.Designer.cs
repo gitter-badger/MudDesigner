@@ -32,6 +32,7 @@
             this.btnLogo = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnProjectManager = new System.Windows.Forms.Button();
+            this.btnCurrencyEditor = new System.Windows.Forms.Button();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -78,6 +79,7 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.btnProjectManager);
+            this.flowLayoutPanel1.Controls.Add(this.btnCurrencyEditor);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -95,6 +97,18 @@
             this.btnProjectManager.Text = "Project Manager";
             this.btnProjectManager.UseVisualStyleBackColor = true;
             this.btnProjectManager.Click += new System.EventHandler(this.btnProjectManager_Click);
+            // 
+            // btnCurrencyEditor
+            // 
+            this.btnCurrencyEditor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCurrencyEditor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCurrencyEditor.Location = new System.Drawing.Point(156, 3);
+            this.btnCurrencyEditor.Name = "btnCurrencyEditor";
+            this.btnCurrencyEditor.Size = new System.Drawing.Size(147, 55);
+            this.btnCurrencyEditor.TabIndex = 1;
+            this.btnCurrencyEditor.Text = "Currency Editor";
+            this.btnCurrencyEditor.UseVisualStyleBackColor = true;
+            this.btnCurrencyEditor.Click += new System.EventHandler(this.btnCurrencyEditor_Click);
             // 
             // frmMain
             // 
@@ -122,6 +136,7 @@
         private System.Windows.Forms.Button btnLogo;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button btnProjectManager;
+        private System.Windows.Forms.Button btnCurrencyEditor;
     }
 }
 
