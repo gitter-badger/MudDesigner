@@ -30,6 +30,8 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.txtStory = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.lstRooms = new System.Windows.Forms.CheckedListBox();
@@ -40,6 +42,7 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -58,6 +61,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.groupBox5);
             this.splitContainer1.Panel2.Controls.Add(this.groupBox1);
             this.splitContainer1.Size = new System.Drawing.Size(573, 390);
             this.splitContainer1.SplitterDistance = 254;
@@ -70,6 +74,26 @@
             this.propertyGrid1.Name = "propertyGrid1";
             this.propertyGrid1.Size = new System.Drawing.Size(254, 390);
             this.propertyGrid1.TabIndex = 0;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.txtStory);
+            this.groupBox5.Location = new System.Drawing.Point(3, 214);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(309, 173);
+            this.groupBox5.TabIndex = 1;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Project Story";
+            // 
+            // txtStory
+            // 
+            this.txtStory.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtStory.Location = new System.Drawing.Point(3, 16);
+            this.txtStory.Name = "txtStory";
+            this.txtStory.Size = new System.Drawing.Size(303, 154);
+            this.txtStory.TabIndex = 2;
+            this.txtStory.Text = "";
+            this.txtStory.TextChanged += new System.EventHandler(this.txtStory_TextChanged);
             // 
             // groupBox1
             // 
@@ -162,6 +186,7 @@
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
@@ -181,6 +206,8 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.CheckedListBox lstRooms;
         private System.Windows.Forms.CheckedListBox lstZones;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.RichTextBox txtStory;
 
     }
 }

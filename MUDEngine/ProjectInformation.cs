@@ -20,7 +20,21 @@ namespace MUDEngine
             public Environment.Realm Realm;
         }
 
-        #region ====== Public Enumerators, Structures & Properties ======
+        public struct CurrencyInfo
+        {
+            public uint Amount;
+            public string Name;
+            public string Description;
+            public uint BaseValue;
+        }
+
+        public enum TimeOfDayOptions
+        {
+            AlwaysDay,
+            AlwaysNight,
+            Transition,
+        }
+
         [Category("Company Information")]
         /// <summary>
         /// Gets or Sets the name of the company
@@ -49,15 +63,31 @@ namespace MUDEngine
         /// </summary>
         public bool HideRoomNames { get; set; }
 
+        [Category("Project Settings")]
+        public TimeOfDayOptions TimeOfDay
+        {
+            get;
+            set;
+        }
+
+        [Category("Project Settings")]
+        [Description("Set how long in minutes it takes to transition from day to night.")]
+        public int TimeOfDayTransition
+        {
+            get;
+            set;
+        }
+
+        [Category("Project Settings")]
+        [Description("Sets how long in minutes a day lasts in the game world.")]
+        public int DayLength
+        {
+            get;
+            set;
+        }
+
         [Category("Project Information")]
         public string Version { get; set; }
-        public struct CurrencyInfo
-        {
-            public uint Amount;
-            public string Name;
-            public string Description;
-            public uint BaseValue;
-        }
 
         [Category("Project Information")]
         [Description("Sets the amount that the base currency is valued at.")]
@@ -67,17 +97,24 @@ namespace MUDEngine
         [Category("Project Information")]
         public string BaseCurrencyName { get; set; }
 
+
+
+        //TODO: Add Party support.
         [Browsable(false)]
         public List<CurrencyInfo> CurrencyList { get; set; }
 
         [Browsable(false)]
         public string ProjectPath { get; set; }
 
-        //TODO: Add Party support.
-        #endregion
-
         [Browsable(false)]
         public StartingLocation InitialLocation
+        {
+            get;
+            set;
+        }
+
+        [Browsable(false)]
+        public string Story
         {
             get;
             set;

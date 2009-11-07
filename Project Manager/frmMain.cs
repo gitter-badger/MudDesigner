@@ -17,6 +17,8 @@ namespace Project_Manager
         public frmMain()
         {
             InitializeComponent();
+            zones = new List<MUDEngine.Environment.Zone>();
+            rooms = new List<MUDEngine.Environment.Room>();
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -26,6 +28,7 @@ namespace Project_Manager
 
             //Aquire the project settings and show them.
             propertyGrid1.SelectedObject = Program.project;
+            txtStory.Text = Program.project.Story;
 
             //Add each realm found into the combo box of available realms.
             foreach (string realm in files)
@@ -128,6 +131,11 @@ namespace Project_Manager
                         lstRooms.SelectedIndex = lstRooms.Items.IndexOf(room.Name);
                 }
             }
+        }
+
+        private void txtStory_TextChanged(object sender, EventArgs e)
+        {
+            Program.project.Story = txtStory.Text;
         }
     }
 }
