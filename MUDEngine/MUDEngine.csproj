@@ -55,8 +55,10 @@
     <Compile Include="FileSystem\XmlSerialization.cs" />
     <Compile Include="Objects\Currency.cs" />
     <Compile Include="Objects\Environment\Door.cs" />
+    <Compile Include="Objects\Environment\InitialLocation.cs" />
     <Compile Include="Objects\Environment\Realm.cs" />
     <Compile Include="Objects\Environment\Room.cs" />
+    <Compile Include="Objects\Environment\TravelDirections.cs" />
     <Compile Include="Objects\Environment\Zone.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

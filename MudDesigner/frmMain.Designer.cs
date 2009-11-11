@@ -30,6 +30,8 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.btnLogo = new System.Windows.Forms.Button();
+            this.tabEditors = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnProjectManager = new System.Windows.Forms.Button();
             this.btnCurrencyEditor = new System.Windows.Forms.Button();
@@ -37,6 +39,8 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.tabEditors.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,7 +58,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.flowLayoutPanel1);
+            this.splitContainer1.Panel2.Controls.Add(this.tabEditors);
             this.splitContainer1.Size = new System.Drawing.Size(615, 383);
             this.splitContainer1.SplitterDistance = 154;
             this.splitContainer1.TabIndex = 0;
@@ -77,16 +81,37 @@
             this.btnLogo.Text = "MUD Designer HUB \r\nBeta 1.0\r\n";
             this.btnLogo.UseVisualStyleBackColor = false;
             // 
+            // tabEditors
+            // 
+            this.tabEditors.Controls.Add(this.tabPage1);
+            this.tabEditors.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabEditors.Location = new System.Drawing.Point(0, 0);
+            this.tabEditors.Name = "tabEditors";
+            this.tabEditors.SelectedIndex = 0;
+            this.tabEditors.Size = new System.Drawing.Size(615, 225);
+            this.tabEditors.TabIndex = 0;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.flowLayoutPanel1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(607, 199);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Available Editors";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.btnProjectManager);
             this.flowLayoutPanel1.Controls.Add(this.btnCurrencyEditor);
             this.flowLayoutPanel1.Controls.Add(this.btnRoomDesigner);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(615, 225);
-            this.flowLayoutPanel1.TabIndex = 0;
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(601, 193);
+            this.flowLayoutPanel1.TabIndex = 1;
             // 
             // btnProjectManager
             // 
@@ -110,7 +135,7 @@
             this.btnCurrencyEditor.TabIndex = 1;
             this.btnCurrencyEditor.Text = "Currency Editor";
             this.btnCurrencyEditor.UseVisualStyleBackColor = true;
-            this.btnCurrencyEditor.Click += new System.EventHandler(this.btnCurrencyEditor_Click);
+            this.btnCurrencyEditor.Click +=new System.EventHandler(btnCurrencyEditor_Click);
             // 
             // btnRoomDesigner
             // 
@@ -122,7 +147,7 @@
             this.btnRoomDesigner.TabIndex = 2;
             this.btnRoomDesigner.Text = "Room Designer";
             this.btnRoomDesigner.UseVisualStyleBackColor = true;
-            this.btnRoomDesigner.Click += new System.EventHandler(this.btnRoomDesigner_Click);
+            this.btnRoomDesigner.Click += new System.EventHandler(btnRoomDesigner_Click);
             // 
             // frmMain
             // 
@@ -139,6 +164,8 @@
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
+            this.tabEditors.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -148,6 +175,8 @@
 
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button btnLogo;
+        private System.Windows.Forms.TabControl tabEditors;
+        private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button btnProjectManager;
         private System.Windows.Forms.Button btnCurrencyEditor;

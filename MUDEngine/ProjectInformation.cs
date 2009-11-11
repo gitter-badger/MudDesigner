@@ -17,14 +17,6 @@ namespace MUDEngine
     [XmlInclude(typeof(StartingLocation))]
     public class ProjectInformation
     {
-
-        public struct StartingLocation
-        {
-            public Room Room;
-            public Zone Zone;
-            public Realm Realm;
-        }
-
         public enum TimeOfDayOptions
         {
             AlwaysDay,
@@ -45,8 +37,8 @@ namespace MUDEngine
         public string Website { get; set; }
 
         [Category("Project Settings")]
-        [Description("The name of the project.")]
-        public string ProjectName { get; set; }
+        [Description("The name of the game.")]
+        public string GameTitle { get; set; }
 
         [Category("Project Settings")]
         /// <summary>

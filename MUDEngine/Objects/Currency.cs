@@ -10,6 +10,7 @@ namespace MUDEngine.Objects
     public class Currency : BaseObject
     {
         [Category("Currency Settings")]
+        [DefaultValue(100)]
         /// <summary>
         /// The value of this currency. It should be how many 'base currency' it takes to equal 1 of this currency
         /// </summary>
