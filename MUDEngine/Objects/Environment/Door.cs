@@ -46,5 +46,12 @@ namespace MUDEngine.Objects.Environment
             get;
             set;
         }
+
+        [Browsable(false)]
+        public AvailableTravelDirections TravelDirection
+        {
+            get;
+            set;
+        }
     }
 }

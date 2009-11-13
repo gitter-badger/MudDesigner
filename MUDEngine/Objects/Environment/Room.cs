@@ -56,10 +56,15 @@ namespace MUDEngine.Objects.Environment
 
         public Room()
         {
+            InstalledDoors = new List<Door>();
+
             this.Feel = "You feel nothing.";
             this.Listen = "You hear nothing of interest.";
             this.Smell = "You don't smell anything unsual.";
             this.StatDrainAmount = 0;
         }
+
+        [Browsable(false)]
+        public List<Door> InstalledDoors;
     }
 }

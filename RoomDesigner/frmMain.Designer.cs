@@ -284,6 +284,7 @@
             this.propertyDoor.Name = "propertyDoor";
             this.propertyDoor.Size = new System.Drawing.Size(350, 183);
             this.propertyDoor.TabIndex = 4;
+            this.propertyDoor.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyDoor_PropertyValueChanged);
             // 
             // groupBox6
             // 
