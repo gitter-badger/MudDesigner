@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomDesigner", "RoomDesigne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudDesigner", "MudDesigner\MudDesigner.csproj", "{F782C36B-5A00-4BC9-BE4E-B631729DA40E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualDesigner", "VisualDesigner\VisualDesigner.csproj", "{2E20971A-E968-4AE9-B7B2-58236D499618}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualComponents", "VisualComponents\VisualComponents.csproj", "{18B191BD-5926-4544-AB3C-A1F38B32F8E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +41,14 @@ Global
 		{F782C36B-5A00-4BC9-BE4E-B631729DA40E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F782C36B-5A00-4BC9-BE4E-B631729DA40E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F782C36B-5A00-4BC9-BE4E-B631729DA40E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E20971A-E968-4AE9-B7B2-58236D499618}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E20971A-E968-4AE9-B7B2-58236D499618}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E20971A-E968-4AE9-B7B2-58236D499618}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E20971A-E968-4AE9-B7B2-58236D499618}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18B191BD-5926-4544-AB3C-A1F38B32F8E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18B191BD-5926-4544-AB3C-A1F38B32F8E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18B191BD-5926-4544-AB3C-A1F38B32F8E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18B191BD-5926-4544-AB3C-A1F38B32F8E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
