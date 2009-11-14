@@ -29,38 +29,32 @@
         private void InitializeComponent()
         {
             this.containerMain = new System.Windows.Forms.SplitContainer();
-            this.ObjectList = new VisualComponents.VisualContainer();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.containerProperties = new System.Windows.Forms.SplitContainer();
-            this.VisualEditor = new VisualComponents.VisualContainer();
-            this.tabDesigner = new System.Windows.Forms.TabControl();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.page1 = new System.Windows.Forms.TabPage();
             this.containerLeftPane = new System.Windows.Forms.SplitContainer();
-            this.ObjectExplorer = new VisualComponents.VisualContainer();
-            this.tabExplorer = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.treeView1 = new System.Windows.Forms.TreeView();
-            this.Properties = new VisualComponents.VisualContainer();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.containerMain.Panel1.SuspendLayout();
             this.containerMain.Panel2.SuspendLayout();
             this.containerMain.SuspendLayout();
-            this.ObjectList.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.containerProperties.Panel1.SuspendLayout();
             this.containerProperties.Panel2.SuspendLayout();
             this.containerProperties.SuspendLayout();
-            this.VisualEditor.SuspendLayout();
-            this.tabDesigner.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.tabControl1.SuspendLayout();
             this.containerLeftPane.Panel1.SuspendLayout();
             this.containerLeftPane.Panel2.SuspendLayout();
             this.containerLeftPane.SuspendLayout();
-            this.ObjectExplorer.SuspendLayout();
-            this.tabExplorer.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.Properties.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,27 +66,33 @@
             // 
             // containerMain.Panel1
             // 
-            this.containerMain.Panel1.Controls.Add(this.ObjectList);
+            this.containerMain.Panel1.Controls.Add(this.groupBox1);
             // 
             // containerMain.Panel2
             // 
             this.containerMain.Panel2.Controls.Add(this.containerProperties);
             this.containerMain.Size = new System.Drawing.Size(1050, 589);
-            this.containerMain.SplitterDistance = 112;
+            this.containerMain.SplitterDistance = 133;
             this.containerMain.TabIndex = 0;
             // 
-            // ObjectList
+            // groupBox1
             // 
-            this.ObjectList.BackColor = System.Drawing.Color.Gray;
-            this.ObjectList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ObjectList.Controls.Add(this.flowLayoutPanel1);
-            this.ObjectList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ObjectList.IsClosable = false;
-            this.ObjectList.Location = new System.Drawing.Point(0, 0);
-            this.ObjectList.Name = "ObjectList";
-            this.ObjectList.Size = new System.Drawing.Size(112, 589);
-            this.ObjectList.TabIndex = 0;
-            this.ObjectList.Title = "Object Toolbox";
+            this.groupBox1.Controls.Add(this.flowLayoutPanel1);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(133, 589);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Object Library";
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 16);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(127, 570);
+            this.flowLayoutPanel1.TabIndex = 0;
             // 
             // containerProperties
             // 
@@ -103,47 +103,49 @@
             // 
             // containerProperties.Panel1
             // 
-            this.containerProperties.Panel1.Controls.Add(this.VisualEditor);
+            this.containerProperties.Panel1.Controls.Add(this.groupBox2);
             // 
             // containerProperties.Panel2
             // 
             this.containerProperties.Panel2.Controls.Add(this.containerLeftPane);
-            this.containerProperties.Size = new System.Drawing.Size(934, 589);
-            this.containerProperties.SplitterDistance = 683;
+            this.containerProperties.Size = new System.Drawing.Size(913, 589);
+            this.containerProperties.SplitterDistance = 667;
             this.containerProperties.TabIndex = 0;
             // 
-            // VisualEditor
+            // groupBox2
             // 
-            this.VisualEditor.BackColor = System.Drawing.Color.Gray;
-            this.VisualEditor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.VisualEditor.Controls.Add(this.tabDesigner);
-            this.VisualEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.VisualEditor.IsClosable = false;
-            this.VisualEditor.Location = new System.Drawing.Point(0, 0);
-            this.VisualEditor.Name = "VisualEditor";
-            this.VisualEditor.Size = new System.Drawing.Size(681, 587);
-            this.VisualEditor.TabIndex = 1;
-            this.VisualEditor.Title = "Visual Editor";
+            this.groupBox2.Controls.Add(this.tabControl1);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox2.Location = new System.Drawing.Point(0, 0);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(665, 587);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Visual Designer";
             // 
-            // tabDesigner
+            // tabControl1
             // 
-            this.tabDesigner.Controls.Add(this.tabPage2);
-            this.tabDesigner.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabDesigner.Location = new System.Drawing.Point(0, 0);
-            this.tabDesigner.Name = "tabDesigner";
-            this.tabDesigner.SelectedIndex = 0;
-            this.tabDesigner.Size = new System.Drawing.Size(679, 585);
-            this.tabDesigner.TabIndex = 2;
+            this.tabControl1.AllowDrop = true;
+            this.tabControl1.Controls.Add(this.page1);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(3, 16);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(659, 568);
+            this.tabControl1.TabIndex = 0;
             // 
-            // tabPage2
+            // page1
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.Silver;
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(671, 559);
-            this.tabPage2.TabIndex = 0;
-            this.tabPage2.Text = "tabPage2";
+            this.page1.AllowDrop = true;
+            this.page1.Location = new System.Drawing.Point(4, 22);
+            this.page1.Name = "page1";
+            this.page1.Padding = new System.Windows.Forms.Padding(3);
+            this.page1.Size = new System.Drawing.Size(651, 542);
+            this.page1.TabIndex = 0;
+            this.page1.Text = "Empty";
+            this.page1.UseVisualStyleBackColor = true;
+            this.page1.DragDrop += new System.Windows.Forms.DragEventHandler(this.page1_DragDrop);
+            this.page1.DragEnter += new System.Windows.Forms.DragEventHandler(this.page1_DragEnter);
             // 
             // containerLeftPane
             // 
@@ -154,79 +156,43 @@
             // 
             // containerLeftPane.Panel1
             // 
-            this.containerLeftPane.Panel1.Controls.Add(this.ObjectExplorer);
+            this.containerLeftPane.Panel1.Controls.Add(this.groupBox3);
             // 
             // containerLeftPane.Panel2
             // 
-            this.containerLeftPane.Panel2.Controls.Add(this.Properties);
-            this.containerLeftPane.Size = new System.Drawing.Size(245, 587);
+            this.containerLeftPane.Panel2.Controls.Add(this.groupBox4);
+            this.containerLeftPane.Size = new System.Drawing.Size(240, 587);
             this.containerLeftPane.SplitterDistance = 297;
             this.containerLeftPane.TabIndex = 0;
             // 
-            // ObjectExplorer
+            // groupBox3
             // 
-            this.ObjectExplorer.BackColor = System.Drawing.Color.Gray;
-            this.ObjectExplorer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ObjectExplorer.Controls.Add(this.tabExplorer);
-            this.ObjectExplorer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ObjectExplorer.IsClosable = false;
-            this.ObjectExplorer.Location = new System.Drawing.Point(0, 0);
-            this.ObjectExplorer.Name = "ObjectExplorer";
-            this.ObjectExplorer.Size = new System.Drawing.Size(245, 297);
-            this.ObjectExplorer.TabIndex = 0;
-            this.ObjectExplorer.Title = "Project Explorer";
+            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox3.Location = new System.Drawing.Point(0, 0);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(240, 297);
+            this.groupBox3.TabIndex = 1;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Project Explorer";
             // 
-            // tabExplorer
+            // groupBox4
             // 
-            this.tabExplorer.Alignment = System.Windows.Forms.TabAlignment.Bottom;
-            this.tabExplorer.Controls.Add(this.tabPage1);
-            this.tabExplorer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabExplorer.Location = new System.Drawing.Point(0, 0);
-            this.tabExplorer.Name = "tabExplorer";
-            this.tabExplorer.SelectedIndex = 0;
-            this.tabExplorer.Size = new System.Drawing.Size(243, 295);
-            this.tabExplorer.TabIndex = 2;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.BackColor = System.Drawing.Color.Silver;
-            this.tabPage1.Controls.Add(this.treeView1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 4);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(235, 269);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Project Objects";
-            // 
-            // treeView1
-            // 
-            this.treeView1.BackColor = System.Drawing.Color.Silver;
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.Location = new System.Drawing.Point(3, 3);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(229, 263);
-            this.treeView1.TabIndex = 3;
-            // 
-            // Properties
-            // 
-            this.Properties.BackColor = System.Drawing.Color.Gray;
-            this.Properties.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Properties.Controls.Add(this.propertyGrid1);
-            this.Properties.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Properties.IsClosable = false;
-            this.Properties.Location = new System.Drawing.Point(0, 0);
-            this.Properties.Name = "Properties";
-            this.Properties.Size = new System.Drawing.Size(245, 286);
-            this.Properties.TabIndex = 1;
-            this.Properties.Title = "Properties";
+            this.groupBox4.Controls.Add(this.propertyGrid1);
+            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox4.Location = new System.Drawing.Point(0, 0);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(240, 286);
+            this.groupBox4.TabIndex = 1;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Object Properties";
             // 
             // propertyGrid1
             // 
             this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
+            this.propertyGrid1.Location = new System.Drawing.Point(3, 16);
             this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(243, 284);
-            this.propertyGrid1.TabIndex = 2;
+            this.propertyGrid1.Size = new System.Drawing.Size(234, 267);
+            this.propertyGrid1.TabIndex = 0;
             // 
             // menuStrip1
             // 
@@ -256,16 +222,9 @@
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 25);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(110, 562);
-            this.flowLayoutPanel1.TabIndex = 3;
-            // 
             // frmMain
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1050, 613);
@@ -280,19 +239,16 @@
             this.containerMain.Panel1.ResumeLayout(false);
             this.containerMain.Panel2.ResumeLayout(false);
             this.containerMain.ResumeLayout(false);
-            this.ObjectList.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.containerProperties.Panel1.ResumeLayout(false);
             this.containerProperties.Panel2.ResumeLayout(false);
             this.containerProperties.ResumeLayout(false);
-            this.VisualEditor.ResumeLayout(false);
-            this.tabDesigner.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
             this.containerLeftPane.Panel1.ResumeLayout(false);
             this.containerLeftPane.Panel2.ResumeLayout(false);
             this.containerLeftPane.ResumeLayout(false);
-            this.ObjectExplorer.ResumeLayout(false);
-            this.tabExplorer.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.Properties.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -305,20 +261,17 @@
         private System.Windows.Forms.SplitContainer containerMain;
         private System.Windows.Forms.SplitContainer containerProperties;
         private System.Windows.Forms.SplitContainer containerLeftPane;
-        private VisualComponents.VisualContainer ObjectExplorer;
-        private VisualComponents.VisualContainer Properties;
-        private VisualComponents.VisualContainer VisualEditor;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
-        private VisualComponents.VisualContainer ObjectList;
-        private System.Windows.Forms.TabControl tabExplorer;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabControl tabDesigner;
-        private System.Windows.Forms.PropertyGrid propertyGrid1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.PropertyGrid propertyGrid1;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage page1;
     }
 }
 

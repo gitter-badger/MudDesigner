@@ -27,6 +27,11 @@ namespace VisualComponents
             set { lblTitle.Text = value; }
         }
 
+        public void AddControl(Control control)
+        {
+            this.flowLayoutPanel1.Controls.Add(control);
+        }
+
         public VisualContainer()
         {
             InitializeComponent();
