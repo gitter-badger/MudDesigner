@@ -16,45 +16,64 @@ namespace VisualDesigner
 {
     public partial class frmMain : Form
     {
+        //Script engine used to load and instance objects
         ScriptingEngine engine = new ScriptingEngine();
+        //The current object being edited
         ScriptObject currentScript;
+        //Collection of types the engine is holding from compiled scripts and the engine Objects namespace
         Type[] types;
+        //The object being dragged by the mouse onto the visual designer
         object movingObject;
 
         public frmMain()
         {
             InitializeComponent();
 
+            //Load the engine's assembly
             engine.LoadAssembly(Application.StartupPath + "/MUDEngine.dll");
+
+            //Get all of the Types it contains.
             types = engine.GetAssembly.GetTypes();
+            //instance the current script object
             currentScript = new ScriptObject();
         }
 
+        /// <summary>
+        /// Closes the application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
+        /// <summary>
+        /// Sets up the initial editor
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void frmMain_Load(object sender, EventArgs e)
         {
-            //Load the engine
-            engine.LoadAssembly(Application.StartupPath + "/MUDEngine.dll");
-            Type[] foundTypes = engine.GetAssembly.GetTypes();
+            //The button that will be placed within the Object Browser for object creation
             Button button = new Button();
 
-            List<Type> tempTypes = new List<Type>();
+            //Collections used to sort out the non-useable objects and sort them
             ListBox lst = new ListBox();
             lst.Sorted = true;
 
-            foreach (Type t in foundTypes)
+            //Scan the types array and only save the Types inheriting from BaseObject
+            foreach (Type t in types)
             {
                 if (t.BaseType.Name == "BaseObject")
                 {
-                    tempTypes.Add(t);
                     lst.Items.Add(t.Name);
                 }
             }
 
+            //Loop through our now sorted Object collection and create new buttons
+            //within the Object Browser for each Object, and tie them into the same
+            //MouseDown event handler.
             foreach (string t in lst.Items)
             {
                 button = new Button();
@@ -65,11 +84,16 @@ namespace VisualDesigner
                 button.FlatStyle = FlatStyle.Flat;
                 flowLayoutPanel1.Controls.Add(button);
             }
-
-            propertyGrid1.ViewForeColor = Color.Blue;
-            propertyGrid1.SelectedObject = engine;
         }
 
+        /// <summary>
+        /// When the mouse is pressed down, begin the drag and drop
+        /// Store the button within the movingObject so we can access it
+        /// due to DoDragDrop not coping the button like it should when I
+        /// try to access it via the DragDrop method of the tabpage
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void newObject_MouseDown(object sender, MouseEventArgs e)
         {
             Button button = (Button)sender;
@@ -77,31 +101,48 @@ namespace VisualDesigner
             DoDragDrop(button, DragDropEffects.Copy);
         }
 
+        /// <summary>
+        /// Create a new instance of the object dropped onto this tab and
+        /// create a new page once the object is created.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void page1_DragDrop(object sender, DragEventArgs e)
         {
-
+            //Check if the object is a button being dropped on here
             if (movingObject is Button)
             {
+                //create a new button based off the one being dropped on here
                 Button button = (Button)movingObject;
 
+                //loop through all the types we have at the moment
+                //and find the one that matches the one the button represents
                 foreach (Type t in types)
                 {
                     if (t.Name == button.Text)
                     {
+                        //Create an instance of the object within the engine
                         engine.InstanceObject(t, null);
+                        //Get a copy of it
                         currentScript = engine.GetObject(t.Name);
+                        //Place it in the propertygrid so we can edit it
                         propertyGrid1.SelectedObject = currentScript.Instance;
+
+                        //If the first page is still empty, use it
                         if (page1.Text == "Empty")
                         {
                             page1.Text = currentScript.Name;
                         }
+                            //Otherwise create a new page
                         else
                         {
                             TabPage tab = new TabPage(currentScript.Name);
+                            //All new tabs will use the same event handler method
                             tab.DragDrop +=new DragEventHandler(page1_DragDrop);
                             tab.DragEnter += new DragEventHandler(page1_DragEnter);
                             tab.AllowDrop = true;
                             tabControl1.TabPages.Add(tab);
+                            //select the tab.
                             tabControl1.SelectedTab = tab;
                         }
                     }
