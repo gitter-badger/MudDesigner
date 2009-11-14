@@ -62,6 +62,7 @@ namespace VisualDesigner
                 button.Text = t;
                 button.AllowDrop = true;
                 button.MouseDown += new MouseEventHandler(newObject_MouseDown);
+                button.FlatStyle = FlatStyle.Flat;
                 flowLayoutPanel1.Controls.Add(button);
             }
 
@@ -97,7 +98,11 @@ namespace VisualDesigner
                         else
                         {
                             TabPage tab = new TabPage(currentScript.Name);
+                            tab.DragDrop +=new DragEventHandler(page1_DragDrop);
+                            tab.DragEnter += new DragEventHandler(page1_DragEnter);
+                            tab.AllowDrop = true;
                             tabControl1.TabPages.Add(tab);
+                            tabControl1.SelectedTab = tab;
                         }
                     }
                 }
@@ -107,6 +112,12 @@ namespace VisualDesigner
         private void page1_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Copy;
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            currentScript = engine.GetObject(tabControl1.SelectedTab.Text);
+            propertyGrid1.SelectedObject = currentScript.Instance;
         }
     }
 }
