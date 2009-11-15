@@ -8,6 +8,9 @@ namespace MudDesigner
     static class Program
     {
         static frmMain MudHUB;
+
+        internal static string _InstallLocation = @"C:\CodePlex\MudDesigner\";
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -28,7 +31,7 @@ namespace MudDesigner
             //If running in debug mode we need to hard-code the paths as during normal running of the apps
             //all of the apps are running within the Apps directory.
 #if DEBUG
-            string[] apps = System.IO.Directory.GetFiles(@"C:\CodePlex\MudDesigner\", "*.exe", System.IO.SearchOption.AllDirectories);
+            string[] apps = System.IO.Directory.GetFiles(_InstallLocation, "*.exe", System.IO.SearchOption.AllDirectories);
             List<string> legalApps = new List<string>();
 
             foreach (string app in apps)
