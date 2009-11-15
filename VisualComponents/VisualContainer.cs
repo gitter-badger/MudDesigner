@@ -14,36 +14,15 @@ namespace VisualComponents
     public partial class VisualContainer : UserControl
     {
         [Browsable(true)]
-        public bool IsClosable
-        {
-            get { return btnClose.Visible; }
-            set { btnClose.Visible = value; }
-        }
-
-        [Browsable(true)]
         public  string Title
         {
-            get { return lblTitle.Text; }
-            set { lblTitle.Text = value; }
-        }
-
-        public void AddControl(Control control)
-        {
-            this.flowLayoutPanel1.Controls.Add(control);
+            get { return btnTitle.Text; }
+            set { btnTitle.Text = value; }
         }
 
         public VisualContainer()
         {
             InitializeComponent();
-        }
-
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Container.Remove(this);
-        }
-
-        private void Container_Load(object sender, EventArgs e)
-        {
         }
     }
 }

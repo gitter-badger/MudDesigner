@@ -45,6 +45,10 @@ namespace VisualDesigner
         /// <param name="e"></param>
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            foreach (ScriptObject obj in engine.GetObjects())
+            {
+                XmlSerialization.Save(obj.Name + ".xml", obj);
+            }
             Application.Exit();
         }
 
@@ -80,8 +84,10 @@ namespace VisualDesigner
                 button.Width = flowLayoutPanel1.Width - 10;
                 button.Text = t;
                 button.AllowDrop = true;
+                button.Dock = DockStyle.Top;
                 button.MouseDown += new MouseEventHandler(newObject_MouseDown);
                 button.FlatStyle = FlatStyle.Flat;
+                
                 flowLayoutPanel1.Controls.Add(button);
             }
         }
@@ -141,6 +147,7 @@ namespace VisualDesigner
                             tab.DragDrop +=new DragEventHandler(page1_DragDrop);
                             tab.DragEnter += new DragEventHandler(page1_DragEnter);
                             tab.AllowDrop = true;
+                            tab.BackColor = Color.FromArgb(64,64,64);
                             tabControl1.TabPages.Add(tab);
                             //select the tab.
                             tabControl1.SelectedTab = tab;

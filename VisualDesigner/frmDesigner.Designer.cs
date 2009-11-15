@@ -28,45 +28,58 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Game Objects");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Game", new System.Windows.Forms.TreeNode[] {
+            treeNode3});
             this.containerMain = new System.Windows.Forms.SplitContainer();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.containerProperties = new System.Windows.Forms.SplitContainer();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.page1 = new System.Windows.Forms.TabPage();
             this.containerLeftPane = new System.Windows.Forms.SplitContainer();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.page1 = new System.Windows.Forms.TabPage();
+            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.treeProjectExplorer = new System.Windows.Forms.TreeView();
             this.containerMain.Panel1.SuspendLayout();
             this.containerMain.Panel2.SuspendLayout();
             this.containerMain.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.containerProperties.Panel1.SuspendLayout();
             this.containerProperties.Panel2.SuspendLayout();
             this.containerProperties.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.tabControl1.SuspendLayout();
             this.containerLeftPane.Panel1.SuspendLayout();
             this.containerLeftPane.Panel2.SuspendLayout();
             this.containerLeftPane.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // containerMain
             // 
+            this.containerMain.BackColor = System.Drawing.Color.Gray;
+            this.containerMain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.containerMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.containerMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.containerMain.Location = new System.Drawing.Point(0, 24);
             this.containerMain.Name = "containerMain";
             // 
             // containerMain.Panel1
             // 
-            this.containerMain.Panel1.Controls.Add(this.groupBox1);
+            this.containerMain.Panel1.Controls.Add(this.flowLayoutPanel1);
+            this.containerMain.Panel1.Controls.Add(this.panel1);
             // 
             // containerMain.Panel2
             // 
@@ -74,25 +87,6 @@
             this.containerMain.Size = new System.Drawing.Size(1050, 589);
             this.containerMain.SplitterDistance = 133;
             this.containerMain.TabIndex = 0;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.flowLayoutPanel1);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(0, 0);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(133, 589);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Object Library";
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 16);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(127, 570);
-            this.flowLayoutPanel1.TabIndex = 0;
             // 
             // containerProperties
             // 
@@ -103,7 +97,8 @@
             // 
             // containerProperties.Panel1
             // 
-            this.containerProperties.Panel1.Controls.Add(this.groupBox2);
+            this.containerProperties.Panel1.Controls.Add(this.tabControl1);
+            this.containerProperties.Panel1.Controls.Add(this.panel4);
             // 
             // containerProperties.Panel2
             // 
@@ -111,42 +106,6 @@
             this.containerProperties.Size = new System.Drawing.Size(913, 589);
             this.containerProperties.SplitterDistance = 667;
             this.containerProperties.TabIndex = 0;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.tabControl1);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(0, 0);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(665, 587);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Visual Designer";
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.AllowDrop = true;
-            this.tabControl1.Controls.Add(this.page1);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(3, 16);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(659, 568);
-            this.tabControl1.TabIndex = 0;
-            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
-            // 
-            // page1
-            // 
-            this.page1.AllowDrop = true;
-            this.page1.Location = new System.Drawing.Point(4, 22);
-            this.page1.Name = "page1";
-            this.page1.Padding = new System.Windows.Forms.Padding(3);
-            this.page1.Size = new System.Drawing.Size(651, 542);
-            this.page1.TabIndex = 0;
-            this.page1.Text = "Empty";
-            this.page1.UseVisualStyleBackColor = true;
-            this.page1.DragDrop += new System.Windows.Forms.DragEventHandler(this.page1_DragDrop);
-            this.page1.DragEnter += new System.Windows.Forms.DragEventHandler(this.page1_DragEnter);
             // 
             // containerLeftPane
             // 
@@ -157,44 +116,16 @@
             // 
             // containerLeftPane.Panel1
             // 
-            this.containerLeftPane.Panel1.Controls.Add(this.groupBox3);
+            this.containerLeftPane.Panel1.Controls.Add(this.treeProjectExplorer);
+            this.containerLeftPane.Panel1.Controls.Add(this.panel2);
             // 
             // containerLeftPane.Panel2
             // 
-            this.containerLeftPane.Panel2.Controls.Add(this.groupBox4);
+            this.containerLeftPane.Panel2.Controls.Add(this.propertyGrid1);
+            this.containerLeftPane.Panel2.Controls.Add(this.panel3);
             this.containerLeftPane.Size = new System.Drawing.Size(240, 587);
             this.containerLeftPane.SplitterDistance = 297;
             this.containerLeftPane.TabIndex = 0;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(0, 0);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(240, 297);
-            this.groupBox3.TabIndex = 1;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Project Explorer";
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.propertyGrid1);
-            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox4.Location = new System.Drawing.Point(0, 0);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(240, 286);
-            this.groupBox4.TabIndex = 1;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Object Properties";
-            // 
-            // propertyGrid1
-            // 
-            this.propertyGrid1.CategoryForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGrid1.Location = new System.Drawing.Point(3, 16);
-            this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(234, 267);
-            this.propertyGrid1.TabIndex = 0;
             // 
             // menuStrip1
             // 
@@ -224,6 +155,158 @@
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(131, 29);
+            this.panel1.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Silver;
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.label1.Size = new System.Drawing.Size(129, 27);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Object Browser";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label2
+            // 
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.Silver;
+            this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Name = "label2";
+            this.label2.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.label2.Size = new System.Drawing.Size(238, 27);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Project Explorer";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(240, 29);
+            this.panel2.TabIndex = 1;
+            // 
+            // label3
+            // 
+            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.Silver;
+            this.label3.Location = new System.Drawing.Point(0, 0);
+            this.label3.Name = "label3";
+            this.label3.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.label3.Size = new System.Drawing.Size(238, 27);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Object Properties";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.label3);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel3.Location = new System.Drawing.Point(0, 0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(240, 29);
+            this.panel3.TabIndex = 1;
+            // 
+            // label4
+            // 
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.Silver;
+            this.label4.Location = new System.Drawing.Point(0, 0);
+            this.label4.Name = "label4";
+            this.label4.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.label4.Size = new System.Drawing.Size(663, 27);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Visual Designer";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.label4);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel4.Location = new System.Drawing.Point(0, 0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(665, 29);
+            this.panel4.TabIndex = 1;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 29);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(131, 558);
+            this.flowLayoutPanel1.TabIndex = 1;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.AllowDrop = true;
+            this.tabControl1.Controls.Add(this.page1);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 29);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(665, 558);
+            this.tabControl1.TabIndex = 2;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
+            // 
+            // page1
+            // 
+            this.page1.AllowDrop = true;
+            this.page1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.page1.Location = new System.Drawing.Point(4, 22);
+            this.page1.Name = "page1";
+            this.page1.Padding = new System.Windows.Forms.Padding(3);
+            this.page1.Size = new System.Drawing.Size(657, 532);
+            this.page1.TabIndex = 1;
+            this.page1.Text = "Empty";
+            this.page1.DragDrop += new System.Windows.Forms.DragEventHandler(this.page1_DragDrop);
+            this.page1.DragEnter += new System.Windows.Forms.DragEventHandler(this.page1_DragEnter);
+            // 
+            // propertyGrid1
+            // 
+            this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyGrid1.Location = new System.Drawing.Point(0, 29);
+            this.propertyGrid1.Name = "propertyGrid1";
+            this.propertyGrid1.Size = new System.Drawing.Size(240, 257);
+            this.propertyGrid1.TabIndex = 2;
+            // 
+            // treeProjectExplorer
+            // 
+            this.treeProjectExplorer.BackColor = System.Drawing.Color.Gray;
+            this.treeProjectExplorer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeProjectExplorer.Location = new System.Drawing.Point(0, 29);
+            this.treeProjectExplorer.Name = "treeProjectExplorer";
+            treeNode3.Name = "nodeGameObjects";
+            treeNode3.Text = "Game Objects";
+            treeNode4.Name = "nodeGame";
+            treeNode4.Text = "Game";
+            this.treeProjectExplorer.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode4});
+            this.treeProjectExplorer.Size = new System.Drawing.Size(240, 268);
+            this.treeProjectExplorer.TabIndex = 2;
+            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -236,23 +319,23 @@
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Visual Mud Designer";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.containerMain.Panel1.ResumeLayout(false);
             this.containerMain.Panel2.ResumeLayout(false);
             this.containerMain.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
             this.containerProperties.Panel1.ResumeLayout(false);
             this.containerProperties.Panel2.ResumeLayout(false);
             this.containerProperties.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
             this.containerLeftPane.Panel1.ResumeLayout(false);
             this.containerLeftPane.Panel2.ResumeLayout(false);
             this.containerLeftPane.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -266,14 +349,19 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.PropertyGrid propertyGrid1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage page1;
+        private System.Windows.Forms.PropertyGrid propertyGrid1;
+        private System.Windows.Forms.TreeView treeProjectExplorer;
     }
 }
 
