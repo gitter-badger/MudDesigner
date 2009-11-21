@@ -138,6 +138,11 @@ namespace VisualDesigner
                         if (page1.Text == "Empty")
                         {
                             page1.Text = currentScript.Name;
+                            if (currentScript.Name == "Room")
+                            {
+                                page1.Controls.Add(new VisualComponents.RoomDesigner((Room)currentScript.Instance));
+                            }
+                            break;
                         }
                             //Otherwise create a new page
                         else
@@ -148,9 +153,11 @@ namespace VisualDesigner
                             tab.DragEnter += new DragEventHandler(page1_DragEnter);
                             tab.AllowDrop = true;
                             tab.BackColor = Color.FromArgb(64,64,64);
+                            page1.Text = currentScript.Name;
                             tabControl1.TabPages.Add(tab);
                             //select the tab.
                             tabControl1.SelectedTab = tab;
+                            break;
                         }
                     }
                 }

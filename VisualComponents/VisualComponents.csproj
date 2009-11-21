@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RoomDesigner.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RoomDesigner.Designer.cs">
+      <DependentUpon>RoomDesigner.cs</DependentUpon>
+    </Compile>
     <Compile Include="VisualContainer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -56,10 +62,20 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="RoomDesigner.resx">
+      <DependentUpon>RoomDesigner.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="VisualContainer.resx">
       <DependentUpon>VisualContainer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MUDEngine\MUDEngine.csproj">
+      <Project>{33828B3B-F227-4726-8FCD-3D9D780E643D}</Project>
+      <Name>MUDEngine</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

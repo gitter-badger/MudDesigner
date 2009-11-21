@@ -44,6 +44,7 @@ namespace MudDesigner
                     legalApps.Add(app);
                 }
             }
+
             string filename = "";
             foreach (string app in legalApps)
             {
@@ -53,10 +54,12 @@ namespace MudDesigner
                     break;
                 }
             }
+
             info.FileName = filename;
 #else
             info.FileName = appName;
 #endif
+
             info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
             info.WorkingDirectory = Application.StartupPath;
 
