@@ -140,7 +140,7 @@ namespace VisualDesigner
                             page1.Text = currentScript.Name;
                             if (currentScript.Name == "Room")
                             {
-                                page1.Controls.Add(new VisualComponents.RoomDesigner((Room)currentScript.Instance));
+                                //page1.Controls.Add(new VisualComponents.RoomDesigner((Room)currentScript.Instance));
                             }
                             break;
                         }
