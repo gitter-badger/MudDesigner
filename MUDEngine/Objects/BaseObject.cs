@@ -23,5 +23,11 @@ namespace MUDEngine.Objects
             get;
             set;
         }
+
+        public ManagedScripting.ScriptObject Script
+        {
+            get;
+            set;
+        }
     }
 }

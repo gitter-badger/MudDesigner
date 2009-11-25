@@ -31,7 +31,23 @@ namespace MudDesigner
             //If running in debug mode we need to hard-code the paths as during normal running of the apps
             //all of the apps are running within the Apps directory.
 #if DEBUG
-            string[] apps = System.IO.Directory.GetFiles(_InstallLocation, "*.exe", System.IO.SearchOption.AllDirectories);
+            string[] apps = new string[] { };
+            try
+            {
+                apps = System.IO.Directory.GetFiles(_InstallLocation, "*.exe", System.IO.SearchOption.AllDirectories);
+            }
+            catch
+            {
+                MessageBox.Show("Error: The directory '" + _InstallLocation + "' does not exist!\n\n"
+                    + "The engine has a #DEBUG constant defined in the project properties."
+                    + "\nIf you are wanting to run the Designer from within Visual Studio, please change the\n"
+                    + "MudDesigner.Program._InstallLocation Field to the current ROOT directory of your source code."
+                    + "\n\nIf you are running a Release build of the engine, with all of the editors contained within the"
+                    + " same directory, then edit the MudDesigner project properties to remove the #DEBUG constant."
+                    + "\n" + appName + " will not load.",
+                    "Mud Designer", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             List<string> legalApps = new List<string>();
 
             foreach (string app in apps)

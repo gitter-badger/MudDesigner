@@ -22,3 +22,17 @@ namespace CurrencyEditor
         }
     }
 }
+
+namespace Project2
+{
+    public class MyClass
+    {
+        public string DoSomething(string argument1, string argument2)
+        {
+            if (!argument1.Equals(argument2))
+                return "The two arguments are different";
+            else
+                return "The two arguments are the same";
+        }
+    }
+}

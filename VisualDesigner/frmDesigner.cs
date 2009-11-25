@@ -45,10 +45,6 @@ namespace VisualDesigner
         /// <param name="e"></param>
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (ScriptObject obj in engine.GetObjects())
-            {
-                XmlSerialization.Save(obj.Name + ".xml", obj);
-            }
             Application.Exit();
         }
 
