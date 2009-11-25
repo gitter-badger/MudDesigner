@@ -53,5 +53,10 @@ namespace MUDEngine.Objects.Environment
             get;
             set;
         }
+
+        public Door(AvailableTravelDirections TravelDirection)
+        {
+            this.TravelDirection = TravelDirection;
+        }
     }
 }
