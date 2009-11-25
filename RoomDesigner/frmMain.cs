@@ -135,13 +135,12 @@ namespace RoomDesigner
 
         private void LoadPlugins()
         {
-            //Check if the plugin path exists.
             string pluginPath = System.IO.Path.Combine(Application.StartupPath, "Plugins");
+            _Plugins = new List<System.Reflection.Assembly>();
+            
+            //Check if the plugin path exists.
             if (!System.IO.Directory.Exists(pluginPath))
                 return;
-
-
-            _Plugins = new List<System.Reflection.Assembly>();
 
             //Now loop through every .dll file in the plugins directory and load it into memory
             //A copy is stored within a collection for use later if needed.
