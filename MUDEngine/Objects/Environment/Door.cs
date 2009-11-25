@@ -58,5 +58,9 @@ namespace MUDEngine.Objects.Environment
         {
             this.TravelDirection = TravelDirection;
         }
+
+        public Door()
+        {
+        }
     }
 }
