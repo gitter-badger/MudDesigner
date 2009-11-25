@@ -9,7 +9,7 @@ namespace MudDesigner
     {
         static frmMain MudHUB;
 
-        internal static string _InstallLocation = @"C:\CodePlex\MudDesigner\";
+        internal static string _InstallLocation = @"E:\Codeplex\MudDesigner";
 
         /// <summary>
         /// The main entry point for the application.
