@@ -1,5 +1,8 @@
-﻿namespace MUDEngine.Objects.Environment
+﻿using MUDEngine.Attributes;
+
+namespace MUDEngine.Objects.Environment
 {
+    [Unusable(true)]
     public struct StartingLocation
     {
         public Room Room;

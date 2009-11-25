@@ -49,6 +49,20 @@
             this.propertyDoor = new System.Windows.Forms.PropertyGrid();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.lstDirections = new System.Windows.Forms.ListBox();
+            this.tabScript = new System.Windows.Forms.TabPage();
+            this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.tabFunctions = new System.Windows.Forms.TabPage();
+            this.tabVariables = new System.Windows.Forms.TabPage();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.txtScript = new System.Windows.Forms.RichTextBox();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.comFunctions = new System.Windows.Forms.ComboBox();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.txtFunctionName = new System.Windows.Forms.TextBox();
+            this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.comReturnTypes = new System.Windows.Forms.ComboBox();
+            this.groupBox14 = new System.Windows.Forms.GroupBox();
             this.containerMain.Panel1.SuspendLayout();
             this.containerMain.Panel2.SuspendLayout();
             this.containerMain.SuspendLayout();
@@ -66,6 +80,14 @@
             this.groupBox7.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            this.tabScript.SuspendLayout();
+            this.tabControl2.SuspendLayout();
+            this.tabFunctions.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            this.groupBox11.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            this.groupBox13.SuspendLayout();
+            this.groupBox12.SuspendLayout();
             this.SuspendLayout();
             // 
             // containerMain
@@ -82,8 +104,8 @@
             // containerMain.Panel2
             // 
             this.containerMain.Panel2.Controls.Add(this.containerDesigner);
-            this.containerMain.Size = new System.Drawing.Size(784, 564);
-            this.containerMain.SplitterDistance = 236;
+            this.containerMain.Size = new System.Drawing.Size(792, 564);
+            this.containerMain.SplitterDistance = 238;
             this.containerMain.TabIndex = 0;
             // 
             // containerSidebar
@@ -102,7 +124,7 @@
             // containerSidebar.Panel2
             // 
             this.containerSidebar.Panel2.Controls.Add(this.groupBox2);
-            this.containerSidebar.Size = new System.Drawing.Size(234, 562);
+            this.containerSidebar.Size = new System.Drawing.Size(236, 562);
             this.containerSidebar.SplitterDistance = 109;
             this.containerSidebar.TabIndex = 0;
             // 
@@ -142,13 +164,14 @@
             this.btnNewRoom.TabIndex = 0;
             this.btnNewRoom.Text = "New Room";
             this.btnNewRoom.UseVisualStyleBackColor = true;
+            this.btnNewRoom.Click += new System.EventHandler(this.btnNewRoom_Click);
             // 
             // btnCloseEditor
             // 
             this.btnCloseEditor.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnCloseEditor.Location = new System.Drawing.Point(0, 86);
             this.btnCloseEditor.Name = "btnCloseEditor";
-            this.btnCloseEditor.Size = new System.Drawing.Size(234, 23);
+            this.btnCloseEditor.Size = new System.Drawing.Size(236, 23);
             this.btnCloseEditor.TabIndex = 3;
             this.btnCloseEditor.Text = "Close Editor";
             this.btnCloseEditor.UseVisualStyleBackColor = true;
@@ -160,7 +183,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(234, 449);
+            this.groupBox2.Size = new System.Drawing.Size(236, 449);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Room Setup";
@@ -170,7 +193,7 @@
             this.propertyRoom.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyRoom.Location = new System.Drawing.Point(3, 16);
             this.propertyRoom.Name = "propertyRoom";
-            this.propertyRoom.Size = new System.Drawing.Size(228, 430);
+            this.propertyRoom.Size = new System.Drawing.Size(230, 430);
             this.propertyRoom.TabIndex = 3;
             // 
             // containerDesigner
@@ -187,7 +210,7 @@
             // containerDesigner.Panel2
             // 
             this.containerDesigner.Panel2.Controls.Add(this.groupBox5);
-            this.containerDesigner.Size = new System.Drawing.Size(542, 562);
+            this.containerDesigner.Size = new System.Drawing.Size(548, 562);
             this.containerDesigner.SplitterDistance = 318;
             this.containerDesigner.TabIndex = 0;
             // 
@@ -197,7 +220,7 @@
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox4.Location = new System.Drawing.Point(0, 0);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(542, 318);
+            this.groupBox4.Size = new System.Drawing.Size(548, 318);
             this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Object Management";
@@ -207,11 +230,12 @@
             this.tabControl1.Controls.Add(this.tabBooks);
             this.tabControl1.Controls.Add(this.tabEquipment);
             this.tabControl1.Controls.Add(this.tabItems);
+            this.tabControl1.Controls.Add(this.tabScript);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(3, 16);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(536, 299);
+            this.tabControl1.Size = new System.Drawing.Size(542, 299);
             this.tabControl1.TabIndex = 0;
             // 
             // tabBooks
@@ -250,7 +274,7 @@
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox5.Location = new System.Drawing.Point(0, 0);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(542, 240);
+            this.groupBox5.Size = new System.Drawing.Size(548, 240);
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Door Installation";
@@ -261,7 +285,7 @@
             this.groupBox7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox7.Location = new System.Drawing.Point(174, 16);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(365, 221);
+            this.groupBox7.Size = new System.Drawing.Size(371, 221);
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Install Options";
@@ -270,7 +294,7 @@
             // 
             this.groupBox10.Controls.Add(this.propertyDoor);
             this.groupBox10.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBox10.Location = new System.Drawing.Point(6, 16);
+            this.groupBox10.Location = new System.Drawing.Point(12, 16);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(356, 202);
             this.groupBox10.TabIndex = 7;
@@ -307,11 +331,165 @@
             this.lstDirections.TabIndex = 0;
             this.lstDirections.SelectedIndexChanged += new System.EventHandler(this.lstDirections_SelectedIndexChanged);
             // 
+            // tabScript
+            // 
+            this.tabScript.Controls.Add(this.tabControl2);
+            this.tabScript.Location = new System.Drawing.Point(4, 22);
+            this.tabScript.Name = "tabScript";
+            this.tabScript.Size = new System.Drawing.Size(534, 273);
+            this.tabScript.TabIndex = 3;
+            this.tabScript.Text = "Script";
+            this.tabScript.UseVisualStyleBackColor = true;
+            // 
+            // tabControl2
+            // 
+            this.tabControl2.Controls.Add(this.tabFunctions);
+            this.tabControl2.Controls.Add(this.tabVariables);
+            this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl2.Location = new System.Drawing.Point(0, 0);
+            this.tabControl2.Name = "tabControl2";
+            this.tabControl2.SelectedIndex = 0;
+            this.tabControl2.Size = new System.Drawing.Size(534, 273);
+            this.tabControl2.TabIndex = 0;
+            // 
+            // tabFunctions
+            // 
+            this.tabFunctions.Controls.Add(this.groupBox9);
+            this.tabFunctions.Controls.Add(this.groupBox8);
+            this.tabFunctions.Location = new System.Drawing.Point(4, 22);
+            this.tabFunctions.Name = "tabFunctions";
+            this.tabFunctions.Padding = new System.Windows.Forms.Padding(3);
+            this.tabFunctions.Size = new System.Drawing.Size(526, 247);
+            this.tabFunctions.TabIndex = 0;
+            this.tabFunctions.Text = "Functions";
+            this.tabFunctions.UseVisualStyleBackColor = true;
+            // 
+            // tabVariables
+            // 
+            this.tabVariables.Location = new System.Drawing.Point(4, 22);
+            this.tabVariables.Name = "tabVariables";
+            this.tabVariables.Padding = new System.Windows.Forms.Padding(3);
+            this.tabVariables.Size = new System.Drawing.Size(526, 247);
+            this.tabVariables.TabIndex = 1;
+            this.tabVariables.Text = "Variables";
+            this.tabVariables.UseVisualStyleBackColor = true;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.txtScript);
+            this.groupBox8.Dock = System.Windows.Forms.DockStyle.Left;
+            this.groupBox8.Location = new System.Drawing.Point(3, 3);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(359, 241);
+            this.groupBox8.TabIndex = 2;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Room Script";
+            // 
+            // txtScript
+            // 
+            this.txtScript.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtScript.Location = new System.Drawing.Point(3, 16);
+            this.txtScript.Name = "txtScript";
+            this.txtScript.Size = new System.Drawing.Size(353, 222);
+            this.txtScript.TabIndex = 0;
+            this.txtScript.Text = "";
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.comFunctions);
+            this.groupBox11.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox11.Location = new System.Drawing.Point(3, 16);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(152, 41);
+            this.groupBox11.TabIndex = 0;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "Existing Functions";
+            // 
+            // comFunctions
+            // 
+            this.comFunctions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comFunctions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comFunctions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comFunctions.FormattingEnabled = true;
+            this.comFunctions.Location = new System.Drawing.Point(3, 16);
+            this.comFunctions.Name = "comFunctions";
+            this.comFunctions.Size = new System.Drawing.Size(146, 21);
+            this.comFunctions.Sorted = true;
+            this.comFunctions.TabIndex = 0;
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.groupBox14);
+            this.groupBox9.Controls.Add(this.groupBox12);
+            this.groupBox9.Controls.Add(this.groupBox13);
+            this.groupBox9.Controls.Add(this.groupBox11);
+            this.groupBox9.Dock = System.Windows.Forms.DockStyle.Right;
+            this.groupBox9.Location = new System.Drawing.Point(365, 3);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(158, 241);
+            this.groupBox9.TabIndex = 3;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Script Setup";
+            // 
+            // groupBox13
+            // 
+            this.groupBox13.Controls.Add(this.txtFunctionName);
+            this.groupBox13.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox13.Location = new System.Drawing.Point(3, 57);
+            this.groupBox13.Name = "groupBox13";
+            this.groupBox13.Size = new System.Drawing.Size(152, 41);
+            this.groupBox13.TabIndex = 6;
+            this.groupBox13.TabStop = false;
+            this.groupBox13.Text = "Function Name";
+            // 
+            // txtFunctionName
+            // 
+            this.txtFunctionName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtFunctionName.Location = new System.Drawing.Point(3, 16);
+            this.txtFunctionName.Name = "txtFunctionName";
+            this.txtFunctionName.Size = new System.Drawing.Size(146, 20);
+            this.txtFunctionName.TabIndex = 0;
+            // 
+            // groupBox12
+            // 
+            this.groupBox12.Controls.Add(this.comReturnTypes);
+            this.groupBox12.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox12.Location = new System.Drawing.Point(3, 98);
+            this.groupBox12.Name = "groupBox12";
+            this.groupBox12.Size = new System.Drawing.Size(152, 41);
+            this.groupBox12.TabIndex = 7;
+            this.groupBox12.TabStop = false;
+            this.groupBox12.Text = "Returnable Types";
+            // 
+            // comReturnTypes
+            // 
+            this.comReturnTypes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comReturnTypes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comReturnTypes.FormattingEnabled = true;
+            this.comReturnTypes.Items.AddRange(new object[] {
+            "bool",
+            "int",
+            "string"});
+            this.comReturnTypes.Location = new System.Drawing.Point(3, 16);
+            this.comReturnTypes.Name = "comReturnTypes";
+            this.comReturnTypes.Size = new System.Drawing.Size(146, 21);
+            this.comReturnTypes.Sorted = true;
+            this.comReturnTypes.TabIndex = 0;
+            // 
+            // groupBox14
+            // 
+            this.groupBox14.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox14.Location = new System.Drawing.Point(3, 139);
+            this.groupBox14.Name = "groupBox14";
+            this.groupBox14.Size = new System.Drawing.Size(152, 96);
+            this.groupBox14.TabIndex = 8;
+            this.groupBox14.TabStop = false;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 564);
+            this.ClientSize = new System.Drawing.Size(792, 564);
             this.Controls.Add(this.containerMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -336,6 +514,15 @@
             this.groupBox7.ResumeLayout(false);
             this.groupBox10.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
+            this.tabScript.ResumeLayout(false);
+            this.tabControl2.ResumeLayout(false);
+            this.tabFunctions.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox13.ResumeLayout(false);
+            this.groupBox13.PerformLayout();
+            this.groupBox12.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -363,6 +550,20 @@
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.GroupBox groupBox10;
         private System.Windows.Forms.PropertyGrid propertyDoor;
+        private System.Windows.Forms.TabPage tabScript;
+        private System.Windows.Forms.TabControl tabControl2;
+        private System.Windows.Forms.TabPage tabFunctions;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.RichTextBox txtScript;
+        private System.Windows.Forms.TabPage tabVariables;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.GroupBox groupBox14;
+        private System.Windows.Forms.GroupBox groupBox12;
+        private System.Windows.Forms.ComboBox comReturnTypes;
+        private System.Windows.Forms.GroupBox groupBox13;
+        private System.Windows.Forms.TextBox txtFunctionName;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private System.Windows.Forms.ComboBox comFunctions;
     }
 }
 

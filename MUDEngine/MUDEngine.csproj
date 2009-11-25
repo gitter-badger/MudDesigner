@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine.cs" />
+    <Compile Include="Attributes\UnusableAttribute.cs" />
     <Compile Include="Objects\BaseObject.cs" />
     <Compile Include="FileSystem\FileSystem.cs" />
     <Compile Include="FileSystem\XmlSerialization.cs" />

@@ -24,10 +24,19 @@ namespace MUDEngine.Objects
             set;
         }
 
-        public ManagedScripting.ScriptObject Script
+        [Browsable(false)]
+        public ManagedScripting.CodeBuilding.ClassGenerator Script
         {
             get;
             set;
+        }
+
+        public void OnEnter()
+        {
+        }
+
+        public void OnExit()
+        {
         }
     }
 }
