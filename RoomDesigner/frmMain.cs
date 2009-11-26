@@ -25,8 +25,6 @@ namespace RoomDesigner
 
         //Scripting engine and it's components.
         ManagedScripting.ScriptingEngine _ScriptEngine;
-        ManagedScripting.CodeBuilding.ClassGenerator _CurrentClass;
-        ManagedScripting.CodeBuilding.MethodSetup _CurrentCodeBlock;
         
         //Collection of plugins from within the 'plugins' folder
         List<System.Reflection.Assembly> _Plugins;
@@ -310,9 +308,7 @@ namespace RoomDesigner
 
             _CurrentRoom = new Room();
             _CurrentDoor = new Door(AvailableTravelDirections.None);
-            _CurrentClass = new ManagedScripting.CodeBuilding.ClassGenerator();
-            _CurrentCodeBlock = new ManagedScripting.CodeBuilding.MethodSetup();
-
+            
             propertyDoor.SelectedObject = null;
             propertyRoom.SelectedObject = _CurrentRoom;
         }
@@ -340,11 +336,6 @@ namespace RoomDesigner
             {
                 txtScript.Text = _CurrentRoom.Script;
             }
-        }
-
-        private void propertyRoom_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
-        {
-            //propertyRoom.Refresh();
         }
     }
 }

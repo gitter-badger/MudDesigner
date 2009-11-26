@@ -184,7 +184,6 @@
             this.propertyRoom.Name = "propertyRoom";
             this.propertyRoom.Size = new System.Drawing.Size(230, 430);
             this.propertyRoom.TabIndex = 3;
-            this.propertyRoom.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyRoom_PropertyValueChanged);
             // 
             // containerDesigner
             // 
