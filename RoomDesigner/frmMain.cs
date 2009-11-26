@@ -65,13 +65,19 @@ namespace RoomDesigner
 
             if (parameters.Length != 0)
             {
-                string rooms = Engine.GetDataPath(Engine.SaveDataTypes.Rooms);
-                string filename = System.IO.Path.Combine(rooms, parameters[0].ToString());
-
-                //Room to load should always be the first arg.
-                if (System.IO.File.Exists(filename))
+                foreach (object argument in parameters)
                 {
-                    _CurrentRoom = (Room)ManagedScripting.XmlSerialization.Load(filename, _CurrentRoom);
+                    if (argument.ToString().ToLower().StartsWith("room="))
+                    {
+                        string rooms = Engine.GetDataPath(Engine.SaveDataTypes.Rooms);
+                        string filename = System.IO.Path.Combine(rooms, argument.ToString());
+
+                        //Room to load should always be the first arg.
+                        if (System.IO.File.Exists(filename))
+                        {
+                            _CurrentRoom = (Room)ManagedScripting.XmlSerialization.Load(filename, _CurrentRoom);
+                        }
+                    }
                 }
             }
 
