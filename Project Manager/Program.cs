@@ -21,7 +21,7 @@ namespace Project_Manager
         static void Main()
         {
             //Make sure all our paths are created before we start working with the editor.
-            Engine.ValidateProjectPath(Application.StartupPath);
+            MUDEngine.Engine.ValidateDataPaths();
             FileSystem.FileType = FileSystem.OutputFormats.XML;
 
             project = new ProjectInformation();

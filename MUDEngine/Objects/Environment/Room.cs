@@ -31,12 +31,14 @@ namespace MUDEngine.Objects.Environment
             get;
             set;
         }
-
-        /*public Stats StatDrain
+        
+        [Category("Room Information")]
+        [DefaultValue(false)]
+        public bool StatDrain
         {
             get;
             set;
-        }*/
+        }
 
         [Category("Room Information")]
         [DefaultValue(0)]
@@ -54,17 +56,18 @@ namespace MUDEngine.Objects.Environment
             set;
         }
 
+        [Browsable(false)]
+        public List<Door> InstalledDoors;
+
         public Room()
         {
             InstalledDoors = new List<Door>();
-
+            Script = "";
             this.Feel = "You feel nothing.";
             this.Listen = "You hear nothing of interest.";
             this.Smell = "You don't smell anything unsual.";
             this.StatDrainAmount = 0;
+            Name = "New Room";
         }
-
-        [Browsable(false)]
-        public List<Door> InstalledDoors;
     }
 }

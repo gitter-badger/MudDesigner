@@ -21,7 +21,7 @@ namespace MudDesigner
             InitializeComponent();
             this.Text = "Mud Designer Beta " + version;
         }
-
+        
         private void btnProjectManager_Click(object sender, EventArgs e)
         {
             Program.ExecuteApp("Project Manager.exe");
@@ -31,7 +31,7 @@ namespace MudDesigner
         {
             Program.ExecuteApp("Currency Editor.exe");
         }
-
+        
         private void btnRoomDesigner_Click(object sender, EventArgs e)
         {
             Program.ExecuteApp("Room Designer.exe");

@@ -121,6 +121,12 @@
   <ItemGroup>
     <Content Include="EditorList.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MUDEngine\MUDEngine.csproj">
+      <Project>{33828B3B-F227-4726-8FCD-3D9D780E643D}</Project>
+      <Name>MUDEngine</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

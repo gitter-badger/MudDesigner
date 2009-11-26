@@ -13,7 +13,7 @@ namespace CurrencyEditor
         [STAThread]
         static void Main()
         {
-            MUDEngine.Engine.ValidateProjectPath(Application.StartupPath);
+            MUDEngine.Engine.ValidateDataPaths();
             MUDEngine.FileSystem.FileSystem.FileType = MUDEngine.FileSystem.FileSystem.OutputFormats.XML;
 
             Application.EnableVisualStyles();
