@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using ManagedScripting;
 using MUDEngine;
+using MUDEngine.Controls;
 using MUDEngine.Objects;
 using MUDEngine.Objects.Environment;
 using MUDEngine.FileSystem;
@@ -133,11 +134,7 @@ namespace VisualDesigner
                         //If the first page is still empty, use it
                         if (page1.Text == "Empty")
                         {
-                            page1.Text = currentScript.Name;
-                            if (currentScript.Name == "Room")
-                            {
-                                //page1.Controls.Add(new VisualComponents.RoomDesigner((Room)currentScript.Instance));
-                            }
+                            page1.Controls.Add(new MUDEngine.Controls.RoomControl((BaseObject)currentScript.Instance));
                             break;
                         }
                             //Otherwise create a new page

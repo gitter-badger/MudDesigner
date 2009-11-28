@@ -105,7 +105,7 @@ namespace RoomDesigner
                     method.IsOverride = true;
                     method.Modifier = ManagedScripting.CodeBuilding.ClassGenerator.Modifiers.Public;
                     method.Code = new string[] { "base." + method.Name + "();" };
-                    script = script.Insert(_CurrentRoom.Script.Length, method.Create());
+                    script = script.Insert(_CurrentRoom.Script.Length, method.Create() + "\n");
                 }
                 _CurrentRoom.Script = script;
             }
@@ -338,7 +338,7 @@ namespace RoomDesigner
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControl1.SelectedTab.Text == "Script")
+            if (tabObjects.SelectedTab.Text == "Script")
             {
                 txtScript.Text = _CurrentRoom.Script;
             }

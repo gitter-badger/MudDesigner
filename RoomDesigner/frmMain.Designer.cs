@@ -30,31 +30,26 @@
         {
             this.containerMain = new System.Windows.Forms.SplitContainer();
             this.containerSidebar = new System.Windows.Forms.SplitContainer();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnSaveRoom = new System.Windows.Forms.Button();
-            this.btnNewRoom = new System.Windows.Forms.Button();
             this.btnCloseEditor = new System.Windows.Forms.Button();
+            this.btnCheckScript = new System.Windows.Forms.Button();
+            this.btnSaveRoom = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.propertyRoom = new System.Windows.Forms.PropertyGrid();
             this.containerDesigner = new System.Windows.Forms.SplitContainer();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabObjects = new System.Windows.Forms.TabControl();
             this.tabBooks = new System.Windows.Forms.TabPage();
             this.tabEquipment = new System.Windows.Forms.TabPage();
             this.tabItems = new System.Windows.Forms.TabPage();
-            this.tabScript = new System.Windows.Forms.TabPage();
-            this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.tabFunctions = new System.Windows.Forms.TabPage();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.txtScript = new System.Windows.Forms.RichTextBox();
-            this.tabVariables = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.propertyDoor = new System.Windows.Forms.PropertyGrid();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.lstDirections = new System.Windows.Forms.ListBox();
+            this.tabScript = new System.Windows.Forms.TabPage();
+            this.txtScript = new System.Windows.Forms.RichTextBox();
             this.containerMain.Panel1.SuspendLayout();
             this.containerMain.Panel2.SuspendLayout();
             this.containerMain.SuspendLayout();
@@ -67,15 +62,12 @@
             this.containerDesigner.Panel2.SuspendLayout();
             this.containerDesigner.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabScript.SuspendLayout();
-            this.tabControl2.SuspendLayout();
-            this.tabFunctions.SuspendLayout();
-            this.groupBox8.SuspendLayout();
+            this.tabObjects.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            this.tabScript.SuspendLayout();
             this.SuspendLayout();
             // 
             // containerMain
@@ -93,7 +85,7 @@
             // 
             this.containerMain.Panel2.Controls.Add(this.containerDesigner);
             this.containerMain.Size = new System.Drawing.Size(792, 564);
-            this.containerMain.SplitterDistance = 238;
+            this.containerMain.SplitterDistance = 211;
             this.containerMain.TabIndex = 0;
             // 
             // containerSidebar
@@ -105,66 +97,57 @@
             // 
             // containerSidebar.Panel1
             // 
-            this.containerSidebar.Panel1.Controls.Add(this.groupBox3);
             this.containerSidebar.Panel1.Controls.Add(this.groupBox1);
-            this.containerSidebar.Panel1.Controls.Add(this.btnCloseEditor);
             // 
             // containerSidebar.Panel2
             // 
             this.containerSidebar.Panel2.Controls.Add(this.groupBox2);
-            this.containerSidebar.Size = new System.Drawing.Size(236, 562);
-            this.containerSidebar.SplitterDistance = 109;
+            this.containerSidebar.Size = new System.Drawing.Size(209, 562);
+            this.containerSidebar.SplitterDistance = 88;
             this.containerSidebar.TabIndex = 0;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Location = new System.Drawing.Point(106, 6);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(125, 74);
-            this.groupBox3.TabIndex = 5;
-            this.groupBox3.TabStop = false;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnCloseEditor);
+            this.groupBox1.Controls.Add(this.btnCheckScript);
             this.groupBox1.Controls.Add(this.btnSaveRoom);
-            this.groupBox1.Controls.Add(this.btnNewRoom);
-            this.groupBox1.Location = new System.Drawing.Point(3, 6);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(100, 74);
+            this.groupBox1.Size = new System.Drawing.Size(209, 88);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Room Options";
             // 
-            // btnSaveRoom
-            // 
-            this.btnSaveRoom.Location = new System.Drawing.Point(3, 45);
-            this.btnSaveRoom.Name = "btnSaveRoom";
-            this.btnSaveRoom.Size = new System.Drawing.Size(91, 23);
-            this.btnSaveRoom.TabIndex = 1;
-            this.btnSaveRoom.Text = "Save Room";
-            this.btnSaveRoom.UseVisualStyleBackColor = true;
-            this.btnSaveRoom.Click += new System.EventHandler(this.btnSaveRoom_Click);
-            // 
-            // btnNewRoom
-            // 
-            this.btnNewRoom.Location = new System.Drawing.Point(3, 16);
-            this.btnNewRoom.Name = "btnNewRoom";
-            this.btnNewRoom.Size = new System.Drawing.Size(91, 23);
-            this.btnNewRoom.TabIndex = 0;
-            this.btnNewRoom.Text = "New Room";
-            this.btnNewRoom.UseVisualStyleBackColor = true;
-            this.btnNewRoom.Click += new System.EventHandler(this.btnNewRoom_Click);
-            // 
             // btnCloseEditor
             // 
             this.btnCloseEditor.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnCloseEditor.Location = new System.Drawing.Point(0, 86);
+            this.btnCloseEditor.Location = new System.Drawing.Point(3, 62);
             this.btnCloseEditor.Name = "btnCloseEditor";
-            this.btnCloseEditor.Size = new System.Drawing.Size(236, 23);
-            this.btnCloseEditor.TabIndex = 3;
+            this.btnCloseEditor.Size = new System.Drawing.Size(203, 23);
+            this.btnCloseEditor.TabIndex = 10;
             this.btnCloseEditor.Text = "Close Editor";
             this.btnCloseEditor.UseVisualStyleBackColor = true;
-            this.btnCloseEditor.Click += new System.EventHandler(this.btnCloseEditor_Click);
+            // 
+            // btnCheckScript
+            // 
+            this.btnCheckScript.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnCheckScript.Location = new System.Drawing.Point(3, 39);
+            this.btnCheckScript.Name = "btnCheckScript";
+            this.btnCheckScript.Size = new System.Drawing.Size(203, 23);
+            this.btnCheckScript.TabIndex = 9;
+            this.btnCheckScript.Text = "Validate Script";
+            this.btnCheckScript.UseVisualStyleBackColor = true;
+            // 
+            // btnSaveRoom
+            // 
+            this.btnSaveRoom.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnSaveRoom.Location = new System.Drawing.Point(3, 16);
+            this.btnSaveRoom.Name = "btnSaveRoom";
+            this.btnSaveRoom.Size = new System.Drawing.Size(203, 23);
+            this.btnSaveRoom.TabIndex = 6;
+            this.btnSaveRoom.Text = "Save Room";
+            this.btnSaveRoom.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
@@ -172,7 +155,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(236, 449);
+            this.groupBox2.Size = new System.Drawing.Size(209, 470);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Room Setup";
@@ -182,7 +165,7 @@
             this.propertyRoom.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyRoom.Location = new System.Drawing.Point(3, 16);
             this.propertyRoom.Name = "propertyRoom";
-            this.propertyRoom.Size = new System.Drawing.Size(230, 430);
+            this.propertyRoom.Size = new System.Drawing.Size(203, 451);
             this.propertyRoom.TabIndex = 3;
             // 
             // containerDesigner
@@ -199,41 +182,41 @@
             // containerDesigner.Panel2
             // 
             this.containerDesigner.Panel2.Controls.Add(this.groupBox5);
-            this.containerDesigner.Size = new System.Drawing.Size(548, 562);
+            this.containerDesigner.Size = new System.Drawing.Size(575, 562);
             this.containerDesigner.SplitterDistance = 318;
             this.containerDesigner.TabIndex = 0;
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.tabControl1);
+            this.groupBox4.Controls.Add(this.tabObjects);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox4.Location = new System.Drawing.Point(0, 0);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(548, 318);
+            this.groupBox4.Size = new System.Drawing.Size(575, 318);
             this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Object Management";
             // 
-            // tabControl1
+            // tabObjects
             // 
-            this.tabControl1.Controls.Add(this.tabBooks);
-            this.tabControl1.Controls.Add(this.tabEquipment);
-            this.tabControl1.Controls.Add(this.tabItems);
-            this.tabControl1.Controls.Add(this.tabScript);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(3, 16);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(542, 299);
-            this.tabControl1.TabIndex = 0;
-            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
+            this.tabObjects.Controls.Add(this.tabBooks);
+            this.tabObjects.Controls.Add(this.tabEquipment);
+            this.tabObjects.Controls.Add(this.tabItems);
+            this.tabObjects.Controls.Add(this.tabScript);
+            this.tabObjects.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabObjects.Location = new System.Drawing.Point(3, 16);
+            this.tabObjects.Name = "tabObjects";
+            this.tabObjects.SelectedIndex = 0;
+            this.tabObjects.Size = new System.Drawing.Size(569, 299);
+            this.tabObjects.TabIndex = 0;
+            this.tabObjects.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabBooks
             // 
             this.tabBooks.Location = new System.Drawing.Point(4, 22);
             this.tabBooks.Name = "tabBooks";
             this.tabBooks.Padding = new System.Windows.Forms.Padding(3);
-            this.tabBooks.Size = new System.Drawing.Size(534, 273);
+            this.tabBooks.Size = new System.Drawing.Size(561, 273);
             this.tabBooks.TabIndex = 0;
             this.tabBooks.Text = "Books";
             this.tabBooks.UseVisualStyleBackColor = true;
@@ -243,7 +226,7 @@
             this.tabEquipment.Location = new System.Drawing.Point(4, 22);
             this.tabEquipment.Name = "tabEquipment";
             this.tabEquipment.Padding = new System.Windows.Forms.Padding(3);
-            this.tabEquipment.Size = new System.Drawing.Size(534, 273);
+            this.tabEquipment.Size = new System.Drawing.Size(561, 273);
             this.tabEquipment.TabIndex = 1;
             this.tabEquipment.Text = "Equipment";
             this.tabEquipment.UseVisualStyleBackColor = true;
@@ -252,72 +235,10 @@
             // 
             this.tabItems.Location = new System.Drawing.Point(4, 22);
             this.tabItems.Name = "tabItems";
-            this.tabItems.Size = new System.Drawing.Size(534, 273);
+            this.tabItems.Size = new System.Drawing.Size(561, 273);
             this.tabItems.TabIndex = 2;
             this.tabItems.Text = "Items";
             this.tabItems.UseVisualStyleBackColor = true;
-            // 
-            // tabScript
-            // 
-            this.tabScript.Controls.Add(this.tabControl2);
-            this.tabScript.Location = new System.Drawing.Point(4, 22);
-            this.tabScript.Name = "tabScript";
-            this.tabScript.Size = new System.Drawing.Size(534, 273);
-            this.tabScript.TabIndex = 3;
-            this.tabScript.Text = "Script";
-            this.tabScript.UseVisualStyleBackColor = true;
-            // 
-            // tabControl2
-            // 
-            this.tabControl2.Controls.Add(this.tabFunctions);
-            this.tabControl2.Controls.Add(this.tabVariables);
-            this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl2.Location = new System.Drawing.Point(0, 0);
-            this.tabControl2.Name = "tabControl2";
-            this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(534, 273);
-            this.tabControl2.TabIndex = 0;
-            // 
-            // tabFunctions
-            // 
-            this.tabFunctions.Controls.Add(this.groupBox8);
-            this.tabFunctions.Location = new System.Drawing.Point(4, 22);
-            this.tabFunctions.Name = "tabFunctions";
-            this.tabFunctions.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFunctions.Size = new System.Drawing.Size(526, 247);
-            this.tabFunctions.TabIndex = 0;
-            this.tabFunctions.Text = "Functions";
-            this.tabFunctions.UseVisualStyleBackColor = true;
-            // 
-            // groupBox8
-            // 
-            this.groupBox8.Controls.Add(this.txtScript);
-            this.groupBox8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox8.Location = new System.Drawing.Point(3, 3);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(520, 241);
-            this.groupBox8.TabIndex = 2;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Room Script";
-            // 
-            // txtScript
-            // 
-            this.txtScript.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtScript.Location = new System.Drawing.Point(3, 16);
-            this.txtScript.Name = "txtScript";
-            this.txtScript.Size = new System.Drawing.Size(514, 222);
-            this.txtScript.TabIndex = 0;
-            this.txtScript.Text = "";
-            // 
-            // tabVariables
-            // 
-            this.tabVariables.Location = new System.Drawing.Point(4, 22);
-            this.tabVariables.Name = "tabVariables";
-            this.tabVariables.Padding = new System.Windows.Forms.Padding(3);
-            this.tabVariables.Size = new System.Drawing.Size(526, 247);
-            this.tabVariables.TabIndex = 1;
-            this.tabVariables.Text = "Variables";
-            this.tabVariables.UseVisualStyleBackColor = true;
             // 
             // groupBox5
             // 
@@ -326,7 +247,7 @@
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox5.Location = new System.Drawing.Point(0, 0);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(548, 240);
+            this.groupBox5.Size = new System.Drawing.Size(575, 240);
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Door Installation";
@@ -337,7 +258,7 @@
             this.groupBox7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox7.Location = new System.Drawing.Point(174, 16);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(371, 221);
+            this.groupBox7.Size = new System.Drawing.Size(398, 221);
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Install Options";
@@ -346,7 +267,7 @@
             // 
             this.groupBox10.Controls.Add(this.propertyDoor);
             this.groupBox10.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBox10.Location = new System.Drawing.Point(12, 16);
+            this.groupBox10.Location = new System.Drawing.Point(39, 16);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(356, 202);
             this.groupBox10.TabIndex = 7;
@@ -383,6 +304,27 @@
             this.lstDirections.TabIndex = 0;
             this.lstDirections.SelectedIndexChanged += new System.EventHandler(this.lstDirections_SelectedIndexChanged);
             // 
+            // tabScript
+            // 
+            this.tabScript.Controls.Add(this.txtScript);
+            this.tabScript.Location = new System.Drawing.Point(4, 22);
+            this.tabScript.Name = "tabScript";
+            this.tabScript.Padding = new System.Windows.Forms.Padding(3);
+            this.tabScript.Size = new System.Drawing.Size(561, 273);
+            this.tabScript.TabIndex = 3;
+            this.tabScript.Text = "Script";
+            this.tabScript.UseVisualStyleBackColor = true;
+            // 
+            // txtScript
+            // 
+            this.txtScript.AcceptsTab = true;
+            this.txtScript.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtScript.Location = new System.Drawing.Point(3, 3);
+            this.txtScript.Name = "txtScript";
+            this.txtScript.Size = new System.Drawing.Size(555, 267);
+            this.txtScript.TabIndex = 0;
+            this.txtScript.Text = "";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -407,15 +349,12 @@
             this.containerDesigner.Panel2.ResumeLayout(false);
             this.containerDesigner.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
-            this.tabScript.ResumeLayout(false);
-            this.tabControl2.ResumeLayout(false);
-            this.tabFunctions.ResumeLayout(false);
-            this.groupBox8.ResumeLayout(false);
+            this.tabObjects.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.groupBox10.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
+            this.tabScript.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -426,14 +365,10 @@
         private System.Windows.Forms.SplitContainer containerSidebar;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.PropertyGrid propertyRoom;
-        private System.Windows.Forms.Button btnCloseEditor;
-        private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button btnSaveRoom;
-        private System.Windows.Forms.Button btnNewRoom;
         private System.Windows.Forms.SplitContainer containerDesigner;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabObjects;
         private System.Windows.Forms.TabPage tabBooks;
         private System.Windows.Forms.TabPage tabEquipment;
         private System.Windows.Forms.TabPage tabItems;
@@ -443,12 +378,11 @@
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.GroupBox groupBox10;
         private System.Windows.Forms.PropertyGrid propertyDoor;
+        private System.Windows.Forms.Button btnCloseEditor;
+        private System.Windows.Forms.Button btnCheckScript;
+        private System.Windows.Forms.Button btnSaveRoom;
         private System.Windows.Forms.TabPage tabScript;
-        private System.Windows.Forms.TabControl tabControl2;
-        private System.Windows.Forms.TabPage tabFunctions;
-        private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.RichTextBox txtScript;
-        private System.Windows.Forms.TabPage tabVariables;
     }
 }
 

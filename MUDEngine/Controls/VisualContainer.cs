@@ -7,14 +7,13 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using MUDEngine.Objects;
 
-namespace VisualComponents
+namespace MUDEngine.Controls
 {
     [Designer("System.Windows.Forms.Design.ParentControlDesigner, System.Design", typeof(IDesigner))]
     public partial class VisualContainer : UserControl
     {
-        MUDEngine.Objects.BaseObject _Object;
-
         [Browsable(true)]
         public  string Title
         {
@@ -22,11 +21,25 @@ namespace VisualComponents
             set { btnTitle.Text = value; }
         }
 
-        public VisualContainer(MUDEngine.Objects.BaseObject EngineObject)
+        [Browsable(false)]
+        internal BaseObject GameObject
+        {
+            get;
+            set;
+        }
+
+        public VisualContainer(BaseObject EngineObject) : this()
+        {
+            //InitializeComponent();
+            this.Dock = DockStyle.Fill;
+            GameObject = EngineObject;
+        }
+
+        public VisualContainer() : base()
         {
             InitializeComponent();
-
-            _Object = EngineObject;
         }
+
+        protected MUDEngine.Objects.BaseObject _Object;
     }
 }

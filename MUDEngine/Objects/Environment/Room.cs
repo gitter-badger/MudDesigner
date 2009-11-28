@@ -59,6 +59,18 @@ namespace MUDEngine.Objects.Environment
         [Browsable(false)]
         public List<Door> InstalledDoors;
 
+        public new Controls.RoomControl Control
+        {
+            get
+            {
+                return this._Control;
+            }
+            internal set
+            {
+                this._Control = value;
+            }
+        }
+
         public Room()
         {
             InstalledDoors = new List<Door>();
@@ -68,6 +80,10 @@ namespace MUDEngine.Objects.Environment
             this.Smell = "You don't smell anything unsual.";
             this.StatDrainAmount = 0;
             Name = "New Room";
+            Control = new MUDEngine.Controls.RoomControl(this);
+            Control.Title = "Room Designer";
         }
+
+        private Controls.RoomControl _Control;
     }
 }

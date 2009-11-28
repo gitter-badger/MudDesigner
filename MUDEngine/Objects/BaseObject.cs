@@ -45,11 +45,26 @@ namespace MUDEngine.Objects
             }
         }
 
+        [Browsable(false)]
+        public Controls.VisualContainer Control
+        {
+            get
+            {
+                return this._Control;
+            }
+            internal set
+            {
+                this._Control = value;
+            }
+        }
+        private Controls.VisualContainer _Control;
+
         /// <summary>
         /// Initializes the base object
         /// </summary>
         public BaseObject()
         {
+            Control = new Controls.VisualContainer(this);
         }
     }
 }
