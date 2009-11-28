@@ -11,7 +11,19 @@ namespace MUDEngine.Objects
 {
     public class BaseObject
     {
-        public virtual void OnEnter(object sender, EventArgs e)
+        public virtual void OnEnter()
+        {
+        }
+
+        public virtual void OnExit()
+        {
+        }
+
+        public virtual void OnCreate()
+        {
+        }
+
+        public virtual void OnDestroy()
         {
         }
 

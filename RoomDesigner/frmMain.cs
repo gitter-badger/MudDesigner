@@ -343,5 +343,20 @@ namespace RoomDesigner
                 txtScript.Text = _CurrentRoom.Script;
             }
         }
+
+        private void btnCheckScript_Click(object sender, EventArgs e)
+        {
+            _ScriptEngine.Compiler = ManagedScripting.ScriptingEngine.CompilerSelections.SourceCompiler;
+            _ScriptEngine.AddReference(Application.StartupPath + "/MUDEngine.dll");
+            ManagedScripting.CodeBuilding.ClassGenerator newClass = new ManagedScripting.CodeBuilding.ClassGenerator();
+            string code = "namespace MUDEngine.Objects.Environment\n"
+                + "{\n"
+                + "  public class " + _CurrentRoom.Name.Replace(" ", "") + " : Room\n"
+                + "  {\n"
+                + "     " + txtScript.Text + "\n"
+                + "  }\n"
+                + "}\n";
+            MessageBox.Show(_ScriptEngine.Compile(code), "Script Compiling", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

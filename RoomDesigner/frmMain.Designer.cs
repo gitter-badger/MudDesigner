@@ -42,14 +42,14 @@
             this.tabBooks = new System.Windows.Forms.TabPage();
             this.tabEquipment = new System.Windows.Forms.TabPage();
             this.tabItems = new System.Windows.Forms.TabPage();
+            this.tabScript = new System.Windows.Forms.TabPage();
+            this.txtScript = new System.Windows.Forms.RichTextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.propertyDoor = new System.Windows.Forms.PropertyGrid();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.lstDirections = new System.Windows.Forms.ListBox();
-            this.tabScript = new System.Windows.Forms.TabPage();
-            this.txtScript = new System.Windows.Forms.RichTextBox();
             this.containerMain.Panel1.SuspendLayout();
             this.containerMain.Panel2.SuspendLayout();
             this.containerMain.SuspendLayout();
@@ -63,11 +63,11 @@
             this.containerDesigner.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.tabObjects.SuspendLayout();
+            this.tabScript.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.groupBox6.SuspendLayout();
-            this.tabScript.SuspendLayout();
             this.SuspendLayout();
             // 
             // containerMain
@@ -128,6 +128,7 @@
             this.btnCloseEditor.TabIndex = 10;
             this.btnCloseEditor.Text = "Close Editor";
             this.btnCloseEditor.UseVisualStyleBackColor = true;
+            this.btnCloseEditor.Click += new System.EventHandler(this.btnCloseEditor_Click);
             // 
             // btnCheckScript
             // 
@@ -138,6 +139,7 @@
             this.btnCheckScript.TabIndex = 9;
             this.btnCheckScript.Text = "Validate Script";
             this.btnCheckScript.UseVisualStyleBackColor = true;
+            this.btnCheckScript.Click += new System.EventHandler(this.btnCheckScript_Click);
             // 
             // btnSaveRoom
             // 
@@ -241,6 +243,27 @@
             this.tabItems.Text = "Items";
             this.tabItems.UseVisualStyleBackColor = true;
             // 
+            // tabScript
+            // 
+            this.tabScript.Controls.Add(this.txtScript);
+            this.tabScript.Location = new System.Drawing.Point(4, 22);
+            this.tabScript.Name = "tabScript";
+            this.tabScript.Padding = new System.Windows.Forms.Padding(3);
+            this.tabScript.Size = new System.Drawing.Size(561, 273);
+            this.tabScript.TabIndex = 3;
+            this.tabScript.Text = "Script";
+            this.tabScript.UseVisualStyleBackColor = true;
+            // 
+            // txtScript
+            // 
+            this.txtScript.AcceptsTab = true;
+            this.txtScript.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtScript.Location = new System.Drawing.Point(3, 3);
+            this.txtScript.Name = "txtScript";
+            this.txtScript.Size = new System.Drawing.Size(555, 267);
+            this.txtScript.TabIndex = 0;
+            this.txtScript.Text = "";
+            // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.groupBox7);
@@ -305,27 +328,6 @@
             this.lstDirections.TabIndex = 0;
             this.lstDirections.SelectedIndexChanged += new System.EventHandler(this.lstDirections_SelectedIndexChanged);
             // 
-            // tabScript
-            // 
-            this.tabScript.Controls.Add(this.txtScript);
-            this.tabScript.Location = new System.Drawing.Point(4, 22);
-            this.tabScript.Name = "tabScript";
-            this.tabScript.Padding = new System.Windows.Forms.Padding(3);
-            this.tabScript.Size = new System.Drawing.Size(561, 273);
-            this.tabScript.TabIndex = 3;
-            this.tabScript.Text = "Script";
-            this.tabScript.UseVisualStyleBackColor = true;
-            // 
-            // txtScript
-            // 
-            this.txtScript.AcceptsTab = true;
-            this.txtScript.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtScript.Location = new System.Drawing.Point(3, 3);
-            this.txtScript.Name = "txtScript";
-            this.txtScript.Size = new System.Drawing.Size(555, 267);
-            this.txtScript.TabIndex = 0;
-            this.txtScript.Text = "";
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -351,11 +353,11 @@
             this.containerDesigner.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.tabObjects.ResumeLayout(false);
+            this.tabScript.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.groupBox10.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
-            this.tabScript.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
