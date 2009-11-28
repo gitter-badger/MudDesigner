@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using ManagedScripting;
 using MUDEngine.Objects.Environment;
 using MUDEngine;
 
@@ -16,6 +17,7 @@ namespace RealmExplorer
         Zone _Zone;
         Realm _Realm;
         List<Zone> _AvailableZones;
+        ScriptingEngine _ScriptEngine;
 
         public frmMain()
         {
@@ -23,6 +25,9 @@ namespace RealmExplorer
             _Zone = new Zone();
             _Realm = new Realm();
             _AvailableZones = new List<Zone>();
+            _ScriptEngine = new ScriptingEngine();
+            _ScriptEngine.CompileStyle = ManagedScripting.Compilers.BaseCompiler.ScriptCompileStyle.CompileToMemory;
+            _ScriptEngine.KeepTempFiles = false;
 
             BuildZoneLists();
 
@@ -132,7 +137,7 @@ namespace RealmExplorer
 
             string path = Engine.GetDataPath(Engine.SaveDataTypes.Realms);
             string filename = System.IO.Path.Combine(path, lstRealms.SelectedItem.ToString() + ".realm");
-            _Realm = (Realm)ManagedScripting.XmlSerialization.Load(filename, _Realm);
+            _Realm = (Realm)MUDEngine.FileSystem.FileSystem.Load(filename, _Realm);
 
             propertyRealm.SelectedObject = _Realm;
         }
@@ -168,6 +173,42 @@ namespace RealmExplorer
             {
                 txtScript.Text = _Realm.Script;
             }
+        }
+
+        private void btnValidateScript_Click(object sender, EventArgs e)
+        {
+            _ScriptEngine.Compiler = ManagedScripting.ScriptingEngine.CompilerSelections.SourceCompiler;
+            _ScriptEngine.AddReference(Application.StartupPath + "/MUDEngine.dll");
+            string code = "namespace MUDEngine.Objects.Environment\n"
+                + "{\n"
+                + "  public class " + _Realm.Name.Replace(" ", "") + " : Realm\n"
+                + "  {\n"
+                + "     " + txtScript.Text + "\n"
+                + "  }\n"
+                + "}\n";
+            MessageBox.Show(_ScriptEngine.Compile(code), "Script Compiling", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnBuildZone_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
+
+            info.Arguments = "\"Run=Zone Builder.exe\"";
+            info.Domain = "Zone Builder";
+#if DEBUG
+            info.FileName = @"E:\Codeplex\MudDesigner\MudDesigner\bin\Debug\Mud Designer.exe";
+#else
+            info.FileName = "Mud Designer.exe";
+#endif
+            info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
+
+            process.StartInfo = info;
+            process.Start();
+            this.Hide();
+            process.WaitForExit();
+            this.Show();
+            process = null;
         }
     }
 }

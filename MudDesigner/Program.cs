@@ -19,8 +19,26 @@ namespace MudDesigner
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            MudHUB = new frmMain();
-            Application.Run(MudHUB);
+            bool bExit = false;
+
+            foreach (string arg in Environment.GetCommandLineArgs())
+            {
+                if (arg.ToLower().StartsWith("run="))
+                {
+                    string app = arg.Substring("Run=".Length);
+                    if (!app.EndsWith(".exe"))
+                        app += ".exe";
+
+                    ExecuteApp(app);
+                    bExit = true;
+                }
+            }
+
+            if (!bExit)
+            {
+                MudHUB = new frmMain();
+                Application.Run(MudHUB);
+            }
         }
 
         internal static void ExecuteApp(string appName)
@@ -83,7 +101,9 @@ namespace MudDesigner
             try
             {
                 process.Start();
-                MudHUB.Hide();
+                if (MudHUB != null)
+                    MudHUB.Hide();
+
                 process.WaitForExit();
             }
             catch (Exception ex)
@@ -93,7 +113,10 @@ namespace MudDesigner
             finally
             {
                 process = null;
-                MudHUB.Show();
+                //It will be null if the HUB was launched from another editor using it's arguments
+                //to launch another editor.
+                if (MudHUB != null)
+                    MudHUB.Show();
             }
         }
     }

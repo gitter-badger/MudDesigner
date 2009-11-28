@@ -80,6 +80,8 @@ namespace MUDEngine.Objects
         public BaseObject()
         {
             Control = new Controls.VisualContainer(this);
+            Script = "";
+            this.Name = "New " + this.GetType().Name;
         }
     }
 }

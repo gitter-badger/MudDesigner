@@ -33,8 +33,9 @@
             this.lstRealms = new System.Windows.Forms.ListBox();
             this.propertyRealm = new System.Windows.Forms.PropertyGrid();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnRemoveZone = new System.Windows.Forms.Button();
+            this.btnPlaceZone = new System.Windows.Forms.Button();
+            this.btnBuildZone = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lstZonesInRealm = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -42,6 +43,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabOptions = new System.Windows.Forms.TabPage();
+            this.btnValidateScript = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnSaveRealm = new System.Windows.Forms.Button();
             this.btnDeleteRealm = new System.Windows.Forms.Button();
@@ -123,34 +125,46 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.button2);
-            this.groupBox4.Controls.Add(this.button1);
-            this.groupBox4.Location = new System.Drawing.Point(2, 278);
+            this.groupBox4.Controls.Add(this.btnRemoveZone);
+            this.groupBox4.Controls.Add(this.btnPlaceZone);
+            this.groupBox4.Controls.Add(this.btnBuildZone);
+            this.groupBox4.Location = new System.Drawing.Point(2, 256);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(260, 66);
+            this.groupBox4.Size = new System.Drawing.Size(260, 88);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Realm Zone Setup";
             // 
-            // button2
+            // btnRemoveZone
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button2.Location = new System.Drawing.Point(3, 39);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(254, 23);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Remove Zone From Realm";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnRemoveZone.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnRemoveZone.Location = new System.Drawing.Point(3, 62);
+            this.btnRemoveZone.Name = "btnRemoveZone";
+            this.btnRemoveZone.Size = new System.Drawing.Size(254, 23);
+            this.btnRemoveZone.TabIndex = 3;
+            this.btnRemoveZone.Text = "Remove Zone From Realm";
+            this.btnRemoveZone.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnPlaceZone
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button1.Location = new System.Drawing.Point(3, 16);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(254, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Insert Zone Into Realm";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnPlaceZone.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnPlaceZone.Location = new System.Drawing.Point(3, 39);
+            this.btnPlaceZone.Name = "btnPlaceZone";
+            this.btnPlaceZone.Size = new System.Drawing.Size(254, 23);
+            this.btnPlaceZone.TabIndex = 2;
+            this.btnPlaceZone.Text = "Place Zone In Realm";
+            this.btnPlaceZone.UseVisualStyleBackColor = true;
+            // 
+            // btnBuildZone
+            // 
+            this.btnBuildZone.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnBuildZone.Location = new System.Drawing.Point(3, 16);
+            this.btnBuildZone.Name = "btnBuildZone";
+            this.btnBuildZone.Size = new System.Drawing.Size(254, 23);
+            this.btnBuildZone.TabIndex = 1;
+            this.btnBuildZone.Text = "Build A Zone";
+            this.btnBuildZone.UseVisualStyleBackColor = true;
+            this.btnBuildZone.Click += new System.EventHandler(this.btnBuildZone_Click);
             // 
             // groupBox3
             // 
@@ -176,7 +190,7 @@
             this.groupBox2.Controls.Add(this.lstAvailableZones);
             this.groupBox2.Location = new System.Drawing.Point(2, 148);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(260, 124);
+            this.groupBox2.Size = new System.Drawing.Size(260, 102);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Available Zones";
@@ -187,7 +201,7 @@
             this.lstAvailableZones.FormattingEnabled = true;
             this.lstAvailableZones.Location = new System.Drawing.Point(3, 16);
             this.lstAvailableZones.Name = "lstAvailableZones";
-            this.lstAvailableZones.Size = new System.Drawing.Size(254, 95);
+            this.lstAvailableZones.Size = new System.Drawing.Size(254, 82);
             this.lstAvailableZones.TabIndex = 1;
             // 
             // groupBox1
@@ -214,6 +228,7 @@
             // 
             // tabOptions
             // 
+            this.tabOptions.Controls.Add(this.btnValidateScript);
             this.tabOptions.Controls.Add(this.btnClose);
             this.tabOptions.Controls.Add(this.btnSaveRealm);
             this.tabOptions.Controls.Add(this.btnDeleteRealm);
@@ -226,9 +241,20 @@
             this.tabOptions.Text = "Explorer Options";
             this.tabOptions.UseVisualStyleBackColor = true;
             // 
+            // btnValidateScript
+            // 
+            this.btnValidateScript.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnValidateScript.Location = new System.Drawing.Point(3, 71);
+            this.btnValidateScript.Name = "btnValidateScript";
+            this.btnValidateScript.Size = new System.Drawing.Size(245, 23);
+            this.btnValidateScript.TabIndex = 8;
+            this.btnValidateScript.Text = "Validate Script";
+            this.btnValidateScript.UseVisualStyleBackColor = true;
+            this.btnValidateScript.Click += new System.EventHandler(this.btnValidateScript_Click);
+            // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(139, 50);
+            this.btnClose.Location = new System.Drawing.Point(139, 35);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(109, 23);
             this.btnClose.TabIndex = 7;
@@ -238,7 +264,7 @@
             // 
             // btnSaveRealm
             // 
-            this.btnSaveRealm.Location = new System.Drawing.Point(139, 21);
+            this.btnSaveRealm.Location = new System.Drawing.Point(139, 6);
             this.btnSaveRealm.Name = "btnSaveRealm";
             this.btnSaveRealm.Size = new System.Drawing.Size(109, 23);
             this.btnSaveRealm.TabIndex = 6;
@@ -248,7 +274,7 @@
             // 
             // btnDeleteRealm
             // 
-            this.btnDeleteRealm.Location = new System.Drawing.Point(3, 50);
+            this.btnDeleteRealm.Location = new System.Drawing.Point(3, 35);
             this.btnDeleteRealm.Name = "btnDeleteRealm";
             this.btnDeleteRealm.Size = new System.Drawing.Size(114, 23);
             this.btnDeleteRealm.TabIndex = 5;
@@ -258,7 +284,7 @@
             // 
             // btnNewRealm
             // 
-            this.btnNewRealm.Location = new System.Drawing.Point(3, 21);
+            this.btnNewRealm.Location = new System.Drawing.Point(3, 6);
             this.btnNewRealm.Name = "btnNewRealm";
             this.btnNewRealm.Size = new System.Drawing.Size(114, 23);
             this.btnNewRealm.TabIndex = 4;
@@ -324,8 +350,8 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.ListBox lstZonesInRealm;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnPlaceZone;
+        private System.Windows.Forms.Button btnBuildZone;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabOptions;
         private System.Windows.Forms.Button btnClose;
@@ -334,6 +360,8 @@
         private System.Windows.Forms.Button btnNewRealm;
         private System.Windows.Forms.TabPage tabScript;
         private System.Windows.Forms.RichTextBox txtScript;
+        private System.Windows.Forms.Button btnValidateScript;
+        private System.Windows.Forms.Button btnRemoveZone;
 
 
     }

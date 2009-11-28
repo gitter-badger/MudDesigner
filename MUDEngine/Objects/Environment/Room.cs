@@ -77,14 +77,10 @@ namespace MUDEngine.Objects.Environment
         public Room()
         {
             InstalledDoors = new List<Door>();
-            Script = "";
             this.Feel = "You feel nothing.";
             this.Listen = "You hear nothing of interest.";
             this.Smell = "You don't smell anything unsual.";
             this.StatDrainAmount = 0;
-            Name = "New Room";
-            Control = new MUDEngine.Controls.RoomControl(this);
-            Control.Title = "Room Designer";
         }
 
         private Controls.RoomControl _Control;

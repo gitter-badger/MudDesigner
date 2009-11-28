@@ -332,8 +332,8 @@ namespace RoomDesigner
                 if (result == DialogResult.No)
                     return;
             }
-            
-            ManagedScripting.XmlSerialization.Save(filePath, _CurrentRoom);
+
+            MUDEngine.FileSystem.FileSystem.Save(filePath, _CurrentRoom);
             MessageBox.Show("Saved.", "Room Designer");
         }
 

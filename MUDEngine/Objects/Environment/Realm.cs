@@ -12,9 +12,7 @@ namespace MUDEngine.Objects.Environment
 
         public Realm()
         {
-            this.Name = "New Realm";
             Zones = new List<Zone>();
-            Script = "";
         }
     }
 }
