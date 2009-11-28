@@ -35,7 +35,8 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnProjectManager = new System.Windows.Forms.Button();
             this.btnCurrencyEditor = new System.Windows.Forms.Button();
-            this.btnRoomDesigner = new System.Windows.Forms.Button();
+            this.btnRealmExplorer = new System.Windows.Forms.Button();
+            this.btnZoneBuilder = new System.Windows.Forms.Button();
             this.tabFunctions = new System.Windows.Forms.TabPage();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
@@ -48,6 +49,7 @@
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.txtScript = new System.Windows.Forms.RichTextBox();
             this.tabVariables = new System.Windows.Forms.TabPage();
+            this.btnRoomDesigner = new System.Windows.Forms.Button();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -77,7 +79,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabEditors);
-            this.splitContainer1.Size = new System.Drawing.Size(615, 383);
+            this.splitContainer1.Size = new System.Drawing.Size(639, 383);
             this.splitContainer1.SplitterDistance = 154;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -94,7 +96,7 @@
             this.btnLogo.ForeColor = System.Drawing.Color.Gray;
             this.btnLogo.Location = new System.Drawing.Point(0, 0);
             this.btnLogo.Name = "btnLogo";
-            this.btnLogo.Size = new System.Drawing.Size(615, 154);
+            this.btnLogo.Size = new System.Drawing.Size(639, 154);
             this.btnLogo.TabIndex = 0;
             this.btnLogo.Text = "MUD Designer HUB \r\nBeta 1.0\r\n";
             this.btnLogo.UseVisualStyleBackColor = false;
@@ -106,7 +108,7 @@
             this.tabEditors.Location = new System.Drawing.Point(0, 0);
             this.tabEditors.Name = "tabEditors";
             this.tabEditors.SelectedIndex = 0;
-            this.tabEditors.Size = new System.Drawing.Size(615, 225);
+            this.tabEditors.Size = new System.Drawing.Size(639, 225);
             this.tabEditors.TabIndex = 0;
             // 
             // tabPage1
@@ -115,7 +117,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(607, 199);
+            this.tabPage1.Size = new System.Drawing.Size(631, 199);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Available Editors";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -124,11 +126,13 @@
             // 
             this.flowLayoutPanel1.Controls.Add(this.btnProjectManager);
             this.flowLayoutPanel1.Controls.Add(this.btnCurrencyEditor);
+            this.flowLayoutPanel1.Controls.Add(this.btnRealmExplorer);
+            this.flowLayoutPanel1.Controls.Add(this.btnZoneBuilder);
             this.flowLayoutPanel1.Controls.Add(this.btnRoomDesigner);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(601, 193);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(625, 193);
             this.flowLayoutPanel1.TabIndex = 1;
             // 
             // btnProjectManager
@@ -155,17 +159,29 @@
             this.btnCurrencyEditor.UseVisualStyleBackColor = true;
             this.btnCurrencyEditor.Click += new System.EventHandler(this.btnCurrencyEditor_Click);
             // 
-            // btnRoomDesigner
+            // btnRealmExplorer
             // 
-            this.btnRoomDesigner.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRoomDesigner.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRoomDesigner.Location = new System.Drawing.Point(309, 3);
-            this.btnRoomDesigner.Name = "btnRoomDesigner";
-            this.btnRoomDesigner.Size = new System.Drawing.Size(147, 55);
-            this.btnRoomDesigner.TabIndex = 2;
-            this.btnRoomDesigner.Text = "Room Designer";
-            this.btnRoomDesigner.UseVisualStyleBackColor = true;
-            this.btnRoomDesigner.Click += new System.EventHandler(this.btnRoomDesigner_Click);
+            this.btnRealmExplorer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRealmExplorer.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRealmExplorer.Location = new System.Drawing.Point(309, 3);
+            this.btnRealmExplorer.Name = "btnRealmExplorer";
+            this.btnRealmExplorer.Size = new System.Drawing.Size(147, 55);
+            this.btnRealmExplorer.TabIndex = 3;
+            this.btnRealmExplorer.Text = "Realm Explorer";
+            this.btnRealmExplorer.UseVisualStyleBackColor = true;
+            this.btnRealmExplorer.Click += new System.EventHandler(this.btnRealmExplorer_Click);
+            // 
+            // btnZoneBuilder
+            // 
+            this.btnZoneBuilder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnZoneBuilder.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnZoneBuilder.Location = new System.Drawing.Point(462, 3);
+            this.btnZoneBuilder.Name = "btnZoneBuilder";
+            this.btnZoneBuilder.Size = new System.Drawing.Size(147, 55);
+            this.btnZoneBuilder.TabIndex = 4;
+            this.btnZoneBuilder.Text = "Zone Builder";
+            this.btnZoneBuilder.UseVisualStyleBackColor = true;
+            this.btnZoneBuilder.Click += new System.EventHandler(this.btnZoneBuilder_Click);
             // 
             // tabFunctions
             // 
@@ -300,11 +316,23 @@
             this.tabVariables.Text = "Variables";
             this.tabVariables.UseVisualStyleBackColor = true;
             // 
+            // btnRoomDesigner
+            // 
+            this.btnRoomDesigner.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRoomDesigner.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRoomDesigner.Location = new System.Drawing.Point(3, 64);
+            this.btnRoomDesigner.Name = "btnRoomDesigner";
+            this.btnRoomDesigner.Size = new System.Drawing.Size(147, 55);
+            this.btnRoomDesigner.TabIndex = 5;
+            this.btnRoomDesigner.Text = "Room Designer";
+            this.btnRoomDesigner.UseVisualStyleBackColor = true;
+            this.btnRoomDesigner.Click += new System.EventHandler(this.btnRoomDesigner_Click_1);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(615, 383);
+            this.ClientSize = new System.Drawing.Size(639, 383);
             this.Controls.Add(this.splitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -338,7 +366,6 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button btnProjectManager;
         private System.Windows.Forms.Button btnCurrencyEditor;
-        private System.Windows.Forms.Button btnRoomDesigner;
         private System.Windows.Forms.TabPage tabFunctions;
         private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.GroupBox groupBox14;
@@ -351,6 +378,9 @@
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.RichTextBox txtScript;
         private System.Windows.Forms.TabPage tabVariables;
+        private System.Windows.Forms.Button btnRealmExplorer;
+        private System.Windows.Forms.Button btnZoneBuilder;
+        private System.Windows.Forms.Button btnRoomDesigner;
     }
 }
 

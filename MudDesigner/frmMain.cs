@@ -36,5 +36,20 @@ namespace MudDesigner
         {
             Program.ExecuteApp("Room Designer.exe");
         }
+
+        private void btnRealmExplorer_Click(object sender, EventArgs e)
+        {
+            Program.ExecuteApp("Realm Explorer.exe");
+        }
+
+        private void btnZoneBuilder_Click(object sender, EventArgs e)
+        {
+            Program.ExecuteApp("Zone Builder.exe");
+        }
+
+        private void btnRoomDesigner_Click_1(object sender, EventArgs e)
+        {
+            Program.ExecuteApp("Room Designer.exe");
+        }
     }
 }
