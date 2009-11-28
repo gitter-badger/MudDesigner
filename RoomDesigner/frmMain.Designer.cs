@@ -148,6 +148,7 @@
             this.btnSaveRoom.TabIndex = 6;
             this.btnSaveRoom.Text = "Save Room";
             this.btnSaveRoom.UseVisualStyleBackColor = true;
+            this.btnSaveRoom.Click += new System.EventHandler(this.btnSaveRoom_Click);
             // 
             // groupBox2
             // 

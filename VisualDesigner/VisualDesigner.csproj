@@ -88,10 +88,6 @@
       <Project>{33828B3B-F227-4726-8FCD-3D9D780E643D}</Project>
       <Name>MUDEngine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VisualComponents\VisualComponents.csproj">
-      <Project>{18B191BD-5926-4544-AB3C-A1F38B32F8E8}</Project>
-      <Name>VisualComponents</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
