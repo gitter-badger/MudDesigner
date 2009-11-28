@@ -39,9 +39,6 @@
             this.containerDesigner = new System.Windows.Forms.SplitContainer();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tabObjects = new System.Windows.Forms.TabControl();
-            this.tabBooks = new System.Windows.Forms.TabPage();
-            this.tabEquipment = new System.Windows.Forms.TabPage();
-            this.tabItems = new System.Windows.Forms.TabPage();
             this.tabScript = new System.Windows.Forms.TabPage();
             this.txtScript = new System.Windows.Forms.RichTextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -203,9 +200,6 @@
             // 
             // tabObjects
             // 
-            this.tabObjects.Controls.Add(this.tabBooks);
-            this.tabObjects.Controls.Add(this.tabEquipment);
-            this.tabObjects.Controls.Add(this.tabItems);
             this.tabObjects.Controls.Add(this.tabScript);
             this.tabObjects.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabObjects.Location = new System.Drawing.Point(3, 16);
@@ -214,35 +208,6 @@
             this.tabObjects.Size = new System.Drawing.Size(569, 299);
             this.tabObjects.TabIndex = 0;
             this.tabObjects.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
-            // 
-            // tabBooks
-            // 
-            this.tabBooks.Location = new System.Drawing.Point(4, 22);
-            this.tabBooks.Name = "tabBooks";
-            this.tabBooks.Padding = new System.Windows.Forms.Padding(3);
-            this.tabBooks.Size = new System.Drawing.Size(561, 273);
-            this.tabBooks.TabIndex = 0;
-            this.tabBooks.Text = "Books";
-            this.tabBooks.UseVisualStyleBackColor = true;
-            // 
-            // tabEquipment
-            // 
-            this.tabEquipment.Location = new System.Drawing.Point(4, 22);
-            this.tabEquipment.Name = "tabEquipment";
-            this.tabEquipment.Padding = new System.Windows.Forms.Padding(3);
-            this.tabEquipment.Size = new System.Drawing.Size(561, 273);
-            this.tabEquipment.TabIndex = 1;
-            this.tabEquipment.Text = "Equipment";
-            this.tabEquipment.UseVisualStyleBackColor = true;
-            // 
-            // tabItems
-            // 
-            this.tabItems.Location = new System.Drawing.Point(4, 22);
-            this.tabItems.Name = "tabItems";
-            this.tabItems.Size = new System.Drawing.Size(561, 273);
-            this.tabItems.TabIndex = 2;
-            this.tabItems.Text = "Items";
-            this.tabItems.UseVisualStyleBackColor = true;
             // 
             // tabScript
             // 
@@ -374,9 +339,6 @@
         private System.Windows.Forms.SplitContainer containerDesigner;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TabControl tabObjects;
-        private System.Windows.Forms.TabPage tabBooks;
-        private System.Windows.Forms.TabPage tabEquipment;
-        private System.Windows.Forms.TabPage tabItems;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.ListBox lstDirections;

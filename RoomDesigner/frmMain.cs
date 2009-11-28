@@ -314,6 +314,7 @@ namespace RoomDesigner
 
             _CurrentRoom = new Room();
             _CurrentDoor = new Door(AvailableTravelDirections.None);
+            SetupRoomScript();
             
             propertyDoor.SelectedObject = null;
             propertyRoom.SelectedObject = _CurrentRoom;
