@@ -43,6 +43,8 @@ namespace MUDEngine
             foreach (SaveDataTypes value in Enum.GetValues(typeof(SaveDataTypes)))
             {
                 string dataType = value.ToString();
+                if (value.ToString() == "Root")
+                    continue;
 
                 if (!System.IO.Directory.Exists(System.IO.Path.Combine(InstallPath, dataType)))
                     System.IO.Directory.CreateDirectory(System.IO.Path.Combine(InstallPath, dataType));

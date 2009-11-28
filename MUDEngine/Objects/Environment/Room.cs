@@ -9,7 +9,7 @@ namespace MUDEngine.Objects.Environment
 {
     public class Room : BaseObject
     {
-        [Category("Room Information")]
+        [Category("Room Senses")]
         [DefaultValue("You don't smell anything unsual.")]
         public string Smell
         {
@@ -17,7 +17,7 @@ namespace MUDEngine.Objects.Environment
             set;
         }
 
-        [Category("Room Information")]
+        [Category("Room Senses")]
         [DefaultValue("You hear nothing of interest.")]
         public string Listen
         {
@@ -25,7 +25,7 @@ namespace MUDEngine.Objects.Environment
             set;
         }
 
-        [Category("Room Information")]
+        [Category("Room Senses")]
         [DefaultValue("You feel nothing.")]
         public string Feel
         {
@@ -61,6 +61,7 @@ namespace MUDEngine.Objects.Environment
         public List<Door> InstalledDoors;
 
         [XmlIgnore()]
+        [Browsable(false)]
         public new Controls.RoomControl Control
         {
             get

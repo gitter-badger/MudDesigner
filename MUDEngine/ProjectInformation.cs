@@ -24,13 +24,13 @@ namespace MUDEngine
             Transition,
         }
 
-        [Category("Company Information")]
+        [Category("Company Settings")]
         /// <summary>
         /// Gets or Sets the name of the company
         /// </summary>
         public string CompanyName { get; set; }
 
-        [Category("Company Information")]
+        [Category("Company Settings")]
         /// <summary>
         /// Gets or Sets the companies website for this project
         /// </summary>
@@ -52,14 +52,14 @@ namespace MUDEngine
         /// </summary>
         public bool HideRoomNames { get; set; }
 
-        [Category("Project Settings")]
+        [Category("Day Management")]
         public TimeOfDayOptions TimeOfDay
         {
             get;
             set;
         }
 
-        [Category("Project Settings")]
+        [Category("Day Management")]
         [Description("Set how long in minutes it takes to transition from day to night.")]
         public int TimeOfDayTransition
         {
@@ -67,7 +67,7 @@ namespace MUDEngine
             set;
         }
 
-        [Category("Project Settings")]
+        [Category("Day Management")]
         [Description("Sets how long in minutes a day lasts in the game world.")]
         public int DayLength
         {
@@ -75,15 +75,15 @@ namespace MUDEngine
             set;
         }
 
-        [Category("Project Information")]
+        [Category("Project Settings")]
         public string Version { get; set; }
 
-        [Category("Project Information")]
+        [Category("Game Currency")]
         [Description("Sets the amount that the base currency is valued at.")]
         public uint BaseCurrencyAmount { get; set; }
 
 
-        [Category("Project Information")]
+        [Category("Game Currency")]
         public string BaseCurrencyName { get; set; }
 
 

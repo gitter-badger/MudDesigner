@@ -170,6 +170,7 @@
             this.propertyRoom.Name = "propertyRoom";
             this.propertyRoom.Size = new System.Drawing.Size(203, 451);
             this.propertyRoom.TabIndex = 3;
+            this.propertyRoom.ToolbarVisible = false;
             // 
             // containerDesigner
             // 
@@ -305,6 +306,7 @@
             this.propertyDoor.Name = "propertyDoor";
             this.propertyDoor.Size = new System.Drawing.Size(350, 183);
             this.propertyDoor.TabIndex = 4;
+            this.propertyDoor.ToolbarVisible = false;
             this.propertyDoor.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyDoor_PropertyValueChanged);
             // 
             // groupBox6

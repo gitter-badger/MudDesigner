@@ -13,6 +13,9 @@ namespace RealmExplorer
         [STAThread]
         static void Main()
         {
+            MUDEngine.Engine.ValidateDataPaths();
+            MUDEngine.FileSystem.FileSystem.FileType = MUDEngine.FileSystem.FileSystem.OutputFormats.XML;
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain());
