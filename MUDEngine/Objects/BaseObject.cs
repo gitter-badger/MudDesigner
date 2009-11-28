@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.Windows.Forms;
+using System.Xml.Serialization;
+using MUDEngine.Controls;
 
 namespace MUDEngine.Objects
 {
@@ -46,6 +48,7 @@ namespace MUDEngine.Objects
         }
 
         [Browsable(false)]
+        [XmlIgnore()]
         public Controls.VisualContainer Control
         {
             get

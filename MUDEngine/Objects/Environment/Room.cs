@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace MUDEngine.Objects.Environment
 {
@@ -59,6 +60,7 @@ namespace MUDEngine.Objects.Environment
         [Browsable(false)]
         public List<Door> InstalledDoors;
 
+        [XmlIgnore()]
         public new Controls.RoomControl Control
         {
             get

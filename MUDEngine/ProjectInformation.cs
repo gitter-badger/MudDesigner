@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
-using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Xml;
 
@@ -15,6 +14,7 @@ using MUDEngine.FileSystem;
 namespace MUDEngine
 {
     [XmlInclude(typeof(StartingLocation))]
+    [XmlInclude(typeof(Currency))]
     public class ProjectInformation
     {
         public enum TimeOfDayOptions
@@ -107,6 +107,11 @@ namespace MUDEngine
         {
             get;
             set;
+        }
+
+        public ProjectInformation()
+        {
+            CurrencyList = new List<Currency>();
         }
     }
 }

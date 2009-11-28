@@ -23,6 +23,10 @@ namespace CurrencyEditor
             InitializeComponent();
             _Currency = new Currency();
             propertyGrid1.SelectedObject = _Currency;
+            foreach (string currency in System.IO.Directory.GetFiles(MUDEngine.Engine.GetDataPath(MUDEngine.Engine.SaveDataTypes.Currency), "*.xml"))
+            {
+                lstCurrencies.Items.Add(System.IO.Path.GetFileNameWithoutExtension(currency));
+            }
         }
 
         private void btnNewCurrency_Click(object sender, EventArgs e)
