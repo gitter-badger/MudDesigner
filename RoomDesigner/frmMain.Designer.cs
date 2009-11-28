@@ -229,6 +229,7 @@
             this.txtScript.Size = new System.Drawing.Size(555, 267);
             this.txtScript.TabIndex = 0;
             this.txtScript.Text = "";
+            this.txtScript.TextChanged += new System.EventHandler(this.txtScript_TextChanged);
             // 
             // groupBox5
             // 

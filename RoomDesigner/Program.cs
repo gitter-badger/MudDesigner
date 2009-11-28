@@ -43,7 +43,7 @@ namespace RoomDesigner
 
                         if (File.Exists(file))
                         {
-                            Application.Run(new frmMain(room));
+                            Application.Run(new frmMain(argument));
                         }
                         else
                         {

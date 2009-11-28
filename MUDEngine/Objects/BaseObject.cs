@@ -11,22 +11,6 @@ namespace MUDEngine.Objects
 {
     public class BaseObject
     {
-        public virtual void OnEnter()
-        {
-        }
-
-        public virtual void OnExit()
-        {
-        }
-
-        public virtual void OnCreate()
-        {
-        }
-
-        public virtual void OnDestroy()
-        {
-        }
-
         [Category("Object Setup")]
         [RefreshProperties(RefreshProperties.All)] //Required to refresh Filename property in the editors propertygrid
         public string Name
@@ -59,29 +43,70 @@ namespace MUDEngine.Objects
             }
         }
 
-        [Browsable(false)]
-        [XmlIgnore()]
-        public Controls.VisualContainer Control
-        {
-            get
-            {
-                return this._Control;
-            }
-            internal set
-            {
-                this._Control = value;
-            }
-        }
-        private Controls.VisualContainer _Control;
-
         /// <summary>
         /// Initializes the base object
         /// </summary>
         public BaseObject()
         {
-            Control = new Controls.VisualContainer(this);
             Script = "";
-            this.Name = "New " + this.GetType().Name;
+            this.Name = DefaultName();
+            SetupScript();
+        }
+
+        private bool ShouldSerializeName()
+        {
+            return this.Name != DefaultName();
+        }
+
+        private void ResetName()
+        {
+            this.Name = DefaultName();
+        }
+
+        private string DefaultName()
+        {
+            return "New " + this.GetType().Name;
+        }
+
+        private void SetupScript()
+        {
+            //Check if the realm script is empty. If so then generate a standard script for it.
+            if (Script == "")
+            {
+                //Instance a new method helper class
+                ManagedScripting.CodeBuilding.MethodSetup method = new ManagedScripting.CodeBuilding.MethodSetup();
+                string script = "";
+                //Setup our method. All objects inheriting from BaseObject will have the standard
+                //methods created for them.
+                string[] names = new string[] { "OnCreate", "OnDestroy", "OnEnter", "OnExit" };
+                foreach (string name in names)
+                {
+                    method = new ManagedScripting.CodeBuilding.MethodSetup();
+                    method.Name = name;
+                    method.ReturnType = "void";
+                    method.IsOverride = true;
+                    method.Modifier = ManagedScripting.CodeBuilding.ClassGenerator.Modifiers.Public;
+                    method.Code = new string[] { "base." + method.Name + "();" };
+                    script = script.Insert(Script.Length, method.Create() + "\n");
+                }
+                Script = script;
+            }
+        }
+
+        public virtual void OnEnter()
+        {
+        }
+
+        public virtual void OnExit()
+        {
+        }
+
+        public virtual void OnCreate()
+        {
+        }
+
+        public virtual void OnDestroy()
+        {
         }
     }
 }

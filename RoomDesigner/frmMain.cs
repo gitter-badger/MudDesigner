@@ -61,7 +61,7 @@ namespace RoomDesigner
 
             //Get the current rooms scripts.
             //TODO: Add Doorway script support
-            SetupRoomScript();
+            //SetupRoomScript();
 
             if (parameters.Length != 0)
             {
@@ -69,13 +69,14 @@ namespace RoomDesigner
                 {
                     if (argument.ToString().ToLower().StartsWith("room="))
                     {
-                        string rooms = Engine.GetDataPath(Engine.SaveDataTypes.Rooms);
-                        string filename = System.IO.Path.Combine(rooms, argument.ToString());
+                        string roomPath = Engine.GetDataPath(Engine.SaveDataTypes.Rooms);
+                        string room = argument.ToString().Substring("room=".Length);
+                        string filename = System.IO.Path.Combine(roomPath, room.ToString());
 
                         //Room to load should always be the first arg.
                         if (System.IO.File.Exists(filename))
                         {
-                            _CurrentRoom = (Room)ManagedScripting.XmlSerialization.Load(filename, _CurrentRoom);
+                            _CurrentRoom = (Room)MUDEngine.FileSystem.FileSystem.Load(filename, _CurrentRoom);
                         }
                     }
                 }
@@ -84,6 +85,7 @@ namespace RoomDesigner
 
             //Show the user(s) the rooms properties
             propertyRoom.SelectedObject = _CurrentRoom;
+            txtScript.Text = _CurrentRoom.Script;
         }
 
         private void SetupRoomScript()
@@ -358,6 +360,11 @@ namespace RoomDesigner
                 + "  }\n"
                 + "}\n";
             MessageBox.Show(_ScriptEngine.Compile(code), "Script Compiling", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void txtScript_TextChanged(object sender, EventArgs e)
+        {
+            _CurrentRoom.Script = txtScript.Text;
         }
     }
 }

@@ -26,32 +26,7 @@ namespace ZoneBuilder
             _CurrentRoom = new Room();
             _CurrentZone = new Zone();
 
-            SetupScript();
-        }
-
-        private void SetupScript()
-        {
-            //Check if the realm script is empty. If so then generate a standard script for it.
-            if (String.IsNullOrEmpty(_CurrentZone.Script))
-            {
-                //Instance a new method helper class
-                ManagedScripting.CodeBuilding.MethodSetup method = new ManagedScripting.CodeBuilding.MethodSetup();
-                string script = "";
-                //Setup our method. All objects inheriting from BaseObject will have the standard
-                //methods created for them.
-                string[] names = new string[] { "OnCreate", "OnDestroy", "OnEnter", "OnExit" };
-                foreach (string name in names)
-                {
-                    method = new ManagedScripting.CodeBuilding.MethodSetup();
-                    method.Name = name;
-                    method.ReturnType = "void";
-                    method.IsOverride = true;
-                    method.Modifier = ManagedScripting.CodeBuilding.ClassGenerator.Modifiers.Public;
-                    method.Code = new string[] { "base." + method.Name + "();" };
-                    script = script.Insert(_CurrentZone.Script.Length, method.Create() + "\n");
-                }
-                _CurrentZone.Script = script;
-            }
+            propertyZone.SelectedObject = _CurrentZone;
         }
 
         private void btnRoomEditor_Click(object sender, EventArgs e)

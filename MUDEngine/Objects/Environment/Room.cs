@@ -60,20 +60,6 @@ namespace MUDEngine.Objects.Environment
         [Browsable(false)]
         public List<Door> InstalledDoors;
 
-        [XmlIgnore()]
-        [Browsable(false)]
-        public new Controls.RoomControl Control
-        {
-            get
-            {
-                return this._Control;
-            }
-            internal set
-            {
-                this._Control = value;
-            }
-        }
-
         public Room()
         {
             InstalledDoors = new List<Door>();
