@@ -351,7 +351,7 @@ namespace RoomDesigner
         {
             _ScriptEngine.Compiler = ManagedScripting.ScriptingEngine.CompilerSelections.SourceCompiler;
             _ScriptEngine.AddReference(Application.StartupPath + "/MUDEngine.dll");
-            ManagedScripting.CodeBuilding.ClassGenerator newClass = new ManagedScripting.CodeBuilding.ClassGenerator();
+          
             string code = "namespace MUDEngine.Objects.Environment\n"
                 + "{\n"
                 + "  public class " + _CurrentRoom.Name.Replace(" ", "") + " : Room\n"

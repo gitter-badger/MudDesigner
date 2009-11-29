@@ -13,7 +13,7 @@ namespace ZoneBuilder
         [STAThread]
         static void Main()
         {
-            MUDEngine.Engine.ValidateDataPaths(Application.StartupPath);
+            MUDEngine.Engine.ValidateDataPaths();
             MUDEngine.FileSystem.FileSystem.FileType = MUDEngine.FileSystem.FileSystem.OutputFormats.XML;
 
             Application.EnableVisualStyles();

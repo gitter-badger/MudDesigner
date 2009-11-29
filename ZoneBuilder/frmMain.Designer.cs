@@ -29,21 +29,21 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.propertyZone = new System.Windows.Forms.PropertyGrid();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnValidateScript = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnSaveZone = new System.Windows.Forms.Button();
             this.btnDeleteZone = new System.Windows.Forms.Button();
             this.btnNewZone = new System.Windows.Forms.Button();
-            this.propertyZone = new System.Windows.Forms.PropertyGrid();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnRoomEditor = new System.Windows.Forms.Button();
-            this.lstRooms = new System.Windows.Forms.ListBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabZoneCreation = new System.Windows.Forms.TabPage();
             this.tabScript = new System.Windows.Forms.TabPage();
             this.txtScript = new System.Windows.Forms.RichTextBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lstRooms = new System.Windows.Forms.ListBox();
+            this.btnRoomEditor = new System.Windows.Forms.Button();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -51,9 +51,9 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabScript.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -73,6 +73,15 @@
             this.splitContainer1.Size = new System.Drawing.Size(794, 574);
             this.splitContainer1.SplitterDistance = 210;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // propertyZone
+            // 
+            this.propertyZone.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyZone.Location = new System.Drawing.Point(0, 99);
+            this.propertyZone.Name = "propertyZone";
+            this.propertyZone.Size = new System.Drawing.Size(210, 475);
+            this.propertyZone.TabIndex = 1;
+            this.propertyZone.ToolbarVisible = false;
             // 
             // groupBox1
             // 
@@ -98,6 +107,7 @@
             this.btnValidateScript.TabIndex = 13;
             this.btnValidateScript.Text = "Validate Script";
             this.btnValidateScript.UseVisualStyleBackColor = true;
+            this.btnValidateScript.Click += new System.EventHandler(this.btnValidateScript_Click);
             // 
             // btnClose
             // 
@@ -117,6 +127,7 @@
             this.btnSaveZone.TabIndex = 11;
             this.btnSaveZone.Text = "Save Zone";
             this.btnSaveZone.UseVisualStyleBackColor = true;
+            this.btnSaveZone.Click += new System.EventHandler(this.btnSaveZone_Click);
             // 
             // btnDeleteZone
             // 
@@ -135,15 +146,7 @@
             this.btnNewZone.TabIndex = 9;
             this.btnNewZone.Text = "New Zone";
             this.btnNewZone.UseVisualStyleBackColor = true;
-            // 
-            // propertyZone
-            // 
-            this.propertyZone.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyZone.Location = new System.Drawing.Point(0, 99);
-            this.propertyZone.Name = "propertyZone";
-            this.propertyZone.Size = new System.Drawing.Size(210, 475);
-            this.propertyZone.TabIndex = 1;
-            this.propertyZone.ToolbarVisible = false;
+            this.btnNewZone.Click += new System.EventHandler(this.btnNewZone_Click);
             // 
             // splitContainer2
             // 
@@ -161,38 +164,6 @@
             this.splitContainer2.Size = new System.Drawing.Size(580, 574);
             this.splitContainer2.SplitterDistance = 365;
             this.splitContainer2.TabIndex = 0;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.lstRooms);
-            this.groupBox2.Controls.Add(this.btnRoomEditor);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox2.Location = new System.Drawing.Point(0, 0);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(211, 168);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Available Rooms";
-            // 
-            // btnRoomEditor
-            // 
-            this.btnRoomEditor.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnRoomEditor.Location = new System.Drawing.Point(3, 142);
-            this.btnRoomEditor.Name = "btnRoomEditor";
-            this.btnRoomEditor.Size = new System.Drawing.Size(205, 23);
-            this.btnRoomEditor.TabIndex = 0;
-            this.btnRoomEditor.Text = "Build-A-Room";
-            this.btnRoomEditor.UseVisualStyleBackColor = true;
-            this.btnRoomEditor.Click += new System.EventHandler(this.btnRoomEditor_Click);
-            // 
-            // lstRooms
-            // 
-            this.lstRooms.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstRooms.FormattingEnabled = true;
-            this.lstRooms.Location = new System.Drawing.Point(3, 16);
-            this.lstRooms.Name = "lstRooms";
-            this.lstRooms.Size = new System.Drawing.Size(205, 121);
-            this.lstRooms.TabIndex = 1;
             // 
             // tabControl1
             // 
@@ -235,6 +206,38 @@
             this.txtScript.TabIndex = 0;
             this.txtScript.Text = "";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.lstRooms);
+            this.groupBox2.Controls.Add(this.btnRoomEditor);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox2.Location = new System.Drawing.Point(0, 0);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(211, 168);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Available Rooms";
+            // 
+            // lstRooms
+            // 
+            this.lstRooms.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstRooms.FormattingEnabled = true;
+            this.lstRooms.Location = new System.Drawing.Point(3, 16);
+            this.lstRooms.Name = "lstRooms";
+            this.lstRooms.Size = new System.Drawing.Size(205, 121);
+            this.lstRooms.TabIndex = 1;
+            // 
+            // btnRoomEditor
+            // 
+            this.btnRoomEditor.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnRoomEditor.Location = new System.Drawing.Point(3, 142);
+            this.btnRoomEditor.Name = "btnRoomEditor";
+            this.btnRoomEditor.Size = new System.Drawing.Size(205, 23);
+            this.btnRoomEditor.TabIndex = 0;
+            this.btnRoomEditor.Text = "Build-A-Room";
+            this.btnRoomEditor.UseVisualStyleBackColor = true;
+            this.btnRoomEditor.Click += new System.EventHandler(this.btnRoomEditor_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -254,9 +257,9 @@
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabScript.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

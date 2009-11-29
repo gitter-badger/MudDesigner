@@ -20,6 +20,9 @@ namespace MudDesigner
         {
             InitializeComponent();
             this.Text = "Mud Designer Beta " + version;
+
+            MessageBox.Show("Please note that the Zone Builder and Room Designers will be removed from this editor as a point of access here pretty soon.\n"
+                + "If you need to access one of these editors you will need to use the Realm Explorer.", "Mud Designer");
         }
         
         private void btnProjectManager_Click(object sender, EventArgs e)
