@@ -154,6 +154,7 @@
             this.btnPlaceZone.TabIndex = 2;
             this.btnPlaceZone.Text = "Place Zone In Realm";
             this.btnPlaceZone.UseVisualStyleBackColor = true;
+            this.btnPlaceZone.Click += new System.EventHandler(this.btnPlaceZone_Click);
             // 
             // btnBuildZone
             // 

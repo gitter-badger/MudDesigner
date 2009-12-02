@@ -7,6 +7,8 @@ namespace MUDEngine
 {
     public class Engine
     {
+        private const string _InstallLocation = @"C:\Codeplex\MudDesigner\Example\";
+
         public enum SaveDataTypes
         {
             Root,
@@ -23,11 +25,15 @@ namespace MUDEngine
         /// <param name="validatedPath"></param>
         public static void ValidateDataPaths()
         {
+#if DEBUG
+            ValidateDataPaths(_InstallLocation);
+#else
             string assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().ManifestModule.FullyQualifiedName;
             string assemblyName = System.IO.Path.GetFileName(assemblyPath);
             string installBase = assemblyPath.Substring(0, assemblyPath.Length - assemblyName.Length);
             string rootPath = System.IO.Path.Combine(installBase, "Data");
             ValidateDataPaths(rootPath);
+#endif
         }
 
         /// <summary>
@@ -37,6 +43,9 @@ namespace MUDEngine
         /// <param name="InstallPath"></param>
         public static void ValidateDataPaths(string InstallPath)
         {
+            if (!InstallPath.EndsWith("data", true, null))
+                InstallPath = System.IO.Path.Combine(InstallPath, "Data");
+
             if (!System.IO.Directory.Exists(InstallPath))
                 System.IO.Directory.CreateDirectory(InstallPath);
 
@@ -58,12 +67,23 @@ namespace MUDEngine
         /// <returns></returns>
         public static string GetDataPath(SaveDataTypes DataType)
         {
+#if DEBUG
+            string path = System.IO.Path.Combine(_InstallLocation, "Data");
+            if (DataType == SaveDataTypes.Root)
+                return _InstallLocation;
+            else
+                return System.IO.Path.Combine(path, DataType.ToString());
+#else
             string assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().ManifestModule.FullyQualifiedName;
             string assemblyName = System.IO.Path.GetFileName(assemblyPath);
             string installBase = assemblyPath.Substring(0, assemblyPath.Length - assemblyName.Length);
             string rootPath = System.IO.Path.Combine(installBase, "Data");
 
-            return System.IO.Path.Combine(rootPath, DataType.ToString());
+            if (DataType == SaveDataTypes.Root)
+                return installBase;
+            else
+                return System.IO.Path.Combine(rootPath, DataType.ToString());
+#endif
         }
     }
 }

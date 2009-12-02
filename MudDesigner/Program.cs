@@ -9,14 +9,13 @@ namespace MudDesigner
     {
         static frmMain MudHUB;
 
-        internal static string _InstallLocation = @"E:\Codeplex\MudDesigner";
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
+            MUDEngine.Engine.ValidateDataPaths();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             bool bExit = false;
@@ -46,53 +45,7 @@ namespace MudDesigner
             System.Diagnostics.Process process = new System.Diagnostics.Process();
             System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
 
-            //If running in debug mode we need to hard-code the paths as during normal running of the apps
-            //all of the apps are running within the Apps directory.
-#if DEBUG
-            string[] apps = new string[] { };
-            try
-            {
-                apps = System.IO.Directory.GetFiles(_InstallLocation, "*.exe", System.IO.SearchOption.AllDirectories);
-            }
-            catch
-            {
-                MessageBox.Show("Error: The directory '" + _InstallLocation + "' does not exist!\n\n"
-                    + "The engine has a #DEBUG constant defined in the project properties."
-                    + "\nIf you are wanting to run the Designer from within Visual Studio, please change the\n"
-                    + "MudDesigner.Program._InstallLocation Field to the current ROOT directory of your source code."
-                    + "\n\nIf you are running a Release build of the engine, with all of the editors contained within the"
-                    + " same directory, then edit the MudDesigner project properties to remove the #DEBUG constant."
-                    + "\n" + appName + " will not load.",
-                    "Mud Designer", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            List<string> legalApps = new List<string>();
-
-            foreach (string app in apps)
-            {
-                if ((!app.EndsWith(".vshost.exe"))
-                    && (!app.EndsWith(".vshost.exe.manifest"))
-                    && System.IO.Directory.GetParent(app).Name == "Debug"
-                    && System.IO.Directory.GetParent(app).Parent.Name == "bin")
-                {
-                    legalApps.Add(app);
-                }
-            }
-
-            string filename = "";
-            foreach (string app in legalApps)
-            {
-                if (System.IO.Path.GetFileName(app).ToLower() == appName.ToLower())
-                {
-                    filename = app;
-                    break;
-                }
-            }
-
-            info.FileName = filename;
-#else
-            info.FileName = appName;
-#endif
+            info.FileName = System.IO.Path.Combine(MUDEngine.Engine.GetDataPath(MUDEngine.Engine.SaveDataTypes.Root), appName);
 
             info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
             info.WorkingDirectory = Application.StartupPath;
@@ -108,7 +61,7 @@ namespace MudDesigner
             }
             catch (Exception ex)
             {
-                MessageBox.Show("ERROR:\n" + ex.Message, "Editor HUB", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("ERROR:\n" + ex.Message + "\nPlease change MUDEngine.Engine._InstallLocation to the Examples directory found inside of your downloaded source code folder.", "Editor HUB", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
