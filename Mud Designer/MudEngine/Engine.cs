@@ -7,7 +7,6 @@ namespace MudDesigner.MudEngine
 {
     public class Engine
     {
-        private const string _InstallLocation = @"C:\Codeplex\MudDesigner\Example\";
 
         public enum SaveDataTypes
         {
