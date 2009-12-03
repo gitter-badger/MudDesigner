@@ -30,6 +30,13 @@ namespace MudDesigner.Editors
             ProjectSettings form = new ProjectSettings();
 
             form.Show();
+            this.Hide();
+            while (form.Created)
+                Application.DoEvents();
+
+            form = null;
+
+            this.Show();
         }
 
         private void btnCurrencyEditor_Click(object sender, EventArgs e)
@@ -37,6 +44,13 @@ namespace MudDesigner.Editors
             CurrencyEditor form = new CurrencyEditor();
 
             form.Show();
+            this.Hide();
+            while (form.Created)
+                Application.DoEvents();
+
+            form = null;
+
+            this.Show();
         }
         
         private void btnRoomDesigner_Click(object sender, EventArgs e)
@@ -44,6 +58,13 @@ namespace MudDesigner.Editors
             RoomDesigner form = new RoomDesigner();
 
             form.Show();
+            this.Hide();
+            while (form.Created)
+                Application.DoEvents();
+
+            form = null;
+
+            this.Show();
         }
 
         private void btnRealmExplorer_Click(object sender, EventArgs e)
@@ -51,6 +72,13 @@ namespace MudDesigner.Editors
             RealmExplorer form = new RealmExplorer();
 
             form.Show();
+            this.Hide();
+            while (form.Created)
+                Application.DoEvents();
+
+            form = null;
+
+            this.Show();
         }
 
         private void btnZoneBuilder_Click(object sender, EventArgs e)
@@ -58,6 +86,13 @@ namespace MudDesigner.Editors
             ZoneBuilder form = new ZoneBuilder();
 
             form.Show();
+            this.Hide();
+            while (form.Created)
+                Application.DoEvents();
+
+            form = null;
+
+            this.Show();
         }
     }
 }

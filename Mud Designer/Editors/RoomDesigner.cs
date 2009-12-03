@@ -156,7 +156,7 @@ namespace MudDesigner.Editors
         /// <param name="e"></param>
         private void btnCloseEditor_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         /// <summary>

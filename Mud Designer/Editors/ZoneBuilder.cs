@@ -42,8 +42,10 @@ namespace MudDesigner.Editors
         private void btnRoomEditor_Click(object sender, EventArgs e)
         {
             DialogResult result;
-            string argument = "";
+            RoomDesigner form = new RoomDesigner();
+            Program.Room = new Room();
 
+            //Check if we have a room selected, if so we are going to ask if the user wants to edit it.
             if (lstRooms.SelectedItem != null)
             {
                 result = MessageBox.Show("You have a room selected, are you wanting to edit it?",
@@ -52,23 +54,28 @@ namespace MudDesigner.Editors
                 switch (result)
                 {
                     case DialogResult.Yes:
-                        argument += " \"room=" + lstRooms.SelectedItem.ToString() + ".room\"";
+                        form = new RoomDesigner(lstRooms.SelectedItem.ToString());
+                        string filename = System.IO.Path.Combine(FileManager.GetDataPath(SaveDataTypes.Rooms), lstRooms.SelectedItem.ToString());
+                        Program.Room = (Room)FileManager.Load(filename, Program.Room);
                         break;
                     case DialogResult.Cancel:
                         return;
                 }
             }
 
-            RoomDesigner form = new RoomDesigner();
-
             form.Show();
+            this.Hide();
+            while (form.Created)
+                Application.DoEvents();
 
-            MessageBox.Show("Broke.");
+            form = null;
+
+            this.Show();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void btnSaveZone_Click(object sender, EventArgs e)

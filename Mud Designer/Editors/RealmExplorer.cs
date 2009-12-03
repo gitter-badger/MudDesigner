@@ -180,7 +180,7 @@ namespace MudDesigner.Editors
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -209,6 +209,13 @@ namespace MudDesigner.Editors
         {
             ZoneBuilder form = new ZoneBuilder();
             form.Show();
+            this.Hide();
+            while (form.Created)
+                Application.DoEvents();
+
+            form = null;
+
+            this.Show();
         }
 
         private void btnPlaceZone_Click(object sender, EventArgs e)
