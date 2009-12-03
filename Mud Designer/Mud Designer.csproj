@@ -52,7 +52,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MudEngine\Engine.cs" />
     <Compile Include="MudEngine\FileSystem\SaveDataTypes.cs" />
     <Compile Include="MudEngine\GameObjects\BaseObject.cs" />
     <Compile Include="MudEngine\GameObjects\Currency.cs" />

@@ -105,6 +105,5 @@ namespace MudDesigner.MudEngine.FileSystem
             else
                 return System.IO.Path.Combine(rootPath, DataType.ToString());
         }
-
     }
 }
