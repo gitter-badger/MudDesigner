@@ -5,10 +5,11 @@ using System.Text;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using MudDesigner.MudEngine.Interfaces;
 
 namespace MudDesigner.MudEngine.Objects
 {
-    public class BaseObject
+    public class BaseObject : IGameObject
     {
         [Category("Object Setup")]
         [RefreshProperties(RefreshProperties.All)] //Required to refresh Filename property in the editors propertygrid
@@ -105,6 +106,22 @@ namespace MudDesigner.MudEngine.Objects
         }
 
         public virtual void OnDestroy()
+        {
+        }
+
+        public virtual void OnEquip()
+        {
+        }
+
+        public virtual void OnUnequip()
+        {
+        }
+
+        public virtual void OnMount()
+        {
+        }
+
+        public virtual void OnDismount()
         {
         }
     }

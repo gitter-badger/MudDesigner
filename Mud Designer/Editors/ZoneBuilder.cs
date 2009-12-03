@@ -19,23 +19,19 @@ namespace MudDesigner.Editors
 {
     public partial class ZoneBuilder : Form
     {
-        Zone _CurrentZone;
-        Room _CurrentRoom;
-        ScriptingEngine _ScriptEngine;
-
         public ZoneBuilder()
         {
             InitializeComponent();
-            _CurrentRoom = new Room();
-            _CurrentZone = new Zone();
-            _ScriptEngine = new ScriptingEngine();
-            _ScriptEngine.CompileStyle = ManagedScripting.Compilers.BaseCompiler.ScriptCompileStyle.CompileToMemory;
-            _ScriptEngine.Compiler = ScriptingEngine.CompilerSelections.SourceCompiler;
+            Program.Room = new Room();
+            Program.Zone = new Zone();
+            Program.ScriptEngine = new ScriptingEngine();
+            Program.ScriptEngine.CompileStyle = ManagedScripting.Compilers.BaseCompiler.ScriptCompileStyle.CompileToMemory;
+            Program.ScriptEngine.Compiler = ScriptingEngine.CompilerSelections.SourceCompiler;
 
-            propertyZone.SelectedObject = _CurrentZone;
-            txtScript.Text = _CurrentZone.Script;
+            propertyZone.SelectedObject = Program.Zone;
+            txtScript.Text = Program.Zone.Script;
 
-            string[] rooms = System.IO.Directory.GetFiles(MudEngine.Engine.GetDataPath(Engine.SaveDataTypes.Rooms), "*.room");
+            string[] rooms = System.IO.Directory.GetFiles(FileManager.GetDataPath(SaveDataTypes.Rooms), "*.room");
 
             foreach (string room in rooms)
             {
@@ -77,32 +73,32 @@ namespace MudDesigner.Editors
 
         private void btnSaveZone_Click(object sender, EventArgs e)
         {
-            string path = Engine.GetDataPath(Engine.SaveDataTypes.Zones);
-            string filename = System.IO.Path.Combine(path, _CurrentZone.Name + ".zone");
+            string path = FileManager.GetDataPath(SaveDataTypes.Zones);
+            string filename = System.IO.Path.Combine(path, Program.Zone.Name + ".zone");
 
-            FileSystem.Save(filename, _CurrentZone);
+            FileManager.Save(filename, Program.Zone);
         }
 
         private void btnNewZone_Click(object sender, EventArgs e)
         {
-            _CurrentZone = new Zone();
-            _CurrentRoom = new Room();
-            propertyZone.SelectedObject = _CurrentZone;
+            Program.Zone = new Zone();
+            Program.Room = new Room();
+            propertyZone.SelectedObject = Program.Zone;
         }
 
         private void btnValidateScript_Click(object sender, EventArgs e)
         {
-            _ScriptEngine.Compiler = ManagedScripting.ScriptingEngine.CompilerSelections.SourceCompiler;
-            _ScriptEngine.AddReference(Application.StartupPath + "/MUDEngine.dll");
+            Program.ScriptEngine.Compiler = ManagedScripting.ScriptingEngine.CompilerSelections.SourceCompiler;
+            Program.ScriptEngine.AddReference(Application.StartupPath + "/MUDEngine.dll");
 
             string code = "namespace MudDesigner.MudEngine.Objects.Environment\n"
                 + "{\n"
-                + "  public class " + _CurrentZone.Name.Replace(" ", "") + " : Zone\n"
+                + "  public class " + Program.Zone.Name.Replace(" ", "") + " : Zone\n"
                 + "  {\n"
                 + "     " + txtScript.Text + "\n"
                 + "  }\n"
                 + "}\n";
-            MessageBox.Show(_ScriptEngine.Compile(code), "Script Compiling", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(Program.ScriptEngine.Compile(code), "Script Compiling", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

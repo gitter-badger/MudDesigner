@@ -30,7 +30,6 @@ namespace MudDesigner.Editors
             ProjectSettings form = new ProjectSettings();
 
             form.Show();
-
         }
 
         private void btnCurrencyEditor_Click(object sender, EventArgs e)

@@ -32,7 +32,7 @@ namespace MudDesigner.Editors
         private void frmMain_Load(object sender, EventArgs e)
         {
             //Get all of the realms currently created.
-            string[] files = System.IO.Directory.GetFiles(Engine.GetDataPath(Engine.SaveDataTypes.Realms), "*.realm");
+            string[] files = System.IO.Directory.GetFiles(FileManager.GetDataPath(SaveDataTypes.Realms), "*.realm");
 
             //Aquire the Project settings and show them.
             propertyGrid1.SelectedObject = Program.Project;
@@ -44,7 +44,7 @@ namespace MudDesigner.Editors
                 //Instance a new realm
                 Realm newRealm = new Realm();
                 //De-serialize the current realm.
-                newRealm = (Realm)FileSystem.Load(realm, newRealm);
+                newRealm = (Realm)FileManager.Load(realm, newRealm);
                 //Add it to the available realms combo box.
                 comRealms.Items.Add(newRealm.Name);
             }
@@ -76,7 +76,7 @@ namespace MudDesigner.Editors
             {
                 Zone newZone = new Zone();
                 //De-serialize the current zone.
-                newZone = (Zone)FileSystem.Load(zone, newZone);
+                newZone = (Zone)FileManager.Load(zone, newZone);
                 //Add it to the available zones list box
                 lstZones.Items.Add(newZone.Name);
                 zones.Add(newZone);
@@ -118,7 +118,7 @@ namespace MudDesigner.Editors
             {
                 Room newRoom = new Room();
                 //De-serialize the current Room.
-                newRoom = (Room)FileSystem.Load(room, newRoom);
+                newRoom = (Room)FileManager.Load(room, newRoom);
                 //Add it to the available rooms list box
                 lstRooms.Items.Add(newRoom.Name);
                 rooms.Add(newRoom);
@@ -148,8 +148,8 @@ namespace MudDesigner.Editors
 
         private void ProjectSettings_FormClosing(object sender, FormClosingEventArgs e)
         {
-            string filename = System.IO.Path.Combine(Engine.GetDataPath(Engine.SaveDataTypes.Root), "Project.xml");
-            FileSystem.Save(filename, Program.Project);
+            string filename = System.IO.Path.Combine(FileManager.GetDataPath(SaveDataTypes.Root), "Project.xml");
+            FileManager.Save(filename, Program.Project);
         }
     }
 }

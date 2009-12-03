@@ -18,15 +18,9 @@ namespace MudDesigner.Editors
 {
     public partial class RoomDesigner : Form
     {
-        //Current _CurrentRoom
-        Room _CurrentRoom;
-
         //Doorway currently loaded.
         Door _CurrentDoor;
 
-        //Scripting engine and it's components.
-        ManagedScripting.ScriptingEngine _ScriptEngine;
-        
         //Collection of plugins from within the 'plugins' folder
         List<System.Reflection.Assembly> _Plugins;
 
@@ -39,7 +33,7 @@ namespace MudDesigner.Editors
         private void SetupEditor(params object[] parameters)
         {
             //Initialize the Room & Doorway
-            _CurrentRoom = new Room();
+            Program.Room = new Room();
             _CurrentDoor = new Door(AvailableTravelDirections.None);
 
             //This instances a copy of AvailableTravelDirections which is a list of
@@ -55,10 +49,10 @@ namespace MudDesigner.Editors
             LoadPlugins();
 
             //Instance the scripting engine and set it up.
-            _ScriptEngine = new ManagedScripting.ScriptingEngine();
-            _ScriptEngine.Compiler = ManagedScripting.ScriptingEngine.CompilerSelections.SourceCompiler;
-            _ScriptEngine.CompileStyle = ManagedScripting.Compilers.BaseCompiler.ScriptCompileStyle.CompileToMemory;
-            _ScriptEngine.KeepTempFiles = false;
+            Program.ScriptEngine = new ManagedScripting.ScriptingEngine();
+            Program.ScriptEngine.Compiler = ManagedScripting.ScriptingEngine.CompilerSelections.SourceCompiler;
+            Program.ScriptEngine.CompileStyle = ManagedScripting.Compilers.BaseCompiler.ScriptCompileStyle.CompileToMemory;
+            Program.ScriptEngine.KeepTempFiles = false;
 
             //Get the current rooms scripts.
             //TODO: Add Doorway script support
@@ -70,14 +64,14 @@ namespace MudDesigner.Editors
                 {
                     if (argument.ToString().ToLower().StartsWith("room="))
                     {
-                        string roomPath = Engine.GetDataPath(Engine.SaveDataTypes.Rooms);
+                        string roomPath = FileManager.GetDataPath(SaveDataTypes.Rooms);
                         string room = argument.ToString().Substring("room=".Length);
                         string filename = System.IO.Path.Combine(roomPath, room.ToString());
 
                         //Room to load should always be the first arg.
                         if (System.IO.File.Exists(filename))
                         {
-                            _CurrentRoom = (Room)FileSystem.Load(filename, _CurrentRoom);
+                            Program.Room = (Room)FileManager.Load(filename, Program.Room);
                         }
                     }
                 }
@@ -85,14 +79,14 @@ namespace MudDesigner.Editors
 
 
             //Show the user(s) the rooms properties
-            propertyRoom.SelectedObject = _CurrentRoom;
-            txtScript.Text = _CurrentRoom.Script;
+            propertyRoom.SelectedObject = Program.Room;
+            txtScript.Text = Program.Room.Script;
         }
 
         private void SetupRoomScript()
         {
             //Check if the rooms script is empty. If so then generate a standard script for it.
-            if (String.IsNullOrEmpty(_CurrentRoom.Script))
+            if (String.IsNullOrEmpty(Program.Room.Script))
             {
                 //Instance a new method helper class
                 ManagedScripting.CodeBuilding.MethodSetup method = new ManagedScripting.CodeBuilding.MethodSetup();
@@ -108,9 +102,9 @@ namespace MudDesigner.Editors
                     method.IsOverride = true;
                     method.Modifier = ManagedScripting.CodeBuilding.ClassGenerator.Modifiers.Public;
                     method.Code = new string[] { "base." + method.Name + "();" };
-                    script = script.Insert(_CurrentRoom.Script.Length, method.Create() + "\n");
+                    script = script.Insert(Program.Room.Script.Length, method.Create() + "\n");
                 }
-                _CurrentRoom.Script = script;
+                Program.Room.Script = script;
             }
         }
 
@@ -177,11 +171,11 @@ namespace MudDesigner.Editors
             //and was found for editing
             bool IsFound = false;
 
-            //Loop through each doorway installed within the _CurrentRoom and see if the user has
+            //Loop through each doorway installed within the Program.Room and see if the user has
             //selected a direction that belongs to a _CurrentDoor already created. If a _CurrentDoor with 
             //the selected direction is found, we display it's properties for editing instead
             //of creating a new _CurrentDoor and overwriting the previously created doorway.
-            foreach (Door newDoor in _CurrentRoom.InstalledDoors)
+            foreach (Door newDoor in Program.Room.InstalledDoors)
             {
                 //Check if the current _CurrentDoor in the loop matches the currently selected
                 //travel direction the user has selected in the listbox.
@@ -200,7 +194,7 @@ namespace MudDesigner.Editors
                 }
             }
 
-            //There isn't a _CurrentDoor installed into the _CurrentRoom yet with a travel direction
+            //There isn't a _CurrentDoor installed into the Program.Room yet with a travel direction
             //matching that of the users currently selected travel direction within the listbox.
             //so we instance a new _CurrentDoor
             if (!IsFound)
@@ -253,7 +247,7 @@ namespace MudDesigner.Editors
         }
 
         /// <summary>
-        /// Installs the _CurrentDoor into the _CurrentRoom's collection of doorways
+        /// Installs the _CurrentDoor into the Program.Room's collection of doorways
         /// </summary>
         private void InstallDoor()
         {
@@ -262,10 +256,10 @@ namespace MudDesigner.Editors
             bool IsInstalled = false;
 
             //Incase there are no existing doors, the foreach loop gets skipped.
-            if (_CurrentRoom.InstalledDoors.Count == 0)
+            if (Program.Room.InstalledDoors.Count == 0)
             {
                 //Add the new door to the room
-                _CurrentRoom.InstalledDoors.Add(_CurrentDoor);
+                Program.Room.InstalledDoors.Add(_CurrentDoor);
                 return;
             }
 
@@ -274,19 +268,19 @@ namespace MudDesigner.Editors
             //that the user has selected within the list box. If so then we
             //need to prompt the user to ensure it's ok to overwrite the previous
             //door with a new door.
-            foreach (Door newDoor in _CurrentRoom.InstalledDoors)
+            foreach (Door newDoor in Program.Room.InstalledDoors)
             {
                 if (newDoor.TravelDirection == _CurrentDoor.TravelDirection)
                 {
-                    _CurrentRoom.InstalledDoors.Remove(newDoor);
-                    _CurrentRoom.InstalledDoors.Add(_CurrentDoor);
+                    Program.Room.InstalledDoors.Remove(newDoor);
+                    Program.Room.InstalledDoors.Add(_CurrentDoor);
                     IsInstalled = true;
                     break;
                 }
             }
 
             if (!IsInstalled)
-                _CurrentRoom.InstalledDoors.Add(_CurrentDoor);
+                Program.Room.InstalledDoors.Add(_CurrentDoor);
         }
 
         /// <summary>
@@ -294,11 +288,11 @@ namespace MudDesigner.Editors
         /// </summary>
         private void UninstallDoor()
         {
-            foreach (Door door in _CurrentRoom.InstalledDoors)
+            foreach (Door door in Program.Room.InstalledDoors)
             {
                 if (door.TravelDirection == _CurrentDoor.TravelDirection)
                 {
-                    _CurrentRoom.InstalledDoors.Remove(door);
+                    Program.Room.InstalledDoors.Remove(door);
                     break;
                 }
             }
@@ -315,18 +309,18 @@ namespace MudDesigner.Editors
             if (result == DialogResult.No)
                 return;
 
-            _CurrentRoom = new Room();
+            Program.Room = new Room();
             _CurrentDoor = new Door(AvailableTravelDirections.None);
             SetupRoomScript();
             
             propertyDoor.SelectedObject = null;
-            propertyRoom.SelectedObject = _CurrentRoom;
+            propertyRoom.SelectedObject = Program.Room;
         }
 
         private void btnSaveRoom_Click(object sender, EventArgs e)
         {
-            string savePath = Engine.GetDataPath(Engine.SaveDataTypes.Rooms);
-            string filePath = System.IO.Path.Combine(savePath, _CurrentRoom.Name + ".room");
+            string savePath = FileManager.GetDataPath(SaveDataTypes.Rooms);
+            string filePath = System.IO.Path.Combine(savePath, Program.Room.Name + ".room");
 
             if (System.IO.File.Exists(filePath))
             {
@@ -336,7 +330,7 @@ namespace MudDesigner.Editors
                     return;
             }
 
-            FileSystem.Save(filePath, _CurrentRoom);
+            FileManager.Save(filePath, Program.Room);
             MessageBox.Show("Saved.", "Room Designer");
         }
 
@@ -344,28 +338,28 @@ namespace MudDesigner.Editors
         {
             if (tabObjects.SelectedTab.Text == "Script")
             {
-                txtScript.Text = _CurrentRoom.Script;
+                txtScript.Text = Program.Room.Script;
             }
         }
 
         private void btnCheckScript_Click(object sender, EventArgs e)
         {
-            _ScriptEngine.Compiler = ManagedScripting.ScriptingEngine.CompilerSelections.SourceCompiler;
-            _ScriptEngine.AddReference(Application.StartupPath + "/MUDEngine.dll");
+            Program.ScriptEngine.Compiler = ManagedScripting.ScriptingEngine.CompilerSelections.SourceCompiler;
+            Program.ScriptEngine.AddReference(Application.StartupPath + "/MUDEngine.dll");
           
             string code = "namespace MudDesigner.MudEngine.Objects.Environment\n"
                 + "{\n"
-                + "  public class " + _CurrentRoom.Name.Replace(" ", "") + " : Room\n"
+                + "  public class " + Program.Room.Name.Replace(" ", "") + " : Room\n"
                 + "  {\n"
                 + "     " + txtScript.Text + "\n"
                 + "  }\n"
                 + "}\n";
-            MessageBox.Show(_ScriptEngine.Compile(code), "Script Compiling", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(Program.ScriptEngine.Compile(code), "Script Compiling", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void txtScript_TextChanged(object sender, EventArgs e)
         {
-            _CurrentRoom.Script = txtScript.Text;
+            Program.Room.Script = txtScript.Text;
         }
     }
 }

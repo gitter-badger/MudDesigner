@@ -5,6 +5,7 @@ using System.Text;
 
 namespace MudDesigner.MudEngine
 {
-    public class Engine
-    {    }
+    public class QuestSetup
+    {
+    }
 }

@@ -14,19 +14,24 @@ namespace MudDesigner
     static class Program
     {
         public static ProjectInformation Project{ get; set; }
+        public static Realm Realm { get; set; }
+        public static Zone Zone {get;set;}
+        public static Room Room { get; set; }
+        public static ManagedScripting.ScriptingEngine ScriptEngine { get; set; }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            Engine.ValidateDataPaths();
-            FileSystem.FileType = FileSystem.OutputFormats.XML;
+            FileManager.ValidateDataPaths();
+            FileManager.FileType = FileManager.OutputFormats.XML;
             Project = new ProjectInformation();
 
-            string filename = System.IO.Path.Combine(Engine.GetDataPath(Engine.SaveDataTypes.Root), "Project.Xml");
+            string filename = System.IO.Path.Combine(FileManager.GetDataPath(SaveDataTypes.Root), "Project.Xml");
             if (System.IO.File.Exists(filename))
-                Project = (ProjectInformation)FileSystem.Load(filename, Project);
+                Project = (ProjectInformation)FileManager.Load(filename, Project);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

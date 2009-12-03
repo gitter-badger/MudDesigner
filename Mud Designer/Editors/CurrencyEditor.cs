@@ -25,7 +25,7 @@ namespace MudDesigner.Editors
             InitializeComponent();
             _Currency = new Currency();
             propertyGrid1.SelectedObject = _Currency;
-            foreach (string currency in System.IO.Directory.GetFiles(Engine.GetDataPath(Engine.SaveDataTypes.Currency), "*.xml"))
+            foreach (string currency in System.IO.Directory.GetFiles(FileManager.GetDataPath(SaveDataTypes.Currency), "*.xml"))
             {
                 lstCurrencies.Items.Add(System.IO.Path.GetFileNameWithoutExtension(currency));
             }
@@ -45,7 +45,7 @@ namespace MudDesigner.Editors
                 return;
             }
 
-            FileSystem.Save(Application.StartupPath + @"\Data\Currency\" + _Currency.Name + ".xml", _Currency);
+            FileManager.Save(Application.StartupPath + @"\Data\Currency\" + _Currency.Name + ".xml", _Currency);
             lstCurrencies.Items.Add(_Currency.Name);
         }
 
@@ -55,7 +55,7 @@ namespace MudDesigner.Editors
             if (lstCurrencies.SelectedIndex == -1)
                 return;
 
-            _Currency = (Currency)FileSystem.Load(Application.StartupPath + @"\Data\Currency\" + lstCurrencies.SelectedItem.ToString() + ".xml", _Currency);
+            _Currency = (Currency)FileManager.Load(Application.StartupPath + @"\Data\Currency\" + lstCurrencies.SelectedItem.ToString() + ".xml", _Currency);
             propertyGrid1.SelectedObject = _Currency;
         }
 
