@@ -108,6 +108,8 @@ namespace MudDesigner.Editors
             //loop through each zone first and delete them all, along with their there rooms.
             System.IO.File.Delete(realmFile);
             lstRealms.Items.Remove(lstRealms.SelectedItem);
+            lstZones.Items.Clear();
+            btnNewRealm_Click(sender, e);
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -200,7 +202,29 @@ namespace MudDesigner.Editors
                 return;
             }
 
-            Program.Realm.Zones.Remove(zone);
+            DialogResult result = MessageBox.Show("Are you sure you wish to delete the Zone '" + lstZones.SelectedItem.ToString() + "'?\nWarning! All Rooms contained within this Zone will be deleted!", "Realm Explorer", MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.No)
+                return;
+
+            string zonePath = FileManager.GetDataPath(SaveDataTypes.Zones);
+            string zoneFile = System.IO.Path.Combine(zonePath, lstZones.SelectedItem.ToString() + ".zone");
+            Program.Zone = (Zone)FileManager.Load(zoneFile, Program.Zone);
+            foreach (Room room in Program.Zone.Rooms)
+            {
+                string roomPath = FileManager.GetDataPath(SaveDataTypes.Rooms);
+                string roomFile = System.IO.Path.Combine(roomPath, room.Filename);
+                System.IO.File.Delete(roomFile);
+            }
+
+            foreach (Zone z in Program.Realm.Zones)
+            {
+                if (z.Name == lstZones.SelectedItem.ToString())
+                {
+                    Program.Realm.Zones.Remove(z);
+                    break;
+                }
+            }
             string filename = System.IO.Path.Combine(FileManager.GetDataPath(SaveDataTypes.Zones), lstZones.SelectedItem.ToString() + ".zone");
 
             if (System.IO.File.Exists(filename))
