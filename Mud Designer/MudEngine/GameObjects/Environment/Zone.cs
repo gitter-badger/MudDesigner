@@ -13,5 +13,7 @@ namespace MudDesigner.MudEngine.Objects.Environment
             get;
             set;
         }
+
+        public List<Room> Rooms { get; set; }
     }
 }

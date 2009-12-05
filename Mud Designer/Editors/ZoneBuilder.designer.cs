@@ -31,16 +31,17 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.propertyZone = new System.Windows.Forms.PropertyGrid();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnValidateScript = new System.Windows.Forms.Button();
+            this.btnCloseBuilder = new System.Windows.Forms.Button();
             this.btnSaveZone = new System.Windows.Forms.Button();
-            this.btnNewZone = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabZoneCreation = new System.Windows.Forms.TabPage();
             this.tabScript = new System.Windows.Forms.TabPage();
             this.txtScript = new System.Windows.Forms.RichTextBox();
+            this.btnValidateScript = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lstRooms = new System.Windows.Forms.ListBox();
+            this.btnUnselectRoom = new System.Windows.Forms.Button();
             this.btnRoomEditor = new System.Windows.Forms.Button();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -83,9 +84,8 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btnValidateScript);
+            this.groupBox1.Controls.Add(this.btnCloseBuilder);
             this.groupBox1.Controls.Add(this.btnSaveZone);
-            this.groupBox1.Controls.Add(this.btnNewZone);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
@@ -94,36 +94,27 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Zone Setup";
             // 
-            // btnValidateScript
+            // btnCloseBuilder
             // 
-            this.btnValidateScript.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnValidateScript.Location = new System.Drawing.Point(3, 45);
-            this.btnValidateScript.Name = "btnValidateScript";
-            this.btnValidateScript.Size = new System.Drawing.Size(204, 23);
-            this.btnValidateScript.TabIndex = 13;
-            this.btnValidateScript.Text = "Validate Script";
-            this.btnValidateScript.UseVisualStyleBackColor = true;
-            this.btnValidateScript.Click += new System.EventHandler(this.btnValidateScript_Click);
+            this.btnCloseBuilder.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnCloseBuilder.Location = new System.Drawing.Point(3, 39);
+            this.btnCloseBuilder.Name = "btnCloseBuilder";
+            this.btnCloseBuilder.Size = new System.Drawing.Size(204, 23);
+            this.btnCloseBuilder.TabIndex = 12;
+            this.btnCloseBuilder.Text = "Close Builder";
+            this.btnCloseBuilder.UseVisualStyleBackColor = true;
+            this.btnCloseBuilder.Click += new System.EventHandler(this.btnCloseBuilder_Click);
             // 
             // btnSaveZone
             // 
-            this.btnSaveZone.Location = new System.Drawing.Point(110, 19);
+            this.btnSaveZone.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnSaveZone.Location = new System.Drawing.Point(3, 16);
             this.btnSaveZone.Name = "btnSaveZone";
-            this.btnSaveZone.Size = new System.Drawing.Size(97, 23);
+            this.btnSaveZone.Size = new System.Drawing.Size(204, 23);
             this.btnSaveZone.TabIndex = 11;
             this.btnSaveZone.Text = "Save Zone";
             this.btnSaveZone.UseVisualStyleBackColor = true;
             this.btnSaveZone.Click += new System.EventHandler(this.btnSaveZone_Click);
-            // 
-            // btnNewZone
-            // 
-            this.btnNewZone.Location = new System.Drawing.Point(3, 19);
-            this.btnNewZone.Name = "btnNewZone";
-            this.btnNewZone.Size = new System.Drawing.Size(102, 23);
-            this.btnNewZone.TabIndex = 9;
-            this.btnNewZone.Text = "New Zone";
-            this.btnNewZone.UseVisualStyleBackColor = true;
-            this.btnNewZone.Click += new System.EventHandler(this.btnNewZone_Click);
             // 
             // splitContainer2
             // 
@@ -166,6 +157,7 @@
             // tabScript
             // 
             this.tabScript.Controls.Add(this.txtScript);
+            this.tabScript.Controls.Add(this.btnValidateScript);
             this.tabScript.Location = new System.Drawing.Point(4, 22);
             this.tabScript.Name = "tabScript";
             this.tabScript.Padding = new System.Windows.Forms.Padding(3);
@@ -177,20 +169,33 @@
             // txtScript
             // 
             this.txtScript.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtScript.Location = new System.Drawing.Point(3, 3);
+            this.txtScript.Location = new System.Drawing.Point(3, 26);
             this.txtScript.Name = "txtScript";
-            this.txtScript.Size = new System.Drawing.Size(351, 542);
-            this.txtScript.TabIndex = 0;
+            this.txtScript.Size = new System.Drawing.Size(351, 519);
+            this.txtScript.TabIndex = 15;
             this.txtScript.Text = "";
+            this.txtScript.TextChanged += new System.EventHandler(this.txtScript_TextChanged);
+            // 
+            // btnValidateScript
+            // 
+            this.btnValidateScript.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnValidateScript.Location = new System.Drawing.Point(3, 3);
+            this.btnValidateScript.Name = "btnValidateScript";
+            this.btnValidateScript.Size = new System.Drawing.Size(351, 23);
+            this.btnValidateScript.TabIndex = 14;
+            this.btnValidateScript.Text = "Validate Script";
+            this.btnValidateScript.UseVisualStyleBackColor = true;
+            this.btnValidateScript.Click += new System.EventHandler(this.btnValidateScript_Click);
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.lstRooms);
+            this.groupBox2.Controls.Add(this.btnUnselectRoom);
             this.groupBox2.Controls.Add(this.btnRoomEditor);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(211, 168);
+            this.groupBox2.Size = new System.Drawing.Size(211, 209);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Available Rooms";
@@ -201,17 +206,29 @@
             this.lstRooms.FormattingEnabled = true;
             this.lstRooms.Location = new System.Drawing.Point(3, 16);
             this.lstRooms.Name = "lstRooms";
-            this.lstRooms.Size = new System.Drawing.Size(205, 121);
-            this.lstRooms.TabIndex = 1;
+            this.lstRooms.Size = new System.Drawing.Size(205, 134);
+            this.lstRooms.TabIndex = 3;
+            this.lstRooms.SelectedIndexChanged += new System.EventHandler(this.lstRooms_SelectedIndexChanged);
+            // 
+            // btnUnselectRoom
+            // 
+            this.btnUnselectRoom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnUnselectRoom.Location = new System.Drawing.Point(3, 160);
+            this.btnUnselectRoom.Name = "btnUnselectRoom";
+            this.btnUnselectRoom.Size = new System.Drawing.Size(205, 23);
+            this.btnUnselectRoom.TabIndex = 2;
+            this.btnUnselectRoom.Text = "Unselect Room";
+            this.btnUnselectRoom.UseVisualStyleBackColor = true;
+            this.btnUnselectRoom.Click += new System.EventHandler(this.btnUnselectRoom_Click);
             // 
             // btnRoomEditor
             // 
             this.btnRoomEditor.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnRoomEditor.Location = new System.Drawing.Point(3, 142);
+            this.btnRoomEditor.Location = new System.Drawing.Point(3, 183);
             this.btnRoomEditor.Name = "btnRoomEditor";
             this.btnRoomEditor.Size = new System.Drawing.Size(205, 23);
             this.btnRoomEditor.TabIndex = 0;
-            this.btnRoomEditor.Text = "Build-A-Room";
+            this.btnRoomEditor.Text = "Build A Room";
             this.btnRoomEditor.UseVisualStyleBackColor = true;
             this.btnRoomEditor.Click += new System.EventHandler(this.btnRoomEditor_Click);
             // 
@@ -246,18 +263,19 @@
 
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button btnValidateScript;
         private System.Windows.Forms.Button btnSaveZone;
-        private System.Windows.Forms.Button btnNewZone;
         private System.Windows.Forms.PropertyGrid propertyZone;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ListBox lstRooms;
         private System.Windows.Forms.Button btnRoomEditor;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabZoneCreation;
         private System.Windows.Forms.TabPage tabScript;
         private System.Windows.Forms.RichTextBox txtScript;
+        private System.Windows.Forms.Button btnValidateScript;
+        private System.Windows.Forms.Button btnCloseBuilder;
+        private System.Windows.Forms.Button btnUnselectRoom;
+        public System.Windows.Forms.ListBox lstRooms;
 
     }
 }

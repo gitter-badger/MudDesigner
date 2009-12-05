@@ -32,7 +32,6 @@
             this.containerSidebar = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnCloseEditor = new System.Windows.Forms.Button();
-            this.btnCheckScript = new System.Windows.Forms.Button();
             this.btnSaveRoom = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.propertyRoom = new System.Windows.Forms.PropertyGrid();
@@ -41,6 +40,7 @@
             this.tabObjects = new System.Windows.Forms.TabControl();
             this.tabScript = new System.Windows.Forms.TabPage();
             this.txtScript = new System.Windows.Forms.RichTextBox();
+            this.btnCheckScript = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
@@ -100,18 +100,17 @@
             // 
             this.containerSidebar.Panel2.Controls.Add(this.groupBox2);
             this.containerSidebar.Size = new System.Drawing.Size(209, 562);
-            this.containerSidebar.SplitterDistance = 88;
+            this.containerSidebar.SplitterDistance = 66;
             this.containerSidebar.TabIndex = 0;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.btnCloseEditor);
-            this.groupBox1.Controls.Add(this.btnCheckScript);
             this.groupBox1.Controls.Add(this.btnSaveRoom);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(209, 88);
+            this.groupBox1.Size = new System.Drawing.Size(209, 66);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Room Options";
@@ -119,24 +118,13 @@
             // btnCloseEditor
             // 
             this.btnCloseEditor.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnCloseEditor.Location = new System.Drawing.Point(3, 62);
+            this.btnCloseEditor.Location = new System.Drawing.Point(3, 40);
             this.btnCloseEditor.Name = "btnCloseEditor";
             this.btnCloseEditor.Size = new System.Drawing.Size(203, 23);
             this.btnCloseEditor.TabIndex = 10;
             this.btnCloseEditor.Text = "Close Editor";
             this.btnCloseEditor.UseVisualStyleBackColor = true;
             this.btnCloseEditor.Click += new System.EventHandler(this.btnCloseEditor_Click);
-            // 
-            // btnCheckScript
-            // 
-            this.btnCheckScript.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnCheckScript.Location = new System.Drawing.Point(3, 39);
-            this.btnCheckScript.Name = "btnCheckScript";
-            this.btnCheckScript.Size = new System.Drawing.Size(203, 23);
-            this.btnCheckScript.TabIndex = 9;
-            this.btnCheckScript.Text = "Validate Script";
-            this.btnCheckScript.UseVisualStyleBackColor = true;
-            this.btnCheckScript.Click += new System.EventHandler(this.btnCheckScript_Click);
             // 
             // btnSaveRoom
             // 
@@ -155,7 +143,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(209, 470);
+            this.groupBox2.Size = new System.Drawing.Size(209, 492);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Room Setup";
@@ -165,7 +153,7 @@
             this.propertyRoom.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyRoom.Location = new System.Drawing.Point(3, 16);
             this.propertyRoom.Name = "propertyRoom";
-            this.propertyRoom.Size = new System.Drawing.Size(203, 451);
+            this.propertyRoom.Size = new System.Drawing.Size(203, 473);
             this.propertyRoom.TabIndex = 3;
             this.propertyRoom.ToolbarVisible = false;
             // 
@@ -212,6 +200,7 @@
             // tabScript
             // 
             this.tabScript.Controls.Add(this.txtScript);
+            this.tabScript.Controls.Add(this.btnCheckScript);
             this.tabScript.Location = new System.Drawing.Point(4, 22);
             this.tabScript.Name = "tabScript";
             this.tabScript.Padding = new System.Windows.Forms.Padding(3);
@@ -224,12 +213,23 @@
             // 
             this.txtScript.AcceptsTab = true;
             this.txtScript.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtScript.Location = new System.Drawing.Point(3, 3);
+            this.txtScript.Location = new System.Drawing.Point(3, 26);
             this.txtScript.Name = "txtScript";
-            this.txtScript.Size = new System.Drawing.Size(555, 267);
-            this.txtScript.TabIndex = 0;
+            this.txtScript.Size = new System.Drawing.Size(555, 244);
+            this.txtScript.TabIndex = 11;
             this.txtScript.Text = "";
-            this.txtScript.TextChanged += new System.EventHandler(this.txtScript_TextChanged);
+            this.txtScript.Click += new System.EventHandler(this.txtScript_TextChanged);
+            // 
+            // btnCheckScript
+            // 
+            this.btnCheckScript.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnCheckScript.Location = new System.Drawing.Point(3, 3);
+            this.btnCheckScript.Name = "btnCheckScript";
+            this.btnCheckScript.Size = new System.Drawing.Size(555, 23);
+            this.btnCheckScript.TabIndex = 10;
+            this.btnCheckScript.Text = "Validate Script";
+            this.btnCheckScript.UseVisualStyleBackColor = true;
+            this.btnCheckScript.Click += new System.EventHandler(this.btnCheckScript_Click);
             // 
             // groupBox5
             // 
@@ -296,7 +296,7 @@
             this.lstDirections.TabIndex = 0;
             this.lstDirections.SelectedIndexChanged += new System.EventHandler(this.lstDirections_SelectedIndexChanged);
             // 
-            // frmMain
+            // RoomDesigner
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -305,9 +305,10 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmMain";
+            this.Name = "RoomDesigner";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mud Designer: Room Designer";
+            this.Load += new System.EventHandler(this.RoomDesigner_Load);
             this.containerMain.Panel1.ResumeLayout(false);
             this.containerMain.Panel2.ResumeLayout(false);
             this.containerMain.ResumeLayout(false);
@@ -347,10 +348,10 @@
         private System.Windows.Forms.GroupBox groupBox10;
         private System.Windows.Forms.PropertyGrid propertyDoor;
         private System.Windows.Forms.Button btnCloseEditor;
-        private System.Windows.Forms.Button btnCheckScript;
         private System.Windows.Forms.Button btnSaveRoom;
         private System.Windows.Forms.TabPage tabScript;
         private System.Windows.Forms.RichTextBox txtScript;
+        private System.Windows.Forms.Button btnCheckScript;
     }
 }
 

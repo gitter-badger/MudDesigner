@@ -28,32 +28,19 @@ namespace MudDesigner.Editors
 
         private void btnRoomEditor_Click(object sender, EventArgs e)
         {
-            DialogResult result;
-            RoomDesigner form = new RoomDesigner();
-            Program.Room = new Room();
-
-            //Check if we have a room selected, if so we are going to ask if the user wants to edit it.
-            if (lstRooms.SelectedItem != null)
+            RoomDesigner form = new RoomDesigner(this);
+            if (!btnRoomEditor.Text.Equals("Build A Room"))
             {
-                result = MessageBox.Show("You have a room selected, are you wanting to edit it?",
-                    "Zone Builder", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-
-                switch (result)
-                {
-                    case DialogResult.Yes:
-                        form = new RoomDesigner(lstRooms.SelectedItem.ToString());
-                        string filename = System.IO.Path.Combine(FileManager.GetDataPath(SaveDataTypes.Rooms), lstRooms.SelectedItem.ToString());
-                        Program.Room = (Room)FileManager.Load(filename, Program.Room);
-                        break;
-                    case DialogResult.Cancel:
-                        return;
-                }
+                form.IsEditingExisting = true;
             }
 
             form.Show();
             this.Hide();
+
             while (form.Created)
+            {
                 Application.DoEvents();
+            }
 
             form = null;
 
@@ -64,9 +51,9 @@ namespace MudDesigner.Editors
         {
             //build the save file name
             string path = FileManager.GetDataPath(SaveDataTypes.Zones);
-            string zoneFile = System.IO.Path.Combine(path, Program.Zone.Name + ".zone");
+            string zoneFile = System.IO.Path.Combine(path, Program.Zone.Filename);
             path = FileManager.GetDataPath(SaveDataTypes.Realms);
-            string realmFile = System.IO.Path.Combine(path, Program.Realm.Name + ".realm");
+            string realmFile = System.IO.Path.Combine(path, Program.Realm.Filename);
 
             //get a copy of the currently running (but hidden) realm explorer
             RealmExplorer form = (RealmExplorer)Program.CurrentEditor;
@@ -93,13 +80,6 @@ namespace MudDesigner.Editors
             propertyZone.SelectedObject = Program.Zone;
 
             this.Close();
-        }
-
-        private void btnNewZone_Click(object sender, EventArgs e)
-        {
-            Program.Zone = new Zone();
-            Program.Room = new Room();
-            propertyZone.SelectedObject = Program.Zone;
         }
 
         private void btnValidateScript_Click(object sender, EventArgs e)
@@ -145,6 +125,27 @@ namespace MudDesigner.Editors
                     lstRooms.Items.Add(System.IO.Path.GetFileNameWithoutExtension(room));
                 }
 
+        }
+
+        private void txtScript_TextChanged(object sender, EventArgs e)
+        {
+            Program.Zone.Script = txtScript.Text;
+        }
+
+        private void btnCloseBuilder_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void lstRooms_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnRoomEditor.Text = "Edit Selected Room";
+        }
+
+        private void btnUnselectRoom_Click(object sender, EventArgs e)
+        {
+            lstRooms.SelectedIndex = -1;
+            btnRoomEditor.Text = "Build A Room";
         }
     }
 }

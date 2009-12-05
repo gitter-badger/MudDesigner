@@ -313,6 +313,7 @@
             this.txtScript.Size = new System.Drawing.Size(312, 385);
             this.txtScript.TabIndex = 11;
             this.txtScript.Text = "";
+            this.txtScript.TextChanged += new System.EventHandler(this.txtScript_TextChanged);
             // 
             // btnValidateScript
             // 

@@ -18,19 +18,29 @@ namespace MudDesigner.Editors
 {
     public partial class RoomDesigner : Form
     {
+        internal bool IsEditingExisting = false;
+        ZoneBuilder _ZoneBuilder;
+
         //Doorway currently loaded.
         Door _CurrentDoor;
 
         //Collection of plugins from within the 'plugins' folder
         List<System.Reflection.Assembly> _Plugins;
 
-        public RoomDesigner(params object[] parameters)
+        public RoomDesigner(ZoneBuilder designer)
         {
             InitializeComponent();
-            SetupEditor(parameters);
+            SetupEditor();
+            _ZoneBuilder = designer;
         }
 
-        private void SetupEditor(params object[] parameters)
+        public RoomDesigner()
+        {
+            InitializeComponent();
+            SetupEditor();
+        }
+
+        private void SetupEditor()
         {
             //Initialize the Room & Doorway
             Program.Room = new Room();
@@ -54,58 +64,9 @@ namespace MudDesigner.Editors
             Program.ScriptEngine.CompileStyle = ManagedScripting.Compilers.BaseCompiler.ScriptCompileStyle.CompileToMemory;
             Program.ScriptEngine.KeepTempFiles = false;
 
-            //Get the current rooms scripts.
-            //TODO: Add Doorway script support
-            //SetupRoomScript();
-
-            if (parameters.Length != 0)
-            {
-                foreach (object argument in parameters)
-                {
-                    if (argument.ToString().ToLower().StartsWith("room="))
-                    {
-                        string roomPath = FileManager.GetDataPath(SaveDataTypes.Rooms);
-                        string room = argument.ToString().Substring("room=".Length);
-                        string filename = System.IO.Path.Combine(roomPath, room.ToString());
-
-                        //Room to load should always be the first arg.
-                        if (System.IO.File.Exists(filename))
-                        {
-                            Program.Room = (Room)FileManager.Load(filename, Program.Room);
-                        }
-                    }
-                }
-            }
-
-
             //Show the user(s) the rooms properties
             propertyRoom.SelectedObject = Program.Room;
             txtScript.Text = Program.Room.Script;
-        }
-
-        private void SetupRoomScript()
-        {
-            //Check if the rooms script is empty. If so then generate a standard script for it.
-            if (String.IsNullOrEmpty(Program.Room.Script))
-            {
-                //Instance a new method helper class
-                ManagedScripting.CodeBuilding.MethodSetup method = new ManagedScripting.CodeBuilding.MethodSetup();
-                string script = "";
-                //Setup our method. All objects inheriting from BaseObject will have the standard
-                //methods created for them.
-                string[] names = new string[] { "OnCreate", "OnDestroy", "OnEnter", "OnExit" };
-                foreach (string name in names)
-                {
-                    method = new ManagedScripting.CodeBuilding.MethodSetup();
-                    method.Name = name;
-                    method.ReturnType = "void";
-                    method.IsOverride = true;
-                    method.Modifier = ManagedScripting.CodeBuilding.ClassGenerator.Modifiers.Public;
-                    method.Code = new string[] { "base." + method.Name + "();" };
-                    script = script.Insert(Program.Room.Script.Length, method.Create() + "\n");
-                }
-                Program.Room.Script = script;
-            }
         }
 
         private void BuildDoorwayList()
@@ -311,7 +272,6 @@ namespace MudDesigner.Editors
 
             Program.Room = new Room();
             _CurrentDoor = new Door(AvailableTravelDirections.None);
-            SetupRoomScript();
             
             propertyDoor.SelectedObject = null;
             propertyRoom.SelectedObject = Program.Room;
@@ -319,19 +279,20 @@ namespace MudDesigner.Editors
 
         private void btnSaveRoom_Click(object sender, EventArgs e)
         {
-            string savePath = FileManager.GetDataPath(SaveDataTypes.Rooms);
-            string filePath = System.IO.Path.Combine(savePath, Program.Room.Name + ".room");
+            string roomPath = FileManager.GetDataPath(SaveDataTypes.Rooms);
+            string roomFile = System.IO.Path.Combine(roomPath, Program.Room.Filename);
 
-            if (System.IO.File.Exists(filePath))
-            {
-                DialogResult result = MessageBox.Show("File exists! Overwrite?", "Room Designer", MessageBoxButtons.YesNo);
+            FileManager.Save(roomFile, Program.Room);
 
-                if (result == DialogResult.No)
-                    return;
-            }
+            if (!_ZoneBuilder.lstRooms.Items.Contains(Program.Room.Name))
+                _ZoneBuilder.lstRooms.Items.Add(Program.Room.Name);
 
-            FileManager.Save(filePath, Program.Room);
-            MessageBox.Show("Saved.", "Room Designer");
+            Program.Zone.Rooms.Add(Program.Room);
+            string zonePath = FileManager.GetDataPath(SaveDataTypes.Zones);
+            string zoneFile = System.IO.Path.Combine(zonePath, Program.Zone.Filename);
+            FileManager.Save(zoneFile, Program.Zone);
+            Program.Room = new Room();
+            this.Close();
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -360,6 +321,18 @@ namespace MudDesigner.Editors
         private void txtScript_TextChanged(object sender, EventArgs e)
         {
             Program.Room.Script = txtScript.Text;
+        }
+
+        private void RoomDesigner_Load(object sender, EventArgs e)
+        {
+            if (IsEditingExisting)
+            {
+                string roomPath = FileManager.GetDataPath(SaveDataTypes.Rooms);
+                string roomFile = System.IO.Path.Combine(roomPath, _ZoneBuilder.lstRooms.SelectedItem.ToString() + ".room");
+                Program.Room = (Room)FileManager.Load(roomFile, Program.Room);
+                propertyRoom.SelectedObject = Program.Room;
+                txtScript.Text = Program.Room.Script;
+            }
         }
     }
 }

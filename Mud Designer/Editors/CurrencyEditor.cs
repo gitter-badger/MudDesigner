@@ -45,7 +45,9 @@ namespace MudDesigner.Editors
                 return;
             }
 
-            FileManager.Save(Application.StartupPath + @"\Data\Currency\" + _Currency.Name + ".xml", _Currency);
+            string currencyPath = FileManager.GetDataPath(SaveDataTypes.Currency);
+            string currencyFile = System.IO.Path.Combine(currencyPath, _Currency.Filename);
+            FileManager.Save(currencyFile, _Currency);
             lstCurrencies.Items.Add(_Currency.Name);
         }
 
