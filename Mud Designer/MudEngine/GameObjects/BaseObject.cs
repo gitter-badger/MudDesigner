@@ -93,6 +93,11 @@ namespace MudDesigner.MudEngine.Objects
             }
         }
 
+        public override string ToString()
+        {
+            return this.Name;
+        }
+
         public virtual void OnEnter()
         {
         }

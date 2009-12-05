@@ -18,6 +18,7 @@ namespace MudDesigner
         public static Zone Zone {get;set;}
         public static Room Room { get; set; }
         public static ManagedScripting.ScriptingEngine ScriptEngine { get; set; }
+        public static Form CurrentEditor { get; set; }
 
         /// <summary>
         /// The main entry point for the application.
@@ -25,9 +26,10 @@ namespace MudDesigner
         [STAThread]
         static void Main()
         {
+            Project = new ProjectInformation();
+
             FileManager.ValidateDataPaths();
             FileManager.FileType = FileManager.OutputFormats.XML;
-            Project = new ProjectInformation();
 
             string filename = System.IO.Path.Combine(FileManager.GetDataPath(SaveDataTypes.Root), "Project.Xml");
             if (System.IO.File.Exists(filename))

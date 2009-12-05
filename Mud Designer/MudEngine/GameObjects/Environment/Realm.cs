@@ -14,5 +14,16 @@ namespace MudDesigner.MudEngine.Objects.Environment
         {
             Zones = new List<Zone>();
         }
+
+        public Zone GetZone(string ZoneName)
+        {
+            foreach(Zone zone in Zones)
+            {
+                if (zone.Name == ZoneName)
+                    return zone;
+            }
+
+            return null;
+        }
     }
 }

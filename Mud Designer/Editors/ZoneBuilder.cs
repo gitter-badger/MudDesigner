@@ -19,24 +19,11 @@ namespace MudDesigner.Editors
 {
     public partial class ZoneBuilder : Form
     {
+        internal bool IsEditingExisting = false;
+
         public ZoneBuilder()
         {
             InitializeComponent();
-            Program.Room = new Room();
-            Program.Zone = new Zone();
-            Program.ScriptEngine = new ScriptingEngine();
-            Program.ScriptEngine.CompileStyle = ManagedScripting.Compilers.BaseCompiler.ScriptCompileStyle.CompileToMemory;
-            Program.ScriptEngine.Compiler = ScriptingEngine.CompilerSelections.SourceCompiler;
-
-            propertyZone.SelectedObject = Program.Zone;
-            txtScript.Text = Program.Zone.Script;
-
-            string[] rooms = System.IO.Directory.GetFiles(FileManager.GetDataPath(SaveDataTypes.Rooms), "*.room");
-
-            foreach (string room in rooms)
-            {
-                lstRooms.Items.Add(System.IO.Path.GetFileNameWithoutExtension(room));
-            }
         }
 
         private void btnRoomEditor_Click(object sender, EventArgs e)
@@ -73,17 +60,39 @@ namespace MudDesigner.Editors
             this.Show();
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void btnSaveZone_Click(object sender, EventArgs e)
         {
+            //build the save file name
             string path = FileManager.GetDataPath(SaveDataTypes.Zones);
-            string filename = System.IO.Path.Combine(path, Program.Zone.Name + ".zone");
+            string zoneFile = System.IO.Path.Combine(path, Program.Zone.Name + ".zone");
+            path = FileManager.GetDataPath(SaveDataTypes.Realms);
+            string realmFile = System.IO.Path.Combine(path, Program.Realm.Name + ".realm");
 
-            FileManager.Save(filename, Program.Zone);
+            //get a copy of the currently running (but hidden) realm explorer
+            RealmExplorer form = (RealmExplorer)Program.CurrentEditor;
+
+            //Check if the currently selected realm currently contains the zone already
+            //in its lists of zones. It could already be there and the user is just editing it.
+            if (!form.lstZones.Items.Contains(Program.Zone.Name))
+                form.lstZones.Items.Add(Program.Zone.Name);
+
+            //Set the zones owning realm to the current realm
+            Program.Zone.Realm = Program.Realm.Name;
+
+            //Add the zone to the realms zone collection
+            if (!Program.Realm.Zones.Contains(Program.Realm.GetZone(Program.Zone.Name)))
+                Program.Realm.Zones.Add(Program.Zone);
+
+            //Save the zone and modified realm.
+            FileManager.Save(zoneFile, Program.Zone);
+            FileManager.Save(realmFile, Program.Realm);
+
+            //Reset the zone and room
+            Program.Zone = new Zone();
+            Program.Room = new Room();
+            propertyZone.SelectedObject = Program.Zone;
+
+            this.Close();
         }
 
         private void btnNewZone_Click(object sender, EventArgs e)
@@ -106,6 +115,36 @@ namespace MudDesigner.Editors
                 + "  }\n"
                 + "}\n";
             MessageBox.Show(Program.ScriptEngine.Compile(code), "Script Compiling", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ZoneBuilder_Load(object sender, EventArgs e)
+        {
+                Program.Room = new Room();
+                Program.Zone = new Zone();
+                Program.ScriptEngine = new ScriptingEngine();
+                Program.ScriptEngine.CompileStyle = ManagedScripting.Compilers.BaseCompiler.ScriptCompileStyle.CompileToMemory;
+                Program.ScriptEngine.Compiler = ScriptingEngine.CompilerSelections.SourceCompiler;
+
+                if (IsEditingExisting)
+                {
+                    string path = FileManager.GetDataPath(SaveDataTypes.Zones);
+                    RealmExplorer form = (RealmExplorer)Program.CurrentEditor;
+                    string zoneFile = form.lstZones.SelectedItem.ToString() + ".zone";
+                    string fullFilePath = System.IO.Path.Combine(path, zoneFile);
+
+                    Program.Zone = (Zone)FileManager.Load(fullFilePath, Program.Zone);
+                }
+
+                propertyZone.SelectedObject = Program.Zone;
+                txtScript.Text = Program.Zone.Script;
+
+                string[] rooms = System.IO.Directory.GetFiles(FileManager.GetDataPath(SaveDataTypes.Rooms), "*.room");
+
+                foreach (string room in rooms)
+                {
+                    lstRooms.Items.Add(System.IO.Path.GetFileNameWithoutExtension(room));
+                }
+
         }
     }
 }

@@ -26,14 +26,12 @@ namespace MudDesigner.Editors
             InitializeComponent();
             Program.Zone = new Zone();
             Program.Realm = new Realm();
+            Program.Room = new Room();
+
             _AvailableZones = new List<Zone>();
             Program.ScriptEngine = new ScriptingEngine();
             Program.ScriptEngine.CompileStyle = ManagedScripting.Compilers.BaseCompiler.ScriptCompileStyle.CompileToMemory;
             Program.ScriptEngine.KeepTempFiles = false;
-
-            BuildZoneLists();
-
-            SetupScript();
 
             propertyRealm.SelectedObject = Program.Realm;
 
@@ -42,83 +40,20 @@ namespace MudDesigner.Editors
                 lstRealms.Items.Add(System.IO.Path.GetFileNameWithoutExtension(realm));
         }
 
-        private void BuildZoneLists()
-        {
-            string[] zones = System.IO.Directory.GetFiles(FileManager.GetDataPath(SaveDataTypes.Zones), "*.zone");
-            bool available = true;
-            lstAvailableZones.Items.Clear();
-            lstZonesInRealm.Items.Clear();
-
-            foreach (string zone in zones)
-            {
-                string[] realms = System.IO.Directory.GetFiles(FileManager.GetDataPath(SaveDataTypes.Realms), "*.realm");
-
-                foreach (string realm in realms)
-                {
-                    Realm r = new Realm();
-                    r = (Realm)ManagedScripting.XmlSerialization.Load(realm, r);
-
-                    foreach (Zone z in r.Zones)
-                    {
-                        if (z.Name == System.IO.Path.GetFileNameWithoutExtension(zone))
-                        {
-                            available = false;
-                            break;
-                        }
-                    }
-                    if (!available)
-                        break;
-                }
-
-                if (!available)
-                    break;
-                else
-                {
-                    lstAvailableZones.Items.Add(System.IO.Path.GetFileNameWithoutExtension(zone));
-                }
-            }
-        }
-
-        private void SetupScript()
-        {
-            //Check if the realm script is empty. If so then generate a standard script for it.
-            if (String.IsNullOrEmpty(Program.Realm.Script))
-            {
-                //Instance a new method helper class
-                ManagedScripting.CodeBuilding.MethodSetup method = new ManagedScripting.CodeBuilding.MethodSetup();
-                string script = "";
-                //Setup our method. All objects inheriting from BaseObject will have the standard
-                //methods created for them.
-                string[] names = new string[] { "OnCreate", "OnDestroy", "OnEnter", "OnExit" };
-                foreach (string name in names)
-                {
-                    method = new ManagedScripting.CodeBuilding.MethodSetup();
-                    method.Name = name;
-                    method.ReturnType = "void";
-                    method.IsOverride = true;
-                    method.Modifier = ManagedScripting.CodeBuilding.ClassGenerator.Modifiers.Public;
-                    method.Code = new string[] { "base." + method.Name + "();" };
-                    script = script.Insert(Program.Realm.Script.Length, method.Create() + "\n");
-                }
-                Program.Realm.Script = script;
-            }
-        }
-
         private void btnNewRealm_Click(object sender, EventArgs e)
         {
             Program.Zone = new Zone();
             Program.Realm = new Realm();
-            SetupScript();
+            lstZones.Items.Clear();
 
             propertyRealm.SelectedObject = Program.Realm;
-            lstZonesInRealm.Items.Clear();
         }
 
         private void btnSaveRealm_Click(object sender, EventArgs e)
         {
             string path = FileManager.GetDataPath(SaveDataTypes.Realms);
-            string filename = System.IO.Path.Combine(path, Program.Realm.Name + ".realm");
-            if (System.IO.File.Exists(filename))
+            string realmFile = System.IO.Path.Combine(path, Program.Realm.Name + ".realm");
+            if (System.IO.File.Exists(realmFile))
             {
                 DialogResult result = MessageBox.Show("File exists!\nOverwrite?", "Realm Explorer", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -126,7 +61,7 @@ namespace MudDesigner.Editors
                     return;
             }
 
-            FileManager.Save(filename, Program.Realm);
+            FileManager.Save(realmFile, Program.Realm);
 
             if (!lstRealms.Items.Contains(Program.Realm.Name))
             lstRealms.Items.Add(Program.Realm.Name);
@@ -136,26 +71,15 @@ namespace MudDesigner.Editors
         {
             if (lstRealms.SelectedIndex == -1)
                 return;
+            lstZones.Items.Clear();
 
             string path = FileManager.GetDataPath(SaveDataTypes.Realms);
-            string filename = System.IO.Path.Combine(path, lstRealms.SelectedItem.ToString() + ".realm");
-            Program.Realm = (Realm)FileManager.Load(filename, Program.Realm);
+            string realmFile = System.IO.Path.Combine(path, lstRealms.SelectedItem.ToString() + ".realm");
+            Program.Realm = (Realm)FileManager.Load(realmFile, Program.Realm);
 
             propertyRealm.SelectedObject = Program.Realm;
-            lstZonesInRealm.Items.Clear();
-
-            foreach (string file in System.IO.Directory.GetFiles(FileManager.GetDataPath(SaveDataTypes.Zones), "*.zone"))
-            {
-                Zone zone = new Zone();
-                zone = (Zone)FileManager.Load(file, zone);
-
-                if (zone.Realm == Program.Realm.Name)
-                    lstZonesInRealm.Items.Add(zone.Name);
-                else if (String.IsNullOrEmpty(zone.Realm))
-                {
-                    lstAvailableZones.Items.Add(zone.Name);
-                }
-            }
+            foreach (Zone zone in Program.Realm.Zones)
+                lstZones.Items.Add(zone.Name);
         }
 
         private void btnDeleteRealm_Click(object sender, EventArgs e)
@@ -173,8 +97,8 @@ namespace MudDesigner.Editors
                 return;
 
             string path = FileManager.GetDataPath(SaveDataTypes.Realms);
-            string filename = System.IO.Path.Combine(path, lstRealms.SelectedItem.ToString() + ".realm");
-            System.IO.File.Delete(filename);
+            string realmFile = System.IO.Path.Combine(path, lstRealms.SelectedItem.ToString() + ".realm");
+            System.IO.File.Delete(realmFile);
             lstRealms.Items.Remove(lstRealms.SelectedItem);
         }
 
@@ -194,7 +118,7 @@ namespace MudDesigner.Editors
         private void btnValidateScript_Click(object sender, EventArgs e)
         {
             Program.ScriptEngine.Compiler = ManagedScripting.ScriptingEngine.CompilerSelections.SourceCompiler;
-            Program.ScriptEngine.AddReference(Application.StartupPath + "/MUDEngine.dll");
+            Program.ScriptEngine.AddReference(FileManager.GetDataPath(SaveDataTypes.Root) + "\\Mud Designer.exe");
             string code = "namespace MudDesigner.MudEngine.Objects.Environment\n"
                 + "{\n"
                 + "  public class " + Program.Realm.Name.Replace(" ", "") + " : Realm\n"
@@ -207,9 +131,20 @@ namespace MudDesigner.Editors
 
         private void btnBuildZone_Click(object sender, EventArgs e)
         {
+            if (lstRealms.SelectedIndex == -1)
+            {
+                MessageBox.Show("Select a Realm to build a Zone for.", "Realm Explorer", MessageBoxButtons.OK);
+                return;
+            }
+            
             ZoneBuilder form = new ZoneBuilder();
+
+            if (btnBuildZone.Text == "Edit Selected Zone")
+                form.IsEditingExisting = true;
+
             form.Show();
             this.Hide();
+                
             while (form.Created)
                 Application.DoEvents();
 
@@ -218,23 +153,59 @@ namespace MudDesigner.Editors
             this.Show();
         }
 
-        private void btnPlaceZone_Click(object sender, EventArgs e)
+        private void btnMoveZone_Click(object sender, EventArgs e)
         {
-            if (lstAvailableZones.SelectedIndex == -1)
+            if (lstZones.SelectedIndex == -1)
             {
-                MessageBox.Show("Please select a Zone to add!", "Realm Explorer");
+                MessageBox.Show("Select a Zone to transfer first.", "Realm Explorer", MessageBoxButtons.OK);
                 return;
             }
 
-            string path = FileManager.GetDataPath(SaveDataTypes.Zones);
-            string filename = System.IO.Path.Combine(path, lstAvailableZones.SelectedItem.ToString() + ".zone");
-            Zone zone = new Zone();
-            zone = (Zone)FileManager.Load(filename, zone);
-            zone.Realm = Program.Realm.Name;
-            FileManager.Save(filename, zone);
+            ExistingRealms form = new ExistingRealms(lstZones.SelectedItem.ToString());
+            form.Show();
+            this.Hide();
 
-            Program.Realm.Zones.Add(zone);
-            lstZonesInRealm.Items.Add(zone.Name);
+            while (form.Created)
+                Application.DoEvents();
+
+            this.Show();
+        }
+
+        private void btnUnselectZone_Click(object sender, EventArgs e)
+        {
+            lstZones.SelectedIndex = -1;
+            btnBuildZone.Text = "Build A Zone";
+        }
+
+        private void btnDeleteZone_Click(object sender, EventArgs e)
+        {
+            if (lstZones.SelectedIndex == -1)
+            {
+                MessageBox.Show("No zone selected for deletion.", "Realm Explorer", MessageBoxButtons.OK);
+                return;
+            }
+
+            Zone zone = Program.Realm.GetZone(lstZones.SelectedItem.ToString());
+            if (zone == null)
+            {
+                MessageBox.Show("Error deleting Zone.", "Realm Exporer");
+                return;
+            }
+
+            Program.Realm.Zones.Remove(zone);
+            string filename = System.IO.Path.Combine(FileManager.GetDataPath(SaveDataTypes.Zones), lstZones.SelectedItem.ToString() + ".zone");
+
+            if (System.IO.File.Exists(filename))
+                System.IO.File.Delete(filename);
+
+            filename = System.IO.Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), Program.Realm.Name + ".realm");
+            lstZones.Items.Remove(lstZones.SelectedItem);
+            FileManager.Save(filename, Program.Realm);
+        }
+
+        private void lstZones_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnBuildZone.Text = "Edit Selected Zone";
         }
     }
 }

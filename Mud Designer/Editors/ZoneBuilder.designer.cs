@@ -32,9 +32,7 @@
             this.propertyZone = new System.Windows.Forms.PropertyGrid();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnValidateScript = new System.Windows.Forms.Button();
-            this.btnClose = new System.Windows.Forms.Button();
             this.btnSaveZone = new System.Windows.Forms.Button();
-            this.btnDeleteZone = new System.Windows.Forms.Button();
             this.btnNewZone = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -77,23 +75,21 @@
             // propertyZone
             // 
             this.propertyZone.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyZone.Location = new System.Drawing.Point(0, 99);
+            this.propertyZone.Location = new System.Drawing.Point(0, 71);
             this.propertyZone.Name = "propertyZone";
-            this.propertyZone.Size = new System.Drawing.Size(210, 475);
+            this.propertyZone.Size = new System.Drawing.Size(210, 503);
             this.propertyZone.TabIndex = 1;
             this.propertyZone.ToolbarVisible = false;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.btnValidateScript);
-            this.groupBox1.Controls.Add(this.btnClose);
             this.groupBox1.Controls.Add(this.btnSaveZone);
-            this.groupBox1.Controls.Add(this.btnDeleteZone);
             this.groupBox1.Controls.Add(this.btnNewZone);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(210, 99);
+            this.groupBox1.Size = new System.Drawing.Size(210, 71);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Zone Setup";
@@ -101,23 +97,13 @@
             // btnValidateScript
             // 
             this.btnValidateScript.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnValidateScript.Location = new System.Drawing.Point(3, 73);
+            this.btnValidateScript.Location = new System.Drawing.Point(3, 45);
             this.btnValidateScript.Name = "btnValidateScript";
             this.btnValidateScript.Size = new System.Drawing.Size(204, 23);
             this.btnValidateScript.TabIndex = 13;
             this.btnValidateScript.Text = "Validate Script";
             this.btnValidateScript.UseVisualStyleBackColor = true;
             this.btnValidateScript.Click += new System.EventHandler(this.btnValidateScript_Click);
-            // 
-            // btnClose
-            // 
-            this.btnClose.Location = new System.Drawing.Point(110, 48);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(97, 23);
-            this.btnClose.TabIndex = 12;
-            this.btnClose.Text = "Close Builder";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnSaveZone
             // 
@@ -128,15 +114,6 @@
             this.btnSaveZone.Text = "Save Zone";
             this.btnSaveZone.UseVisualStyleBackColor = true;
             this.btnSaveZone.Click += new System.EventHandler(this.btnSaveZone_Click);
-            // 
-            // btnDeleteZone
-            // 
-            this.btnDeleteZone.Location = new System.Drawing.Point(3, 48);
-            this.btnDeleteZone.Name = "btnDeleteZone";
-            this.btnDeleteZone.Size = new System.Drawing.Size(102, 23);
-            this.btnDeleteZone.TabIndex = 10;
-            this.btnDeleteZone.Text = "Delete Zone";
-            this.btnDeleteZone.UseVisualStyleBackColor = true;
             // 
             // btnNewZone
             // 
@@ -238,7 +215,7 @@
             this.btnRoomEditor.UseVisualStyleBackColor = true;
             this.btnRoomEditor.Click += new System.EventHandler(this.btnRoomEditor_Click);
             // 
-            // frmMain
+            // ZoneBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -247,9 +224,10 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmMain";
+            this.Name = "ZoneBuilder";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Zone Builder";
+            this.Load += new System.EventHandler(this.ZoneBuilder_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
@@ -269,9 +247,7 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnValidateScript;
-        private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnSaveZone;
-        private System.Windows.Forms.Button btnDeleteZone;
         private System.Windows.Forms.Button btnNewZone;
         private System.Windows.Forms.PropertyGrid propertyZone;
         private System.Windows.Forms.SplitContainer splitContainer2;
