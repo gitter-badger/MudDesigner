@@ -80,8 +80,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.groupBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(529, 488);
-            this.splitContainer1.SplitterDistance = 193;
+            this.splitContainer1.Size = new System.Drawing.Size(536, 488);
+            this.splitContainer1.SplitterDistance = 208;
             this.splitContainer1.TabIndex = 0;
             // 
             // splitContainer2
@@ -98,7 +98,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.propertyRealm);
-            this.splitContainer2.Size = new System.Drawing.Size(193, 488);
+            this.splitContainer2.Size = new System.Drawing.Size(208, 488);
             this.splitContainer2.SplitterDistance = 220;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -108,7 +108,7 @@
             this.lstRealms.FormattingEnabled = true;
             this.lstRealms.Location = new System.Drawing.Point(0, 0);
             this.lstRealms.Name = "lstRealms";
-            this.lstRealms.Size = new System.Drawing.Size(193, 212);
+            this.lstRealms.Size = new System.Drawing.Size(208, 212);
             this.lstRealms.Sorted = true;
             this.lstRealms.TabIndex = 0;
             this.lstRealms.SelectedIndexChanged += new System.EventHandler(this.lstRealms_SelectedIndexChanged);
@@ -118,7 +118,7 @@
             this.propertyRealm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyRealm.Location = new System.Drawing.Point(0, 0);
             this.propertyRealm.Name = "propertyRealm";
-            this.propertyRealm.Size = new System.Drawing.Size(193, 264);
+            this.propertyRealm.Size = new System.Drawing.Size(208, 264);
             this.propertyRealm.TabIndex = 0;
             this.propertyRealm.ToolbarVisible = false;
             // 
@@ -191,7 +191,7 @@
             // 
             // btnUnselectZone
             // 
-            this.btnUnselectZone.Location = new System.Drawing.Point(211, 175);
+            this.btnUnselectZone.Location = new System.Drawing.Point(214, 175);
             this.btnUnselectZone.Name = "btnUnselectZone";
             this.btnUnselectZone.Size = new System.Drawing.Size(95, 23);
             this.btnUnselectZone.TabIndex = 15;
@@ -255,7 +255,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(197, 48);
+            this.btnClose.Location = new System.Drawing.Point(200, 47);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(109, 23);
             this.btnClose.TabIndex = 11;
@@ -265,7 +265,7 @@
             // 
             // btnSaveRealm
             // 
-            this.btnSaveRealm.Location = new System.Drawing.Point(197, 19);
+            this.btnSaveRealm.Location = new System.Drawing.Point(200, 19);
             this.btnSaveRealm.Name = "btnSaveRealm";
             this.btnSaveRealm.Size = new System.Drawing.Size(109, 23);
             this.btnSaveRealm.TabIndex = 10;
@@ -330,7 +330,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(529, 488);
+            this.ClientSize = new System.Drawing.Size(536, 488);
             this.Controls.Add(this.splitContainer1);
             this.Name = "RealmExplorer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

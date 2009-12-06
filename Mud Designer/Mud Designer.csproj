@@ -65,7 +65,7 @@
     <Compile Include="MudEngine\GameObjects\Environment\InitialLocation.cs" />
     <Compile Include="MudEngine\GameObjects\Environment\Realm.cs" />
     <Compile Include="MudEngine\GameObjects\Environment\Room.cs" />
-    <Compile Include="MudEngine\GameObjects\Environment\TravelDirections.cs" />
+    <Compile Include="MudEngine\GameObjects\TravelDirections.cs" />
     <Compile Include="MudEngine\GameObjects\Environment\Zone.cs" />
     <Compile Include="MudEngine\Interfaces\IGameObject.cs" />
     <Compile Include="MudEngine\Interfaces\IQuest.cs" />

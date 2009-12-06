@@ -14,6 +14,12 @@ namespace MudDesigner.MudEngine.Objects.Environment
             set;
         }
 
+        [System.ComponentModel.Browsable(false)]
         public List<Room> Rooms { get; set; }
+
+        public Zone()
+        {
+            Rooms = new List<Room>();
+        }
     }
 }

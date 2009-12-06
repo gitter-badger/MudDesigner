@@ -6,11 +6,10 @@ using MudDesigner.MudEngine.Objects.Environment;
 
 namespace MudDesigner.MudEngine.Objects.Environment
 {
-    [Unusable(true)]
     public struct StartingLocation
     {
-        public Room Room;
-        public Zone Zone;
-        public Realm Realm;
+        public string Room;
+        public string Zone;
+        public string Realm;
     }
 }

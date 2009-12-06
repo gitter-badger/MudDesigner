@@ -24,6 +24,12 @@ namespace MudDesigner.Editors
         public ZoneBuilder()
         {
             InitializeComponent();
+            string realmPath = FileManager.GetDataPath(SaveDataTypes.Realms);
+            string[] realms = System.IO.Directory.GetFiles(realmPath, "*.realm");
+            comRealms.DataSource = realms;
+
+            if (comRealms.Items.Count != 0)
+                comRealms.SelectedIndex = comRealms.Items.IndexOf(Program.Zone.Realm);
         }
 
         private void btnRoomEditor_Click(object sender, EventArgs e)
@@ -45,6 +51,7 @@ namespace MudDesigner.Editors
             form = null;
 
             this.Show();
+            propertyRoom.SelectedObject = Program.Room;
         }
 
         private void btnSaveZone_Click(object sender, EventArgs e)
@@ -139,13 +146,39 @@ namespace MudDesigner.Editors
 
         private void lstRooms_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (lstRooms.SelectedIndex == -1)
+                return;
+
             btnRoomEditor.Text = "Edit Selected Room";
+
+            string roomPath = FileManager.GetDataPath(SaveDataTypes.Rooms);
+            string roomFile = System.IO.Path.Combine(roomPath, lstRooms.SelectedItem.ToString() + ".room");
+            Program.Room = (Room)FileManager.Load(roomFile, Program.Room);
+            //propertyRoom.Enabled = true;
+            propertyRoom.SelectedObject = Program.Room;
         }
 
         private void btnUnselectRoom_Click(object sender, EventArgs e)
         {
             lstRooms.SelectedIndex = -1;
             btnRoomEditor.Text = "Build A Room";
+            Program.Room = new Room();
+            propertyRoom.SelectedObject = null;
+        }
+
+        private void btnCurrentRealm_Click(object sender, EventArgs e)
+        {
+            comRealms.SelectedIndex = comRealms.Items.IndexOf(Program.Zone.Realm);
+        }
+
+        private void comRealms_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comRealms.SelectedIndex == -1)
+                return;
+
+            string zonePath = FileManager.GetDataPath(SaveDataTypes.Zones);
+            string[] zones = System.IO.Directory.GetFiles(zonePath, "*.zone");
+            lstZonesInRealm.DataSource = zones;
         }
     }
 }

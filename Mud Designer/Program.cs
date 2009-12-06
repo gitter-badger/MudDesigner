@@ -13,7 +13,7 @@ namespace MudDesigner
 {
     static class Program
     {
-        public static ProjectInformation Project{ get; set; }
+        public static ProjectInformation Project { get; set; }
         public static Realm Realm { get; set; }
         public static Zone Zone {get;set;}
         public static Room Room { get; set; }

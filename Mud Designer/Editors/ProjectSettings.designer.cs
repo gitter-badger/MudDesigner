@@ -34,11 +34,11 @@
             this.txtStory = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.lstRooms = new System.Windows.Forms.CheckedListBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.lstZones = new System.Windows.Forms.CheckedListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.comRealms = new System.Windows.Forms.ComboBox();
+            this.lstZones = new System.Windows.Forms.ListBox();
+            this.lstRooms = new System.Windows.Forms.ListBox();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -117,16 +117,6 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Available Rooms";
             // 
-            // lstRooms
-            // 
-            this.lstRooms.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstRooms.FormattingEnabled = true;
-            this.lstRooms.Location = new System.Drawing.Point(3, 16);
-            this.lstRooms.Name = "lstRooms";
-            this.lstRooms.Size = new System.Drawing.Size(143, 154);
-            this.lstRooms.TabIndex = 1;
-            this.lstRooms.ThreeDCheckBoxes = true;
-            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.lstZones);
@@ -136,17 +126,6 @@
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Available Zones";
-            // 
-            // lstZones
-            // 
-            this.lstZones.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstZones.FormattingEnabled = true;
-            this.lstZones.Location = new System.Drawing.Point(3, 16);
-            this.lstZones.Name = "lstZones";
-            this.lstZones.Size = new System.Drawing.Size(143, 109);
-            this.lstZones.TabIndex = 0;
-            this.lstZones.ThreeDCheckBoxes = true;
-            this.lstZones.SelectedIndexChanged += new System.EventHandler(this.lstZones_SelectedIndexChanged);
             // 
             // groupBox2
             // 
@@ -169,6 +148,26 @@
             this.comRealms.Size = new System.Drawing.Size(146, 21);
             this.comRealms.TabIndex = 0;
             this.comRealms.SelectedIndexChanged += new System.EventHandler(this.comRealms_SelectedIndexChanged);
+            // 
+            // lstZones
+            // 
+            this.lstZones.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstZones.FormattingEnabled = true;
+            this.lstZones.Location = new System.Drawing.Point(3, 16);
+            this.lstZones.Name = "lstZones";
+            this.lstZones.Size = new System.Drawing.Size(143, 108);
+            this.lstZones.TabIndex = 0;
+            this.lstZones.SelectedIndexChanged += new System.EventHandler(this.lstZones_SelectedIndexChanged);
+            // 
+            // lstRooms
+            // 
+            this.lstRooms.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstRooms.FormattingEnabled = true;
+            this.lstRooms.Location = new System.Drawing.Point(3, 16);
+            this.lstRooms.Name = "lstRooms";
+            this.lstRooms.Size = new System.Drawing.Size(143, 160);
+            this.lstRooms.TabIndex = 1;
+            this.lstRooms.SelectedIndexChanged += new System.EventHandler(this.lstRooms_SelectedIndexChanged);
             // 
             // ProjectSettings
             // 
@@ -205,10 +204,10 @@
         private System.Windows.Forms.ComboBox comRealms;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.CheckedListBox lstRooms;
-        private System.Windows.Forms.CheckedListBox lstZones;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.RichTextBox txtStory;
+        private System.Windows.Forms.ListBox lstZones;
+        private System.Windows.Forms.ListBox lstRooms;
 
     }
 }

@@ -36,8 +36,6 @@
             this.btnProjectSettings = new System.Windows.Forms.Button();
             this.btnCurrencyEditor = new System.Windows.Forms.Button();
             this.btnRealmExplorer = new System.Windows.Forms.Button();
-            this.btnZoneBuilder = new System.Windows.Forms.Button();
-            this.btnRoomDesigner = new System.Windows.Forms.Button();
             this.tabFunctions = new System.Windows.Forms.TabPage();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
@@ -98,7 +96,7 @@
             this.btnLogo.Name = "btnLogo";
             this.btnLogo.Size = new System.Drawing.Size(639, 154);
             this.btnLogo.TabIndex = 0;
-            this.btnLogo.Text = "MUD Designer HUB \r\nBeta 1.0\r\n";
+            this.btnLogo.Text = "MUD Designer HUB \r\nPreview Release 1\r\n";
             this.btnLogo.UseVisualStyleBackColor = false;
             // 
             // tabEditors
@@ -127,8 +125,6 @@
             this.flowLayoutPanel1.Controls.Add(this.btnProjectSettings);
             this.flowLayoutPanel1.Controls.Add(this.btnCurrencyEditor);
             this.flowLayoutPanel1.Controls.Add(this.btnRealmExplorer);
-            this.flowLayoutPanel1.Controls.Add(this.btnZoneBuilder);
-            this.flowLayoutPanel1.Controls.Add(this.btnRoomDesigner);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -170,30 +166,6 @@
             this.btnRealmExplorer.Text = "Realm Explorer";
             this.btnRealmExplorer.UseVisualStyleBackColor = true;
             this.btnRealmExplorer.Click += new System.EventHandler(this.btnRealmExplorer_Click);
-            // 
-            // btnZoneBuilder
-            // 
-            this.btnZoneBuilder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnZoneBuilder.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnZoneBuilder.Location = new System.Drawing.Point(462, 3);
-            this.btnZoneBuilder.Name = "btnZoneBuilder";
-            this.btnZoneBuilder.Size = new System.Drawing.Size(147, 55);
-            this.btnZoneBuilder.TabIndex = 4;
-            this.btnZoneBuilder.Text = "Zone Builder";
-            this.btnZoneBuilder.UseVisualStyleBackColor = true;
-            this.btnZoneBuilder.Click += new System.EventHandler(this.btnZoneBuilder_Click);
-            // 
-            // btnRoomDesigner
-            // 
-            this.btnRoomDesigner.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRoomDesigner.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRoomDesigner.Location = new System.Drawing.Point(3, 64);
-            this.btnRoomDesigner.Name = "btnRoomDesigner";
-            this.btnRoomDesigner.Size = new System.Drawing.Size(147, 55);
-            this.btnRoomDesigner.TabIndex = 5;
-            this.btnRoomDesigner.Text = "Room Designer";
-            this.btnRoomDesigner.UseVisualStyleBackColor = true;
-            this.btnRoomDesigner.Click += new System.EventHandler(this.btnRoomDesigner_Click);
             // 
             // tabFunctions
             // 
@@ -379,8 +351,6 @@
         private System.Windows.Forms.RichTextBox txtScript;
         private System.Windows.Forms.TabPage tabVariables;
         private System.Windows.Forms.Button btnRealmExplorer;
-        private System.Windows.Forms.Button btnZoneBuilder;
-        private System.Windows.Forms.Button btnRoomDesigner;
     }
 }
 

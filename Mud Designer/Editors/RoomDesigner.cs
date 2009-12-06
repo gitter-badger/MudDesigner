@@ -291,7 +291,6 @@ namespace MudDesigner.Editors
             string zonePath = FileManager.GetDataPath(SaveDataTypes.Zones);
             string zoneFile = System.IO.Path.Combine(zonePath, Program.Zone.Filename);
             FileManager.Save(zoneFile, Program.Zone);
-            Program.Room = new Room();
             this.Close();
         }
 

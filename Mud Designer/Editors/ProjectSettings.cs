@@ -31,113 +31,50 @@ namespace MudDesigner.Editors
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            //Get all of the realms currently created.
-            string[] files = System.IO.Directory.GetFiles(FileManager.GetDataPath(SaveDataTypes.Realms), "*.realm");
-
             //Aquire the Project settings and show them.
             propertyGrid1.SelectedObject = Program.Project;
             txtStory.Text = Program.Project.Story;
 
-            //Add each realm found into the combo box of available realms.
-            foreach (string realm in files)
+            string realmPath = FileManager.GetDataPath(SaveDataTypes.Realms);
+            string[] realms = System.IO.Directory.GetFiles(realmPath, "*.realm");
+            foreach (string file in realms)
             {
-                //Instance a new realm
-                Realm newRealm = new Realm();
-                //De-serialize the current realm.
-                newRealm = (Realm)FileManager.Load(realm, newRealm);
-                //Add it to the available realms combo box.
-                comRealms.Items.Add(newRealm.Name);
+                Realm realm = new Realm();
+                realm = (Realm)FileManager.Load(file, realm);
+                comRealms.Items.Add(realm.Name);
             }
 
-            //If the Project already has a starting realm, then select it.
-            if (Program.Project.InitialLocation.Realm != null)
-            {
-                comRealms.SelectedIndex = comRealms.Items.IndexOf(Program.Project.InitialLocation.Realm.Name);
-            }
-                //If there is no starting realm, but a realm does exist, select the first one in the list.
-            else if (comRealms.Items.Count != 0)
-            {
+            if (comRealms.Items.Count != 0)
                 comRealms.SelectedIndex = 0;
-            }
-        }//End frmMain_Load
+        }
 
         private void comRealms_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lstZones.Items.Clear();
-
-            //Check if we have any realms first.
-            if (comRealms.Items.Count == 0)
+            if (comRealms.SelectedIndex == -1)
                 return;
 
-            string[] files = System.IO.Directory.GetFiles(Application.StartupPath + @"\Data\Zones");
-
-            //Add each zone found into the list box.
-            foreach (string zone in files)
+            string realmPath = FileManager.GetDataPath(SaveDataTypes.Realms);
+            string realmFile = System.IO.Path.Combine(realmPath, comRealms.SelectedItem.ToString() + ".realm");
+            Realm realm = new Realm();
+            realm = (Realm)FileManager.Load(realmFile, realm);
+            foreach (Zone zone in realm.Zones)
             {
-                Zone newZone = new Zone();
-                //De-serialize the current zone.
-                newZone = (Zone)FileManager.Load(zone, newZone);
-                //Add it to the available zones list box
-                lstZones.Items.Add(newZone.Name);
-                zones.Add(newZone);
+                lstZones.Items.Add(zone.Name);
             }
-
-            //Check if we have an existing realm that's set as our startup.
-            if (Program.Project.InitialLocation.Realm != null)
-            {
-                //Check if we have the Initial realm selected, if so we need to check the initial Zone as well
-                if (comRealms.SelectedItem.ToString() == Program.Project.InitialLocation.Realm.Name)
-                {
-                    //We have an initial zone, so lets check it in the list box
-                    if (Program.Project.InitialLocation.Zone != null)
-                    {
-                        if (lstZones.Items.Contains(Program.Project.InitialLocation.Zone.Name))
-                        {
-                            lstZones.SelectedIndex = lstZones.Items.IndexOf(Program.Project.InitialLocation.Zone.Name);
-                        }
-                    }
-                }
-            }
-        }//End comRealms
+        }
 
         private void lstZones_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string realm = comRealms.SelectedItem.ToString();
-            string zone = lstZones.SelectedItem.ToString();
-
-            lstRooms.Items.Clear();
-
-            //Check if we have any realms first.
-            if (comRealms.Items.Count == 0)
+            if (lstZones.SelectedIndex == -1)
                 return;
 
-            string[] files = System.IO.Directory.GetFiles(Application.StartupPath + @"\Data\Rooms");
-
-            //Add each room found into the list box.
-            foreach (string room in files)
+            string zonePath = FileManager.GetDataPath(SaveDataTypes.Zones);
+            string zoneFile = System.IO.Path.Combine(zonePath, lstZones.SelectedItem.ToString() + ".zone");
+            Zone zone = new Zone();
+            zone = (Zone)FileManager.Load(zoneFile, zone);
+            foreach (Room room in zone.Rooms)
             {
-                Room newRoom = new Room();
-                //De-serialize the current Room.
-                newRoom = (Room)FileManager.Load(room, newRoom);
-                //Add it to the available rooms list box
-                lstRooms.Items.Add(newRoom.Name);
-                rooms.Add(newRoom);
-            }
-
-            //Now select the initial room if its listed.
-            string selectedRealm = comRealms.SelectedItem.ToString();
-            string selectedZone = lstZones.SelectedItem.ToString();
-            string initialRealm = Program.Project.InitialLocation.Realm.Name;
-            string initialZone = Program.Project.InitialLocation.Zone.Name;
-
-            //The realm and zone that matches the initial are selected, so lets select the initial room next.
-            if ((initialRealm == selectedRealm) && (initialZone == selectedZone))
-            {
-                foreach (Room room in rooms)
-                {
-                    if (lstRooms.Items.Contains(room.Name))
-                        lstRooms.SelectedIndex = lstRooms.Items.IndexOf(room.Name);
-                }
+                lstRooms.Items.Add(room.Name);
             }
         }
 
@@ -150,6 +87,26 @@ namespace MudDesigner.Editors
         {
             string filename = System.IO.Path.Combine(FileManager.GetDataPath(SaveDataTypes.Root), "Project.xml");
             FileManager.Save(filename, Program.Project);
+        }
+
+        private void lstRooms_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string roomPath = FileManager.GetDataPath(SaveDataTypes.Rooms);
+            string zonePath = FileManager.GetDataPath(SaveDataTypes.Zones);
+            string realmPath = FileManager.GetDataPath(SaveDataTypes.Realms);
+
+            string roomFile = System.IO.Path.Combine(roomPath, lstRooms.SelectedItem.ToString() + ".room");
+            string zoneFile = System.IO.Path.Combine(zonePath, lstZones.SelectedItem.ToString() + ".zone");
+            string realmFile = System.IO.Path.Combine(realmPath, comRealms.SelectedItem.ToString() + ".realm");
+
+            Room room = new Room();
+            Zone zone = new Zone();
+            Realm realm = new Realm();
+            room = (Room)FileManager.Load(roomFile, room);
+            zone = (Zone)FileManager.Load(zoneFile, zone);
+            realm = (Realm)FileManager.Load(realmFile, realm);
+
+            //TODO: Fix broken InitialLocation
         }
     }
 }

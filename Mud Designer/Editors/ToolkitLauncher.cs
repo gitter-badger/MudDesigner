@@ -19,10 +19,7 @@ namespace MudDesigner.Editors
         public ToolkitLauncher()
         {
             InitializeComponent();
-            this.Text = "Mud Designer Beta " + version;
-
-            MessageBox.Show("Please note that the Zone Builder and Room Designers will be removed from this editor as a point of access here pretty soon.\n"
-                + "If you need to access one of these editors you will need to use the Realm Explorer.", "Mud Designer");
+            this.Text = "Mud Designer Preview Release " + version;
         }
         
         private void btnProjectSettings_Click(object sender, EventArgs e)
@@ -55,39 +52,9 @@ namespace MudDesigner.Editors
             this.Show();
         }
         
-        private void btnRoomDesigner_Click(object sender, EventArgs e)
-        {
-            RoomDesigner form = new RoomDesigner();
-            Program.CurrentEditor = form;
-
-            form.Show();
-            this.Hide();
-            while (form.Created)
-                Application.DoEvents();
-
-            form = null;
-
-            this.Show();
-        }
-
         private void btnRealmExplorer_Click(object sender, EventArgs e)
         {
             RealmExplorer form = new RealmExplorer();
-            Program.CurrentEditor = form;
-
-            form.Show();
-            this.Hide();
-            while (form.Created)
-                Application.DoEvents();
-
-            form = null;
-
-            this.Show();
-        }
-
-        private void btnZoneBuilder_Click(object sender, EventArgs e)
-        {
-            ZoneBuilder form = new ZoneBuilder();
             Program.CurrentEditor = form;
 
             form.Show();
