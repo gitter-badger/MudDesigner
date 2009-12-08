@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Xml.Serialization;
 using System.ComponentModel;
 
 namespace MudDesigner.MudEngine.GameObjects.Environment
 {
+    [XmlInclude(typeof(ConnectedRoom))]
     public class Door
     {
-        public enum AvailableDoorStates
+        public struct ConnectedRoom
         {
-            Uninstalled,
-            Installed,
+            public string Realm;
+            public string Zone;
+            public string Room;
         }
 
         [Category("Door Settings")]
@@ -38,26 +40,16 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
             set;
         }
 
-        [Category("Door Settings")]
-        [DefaultValue(false)]
-        public bool IsRealmEntrance
-        { get; set; }
-
-        [Category("Door Settings")]
-        [DefaultValue(false)]
-        public bool IsRealmExit { get; set; }
-
-        [Category("Door Settings")]
-        [Description("Sets if the door is installed and useable within the room or not.")]
-        [DefaultValue(AvailableDoorStates.Uninstalled)]
-        public AvailableDoorStates DoorState
+        [Browsable(false)]
+        public AvailableTravelDirections TravelDirection
         {
             get;
             set;
         }
 
-        [Browsable(false)]
-        public AvailableTravelDirections TravelDirection
+        [ReadOnly(true)]
+        [Category("Door Settings")]
+        public ConnectedRoom TravelRoom
         {
             get;
             set;

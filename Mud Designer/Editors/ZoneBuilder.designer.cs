@@ -42,7 +42,7 @@
             this.tabZone = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.propertyZone = new System.Windows.Forms.PropertyGrid();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabRoomDesigner = new System.Windows.Forms.TabPage();
             this.Help = new System.Windows.Forms.ToolTip(this.components);
             this.containerMain.Panel1.SuspendLayout();
             this.containerMain.Panel2.SuspendLayout();
@@ -161,7 +161,7 @@
             // tabZoneBuilder
             // 
             this.tabZoneBuilder.Controls.Add(this.tabZone);
-            this.tabZoneBuilder.Controls.Add(this.tabPage2);
+            this.tabZoneBuilder.Controls.Add(this.tabRoomDesigner);
             this.tabZoneBuilder.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabZoneBuilder.Location = new System.Drawing.Point(0, 0);
             this.tabZoneBuilder.Name = "tabZoneBuilder";
@@ -200,15 +200,15 @@
             this.propertyZone.TabIndex = 0;
             this.propertyZone.ToolbarVisible = false;
             // 
-            // tabPage2
+            // tabRoomDesigner
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(443, 445);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabRoomDesigner.Location = new System.Drawing.Point(4, 22);
+            this.tabRoomDesigner.Name = "tabRoomDesigner";
+            this.tabRoomDesigner.Padding = new System.Windows.Forms.Padding(3);
+            this.tabRoomDesigner.Size = new System.Drawing.Size(443, 445);
+            this.tabRoomDesigner.TabIndex = 1;
+            this.tabRoomDesigner.Text = "Room Designer";
+            this.tabRoomDesigner.UseVisualStyleBackColor = true;
             // 
             // Help
             // 
@@ -253,7 +253,7 @@
         private System.Windows.Forms.ListBox lstZones;
         private System.Windows.Forms.TabControl tabZoneBuilder;
         private System.Windows.Forms.TabPage tabZone;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabRoomDesigner;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.PropertyGrid propertyZone;
         private System.Windows.Forms.Button btnSelectRealm;
