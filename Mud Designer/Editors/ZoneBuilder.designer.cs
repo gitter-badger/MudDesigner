@@ -30,18 +30,28 @@
         {
             this.components = new System.ComponentModel.Container();
             this.containerMain = new System.Windows.Forms.SplitContainer();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lstZones = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnSelectRealm = new System.Windows.Forms.Button();
             this.btnLoadRealm = new System.Windows.Forms.Button();
             this.btnSaveRealm = new System.Windows.Forms.Button();
             this.btnDeleteRealm = new System.Windows.Forms.Button();
             this.btnNewRealm = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lstZones = new System.Windows.Forms.ListBox();
+            this.tabZoneBuilder = new System.Windows.Forms.TabControl();
+            this.tabZone = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.propertyZone = new System.Windows.Forms.PropertyGrid();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.Help = new System.Windows.Forms.ToolTip(this.components);
             this.containerMain.Panel1.SuspendLayout();
+            this.containerMain.Panel2.SuspendLayout();
             this.containerMain.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.tabZoneBuilder.SuspendLayout();
+            this.tabZone.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // containerMain
@@ -54,18 +64,38 @@
             // 
             this.containerMain.Panel1.Controls.Add(this.groupBox1);
             this.containerMain.Panel1.Controls.Add(this.groupBox2);
-            this.containerMain.Size = new System.Drawing.Size(758, 471);
-            this.containerMain.SplitterDistance = 203;
+            // 
+            // containerMain.Panel2
+            // 
+            this.containerMain.Panel2.Controls.Add(this.tabZoneBuilder);
+            this.containerMain.Size = new System.Drawing.Size(650, 471);
+            this.containerMain.SplitterDistance = 195;
             this.containerMain.TabIndex = 0;
             // 
-            // toolTip1
+            // groupBox1
             // 
-            this.toolTip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.toolTip1.IsBalloon = true;
-            this.toolTip1.ToolTipTitle = "Zone Designer";
+            this.groupBox1.Controls.Add(this.lstZones);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(0, 100);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(195, 371);
+            this.groupBox1.TabIndex = 37;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Zone List";
+            // 
+            // lstZones
+            // 
+            this.lstZones.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstZones.FormattingEnabled = true;
+            this.lstZones.Location = new System.Drawing.Point(3, 16);
+            this.lstZones.Name = "lstZones";
+            this.lstZones.Size = new System.Drawing.Size(189, 342);
+            this.lstZones.Sorted = true;
+            this.lstZones.TabIndex = 17;
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btnSelectRealm);
             this.groupBox2.Controls.Add(this.btnLoadRealm);
             this.groupBox2.Controls.Add(this.btnSaveRealm);
             this.groupBox2.Controls.Add(this.btnDeleteRealm);
@@ -73,10 +103,21 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(203, 76);
+            this.groupBox2.Size = new System.Drawing.Size(195, 100);
             this.groupBox2.TabIndex = 35;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Zone Setup";
+            // 
+            // btnSelectRealm
+            // 
+            this.btnSelectRealm.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnSelectRealm.Location = new System.Drawing.Point(3, 74);
+            this.btnSelectRealm.Name = "btnSelectRealm";
+            this.btnSelectRealm.Size = new System.Drawing.Size(189, 23);
+            this.btnSelectRealm.TabIndex = 12;
+            this.btnSelectRealm.Text = "Select Realm";
+            this.btnSelectRealm.UseVisualStyleBackColor = true;
+            this.btnSelectRealm.Click += new System.EventHandler(this.btnSelectRealm_Click);
             // 
             // btnLoadRealm
             // 
@@ -86,6 +127,7 @@
             this.btnLoadRealm.TabIndex = 11;
             this.btnLoadRealm.Text = "Load Zone";
             this.btnLoadRealm.UseVisualStyleBackColor = true;
+            this.btnLoadRealm.Click += new System.EventHandler(this.btnLoadRealm_Click);
             // 
             // btnSaveRealm
             // 
@@ -95,6 +137,7 @@
             this.btnSaveRealm.TabIndex = 10;
             this.btnSaveRealm.Text = "Save Zone";
             this.btnSaveRealm.UseVisualStyleBackColor = true;
+            this.btnSaveRealm.Click += new System.EventHandler(this.btnSaveRealm_Click);
             // 
             // btnDeleteRealm
             // 
@@ -113,44 +156,86 @@
             this.btnNewRealm.TabIndex = 8;
             this.btnNewRealm.Text = "New Zone";
             this.btnNewRealm.UseVisualStyleBackColor = true;
+            this.btnNewRealm.Click += new System.EventHandler(this.btnNewRealm_Click);
             // 
-            // groupBox1
+            // tabZoneBuilder
             // 
-            this.groupBox1.Controls.Add(this.lstZones);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(0, 76);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(203, 395);
-            this.groupBox1.TabIndex = 37;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Zone List";
+            this.tabZoneBuilder.Controls.Add(this.tabZone);
+            this.tabZoneBuilder.Controls.Add(this.tabPage2);
+            this.tabZoneBuilder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabZoneBuilder.Location = new System.Drawing.Point(0, 0);
+            this.tabZoneBuilder.Name = "tabZoneBuilder";
+            this.tabZoneBuilder.SelectedIndex = 0;
+            this.tabZoneBuilder.Size = new System.Drawing.Size(451, 471);
+            this.tabZoneBuilder.TabIndex = 0;
             // 
-            // lstZones
+            // tabZone
             // 
-            this.lstZones.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstZones.FormattingEnabled = true;
-            this.lstZones.Location = new System.Drawing.Point(3, 16);
-            this.lstZones.Name = "lstZones";
-            this.lstZones.Size = new System.Drawing.Size(197, 368);
-            this.lstZones.Sorted = true;
-            this.lstZones.TabIndex = 17;
+            this.tabZone.Controls.Add(this.groupBox3);
+            this.tabZone.Location = new System.Drawing.Point(4, 22);
+            this.tabZone.Name = "tabZone";
+            this.tabZone.Padding = new System.Windows.Forms.Padding(3);
+            this.tabZone.Size = new System.Drawing.Size(443, 445);
+            this.tabZone.TabIndex = 0;
+            this.tabZone.Text = "Zone Editing";
+            this.tabZone.UseVisualStyleBackColor = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.propertyZone);
+            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Left;
+            this.groupBox3.Location = new System.Drawing.Point(3, 3);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(253, 439);
+            this.groupBox3.TabIndex = 0;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Zone Properties";
+            // 
+            // propertyZone
+            // 
+            this.propertyZone.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyZone.Location = new System.Drawing.Point(3, 16);
+            this.propertyZone.Name = "propertyZone";
+            this.propertyZone.Size = new System.Drawing.Size(247, 420);
+            this.propertyZone.TabIndex = 0;
+            this.propertyZone.ToolbarVisible = false;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(443, 445);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // Help
+            // 
+            this.Help.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.Help.IsBalloon = true;
+            this.Help.ToolTipTitle = "Zone Designer";
             // 
             // ZoneBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(758, 471);
+            this.ClientSize = new System.Drawing.Size(650, 471);
             this.Controls.Add(this.containerMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ZoneBuilder";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Zone Builder";
+            this.Text = "Zone Builder (No Realm Selected)";
             this.containerMain.Panel1.ResumeLayout(false);
+            this.containerMain.Panel2.ResumeLayout(false);
             this.containerMain.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.tabZoneBuilder.ResumeLayout(false);
+            this.tabZone.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -158,7 +243,7 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer containerMain;
-        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolTip Help;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnLoadRealm;
         private System.Windows.Forms.Button btnSaveRealm;
@@ -166,6 +251,12 @@
         private System.Windows.Forms.Button btnNewRealm;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ListBox lstZones;
+        private System.Windows.Forms.TabControl tabZoneBuilder;
+        private System.Windows.Forms.TabPage tabZone;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.PropertyGrid propertyZone;
+        private System.Windows.Forms.Button btnSelectRealm;
 
     }
 }

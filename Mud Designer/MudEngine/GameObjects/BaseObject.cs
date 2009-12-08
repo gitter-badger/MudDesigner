@@ -22,7 +22,7 @@ namespace MudDesigner.MudEngine.GameObjects
             set
             {
                 this._Name = value;
-                this.Filename = value + ".realm";
+                this.Filename = value + "." + this.GetType().Name.ToLower();
             }
         }
 
@@ -37,7 +37,6 @@ namespace MudDesigner.MudEngine.GameObjects
         public string Script { get; set; }
 
         [Category("Object Setup")]
-        [DefaultValue("New Realm.realm")]
         public string Filename
         {
             //Returns the name of the object + the objects Type as it's extension.
@@ -48,21 +47,60 @@ namespace MudDesigner.MudEngine.GameObjects
             }
             set 
             {
-                if (!value.EndsWith(".realm"))
-                    value += ".realm";
+                string extension = "." + this.GetType().Name.ToLower();
+                if (!value.EndsWith(extension))
+                    value += extension;
 
                 this._Filename = value; 
             }
         }
 
-        private string _Filename = "New Realm.realm";
-        private string _Name = "New Realm";
+        [Category("Senses")]
+        [DefaultValue("You don't smell anything unsual.")]
+        public string Smell
+        {
+            get;
+            set;
+        }
+
+        [Category("Senses")]
+        [DefaultValue("You hear nothing of interest.")]
+        public string Listen
+        {
+            get;
+            set;
+        }
+
+        [Category("Senses")]
+        [DefaultValue("You feel nothing.")]
+        public string Feel
+        {
+            get;
+            set;
+        }
+
+        [Category("Environment Information")]
+        [DefaultValue(false)]
+        public bool IsSafe
+        {
+            get;
+            set;
+        }
+
+        private string _Filename = "";
+        private string _Name = "";
         /// <summary>
         /// Initializes the base object
         /// </summary>
         public BaseObject()
         {
             Script = "";
+            _Name = "New " + this.GetType().Name;
+            _Filename = _Name + "." + this.GetType().Name.ToLower();
+
+            this.Feel = "You feel nothing.";
+            this.Listen = "You hear nothing of interest.";
+            this.Smell = "You don't smell anything unsual.";
             this.Name = DefaultName();
             SetupScript();
         }

@@ -39,8 +39,9 @@
             this.btnTransfer.Name = "btnTransfer";
             this.btnTransfer.Size = new System.Drawing.Size(242, 23);
             this.btnTransfer.TabIndex = 1;
-            this.btnTransfer.Text = "Transfer Zone to Selected Realm";
+            this.btnTransfer.Text = "Select Realm";
             this.btnTransfer.UseVisualStyleBackColor = true;
+            this.btnTransfer.Click += new System.EventHandler(this.btnTransfer_Click);
             // 
             // lstRealms
             // 
@@ -49,7 +50,8 @@
             this.lstRealms.Location = new System.Drawing.Point(0, 0);
             this.lstRealms.Name = "lstRealms";
             this.lstRealms.Size = new System.Drawing.Size(242, 277);
-            this.lstRealms.TabIndex = 2;
+            this.lstRealms.TabIndex = 3;
+            this.lstRealms.SelectedIndexChanged += new System.EventHandler(this.lstRealms_SelectedIndexChanged);
             // 
             // ExistingRealms
             // 

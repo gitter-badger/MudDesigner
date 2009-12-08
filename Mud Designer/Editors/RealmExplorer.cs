@@ -79,7 +79,7 @@ namespace MudDesigner.Editors
             }
         }
 
-        bool RealmExists(string realm)
+        internal bool RealmExists(string realm)
         {
             string realmPath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), realm);
             if (Directory.Exists(realm))
