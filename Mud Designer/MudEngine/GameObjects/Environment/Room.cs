@@ -5,7 +5,7 @@ using System.Text;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
-namespace MudDesigner.MudEngine.Objects.Environment
+namespace MudDesigner.MudEngine.GameObjects.Environment
 {
     public class Room : BaseObject
     {
@@ -57,9 +57,39 @@ namespace MudDesigner.MudEngine.Objects.Environment
             set;
         }
 
+        [Category("Room Information")]
+        [ReadOnly(true)]
+        public string DoorList
+        {
+            get
+            {
+                string installed = "";
+                if (this.InstalledDoors.Count != 0)
+                {
+                    foreach (Door d in InstalledDoors)
+                    {
+                        installed += d.TravelDirection.ToString() + ",";
+                    }
+                    if (InstalledDoors.Count >= 2)
+                    {
+                        installed = installed.Substring(0, installed.Length - 1);
+                    }
+                    return installed;
+                }
+                else
+                    return "None Installed.";
+            }
+        }
+
         [Browsable(false)]
         public List<Door> InstalledDoors;
 
+        [Browsable(false)]
+        public string ParentZone
+        {
+            get;
+            set;
+        }
         public Room()
         {
             InstalledDoors = new List<Door>();

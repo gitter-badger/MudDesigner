@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 
-namespace MudDesigner.MudEngine.Objects
+namespace MudDesigner.MudEngine.GameObjects
 {
     public class Currency : BaseObject
     {

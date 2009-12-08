@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MudDesigner.MudEngine.Objects.Environment
+namespace MudDesigner.MudEngine.GameObjects.Environment
 {
     public class Zone : BaseObject
     {

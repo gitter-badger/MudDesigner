@@ -66,5 +66,20 @@ namespace MudDesigner.Editors
 
             this.Show();
         }
+
+        private void btnZoneBuilder_Click(object sender, EventArgs e)
+        {
+            ZoneBuilder form = new ZoneBuilder();
+            Program.CurrentEditor = form;
+
+            form.Show();
+            this.Hide();
+            while (form.Created)
+                Application.DoEvents();
+
+            form = null;
+
+            this.Show();
+        }
     }
 }

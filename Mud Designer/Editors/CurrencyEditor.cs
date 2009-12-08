@@ -11,8 +11,8 @@ using System.Windows.Forms;
 using MudDesigner.MudEngine;
 using MudDesigner.MudEngine.Attributes;
 using MudDesigner.MudEngine.FileSystem;
-using MudDesigner.MudEngine.Objects;
-using MudDesigner.MudEngine.Objects.Environment;
+using MudDesigner.MudEngine.GameObjects;
+using MudDesigner.MudEngine.GameObjects.Environment;
 
 namespace MudDesigner.Editors
 {
@@ -56,8 +56,9 @@ namespace MudDesigner.Editors
             //nothing selected.
             if (lstCurrencies.SelectedIndex == -1)
                 return;
-
-            _Currency = (Currency)FileManager.Load(Application.StartupPath + @"\Data\Currency\" + lstCurrencies.SelectedItem.ToString() + ".xml", _Currency);
+            
+            string filePath = System.IO.Path.Combine(FileManager.GetDataPath(SaveDataTypes.Currency), lstCurrencies.SelectedItem.ToString() + ".xml");
+            _Currency = (Currency)FileManager.Load(filePath, _Currency);
             propertyGrid1.SelectedObject = _Currency;
         }
 
@@ -80,7 +81,8 @@ namespace MudDesigner.Editors
                 return;
 
             //Delete the files and remove from the list.
-            System.IO.File.Delete(Application.StartupPath + @"\Data\Currency\" + lstCurrencies.SelectedItem.ToString() + ".xml");
+            string filePath = System.IO.Path.Combine(FileManager.GetDataPath(SaveDataTypes.Currency), lstCurrencies.SelectedItem.ToString() + ".xml");
+            System.IO.File.Delete(filePath);
             lstCurrencies.Items.Remove(lstCurrencies.SelectedItem);
 
             //Re-instance the currency and set it within the propertygrid.

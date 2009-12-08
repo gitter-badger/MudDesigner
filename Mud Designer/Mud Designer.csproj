@@ -59,18 +59,20 @@
       <DependentUpon>ExistingRealms.cs</DependentUpon>
     </Compile>
     <Compile Include="MudEngine\FileSystem\SaveDataTypes.cs" />
+    <Compile Include="MudEngine\GameObjects\Bag.cs" />
     <Compile Include="MudEngine\GameObjects\BaseObject.cs" />
     <Compile Include="MudEngine\GameObjects\Currency.cs" />
     <Compile Include="MudEngine\GameObjects\Environment\Door.cs" />
-    <Compile Include="MudEngine\GameObjects\Environment\InitialLocation.cs" />
+    <Compile Include="MudEngine\GameObjects\Environment\StartingLocation.cs" />
     <Compile Include="MudEngine\GameObjects\Environment\Realm.cs" />
     <Compile Include="MudEngine\GameObjects\Environment\Room.cs" />
-    <Compile Include="MudEngine\GameObjects\TravelDirections.cs" />
+    <Compile Include="MudEngine\GameObjects\Environment\TravelDirections.cs" />
     <Compile Include="MudEngine\GameObjects\Environment\Zone.cs" />
+    <Compile Include="MudEngine\GameObjects\Items\BaseItem.cs" />
     <Compile Include="MudEngine\Interfaces\IGameObject.cs" />
     <Compile Include="MudEngine\Interfaces\IQuest.cs" />
     <Compile Include="MudEngine\Interfaces\IRuleSet.cs" />
-    <Compile Include="MudEngine\ProjectInformation.cs" />
+    <Compile Include="MudEngine\GameManagement\ProjectInformation.cs" />
     <Compile Include="MudEngine\Attributes\UnusableAttribute.cs" />
     <Compile Include="Editors\CurrencyEditor.cs">
       <SubType>Form</SubType>
@@ -90,12 +92,6 @@
     <Compile Include="Editors\ToolkitLauncher.designer.cs">
       <DependentUpon>ToolkitLauncher.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editors\RoomDesigner.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Editors\RoomDesigner.designer.cs">
-      <DependentUpon>RoomDesigner.cs</DependentUpon>
-    </Compile>
     <Compile Include="Editors\RealmExplorer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,7 +105,7 @@
       <DependentUpon>ProjectSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="MudEngine\FileSystem\FileManager.cs" />
-    <Compile Include="MudEngine\QuestSetup.cs" />
+    <Compile Include="MudEngine\GameManagement\QuestSetup.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Editors\CurrencyEditor.resx">
@@ -126,10 +122,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\ToolkitLauncher.resx">
       <DependentUpon>ToolkitLauncher.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editors\RoomDesigner.resx">
-      <DependentUpon>RoomDesigner.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\RealmExplorer.resx">

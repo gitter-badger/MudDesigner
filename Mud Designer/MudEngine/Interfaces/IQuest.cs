@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MudDesigner.MudEngine.Objects;
+using MudDesigner.MudEngine.GameObjects;
 namespace MudDesigner.MudEngine.Interfaces
 {
     interface IQuest

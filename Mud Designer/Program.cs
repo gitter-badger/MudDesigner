@@ -6,8 +6,12 @@ using System.Windows.Forms;
 using MudDesigner.MudEngine;
 using MudDesigner.MudEngine.Attributes;
 using MudDesigner.MudEngine.FileSystem;
-using MudDesigner.MudEngine.Objects;
-using MudDesigner.MudEngine.Objects.Environment;
+using MudDesigner.MudEngine.GameManagement;
+using MudDesigner.MudEngine.GameObjects;
+using MudDesigner.MudEngine.GameObjects.Environment;
+//Script Engine
+using ManagedScripting;
+using ManagedScripting.CodeBuilding;
 
 namespace MudDesigner
 {
@@ -17,7 +21,7 @@ namespace MudDesigner
         public static Realm Realm { get; set; }
         public static Zone Zone {get;set;}
         public static Room Room { get; set; }
-        public static ManagedScripting.ScriptingEngine ScriptEngine { get; set; }
+        public static ScriptingEngine ScriptEngine { get; set; }
         public static Form CurrentEditor { get; set; }
 
         /// <summary>

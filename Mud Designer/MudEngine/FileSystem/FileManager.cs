@@ -105,5 +105,21 @@ namespace MudDesigner.MudEngine.FileSystem
             else
                 return System.IO.Path.Combine(rootPath, DataType.ToString());
         }
+
+        public static string GetDataPath(string Realm, string Zone)
+        {
+            string assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().ManifestModule.FullyQualifiedName;
+            string assemblyName = System.IO.Path.GetFileName(assemblyPath);
+            string installBase = assemblyPath.Substring(0, assemblyPath.Length - assemblyName.Length);
+            string rootPath = System.IO.Path.Combine(installBase, "Data");
+            string realmsPath = System.IO.Path.Combine(rootPath, Realm);
+
+            return System.IO.Path.Combine(realmsPath, Zone);
+        }
+
+        public static string GetDataPath(string Realm, string Zone, string Room)
+        {
+            return System.IO.Path.Combine(GetDataPath(Realm, Zone), Room);
+        }
     }
 }

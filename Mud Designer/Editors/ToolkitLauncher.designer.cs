@@ -48,6 +48,7 @@
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.txtScript = new System.Windows.Forms.RichTextBox();
             this.tabVariables = new System.Windows.Forms.TabPage();
+            this.btnZoneBuilder = new System.Windows.Forms.Button();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -125,6 +126,7 @@
             this.flowLayoutPanel1.Controls.Add(this.btnProjectSettings);
             this.flowLayoutPanel1.Controls.Add(this.btnCurrencyEditor);
             this.flowLayoutPanel1.Controls.Add(this.btnRealmExplorer);
+            this.flowLayoutPanel1.Controls.Add(this.btnZoneBuilder);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -300,6 +302,18 @@
             this.tabVariables.Text = "Variables";
             this.tabVariables.UseVisualStyleBackColor = true;
             // 
+            // btnZoneBuilder
+            // 
+            this.btnZoneBuilder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnZoneBuilder.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnZoneBuilder.Location = new System.Drawing.Point(462, 3);
+            this.btnZoneBuilder.Name = "btnZoneBuilder";
+            this.btnZoneBuilder.Size = new System.Drawing.Size(147, 55);
+            this.btnZoneBuilder.TabIndex = 4;
+            this.btnZoneBuilder.Text = "Zone Builder";
+            this.btnZoneBuilder.UseVisualStyleBackColor = true;
+            this.btnZoneBuilder.Click += new System.EventHandler(this.btnZoneBuilder_Click);
+            // 
             // ToolkitLauncher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -351,6 +365,7 @@
         private System.Windows.Forms.RichTextBox txtScript;
         private System.Windows.Forms.TabPage tabVariables;
         private System.Windows.Forms.Button btnRealmExplorer;
+        private System.Windows.Forms.Button btnZoneBuilder;
     }
 }
 

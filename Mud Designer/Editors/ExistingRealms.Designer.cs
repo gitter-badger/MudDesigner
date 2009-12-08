@@ -41,7 +41,6 @@
             this.btnTransfer.TabIndex = 1;
             this.btnTransfer.Text = "Transfer Zone to Selected Realm";
             this.btnTransfer.UseVisualStyleBackColor = true;
-            this.btnTransfer.Click += new System.EventHandler(this.btnTransfer_Click);
             // 
             // lstRealms
             // 

@@ -5,7 +5,7 @@ using System.Text;
 
 using System.ComponentModel;
 
-namespace MudDesigner.MudEngine.Objects.Environment
+namespace MudDesigner.MudEngine.GameObjects.Environment
 {
     public class Door
     {
@@ -37,6 +37,15 @@ namespace MudDesigner.MudEngine.Objects.Environment
             get;
             set;
         }
+
+        [Category("Door Settings")]
+        [DefaultValue(false)]
+        public bool IsRealmEntrance
+        { get; set; }
+
+        [Category("Door Settings")]
+        [DefaultValue(false)]
+        public bool IsRealmExit { get; set; }
 
         [Category("Door Settings")]
         [Description("Sets if the door is installed and useable within the room or not.")]

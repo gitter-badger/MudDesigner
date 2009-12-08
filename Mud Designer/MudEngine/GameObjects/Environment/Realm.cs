@@ -2,25 +2,44 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
+using System.ComponentModel;
 
-namespace MudDesigner.MudEngine.Objects.Environment
+using MudDesigner.MudEngine.FileSystem;
+using MudDesigner.MudEngine.GameObjects;
+
+namespace MudDesigner.MudEngine.GameObjects.Environment
 {
     public class Realm : BaseObject
     {
-        [System.ComponentModel.Browsable(false)]
-        public List<Zone> Zones { get; set; }
+        [Browsable(false)]
+        public List<string> Zones { get; set; }
 
         public Realm()
         {
-            Zones = new List<Zone>();
+            Zones = new List<string>();
         }
 
         public Zone GetZone(string ZoneName)
         {
-            foreach(Zone zone in Zones)
+            //correct the zonename if needed
+            if (!ZoneName.EndsWith(".zone"))
+                ZoneName += ".zone";
+
+            //build our path
+            string realmPath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), this.Name);
+
+            //get a collection of all the zones within the realm
+            string[] files = Directory.GetFiles(realmPath, "*.zone");
+            Zone zone = new Zone();
+
+            //look four our zone file
+            foreach (string file in files)
             {
-                if (zone.Name == ZoneName)
-                    return zone;
+                if (file == ZoneName)
+                {
+                    string zonePath = Path.Combine(realmPath, Path.GetDirectoryName(file));
+                }
             }
 
             return null;

@@ -29,24 +29,13 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.propertySettings = new System.Windows.Forms.PropertyGrid();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.txtStory = new System.Windows.Forms.RichTextBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.comRealms = new System.Windows.Forms.ComboBox();
-            this.lstZones = new System.Windows.Forms.ListBox();
-            this.lstRooms = new System.Windows.Forms.ListBox();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -57,30 +46,30 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.propertyGrid1);
+            this.splitContainer1.Panel1.Controls.Add(this.propertySettings);
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.groupBox5);
-            this.splitContainer1.Panel2.Controls.Add(this.groupBox1);
             this.splitContainer1.Size = new System.Drawing.Size(573, 390);
             this.splitContainer1.SplitterDistance = 254;
             this.splitContainer1.TabIndex = 0;
             // 
-            // propertyGrid1
+            // propertySettings
             // 
-            this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
-            this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(254, 390);
-            this.propertyGrid1.TabIndex = 0;
+            this.propertySettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertySettings.Location = new System.Drawing.Point(0, 0);
+            this.propertySettings.Name = "propertySettings";
+            this.propertySettings.Size = new System.Drawing.Size(254, 390);
+            this.propertySettings.TabIndex = 0;
+            this.propertySettings.ToolbarVisible = false;
             // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.txtStory);
-            this.groupBox5.Location = new System.Drawing.Point(3, 214);
+            this.groupBox5.Location = new System.Drawing.Point(3, 3);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(309, 173);
+            this.groupBox5.Size = new System.Drawing.Size(309, 384);
             this.groupBox5.TabIndex = 1;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Project Story";
@@ -90,84 +79,10 @@
             this.txtStory.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtStory.Location = new System.Drawing.Point(3, 16);
             this.txtStory.Name = "txtStory";
-            this.txtStory.Size = new System.Drawing.Size(303, 154);
+            this.txtStory.Size = new System.Drawing.Size(303, 365);
             this.txtStory.TabIndex = 2;
             this.txtStory.Text = "";
             this.txtStory.TextChanged += new System.EventHandler(this.txtStory_TextChanged);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.groupBox4);
-            this.groupBox1.Controls.Add(this.groupBox3);
-            this.groupBox1.Controls.Add(this.groupBox2);
-            this.groupBox1.Location = new System.Drawing.Point(3, 0);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(309, 208);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Initial Room Setup";
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.lstRooms);
-            this.groupBox4.Location = new System.Drawing.Point(158, 16);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(149, 186);
-            this.groupBox4.TabIndex = 2;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Available Rooms";
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.lstZones);
-            this.groupBox3.Location = new System.Drawing.Point(6, 64);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(149, 138);
-            this.groupBox3.TabIndex = 1;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Available Zones";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.comRealms);
-            this.groupBox2.Location = new System.Drawing.Point(3, 16);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(152, 42);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Available Realms";
-            // 
-            // comRealms
-            // 
-            this.comRealms.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comRealms.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comRealms.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comRealms.FormattingEnabled = true;
-            this.comRealms.Location = new System.Drawing.Point(3, 16);
-            this.comRealms.Name = "comRealms";
-            this.comRealms.Size = new System.Drawing.Size(146, 21);
-            this.comRealms.TabIndex = 0;
-            this.comRealms.SelectedIndexChanged += new System.EventHandler(this.comRealms_SelectedIndexChanged);
-            // 
-            // lstZones
-            // 
-            this.lstZones.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstZones.FormattingEnabled = true;
-            this.lstZones.Location = new System.Drawing.Point(3, 16);
-            this.lstZones.Name = "lstZones";
-            this.lstZones.Size = new System.Drawing.Size(143, 108);
-            this.lstZones.TabIndex = 0;
-            this.lstZones.SelectedIndexChanged += new System.EventHandler(this.lstZones_SelectedIndexChanged);
-            // 
-            // lstRooms
-            // 
-            this.lstRooms.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstRooms.FormattingEnabled = true;
-            this.lstRooms.Location = new System.Drawing.Point(3, 16);
-            this.lstRooms.Name = "lstRooms";
-            this.lstRooms.Size = new System.Drawing.Size(143, 160);
-            this.lstRooms.TabIndex = 1;
-            this.lstRooms.SelectedIndexChanged += new System.EventHandler(this.lstRooms_SelectedIndexChanged);
             // 
             // ProjectSettings
             // 
@@ -187,10 +102,6 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -198,16 +109,9 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.PropertyGrid propertyGrid1;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ComboBox comRealms;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.PropertyGrid propertySettings;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.RichTextBox txtStory;
-        private System.Windows.Forms.ListBox lstZones;
-        private System.Windows.Forms.ListBox lstRooms;
 
     }
 }

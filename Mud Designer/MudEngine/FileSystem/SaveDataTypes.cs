@@ -4,8 +4,6 @@
     {
         Root,
         Currency,
-        Rooms,
-        Zones,
         Realms,
     }
 }
