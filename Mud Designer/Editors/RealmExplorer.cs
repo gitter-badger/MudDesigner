@@ -31,13 +31,9 @@ namespace MudDesigner.Editors
 
             //instance our collections
             realms = new List<Realm>();
-            zones = new List<Zone>();
-            rooms = new List<Room>();
 
             //instance the environments
-            Program.Zone = new Zone();
             Program.Realm = new Realm();
-            Program.Room = new Room();
 
             //instance the script engine
             Program.ScriptEngine = new ScriptingEngine();
@@ -92,8 +88,6 @@ namespace MudDesigner.Editors
         {
             //Reinstance all of our environments
             Program.Realm = new Realm();
-            Program.Zone = new Zone();
-            Program.Room = new Room();
  
             propertyRealm.SelectedObject = Program.Realm;
             txtScript.Text = Program.Realm.Script;
@@ -187,15 +181,6 @@ namespace MudDesigner.Editors
                     propertyRealm.SelectedObject = r;
                     break;
                 }
-            }
-
-            //now that the realm is loaded, we need to loop through each
-            //zone within the realm, and load it's rooms, scanning for available
-            //exists for the realm to use.
-            foreach (string zone in Program.Realm.Zones)
-            {
-                Zone z = new Zone();
-                z = Program.Realm.GetZone(zone);
             }
         }
 

@@ -31,7 +31,7 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
 
             //get a collection of all the zones within the realm
             string[] files = Directory.GetFiles(realmPath, "*.zone");
-            Zone zone = new Zone();
+            Zone zone = new Zone(this);
 
             //look four our zone file
             foreach (string file in files)

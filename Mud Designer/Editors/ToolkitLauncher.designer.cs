@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.btnLogo = new System.Windows.Forms.Button();
             this.tabEditors = new System.Windows.Forms.TabControl();
@@ -36,6 +37,7 @@
             this.btnProjectSettings = new System.Windows.Forms.Button();
             this.btnCurrencyEditor = new System.Windows.Forms.Button();
             this.btnRealmExplorer = new System.Windows.Forms.Button();
+            this.btnZoneBuilder = new System.Windows.Forms.Button();
             this.tabFunctions = new System.Windows.Forms.TabPage();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
@@ -48,7 +50,7 @@
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.txtScript = new System.Windows.Forms.RichTextBox();
             this.tabVariables = new System.Windows.Forms.TabPage();
-            this.btnZoneBuilder = new System.Windows.Forms.Button();
+            this.Help = new System.Windows.Forms.ToolTip(this.components);
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -78,7 +80,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabEditors);
-            this.splitContainer1.Size = new System.Drawing.Size(639, 383);
+            this.splitContainer1.Size = new System.Drawing.Size(627, 383);
             this.splitContainer1.SplitterDistance = 154;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -95,7 +97,7 @@
             this.btnLogo.ForeColor = System.Drawing.Color.Gray;
             this.btnLogo.Location = new System.Drawing.Point(0, 0);
             this.btnLogo.Name = "btnLogo";
-            this.btnLogo.Size = new System.Drawing.Size(639, 154);
+            this.btnLogo.Size = new System.Drawing.Size(627, 154);
             this.btnLogo.TabIndex = 0;
             this.btnLogo.Text = "MUD Designer HUB \r\nPreview Release 1\r\n";
             this.btnLogo.UseVisualStyleBackColor = false;
@@ -107,7 +109,7 @@
             this.tabEditors.Location = new System.Drawing.Point(0, 0);
             this.tabEditors.Name = "tabEditors";
             this.tabEditors.SelectedIndex = 0;
-            this.tabEditors.Size = new System.Drawing.Size(639, 225);
+            this.tabEditors.Size = new System.Drawing.Size(627, 225);
             this.tabEditors.TabIndex = 0;
             // 
             // tabPage1
@@ -116,7 +118,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(631, 199);
+            this.tabPage1.Size = new System.Drawing.Size(619, 199);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Available Editors";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -130,7 +132,7 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(625, 193);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(613, 193);
             this.flowLayoutPanel1.TabIndex = 1;
             // 
             // btnProjectSettings
@@ -142,6 +144,8 @@
             this.btnProjectSettings.Size = new System.Drawing.Size(147, 55);
             this.btnProjectSettings.TabIndex = 0;
             this.btnProjectSettings.Text = "Project Settings";
+            this.Help.SetToolTip(this.btnProjectSettings, "Managed your MUDs project settings. \r\nSettings include day/night transitions, sta" +
+                    "rting locations and various other MUD startup options");
             this.btnProjectSettings.UseVisualStyleBackColor = true;
             this.btnProjectSettings.Click += new System.EventHandler(this.btnProjectSettings_Click);
             // 
@@ -154,6 +158,8 @@
             this.btnCurrencyEditor.Size = new System.Drawing.Size(147, 55);
             this.btnCurrencyEditor.TabIndex = 1;
             this.btnCurrencyEditor.Text = "Currency Editor";
+            this.Help.SetToolTip(this.btnCurrencyEditor, "Edits the currency that players will use for transactions\r\nduring your MUDs gamep" +
+                    "lay.");
             this.btnCurrencyEditor.UseVisualStyleBackColor = true;
             this.btnCurrencyEditor.Click += new System.EventHandler(this.btnCurrencyEditor_Click);
             // 
@@ -166,8 +172,25 @@
             this.btnRealmExplorer.Size = new System.Drawing.Size(147, 55);
             this.btnRealmExplorer.TabIndex = 3;
             this.btnRealmExplorer.Text = "Realm Explorer";
+            this.Help.SetToolTip(this.btnRealmExplorer, "Create and manage Realms using the Explorer.\r\nRealms contain the Zones & Rooms of" +
+                    " your MUD, allowing\r\nplayers to traverse your MUD.");
             this.btnRealmExplorer.UseVisualStyleBackColor = true;
             this.btnRealmExplorer.Click += new System.EventHandler(this.btnRealmExplorer_Click);
+            // 
+            // btnZoneBuilder
+            // 
+            this.btnZoneBuilder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnZoneBuilder.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnZoneBuilder.Location = new System.Drawing.Point(462, 3);
+            this.btnZoneBuilder.Name = "btnZoneBuilder";
+            this.btnZoneBuilder.Size = new System.Drawing.Size(147, 55);
+            this.btnZoneBuilder.TabIndex = 4;
+            this.btnZoneBuilder.Text = "Zone Builder";
+            this.Help.SetToolTip(this.btnZoneBuilder, "The Zone Builder provides tools to create and manage your MUDs\r\nZones & Rooms. Cr" +
+                    "eate Rooms, link them together via Doors and\r\nconnect Zones together either with" +
+                    "in the same Realm or cross-realms.");
+            this.btnZoneBuilder.UseVisualStyleBackColor = true;
+            this.btnZoneBuilder.Click += new System.EventHandler(this.btnZoneBuilder_Click);
             // 
             // tabFunctions
             // 
@@ -302,23 +325,20 @@
             this.tabVariables.Text = "Variables";
             this.tabVariables.UseVisualStyleBackColor = true;
             // 
-            // btnZoneBuilder
+            // Help
             // 
-            this.btnZoneBuilder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnZoneBuilder.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnZoneBuilder.Location = new System.Drawing.Point(462, 3);
-            this.btnZoneBuilder.Name = "btnZoneBuilder";
-            this.btnZoneBuilder.Size = new System.Drawing.Size(147, 55);
-            this.btnZoneBuilder.TabIndex = 4;
-            this.btnZoneBuilder.Text = "Zone Builder";
-            this.btnZoneBuilder.UseVisualStyleBackColor = true;
-            this.btnZoneBuilder.Click += new System.EventHandler(this.btnZoneBuilder_Click);
+            this.Help.AutoPopDelay = 8000;
+            this.Help.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.Help.InitialDelay = 500;
+            this.Help.IsBalloon = true;
+            this.Help.ReshowDelay = 100;
+            this.Help.ToolTipTitle = "Toolkit Help";
             // 
             // ToolkitLauncher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(639, 383);
+            this.ClientSize = new System.Drawing.Size(627, 383);
             this.Controls.Add(this.splitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -366,6 +386,7 @@
         private System.Windows.Forms.TabPage tabVariables;
         private System.Windows.Forms.Button btnRealmExplorer;
         private System.Windows.Forms.Button btnZoneBuilder;
+        private System.Windows.Forms.ToolTip Help;
     }
 }
 

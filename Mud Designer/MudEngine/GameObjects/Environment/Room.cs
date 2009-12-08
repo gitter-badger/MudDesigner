@@ -37,7 +37,7 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
         public List<Door> InstalledDoors;
 
         [Browsable(false)]
-        public string ParentZone
+        public string Zone
         {
             get;
             set;
