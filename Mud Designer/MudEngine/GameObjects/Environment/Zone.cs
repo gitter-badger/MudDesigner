@@ -42,7 +42,7 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
 
         public Zone()
         {
-            throw new NotSupportedException("Parameterless constructors of Type " + this.GetType().FullName + " is not supported.");
+            //throw new NotSupportedException("Parameterless constructors of Type " + this.GetType().FullName + " is not supported.");
         }
 
         public Zone(Realm realm)

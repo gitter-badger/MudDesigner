@@ -21,8 +21,6 @@ namespace MudDesigner.Editors
     public partial class RealmExplorer : Form
     {
         List<Realm> realms;
-        List<Zone> zones;
-        List<Room> rooms;
 
         public RealmExplorer()
         {

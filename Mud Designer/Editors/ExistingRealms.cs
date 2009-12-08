@@ -46,6 +46,9 @@ namespace MudDesigner.Editors
 
         private void lstRealms_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (lstRealms.SelectedIndex == -1)
+                return;
+
             foreach (Realm realm in realms)
             {
                 if (realm.Name == lstRealms.SelectedItem.ToString())
