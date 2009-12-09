@@ -168,6 +168,35 @@ namespace MudDesigner.Editors
                 return;
             }
 
+            //Delete the door if it already exists, so we can re-install
+            //the new door for this direction
+            foreach (Door d in linkedRoom.InstalledDoors)
+            {
+                if (d.TravelDirection == TravelDirection)
+                {
+                    linkedRoom.InstalledDoors.Remove(d);
+                    break;
+                }
+            }
+
+            //Create a link to the currently loaded room within the Zone Builder
+            Door.ConnectedRoom connected = new Door.ConnectedRoom();
+            connected.Realm = Program.Realm.Name;
+            connected.Zone = Program.Zone.Name;
+            connected.Room = Program.Room.Name;
+
+            //Create a new door, add our link and set its travel direction
+            Door door = new Door();
+            door.TravelRoom = connected;
+            door.TravelDirection = TravelDirections.GetTravelDirectionValue(TravelDirection.ToString());
+
+            //install the door
+            linkedRoom.InstalledDoors.Add(door);
+            //save the linked room
+            string realmPath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), linkedRealm.Name);
+            string zonePath = Path.Combine(realmPath, linkedZone.Name);
+            string roomFile = Path.Combine(zonePath, linkedRoom.Filename);
+            FileManager.Save(roomFile, linkedRoom);
             this.Close();
         }
     }

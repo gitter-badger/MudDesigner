@@ -427,6 +427,14 @@ namespace MudDesigner.Editors
             d.Room = form.linkedRoom.Name;
             d.Zone = form.linkedZone.Name;
             door.TravelRoom = d;
+            foreach (Door obj in Program.Room.InstalledDoors)
+            {
+                if (obj.TravelDirection == door.TravelDirection)
+                {
+                    Program.Room.InstalledDoors.Remove(obj);
+                    break;
+                }
+            }
             Program.Room.InstalledDoors.Add(door);
         }
     }
