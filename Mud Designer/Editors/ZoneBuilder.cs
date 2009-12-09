@@ -24,6 +24,9 @@ namespace MudDesigner.Editors
         bool IsRealmLoaded = false;
         bool IsZoneLoaded = false;
         bool IsCreatingZone = false;
+        bool IsRoomLoaded = false;
+        bool IsCreatingRoom = false;
+
         List<Zone> _Zones = new List<Zone>();
 
         public ZoneBuilder()
@@ -98,7 +101,6 @@ namespace MudDesigner.Editors
             //Zone is in 'create' mode, and has not been saved/loaded fully yet.
             IsZoneLoaded = false;
             IsCreatingZone = true;
-
             //Reset our room, as we are creating a new zone, there will be no rooms.
             propertyRoom.SelectedObject = null;
             lstRooms.Items.Clear();
@@ -174,6 +176,8 @@ namespace MudDesigner.Editors
 
             this.Text = "Zone Builder: (" + Program.Realm.Name + ")";
             IsRealmLoaded = true;
+            IsZoneLoaded = false;
+            IsRoomLoaded = false;
 
             //realm is loaded, now clear out the list of zones & rooms and show the zones contained
             //within the new realm
@@ -245,6 +249,7 @@ namespace MudDesigner.Editors
             propertyZone.SelectedObject = Program.Zone;
             IsZoneLoaded = true;
             IsCreatingZone = false;
+            IsRoomLoaded = false;
         }
 
         private void btnNewRoom_Click(object sender, EventArgs e)
@@ -268,10 +273,20 @@ namespace MudDesigner.Editors
             Program.Room = new Room();
             Program.Room.Zone = Program.Zone.Name;
             propertyRoom.SelectedObject = Program.Room;
+            IsRoomLoaded = false;
+            IsCreatingRoom = true;
         }
 
         private void btnSaveRoom_Click(object sender, EventArgs e)
         {
+            if (!IsRoomLoaded)
+            {
+                if (!IsCreatingRoom)
+                {
+                    MessageBox.Show("You must create a new Room in order to save.", "Zone Builder", MessageBoxButtons.OK);
+                    return;
+                }
+            }
             //Get the realm, zone & room path setup first
             string realmPath = System.IO.Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), Program.Realm.Name);
             string zonePath = Path.Combine(realmPath, Program.Zone.Name);
@@ -291,6 +306,9 @@ namespace MudDesigner.Editors
             //add it to the list box if it isn't already there
             if (!lstRooms.Items.Contains(Program.Room.Name))
                 lstRooms.Items.Add(Program.Room.Name);
+
+            IsRoomLoaded = true;
+            IsCreatingRoom = false;
         }
 
         private void btnLoadRoom_Click(object sender, EventArgs e)
@@ -334,6 +352,82 @@ namespace MudDesigner.Editors
             }
 
             propertyRoom.SelectedObject = Program.Room;
+            IsRoomLoaded = true;
+            IsCreatingRoom = false;
+        }
+
+        private void doorwayMenuStrip_Opening(object sender, CancelEventArgs e)
+        {
+            if (sender is ContextMenuStrip)
+            {
+                ContextMenuStrip mnu = (ContextMenuStrip)sender;
+                Button btn = (Button)mnu.SourceControl;
+                mnuInstallDoor.Text = "Install " + btn.Text + " doorway.";
+                
+            }
+        }
+
+        private void installDoorwayToAnotherZoneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!IsRoomLoaded)
+            {
+                MessageBox.Show("You must load a Room prior to any doorway installation attempts.",
+                    "Zone Builder", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            //Split the menus text into an array, since the menu
+            //is dynamically generating it's text, depending on the
+            //button it is right clicked over.
+            string[] menuWords = mnuInstallDoor.Text.Split(' ');
+
+            //Create an array of all available travel directions
+            AvailableTravelDirections travelDirection = new AvailableTravelDirections();
+            Array values = Enum.GetValues(typeof(AvailableTravelDirections));
+
+            //Loop through each word in the menu, until we find a word
+            //that matches a travel direction.
+            foreach (string word in menuWords)
+            {
+                foreach (int value in values)
+                {
+                    //get a copy of the current travel direction in the array
+                    string displayName = Enum.GetName(typeof(AvailableTravelDirections), value);
+
+                    //check if the current travel direction matches the current word in
+                    //the context menu
+                    if (displayName == word)
+                    {
+                        //If we have a match, store the travel direction so
+                        //we can use it on our Doorway manager
+                        travelDirection = (AvailableTravelDirections)Enum.Parse(typeof(AvailableTravelDirections), displayName);
+                    }
+                }
+            }
+
+            //Instance a new Doorway manager
+            DoorwayManager form = new DoorwayManager(travelDirection);
+            form.Show();
+            this.Hide();
+
+            while (form.Created)
+                Application.DoEvents();
+
+            this.Show();
+
+            Control[] controls = this.Controls.Find("btn" + travelDirection.ToString(), true);
+
+            controls[0].Text = travelDirection.ToString() + "\nInstalled";
+            Help.SetToolTip(controls[0], travelDirection.ToString() + " Doorway Installed.\n\n"
+                + form.linkedRealm.Name + "->" + form.linkedZone.Name + "->" + form.linkedRoom.Name);
+
+            Door door = new Door(travelDirection);
+            Door.ConnectedRoom d = new Door.ConnectedRoom();
+            d.Realm = form.linkedRealm.Name;
+            d.Room = form.linkedRoom.Name;
+            d.Zone = form.linkedZone.Name;
+            door.TravelRoom = d;
+            Program.Room.InstalledDoors.Add(door);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace MudDesigner.MudEngine.GameObjects
+﻿using System;
+
+namespace MudDesigner.MudEngine.GameObjects
 {
     public enum AvailableTravelDirections
     {
@@ -34,6 +36,21 @@
                 default:
                     return AvailableTravelDirections.None;
             }
+        }
+
+        public static AvailableTravelDirections GetTravelDirectionValue(string Direction)
+        {
+            Array values = Enum.GetValues(typeof(AvailableTravelDirections));
+
+            foreach (int value in values)
+            {
+                string displayName = Enum.GetName(typeof(AvailableTravelDirections), value);
+
+                if (displayName == Direction)
+                    return (AvailableTravelDirections)Enum.Parse(typeof(AvailableTravelDirections), displayName);
+            }
+
+            return AvailableTravelDirections.None;
         }
     }
 }

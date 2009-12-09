@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZoneBuilder));
             this.containerMain = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lstZones = new System.Windows.Forms.ListBox();
@@ -56,6 +57,20 @@
             this.btnDeleteRoom = new System.Windows.Forms.Button();
             this.btnNewRoom = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.btnEast = new System.Windows.Forms.Button();
+            this.doorwayMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mnuInstallDoor = new System.Windows.Forms.ToolStripMenuItem();
+            this.installDoorwayToAnotherZoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.installReverseDoorwayToSelectedRoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuClearDoorway = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnWest = new System.Windows.Forms.Button();
+            this.btnDown = new System.Windows.Forms.Button();
+            this.btnSouth = new System.Windows.Forms.Button();
+            this.btnNorth = new System.Windows.Forms.Button();
+            this.btnUp = new System.Windows.Forms.Button();
             this.Help = new System.Windows.Forms.ToolTip(this.components);
             this.containerMain.Panel1.SuspendLayout();
             this.containerMain.Panel2.SuspendLayout();
@@ -71,6 +86,9 @@
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            this.doorwayMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // containerMain
@@ -361,6 +379,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.groupBox8);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -369,9 +388,167 @@
             this.tabPage2.Text = "Room Doorways";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.btnEast);
+            this.groupBox8.Controls.Add(this.btnWest);
+            this.groupBox8.Controls.Add(this.btnDown);
+            this.groupBox8.Controls.Add(this.btnSouth);
+            this.groupBox8.Controls.Add(this.btnNorth);
+            this.groupBox8.Controls.Add(this.btnUp);
+            this.groupBox8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox8.Location = new System.Drawing.Point(3, 3);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(458, 407);
+            this.groupBox8.TabIndex = 0;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Available Travel Directions";
+            // 
+            // btnEast
+            // 
+            this.btnEast.BackColor = System.Drawing.Color.Gray;
+            this.btnEast.ContextMenuStrip = this.doorwayMenuStrip;
+            this.btnEast.FlatAppearance.BorderSize = 2;
+            this.btnEast.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnEast.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEast.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEast.Location = new System.Drawing.Point(334, 159);
+            this.btnEast.Name = "btnEast";
+            this.btnEast.Size = new System.Drawing.Size(118, 93);
+            this.btnEast.TabIndex = 7;
+            this.btnEast.Text = "East";
+            this.btnEast.UseVisualStyleBackColor = false;
+            // 
+            // doorwayMenuStrip
+            // 
+            this.doorwayMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuInstallDoor,
+            this.toolStripMenuItem2,
+            this.mnuClearDoorway});
+            this.doorwayMenuStrip.Name = "doorwayMenuStrip";
+            this.doorwayMenuStrip.Size = new System.Drawing.Size(162, 76);
+            this.doorwayMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.doorwayMenuStrip_Opening);
+            // 
+            // mnuInstallDoor
+            // 
+            this.mnuInstallDoor.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.installDoorwayToAnotherZoneToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.installReverseDoorwayToSelectedRoomToolStripMenuItem});
+            this.mnuInstallDoor.Name = "mnuInstallDoor";
+            this.mnuInstallDoor.Size = new System.Drawing.Size(161, 22);
+            this.mnuInstallDoor.Text = "Install New Door";
+            // 
+            // installDoorwayToAnotherZoneToolStripMenuItem
+            // 
+            this.installDoorwayToAnotherZoneToolStripMenuItem.Name = "installDoorwayToAnotherZoneToolStripMenuItem";
+            this.installDoorwayToAnotherZoneToolStripMenuItem.Size = new System.Drawing.Size(293, 22);
+            this.installDoorwayToAnotherZoneToolStripMenuItem.Text = "Install Doorway to another Zone";
+            this.installDoorwayToAnotherZoneToolStripMenuItem.ToolTipText = "Opens the Doorway Manager giving you the ability\r\nto link a Room located in a dif" +
+                "ferent Zone or Realm.";
+            this.installDoorwayToAnotherZoneToolStripMenuItem.Click += new System.EventHandler(this.installDoorwayToAnotherZoneToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(290, 6);
+            // 
+            // installReverseDoorwayToSelectedRoomToolStripMenuItem
+            // 
+            this.installReverseDoorwayToSelectedRoomToolStripMenuItem.Name = "installReverseDoorwayToSelectedRoomToolStripMenuItem";
+            this.installReverseDoorwayToSelectedRoomToolStripMenuItem.Size = new System.Drawing.Size(293, 22);
+            this.installReverseDoorwayToSelectedRoomToolStripMenuItem.Text = "Install Reverse Doorway to selected Room";
+            this.installReverseDoorwayToSelectedRoomToolStripMenuItem.ToolTipText = resources.GetString("installReverseDoorwayToSelectedRoomToolStripMenuItem.ToolTipText");
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(158, 6);
+            // 
+            // mnuClearDoorway
+            // 
+            this.mnuClearDoorway.Name = "mnuClearDoorway";
+            this.mnuClearDoorway.Size = new System.Drawing.Size(161, 22);
+            this.mnuClearDoorway.Text = "Clear Doorway";
+            // 
+            // btnWest
+            // 
+            this.btnWest.BackColor = System.Drawing.Color.Gray;
+            this.btnWest.ContextMenuStrip = this.doorwayMenuStrip;
+            this.btnWest.FlatAppearance.BorderSize = 2;
+            this.btnWest.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnWest.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnWest.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnWest.Location = new System.Drawing.Point(6, 159);
+            this.btnWest.Name = "btnWest";
+            this.btnWest.Size = new System.Drawing.Size(118, 93);
+            this.btnWest.TabIndex = 6;
+            this.btnWest.Text = "West";
+            this.btnWest.UseVisualStyleBackColor = false;
+            // 
+            // btnDown
+            // 
+            this.btnDown.BackColor = System.Drawing.Color.Gray;
+            this.btnDown.ContextMenuStrip = this.doorwayMenuStrip;
+            this.btnDown.FlatAppearance.BorderSize = 2;
+            this.btnDown.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDown.Location = new System.Drawing.Point(166, 350);
+            this.btnDown.Name = "btnDown";
+            this.btnDown.Size = new System.Drawing.Size(118, 51);
+            this.btnDown.TabIndex = 5;
+            this.btnDown.Text = "Down";
+            this.btnDown.UseVisualStyleBackColor = false;
+            // 
+            // btnSouth
+            // 
+            this.btnSouth.BackColor = System.Drawing.Color.Gray;
+            this.btnSouth.ContextMenuStrip = this.doorwayMenuStrip;
+            this.btnSouth.FlatAppearance.BorderSize = 2;
+            this.btnSouth.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnSouth.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSouth.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSouth.Location = new System.Drawing.Point(166, 258);
+            this.btnSouth.Name = "btnSouth";
+            this.btnSouth.Size = new System.Drawing.Size(118, 86);
+            this.btnSouth.TabIndex = 4;
+            this.btnSouth.Text = "South";
+            this.btnSouth.UseVisualStyleBackColor = false;
+            // 
+            // btnNorth
+            // 
+            this.btnNorth.BackColor = System.Drawing.Color.Gray;
+            this.btnNorth.ContextMenuStrip = this.doorwayMenuStrip;
+            this.btnNorth.FlatAppearance.BorderSize = 2;
+            this.btnNorth.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnNorth.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNorth.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNorth.Location = new System.Drawing.Point(166, 67);
+            this.btnNorth.Name = "btnNorth";
+            this.btnNorth.Size = new System.Drawing.Size(118, 86);
+            this.btnNorth.TabIndex = 3;
+            this.btnNorth.Text = "North";
+            this.btnNorth.UseVisualStyleBackColor = false;
+            // 
+            // btnUp
+            // 
+            this.btnUp.BackColor = System.Drawing.Color.Gray;
+            this.btnUp.ContextMenuStrip = this.doorwayMenuStrip;
+            this.btnUp.FlatAppearance.BorderSize = 2;
+            this.btnUp.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUp.Location = new System.Drawing.Point(166, 10);
+            this.btnUp.Name = "btnUp";
+            this.btnUp.Size = new System.Drawing.Size(118, 51);
+            this.btnUp.TabIndex = 0;
+            this.btnUp.Text = "Up";
+            this.btnUp.UseVisualStyleBackColor = false;
+            // 
             // Help
             // 
-            this.Help.AutoPopDelay = 5000;
+            this.Help.AutoPopDelay = 12000;
             this.Help.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.Help.InitialDelay = 1000;
             this.Help.IsBalloon = true;
@@ -404,6 +581,9 @@
             this.groupBox7.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.doorwayMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -438,6 +618,20 @@
         private System.Windows.Forms.ListBox lstRooms;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.PropertyGrid propertyRoom;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.Button btnUp;
+        private System.Windows.Forms.Button btnNorth;
+        private System.Windows.Forms.Button btnDown;
+        private System.Windows.Forms.Button btnSouth;
+        private System.Windows.Forms.Button btnWest;
+        private System.Windows.Forms.Button btnEast;
+        private System.Windows.Forms.ContextMenuStrip doorwayMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem mnuInstallDoor;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem mnuClearDoorway;
+        private System.Windows.Forms.ToolStripMenuItem installDoorwayToAnotherZoneToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem installReverseDoorwayToSelectedRoomToolStripMenuItem;
 
     }
 }
