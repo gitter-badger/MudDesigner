@@ -99,7 +99,7 @@
             this.btnLogo.Name = "btnLogo";
             this.btnLogo.Size = new System.Drawing.Size(627, 154);
             this.btnLogo.TabIndex = 0;
-            this.btnLogo.Text = "MUD Designer HUB \r\nPreview Release 1\r\n";
+            this.btnLogo.Text = "MUD Designer Toolkit\r\n";
             this.btnLogo.UseVisualStyleBackColor = false;
             // 
             // tabEditors
@@ -345,7 +345,7 @@
             this.MinimizeBox = false;
             this.Name = "ToolkitLauncher";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Mud Designer Beta";
+            this.Text = "Mud Designer Toolkit";
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);

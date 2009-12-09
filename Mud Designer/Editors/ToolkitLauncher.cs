@@ -19,7 +19,9 @@ namespace MudDesigner.Editors
         public ToolkitLauncher()
         {
             InitializeComponent();
-            this.Text = "Mud Designer Preview Release " + version;
+            this.Text = "Mud Designer Toolkit " + Settings.GetVersion();
+
+            Settings settings = new Settings();
         }
         
         private void btnProjectSettings_Click(object sender, EventArgs e)
