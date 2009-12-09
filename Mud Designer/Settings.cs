@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MudDesigner.MudEngine.GameObjects.Environment;
 
 namespace MudDesigner
 {
@@ -25,9 +26,11 @@ namespace MudDesigner
         }
 #warning Reminder: Change Settings.VersionStage to KitStages.Preview upon release.
 
-        public static KitStages VersionStage = KitStages.Development_Source_Only;
+        public KitStages VersionStage = KitStages.Development_Source_Only;
 
-        public static string GetVersion()
+        public Realm DefaultRealm;
+
+        public string GetVersion()
         {
             string stage = VersionStage.ToString().Replace("_", " ");
             Version version = new Version(Application.ProductVersion);

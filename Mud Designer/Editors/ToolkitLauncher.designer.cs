@@ -38,6 +38,12 @@
             this.btnCurrencyEditor = new System.Windows.Forms.Button();
             this.btnRealmExplorer = new System.Windows.Forms.Button();
             this.btnZoneBuilder = new System.Windows.Forms.Button();
+            this.tabToolkitSettings = new System.Windows.Forms.TabPage();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnChangeRealm = new System.Windows.Forms.Button();
+            this.lblCurrentRealm = new System.Windows.Forms.Label();
+            this.chkDefaultRealm = new System.Windows.Forms.CheckBox();
             this.tabFunctions = new System.Windows.Forms.TabPage();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
@@ -57,6 +63,9 @@
             this.tabEditors.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
+            this.tabToolkitSettings.SuspendLayout();
+            this.flowLayoutPanel2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.tabFunctions.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.groupBox12.SuspendLayout();
@@ -105,6 +114,7 @@
             // tabEditors
             // 
             this.tabEditors.Controls.Add(this.tabPage1);
+            this.tabEditors.Controls.Add(this.tabToolkitSettings);
             this.tabEditors.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabEditors.Location = new System.Drawing.Point(0, 0);
             this.tabEditors.Name = "tabEditors";
@@ -191,6 +201,69 @@
                     "in the same Realm or cross-realms.");
             this.btnZoneBuilder.UseVisualStyleBackColor = true;
             this.btnZoneBuilder.Click += new System.EventHandler(this.btnZoneBuilder_Click);
+            // 
+            // tabToolkitSettings
+            // 
+            this.tabToolkitSettings.Controls.Add(this.flowLayoutPanel2);
+            this.tabToolkitSettings.Location = new System.Drawing.Point(4, 22);
+            this.tabToolkitSettings.Name = "tabToolkitSettings";
+            this.tabToolkitSettings.Padding = new System.Windows.Forms.Padding(3);
+            this.tabToolkitSettings.Size = new System.Drawing.Size(619, 199);
+            this.tabToolkitSettings.TabIndex = 1;
+            this.tabToolkitSettings.Text = "Toolkit Settings";
+            this.tabToolkitSettings.UseVisualStyleBackColor = true;
+            // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.Controls.Add(this.groupBox1);
+            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(613, 193);
+            this.flowLayoutPanel2.TabIndex = 0;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnChangeRealm);
+            this.groupBox1.Controls.Add(this.lblCurrentRealm);
+            this.groupBox1.Controls.Add(this.chkDefaultRealm);
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(215, 61);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Toolkit Default Realm Settings";
+            // 
+            // btnChangeRealm
+            // 
+            this.btnChangeRealm.Location = new System.Drawing.Point(154, 13);
+            this.btnChangeRealm.Name = "btnChangeRealm";
+            this.btnChangeRealm.Size = new System.Drawing.Size(55, 23);
+            this.btnChangeRealm.TabIndex = 5;
+            this.btnChangeRealm.Text = "Change";
+            this.btnChangeRealm.UseVisualStyleBackColor = true;
+            this.btnChangeRealm.Click += new System.EventHandler(this.btnChangeRealm_Click);
+            // 
+            // lblCurrentRealm
+            // 
+            this.lblCurrentRealm.AutoSize = true;
+            this.lblCurrentRealm.Location = new System.Drawing.Point(3, 39);
+            this.lblCurrentRealm.Name = "lblCurrentRealm";
+            this.lblCurrentRealm.Size = new System.Drawing.Size(106, 13);
+            this.lblCurrentRealm.TabIndex = 4;
+            this.lblCurrentRealm.Text = "Current Realm: None";
+            // 
+            // chkDefaultRealm
+            // 
+            this.chkDefaultRealm.AutoSize = true;
+            this.chkDefaultRealm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkDefaultRealm.Location = new System.Drawing.Point(6, 19);
+            this.chkDefaultRealm.Name = "chkDefaultRealm";
+            this.chkDefaultRealm.Size = new System.Drawing.Size(126, 17);
+            this.chkDefaultRealm.TabIndex = 3;
+            this.chkDefaultRealm.Text = "Enable Default Realm";
+            this.chkDefaultRealm.UseVisualStyleBackColor = true;
+            this.chkDefaultRealm.CheckedChanged += new System.EventHandler(this.chkDefaultRealm_CheckedChanged);
             // 
             // tabFunctions
             // 
@@ -352,6 +425,10 @@
             this.tabEditors.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
+            this.tabToolkitSettings.ResumeLayout(false);
+            this.flowLayoutPanel2.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.tabFunctions.ResumeLayout(false);
             this.groupBox9.ResumeLayout(false);
             this.groupBox12.ResumeLayout(false);
@@ -387,6 +464,12 @@
         private System.Windows.Forms.Button btnRealmExplorer;
         private System.Windows.Forms.Button btnZoneBuilder;
         private System.Windows.Forms.ToolTip Help;
+        private System.Windows.Forms.TabPage tabToolkitSettings;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.CheckBox chkDefaultRealm;
+        private System.Windows.Forms.Label lblCurrentRealm;
+        private System.Windows.Forms.Button btnChangeRealm;
     }
 }
 

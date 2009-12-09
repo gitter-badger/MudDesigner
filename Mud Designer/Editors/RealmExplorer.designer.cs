@@ -34,27 +34,27 @@
             this.button4 = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabRealm = new System.Windows.Forms.TabPage();
-            this.tabScript = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lstRealms = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnLoadRealm = new System.Windows.Forms.Button();
             this.btnSaveRealm = new System.Windows.Forms.Button();
             this.btnDeleteRealm = new System.Windows.Forms.Button();
             this.btnNewRealm = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lstRealms = new System.Windows.Forms.ListBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.propertyRealm = new System.Windows.Forms.PropertyGrid();
+            this.tabScript = new System.Windows.Forms.TabPage();
             this.txtScript = new System.Windows.Forms.RichTextBox();
             this.tabControl1.SuspendLayout();
             this.tabRealm.SuspendLayout();
-            this.tabScript.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.tabScript.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -115,17 +115,6 @@
             this.tabRealm.Text = "Realm Setup";
             this.tabRealm.UseVisualStyleBackColor = true;
             // 
-            // tabScript
-            // 
-            this.tabScript.Controls.Add(this.txtScript);
-            this.tabScript.Location = new System.Drawing.Point(4, 22);
-            this.tabScript.Name = "tabScript";
-            this.tabScript.Padding = new System.Windows.Forms.Padding(3);
-            this.tabScript.Size = new System.Drawing.Size(462, 438);
-            this.tabScript.TabIndex = 1;
-            this.tabScript.Text = "Realm Script";
-            this.tabScript.UseVisualStyleBackColor = true;
-            // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -144,16 +133,26 @@
             this.splitContainer1.SplitterDistance = 196;
             this.splitContainer1.TabIndex = 0;
             // 
-            // groupBox3
+            // groupBox1
             // 
-            this.groupBox3.Controls.Add(this.propertyRealm);
-            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(0, 0);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(256, 432);
-            this.groupBox3.TabIndex = 34;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Realm Properties";
+            this.groupBox1.Controls.Add(this.lstRealms);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(0, 76);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(196, 356);
+            this.groupBox1.TabIndex = 36;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Realms List";
+            // 
+            // lstRealms
+            // 
+            this.lstRealms.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstRealms.FormattingEnabled = true;
+            this.lstRealms.Location = new System.Drawing.Point(3, 16);
+            this.lstRealms.Name = "lstRealms";
+            this.lstRealms.Size = new System.Drawing.Size(190, 329);
+            this.lstRealms.Sorted = true;
+            this.lstRealms.TabIndex = 17;
             // 
             // groupBox2
             // 
@@ -209,26 +208,16 @@
             this.btnNewRealm.UseVisualStyleBackColor = true;
             this.btnNewRealm.Click += new System.EventHandler(this.btnNewRealm_Click);
             // 
-            // groupBox1
+            // groupBox3
             // 
-            this.groupBox1.Controls.Add(this.lstRealms);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(0, 76);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(196, 356);
-            this.groupBox1.TabIndex = 36;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Realms List";
-            // 
-            // lstRealms
-            // 
-            this.lstRealms.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstRealms.FormattingEnabled = true;
-            this.lstRealms.Location = new System.Drawing.Point(3, 16);
-            this.lstRealms.Name = "lstRealms";
-            this.lstRealms.Size = new System.Drawing.Size(190, 329);
-            this.lstRealms.Sorted = true;
-            this.lstRealms.TabIndex = 17;
+            this.groupBox3.Controls.Add(this.propertyRealm);
+            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox3.Location = new System.Drawing.Point(0, 0);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(256, 432);
+            this.groupBox3.TabIndex = 34;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Realm Properties";
             // 
             // propertyRealm
             // 
@@ -238,6 +227,17 @@
             this.propertyRealm.Size = new System.Drawing.Size(250, 413);
             this.propertyRealm.TabIndex = 18;
             this.propertyRealm.ToolbarVisible = false;
+            // 
+            // tabScript
+            // 
+            this.tabScript.Controls.Add(this.txtScript);
+            this.tabScript.Location = new System.Drawing.Point(4, 22);
+            this.tabScript.Name = "tabScript";
+            this.tabScript.Padding = new System.Windows.Forms.Padding(3);
+            this.tabScript.Size = new System.Drawing.Size(462, 438);
+            this.tabScript.TabIndex = 1;
+            this.tabScript.Text = "Realm Script";
+            this.tabScript.UseVisualStyleBackColor = true;
             // 
             // txtScript
             // 
@@ -263,13 +263,13 @@
             this.Text = "Realm Explorer";
             this.tabControl1.ResumeLayout(false);
             this.tabRealm.ResumeLayout(false);
-            this.tabScript.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.tabScript.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

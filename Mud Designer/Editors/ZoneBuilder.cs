@@ -31,6 +31,40 @@ namespace MudDesigner.Editors
             InitializeComponent();
             //Reinstance all of our environments
             Program.Realm = new Realm();
+
+            //If we have a default Realm selected, lets load it
+            if (Program.Settings.DefaultRealm != null)
+            {
+                //Load it
+                string realmPath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), Program.Settings.DefaultRealm.Name);
+                string realmFile = Path.Combine(realmPath, Program.Settings.DefaultRealm.Filename);
+                Program.Realm = (Realm)FileManager.Load(realmFile, Program.Realm);
+
+                this.Text = "Zone Builder: (" + Program.Realm.Name + ")";
+                IsRealmLoaded = true;
+
+                //realm is loaded, now clear out the list of zones & rooms and show the zones contained
+                //within the new realm
+                lstZones.Items.Clear();
+                lstRooms.Items.Clear();
+                _Zones.Clear();
+                string[] files = Directory.GetFiles(realmPath, "*.zone", SearchOption.AllDirectories);
+
+                foreach (string file in files)
+                {
+                    string filename = Path.GetFileName(file);
+                    if (Program.Realm.Zones.Contains(filename))
+                    {
+                        Zone zone = new Zone();
+                        zone = (Zone)FileManager.Load(file, zone);
+                        zone.RefreshRoomList();
+                        _Zones.Add(zone);
+                        lstZones.Items.Add(zone.Name);
+                    }
+                    else
+                        continue;
+                }
+            }
         }
 
         private void btnNewZone_Click(object sender, EventArgs e)
