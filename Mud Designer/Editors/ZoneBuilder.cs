@@ -53,7 +53,7 @@ namespace MudDesigner.Editors
             }
 
             //re-instance our zone and room
-            Program.Zone = new Zone(Program.Realm);
+            Program.Zone = new Zone();
 
             //Assign the realm to the zone
             Program.Zone.Realm = Program.Realm.Name;
@@ -153,8 +153,9 @@ namespace MudDesigner.Editors
                 string filename = Path.GetFileName(file);
                 if (Program.Realm.Zones.Contains(filename))
                 {
-                    Zone zone = new Zone(Program.Realm);
+                    Zone zone = new Zone();
                     zone = (Zone)FileManager.Load(file, zone);
+                    zone.RefreshRoomList();
                     _Zones.Add(zone);
                     lstZones.Items.Add(zone.Name);
                 }
@@ -194,6 +195,7 @@ namespace MudDesigner.Editors
                 if (zone.Name == lstZones.SelectedItem.ToString())
                 {
                     Program.Zone = zone;
+                    Program.Zone.RefreshRoomList();
                     break;
                 }
             }
