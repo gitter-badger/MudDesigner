@@ -15,6 +15,7 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
             public string Realm;
             public string Zone;
             public string Room;
+            public AvailableTravelDirections TravelDirection;
         }
 
         [Category("Door Settings")]

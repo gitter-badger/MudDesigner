@@ -354,6 +354,20 @@ namespace MudDesigner.Editors
             propertyRoom.SelectedObject = Program.Room;
             IsRoomLoaded = true;
             IsCreatingRoom = false;
+
+            //assign the doorways to the UI
+            foreach (Door door in Program.Room.InstalledDoors)
+            {
+                AvailableTravelDirections travelDirection = door.TravelDirection;
+
+                Control[] controls = this.Controls.Find("btn" + travelDirection.ToString(), true);
+
+                controls[0].Text = travelDirection.ToString() + "\nInstalled";
+
+                doorwayHelp.SetToolTip(controls[0], travelDirection.ToString() + " Doorway Installed.\n\n"
+                    + door.TravelRoom.Realm + "->" + door.TravelRoom.Zone + "->" + door.TravelRoom.Room + "->" + door.TravelRoom.TravelDirection.ToString());
+
+            }
         }
 
         private void doorwayMenuStrip_Opening(object sender, CancelEventArgs e)
@@ -418,8 +432,8 @@ namespace MudDesigner.Editors
             Control[] controls = this.Controls.Find("btn" + travelDirection.ToString(), true);
 
             controls[0].Text = travelDirection.ToString() + "\nInstalled";
-            Help.SetToolTip(controls[0], travelDirection.ToString() + " Doorway Installed.\n\n"
-                + form.linkedRealm.Name + "->" + form.linkedZone.Name + "->" + form.linkedRoom.Name);
+            doorwayHelp.SetToolTip(controls[0], travelDirection.ToString() + " Doorway Installed.\n\n"
+                + form.linkedRealm.Name + "->" + form.linkedZone.Name + "->" + form.linkedRoom.Name + "->" + form.TravelDirection.ToString());
 
             Door door = new Door(travelDirection);
             Door.ConnectedRoom d = new Door.ConnectedRoom();

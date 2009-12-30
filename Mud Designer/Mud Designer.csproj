@@ -80,6 +80,7 @@
       <DependentUpon>ExistingRealms.cs</DependentUpon>
     </Compile>
     <Compile Include="MudEngine\FileSystem\SaveDataTypes.cs" />
+    <Compile Include="MudEngine\GameManagement\GameScript.cs" />
     <Compile Include="MudEngine\GameObjects\Bag.cs" />
     <Compile Include="MudEngine\GameObjects\BaseObject.cs" />
     <Compile Include="MudEngine\GameObjects\Currency.cs" />

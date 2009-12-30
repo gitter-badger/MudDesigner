@@ -72,6 +72,7 @@
             this.btnNorth = new System.Windows.Forms.Button();
             this.btnUp = new System.Windows.Forms.Button();
             this.Help = new System.Windows.Forms.ToolTip(this.components);
+            this.doorwayHelp = new System.Windows.Forms.ToolTip(this.components);
             this.containerMain.Panel1.SuspendLayout();
             this.containerMain.Panel2.SuspendLayout();
             this.containerMain.SuspendLayout();
@@ -417,6 +418,7 @@
             this.btnEast.Size = new System.Drawing.Size(118, 93);
             this.btnEast.TabIndex = 7;
             this.btnEast.Text = "East";
+            this.doorwayHelp.SetToolTip(this.btnEast, "No doorway installed.\r\n\r\nRight-click to install one.\r\n");
             this.btnEast.UseVisualStyleBackColor = false;
             // 
             // doorwayMenuStrip
@@ -426,7 +428,7 @@
             this.toolStripMenuItem2,
             this.mnuClearDoorway});
             this.doorwayMenuStrip.Name = "doorwayMenuStrip";
-            this.doorwayMenuStrip.Size = new System.Drawing.Size(162, 76);
+            this.doorwayMenuStrip.Size = new System.Drawing.Size(162, 54);
             this.doorwayMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.doorwayMenuStrip_Opening);
             // 
             // mnuInstallDoor
@@ -484,6 +486,7 @@
             this.btnWest.Size = new System.Drawing.Size(118, 93);
             this.btnWest.TabIndex = 6;
             this.btnWest.Text = "West";
+            this.doorwayHelp.SetToolTip(this.btnWest, "No doorway installed.\r\n\r\nRight-click to install one.");
             this.btnWest.UseVisualStyleBackColor = false;
             // 
             // btnDown
@@ -499,6 +502,7 @@
             this.btnDown.Size = new System.Drawing.Size(118, 51);
             this.btnDown.TabIndex = 5;
             this.btnDown.Text = "Down";
+            this.doorwayHelp.SetToolTip(this.btnDown, "No doorway installed.\r\n\r\nRight-click to install one.\r\n");
             this.btnDown.UseVisualStyleBackColor = false;
             // 
             // btnSouth
@@ -514,6 +518,7 @@
             this.btnSouth.Size = new System.Drawing.Size(118, 86);
             this.btnSouth.TabIndex = 4;
             this.btnSouth.Text = "South";
+            this.doorwayHelp.SetToolTip(this.btnSouth, "No doorway installed.\r\n\r\nRight-click to install one.\r\n");
             this.btnSouth.UseVisualStyleBackColor = false;
             // 
             // btnNorth
@@ -529,6 +534,7 @@
             this.btnNorth.Size = new System.Drawing.Size(118, 86);
             this.btnNorth.TabIndex = 3;
             this.btnNorth.Text = "North";
+            this.doorwayHelp.SetToolTip(this.btnNorth, "No doorway installed.\r\n\r\nRight-click to install one.");
             this.btnNorth.UseVisualStyleBackColor = false;
             // 
             // btnUp
@@ -544,6 +550,7 @@
             this.btnUp.Size = new System.Drawing.Size(118, 51);
             this.btnUp.TabIndex = 0;
             this.btnUp.Text = "Up";
+            this.doorwayHelp.SetToolTip(this.btnUp, "No doorway installed.\r\n\r\nRight-click to install one.\r\n");
             this.btnUp.UseVisualStyleBackColor = false;
             // 
             // Help
@@ -554,6 +561,16 @@
             this.Help.IsBalloon = true;
             this.Help.ReshowDelay = 100;
             this.Help.ToolTipTitle = "Zone Designer";
+            // 
+            // doorwayHelp
+            // 
+            this.doorwayHelp.AutomaticDelay = 100;
+            this.doorwayHelp.AutoPopDelay = 15000;
+            this.doorwayHelp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.doorwayHelp.InitialDelay = 100;
+            this.doorwayHelp.IsBalloon = true;
+            this.doorwayHelp.ReshowDelay = 20;
+            this.doorwayHelp.ToolTipTitle = "Zone Designer";
             // 
             // ZoneBuilder
             // 
@@ -632,6 +649,7 @@
         private System.Windows.Forms.ToolStripMenuItem installDoorwayToAnotherZoneToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem installReverseDoorwayToSelectedRoomToolStripMenuItem;
+        private System.Windows.Forms.ToolTip doorwayHelp;
 
     }
 }

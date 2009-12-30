@@ -184,12 +184,13 @@ namespace MudDesigner.Editors
             connected.Realm = Program.Realm.Name;
             connected.Zone = Program.Zone.Name;
             connected.Room = Program.Room.Name;
+            connected.TravelDirection = TravelDirection;
 
             //Create a new door, add our link and set its travel direction
             Door door = new Door();
             door.TravelRoom = connected;
             door.TravelDirection = TravelDirections.GetTravelDirectionValue(TravelDirection.ToString());
-
+            
             //install the door
             linkedRoom.InstalledDoors.Add(door);
             //save the linked room
