@@ -79,14 +79,6 @@ namespace MudDesigner.MudEngine.GameObjects
             set;
         }
 
-        [Category("Environment Information")]
-        [DefaultValue(false)]
-        public bool IsSafe
-        {
-            get;
-            set;
-        }
-
         private string _Filename = "";
         private string _Name = "";
         /// <summary>

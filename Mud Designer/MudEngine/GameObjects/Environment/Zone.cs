@@ -37,6 +37,14 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
             get;
             set;
         }
+
+        [Category("Environment Information")]
+        [DefaultValue(false)]
+        public bool IsSafe
+        {
+            get;
+            set;
+        }
         
         internal List<Room> Rooms { get; set; }
 

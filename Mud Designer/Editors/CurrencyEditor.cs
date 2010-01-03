@@ -25,7 +25,9 @@ namespace MudDesigner.Editors
             InitializeComponent();
             _Currency = new Currency();
             propertyGrid1.SelectedObject = _Currency;
-            foreach (string currency in System.IO.Directory.GetFiles(FileManager.GetDataPath(SaveDataTypes.Currency), "*.xml"))
+            string path = FileManager.GetDataPath(SaveDataTypes.Currency);
+
+            foreach (string currency in System.IO.Directory.GetFiles(path, "*.currency"))
             {
                 lstCurrencies.Items.Add(System.IO.Path.GetFileNameWithoutExtension(currency));
             }
@@ -39,16 +41,12 @@ namespace MudDesigner.Editors
 
         private void btnSaveCurrency_Click(object sender, EventArgs e)
         {
-            if (lstCurrencies.Items.Contains(_Currency.Name))
-            {
-                MessageBox.Show("Currency already exists!", "Currency Creation", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             string currencyPath = FileManager.GetDataPath(SaveDataTypes.Currency);
             string currencyFile = System.IO.Path.Combine(currencyPath, _Currency.Filename);
             FileManager.Save(currencyFile, _Currency);
-            lstCurrencies.Items.Add(_Currency.Name);
+            string file = System.IO.Path.GetFileNameWithoutExtension(_Currency.Filename);
+            if (!lstCurrencies.Items.Contains(file))
+                lstCurrencies.Items.Add(file);
         }
 
         private void lstCurrencies_SelectedIndexChanged(object sender, EventArgs e)
@@ -57,7 +55,7 @@ namespace MudDesigner.Editors
             if (lstCurrencies.SelectedIndex == -1)
                 return;
             
-            string filePath = System.IO.Path.Combine(FileManager.GetDataPath(SaveDataTypes.Currency), lstCurrencies.SelectedItem.ToString() + ".xml");
+            string filePath = System.IO.Path.Combine(FileManager.GetDataPath(SaveDataTypes.Currency), lstCurrencies.SelectedItem.ToString() + ".currency");
             _Currency = (Currency)FileManager.Load(filePath, _Currency);
             propertyGrid1.SelectedObject = _Currency;
         }
