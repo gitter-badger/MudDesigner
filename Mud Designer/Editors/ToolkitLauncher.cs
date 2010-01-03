@@ -155,5 +155,10 @@ namespace MudDesigner.Editors
             string savePath = Path.Combine(Application.StartupPath, "Toolkit.xml");
             FileManager.Save(savePath, Program.Settings);
         }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://muddesigner.dailyforum.net");
+        }
     }
 }
