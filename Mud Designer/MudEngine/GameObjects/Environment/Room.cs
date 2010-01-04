@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,6 +52,7 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
             set;
         }
 
+        public Room TestRoom { get; set; }
         public Room()
         {
             InstalledDoors = new List<Door>();

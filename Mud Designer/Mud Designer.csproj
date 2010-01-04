@@ -79,6 +79,12 @@
     <Compile Include="Editors\ExistingRealms.Designer.cs">
       <DependentUpon>ExistingRealms.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\ScriptEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editors\ScriptEditor.Designer.cs">
+      <DependentUpon>ScriptEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="MudEngine\FileSystem\SaveDataTypes.cs" />
     <Compile Include="MudEngine\GameManagement\GameScript.cs" />
     <Compile Include="MudEngine\GameObjects\Bag.cs" />
@@ -142,6 +148,10 @@
       <DependentUpon>ExistingRealms.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Editors\ScriptEditor.resx">
+      <DependentUpon>ScriptEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editors\ZoneBuilder.resx">
       <DependentUpon>ZoneBuilder.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -179,6 +189,7 @@
     </Compile>
     <Compile Include="MudEngine\FileSystem\XmlSerialization.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="MudEngine\UITypeEditors\UIScriptEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">

@@ -44,8 +44,6 @@
             this.btnNewRealm = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.propertyRealm = new System.Windows.Forms.PropertyGrid();
-            this.tabScript = new System.Windows.Forms.TabPage();
-            this.txtScript = new System.Windows.Forms.RichTextBox();
             this.tabControl1.SuspendLayout();
             this.tabRealm.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -54,7 +52,6 @@
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.tabScript.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -96,7 +93,6 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabRealm);
-            this.tabControl1.Controls.Add(this.tabScript);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -228,27 +224,6 @@
             this.propertyRealm.TabIndex = 18;
             this.propertyRealm.ToolbarVisible = false;
             // 
-            // tabScript
-            // 
-            this.tabScript.Controls.Add(this.txtScript);
-            this.tabScript.Location = new System.Drawing.Point(4, 22);
-            this.tabScript.Name = "tabScript";
-            this.tabScript.Padding = new System.Windows.Forms.Padding(3);
-            this.tabScript.Size = new System.Drawing.Size(462, 438);
-            this.tabScript.TabIndex = 1;
-            this.tabScript.Text = "Realm Script";
-            this.tabScript.UseVisualStyleBackColor = true;
-            // 
-            // txtScript
-            // 
-            this.txtScript.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtScript.Location = new System.Drawing.Point(3, 3);
-            this.txtScript.Name = "txtScript";
-            this.txtScript.Size = new System.Drawing.Size(456, 432);
-            this.txtScript.TabIndex = 0;
-            this.txtScript.Text = "";
-            this.txtScript.TextChanged += new System.EventHandler(this.txtScript_TextChanged);
-            // 
             // RealmExplorer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -269,7 +244,6 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
-            this.tabScript.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -292,8 +266,6 @@
         private System.Windows.Forms.Button btnNewRealm;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.PropertyGrid propertyRealm;
-        private System.Windows.Forms.TabPage tabScript;
-        private System.Windows.Forms.RichTextBox txtScript;
 
 
 

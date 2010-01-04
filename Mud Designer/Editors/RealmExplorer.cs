@@ -88,7 +88,6 @@ namespace MudDesigner.Editors
             Program.Realm = new Realm();
  
             propertyRealm.SelectedObject = Program.Realm;
-            txtScript.Text = Program.Realm.Script;
         }
 
         private void btnSaveRealm_Click(object sender, EventArgs e)
@@ -190,16 +189,10 @@ namespace MudDesigner.Editors
                 {
                     //load it.
                     Program.Realm = r;
-                    txtScript.Text = Program.Realm.Script;
                     propertyRealm.SelectedObject = r;
                     break;
                 }
             }
-        }
-
-        private void txtScript_TextChanged(object sender, EventArgs e)
-        {
-            Program.Realm.Script = txtScript.Text;
         }
     }
 }

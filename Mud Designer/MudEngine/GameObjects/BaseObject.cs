@@ -6,13 +6,15 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using MudDesigner.MudEngine.Interfaces;
+using MudDesigner.MudEngine.UITypeEditors;
 
 namespace MudDesigner.MudEngine.GameObjects
 {
     public class BaseObject : IGameObject
     {
         [Category("Object Setup")]
-        [RefreshProperties(RefreshProperties.All)] //Required to refresh Filename property in the editors propertygrid
+        //Required to refresh Filename property in the editors propertygrid
+        [RefreshProperties(RefreshProperties.All)]
         public string Name
         {
             get
@@ -32,8 +34,9 @@ namespace MudDesigner.MudEngine.GameObjects
             get;
             set;
         }
-
-        [Browsable(false)]
+        
+        [Category("Object Setup")]
+        [EditorAttribute(typeof(UIScriptEditor), typeof(System.Drawing.Design.UITypeEditor))]
         public string Script { get; set; }
 
         [Category("Object Setup")]
