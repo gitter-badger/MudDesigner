@@ -36,37 +36,48 @@ namespace MudDesigner.Editors
             Program.Realm = new Realm();
 
             //If we have a default Realm selected, lets load it
-            if (Program.Settings.DefaultRealm != null)
+            try
             {
-                //Load it
-                string realmPath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), Program.Settings.DefaultRealm.Name);
-                string realmFile = Path.Combine(realmPath, Program.Settings.DefaultRealm.Filename);
-                Program.Realm = (Realm)FileManager.Load(realmFile, Program.Realm);
-
-                this.Text = "Zone Builder: (" + Program.Realm.Name + ")";
-                IsRealmLoaded = true;
-
-                //realm is loaded, now clear out the list of zones & rooms and show the zones contained
-                //within the new realm
-                lstZones.Items.Clear();
-                lstRooms.Items.Clear();
-                _Zones.Clear();
-                string[] files = Directory.GetFiles(realmPath, "*.zone", SearchOption.AllDirectories);
-
-                foreach (string file in files)
+                if (Program.Settings.DefaultRealm != null)
                 {
-                    string filename = Path.GetFileName(file);
-                    if (Program.Realm.Zones.Contains(filename))
+                    //Load it
+                    string realmPath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), Program.Settings.DefaultRealm.Name);
+                    string realmFile = Path.Combine(realmPath, Program.Settings.DefaultRealm.Filename);
+
+                    if (File.Exists(realmFile))
                     {
-                        Zone zone = new Zone();
-                        zone = (Zone)FileManager.Load(file, zone);
-                        zone.RefreshRoomList();
-                        _Zones.Add(zone);
-                        lstZones.Items.Add(zone.Name);
+                        Program.Realm = (Realm)FileManager.Load(realmFile, Program.Realm);
+
+                        this.Text = "Zone Builder: (" + Program.Realm.Name + ")";
+                        IsRealmLoaded = true;
                     }
-                    else
-                        continue;
+
+                    //realm is loaded, now clear out the list of zones & rooms and show the zones contained
+                    //within the new realm
+                    lstZones.Items.Clear();
+                    lstRooms.Items.Clear();
+                    _Zones.Clear();
+                    string[] files = Directory.GetFiles(realmPath, "*.zone", SearchOption.AllDirectories);
+
+                    foreach (string file in files)
+                    {
+                        string filename = Path.GetFileName(file);
+                        if (Program.Realm.Zones.Contains(filename))
+                        {
+                            Zone zone = new Zone();
+                            zone = (Zone)FileManager.Load(file, zone);
+                            zone.RefreshRoomList();
+                            _Zones.Add(zone);
+                            lstZones.Items.Add(zone.Name);
+                        }
+                        else
+                            continue;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -265,9 +276,9 @@ namespace MudDesigner.Editors
                 {
                     msg = "You will need to load a Zone prior to creating a new Room.";
                 }
-                    MessageBox.Show(msg,
-                        "Zone Builder", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
+                MessageBox.Show(msg,
+                    "Zone Builder", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
 
             Program.Room = new Room();
@@ -377,7 +388,7 @@ namespace MudDesigner.Editors
                 ContextMenuStrip mnu = (ContextMenuStrip)sender;
                 Button btn = (Button)mnu.SourceControl;
                 mnuInstallDoor.Text = "Install " + btn.Text + " doorway.";
-                
+
             }
         }
 

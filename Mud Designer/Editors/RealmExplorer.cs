@@ -149,7 +149,22 @@ namespace MudDesigner.Editors
                 return;
 
             //get our paths
-            string realmPath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), Program.Realm.Name);
+            //Load the realms name
+            Realm realm = new Realm();
+            foreach (string r in Directory.GetFiles(FileManager.GetDataPath(SaveDataTypes.Realms), "*.realm", SearchOption.AllDirectories))
+            {
+                realm = (Realm)FileManager.Load(r, realm);
+                if (realm.Name == lstRealms.SelectedItem.ToString())
+                {
+                    break;
+                }
+            }
+            if (realm.Name == "New Realm")
+            {
+                MessageBox.Show("Unable to locate the selected realm for deletion!", "Realm Explorer", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            string realmPath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), realm.Name);
             
             //Delete the realm and all of its contents (zones/rooms)
             Directory.Delete(realmPath, true);            
