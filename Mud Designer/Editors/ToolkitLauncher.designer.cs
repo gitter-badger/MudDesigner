@@ -30,6 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.label2 = new System.Windows.Forms.Label();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnLogo = new System.Windows.Forms.Button();
             this.tabEditors = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -57,9 +60,7 @@
             this.txtScript = new System.Windows.Forms.RichTextBox();
             this.tabVariables = new System.Windows.Forms.TabPage();
             this.Help = new System.Windows.Forms.ToolTip(this.components);
-            this.label1 = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.label2 = new System.Windows.Forms.Label();
+            this.btnTest = new System.Windows.Forms.Button();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -98,6 +99,40 @@
             this.splitContainer1.Size = new System.Drawing.Size(627, 383);
             this.splitContainer1.SplitterDistance = 154;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Black;
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(267, 131);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(227, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "to leave feedback and help build a community!";
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.BackColor = System.Drawing.Color.Black;
+            this.linkLabel1.Location = new System.Drawing.Point(160, 131);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(110, 13);
+            this.linkLabel1.TabIndex = 2;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Mud Designer Forums";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Black;
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(7, 131);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(157, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Developers please visit the new";
             // 
             // btnLogo
             // 
@@ -145,6 +180,7 @@
             this.flowLayoutPanel1.Controls.Add(this.btnCurrencyEditor);
             this.flowLayoutPanel1.Controls.Add(this.btnRealmExplorer);
             this.flowLayoutPanel1.Controls.Add(this.btnZoneBuilder);
+            this.flowLayoutPanel1.Controls.Add(this.btnTest);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -413,39 +449,20 @@
             this.Help.ReshowDelay = 100;
             this.Help.ToolTipTitle = "Toolkit Help";
             // 
-            // label1
+            // btnTest
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Black;
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(7, 131);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(157, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Developers please visit the new";
-            // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.BackColor = System.Drawing.Color.Black;
-            this.linkLabel1.Location = new System.Drawing.Point(160, 131);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(110, 13);
-            this.linkLabel1.TabIndex = 2;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Mud Designer Forums";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Black;
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(267, 131);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(227, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "to leave feedback and help build a community!";
+            this.btnTest.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTest.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTest.Location = new System.Drawing.Point(3, 64);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(147, 55);
+            this.btnTest.TabIndex = 5;
+            this.btnTest.Text = "New All-In-One Test Designer";
+            this.Help.SetToolTip(this.btnTest, "The Zone Builder provides tools to create and manage your MUDs\r\nZones & Rooms. Cr" +
+                    "eate Rooms, link them together via Doors and\r\nconnect Zones together either with" +
+                    "in the same Realm or cross-realms.");
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
             // ToolkitLauncher
             // 
@@ -514,6 +531,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Button btnTest;
     }
 }
 

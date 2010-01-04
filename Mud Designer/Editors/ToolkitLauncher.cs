@@ -160,5 +160,20 @@ namespace MudDesigner.Editors
         {
             System.Diagnostics.Process.Start("http://muddesigner.dailyforum.net");
         }
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            Designer form = new Designer();
+            Program.CurrentEditor = form;
+
+            form.Show();
+            this.Hide();
+            while (form.Created)
+                Application.DoEvents();
+
+            form = null;
+
+            this.Show();
+        }
     }
 }

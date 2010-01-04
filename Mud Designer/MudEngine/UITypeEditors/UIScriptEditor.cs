@@ -33,17 +33,31 @@ namespace MudDesigner.MudEngine.UITypeEditors
                 return null;
             }
 
-            MudDesigner.Editors.ScriptEditor frm = new MudDesigner.Editors.ScriptEditor(baseObj);
-            frm.Show();
-            string script = "";
-
-            while (frm.Created)
+            if (Program.CurrentEditor is Designer)
             {
-                script = frm.Script;
-                System.Windows.Forms.Application.DoEvents();
+                UIScriptControl control = new UIScriptControl(baseObj);
+                control.Dock = DockStyle.Fill;
+                Designer frm = (Designer)Program.CurrentEditor;
+                frm.ControlContainer.Panel1.Controls.Clear();
+                frm.ControlContainer.Panel1.Controls.Add(control);
+                string script = "";
+
+                while (control.Created)
+                {
+                    if (!frm.ControlContainer.Panel1.Controls.Contains(control))
+                        break;
+                    Application.DoEvents();
+                    script = control.Script;
+                }
+
+
+                control = null;
+                frm = null;
+
+                return script;
             }
 
-            return script;
+            return null;
         }
 
         public override System.Drawing.Design.UITypeEditorEditStyle GetEditStyle(System.ComponentModel.ITypeDescriptorContext context)
