@@ -171,5 +171,10 @@ namespace MudDesigner
         {
             LoadObject(treeExplorer.SelectedNode);
         }
+
+        private void mnuProjectInformation_Click(object sender, EventArgs e)
+        {
+            propertyObject.SelectedObject = _Project;
+        }
     }
 }
