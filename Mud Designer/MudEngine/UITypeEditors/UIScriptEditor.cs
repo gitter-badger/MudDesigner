@@ -38,14 +38,14 @@ namespace MudDesigner.MudEngine.UITypeEditors
                 UIScriptControl control = new UIScriptControl(baseObj);
                 control.Dock = DockStyle.Fill;
                 Designer frm = (Designer)Program.CurrentEditor;
-                frm.ControlContainer.Panel1.Controls.Clear();
-                frm.ControlContainer.Panel1.Controls.Add(control);
+                //frm.ControlContainer.Panel1.Controls.Clear();
+                //frm.ControlContainer.Panel1.Controls.Add(control);
                 string script = "";
 
                 while (control.Created)
                 {
-                    if (!frm.ControlContainer.Panel1.Controls.Contains(control))
-                        break;
+                    //if (!frm.ControlContainer.Panel1.Controls.Contains(control))
+                        //break;
                     Application.DoEvents();
                     script = control.Script;
                 }

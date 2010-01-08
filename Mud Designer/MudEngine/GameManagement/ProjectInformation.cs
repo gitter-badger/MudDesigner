@@ -52,7 +52,7 @@ namespace MudDesigner.MudEngine.GameManagement
         /// Gets or Sets if room names are hidden during console output.
         /// </summary>
         public bool HideRoomNames { get; set; }
-
+        
         [Category("Day Management")]
         public TimeOfDayOptions TimeOfDay
         {
@@ -113,6 +113,7 @@ namespace MudDesigner.MudEngine.GameManagement
         public ProjectInformation()
         {
             CurrencyList = new List<Currency>();
+            GameTitle = "New Game";
         }
     }
 }
