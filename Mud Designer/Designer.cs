@@ -28,18 +28,18 @@ namespace MudDesigner
             //instance a baseObject so that we can store inherited classes
             //for use during our runtime
             _GameObject = new BaseObject();
+            _Project = new ProjectInformation();
 
             //Get out saved project file
             string projectPath = Path.Combine(Application.StartupPath, "Project");
             string projectFilename = Path.Combine(projectPath, "Game.xml");
 
             //Check if the project directory exists
-            if (!Directory.Exists(projectPath))
-                Directory.CreateDirectory(projectPath);
+            ValidatePath(projectPath);
 
             //Check if the project file exists. If so load it
             if (File.Exists(projectFilename))
-                _Project = (ProjectInformation)FileManager.Load(projectPath, _Project);
+                _Project = (ProjectInformation)FileManager.Load(projectFilename, _Project);
             else
                 _Project = new ProjectInformation();
 
@@ -57,12 +57,18 @@ namespace MudDesigner
 
         private void btnSaveObject_Click(object sender, EventArgs e)
         {
+            //Get the object Type
             Type t = propertyObject.SelectedObject.GetType();
+            //We can use to get a copy of the currently selected object
+            //if it is a BaseObject (Aquire it's BaseObject.Filename)
             BaseObject obj = new BaseObject();
+
+            //Filepaths
             string projectPath = Path.Combine(Application.StartupPath, "Project");
             string objectPath = "";
             string filename = "";
 
+            //Start checking to see what object we are saving
             if (t == typeof(ProjectInformation))
             {
                 filename = Path.Combine(projectPath, "Game.xml");
@@ -76,12 +82,88 @@ namespace MudDesigner
                 filename = Path.Combine(objectPath, obj.Filename);
                 FileManager.Save(filename, obj);
             }
+
+            btnRefreshObjects_Click(null, null);
         }
 
         private void ValidatePath(string path)
         {
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
+
+            string projectPath = Path.Combine(Application.StartupPath, "Project");
+
+            btnRefreshObjects_Click(null, null);
+        }
+
+        private void PopulateTree(string dir, TreeNode node)
+        {
+            // get the information of the directory
+            DirectoryInfo directory = new DirectoryInfo(dir);
+
+            // loop through each subdirectory
+            foreach (DirectoryInfo d in directory.GetDirectories())
+            {
+                // create a new node
+                TreeNode t = new TreeNode(d.Name);
+                // populate the new node recursively
+                PopulateTree(d.FullName, t);
+                node.Nodes.Add(t); // add the node to the "master" node
+            }
+            // lastly, loop through each file in the directory, and add these as nodes
+            foreach (FileInfo f in directory.GetFiles())
+            {
+                // create a new node
+                TreeNode t = new TreeNode(f.Name);
+                // add it to the "master"
+                node.Nodes.Add(t);
+            }
+
+            treeExplorer.SelectedNode = node;
+        }
+
+        private void btnRefreshObjects_Click(object sender, EventArgs e)
+        {
+            treeExplorer.Nodes.Clear();
+            TreeNode node = new TreeNode("Game Objects");
+            treeExplorer.Nodes.Add(node);
+            string projectPath = Path.Combine(Application.StartupPath, "Project");
+            PopulateTree(projectPath, node);
+        }
+
+        private void LoadObject(TreeNode selectedNode)
+        {
+            string projectPath = Path.Combine(Application.StartupPath, "Project");
+            string objectPath = "";
+            string objectFilename = "";
+
+            switch(selectedNode.Parent.Text)
+            {
+                case "Game Objects":
+                    if (selectedNode.Text == "Game.xml")
+                    {
+                        objectFilename = Path.Combine(projectPath, selectedNode.Text);
+                        propertyObject.SelectedObject = (ProjectInformation)FileManager.Load(objectFilename, new ProjectInformation());
+                    }
+                    break;
+
+                case "Currencies":
+                    objectPath = Path.Combine(projectPath, selectedNode.Parent.Text);
+                    objectFilename = Path.Combine(objectPath, selectedNode.Text);
+                    propertyObject.SelectedObject = (Currency)FileManager.Load(objectFilename, new Currency());
+                    break;
+            }
+        }
+
+        private void currencyEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Currency obj = new Currency();
+            propertyObject.SelectedObject = obj;
+        }
+
+        private void mnuEditObject_Click(object sender, EventArgs e)
+        {
+            LoadObject(treeExplorer.SelectedNode);
         }
     }
 }

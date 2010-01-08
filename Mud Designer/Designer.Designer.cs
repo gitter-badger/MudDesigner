@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Game Objects");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Game Objects");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Designer));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,7 +83,12 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnValidate = new System.Windows.Forms.ToolStripButton();
             this.propertyObject = new System.Windows.Forms.PropertyGrid();
+            this.currencyEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.realmExplorer1 = new MudDesigner.UIControls.RealmExplorer();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mnuEditObject = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
+            this.containerMain.Panel1.SuspendLayout();
             this.containerMain.Panel2.SuspendLayout();
             this.containerMain.SuspendLayout();
             this.containerSidebar.Panel1.SuspendLayout();
@@ -91,6 +96,7 @@
             this.containerSidebar.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.toolstripObjectProperties.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -117,7 +123,7 @@
             // mnuExit
             // 
             this.mnuExit.Name = "mnuExit";
-            this.mnuExit.Size = new System.Drawing.Size(152, 22);
+            this.mnuExit.Size = new System.Drawing.Size(92, 22);
             this.mnuExit.Text = "Exit";
             // 
             // mnuEdit
@@ -229,6 +235,7 @@
             // mnuGameManagement
             // 
             this.mnuGameManagement.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.currencyEditorToolStripMenuItem,
             this.mnuProjectInformation,
             this.mnuQuestBuilder});
             this.mnuGameManagement.Name = "mnuGameManagement";
@@ -365,6 +372,10 @@
             this.containerMain.Location = new System.Drawing.Point(0, 24);
             this.containerMain.Name = "containerMain";
             // 
+            // containerMain.Panel1
+            // 
+            this.containerMain.Panel1.Controls.Add(this.realmExplorer1);
+            // 
             // containerMain.Panel2
             // 
             this.containerMain.Panel2.Controls.Add(this.containerSidebar);
@@ -397,13 +408,14 @@
             // 
             // treeExplorer
             // 
+            this.treeExplorer.ContextMenuStrip = this.contextMenuStrip1;
             this.treeExplorer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeExplorer.Location = new System.Drawing.Point(0, 38);
             this.treeExplorer.Name = "treeExplorer";
-            treeNode4.Name = "nodeGameObjects";
-            treeNode4.Text = "Game Objects";
+            treeNode1.Name = "nodeGameObjects";
+            treeNode1.Text = "Game Objects";
             this.treeExplorer.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4});
+            treeNode1});
             this.treeExplorer.Size = new System.Drawing.Size(252, 204);
             this.treeExplorer.TabIndex = 5;
             // 
@@ -429,6 +441,7 @@
             this.btnRefreshObjects.Size = new System.Drawing.Size(93, 22);
             this.btnRefreshObjects.Text = "Refresh Objects";
             this.btnRefreshObjects.ToolTipText = "Save the current object";
+            this.btnRefreshObjects.Click += new System.EventHandler(this.btnRefreshObjects_Click);
             // 
             // toolStripSeparator2
             // 
@@ -516,6 +529,37 @@
             this.propertyObject.TabIndex = 5;
             this.propertyObject.ToolbarVisible = false;
             // 
+            // currencyEditorToolStripMenuItem
+            // 
+            this.currencyEditorToolStripMenuItem.Name = "currencyEditorToolStripMenuItem";
+            this.currencyEditorToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.currencyEditorToolStripMenuItem.Text = "Currency Editor";
+            this.currencyEditorToolStripMenuItem.Click += new System.EventHandler(this.currencyEditorToolStripMenuItem_Click);
+            // 
+            // realmExplorer1
+            // 
+            this.realmExplorer1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.realmExplorer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.realmExplorer1.IsSplashVisible = true;
+            this.realmExplorer1.Location = new System.Drawing.Point(0, 0);
+            this.realmExplorer1.Name = "realmExplorer1";
+            this.realmExplorer1.Size = new System.Drawing.Size(526, 540);
+            this.realmExplorer1.TabIndex = 0;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuEditObject});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 48);
+            // 
+            // mnuEditObject
+            // 
+            this.mnuEditObject.Name = "mnuEditObject";
+            this.mnuEditObject.Size = new System.Drawing.Size(152, 22);
+            this.mnuEditObject.Text = "Edit Object";
+            this.mnuEditObject.Click += new System.EventHandler(this.mnuEditObject_Click);
+            // 
             // Designer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -529,6 +573,7 @@
             this.Text = "Mud Designer Replacement Test";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.containerMain.Panel1.ResumeLayout(false);
             this.containerMain.Panel2.ResumeLayout(false);
             this.containerMain.ResumeLayout(false);
             this.containerSidebar.Panel1.ResumeLayout(false);
@@ -540,6 +585,7 @@
             this.toolStrip1.PerformLayout();
             this.toolstripObjectProperties.ResumeLayout(false);
             this.toolstripObjectProperties.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -599,6 +645,10 @@
         private System.Windows.Forms.ToolStripButton btnValidate;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PropertyGrid propertyObject;
+        private MudDesigner.UIControls.RealmExplorer realmExplorer1;
+        private System.Windows.Forms.ToolStripMenuItem currencyEditorToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem mnuEditObject;
 
 
 
