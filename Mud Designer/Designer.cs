@@ -137,6 +137,12 @@ namespace MudDesigner
             string objectPath = "";
             string objectFilename = "";
 
+            if (selectedNode.Text == "Game Objects")
+            {
+                MessageBox.Show("You cannot edit the Game Object node in the Project Explorer.");
+                return;
+            }
+
             switch(selectedNode.Parent.Text)
             {
                 case "Game Objects":
