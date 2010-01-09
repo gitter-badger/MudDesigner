@@ -53,6 +53,41 @@ namespace MudDesigner
 
             //Assign our Project Information to the propertygrid
             propertyObject.SelectedObject = _Project;
+
+            //build a collection of Realms for viewing
+            InstallWidgetRealms(projectPath);
+        }
+
+        private void InstallWidgetRealms(string projectPath)
+        {
+            ValidatePath(Path.Combine(projectPath, "Realms"));
+            string[] files = Directory.GetFiles(Path.Combine(projectPath, "Realms"), "*.xml");
+
+            if (files.Length == 0)
+                return;
+
+            UninstallWidget();
+            foreach (string realmFile in files)
+            {
+                Realm realm = new Realm();
+                realm = (Realm)FileManager.Load(realmFile, realm);
+
+                Button button = new Button();
+                button.FlatStyle = FlatStyle.Flat;
+                button.BackColor = System.Drawing.Color.FromArgb(48,48,48   );
+                button.Size = new System.Drawing.Size(130,100);
+                button.Name = "btn" + realm.Name;
+                button.Text = realm.Name;
+                flowContainer.Controls.Add(button);
+            }
+        }
+
+        /// <summary>
+        /// Uninstalls the currently installed widget
+        /// </summary>
+        public void UninstallWidget()
+        {
+            flowContainer.Controls.Clear();
         }
 
         private void btnSaveObject_Click(object sender, EventArgs e)
@@ -82,8 +117,52 @@ namespace MudDesigner
                 filename = Path.Combine(objectPath, obj.Filename);
                 FileManager.Save(filename, obj);
             }
+            else if (t == typeof(Realm))
+            {
+                obj = (BaseObject)propertyObject.SelectedObject;
+                objectPath = Path.Combine(projectPath, "Realms");
+                ValidatePath(objectPath);
+                filename = Path.Combine(objectPath, obj.Filename);
+                FileManager.Save(filename, obj);
+            }
 
             btnRefreshObjects_Click(null, null);
+        }
+
+        private void LoadObject(TreeNode selectedNode)
+        {
+            string projectPath = Path.Combine(Application.StartupPath, "Project");
+            string objectPath = "";
+            string objectFilename = "";
+
+            if (selectedNode.Text == "Game Objects")
+            {
+                MessageBox.Show("You cannot edit the Game Object node in the Project Explorer.");
+                return;
+            }
+
+            switch (selectedNode.Parent.Text)
+            {
+                case "Game Objects":
+                    if (selectedNode.Text == "Game.xml")
+                    {
+                        objectFilename = Path.Combine(projectPath, selectedNode.Text);
+                        propertyObject.SelectedObject = (ProjectInformation)FileManager.Load(objectFilename, new ProjectInformation());
+                    }
+                    break;
+
+                case "Currencies":
+                    objectPath = Path.Combine(projectPath, selectedNode.Parent.Text);
+                    objectFilename = Path.Combine(objectPath, selectedNode.Text);
+                    propertyObject.SelectedObject = (Currency)FileManager.Load(objectFilename, new Currency());
+                    break;
+
+                case "Realms":
+                    objectPath = Path.Combine(projectPath, selectedNode.Parent.Text);
+                    objectFilename = Path.Combine(objectPath, selectedNode.Text);
+                    propertyObject.SelectedObject = (Realm)FileManager.Load(objectFilename, new Realm());
+                    break;
+            }
         }
 
         private void ValidatePath(string path)
@@ -131,36 +210,6 @@ namespace MudDesigner
             PopulateTree(projectPath, node);
         }
 
-        private void LoadObject(TreeNode selectedNode)
-        {
-            string projectPath = Path.Combine(Application.StartupPath, "Project");
-            string objectPath = "";
-            string objectFilename = "";
-
-            if (selectedNode.Text == "Game Objects")
-            {
-                MessageBox.Show("You cannot edit the Game Object node in the Project Explorer.");
-                return;
-            }
-
-            switch(selectedNode.Parent.Text)
-            {
-                case "Game Objects":
-                    if (selectedNode.Text == "Game.xml")
-                    {
-                        objectFilename = Path.Combine(projectPath, selectedNode.Text);
-                        propertyObject.SelectedObject = (ProjectInformation)FileManager.Load(objectFilename, new ProjectInformation());
-                    }
-                    break;
-
-                case "Currencies":
-                    objectPath = Path.Combine(projectPath, selectedNode.Parent.Text);
-                    objectFilename = Path.Combine(objectPath, selectedNode.Text);
-                    propertyObject.SelectedObject = (Currency)FileManager.Load(objectFilename, new Currency());
-                    break;
-            }
-        }
-
         private void currencyEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Currency obj = new Currency();
@@ -175,6 +224,11 @@ namespace MudDesigner
         private void mnuProjectInformation_Click(object sender, EventArgs e)
         {
             propertyObject.SelectedObject = _Project;
+        }
+
+        private void mnuRealmEditor_Click(object sender, EventArgs e)
+        {
+            propertyObject.SelectedObject = new Realm();
         }
     }
 }

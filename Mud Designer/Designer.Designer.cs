@@ -69,7 +69,6 @@
             this.mnuHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.containerMain = new System.Windows.Forms.SplitContainer();
-            this.realmExplorer1 = new MudDesigner.UIControls.RealmExplorer();
             this.containerSidebar = new System.Windows.Forms.SplitContainer();
             this.treeExplorer = new System.Windows.Forms.TreeView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -87,6 +86,8 @@
             this.btnValidate = new System.Windows.Forms.ToolStripButton();
             this.label2 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.flowContainer = new System.Windows.Forms.FlowLayoutPanel();
+            this.realmExplorer1 = new MudDesigner.UIControls.RealmExplorer();
             this.menuStrip1.SuspendLayout();
             this.containerMain.Panel1.SuspendLayout();
             this.containerMain.Panel2.SuspendLayout();
@@ -97,6 +98,7 @@
             this.contextMenuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.toolstripObjectProperties.SuspendLayout();
+            this.flowContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -277,26 +279,27 @@
             this.mnuRealmEditor,
             this.mnuZoneBuilder});
             this.mnuEnvironments.Name = "mnuEnvironments";
-            this.mnuEnvironments.Size = new System.Drawing.Size(147, 22);
+            this.mnuEnvironments.Size = new System.Drawing.Size(152, 22);
             this.mnuEnvironments.Text = "Environments";
             // 
             // mnuRealmEditor
             // 
             this.mnuRealmEditor.Name = "mnuRealmEditor";
-            this.mnuRealmEditor.Size = new System.Drawing.Size(141, 22);
+            this.mnuRealmEditor.Size = new System.Drawing.Size(152, 22);
             this.mnuRealmEditor.Text = "Realm Editor";
+            this.mnuRealmEditor.Click += new System.EventHandler(this.mnuRealmEditor_Click);
             // 
             // mnuZoneBuilder
             // 
             this.mnuZoneBuilder.Name = "mnuZoneBuilder";
-            this.mnuZoneBuilder.Size = new System.Drawing.Size(141, 22);
+            this.mnuZoneBuilder.Size = new System.Drawing.Size(152, 22);
             this.mnuZoneBuilder.Text = "Zone Builder";
             // 
             // mnuItems
             // 
             this.mnuItems.Enabled = false;
             this.mnuItems.Name = "mnuItems";
-            this.mnuItems.Size = new System.Drawing.Size(147, 22);
+            this.mnuItems.Size = new System.Drawing.Size(152, 22);
             this.mnuItems.Text = "Items";
             // 
             // customObjectsToolStripMenuItem
@@ -382,7 +385,7 @@
             // 
             // containerMain.Panel1
             // 
-            this.containerMain.Panel1.Controls.Add(this.realmExplorer1);
+            this.containerMain.Panel1.Controls.Add(this.flowContainer);
             // 
             // containerMain.Panel2
             // 
@@ -390,16 +393,6 @@
             this.containerMain.Size = new System.Drawing.Size(784, 540);
             this.containerMain.SplitterDistance = 526;
             this.containerMain.TabIndex = 1;
-            // 
-            // realmExplorer1
-            // 
-            this.realmExplorer1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.realmExplorer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.realmExplorer1.IsSplashVisible = true;
-            this.realmExplorer1.Location = new System.Drawing.Point(0, 0);
-            this.realmExplorer1.Name = "realmExplorer1";
-            this.realmExplorer1.Size = new System.Drawing.Size(526, 540);
-            this.realmExplorer1.TabIndex = 0;
             // 
             // containerSidebar
             // 
@@ -561,6 +554,25 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "Object Properties";
             // 
+            // flowContainer
+            // 
+            this.flowContainer.Controls.Add(this.realmExplorer1);
+            this.flowContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowContainer.Location = new System.Drawing.Point(0, 0);
+            this.flowContainer.Name = "flowContainer";
+            this.flowContainer.Size = new System.Drawing.Size(526, 540);
+            this.flowContainer.TabIndex = 0;
+            // 
+            // realmExplorer1
+            // 
+            this.realmExplorer1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.realmExplorer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.realmExplorer1.IsSplashVisible = true;
+            this.realmExplorer1.Location = new System.Drawing.Point(3, 3);
+            this.realmExplorer1.Name = "realmExplorer1";
+            this.realmExplorer1.Size = new System.Drawing.Size(526, 0);
+            this.realmExplorer1.TabIndex = 1;
+            // 
             // Designer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -587,6 +599,7 @@
             this.toolStrip1.PerformLayout();
             this.toolstripObjectProperties.ResumeLayout(false);
             this.toolstripObjectProperties.PerformLayout();
+            this.flowContainer.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -646,10 +659,11 @@
         private System.Windows.Forms.ToolStripButton btnValidate;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PropertyGrid propertyObject;
-        private MudDesigner.UIControls.RealmExplorer realmExplorer1;
         private System.Windows.Forms.ToolStripMenuItem currencyEditorToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem mnuEditObject;
+        private System.Windows.Forms.FlowLayoutPanel flowContainer;
+        private MudDesigner.UIControls.RealmExplorer realmExplorer1;
 
 
 
