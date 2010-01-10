@@ -82,13 +82,13 @@
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.txtSearch = new System.Windows.Forms.ToolStripTextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.lblObjectProperties = new System.Windows.Forms.Label();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.propertyObject = new System.Windows.Forms.PropertyGrid();
             this.toolstripObjectProperties = new System.Windows.Forms.ToolStrip();
             this.btnSaveObject = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnValidate = new System.Windows.Forms.ToolStripButton();
-            this.propertyObject = new System.Windows.Forms.PropertyGrid();
+            this.lblObjectProperties = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip1.SuspendLayout();
             this.containerMain.Panel2.SuspendLayout();
             this.containerMain.SuspendLayout();
@@ -513,16 +513,14 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Project Explorer";
             // 
-            // lblObjectProperties
+            // propertyObject
             // 
-            this.lblObjectProperties.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblObjectProperties.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblObjectProperties.ForeColor = System.Drawing.Color.Silver;
-            this.lblObjectProperties.Location = new System.Drawing.Point(0, 0);
-            this.lblObjectProperties.Name = "lblObjectProperties";
-            this.lblObjectProperties.Size = new System.Drawing.Size(267, 13);
-            this.lblObjectProperties.TabIndex = 3;
-            this.lblObjectProperties.Text = "Object Properties";
+            this.propertyObject.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyObject.Location = new System.Drawing.Point(0, 38);
+            this.propertyObject.Name = "propertyObject";
+            this.propertyObject.Size = new System.Drawing.Size(267, 252);
+            this.propertyObject.TabIndex = 8;
+            this.propertyObject.ToolbarVisible = false;
             // 
             // toolstripObjectProperties
             // 
@@ -563,14 +561,16 @@
             this.btnValidate.ToolTipText = "Checks the current object to ensure that there are no errors. \r\nThis is just an e" +
                 "rror check, and is not required.";
             // 
-            // propertyObject
+            // lblObjectProperties
             // 
-            this.propertyObject.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyObject.Location = new System.Drawing.Point(0, 38);
-            this.propertyObject.Name = "propertyObject";
-            this.propertyObject.Size = new System.Drawing.Size(267, 252);
-            this.propertyObject.TabIndex = 8;
-            this.propertyObject.ToolbarVisible = false;
+            this.lblObjectProperties.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblObjectProperties.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblObjectProperties.ForeColor = System.Drawing.Color.Silver;
+            this.lblObjectProperties.Location = new System.Drawing.Point(0, 0);
+            this.lblObjectProperties.Name = "lblObjectProperties";
+            this.lblObjectProperties.Size = new System.Drawing.Size(267, 13);
+            this.lblObjectProperties.TabIndex = 3;
+            this.lblObjectProperties.Text = "Object Properties";
             // 
             // Designer
             // 
@@ -583,7 +583,7 @@
             this.IsMdiContainer = true;
             this.Name = "Designer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Mud Designer Replacement Test";
+            this.Text = "Mud Designer";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
