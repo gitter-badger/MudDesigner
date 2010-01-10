@@ -385,5 +385,16 @@ namespace MudDesigner
         {
             btnSaveObject_Click(null, null);
         }
+
+        private void mnuAbout_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Mud Designer.\n\nDownload at http://MudDesigner.Codeplex.com\n"
+                + "Join the community at http://MudDesigner.DailyForum.net", "Mud Designer");
+        }
+
+        private void mnuExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

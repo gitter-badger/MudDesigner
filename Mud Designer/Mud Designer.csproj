@@ -67,24 +67,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Editors\DoorwayManager.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Editors\DoorwayManager.Designer.cs">
-      <DependentUpon>DoorwayManager.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Editors\ExistingRealms.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Editors\ExistingRealms.Designer.cs">
-      <DependentUpon>ExistingRealms.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Editors\ScriptEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Editors\ScriptEditor.Designer.cs">
-      <DependentUpon>ScriptEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="Designer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -108,36 +90,6 @@
     <Compile Include="MudEngine\Interfaces\IRuleSet.cs" />
     <Compile Include="MudEngine\GameManagement\ProjectInformation.cs" />
     <Compile Include="MudEngine\Attributes\UnusableAttribute.cs" />
-    <Compile Include="Editors\CurrencyEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Editors\CurrencyEditor.designer.cs">
-      <DependentUpon>CurrencyEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Editors\ZoneBuilder.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Editors\ZoneBuilder.designer.cs">
-      <DependentUpon>ZoneBuilder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Editors\ToolkitLauncher.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Editors\ToolkitLauncher.designer.cs">
-      <DependentUpon>ToolkitLauncher.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Editors\RealmExplorer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Editors\RealmExplorer.designer.cs">
-      <DependentUpon>RealmExplorer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Editors\ProjectSettings.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Editors\ProjectSettings.designer.cs">
-      <DependentUpon>ProjectSettings.cs</DependentUpon>
-    </Compile>
     <Compile Include="MudEngine\FileSystem\FileManager.cs" />
     <Compile Include="MudEngine\GameManagement\QuestSetup.cs" />
     <Compile Include="MudEngine\UITypeEditors\UIRealmControl.cs">
@@ -155,38 +107,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Editors\CurrencyEditor.resx">
-      <DependentUpon>CurrencyEditor.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editors\DoorwayManager.resx">
-      <DependentUpon>DoorwayManager.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editors\ExistingRealms.resx">
-      <DependentUpon>ExistingRealms.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editors\ScriptEditor.resx">
-      <DependentUpon>ScriptEditor.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editors\ZoneBuilder.resx">
-      <DependentUpon>ZoneBuilder.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editors\ToolkitLauncher.resx">
-      <DependentUpon>ToolkitLauncher.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editors\RealmExplorer.resx">
-      <DependentUpon>RealmExplorer.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editors\ProjectSettings.resx">
-      <DependentUpon>ProjectSettings.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Designer.resx">
       <DependentUpon>Designer.cs</DependentUpon>
       <SubType>Designer</SubType>
