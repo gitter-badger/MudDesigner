@@ -5,9 +5,11 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.Xml.Serialization;
+using System.Drawing.Design;
 
 using MudDesigner.MudEngine.FileSystem;
 using MudDesigner.MudEngine.GameObjects;
+using MudDesigner.MudEngine.UITypeEditors;
 
 namespace MudDesigner.MudEngine.GameObjects.Environment
 {
@@ -46,7 +48,10 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
             set;
         }
         
-        internal List<Room> Rooms { get; set; }
+        [Category("Environment Information")]
+        [EditorAttribute(typeof(UIRoomEditor), typeof(UITypeEditor))]
+        [ReadOnly(false)]
+        public List<Room> Rooms { get; set; }
 
         public Zone()
         {

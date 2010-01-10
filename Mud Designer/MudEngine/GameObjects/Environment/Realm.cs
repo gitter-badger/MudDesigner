@@ -14,7 +14,7 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
     public class Realm : BaseObject
     {
 
-        [Category("Realm Information")]
+        [Category("Environment Information")]
         [EditorAttribute(typeof(UIRealmEditor), typeof(System.Drawing.Design.UITypeEditor))]
         public List<string> Zones { get; set; }
 
