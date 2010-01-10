@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Project");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Project");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Designer));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -426,10 +426,10 @@
             this.treeExplorer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeExplorer.Location = new System.Drawing.Point(0, 38);
             this.treeExplorer.Name = "treeExplorer";
-            treeNode1.Name = "nodeProject";
-            treeNode1.Text = "Project";
+            treeNode2.Name = "nodeProject";
+            treeNode2.Text = "Project";
             this.treeExplorer.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            treeNode2});
             this.treeExplorer.Size = new System.Drawing.Size(267, 204);
             this.treeExplorer.TabIndex = 5;
             // 
@@ -521,6 +521,7 @@
             this.propertyObject.Size = new System.Drawing.Size(267, 252);
             this.propertyObject.TabIndex = 8;
             this.propertyObject.ToolbarVisible = false;
+            this.propertyObject.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyObject_PropertyValueChanged);
             // 
             // toolstripObjectProperties
             // 
@@ -543,6 +544,7 @@
             this.btnSaveObject.Size = new System.Drawing.Size(73, 22);
             this.btnSaveObject.Text = "Save Object";
             this.btnSaveObject.ToolTipText = "Save the current object";
+            this.btnSaveObject.Click += new System.EventHandler(this.btnSaveObject_Click);
             // 
             // toolStripSeparator1
             // 
