@@ -7,12 +7,15 @@ using System.ComponentModel;
 
 using MudDesigner.MudEngine.FileSystem;
 using MudDesigner.MudEngine.GameObjects;
+using MudDesigner.MudEngine.UITypeEditors;
 
 namespace MudDesigner.MudEngine.GameObjects.Environment
 {
     public class Realm : BaseObject
     {
-        [Browsable(false)]
+
+        [Category("Realm Information")]
+        [EditorAttribute(typeof(UIRealmEditor), typeof(System.Drawing.Design.UITypeEditor))]
         public List<string> Zones { get; set; }
 
         public Realm()

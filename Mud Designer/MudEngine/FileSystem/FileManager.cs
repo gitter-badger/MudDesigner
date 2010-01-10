@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace MudDesigner.MudEngine.FileSystem
 {
@@ -121,5 +122,7 @@ namespace MudDesigner.MudEngine.FileSystem
         {
             return System.IO.Path.Combine(GetDataPath(Realm, Zone), Room);
         }
+
+        //TODO Write CopyDirectory method.
     }
 }

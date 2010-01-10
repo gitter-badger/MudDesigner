@@ -55,7 +55,8 @@ namespace MudDesigner
             Application.SetCompatibleTextRenderingDefault(false);
 
             //Run the toolkit
-            Application.Run(new MudDesigner.Editors.ToolkitLauncher());
+            CurrentEditor = new Designer();
+            Application.Run(CurrentEditor);
         }
     }
 }

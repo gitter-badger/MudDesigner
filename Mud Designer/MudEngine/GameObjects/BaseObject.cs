@@ -24,7 +24,7 @@ namespace MudDesigner.MudEngine.GameObjects
             set
             {
                 this._Name = value;
-                this.Filename = value + ".xml";
+                this.Filename = value + "." + this.GetType().Name;
             }
         }
 
@@ -50,7 +50,7 @@ namespace MudDesigner.MudEngine.GameObjects
             }
             set 
             {
-                string extension = ".xml";
+                string extension = "." + this.GetType().Name;
                 if (!value.EndsWith(extension))
                     value += extension;
 
@@ -91,7 +91,7 @@ namespace MudDesigner.MudEngine.GameObjects
         {
             Script = "";
             _Name = "New " + this.GetType().Name;
-            _Filename = _Name + ".xml";
+            _Filename = _Name + "." + this.GetType().Name;
 
             this.Feel = "You feel nothing.";
             this.Listen = "You hear nothing of interest.";
