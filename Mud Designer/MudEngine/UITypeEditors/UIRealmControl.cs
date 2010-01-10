@@ -63,6 +63,9 @@ namespace MudDesigner.MudEngine.UITypeEditors
                 lstRealmMembers.Items.Add(zone);
             }
 
+            if (!Directory.Exists(zonePath))
+                Directory.CreateDirectory(zonePath);
+
             string[] zones = Directory.GetFiles(zonePath, "*.zone", SearchOption.AllDirectories);
 
             foreach (string zone in zones)
