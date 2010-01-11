@@ -1,5 +1,4 @@
 ﻿//MudEngine
-using MudDesigner.MudEngine.Attributes;
 using MudDesigner.MudEngine.FileSystem;
 using MudDesigner.MudEngine.GameObjects;
 using MudDesigner.MudEngine.GameObjects.Environment;

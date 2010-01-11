@@ -4,7 +4,6 @@ using System.Linq;
 using System.Windows.Forms;
 //MudEngine
 using MudDesigner.MudEngine;
-using MudDesigner.MudEngine.Attributes;
 using MudDesigner.MudEngine.FileSystem;
 using MudDesigner.MudEngine.GameManagement;
 using MudDesigner.MudEngine.GameObjects;

@@ -89,7 +89,6 @@
     <Compile Include="MudEngine\Interfaces\IQuest.cs" />
     <Compile Include="MudEngine\Interfaces\IRuleSet.cs" />
     <Compile Include="MudEngine\GameManagement\ProjectInformation.cs" />
-    <Compile Include="MudEngine\Attributes\UnusableAttribute.cs" />
     <Compile Include="MudEngine\FileSystem\FileManager.cs" />
     <Compile Include="MudEngine\GameManagement\QuestSetup.cs" />
     <Compile Include="MudEngine\UITypeEditors\UIRealmControl.cs">
