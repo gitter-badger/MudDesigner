@@ -10,7 +10,8 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
 {
     public class Room : BaseObject
     {
-        [Category("Room Information")]
+        [Category("Environment Information")]
+        [Description("Shows what rooms are currently created and linked to within this Room.")]
         [ReadOnly(true)]
         public string DoorList
         {
@@ -34,10 +35,13 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
             }
         }
 
-        [Browsable(false)]
+        [Category("Environment Information")]
+        [Description("Allows for linking of Rooms together via Doorways")]
         public List<Door> InstalledDoors;
 
-        [Browsable(false)]
+        [ReadOnly(true)]
+        [Description("This is the Zone that the Room is currently assigned to.")]
+        [Category("Environment Information")]
         public string Zone
         {
             get;
@@ -46,6 +50,7 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
 
         [Category("Environment Information")]
         [DefaultValue(false)]
+        [Description("Determins if the Player can be attacked within this Room or not.")]
         public bool IsSafe
         {
             get;
@@ -56,6 +61,7 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
         public Room()
         {
             InstalledDoors = new List<Door>();
+            IsSafe = false;
         }
     }
 }

@@ -5,5 +5,6 @@
         Root,
         Currency,
         Realms,
+        Zones,
     }
 }

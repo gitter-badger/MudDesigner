@@ -15,6 +15,7 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
     {
 
         [Category("Environment Information")]
+        [Description("A collection of Zones that are contained within this Realm. Players can traverse the world be traveling through Rooms that are contained within Zones. Note that it is not required to place a Zone into a Realm.")]
         [EditorAttribute(typeof(UIRealmEditor), typeof(System.Drawing.Design.UITypeEditor))]
         public List<string> Zones { get; set; }
 
@@ -23,26 +24,32 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
             Zones = new List<string>();
         }
 
-        public Zone GetZone(string ZoneName)
+        /// <summary>
+        /// Returns the requested Zone if the Zone exists within this Realm.
+        /// </summary>
+        /// <param name="zoneName"></param>
+        /// <returns></returns>
+        public Zone GetZone(string zoneName)
         {
+            string zoneFilename = "";
             //correct the zonename if needed
-            if (!ZoneName.EndsWith(".zone"))
-                ZoneName += ".zone";
-
-            //build our path
-            string realmPath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), this.Name);
-
-            //get a collection of all the zones within the realm
-            string[] files = Directory.GetFiles(realmPath, "*.zone");
-            Zone zone = new Zone();
-
-            //look four our zone file
-            foreach (string file in files)
+            if (!zoneName.EndsWith(".zone"))
+                zoneFilename = zoneName + ".zone";
+            else
             {
-                if (file == ZoneName)
-                {
-                    string zonePath = Path.Combine(realmPath, Path.GetDirectoryName(file));
-                }
+                zoneName = Path.GetFileNameWithoutExtension(zoneName);
+                zoneFilename = zoneName;
+            }
+
+            string zonePath = FileManager.GetDataPath(this.Name, zoneFilename);
+            zonePath = Path.Combine(zonePath, zoneName);
+            zoneFilename = Path.Combine(zonePath, zoneFilename);
+
+            if (File.Exists(zoneFilename))
+            {
+                Zone z = new Zone();
+                z = (Zone)FileManager.Load(zoneFilename, z);
+                return z;
             }
 
             return null;

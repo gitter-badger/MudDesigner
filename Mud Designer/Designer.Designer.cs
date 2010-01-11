@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Project");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Project");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Designer));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,6 +57,7 @@
             this.mnuEnvironments = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuRealmEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuZoneBuilder = new System.Windows.Forms.ToolStripMenuItem();
+            this.newRoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuItems = new System.Windows.Forms.ToolStripMenuItem();
             this.customObjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
@@ -83,10 +84,6 @@
             this.txtSearch = new System.Windows.Forms.ToolStripTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.propertyObject = new System.Windows.Forms.PropertyGrid();
-            this.toolstripObjectProperties = new System.Windows.Forms.ToolStrip();
-            this.btnSaveObject = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnValidate = new System.Windows.Forms.ToolStripButton();
             this.lblObjectProperties = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip1.SuspendLayout();
@@ -97,7 +94,6 @@
             this.containerSidebar.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            this.toolstripObjectProperties.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -124,7 +120,7 @@
             // mnuExit
             // 
             this.mnuExit.Name = "mnuExit";
-            this.mnuExit.Size = new System.Drawing.Size(152, 22);
+            this.mnuExit.Size = new System.Drawing.Size(92, 22);
             this.mnuExit.Text = "Exit";
             this.mnuExit.Click += new System.EventHandler(this.mnuExit_Click);
             // 
@@ -285,7 +281,8 @@
             // 
             this.mnuEnvironments.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuRealmEditor,
-            this.mnuZoneBuilder});
+            this.mnuZoneBuilder,
+            this.newRoomToolStripMenuItem});
             this.mnuEnvironments.Name = "mnuEnvironments";
             this.mnuEnvironments.Size = new System.Drawing.Size(147, 22);
             this.mnuEnvironments.Text = "Environments";
@@ -303,6 +300,13 @@
             this.mnuZoneBuilder.Size = new System.Drawing.Size(134, 22);
             this.mnuZoneBuilder.Text = "New Zone";
             this.mnuZoneBuilder.Click += new System.EventHandler(this.mnuZoneBuilder_Click);
+            // 
+            // newRoomToolStripMenuItem
+            // 
+            this.newRoomToolStripMenuItem.Name = "newRoomToolStripMenuItem";
+            this.newRoomToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.newRoomToolStripMenuItem.Text = "New Room";
+            this.newRoomToolStripMenuItem.Click += new System.EventHandler(this.newRoomToolStripMenuItem_Click);
             // 
             // mnuItems
             // 
@@ -382,7 +386,7 @@
             // mnuAbout
             // 
             this.mnuAbout.Name = "mnuAbout";
-            this.mnuAbout.Size = new System.Drawing.Size(152, 22);
+            this.mnuAbout.Size = new System.Drawing.Size(107, 22);
             this.mnuAbout.Text = "About";
             this.mnuAbout.Click += new System.EventHandler(this.mnuAbout_Click);
             // 
@@ -417,7 +421,6 @@
             // containerSidebar.Panel2
             // 
             this.containerSidebar.Panel2.Controls.Add(this.propertyObject);
-            this.containerSidebar.Panel2.Controls.Add(this.toolstripObjectProperties);
             this.containerSidebar.Panel2.Controls.Add(this.lblObjectProperties);
             this.containerSidebar.Size = new System.Drawing.Size(269, 540);
             this.containerSidebar.SplitterDistance = 244;
@@ -429,12 +432,14 @@
             this.treeExplorer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeExplorer.Location = new System.Drawing.Point(0, 38);
             this.treeExplorer.Name = "treeExplorer";
-            treeNode2.Name = "nodeProject";
-            treeNode2.Text = "Project";
+            treeNode1.Name = "nodeProject";
+            treeNode1.Text = "Project";
             this.treeExplorer.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2});
+            treeNode1});
             this.treeExplorer.Size = new System.Drawing.Size(267, 204);
             this.treeExplorer.TabIndex = 5;
+            this.toolTip1.SetToolTip(this.treeExplorer, resources.GetString("treeExplorer.ToolTip"));
+            this.treeExplorer.DoubleClick += new System.EventHandler(this.treeExplorer_DoubleClick);
             // 
             // contextMenuStrip1
             // 
@@ -443,24 +448,24 @@
             this.toolStripMenuItem1,
             this.deleteObjectToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(146, 54);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 76);
             // 
             // mnuEditObject
             // 
             this.mnuEditObject.Name = "mnuEditObject";
-            this.mnuEditObject.Size = new System.Drawing.Size(145, 22);
+            this.mnuEditObject.Size = new System.Drawing.Size(152, 22);
             this.mnuEditObject.Text = "Edit Object";
             this.mnuEditObject.Click += new System.EventHandler(this.mnuEditObject_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(142, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
             // 
             // deleteObjectToolStripMenuItem
             // 
             this.deleteObjectToolStripMenuItem.Name = "deleteObjectToolStripMenuItem";
-            this.deleteObjectToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.deleteObjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.deleteObjectToolStripMenuItem.Text = "Delete Object";
             this.deleteObjectToolStripMenuItem.Click += new System.EventHandler(this.deleteObjectToolStripMenuItem_Click);
             // 
@@ -519,52 +524,13 @@
             // propertyObject
             // 
             this.propertyObject.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyObject.Location = new System.Drawing.Point(0, 38);
+            this.propertyObject.Location = new System.Drawing.Point(0, 13);
             this.propertyObject.Name = "propertyObject";
-            this.propertyObject.Size = new System.Drawing.Size(267, 252);
+            this.propertyObject.Size = new System.Drawing.Size(267, 277);
             this.propertyObject.TabIndex = 8;
             this.propertyObject.ToolbarVisible = false;
+            this.toolTip1.SetToolTip(this.propertyObject, resources.GetString("propertyObject.ToolTip"));
             this.propertyObject.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyObject_PropertyValueChanged);
-            // 
-            // toolstripObjectProperties
-            // 
-            this.toolstripObjectProperties.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnSaveObject,
-            this.toolStripSeparator1,
-            this.btnValidate});
-            this.toolstripObjectProperties.Location = new System.Drawing.Point(0, 13);
-            this.toolstripObjectProperties.Name = "toolstripObjectProperties";
-            this.toolstripObjectProperties.Size = new System.Drawing.Size(267, 25);
-            this.toolstripObjectProperties.TabIndex = 7;
-            this.toolstripObjectProperties.Text = "toolStrip1";
-            // 
-            // btnSaveObject
-            // 
-            this.btnSaveObject.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnSaveObject.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveObject.Image")));
-            this.btnSaveObject.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSaveObject.Name = "btnSaveObject";
-            this.btnSaveObject.Size = new System.Drawing.Size(73, 22);
-            this.btnSaveObject.Text = "Save Object";
-            this.btnSaveObject.ToolTipText = "Save the current object";
-            this.btnSaveObject.Click += new System.EventHandler(this.btnSaveObject_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnValidate
-            // 
-            this.btnValidate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnValidate.Enabled = false;
-            this.btnValidate.Image = ((System.Drawing.Image)(resources.GetObject("btnValidate.Image")));
-            this.btnValidate.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnValidate.Name = "btnValidate";
-            this.btnValidate.Size = new System.Drawing.Size(91, 22);
-            this.btnValidate.Text = "Validate Object";
-            this.btnValidate.ToolTipText = "Checks the current object to ensure that there are no errors. \r\nThis is just an e" +
-                "rror check, and is not required.";
             // 
             // lblObjectProperties
             // 
@@ -576,6 +542,18 @@
             this.lblObjectProperties.Size = new System.Drawing.Size(267, 13);
             this.lblObjectProperties.TabIndex = 3;
             this.lblObjectProperties.Text = "Object Properties";
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.AutoPopDelay = 10000;
+            this.toolTip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.toolTip1.ForeColor = System.Drawing.Color.Black;
+            this.toolTip1.InitialDelay = 500;
+            this.toolTip1.IsBalloon = true;
+            this.toolTip1.OwnerDraw = true;
+            this.toolTip1.ReshowDelay = 100;
+            this.toolTip1.ShowAlways = true;
+            this.toolTip1.ToolTipTitle = "Mud Designer Help";
             // 
             // Designer
             // 
@@ -597,13 +575,10 @@
             this.containerSidebar.Panel1.ResumeLayout(false);
             this.containerSidebar.Panel1.PerformLayout();
             this.containerSidebar.Panel2.ResumeLayout(false);
-            this.containerSidebar.Panel2.PerformLayout();
             this.containerSidebar.ResumeLayout(false);
             this.contextMenuStrip1.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.toolstripObjectProperties.ResumeLayout(false);
-            this.toolstripObjectProperties.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -665,10 +640,7 @@
         private System.Windows.Forms.ToolStripMenuItem deleteObjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.PropertyGrid propertyObject;
-        private System.Windows.Forms.ToolStrip toolstripObjectProperties;
-        private System.Windows.Forms.ToolStripButton btnSaveObject;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton btnValidate;
+        private System.Windows.Forms.ToolStripMenuItem newRoomToolStripMenuItem;
 
 
 

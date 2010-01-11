@@ -15,28 +15,11 @@ namespace MudDesigner.MudEngine.UITypeEditors
         public override object EditValue(System.ComponentModel.ITypeDescriptorContext context, IServiceProvider provider, object value)
         {
             Zone obj = (Zone)context.Instance;
+            UIRoomControl ctl;
             
-            List<string> Rooms = new List<string>();
-
-            UIRoomControl ctl = new UIRoomControl();
-
-            if (ctl.IsDisposed)
-                //return the previous zones collection, incase the control error'd out
-                //we aren't overriding and loosing content.
-                return obj.Rooms;
+            ctl = new UIRoomControl(obj);
 
             ctl.ShowDialog();
-
-            while (ctl.Created)
-            {
-                Application.DoEvents();
-            }
-
-            if (Program.CurrentEditor is Designer)
-            {
-                Designer form = (Designer)Program.CurrentEditor;
-                form.RefreshProjectExplorer();
-            }
 
             return new List<Room>();
         }

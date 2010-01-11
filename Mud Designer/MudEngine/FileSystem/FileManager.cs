@@ -6,6 +6,9 @@ using System.IO;
 
 namespace MudDesigner.MudEngine.FileSystem
 {
+    /// <summary>
+    /// Handles saving and loading of engine objects
+    /// </summary>
     public static class FileManager
     {
         public enum OutputFormats
@@ -99,7 +102,7 @@ namespace MudDesigner.MudEngine.FileSystem
             string assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().ManifestModule.FullyQualifiedName;
             string assemblyName = System.IO.Path.GetFileName(assemblyPath);
             string installBase = assemblyPath.Substring(0, assemblyPath.Length - assemblyName.Length);
-            string rootPath = System.IO.Path.Combine(installBase, "Data");
+            string rootPath = System.IO.Path.Combine(installBase, "Project");
 
             if (DataType == SaveDataTypes.Root)
                 return rootPath;
@@ -112,10 +115,13 @@ namespace MudDesigner.MudEngine.FileSystem
             string assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().ManifestModule.FullyQualifiedName;
             string assemblyName = System.IO.Path.GetFileName(assemblyPath);
             string installBase = assemblyPath.Substring(0, assemblyPath.Length - assemblyName.Length);
-            string rootPath = System.IO.Path.Combine(installBase, "Data");
-            string realmsPath = System.IO.Path.Combine(rootPath, Realm);
+            string rootPath = System.IO.Path.Combine(installBase, "Project");
+            string realmsPath = System.IO.Path.Combine(rootPath, "Realms");
+            string requestRealm = Path.Combine(realmsPath, Realm);
+            string requestedRealmZones = Path.Combine(requestRealm, "Zones");
+            string requestedZone = Path.Combine(requestedRealmZones, Zone);
 
-            return System.IO.Path.Combine(realmsPath, Zone);
+            return requestedZone;
         }
 
         public static string GetDataPath(string Realm, string Zone, string Room)

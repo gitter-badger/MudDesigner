@@ -13,6 +13,7 @@ namespace MudDesigner.MudEngine.GameObjects
     public class BaseObject : IGameObject
     {
         [Category("Object Setup")]
+        [Description("The Display Name assigned to this object.")]
         //Required to refresh Filename property in the editors propertygrid
         [RefreshProperties(RefreshProperties.All)]
         public string Name
@@ -29,6 +30,7 @@ namespace MudDesigner.MudEngine.GameObjects
         }
 
         [Category("Object Setup")]
+        [Description("A brief description of this object. The description is displayed to users when they use a command for investigating an object")]
         public string Description
         {
             get;
@@ -36,10 +38,13 @@ namespace MudDesigner.MudEngine.GameObjects
         }
         
         [Category("Object Setup")]
+        [Description("The object script that can manipulate the object during the games life.")]
         [EditorAttribute(typeof(UIScriptEditor), typeof(System.Drawing.Design.UITypeEditor))]
         public string Script { get; set; }
 
         [Category("Object Setup")]
+        [ReadOnly(true)]
+        [Description("The filename of the current object. This is assigned by the engine and not editable.")]
         public string Filename
         {
             //Returns the name of the object + the objects Type as it's extension.
@@ -59,6 +64,7 @@ namespace MudDesigner.MudEngine.GameObjects
         }
 
         [Category("Senses")]
+        [Description("If a user asks to use his/her senses to investigate an area, this is one of the results that will be displayed. Senses can be used to assist blind characters.")]
         [DefaultValue("You don't smell anything unsual.")]
         public string Smell
         {
@@ -67,6 +73,7 @@ namespace MudDesigner.MudEngine.GameObjects
         }
 
         [Category("Senses")]
+        [Description("If a user asks to use his/her senses to investigate an area, this is one of the results that will be displayed. Senses can be used to assist blind characters.")]
         [DefaultValue("You hear nothing of interest.")]
         public string Listen
         {
@@ -75,6 +82,7 @@ namespace MudDesigner.MudEngine.GameObjects
         }
 
         [Category("Senses")]
+        [Description("If a user asks to use his/her senses to investigate an area, this is one of the results that will be displayed. Senses can be used to assist blind characters.")]
         [DefaultValue("You feel nothing.")]
         public string Feel
         {

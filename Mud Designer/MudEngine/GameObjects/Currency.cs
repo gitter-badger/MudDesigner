@@ -9,6 +9,7 @@ namespace MudDesigner.MudEngine.GameObjects
     public class Currency : BaseObject
     {
         [Category("Currency Settings")]
+        [Description("The value of the currency is based off the BaseCurrencyValue set in the Project Information. If BaseCurrencyValue is 1, and a new Currency is 10, then it will take 10 BaseCurrency to equal 1 of the new Currencies.")]
         [DefaultValue(100)]
         /// <summary>
         /// The value of this currency. It should be how many 'base currency' it takes to equal 1 of this currency

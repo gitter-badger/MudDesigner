@@ -18,6 +18,7 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
     {
         [Category("Environment Information")]
         [DefaultValue(0)]
+        [Description("The amount to drain each stat by if StatDrain is enabled.")]
         public int StatDrainAmount
         {
             get;
@@ -25,6 +26,7 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
         }
 
         [Category("Environment Information")]
+        [Description("Enable or Disable the ability for draining stats while traversing.")]
         [DefaultValue(false)]
         public bool StatDrain
         {
@@ -34,6 +36,7 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
 
         [ReadOnly(true)]
         [Category("Environment Information")]
+        [Description("The Realm that this Zone is assigned to. It is not required to be contained within a Realm.")]
         public string Realm
         {
             get;
@@ -41,6 +44,7 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
         }
 
         [Category("Environment Information")]
+        [Description("Determins if the Player can be attacked within this Room or not.")]
         [DefaultValue(false)]
         public bool IsSafe
         {
@@ -50,12 +54,13 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
         
         [Category("Environment Information")]
         [EditorAttribute(typeof(UIRoomEditor), typeof(UITypeEditor))]
-        [ReadOnly(false)]
+        [Description("Collection of Rooms that have been created. Editing the Rooms Collection lets you manage the Zones rooms.")]
         public List<Room> Rooms { get; set; }
 
         public Zone()
         {
             Rooms = new List<Room>();
+            IsSafe = false;
             //throw new NotSupportedException("Parameterless constructors of Type " + this.GetType().FullName + " is not supported.");
         }
 

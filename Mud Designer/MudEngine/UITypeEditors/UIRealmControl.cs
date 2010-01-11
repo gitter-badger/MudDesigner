@@ -124,6 +124,25 @@ namespace MudDesigner.MudEngine.UITypeEditors
             //copy the file
             string newFile = Path.Combine(zonePath, lstAvailableZones.SelectedItem.ToString());
             File.Copy(originalFile, newFile, true);
+            //copy all of its rooms if they exist
+            string originalPath = originalFile.Substring(0, originalFile.Length - Path.GetFileName(originalFile).Length);
+            string roomPath = Path.Combine(originalPath, "Rooms");
+            string[] rooms = Directory.GetFiles(roomPath);
+
+            if (rooms.Length != 0)
+            {
+                string newPath = newFile.Substring(0, newFile.Length - Path.GetFileName(newFile).Length);
+                string newRooms = Path.Combine(newPath, "Rooms");
+                if (!Directory.Exists(newRooms))
+                    Directory.CreateDirectory(newRooms);
+
+                foreach (string room in rooms)
+                {
+                    newFile = Path.Combine(newRooms, Path.GetFileName(room));
+                    File.Copy(room, newFile);
+                    File.Delete(room);
+                }
+            }
             File.Delete(originalFile);
             Directory.Delete(Path.Combine(zoneRoot, zone.Name), true);
             lstAvailableZones.Items.Remove(lstAvailableZones.SelectedItem);
@@ -144,9 +163,12 @@ namespace MudDesigner.MudEngine.UITypeEditors
             }
 
             string projectPath = Path.Combine(Application.StartupPath, "Project");
+            //Project/Realms
             string realmPath = Path.Combine(projectPath, "Realms");
+            //Project/Realms/RealmName
             string realmRoot = Path.Combine(realmPath, _Realm.Name);
             string[] zones = Directory.GetFiles(realmRoot, "*.zone", SearchOption.AllDirectories);
+            bool IsFound = false;
 
             //Find the zone that we need to remove from the realm
             foreach(string zone in zones)
@@ -159,8 +181,11 @@ namespace MudDesigner.MudEngine.UITypeEditors
                 //now that it is no longer part of a realm
                 if (z.Filename == lstRealmMembers.SelectedItem.ToString())
                 {
+                    IsFound = true;
+                    z.Realm = "";
                     _Realm.Zones.Remove(z.Filename);
-                    
+                    FileManager.Save(zone, z);
+
                     string zonePath = Path.Combine(projectPath, "Zones");
                     string zoneRoot = Path.Combine(zonePath, z.Name);
                     string newFile = Path.Combine(zoneRoot, Path.GetFileName(zone));
@@ -191,9 +216,18 @@ namespace MudDesigner.MudEngine.UITypeEditors
                     File.Copy(zone, newFile);
                     File.Delete(zone);
                     Directory.Delete(oldZonePath, true);
+                    lstAvailableZones.Items.Add(lstRealmMembers.SelectedItem);
                     lstRealmMembers.Items.Remove(lstRealmMembers.SelectedItem);
                     break;
                 }
+            }//End of foreach
+            if (!IsFound)
+            {
+                _Realm.Zones.Remove(lstRealmMembers.SelectedItem.ToString());
+                string filename = Path.Combine(realmRoot, _Realm.Filename);
+                FileManager.Save(filename, _Realm);
+                lstAvailableZones.Items.Add(lstRealmMembers.SelectedItem);
+                lstRealmMembers.Items.Remove(lstRealmMembers.SelectedItem);
             }
         }
     }

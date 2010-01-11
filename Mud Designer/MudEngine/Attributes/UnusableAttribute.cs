@@ -5,6 +5,9 @@ using System.Text;
 
 namespace MudDesigner.MudEngine.Attributes
 {
+    /// <summary>
+    /// Used to assign an un
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
     public class UnusableAttribute : System.Attribute
     {

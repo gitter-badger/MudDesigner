@@ -22,18 +22,7 @@ namespace MudDesigner.MudEngine.UITypeEditors
 
             ctl.ShowDialog();
 
-            while (ctl.Created)
-            {
-                Application.DoEvents();
-            }
-
-            if (Program.CurrentEditor is Designer)
-            {
-                Designer form = (Designer)Program.CurrentEditor;
-                form.RefreshProjectExplorer();
-            }
-
-            return ctl.Zones;
+            return obj.Zones;
         }
 
         public override System.Drawing.Design.UITypeEditorEditStyle GetEditStyle(System.ComponentModel.ITypeDescriptorContext context)
