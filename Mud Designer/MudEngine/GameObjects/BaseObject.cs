@@ -185,6 +185,7 @@ namespace MudDesigner.MudEngine.GameObjects
                 Directory.CreateDirectory(directory);
             FileManager.Save(filename, this);
         }
+
         public override string ToString()
         {
             return this.Name;

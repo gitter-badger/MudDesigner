@@ -16,7 +16,7 @@ namespace MudDesigner
 {
     static class Program
     {
-        public static Form CurrentEditor { get; set; }
+        public static Designer Designer{ get; set; }
         
         /// <summary>
         /// The main entry point for the application.
@@ -29,8 +29,8 @@ namespace MudDesigner
             Application.SetCompatibleTextRenderingDefault(false);
 
             //Run the toolkit
-                CurrentEditor = new Designer();
-                Application.Run(CurrentEditor);
+            Designer = new Designer();
+            Application.Run(Designer);
         }
     }
 }

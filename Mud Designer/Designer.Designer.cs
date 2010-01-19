@@ -74,6 +74,10 @@
             this.containerSidebar = new System.Windows.Forms.SplitContainer();
             this.treeExplorer = new System.Windows.Forms.TreeView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.environmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuNewRealmShortcut = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuNewZoneShortcut = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuEditObject = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuDeleteSelectedObject = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,10 +90,6 @@
             this.propertyObject = new System.Windows.Forms.PropertyGrid();
             this.lblObjectProperties = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.addObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.environmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuNewRealmShortcut = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuNewZoneShortcut = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.containerMain.Panel2.SuspendLayout();
             this.containerMain.SuspendLayout();
@@ -453,24 +453,55 @@
             this.toolStripMenuItem1,
             this.mnuDeleteSelectedObject});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 98);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(146, 76);
+            // 
+            // addObjectToolStripMenuItem
+            // 
+            this.addObjectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.environmentToolStripMenuItem});
+            this.addObjectToolStripMenuItem.Name = "addObjectToolStripMenuItem";
+            this.addObjectToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.addObjectToolStripMenuItem.Text = "Add Object";
+            // 
+            // environmentToolStripMenuItem
+            // 
+            this.environmentToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuNewRealmShortcut,
+            this.mnuNewZoneShortcut});
+            this.environmentToolStripMenuItem.Name = "environmentToolStripMenuItem";
+            this.environmentToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.environmentToolStripMenuItem.Text = "Environment";
+            // 
+            // mnuNewRealmShortcut
+            // 
+            this.mnuNewRealmShortcut.Name = "mnuNewRealmShortcut";
+            this.mnuNewRealmShortcut.Size = new System.Drawing.Size(134, 22);
+            this.mnuNewRealmShortcut.Text = "New Realm";
+            this.mnuNewRealmShortcut.Click += new System.EventHandler(this.mnuNewRealm_Click);
+            // 
+            // mnuNewZoneShortcut
+            // 
+            this.mnuNewZoneShortcut.Name = "mnuNewZoneShortcut";
+            this.mnuNewZoneShortcut.Size = new System.Drawing.Size(134, 22);
+            this.mnuNewZoneShortcut.Text = "New Zone";
+            this.mnuNewZoneShortcut.Click += new System.EventHandler(this.mnuNewZone_Click);
             // 
             // mnuEditObject
             // 
             this.mnuEditObject.Name = "mnuEditObject";
-            this.mnuEditObject.Size = new System.Drawing.Size(152, 22);
+            this.mnuEditObject.Size = new System.Drawing.Size(145, 22);
             this.mnuEditObject.Text = "Edit Object";
             this.mnuEditObject.Click += new System.EventHandler(this.mnuEditObject_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(142, 6);
             // 
             // mnuDeleteSelectedObject
             // 
             this.mnuDeleteSelectedObject.Name = "mnuDeleteSelectedObject";
-            this.mnuDeleteSelectedObject.Size = new System.Drawing.Size(152, 22);
+            this.mnuDeleteSelectedObject.Size = new System.Drawing.Size(145, 22);
             this.mnuDeleteSelectedObject.Text = "Delete Object";
             this.mnuDeleteSelectedObject.Click += new System.EventHandler(this.mnuDeleteSelectedObject_Click);
             // 
@@ -513,7 +544,7 @@
             // 
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(100, 25);
-            this.txtSearch.Enter += new System.EventHandler(this.txtSearch_Enter);
+            this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
             // 
             // label1
             // 
@@ -559,37 +590,6 @@
             this.toolTip1.ReshowDelay = 100;
             this.toolTip1.ShowAlways = true;
             this.toolTip1.ToolTipTitle = "Mud Designer Help";
-            // 
-            // addObjectToolStripMenuItem
-            // 
-            this.addObjectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.environmentToolStripMenuItem});
-            this.addObjectToolStripMenuItem.Name = "addObjectToolStripMenuItem";
-            this.addObjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.addObjectToolStripMenuItem.Text = "Add Object";
-            // 
-            // environmentToolStripMenuItem
-            // 
-            this.environmentToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuNewRealmShortcut,
-            this.mnuNewZoneShortcut});
-            this.environmentToolStripMenuItem.Name = "environmentToolStripMenuItem";
-            this.environmentToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.environmentToolStripMenuItem.Text = "Environment";
-            // 
-            // mnuNewRealmShortcut
-            // 
-            this.mnuNewRealmShortcut.Name = "mnuNewRealmShortcut";
-            this.mnuNewRealmShortcut.Size = new System.Drawing.Size(152, 22);
-            this.mnuNewRealmShortcut.Text = "New Realm";
-            this.mnuNewRealmShortcut.Click += new System.EventHandler(this.mnuNewRealm_Click);
-            // 
-            // mnuNewZoneShortcut
-            // 
-            this.mnuNewZoneShortcut.Name = "mnuNewZoneShortcut";
-            this.mnuNewZoneShortcut.Size = new System.Drawing.Size(152, 22);
-            this.mnuNewZoneShortcut.Text = "New Zone";
-            this.mnuNewZoneShortcut.Click += new System.EventHandler(this.mnuNewZone_Click);
             // 
             // Designer
             // 

@@ -14,11 +14,16 @@ namespace MudDesigner.MudEngine.UITypeEditors
         {
             Realm obj = (Realm)context.Instance;
             List<string> zones = new List<string>();
+
+            //Save a copy of the original
+            foreach (string zone in obj.Zones)
+                zones.Add(zone);
+
             UIRealmControl ctl = new UIRealmControl(obj);
             if (ctl.IsDisposed)
                 //return the previous zones collection, incase the control error'd out
                 //we aren't overriding and loosing content.
-                return obj.Zones;
+                return zones;
 
             ctl.ShowDialog();
 

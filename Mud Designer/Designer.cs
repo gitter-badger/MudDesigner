@@ -34,7 +34,7 @@ namespace MudDesigner
             Zone,
             Room,
         }
-        
+
         //Currently loaded project
         ProjectInformation _Project;
         //Used for  temporarily holding an object during load.
@@ -82,7 +82,7 @@ namespace MudDesigner
                 //The provided nodes parent node is aquired so we can
                 //find if we can get it's current type.
                 TreeNode parentNode = node.Parent;
-                
+
                 //Root searching.
                 switch (node.Text)
                 {
@@ -125,7 +125,7 @@ namespace MudDesigner
                 {
                     case "Realms":
                         return ObjectType.Realm;
-                        //Root Zones
+                    //Root Zones
                     case "Zones":
                         if (grandparentNode.Parent.Text == "Project")
                             return ObjectType.ZoneRoot;
@@ -133,12 +133,75 @@ namespace MudDesigner
                             return ObjectType.ZoneWithinRealm;
                 }
             }
-                //Something happened, handle it with a message box.
+            //Something happened, handle it with a message box.
             catch (Exception ex)
             {
                 MessageBox.Show("Internal Error: " + ex.Message);
             }
             return ObjectType.Nothing;
+        }
+
+        public void SaveObject()
+        {
+            //We can use to get a copy of the currently selected object
+            //if it is a BaseObject (Aquire it's BaseObject.Filename)
+            var obj = (BaseObject)propertyObject.SelectedObject;
+
+            //Filepaths
+            string objectPath = "";
+            string filename = "";
+
+            //Scan through the available Types that can be saved
+            switch (obj.GetType().Name)
+            {
+                    //ProjectInformation
+                case "ProjectInformation":
+                    filename = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Root), "Game.xml");
+                    _Project.Save(filename);
+                    break;
+                    //Currency
+                case "Currency":
+                    filename = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Currencies), obj.Filename);
+                    obj.Save(filename);
+                    break;
+                    //Realm
+                case "Realm":
+                    objectPath= Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), obj.Name);
+                    filename = Path.Combine(objectPath, obj.Filename);
+                    obj.Save(filename);
+                    break;
+                    //Zone
+                case "Zone":
+                    //Get the current Zone being edited. We need to check if it has a Realm
+                    Zone z = new Zone();
+                    z = (Zone)obj;
+                    //No realm assigned to it, so it's in the Root Zones directory.
+                    //Base our save path off of that
+                    if (String.IsNullOrEmpty(z.Realm))
+                    {
+                        objectPath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Zones), z.Name);
+                        filename = Path.Combine(objectPath, z.Filename);
+                    }
+                        //Realm assigned to it, so save the zone within that Realm
+                    else
+                    {
+                        objectPath = FileManager.GetDataPath(z.Realm, z.Name);
+                        filename = Path.Combine(objectPath, z.Filename);
+                    }
+                    //Save the Zone
+                    obj.Save(filename);
+
+                    //Check if the Rooms Directory exists.
+                    string roomsPath = Path.Combine(objectPath, "Rooms");
+                    if (!Directory.Exists(roomsPath))
+                        Directory.CreateDirectory(roomsPath);
+
+                    break;
+                case "Room":
+                    break;
+            }
+
+            RefreshProjectExplorer();
         }
 
         /// <summary>
@@ -160,21 +223,21 @@ namespace MudDesigner
             //for root objects
             switch (objType)
             {
-                    //A non-editable object was found
+                //A non-editable object was found
                 case ObjectType.Nothing:
                     return;
-                    //Project Information file
+                //Project Information file
                 case ObjectType.Project:
                     _Project = (ProjectInformation)_Project.Load(FileManager.GetDataPath(SaveDataTypes.Root));
                     propertyObject.SelectedObject = _Project;
                     break;
-                    //Currency File
+                //Currency File
                 case ObjectType.Currency:
                     Currency currency = new Currency();
                     objectFilename = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Currencies), selectedNode.Text);
                     propertyObject.SelectedObject = (Currency)currency.Load(objectFilename);
                     break;
-                    //Realm File selected
+                //Realm File selected
                 case ObjectType.Realm:
                     objectName = Path.GetFileNameWithoutExtension(selectedNode.Parent.Text);
                     objectPath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), objectName);
@@ -182,7 +245,7 @@ namespace MudDesigner
                     _GameObject = new Realm();
                     propertyObject.SelectedObject = _GameObject.Load(objectFilename);
                     break;
-                    //Zone File located under Project/Zones
+                //Zone File located under Project/Zones
                 case ObjectType.ZoneRoot:
                     objectName = Path.GetFileNameWithoutExtension(selectedNode.Parent.Text);
                     objectPath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Zones), objectName);
@@ -190,7 +253,7 @@ namespace MudDesigner
                     _GameObject = new Zone();
                     propertyObject.SelectedObject = _GameObject.Load(objectFilename);
                     break;
-                    //Zone File located under Project/Realms/Zones
+                //Zone File located under Project/Realms/Zones
                 case ObjectType.ZoneWithinRealm:
                     TreeNode grandparent = selectedNode.Parent.Parent;
                     objectName = Path.GetFileNameWithoutExtension(selectedNode.Parent.Text);
@@ -228,12 +291,12 @@ namespace MudDesigner
             //Don't save it. Return true so that it can be overwrote
             if (result == DialogResult.No)
                 return true;
-                //User hit cancel, it's not saved so return false.
+            //User hit cancel, it's not saved so return false.
             else if (result == DialogResult.Cancel)
                 return false;
-                //User hit Yes, so save the object
+            //User hit Yes, so save the object
             else
-                SaveSelected();
+                SaveObject();
 
             return true;
         }
@@ -306,48 +369,21 @@ namespace MudDesigner
             PopulateTree(FileManager.GetDataPath(SaveDataTypes.Root), node);
         }
 
-        public void SaveSelected()
+        public void FindObject(string obj)
         {
-            //We can use to get a copy of the currently selected object
-            //if it is a BaseObject (Aquire it's BaseObject.Filename)
-            var obj = (BaseObject)propertyObject.SelectedObject;
+            if (txtSearch.Text == "")
+                return;
 
-            //Filepaths
-            string objectPath = "";
-            string filename = "";
-
-            switch (obj.GetType().Name)
+            TreeNode node = FindNode(txtSearch.Text, treeExplorer.Nodes[0]);
+            if (node == null)
+                MessageBox.Show("No results found!", "Mud Designer");
+            else
             {
-                case "ProjectInformation":
-                    filename = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Root), "Game.xml");
-                    _Project.Save(filename);
-                    break;
-                case "Currency":
-                    filename = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Currencies), obj.Filename);
-                    obj.Save(filename);
-                    break;
-                case "Realm":
-                    filename = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), obj.Filename);
-                    obj.Save(filename);
-                    break;
-                case "Zone":
-                    Zone z = new Zone();
-                    z = (Zone)obj;
-                    if (String.IsNullOrEmpty(z.Realm))
-                    {
-                        objectPath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Zones), z.Name);
-                        filename = Path.Combine(objectPath, z.Filename);
-                    }
-                    else
-                    {
-                        objectPath = FileManager.GetDataPath(z.Realm, z.Name);
-                        filename = Path.Combine(objectPath, z.Filename);
-                    }
-                    obj.Save(filename);
-                    break;
-            }
+                treeExplorer.SelectedNode = node;
 
-            RefreshProjectExplorer();
+                //TODO: Fix objects not loading during search.
+                LoadObject(node);
+            }
         }
 
         /// <summary>
@@ -417,25 +453,6 @@ namespace MudDesigner
                 propertyObject.SelectedObject = new Zone();
         }
 
-        /// <summary>
-        /// Searchs the Project Explorer for a file or directory matching the supplied name
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void txtSearch_Enter(object sender, EventArgs e)
-        {
-            if (txtSearch.Text == "")
-                return;
-
-            TreeNode node = FindNode(txtSearch.Text, treeExplorer.Nodes[0]);
-            if (node == null)
-                MessageBox.Show("No results found!", "Mud Designer");
-            else
-            {
-                //TODO select the node
-            }
-        }
-
         private void mnuDeleteSelectedObject_Click(object sender, EventArgs e)
         {
             //Check if we are trying to delete the root node
@@ -461,6 +478,8 @@ namespace MudDesigner
             {
                 Realm r = new Realm();
                 string filename = "";
+                //If the user selected the file, then we need to get the realm
+                //filename differently
                 if (IsFile)
                 {
                     string realmName = selectedNode.Parent.Parent.Parent.Text;
@@ -473,9 +492,13 @@ namespace MudDesigner
                     filename = Path.Combine(realmName, realmName + ".realm");
                     filename = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), filename);
                 }
+                //Finalize the filename of the realm
                 filename = Path.Combine(Application.StartupPath, filename);
 
+                //Load the realm that this Zone belongs to
                 r = (Realm)r.Load(filename);
+                //Zone collection does not contain filenames, so we need
+                //to check so we can use the directory name for removal
                 if (IsFile)
                     r.Zones.Remove(selectedNode.Parent.Text);
                 else
@@ -483,6 +506,8 @@ namespace MudDesigner
             }
 
             //Delete the object.
+            //Check if it's a file, if so then delete the parent directory so that
+            //we dont have a left over empty folder
             if (IsFile)
                 Directory.Delete(selectedNode.Parent.FullPath, true);
             else
@@ -506,7 +531,7 @@ namespace MudDesigner
                 if (obj.Name == "New " + obj.GetType().Name)
                     return;
             }
-            SaveSelected();
+            SaveObject();
             IsSaved = true;
             RefreshProjectExplorer();
         }
@@ -524,6 +549,10 @@ namespace MudDesigner
 
         private void treeExplorer_DoubleClick(object sender, EventArgs e)
         {
+            if (treeExplorer.SelectedNode.Text == "Project")
+                return;
+            if (Path.GetExtension(treeExplorer.SelectedNode.Text) == "")
+                return;
             if (CheckSavedState())
                 LoadObject(treeExplorer.SelectedNode);
         }
@@ -542,6 +571,12 @@ namespace MudDesigner
     + "You can use a loaded Zones 'Rooms' property via the Object Properties pane to create and manage Rooms as well.", "Mud Designer");
                 return;
             }
+        }
+
+        private void txtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                FindObject(txtSearch.Text);
         }
     }
 }

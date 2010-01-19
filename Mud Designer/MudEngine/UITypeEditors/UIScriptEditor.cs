@@ -33,11 +33,11 @@ namespace MudDesigner.MudEngine.UITypeEditors
                 return null;
             }
 
-            if (Program.CurrentEditor is Designer)
+            if (Program.Designer is Designer)
             {
                 UIScriptControl control = new UIScriptControl(baseObj);
                 control.Dock = DockStyle.Fill;
-                Designer frm = (Designer)Program.CurrentEditor;
+                Designer frm = (Designer)Program.Designer;
                 //frm.ControlContainer.Panel1.Controls.Clear();
                 //frm.ControlContainer.Panel1.Controls.Add(control);
                 string script = "";

@@ -69,11 +69,29 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
         /// </summary>
         /// <param name="RoomName"></param>
         /// <returns></returns>
-        public Room GetRoom(string RoomName)
+        public Room GetRoomByName(string name)
         {
             var filterQuery =
                 from room in Rooms
-                where room.Name == RoomName
+                where room.Name == name
+                select room;
+
+            foreach (var room in filterQuery)
+                return room;
+
+            return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="RoomName"></param>
+        /// <returns></returns>
+        public Room GetRoomByFilename(string filename)
+        {
+            var filterQuery =
+                from room in Rooms
+                where room.Filename == filename
                 select room;
 
             foreach (var room in filterQuery)

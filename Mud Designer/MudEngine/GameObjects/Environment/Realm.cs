@@ -29,28 +29,16 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
         /// </summary>
         /// <param name="zoneName"></param>
         /// <returns></returns>
-        public Zone GetZone(string zoneName)
+        public Zone GetZone(string filename)
         {
-            string zoneFilename = "";
-            //correct the zonename if needed
-            if (!zoneName.EndsWith(".zone"))
-                zoneFilename = zoneName + ".zone";
-            else
-            {
-                zoneName = Path.GetFileNameWithoutExtension(zoneName);
-                zoneFilename = zoneName;
-            }
+            var filterQuery =
+                from zone in Zones
+                where zone == filename
+                select zone;
 
-            string zonePath = FileManager.GetDataPath(this.Name, zoneFilename);
-            zonePath = Path.Combine(zonePath, zoneName);
-            zoneFilename = Path.Combine(zonePath, zoneFilename);
-
-            if (File.Exists(zoneFilename))
-            {
-                Zone z = new Zone();
-                z = (Zone)FileManager.Load(zoneFilename, z);
-                return z;
-            }
+            Zone z = new Zone();
+            foreach (var zone in filterQuery)
+                return (Zone)z.Load(zone); ;
 
             return null;
         }
