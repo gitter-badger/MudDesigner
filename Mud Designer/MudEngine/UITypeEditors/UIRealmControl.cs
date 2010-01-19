@@ -109,6 +109,8 @@ namespace MudDesigner.MudEngine.UITypeEditors
             Zone zone = new Zone();
             zone = (Zone)zone.Load(originalFilename);
             zone.Realm = _Realm.Name;
+            //Add the zone to the Realm collection
+            _Realm.Zones.Add(zone.Filename);
             //Save the Zone changes into the new Realm path.
             //We are done with modifying the Zone so we are free to delete it
             //after we are done moving all of its Rooms.
@@ -135,7 +137,6 @@ namespace MudDesigner.MudEngine.UITypeEditors
             //All of our Rooms are copied, Zone has been updated.
             //Update the Realm to give it the Zone, then add it to the
             //List box, then remove it from the Available listbox
-            _Realm.Zones.Add(zone.Filename);
             lstRealmMembers.Items.Add(zone.Filename);
             lstAvailableZones.Items.Remove(zone.Filename);
 
@@ -157,73 +158,54 @@ namespace MudDesigner.MudEngine.UITypeEditors
                     return;
             }
 
-            string projectPath = Path.Combine(Application.StartupPath, "Project");
-            //Project/Realms
-            string realmPath = Path.Combine(projectPath, "Realms");
-            //Project/Realms/RealmName
-            string realmRoot = Path.Combine(realmPath, _Realm.Name);
-            string[] zones = Directory.GetFiles(realmRoot, "*.zone", SearchOption.AllDirectories);
-            bool IsFound = false;
+            //Get the current zones name
+            string zoneName = Path.GetFileNameWithoutExtension(lstRealmMembers.SelectedItem.ToString());
 
-            //Find the zone that we need to remove from the realm
-            foreach(string zone in zones)
+            //Get our current storage information
+            string currentZonePath = FileManager.GetDataPath(_Realm.Name, zoneName);
+            string currentZoneRooms = Path.Combine(currentZonePath, "Rooms");
+            string currentFilename = Path.Combine(currentZonePath, lstRealmMembers.SelectedItem.ToString());
+
+            //create our new storage info
+            string newZonePath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Zones), zoneName);
+            string newFilename = Path.Combine(newZonePath, lstRealmMembers.SelectedItem.ToString());
+            string newZoneRooms = Path.Combine(newZonePath, "Rooms");
+
+            //Create the Zone directory within the Root Zones path
+            if (!Directory.Exists(newZoneRooms))
+                Directory.CreateDirectory(newZoneRooms);
+
+            //Load the Zone and remove its link to the Realm
+            Zone z = new Zone();
+            z = (Zone)z.Load(currentFilename);
+            z.Realm = "";
+            //Remove the Zone from the Realm collection
+            _Realm.Zones.Remove(z.Filename);
+
+            //Save the modified Zone into the new path
+            z.Save(newFilename);
+
+            //Check if the original Zone contained Rooms.
+            string[] rooms = Directory.GetFiles(currentZoneRooms, "*.room");
+
+            //If we find Rooms, we need to copy them.
+            if (rooms.Length != 0)
             {
-                Zone z = new Zone();
-                z = (Zone)FileManager.Load(zone, z);
-
-                //We found the zone, remove it from the realm
-                //the zone file gets placed back in the Zones directory
-                //now that it is no longer part of a realm
-                if (z.Filename == lstRealmMembers.SelectedItem.ToString())
+                //Loop through the collection, copying each Room file into the 
+                //new Rooms directory within the Realms Room path
+                foreach (string room in rooms)
                 {
-                    IsFound = true;
-                    z.Realm = "";
-                    _Realm.Zones.Remove(z.Filename);
-                    FileManager.Save(zone, z);
-
-                    string zonePath = Path.Combine(projectPath, "Zones");
-                    string zoneRoot = Path.Combine(zonePath, z.Name);
-                    string newFile = Path.Combine(zoneRoot, Path.GetFileName(zone));
-
-                    if (!Directory.Exists(zoneRoot))
-                        Directory.CreateDirectory(zoneRoot);
-
-                    //Copy all of the rooms assigned to this zone.
-                    string oldZonePath = Path.GetFullPath(zone).Substring(0, Path.GetFullPath(zone).Length - Path.GetFileName(zone).Length);
-
-                    if (Directory.Exists(Path.Combine(oldZonePath, "Rooms")))
-                    {
-                        if (!Directory.Exists(Path.Combine(zoneRoot, "Rooms")))
-                            Directory.CreateDirectory(Path.Combine(zoneRoot, "Rooms"));
-
-                        string[] rooms = Directory.GetFiles(Path.Combine(oldZonePath, "Rooms"), "*.room");
-                        
-                        foreach (string room in rooms)
-                        {
-                            string roomFile = Path.Combine(zoneRoot, "Rooms");
-                            roomFile = Path.Combine(roomFile, Path.GetFileName(room));
-                            File.Copy(room, roomFile);
-                            File.Delete(room);
-                        }
-                    }
-
-                    //finally copy the zone file
-                    File.Copy(zone, newFile);
-                    File.Delete(zone);
-                    Directory.Delete(oldZonePath, true);
-                    lstAvailableZones.Items.Add(lstRealmMembers.SelectedItem);
-                    lstRealmMembers.Items.Remove(lstRealmMembers.SelectedItem);
-                    break;
+                    //Get the current filename and it's new Path
+                    string roomFile = Path.GetFileName(room);
+                    string roomPath = newZoneRooms;
+                    //Copy the current file into the new path.
+                    File.Copy(room, Path.Combine(roomPath, roomFile), true);
                 }
-            }//End of foreach
-            if (!IsFound)
-            {
-                _Realm.Zones.Remove(lstRealmMembers.SelectedItem.ToString());
-                string filename = Path.Combine(realmRoot, _Realm.Filename);
-                FileManager.Save(filename, _Realm);
-                lstAvailableZones.Items.Add(lstRealmMembers.SelectedItem);
-                lstRealmMembers.Items.Remove(lstRealmMembers.SelectedItem);
             }
+
+            lstAvailableZones.Items.Add(z.Filename);
+            lstRealmMembers.Items.Remove(z.Filename);
+            Directory.Delete(currentZonePath, true);
         }
     }
 }
