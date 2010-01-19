@@ -35,7 +35,7 @@ namespace MudDesigner.MudEngine.UITypeEditors
             string realmsPath = Path.Combine(projectPath, "Realms");
             savePath = "";
 
-            if (zone.Realm == "No Realm Associated")
+            if (zone.Realm == "No Realm Associated.")
             {
                 //Project/Zones/ZoneName
                 savePath = Path.Combine(zonesPath, zone.Name);

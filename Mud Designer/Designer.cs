@@ -41,6 +41,7 @@ namespace MudDesigner
         BaseObject _GameObject;
         //Check for if the loaded object is saved yet or not.
         bool IsSaved;
+        IWidget _Widget;
 
         /// <summary>
         /// Initializes the Designers Temporary objects, Project Information and varifies project paths.
@@ -53,6 +54,7 @@ namespace MudDesigner
             //for use during our runtime
             _GameObject = new BaseObject();
             _Project = new ProjectInformation();
+            _Widget = new RealmWidget();
             IsSaved = true;
 
             //Get out saved project file
@@ -66,6 +68,9 @@ namespace MudDesigner
 
             //Display the Project directory structure in the Project Explorer
             RefreshProjectExplorer();
+
+            //Install out Realm Widget
+            this.containerMain.Panel1.Controls.Add(_Widget.Initialize());
         }
 
         /// <summary>
@@ -145,14 +150,15 @@ namespace MudDesigner
         {
             //We can use to get a copy of the currently selected object
             //if it is a BaseObject (Aquire it's BaseObject.Filename)
-            var obj = (BaseObject)propertyObject.SelectedObject;
+            if (propertyObject.SelectedObject.GetType().BaseType.Name == "BaseObject")
+                _GameObject = (BaseObject)propertyObject.SelectedObject;
 
             //Filepaths
             string objectPath = "";
             string filename = "";
 
             //Scan through the available Types that can be saved
-            switch (obj.GetType().Name)
+            switch (propertyObject.SelectedObject.GetType().Name)
             {
                     //ProjectInformation
                 case "ProjectInformation":
@@ -161,20 +167,20 @@ namespace MudDesigner
                     break;
                     //Currency
                 case "Currency":
-                    filename = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Currencies), obj.Filename);
-                    obj.Save(filename);
+                    filename = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Currencies), _GameObject.Filename);
+                    _GameObject.Save(filename);
                     break;
                     //Realm
                 case "Realm":
-                    objectPath= Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), obj.Name);
-                    filename = Path.Combine(objectPath, obj.Filename);
-                    obj.Save(filename);
+                    objectPath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), _GameObject.Name);
+                    filename = Path.Combine(objectPath, _GameObject.Filename);
+                    _GameObject.Save(filename);
                     break;
                     //Zone
                 case "Zone":
                     //Get the current Zone being edited. We need to check if it has a Realm
                     Zone z = new Zone();
-                    z = (Zone)obj;
+                    z = (Zone)_GameObject;
                     //No realm assigned to it, so it's in the Root Zones directory.
                     //Base our save path off of that
                     if (z.Realm == "No Realm Associated.")
@@ -189,7 +195,7 @@ namespace MudDesigner
                         filename = Path.Combine(objectPath, z.Filename);
                     }
                     //Save the Zone
-                    obj.Save(filename);
+                    _GameObject.Save(filename);
 
                     //Check if the Rooms Directory exists.
                     string roomsPath = Path.Combine(objectPath, "Rooms");
@@ -466,6 +472,9 @@ namespace MudDesigner
             TreeNode selectedNode = treeExplorer.SelectedNode;
             bool IsFile = true;
 
+            if (Path.GetExtension(selectedNode.Text) == "")
+                IsFile = false;
+
             result = MessageBox.Show("Are you sure you want to delete this object?\n\nAll objects contained within it will be deleted too!", "Mud Designer", MessageBoxButtons.YesNo);
 
             //User hit no, cancel
@@ -534,6 +543,8 @@ namespace MudDesigner
             SaveObject();
             IsSaved = true;
             RefreshProjectExplorer();
+            if (_Widget != null)
+                _Widget.Refresh();
         }
 
         private void mnuAbout_Click(object sender, EventArgs e)

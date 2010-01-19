@@ -1,6 +1,6 @@
 namespace MudDesigner.UIWidgets
 {
-    partial class RealmExplorer
+    partial class RealmWidget
     {
         /// <summary> 
         /// Required designer variable.

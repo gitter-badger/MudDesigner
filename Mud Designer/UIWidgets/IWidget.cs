@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace MudDesigner.UIWidgets
 {
     public interface IWidget
     {
-        void InstallControl(string path);
+        Control Initialize();
+        void Refresh();
     }
 }
