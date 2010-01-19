@@ -82,6 +82,20 @@ namespace MudDesigner
                 //The provided nodes parent node is aquired so we can
                 //find if we can get it's current type.
                 TreeNode parentNode = node.Parent;
+                
+                //Root searching.
+                switch (node.Text)
+                {
+                    case "Currencies":
+                        return ObjectType.Currency;
+                    case "Realms":
+                        return ObjectType.Realm;
+                    case "Zones":
+                        if (parentNode.Text == "Realms")
+                            return ObjectType.ZoneWithinRealm;
+                        else
+                            return ObjectType.ZoneRoot;
+                }
 
                 //switch is only for ProjectInfo, Currency, un-owned Zones & Rooms
                 switch (parentNode.Text)
@@ -92,6 +106,13 @@ namespace MudDesigner
                         break;
                     case "Currencies":
                         return ObjectType.Currency;
+                    case "Realms":
+                        return ObjectType.Realm;
+                    case "Zones":
+                        if ((parentNode.Parent.Parent != null) && (parentNode.Parent.Parent.Text == "Realms"))
+                            return ObjectType.ZoneWithinRealm;
+                        else
+                            return ObjectType.ZoneRoot;
                 }
 
                 //Basic Root items where not found, do a deeper search now.
@@ -425,99 +446,48 @@ namespace MudDesigner
             }
 
             DialogResult result;
-            ObjectType objectType = new ObjectType();
-            
-            //Check if we are deleting a realm or zone, if so inform the user that
-            //all zones/rooms within the object will be deleted as well.
-            string fullPath = treeExplorer.SelectedNode.FullPath;
             TreeNode selectedNode = treeExplorer.SelectedNode;
+            bool IsFile = true;
 
-            if (fullPath.Contains("Realms") || fullPath.Contains("Zones"))
-            {
-                //ask if we want to delete this
-                result = MessageBox.Show("Are you sure you want to delete" 
-                    + treeExplorer.SelectedNode.Text + "?\nAll Rooms or Zones within this item will be deleted!", "Mud Designer", MessageBoxButtons.YesNo);
-            }
-            else
-                //ask if we want to delete this
-                result = MessageBox.Show("Are you sure you want to delete"
-                    + treeExplorer.SelectedNode.Text + "?", "Mud Designer", MessageBoxButtons.YesNo);
+            result = MessageBox.Show("Are you sure you want to delete this object?\n\nAll objects contained within it will be deleted too!", "Mud Designer", MessageBoxButtons.YesNo);
 
             //User hit no, cancel
             if (result == DialogResult.No)
                 return;
 
-            //Find out what we are deleting
-            if (Path.GetExtension(fullPath) == "")
+            //Check if the object is a Zone owned by a Realm.
+            //If so, remove the zone from the realms zone collection
+            if (GetNodeType(selectedNode) == ObjectType.ZoneWithinRealm)
             {
-                if (selectedNode.Text == "Zones")
-                    objectType = ObjectType.Zone;
-                else if (selectedNode.Text == "Rooms")
-                    objectType = ObjectType.Room;
-            }
-            else if (Path.GetExtension(fullPath) == ".Room")
-            {
-                objectType = ObjectType.Room;
-            }
-            else if (Path.GetExtension(fullPath) == "Zone")
-            {
-                objectType = ObjectType.Zone;
-            }
-
-            if (objectType == ObjectType.Zone)
-            {
-                Zone z = new Zone();
-                string filename = Path.Combine(Application.StartupPath, treeExplorer.SelectedNode.FullPath);
-                if (Path.GetExtension(treeExplorer.SelectedNode.FullPath) == "")
+                Realm r = new Realm();
+                string filename = "";
+                if (IsFile)
                 {
-                    string[] zone = Directory.GetFiles(filename, "*.zone");
-                    if (zone.Length != 0)
-                    {
-                        filename = zone[0];
-                    }
-                    else
-                    {
-                        Directory.Delete(treeExplorer.SelectedNode.FullPath, true);
-                        return;
-                    }
+                    string realmName = selectedNode.Parent.Parent.Parent.Text;
+                    filename = Path.Combine(realmName, realmName + ".realm");
+                    filename = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), filename);
                 }
-                    z = (Zone)FileManager.Load(filename, z);
-                    if (z.Realm != "")
-                    {
-                        string projectPath = Path.Combine(Application.StartupPath, "Project");
-                        string[] files = Directory.GetFiles(Path.Combine(projectPath, "Realms"), "*.realm", SearchOption.AllDirectories);
+                else
+                {
+                    string realmName = selectedNode.Parent.Parent.Text;
+                    filename = Path.Combine(realmName, realmName + ".realm");
+                    filename = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), filename);
+                }
+                filename = Path.Combine(Application.StartupPath, filename);
 
-                        foreach (string file in files)
-                        {
-                            Realm r = new Realm();
-                            r = (Realm)FileManager.Load(file, r);
-                            if (r.Name == z.Realm)
-                            {
-                                r.Zones.Remove(z.Filename);
-                                FileManager.Save(file, r);
-                                break;
-                            }
-                        }
-                    }
-                }//end if(object is zone)
-            else if (objectType == ObjectType.Room)
-            {
-                //TODO Delete rooms from owning zone
+                r = (Realm)r.Load(filename);
+                if (IsFile)
+                    r.Zones.Remove(selectedNode.Parent.Text);
+                else
+                    r.Zones.Remove(selectedNode.Text);
             }
 
-            //Its a directory to delete if we have no extension assigned to it
-            if (Path.GetExtension(treeExplorer.SelectedNode.FullPath) == "")
-            {
-                Directory.Delete(Path.Combine(Application.StartupPath, treeExplorer.SelectedNode.FullPath), true);
-            }
+            //Delete the object.
+            if (IsFile)
+                Directory.Delete(selectedNode.Parent.FullPath, true);
             else
-            {
-                string filename = Path.GetFileName(treeExplorer.SelectedNode.FullPath);
-                fullPath = treeExplorer.SelectedNode.FullPath;
-                string deletePath = fullPath.Substring(0, fullPath.Length - filename.Length);
-                File.Delete(Path.Combine(Application.StartupPath, treeExplorer.SelectedNode.FullPath));
-                Directory.Delete(Path.Combine(Application.StartupPath, deletePath), true);
-            }
+                Directory.Delete(selectedNode.FullPath, true);
+
             //Just incase we have the zone or the realm selected that the zone belonged too.
             //users can re-save the current realm and if it contained the zone we just deleted
             //the zone will be still be saved as part of the realm.

@@ -29,15 +29,8 @@ namespace MudDesigner
             Application.SetCompatibleTextRenderingDefault(false);
 
             //Run the toolkit
-            try
-            {
                 CurrentEditor = new Designer();
                 Application.Run(CurrentEditor);
-            }
-            catch (Exception msg)
-            {
-                MessageBox.Show("Critical error!\n\n" + msg + "\n\nMud Designer shut down occured.", "Mud Designer", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
     }
 }
