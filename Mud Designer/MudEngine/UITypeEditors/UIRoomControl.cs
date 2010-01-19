@@ -18,6 +18,7 @@ namespace MudDesigner.MudEngine.UITypeEditors
     {
         bool IsSaved;
         Room _Room;
+        Zone _Zone;
         string savePath = "";
         public List<Room> Rooms { get; set; }
 
@@ -27,13 +28,14 @@ namespace MudDesigner.MudEngine.UITypeEditors
             IsSaved = true;
             _Room = new Room();
             Rooms = new List<Room>();
+            _Zone = zone;
 
             string projectPath = Path.Combine(Application.StartupPath, "Project");
             string zonesPath = Path.Combine(projectPath, "Zones");
             string realmsPath = Path.Combine(projectPath, "Realms");
             savePath = "";
 
-            if (string.IsNullOrEmpty(zone.Realm))
+            if (zone.Realm == "No Realm Associated")
             {
                 //Project/Zones/ZoneName
                 savePath = Path.Combine(zonesPath, zone.Name);
@@ -146,6 +148,31 @@ namespace MudDesigner.MudEngine.UITypeEditors
                     lstRooms.Items.Add(Path.GetFileName(file));
                 }
             }
+        }
+
+        private void lstRooms_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (lstRooms.SelectedIndex == -1)
+                return;
+
+            string roomName = lstRooms.SelectedItem.ToString();
+            string zonePath = "";
+            string zoneRoomPath = "";
+            string roomFile = "";
+
+            if (_Zone.Realm == "No Realm Associated.")
+            {
+                zonePath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Zones), _Zone.Name);
+            }
+            else
+            {
+                zonePath = FileManager.GetDataPath(_Zone.Realm, _Zone.Name);
+            }
+            zoneRoomPath = Path.Combine(zonePath, "Rooms");
+            roomFile = Path.Combine(zoneRoomPath, roomName);
+            _Room = new Room();
+            _Room = (Room)_Room.Load(roomFile);
+            propertyRoom.SelectedObject = _Room;
         }
     }
 }

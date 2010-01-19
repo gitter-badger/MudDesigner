@@ -61,7 +61,7 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
         {
             Rooms = new List<Room>();
             IsSafe = false;
-            //throw new NotSupportedException("Parameterless constructors of Type " + this.GetType().FullName + " is not supported.");
+            Realm = "No Realm Associated.";
         }
 
         /// <summary>

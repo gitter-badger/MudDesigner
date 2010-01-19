@@ -177,7 +177,7 @@ namespace MudDesigner
                     z = (Zone)obj;
                     //No realm assigned to it, so it's in the Root Zones directory.
                     //Base our save path off of that
-                    if (String.IsNullOrEmpty(z.Realm))
+                    if (z.Realm == "No Realm Associated.")
                     {
                         objectPath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Zones), z.Name);
                         filename = Path.Combine(objectPath, z.Filename);

@@ -64,6 +64,7 @@
             this.lstRooms.Name = "lstRooms";
             this.lstRooms.Size = new System.Drawing.Size(233, 290);
             this.lstRooms.TabIndex = 1;
+            this.lstRooms.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstRooms_MouseDoubleClick);
             // 
             // toolStrip1
             // 
@@ -115,6 +116,7 @@
             // propertyRoom
             // 
             this.propertyRoom.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyRoom.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.propertyRoom.Location = new System.Drawing.Point(3, 16);
             this.propertyRoom.Name = "propertyRoom";
             this.propertyRoom.Size = new System.Drawing.Size(233, 317);

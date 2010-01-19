@@ -178,7 +178,7 @@ namespace MudDesigner.MudEngine.UITypeEditors
             //Load the Zone and remove its link to the Realm
             Zone z = new Zone();
             z = (Zone)z.Load(currentFilename);
-            z.Realm = "";
+            z.Realm = "No Realm Associated.";
             //Remove the Zone from the Realm collection
             _Realm.Zones.Remove(z.Filename);
 
