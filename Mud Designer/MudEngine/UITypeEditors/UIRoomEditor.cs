@@ -21,7 +21,7 @@ namespace MudDesigner.MudEngine.UITypeEditors
 
             ctl.ShowDialog();
 
-            return new List<Room>();
+            return ctl.Rooms;
         }
 
         public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)

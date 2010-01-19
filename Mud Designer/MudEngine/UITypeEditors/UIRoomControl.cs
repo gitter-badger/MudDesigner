@@ -19,12 +19,14 @@ namespace MudDesigner.MudEngine.UITypeEditors
         bool IsSaved;
         Room _Room;
         string savePath = "";
+        public List<Room> Rooms { get; set; }
 
         public UIRoomControl(Zone zone)
         {
             InitializeComponent();
             IsSaved = true;
             _Room = new Room();
+            Rooms = new List<Room>();
 
             string projectPath = Path.Combine(Application.StartupPath, "Project");
             string zonesPath = Path.Combine(projectPath, "Zones");
@@ -81,6 +83,7 @@ namespace MudDesigner.MudEngine.UITypeEditors
             if (!lstRooms.Items.Contains(_Room.Filename))
                 lstRooms.Items.Add(_Room.Filename);
 
+            Rooms.Add(_Room);
             IsSaved = true;
         }
 

@@ -64,17 +64,29 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
             //throw new NotSupportedException("Parameterless constructors of Type " + this.GetType().FullName + " is not supported.");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="RoomName"></param>
+        /// <returns></returns>
         public Room GetRoom(string RoomName)
         {
-            foreach (Room r in Rooms)
-            {
-                if (r.Name == RoomName)
-                    return r;
-            }
+            var filterQuery =
+                from room in Rooms
+                where room.Name == RoomName
+                select room;
+
+            foreach (var room in filterQuery)
+                return room;
 
             return null;
         }
 
+        /// <summary>
+        /// Clears out the Zones room collection and re-builds it.
+        /// This is a time consuming process if there are a large amount of
+        /// of rooms, use sparingly.
+        /// </summary>
         public void RefreshRoomList()
         {
             Rooms = new List<Room>();
@@ -88,13 +100,19 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
 
             //Zone exists, so it's already been saved.
             string[] rooms = Directory.GetFiles(zonePath, "*.room");
-
+            
+            //Clear the existing collection of Rooms
+            this.Rooms.Clear();
+            //Build a new one based off of the files 
             foreach (string file in rooms)
             {
                 Room r = new Room();
                 r = (Room)FileManager.Load(file, r);
                 this.Rooms.Add(r);
             }
+
+            //Save the re-built Room collection
+            this.Save(Path.Combine(zonePath, this.Filename));
         }
     }
 }
