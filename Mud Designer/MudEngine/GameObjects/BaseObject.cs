@@ -159,6 +159,11 @@ namespace MudDesigner.MudEngine.GameObjects
         #endregion
 
         #region Public Methods
+        /// <summary>
+        /// Loads the supplied filename and returns it.
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         public object Load(string filename)
         {
             if (!File.Exists(filename))
@@ -169,8 +174,16 @@ namespace MudDesigner.MudEngine.GameObjects
             return FileManager.Load(filename, this);
         }
 
+        /// <summary>
+        /// Saves the current object with the supplied filename
+        /// </summary>
+        /// <param name="filename"></param>
         public void Save(string filename)
         {
+            string directory = Path.GetDirectoryName(filename);
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+            FileManager.Save(filename, this);
         }
         public override string ToString()
         {

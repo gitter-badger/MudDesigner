@@ -64,6 +64,7 @@ namespace MudDesigner
             //ensure the path exists
             ValidatePath(projectPath);
 
+            //Display the Project directory structure in the Project Explorer
             RefreshProjectExplorer();
         }
 
@@ -144,6 +145,7 @@ namespace MudDesigner
                     //Project Information file
                 case ObjectType.Project:
                     _Project = (ProjectInformation)_Project.Load(FileManager.GetDataPath(SaveDataTypes.Root));
+                    propertyObject.SelectedObject = _Project;
                     break;
                     //Currency File
                 case ObjectType.Currency:
@@ -285,60 +287,43 @@ namespace MudDesigner
 
         public void SaveSelected()
         {
-            //Get the object Type
-            Type t = propertyObject.SelectedObject.GetType();
             //We can use to get a copy of the currently selected object
             //if it is a BaseObject (Aquire it's BaseObject.Filename)
-            var obj = new BaseObject();
+            var obj = (BaseObject)propertyObject.SelectedObject;
 
             //Filepaths
-            string projectPath = Path.Combine(Application.StartupPath, "Project");
             string objectPath = "";
             string filename = "";
 
-            //Start checking to see what object we are saving
-            if (t == typeof(ProjectInformation))
+            switch (obj.GetType().Name)
             {
-                filename = Path.Combine(projectPath, "Game.xml");
-                FileManager.Save(filename, _Project);
-            }
-            else if (t == typeof(Currency))
-            {
-                obj = (Currency)propertyObject.SelectedObject;
-                objectPath = Path.Combine(projectPath, "Currencies");
-                ValidatePath(objectPath);
-                filename = Path.Combine(objectPath, obj.Filename);
-                FileManager.Save(filename, obj);
-            }
-            else if (t == typeof(Realm))
-            {
-                obj = (Realm)propertyObject.SelectedObject;
-                objectPath = Path.Combine(projectPath, "Realms");
-                objectPath = Path.Combine(objectPath, obj.Name);
-                filename = Path.Combine(objectPath, obj.Filename);
-                objectPath = Path.Combine(objectPath, "Zones");
-                ValidatePath(objectPath);
-                FileManager.Save(filename, obj);
-            }
-            else if (t == typeof(Zone))
-            {
-                Zone zone = (Zone)propertyObject.SelectedObject;
-                if (string.IsNullOrEmpty(zone.Realm))
-                {
-                    objectPath = Path.Combine(projectPath, "Zones");
-                    objectPath = Path.Combine(objectPath, zone.Name);
-                }
-                else
-                {
-                    objectPath = Path.Combine(projectPath, "Realms");
-                    objectPath = Path.Combine(objectPath, zone.Realm);
-                    objectPath = Path.Combine(objectPath, "Zones");
-                    objectPath = Path.Combine(objectPath, zone.Name);
-                    filename = Path.Combine(objectPath, zone.Filename);
-                }
-                ValidatePath(objectPath);
-                filename = Path.Combine(objectPath, zone.Filename);
-                FileManager.Save(filename, zone);
+                case "ProjectInformation":
+                    filename = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Root), "Game.xml");
+                    _Project.Save(filename);
+                    break;
+                case "Currency":
+                    filename = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Currencies), obj.Filename);
+                    obj.Save(filename);
+                    break;
+                case "Realm":
+                    filename = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), obj.Filename);
+                    obj.Save(filename);
+                    break;
+                case "Zone":
+                    Zone z = new Zone();
+                    z = (Zone)obj;
+                    if (String.IsNullOrEmpty(z.Realm))
+                    {
+                        objectPath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Zones), z.Name);
+                        filename = Path.Combine(objectPath, z.Filename);
+                    }
+                    else
+                    {
+                        objectPath = FileManager.GetDataPath(z.Realm, z.Name);
+                        filename = Path.Combine(objectPath, z.Filename);
+                    }
+                    obj.Save(filename);
+                    break;
             }
 
             RefreshProjectExplorer();
@@ -569,9 +554,8 @@ namespace MudDesigner
 
         private void treeExplorer_DoubleClick(object sender, EventArgs e)
         {
-            if (treeExplorer.SelectedNode.Text == "Project")
-                return;
-            mnuEditObject_Click(sender, e);
+            if (CheckSavedState())
+                LoadObject(treeExplorer.SelectedNode);
         }
 
         private void mnuNewRoom_Click(object sender, EventArgs e)

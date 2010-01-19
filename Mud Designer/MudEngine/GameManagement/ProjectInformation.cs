@@ -146,6 +146,12 @@ namespace MudDesigner.MudEngine.GameManagement
 
         public void Save(string filename)
         {
+            string directory = Path.GetDirectoryName(filename);
+
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+
+            FileManager.Save(filename, this);
         }
 
         public object Load(string path)
