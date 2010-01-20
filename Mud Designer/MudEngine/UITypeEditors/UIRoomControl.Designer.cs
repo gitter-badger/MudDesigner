@@ -108,7 +108,7 @@
             this.groupBox2.ForeColor = System.Drawing.Color.Silver;
             this.groupBox2.Location = new System.Drawing.Point(258, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(239, 336);
+            this.groupBox2.Size = new System.Drawing.Size(339, 336);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Members in Zone";
@@ -119,7 +119,7 @@
             this.propertyRoom.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.propertyRoom.Location = new System.Drawing.Point(3, 16);
             this.propertyRoom.Name = "propertyRoom";
-            this.propertyRoom.Size = new System.Drawing.Size(233, 317);
+            this.propertyRoom.Size = new System.Drawing.Size(333, 317);
             this.propertyRoom.TabIndex = 1;
             this.propertyRoom.ToolbarVisible = false;
             this.propertyRoom.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyRoom_PropertyValueChanged);
@@ -129,7 +129,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(512, 356);
+            this.ClientSize = new System.Drawing.Size(603, 356);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

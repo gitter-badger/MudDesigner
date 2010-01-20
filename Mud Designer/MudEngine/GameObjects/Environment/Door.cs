@@ -5,17 +5,28 @@ using System.Text;
 using System.Xml.Serialization;
 using System.ComponentModel;
 
+using MudDesigner.MudEngine.UITypeEditors;
+using MudDesigner.MudEngine.GameObjects.Items;
+
 namespace MudDesigner.MudEngine.GameObjects.Environment
 {
-    [XmlInclude(typeof(ConnectedRoom))]
+    [XmlInclude(typeof(BaseItem))]
+    [Serializable]
     public class Door
     {
-        public struct ConnectedRoom
+        public struct DoorwayLinkInformation
         {
             public string Realm;
             public string Zone;
             public string Room;
-            public AvailableTravelDirections TravelDirection;
+
+            public override string ToString()
+            {
+                if (string.IsNullOrEmpty(Room))
+                    return "Doorway to no where.";
+                else
+                    return "Doorway to " + Room;
+            }
         }
 
         [Category("Door Settings")]
@@ -27,7 +38,8 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
         }
 
         [Category("Door Settings")]
-        public string RequiredKey
+        [Browsable(false)]
+        public BaseItem RequiredKey
         {
             get;
             set;
@@ -41,28 +53,33 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
             set;
         }
 
-        [Browsable(false)]
-        public AvailableTravelDirections TravelDirection
-        {
-            get;
-            set;
-        }
-
-        [ReadOnly(true)]
         [Category("Door Settings")]
-        public ConnectedRoom TravelRoom
+        [EditorAttribute(typeof(UIDoorwayEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        public DoorwayLinkInformation DoorwayLink
         {
             get;
             set;
         }
 
-        public Door(AvailableTravelDirections TravelDirection)
-        {
-            this.TravelDirection = TravelDirection;
-        }
+        [Browsable(false)]
+        public AvailableTravelDirections TravelDirection;
 
         public Door()
         {
+            LevelRequirement = 0;
+            IsLocked = false;
+            RequiredKey = new BaseItem();
+            DoorwayLink = new DoorwayLinkInformation();
+        }
+
+        public Door(DoorwayLinkInformation linkInformation) : this()
+        {
+            this.DoorwayLink = linkInformation;
+        }
+
+        public override string ToString()
+        {
+            return this.TravelDirection.ToString() + " Doorway";
         }
     }
 }

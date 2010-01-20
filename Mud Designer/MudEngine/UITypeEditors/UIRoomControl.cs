@@ -132,7 +132,11 @@ namespace MudDesigner.MudEngine.UITypeEditors
         {
             if (CheckSavedState())
             {
-                propertyRoom.SelectedObject = new Room();
+                _Room = new Room();
+                _Room.Zone = _Zone.Name;
+                _Room.Realm = _Zone.Realm;
+                propertyRoom.SelectedObject = _Room;
+
                 IsSaved = false;
             }
         }

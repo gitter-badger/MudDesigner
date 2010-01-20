@@ -8,23 +8,24 @@ using System.Xml.Serialization;
 
 namespace MudDesigner.MudEngine.GameObjects.Environment
 {
+    [XmlInclude(typeof(Door))]
     public class Room : BaseObject
     {
         [Category("Environment Information")]
         [Description("Shows what rooms are currently created and linked to within this Room.")]
         [ReadOnly(true)]
-        public string DoorList
+        public string InstalledDoorways
         {
             get
             {
                 string installed = "";
-                if (this.InstalledDoors.Count != 0)
+                if (this.Doorways.Count != 0)
                 {
-                    foreach (Door d in InstalledDoors)
+                    foreach (Door d in Doorways)
                     {
                         installed += d.TravelDirection.ToString() + ",";
                     }
-                    if (InstalledDoors.Count >= 2)
+                    if (Doorways.Count >= 2)
                     {
                         installed = installed.Substring(0, installed.Length - 1);
                     }
@@ -37,12 +38,25 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
 
         [Category("Environment Information")]
         [Description("Allows for linking of Rooms together via Doorways")]
-        public List<Door> InstalledDoors;
+        public List<Door> Doorways
+        {
+            get;
+            set;
+        }
 
         [ReadOnly(true)]
         [Description("This is the Zone that the Room is currently assigned to.")]
         [Category("Environment Information")]
         public string Zone
+        {
+            get;
+            set;
+        }
+
+        [ReadOnly(true)]
+        [Description("This is the Realm that the Room belongs to.")]
+        [Category("Environment Information")]
+        public string Realm
         {
             get;
             set;
@@ -60,7 +74,7 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
         public Room TestRoom { get; set; }
         public Room()
         {
-            InstalledDoors = new List<Door>();
+            Doorways = new List<Door>();
             IsSafe = false;
         }
     }
