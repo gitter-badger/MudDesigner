@@ -93,13 +93,6 @@
     <Compile Include="MudEngine\GameManagement\ProjectInformation.cs" />
     <Compile Include="MudEngine\FileSystem\FileManager.cs" />
     <Compile Include="MudEngine\GameManagement\QuestSetup.cs" />
-    <Compile Include="MudEngine\UITypeEditors\UIDoorwayControl.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MudEngine\UITypeEditors\UIDoorwayControl.Designer.cs">
-      <DependentUpon>UIDoorwayControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MudEngine\UITypeEditors\UIDoorwayEditor.cs" />
     <Compile Include="MudEngine\UITypeEditors\UIRealmControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,10 +117,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Designer.resx">
       <DependentUpon>Designer.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MudEngine\UITypeEditors\UIDoorwayControl.resx">
-      <DependentUpon>UIDoorwayControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MudEngine\UITypeEditors\UIRealmControl.resx">

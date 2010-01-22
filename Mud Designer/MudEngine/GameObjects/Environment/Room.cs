@@ -36,6 +36,12 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
             }
         }
 
+        public AvailableTravelDirections Directions
+        {
+            get;
+            set;
+        }
+
         [Category("Environment Information")]
         [Description("Allows for linking of Rooms together via Doorways")]
         public List<Door> Doorways
@@ -75,6 +81,7 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
         public Room()
         {
             Doorways = new List<Door>();
+            
             IsSafe = false;
         }
     }

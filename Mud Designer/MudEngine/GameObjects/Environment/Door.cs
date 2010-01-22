@@ -14,21 +14,6 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
     [Serializable]
     public class Door
     {
-        public struct DoorwayLinkInformation
-        {
-            public string Realm;
-            public string Zone;
-            public string Room;
-
-            public override string ToString()
-            {
-                if (string.IsNullOrEmpty(Room))
-                    return "Doorway to no where.";
-                else
-                    return "Doorway to " + Room;
-            }
-        }
-
         [Category("Door Settings")]
         [DefaultValue(false)]
         public bool IsLocked
@@ -54,32 +39,27 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
         }
 
         [Category("Door Settings")]
-        [EditorAttribute(typeof(UIDoorwayEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        public DoorwayLinkInformation DoorwayLink
-        {
-            get;
-            set;
-        }
+        public AvailableTravelDirections TravelDirection { get; set; }
 
-        [Browsable(false)]
-        public AvailableTravelDirections TravelDirection;
+        public string ConnectedRoom { get; set; }
 
         public Door()
         {
             LevelRequirement = 0;
             IsLocked = false;
             RequiredKey = new BaseItem();
-            DoorwayLink = new DoorwayLinkInformation();
         }
 
-        public Door(DoorwayLinkInformation linkInformation) : this()
+        public Door(AvailableTravelDirections travelDirection, string connectedRoom)
+            : this()
         {
-            this.DoorwayLink = linkInformation;
+            ConnectedRoom = connectedRoom;
+            TravelDirection = travelDirection;
         }
 
         public override string ToString()
         {
-            return this.TravelDirection.ToString() + " Doorway";
+            return this.TravelDirection.ToString();
         }
     }
 }
