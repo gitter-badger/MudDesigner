@@ -157,8 +157,8 @@
         private System.Windows.Forms.ToolStripButton btnNewRoom;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripTextBox txtFindRoom;
-        private System.Windows.Forms.ListBox lstRooms;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.PropertyGrid propertyRoom;
+        public System.Windows.Forms.ListBox lstRooms;
     }
 }

@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
+using System.Drawing.Design;
+
+using MudDesigner.MudEngine.UITypeEditors;
 
 namespace MudDesigner.MudEngine.GameObjects.Environment
 {
@@ -36,14 +39,10 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
             }
         }
 
-        public AvailableTravelDirections Directions
-        {
-            get;
-            set;
-        }
-
         [Category("Environment Information")]
         [Description("Allows for linking of Rooms together via Doorways")]
+        [EditorAttribute(typeof(UIDoorwayEditor), typeof(UITypeEditor))]
+        [RefreshProperties(RefreshProperties.All)]
         public List<Door> Doorways
         {
             get;
@@ -77,12 +76,22 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
             set;
         }
 
-        public Room TestRoom { get; set; }
         public Room()
         {
             Doorways = new List<Door>();
             
             IsSafe = false;
+        }
+
+        public bool DoorwayExist(string travelDirection)
+        {
+            foreach (Door door in Doorways)
+            {
+                if (door.TravelDirection.ToString().ToLower() == travelDirection.ToLower())
+                    return true;
+            }
+
+            return false;
         }
     }
 }

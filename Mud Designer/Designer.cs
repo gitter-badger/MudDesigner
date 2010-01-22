@@ -542,7 +542,6 @@ namespace MudDesigner
             }
             SaveObject();
             IsSaved = true;
-            RefreshProjectExplorer();
             if (_Widget != null)
                 _Widget.Refresh();
         }

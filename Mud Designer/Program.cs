@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.Drawing.Design;
+
 //MudEngine
 using MudDesigner.MudEngine;
 using MudDesigner.MudEngine.FileSystem;
@@ -17,7 +19,8 @@ namespace MudDesigner
     static class Program
     {
         public static Designer Designer{ get; set; }
-        
+        internal static Form CurrentEditor { get; set; }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

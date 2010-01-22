@@ -53,6 +53,8 @@ namespace MudDesigner.MudEngine.UITypeEditors
                 //Project/Realms/RealmName/Zones/ZoneName/Rooms
                 savePath = Path.Combine(savePath, "Rooms");
             }
+
+            Program.CurrentEditor = this;
         }
 
         private bool CheckSavedState()
@@ -87,6 +89,20 @@ namespace MudDesigner.MudEngine.UITypeEditors
 
             Rooms.Add(_Room);
             IsSaved = true;
+        }
+
+        internal void RefreshRoomList()
+        {
+            if (Directory.Exists(savePath))
+            {
+                lstRooms.Items.Clear();
+                string[] files = Directory.GetFiles(savePath);
+
+                foreach (string file in files)
+                {
+                    lstRooms.Items.Add(Path.GetFileName(file));
+                }
+            }
         }
 
         private void propertyRoom_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
@@ -143,15 +159,7 @@ namespace MudDesigner.MudEngine.UITypeEditors
 
         private void UIRoomControl_Load(object sender, EventArgs e)
         {
-            if (Directory.Exists(savePath))
-            {
-                string[] files = Directory.GetFiles(savePath);
-
-                foreach (string file in files)
-                {
-                    lstRooms.Items.Add(Path.GetFileName(file));
-                }
-            }
+            RefreshRoomList();
         }
 
         private void lstRooms_MouseDoubleClick(object sender, MouseEventArgs e)

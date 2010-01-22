@@ -16,7 +16,6 @@ namespace MudDesigner.MudEngine.UITypeEditors
         {
             Zone obj = (Zone)context.Instance;
             UIRoomControl ctl;
-            
             ctl = new UIRoomControl(obj);
 
             ctl.ShowDialog();

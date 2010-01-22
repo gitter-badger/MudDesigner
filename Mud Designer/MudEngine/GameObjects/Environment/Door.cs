@@ -56,10 +56,5 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
             ConnectedRoom = connectedRoom;
             TravelDirection = travelDirection;
         }
-
-        public override string ToString()
-        {
-            return this.TravelDirection.ToString();
-        }
     }
 }
