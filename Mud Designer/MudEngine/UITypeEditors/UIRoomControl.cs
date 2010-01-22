@@ -16,7 +16,7 @@ namespace MudDesigner.MudEngine.UITypeEditors
 {
     public partial class UIRoomControl : Form
     {
-        bool IsSaved;
+        public bool IsSaved;
         Room _Room;
         Zone _Zone;
         string savePath = "";
@@ -74,7 +74,7 @@ namespace MudDesigner.MudEngine.UITypeEditors
             return true;
         }
 
-        private void SaveSelected()
+        public void SaveSelected()
         {
             if (!Directory.Exists(savePath))
                 Directory.CreateDirectory(savePath);
@@ -166,6 +166,11 @@ namespace MudDesigner.MudEngine.UITypeEditors
         {
             if (lstRooms.SelectedIndex == -1)
                 return;
+
+            if (!CheckSavedState())
+            {
+                return;
+            }
 
             string roomName = lstRooms.SelectedItem.ToString();
             string zonePath = "";
