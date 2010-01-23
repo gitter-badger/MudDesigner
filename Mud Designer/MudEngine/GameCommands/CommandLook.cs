@@ -35,10 +35,7 @@ namespace MudDesigner.MudEngine.GameCommands
             {
                 if (door.TravelDirection != MudDesigner.MudEngine.GameObjects.AvailableTravelDirections.Down && door.TravelDirection != MudDesigner.MudEngine.GameObjects.AvailableTravelDirections.Up)
                 {
-                    desc.AppendLine("To the ");
-                    desc.Append(door.TravelDirection.ToString());
-                    desc.Append(" is ");
-                    desc.Append(door.ConnectedRoom);
+                    desc.AppendLine(door.Description);
                 }
             }
 

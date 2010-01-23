@@ -43,6 +43,10 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
 
         public string ConnectedRoom { get; set; }
 
+        [Category("Environment Information")]
+        [Description("The description displayed to the user when a 'Look' command is used.")]
+        public string Description { get; set; }
+
         public Door()
         {
             LevelRequirement = 0;
