@@ -74,6 +74,7 @@
       <DependentUpon>Designer.cs</DependentUpon>
     </Compile>
     <Compile Include="MudEngine\FileSystem\SaveDataTypes.cs" />
+    <Compile Include="MudEngine\GameCommands\CommandLook.cs" />
     <Compile Include="MudEngine\GameManagement\GameScript.cs" />
     <Compile Include="MudEngine\GameObjects\Bag.cs" />
     <Compile Include="MudEngine\GameObjects\BaseObject.cs" />
@@ -85,8 +86,10 @@
     <Compile Include="MudEngine\GameObjects\Environment\TravelDirections.cs" />
     <Compile Include="MudEngine\GameObjects\Environment\Zone.cs" />
     <Compile Include="MudEngine\GameObjects\Items\BaseItem.cs" />
+    <Compile Include="MudEngine\Interfaces\ICommand.cs" />
     <Compile Include="MudEngine\Interfaces\IFileIO.cs" />
     <Compile Include="MudEngine\Interfaces\IGameObject.cs" />
+    <Compile Include="MudEngine\Interfaces\IPlayer.cs" />
     <Compile Include="MudEngine\Interfaces\IQuest.cs" />
     <Compile Include="MudEngine\Interfaces\IRoom.cs" />
     <Compile Include="MudEngine\Interfaces\IRuleSet.cs" />
