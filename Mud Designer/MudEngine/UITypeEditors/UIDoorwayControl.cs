@@ -107,7 +107,7 @@ namespace MudDesigner.MudEngine.UITypeEditors
 
                 if (!File.Exists(filePath))
                 {
-                    DialogResult result = 
+                    DialogResult result =
                         MessageBox.Show("Warning! The supplied Room does not exists, would you like the Designer to automatically generate it for you?", "Mud Designer", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     if (result == DialogResult.No)
@@ -127,7 +127,16 @@ namespace MudDesigner.MudEngine.UITypeEditors
                         r.Doorways.Add(d);
                         r.Save(Path.Combine(roomPath, r.Filename));
                     }
-
+                }
+                else
+                {
+                    Room r = new Room();
+                    r.Name = e.ChangedItem.Value.ToString();
+                    r.Realm = _Room.Realm;
+                    r.Zone = _Room.Zone;
+                    Door d = new Door(TravelDirections.GetReverseDirection(_Door.TravelDirection), _Room.Name);
+                    r.Doorways.Add(d);
+                    r.Save(Path.Combine(roomPath, r.Filename));
                 }
             }
         }

@@ -105,7 +105,7 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
         /// This is a time consuming process if there are a large amount of
         /// of rooms, use sparingly.
         /// </summary>
-        public void RefreshRoomList()
+        public void RebuildRoomCollection()
         {
             Rooms = new List<Room>();
             //Create our collection of Rooms.

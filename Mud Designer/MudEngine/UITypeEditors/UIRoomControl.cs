@@ -137,6 +137,29 @@ namespace MudDesigner.MudEngine.UITypeEditors
                             File.Delete(Path.Combine(savePath, fullFilename));
                             lstRooms.Items.RemoveAt(lstRooms.Items.IndexOf(e.OldValue + ".Room"));
                         }
+
+                        //loop through each doorway in the current room
+                        //we will need to update the connected Rooms incase this room changes
+                        //its roomname
+                        foreach (Door d in _Room.Doorways)
+                        {
+                            //Load the connected room
+                            Room r = new Room();
+                            fullFilename = Path.Combine(savePath, d.ConnectedRoom + ".room");
+                            r = (Room)r.Load(fullFilename);
+                            //Loop though each of its doorways to see if any of them are attached
+                            //to are old room name
+                            foreach (Door renamedDoor in r.Doorways)
+                            {
+                                if (renamedDoor.ConnectedRoom == e.OldValue.ToString())
+                                {
+                                    //Change the old room name to the new room name
+                                    renamedDoor.ConnectedRoom = _Room.Name;
+                                }
+                            }
+                            //All the doorways for this room have been corrected, now save it.
+                            r.Save(fullFilename);
+                        }
                     }
                 }
 
@@ -190,6 +213,12 @@ namespace MudDesigner.MudEngine.UITypeEditors
             _Room = new Room();
             _Room = (Room)_Room.Load(roomFile);
             propertyRoom.SelectedObject = _Room;
+        }
+
+        private void UIRoomControl_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!CheckSavedState())
+                e.Cancel = true;
         }
     }
 }

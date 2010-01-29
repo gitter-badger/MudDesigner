@@ -33,6 +33,8 @@ namespace MudDesigner
 
             //Run the toolkit
             Designer = new Designer();
+            MessageBox.Show("Please note that objects are auto-saved, but they are only saved after the objects name has been changed from the default value of 'New Object'", "Mud Designer");
+
             Application.Run(Designer);
         }
     }

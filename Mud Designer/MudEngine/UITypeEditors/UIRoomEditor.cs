@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Design;
+using System.IO;
 
 using MudDesigner.MudEngine.GameObjects.Environment;
+using MudDesigner.MudEngine.FileSystem;
 
 namespace MudDesigner.MudEngine.UITypeEditors
 {
@@ -17,6 +19,23 @@ namespace MudDesigner.MudEngine.UITypeEditors
             Zone obj = (Zone)context.Instance;
             UIRoomControl ctl;
             ctl = new UIRoomControl(obj);
+
+            string zonePath = "";
+            if (obj.Realm == "No Realm Associated.")
+            {
+                zonePath = FileManager.GetDataPath(SaveDataTypes.Zones);
+                zonePath = Path.Combine(zonePath, obj.Name);
+            }
+            else
+                zonePath = FileManager.GetDataPath(obj.Realm, obj.Name);
+
+            string filename = Path.Combine(zonePath, obj.Filename);
+
+            if (!File.Exists(filename))
+            {
+                MessageBox.Show("You must save the Zone prior to managing it's Rooms", "Mud Designer", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return obj.Rooms;
+            }
 
             ctl.ShowDialog();
 

@@ -141,6 +141,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Room Designer";
             this.Load += new System.EventHandler(this.UIRoomControl_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UIRoomControl_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
