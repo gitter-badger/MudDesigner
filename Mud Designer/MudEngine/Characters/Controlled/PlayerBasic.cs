@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MudDesigner.MudEngine.Characters.Controlled
 {
-    public class PlayerBasic
+    public class PlayerBasic : BaseCharacter
     {
     }
 }

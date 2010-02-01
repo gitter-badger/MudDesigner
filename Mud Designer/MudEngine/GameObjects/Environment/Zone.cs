@@ -57,6 +57,9 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
         [Description("Collection of Rooms that have been created. Editing the Rooms Collection lets you manage the Zones rooms.")]
         public List<Room> Rooms { get; set; }
 
+        [Category("Environment Information")]
+        public string EntranceRoom { get; set; }
+
         public Zone()
         {
             Rooms = new List<Room>();

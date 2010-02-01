@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.txtCommand = new System.Windows.Forms.TextBox();
             this.txtConsole = new System.Windows.Forms.RichTextBox();
+            this.txtCommand = new System.Windows.Forms.TextBox();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -55,15 +55,6 @@
             this.splitContainer1.SplitterDistance = 393;
             this.splitContainer1.TabIndex = 0;
             // 
-            // txtCommand
-            // 
-            this.txtCommand.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtCommand.Location = new System.Drawing.Point(0, 0);
-            this.txtCommand.Name = "txtCommand";
-            this.txtCommand.Size = new System.Drawing.Size(693, 20);
-            this.txtCommand.TabIndex = 1;
-            this.txtCommand.TextChanged += new System.EventHandler(this.txtCommand_TextChanged);
-            // 
             // txtConsole
             // 
             this.txtConsole.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -73,6 +64,15 @@
             this.txtConsole.TabIndex = 0;
             this.txtConsole.Text = "";
             // 
+            // txtCommand
+            // 
+            this.txtCommand.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtCommand.Location = new System.Drawing.Point(0, 0);
+            this.txtCommand.Name = "txtCommand";
+            this.txtCommand.Size = new System.Drawing.Size(693, 20);
+            this.txtCommand.TabIndex = 1;
+            this.txtCommand.TextChanged += new System.EventHandler(this.txtCommand_TextChanged);
+            // 
             // Runtime
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -81,6 +81,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Name = "Runtime";
             this.Text = "Runtime";
+            this.Load += new System.EventHandler(this.Runtime_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();

@@ -111,6 +111,8 @@ namespace MudDesigner
                         break;
                     case "Currencies":
                         return ObjectType.Currency;
+                    case "Rooms":
+                        return ObjectType.Room;
                     case "Realms":
                         return ObjectType.Realm;
                     case "Zones":
@@ -392,6 +394,11 @@ namespace MudDesigner
             }
         }
 
+        private void SetStatus(string status)
+        {
+            lblStatus.Text = "Status: " + status;
+        }
+
         /// <summary>
         /// Refreshes the Project Explorer incase the directory structure
         /// has changed, but was not reflected in the Explorer
@@ -587,6 +594,48 @@ namespace MudDesigner
         {
             if (e.KeyCode == Keys.Enter)
                 FindObject(txtSearch.Text);
+        }
+
+        private void setAsInitialLocationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (GetNodeType(treeExplorer.SelectedNode) == ObjectType.ZoneRoot)
+            {
+                StartingLocation location = new StartingLocation();
+
+                Zone zone = new Zone();
+                string filename = "";
+                if (Path.GetExtension(treeExplorer.SelectedNode.FullPath) == "")
+                {
+                    filename = treeExplorer.SelectedNode.Text + ".zone";
+                }
+                else
+                    filename = treeExplorer.SelectedNode.Text;
+
+                string path = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Zones), Path.GetFileNameWithoutExtension(filename));
+                path = Path.Combine(path, filename);
+                zone = (Zone)zone.Load(path);
+
+                location.Realm = "No Realm Associated.";
+                location.Zone = zone.Name;
+                location.Room = zone.EntranceRoom;
+                _Project.InitialLocation = location;
+                _Project.Save(Path.Combine(FileManager.GetDataPath(SaveDataTypes.Root), "Game.xml"));
+                SetStatus("Location Assigned successfully.");
+            }
+
+            else
+                MessageBox.Show("You must select a Zone File when you set the Initial Location", "Mud Designer");
+        }
+
+        private void freshLoginToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Runtime form = new Runtime();
+            form.Show();
+            this.Hide();
+            while (form.Created)
+                Application.DoEvents();
+
+            this.Show();
         }
     }
 }

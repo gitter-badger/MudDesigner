@@ -112,12 +112,9 @@ namespace MudDesigner.MudEngine.GameManagement
         [Browsable(false)]
         public string ProjectPath { get; set; }
 
-        [Browsable(false)]
-        public StartingLocation InitialLocation
-        {
-            get;
-            set;
-        }
+        [Category("Environment Settings")]
+        [ReadOnly(true)]
+        public StartingLocation InitialLocation { get; set; }
 
         [Browsable(false)]
         public string Story
@@ -126,6 +123,7 @@ namespace MudDesigner.MudEngine.GameManagement
             set;
         }
 
+        [Category("Object Setup")]
         public string Filename 
         {
             get
@@ -142,6 +140,7 @@ namespace MudDesigner.MudEngine.GameManagement
             _Filename = "Game.xml";
             BaseCurrencyAmount = 1;
             BaseCurrencyName = "Copper";
+            InitialLocation = new StartingLocation();
         }
 
         public void Save(string filename)

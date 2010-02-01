@@ -15,8 +15,6 @@ namespace MudDesigner.MudEngine.GameManagement
 {
     public class GameScript
     {
-        ScriptObject _ScriptObject;
-
         public GameScript()
         {
         }

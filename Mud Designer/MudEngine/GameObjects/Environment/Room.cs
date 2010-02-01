@@ -93,5 +93,15 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
 
             return false;
         }
+
+        public Door GetDoor(AvailableTravelDirections travelDirection)
+        {
+            foreach (Door door in this.Doorways)
+            {
+                if (door.TravelDirection == travelDirection)
+                    return door;
+            }
+            return null;
+        }
     }
 }
