@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using MudDesigner.MudEngine.Characters;
+using MudDesigner.MudEngine.Characters.Controlled;
 using MudDesigner.MudEngine.FileSystem;
 using MudDesigner.MudEngine.GameCommands;
 using MudDesigner.MudEngine.GameManagement;
@@ -17,20 +19,16 @@ namespace MudDesigner.MudEngine.GameCommands
         public string Name { get; set; }
         public bool Override { get; set; }
 
-        public object Execute(params object[] parameters)
+        public CommandResults Execute(BaseCharacter player, ProjectInformation project, Room room, string command)
         {
-            Room room = new Room() ;
             StringBuilder desc = new StringBuilder();
 
-            foreach (object obj in parameters)
+            if (room == null)
             {
-                if (obj is Room)
-                    room = (Room)obj;
+                return new CommandResults("Not within a created Room.");
             }
 
-            if (room == null)
-                return null;
-
+            desc.AppendLine(room.Description);
             foreach (Door door in room.Doorways)
             {
                 if (door.TravelDirection != MudDesigner.MudEngine.GameObjects.AvailableTravelDirections.Down && door.TravelDirection != MudDesigner.MudEngine.GameObjects.AvailableTravelDirections.Up)
@@ -39,7 +37,7 @@ namespace MudDesigner.MudEngine.GameCommands
                 }
             }
 
-            return desc.ToString();
+            return new CommandResults(desc.ToString());
         }
     }
 }

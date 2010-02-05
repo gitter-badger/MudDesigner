@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text;
 
 using MudDesigner.MudEngine.Interfaces;
+using MudDesigner.MudEngine.Characters;
 using MudDesigner.MudEngine.Characters.Controlled;
+using MudDesigner.MudEngine.GameManagement;
+using MudDesigner.MudEngine.GameObjects.Environment;
 
 namespace MudDesigner.MudEngine.GameCommands
 {
@@ -18,20 +21,16 @@ namespace MudDesigner.MudEngine.GameCommands
             Override = true;
         }
 
-        public object Execute(params object[] parameters)
+        public CommandResults Execute(BaseCharacter player, ProjectInformation project, Room room, string command)
         {
             PlayerGM playerGM = new PlayerGM();
             bool foundGM = false;
 
-            foreach (object obj in parameters)
-            {
-                if (obj is PlayerGM)
+                if (player is PlayerGM)
                 {
                     foundGM = true;
-                    break;
                 }
-            }
-
+            
             if (!foundGM)
                 return null;
 

@@ -46,7 +46,7 @@ namespace MudDesigner.MudEngine.GameObjects
             {
                 string displayName = Enum.GetName(typeof(AvailableTravelDirections), value);
 
-                if (displayName == Direction)
+                if (displayName.ToLower() == Direction.ToLower())
                     return (AvailableTravelDirections)Enum.Parse(typeof(AvailableTravelDirections), displayName);
             }
 
