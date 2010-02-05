@@ -84,6 +84,7 @@
     <Compile Include="MudEngine\Characters\NPC\NPCFriendly.cs" />
     <Compile Include="MudEngine\FileSystem\SaveDataTypes.cs" />
     <Compile Include="MudEngine\GameCommands\CommandEngine.cs" />
+    <Compile Include="MudEngine\GameCommands\CommandExit.cs" />
     <Compile Include="MudEngine\GameCommands\CommandGMTeleport.cs" />
     <Compile Include="MudEngine\GameCommands\CommandLook.cs" />
     <Compile Include="MudEngine\GameCommands\CommandResults.cs" />

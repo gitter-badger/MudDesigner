@@ -615,6 +615,11 @@ namespace MudDesigner
                 path = Path.Combine(path, filename);
                 zone = (Zone)zone.Load(path);
 
+                if (zone.EntranceRoom == null)
+                {
+                    MessageBox.Show("You must set the Entrance Room value for this Zones to become the Initial Location", "Mud Designer");
+                    return;
+                }
                 location.Realm = "No Realm Associated.";
                 location.Zone = zone.Name;
                 location.Room = zone.EntranceRoom;
@@ -635,7 +640,8 @@ namespace MudDesigner
             while (form.Created)
                 Application.DoEvents();
 
-            this.Show();
+            if (this.Created)
+                this.Show();
         }
     }
 }

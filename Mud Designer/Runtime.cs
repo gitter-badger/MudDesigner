@@ -36,6 +36,34 @@ namespace MudDesigner
             _Room = new Room();
         }
 
+        public void ExecuteCommand(string command)
+        {
+            CommandResults result = CommandEngine.ExecuteCommand(command, _Player, _Project, _Room, command);
+
+            if (result.Result == null)
+                return;
+
+            foreach (object obj in result.Result)
+            {
+                switch (obj.GetType().Name.ToLower())
+                {
+                    case "string":
+                        Print(obj.ToString());
+                        break;
+                    case "room":
+                        _Room = (Room)obj;
+                        break;
+                    case "projectinformation":
+                        _Project = (ProjectInformation)obj;
+                        break;
+                    case "playerbasic":
+                        _Player = (PlayerBasic)obj;
+                        break;
+                }
+            }
+
+            txtCommand.Clear();
+        }
         public void Print(string message)
         {
             txtConsole.Text += message + "\n";
@@ -45,16 +73,21 @@ namespace MudDesigner
         private void Runtime_Load(object sender, EventArgs e)
         {
             Print("Loading project information...");
+            if (!File.Exists(FileManager.GetDataPath(SaveDataTypes.Root) + "\\Game.xml"))
+            {
+                Print("Failed Loading Project Information... Runtime failed to initialize.");
+                return;
+            }
             _Project = (ProjectInformation)_Project.Load(FileManager.GetDataPath(SaveDataTypes.Root));
-            if (_Project.InitialLocation.Zone == "")
+            if ((_Project.InitialLocation.Zone == null) || (_Project.InitialLocation.Zone == ""))
             {
                 Print("No Initial Zone was defined within the Project Information. Please associated a Zone to the Projects Initial Zone setting in order to launch the game.");
-                Application.Exit();
+                return;
             }
 
             Print("Loading environment...");
             string filename = FileManager.GetDataPath(SaveDataTypes.Root);
-            if (_Project.InitialLocation.Realm != "No Realm Associated.")
+            if (!String.IsNullOrEmpty(_Project.InitialLocation.Realm) && (_Project.InitialLocation.Realm != "No Realm Associated."))
             {
                 filename = Path.Combine(filename, "Realms");
                 filename = Path.Combine(filename, _Project.InitialLocation.Realm);
@@ -104,56 +137,40 @@ namespace MudDesigner
                 Print(_Project.Story);
 
             Print("");//blank line
-            CommandResults result = CommandEngine.ExecuteCommand("Look", _Player, _Project, _Room, "Look");
-            if (result.Result.Length != 0)
-                Print(result.Result[0].ToString());
+            ExecuteCommand("Look");
         }
 
         private void txtCommand_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                string[] words = txtCommand.Text.Split(' ');
-                string firstWord = "";
-                if (words.Length == 0)
-                    return;
-                firstWord = words[0];
-                List<object> arguments = new List<object>();
-                foreach (string word in words)
-                {
-                    if (word == firstWord)
-                        continue;
-                    arguments.Add(word);
-                }
-                arguments.Add(_Room);
-                arguments.Add(_Player);
-                arguments.Add(_Project);
-                CommandResults result = CommandEngine.ExecuteCommand(txtCommand.Text, _Player, _Project, _Room, txtCommand.Text);
-
-                if (result.Result == null)
-                    return;
-
-                foreach (object obj in result.Result)
-                {
-                    switch (obj.GetType().Name.ToLower())
-                    {
-                        case "string":
-                            Print(obj.ToString());
-                            break;
-                        case "room":
-                            _Room = (Room)obj;
-                            break;
-                        case "projectinformation":
-                            _Project = (ProjectInformation)obj;
-                            break;
-                        case "playerbasic":
-                            _Player = (PlayerBasic)obj;
-                            break;
-                    }
-                }
-
-                txtCommand.Clear();
+                ExecuteCommand(txtCommand.Text);
             }
+        }
+
+        private void btnNorth_Click(object sender, EventArgs e)
+        {
+            ExecuteCommand("Walk North");
+        }
+
+        private void btnSouth_Click(object sender, EventArgs e)
+        {
+            ExecuteCommand("Walk South");
+        }
+
+        private void btnWest_Click(object sender, EventArgs e)
+        {
+            ExecuteCommand("Walk West");
+        }
+
+        private void btnEast_Click(object sender, EventArgs e)
+        {
+            ExecuteCommand("Walk East");
+        }
+
+        private void btnLook_Click(object sender, EventArgs e)
+        {
+            ExecuteCommand("Look");
         }
     }
 }
