@@ -66,8 +66,17 @@ namespace MudDesigner
         }
         public void Print(string message)
         {
+            if (string.IsNullOrEmpty(message))
+                return;
+
             txtConsole.Text += message + "\n";
-            txtConsole.Select(txtConsole.Text.Length, 0);
+            txtConsole.Select(txtConsole.Text.Length - 1, 0);
+        }
+
+        public void Print(bool newLine)
+        {
+            txtCommand.Text += "\n";
+            txtConsole.Select(txtConsole.Text.Length - 1, 0);
         }
 
         private void Runtime_Load(object sender, EventArgs e)
@@ -79,36 +88,24 @@ namespace MudDesigner
                 return;
             }
             _Project = (ProjectInformation)_Project.Load(FileManager.GetDataPath(SaveDataTypes.Root));
-            if ((_Project.InitialLocation.Zone == null) || (_Project.InitialLocation.Zone == ""))
+            if (_Project.InitialLocation.Zone == null && _Project.InitialLocation.Zone == "")
             {
                 Print("No Initial Zone was defined within the Project Information. Please associated a Zone to the Projects Initial Zone setting in order to launch the game.");
                 return;
             }
 
             Print("Loading environment...");
-            string filename = FileManager.GetDataPath(SaveDataTypes.Root);
-            if (!String.IsNullOrEmpty(_Project.InitialLocation.Realm) && (_Project.InitialLocation.Realm != "No Realm Associated."))
-            {
-                filename = Path.Combine(filename, "Realms");
-                filename = Path.Combine(filename, _Project.InitialLocation.Realm);
-            }
 
-            filename = Path.Combine(filename, "Zones");
-            filename = Path.Combine(filename, _Project.InitialLocation.Zone);
-            filename = Path.Combine(filename, "Rooms");
-            filename = Path.Combine(filename, _Project.InitialLocation.Room);
-            filename += ".room";
-            _Room = (Room)_Room.Load(filename);
+            _Room = (Room)_Room.Load(_Project.InitialLocation.Room, _Project.InitialLocation.Zone);
 
             Print("Prepping test player...");
             _Player.CurrentRoom = _Room;
-            _Player.OnTravel(AvailableTravelDirections.North);
 
             Print("Loading Game Commands...");
             CommandEngine.LoadAllCommands();
 
             Print("Startup Complete.");
-            Print(""); //blank line
+            Print(true); //blank line
             txtCommand.Select();
 
             if (string.IsNullOrEmpty(_Project.CompanyName))
@@ -136,7 +133,7 @@ namespace MudDesigner
             else
                 Print(_Project.Story);
 
-            Print("");//blank line
+            Print(true);//blank line
             ExecuteCommand("Look");
         }
 

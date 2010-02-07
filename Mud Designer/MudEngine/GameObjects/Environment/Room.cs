@@ -6,7 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 using System.Drawing.Design;
+using System.IO;
 
+using MudDesigner.MudEngine.FileSystem;
 using MudDesigner.MudEngine.UITypeEditors;
 
 namespace MudDesigner.MudEngine.GameObjects.Environment
@@ -76,6 +78,26 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
             set;
         }
 
+        [Browsable(false)]
+        public string InstallPath
+        {
+            get
+            {
+                string zonePath = "";
+                if (this.Realm == null || this.Realm == "No Realm Associated.")
+                {
+                    zonePath = FileManager.GetDataPath(SaveDataTypes.Zones);
+                    zonePath = Path.Combine(zonePath, this.Zone);
+                }
+                else
+                    zonePath = FileManager.GetDataPath(this.Realm, this.Zone);
+
+                string roomPath = Path.Combine(zonePath, "Rooms");
+                string filename = Path.Combine(roomPath, this.Filename);
+                return filename;
+            }
+        }
+
         public Room()
         {
             Doorways = new List<Door>();
@@ -102,6 +124,64 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
                     return door;
             }
             return null;
+        }
+
+        /// <summary>
+        /// Load a Room that exists within the same Zone as the current Room
+        /// </summary>
+        /// <param name="roomName"></param>
+        /// <returns></returns>
+        public override object Load(string roomName)
+        {
+            //Correct the roomname incase it doesnt contain a file extension
+            if (!roomName.ToLower().EndsWith(".room"))
+                roomName += ".room";
+
+            //If the current room does not belong within a Realm, then load it from the
+            //Zones root directory
+            if (this.Realm != null || this.Realm != "No Realm Associated.")
+            {
+                return this.Load(roomName, this.Zone);
+            }
+                //This Zone is contained within a Realm so we have to load it from within the
+                //Realm and not from within the Zones root directory
+            else
+                return this.Load(roomName, this.Zone, this.Realm);
+        }
+
+        public object Load(string roomName, string zoneName)
+        {
+            string filename = "";
+            if (!roomName.ToLower().EndsWith(".room"))
+                roomName += ".room";
+
+            if (this.Realm != null && this.Realm != "No Realm Associated.")
+            {
+                return this.Load(roomName, zoneName, this.Realm);
+            }
+            else
+                filename = FileManager.GetDataPath(SaveDataTypes.Zones);
+
+            filename = Path.Combine(filename, zoneName);
+            filename = Path.Combine(filename, "Rooms");
+            filename = Path.Combine(filename, roomName);
+
+            return base.Load(filename);
+        }
+
+        public object Load(string roomName, string zoneName, string realmName)
+        {
+            if (!roomName.ToLower().EndsWith(".room"))
+                roomName += ".room";
+
+            string filename = FileManager.GetDataPath(realmName, zoneName);
+            filename = Path.Combine(filename, "Rooms");
+            filename = Path.Combine(filename, roomName);
+
+            if (realmName == null || realmName == "No Realm Associated.")
+                return this.Load(roomName, zoneName);
+
+            return base.Load(filename);
         }
     }
 }

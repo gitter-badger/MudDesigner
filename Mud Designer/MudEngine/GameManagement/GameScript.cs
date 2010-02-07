@@ -7,9 +7,6 @@ using System.Text;
 using MudDesigner.MudEngine.FileSystem;
 using MudDesigner.MudEngine.GameManagement;
 using MudDesigner.MudEngine.GameObjects;
-//ManagedScripting
-using ManagedScripting;
-using ManagedScripting.CodeBuilding;
 
 namespace MudDesigner.MudEngine.GameManagement
 {

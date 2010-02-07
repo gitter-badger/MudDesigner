@@ -33,23 +33,8 @@ namespace MudDesigner.MudEngine.GameCommands
 
                     if (door.TravelDirection == direction)
                     {
-                        string zonePath = "";
-                        string roomPath = "";
-                        string roomFilename = "";
+                        room = (Room)room.Load(door.ConnectedRoom);
 
-                        if (room.Realm == "No Realm Associated.")
-                        {
-                            zonePath = FileManager.GetDataPath(SaveDataTypes.Zones);
-                            zonePath = Path.Combine(zonePath, room.Zone);
-                        }
-                        else
-                        {
-                            zonePath = FileManager.GetDataPath(room.Realm, room.Zone);
-                        }
-
-                        roomPath = Path.Combine(zonePath, "Rooms");
-                        roomFilename = Path.Combine(roomPath, door.ConnectedRoom + ".room");
-                        room = (Room)room.Load(roomFilename);
                         CommandResults cmd = CommandEngine.ExecuteCommand("Look", player, project, room, "Look");
                         string lookValue = "";
 
@@ -57,7 +42,6 @@ namespace MudDesigner.MudEngine.GameCommands
                             lookValue = cmd.Result[0].ToString();
 
                         return new CommandResults(new object[] { lookValue, room });
-
                     }
                 }
             }

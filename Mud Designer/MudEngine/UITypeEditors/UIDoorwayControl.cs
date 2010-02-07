@@ -80,13 +80,18 @@ namespace MudDesigner.MudEngine.UITypeEditors
                     propertyDoorway.Refresh();
                     return;
                 }
-                else if (_Room.DoorwayExist(e.ChangedItem.Value.ToString()))
+                else if (lstInstalledDoors.Items.Contains(e.ChangedItem.Value.ToString()))
                 {
                     MessageBox.Show("This direction has already been installed into the room. Please select another direction.", "Mud Designer");
                     _Door = (Door)propertyDoorway.SelectedObject;
                     _Door.TravelDirection = (AvailableTravelDirections)e.OldValue;
                     propertyDoorway.Refresh();
                     return;
+                }
+                else
+                {
+                    lstInstalledDoors.Items.Remove(e.OldValue.ToString());
+                    lstInstalledDoors.Items.Add(e.ChangedItem.Value.ToString());
                 }
             }
             else if (e.ChangedItem.Label == "ConnectedRoom")

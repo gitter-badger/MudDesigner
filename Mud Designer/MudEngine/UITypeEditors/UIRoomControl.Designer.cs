@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UIRoomControl));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lstRooms = new System.Windows.Forms.ListBox();
@@ -37,9 +38,12 @@
             this.txtFindRoom = new System.Windows.Forms.ToolStripTextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.propertyRoom = new System.Windows.Forms.PropertyGrid();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mnuDeleteRoom = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -57,6 +61,7 @@
             // 
             // lstRooms
             // 
+            this.lstRooms.ContextMenuStrip = this.contextMenuStrip1;
             this.lstRooms.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstRooms.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstRooms.FormattingEnabled = true;
@@ -124,6 +129,20 @@
             this.propertyRoom.ToolbarVisible = false;
             this.propertyRoom.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyRoom_PropertyValueChanged);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuDeleteRoom});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(143, 26);
+            // 
+            // mnuDeleteRoom
+            // 
+            this.mnuDeleteRoom.Name = "mnuDeleteRoom";
+            this.mnuDeleteRoom.Size = new System.Drawing.Size(152, 22);
+            this.mnuDeleteRoom.Text = "Delete Room";
+            this.mnuDeleteRoom.Click += new System.EventHandler(this.mnuDeleteRoom_Click);
+            // 
             // UIRoomControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -147,6 +166,7 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -161,5 +181,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.PropertyGrid propertyRoom;
         public System.Windows.Forms.ListBox lstRooms;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem mnuDeleteRoom;
     }
 }

@@ -128,7 +128,8 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
             foreach (string file in rooms)
             {
                 Room r = new Room();
-                r = (Room)FileManager.Load(file, r);
+                r = (Room)r.Load(Path.GetFileNameWithoutExtension(file));
+                //r = (Room)FileManager.Load(file, r);
                 this.Rooms.Add(r);
             }
 

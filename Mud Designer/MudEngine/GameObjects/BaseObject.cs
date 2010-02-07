@@ -100,7 +100,6 @@ namespace MudDesigner.MudEngine.GameObjects
         private string _Name = "";
         #endregion
 
-        #region Constructor & Private Methods
         /// <summary>
         /// Initializes the base object
         /// </summary>
@@ -114,7 +113,6 @@ namespace MudDesigner.MudEngine.GameObjects
             this.Listen = "You hear nothing of interest.";
             this.Smell = "You don't smell anything unsual.";
             this.Name = DefaultName();
-            SetupScript();
         }
 
         private bool ShouldSerializeName()
@@ -132,39 +130,13 @@ namespace MudDesigner.MudEngine.GameObjects
             return "New " + this.GetType().Name;
         }
 
-        private void SetupScript()
-        {
-            //Check if the realm script is empty. If so then generate a standard script for it.
-            if (Script == "")
-            {
-                //Instance a new method helper class
-                ManagedScripting.CodeBuilding.MethodSetup method = new ManagedScripting.CodeBuilding.MethodSetup();
-                string script = "";
-                //Setup our method. All objects inheriting from BaseObject will have the standard
-                //methods created for them.
-                string[] names = new string[] { "OnCreate", "OnDestroy", "OnEnter", "OnExit" };
-                foreach (string name in names)
-                {
-                    method = new ManagedScripting.CodeBuilding.MethodSetup();
-                    method.Name = name;
-                    method.ReturnType = "void";
-                    method.IsOverride = true;
-                    method.Modifier = ManagedScripting.CodeBuilding.ClassGenerator.Modifiers.Public;
-                    method.Code = new string[] { "base." + method.Name + "();" };
-                    script = script.Insert(Script.Length, method.Create() + "\n");
-                }
-                Script = script;
-            }
-        }
-        #endregion
-
         #region Public Methods
         /// <summary>
         /// Loads the supplied filename and returns it.
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public object Load(string filename)
+        public virtual object Load(string filename)
         {
             if (!File.Exists(filename))
             {

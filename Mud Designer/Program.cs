@@ -10,9 +10,6 @@ using MudDesigner.MudEngine.FileSystem;
 using MudDesigner.MudEngine.GameManagement;
 using MudDesigner.MudEngine.GameObjects;
 using MudDesigner.MudEngine.GameObjects.Environment;
-//Script Engine
-using ManagedScripting;
-using ManagedScripting.CodeBuilding;
 
 namespace MudDesigner
 {

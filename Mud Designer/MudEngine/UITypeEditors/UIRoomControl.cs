@@ -145,8 +145,7 @@ namespace MudDesigner.MudEngine.UITypeEditors
                         {
                             //Load the connected room
                             Room r = new Room();
-                            fullFilename = Path.Combine(savePath, d.ConnectedRoom + ".room");
-                            r = (Room)r.Load(fullFilename);
+                            r = (Room)r.Load(d.ConnectedRoom);
                             //Loop though each of its doorways to see if any of them are attached
                             //to are old room name
                             foreach (Door renamedDoor in r.Doorways)
@@ -211,7 +210,7 @@ namespace MudDesigner.MudEngine.UITypeEditors
             zoneRoomPath = Path.Combine(zonePath, "Rooms");
             roomFile = Path.Combine(zoneRoomPath, roomName);
             _Room = new Room();
-            _Room = (Room)_Room.Load(roomFile);
+            _Room = (Room)_Room.Load(roomName, _Zone.Name, _Zone.Realm);
             propertyRoom.SelectedObject = _Room;
         }
 
@@ -219,6 +218,21 @@ namespace MudDesigner.MudEngine.UITypeEditors
         {
             if (!CheckSavedState())
                 e.Cancel = true;
+        }
+
+        private void mnuDeleteRoom_Click(object sender, EventArgs e)
+        {
+            if (lstRooms.SelectedIndex == -1)
+            {
+                MessageBox.Show("Select a Room to delete first!", "Mud Designer");
+                return;
+            }
+
+            Room r = new Room();
+            r = (Room)r.Load(lstRooms.SelectedItem.ToString(), _Zone.Name);
+            File.Delete(r.InstallPath);
+            lstRooms.Items.Remove(lstRooms.SelectedItem);
+            _Zone.Rooms.Remove(r);
         }
     }
 }

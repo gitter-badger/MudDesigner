@@ -22,20 +22,8 @@ namespace MudDesigner.MudEngine.Characters
         {
             if (CurrentRoom.DoorwayExist(travelDirection.ToString()))
             {
-                string fileName = "";
-                if (CurrentRoom.Realm == "No Realm Associated.")
-                {
-                    fileName = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Zones), CurrentRoom.Zone);
-                    fileName = Path.Combine(fileName, "Rooms");
-                }
-                else 
-                {
-                    fileName = Path.Combine(FileManager.GetDataPath(CurrentRoom.Realm, CurrentRoom.Zone), "Rooms");
-                }
                 string connectedRoom = CurrentRoom.GetDoor(travelDirection).ConnectedRoom;
-                fileName = Path.Combine(fileName, connectedRoom);
-                fileName += ".room";
-                CurrentRoom = (Room)CurrentRoom.Load(fileName);
+                CurrentRoom = (Room)CurrentRoom.Load(connectedRoom);
             }
         }
     }
