@@ -55,14 +55,14 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
         [Category("Environment Information")]
         [EditorAttribute(typeof(UIRoomEditor), typeof(UITypeEditor))]
         [Description("Collection of Rooms that have been created. Editing the Rooms Collection lets you manage the Zones rooms.")]
-        public List<Room> Rooms { get; set; }
+        public List<string> Rooms { get; set; }
 
         [Category("Environment Information")]
         public string EntranceRoom { get; set; }
 
         public Zone()
         {
-            Rooms = new List<Room>();
+            Rooms = new List<string>();
             IsSafe = false;
             Realm = "No Realm Associated.";
         }
@@ -76,30 +76,14 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
         {
             var filterQuery =
                 from room in Rooms
-                where room.Name == name
+                where room == name
                 select room;
 
-            foreach (var room in filterQuery)
-                return room;
-
-            return null;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="RoomName"></param>
-        /// <returns></returns>
-        public Room GetRoomByFilename(string filename)
-        {
-            var filterQuery =
-                from room in Rooms
-                where room.Filename == filename
-                select room;
-
-            foreach (var room in filterQuery)
-                return room;
-
+            foreach (string room in filterQuery)
+            {
+                Room r = new Room();
+                return (Room)r.Load(room, this.Name);
+            }
             return null;
         }
 
@@ -110,7 +94,7 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
         /// </summary>
         public void RebuildRoomCollection()
         {
-            Rooms = new List<Room>();
+            Rooms = new List<string>();
             //Create our collection of Rooms.
             string realmPath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), this.Realm);
             string zonePath = Path.Combine(realmPath, this.Name);
@@ -130,7 +114,7 @@ namespace MudDesigner.MudEngine.GameObjects.Environment
                 Room r = new Room();
                 r = (Room)r.Load(Path.GetFileNameWithoutExtension(file));
                 //r = (Room)FileManager.Load(file, r);
-                this.Rooms.Add(r);
+                this.Rooms.Add(r.Name);
             }
 
             //Save the re-built Room collection

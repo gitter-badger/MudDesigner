@@ -232,7 +232,7 @@ namespace MudDesigner.MudEngine.UITypeEditors
             r = (Room)r.Load(lstRooms.SelectedItem.ToString(), _Zone.Name);
             File.Delete(r.InstallPath);
             lstRooms.Items.Remove(lstRooms.SelectedItem);
-            _Zone.Rooms.Remove(r);
+            _Zone.Rooms.Remove(r.Name);
         }
     }
 }

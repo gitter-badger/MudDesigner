@@ -32,18 +32,18 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UIRoomControl));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lstRooms = new System.Windows.Forms.ListBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mnuDeleteRoom = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnNewRoom = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.txtFindRoom = new System.Windows.Forms.ToolStripTextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.propertyRoom = new System.Windows.Forms.PropertyGrid();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.mnuDeleteRoom = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -70,6 +70,20 @@
             this.lstRooms.Size = new System.Drawing.Size(233, 290);
             this.lstRooms.TabIndex = 1;
             this.lstRooms.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstRooms_MouseDoubleClick);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuDeleteRoom});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(143, 26);
+            // 
+            // mnuDeleteRoom
+            // 
+            this.mnuDeleteRoom.Name = "mnuDeleteRoom";
+            this.mnuDeleteRoom.Size = new System.Drawing.Size(142, 22);
+            this.mnuDeleteRoom.Text = "Delete Room";
+            this.mnuDeleteRoom.Click += new System.EventHandler(this.mnuDeleteRoom_Click);
             // 
             // toolStrip1
             // 
@@ -129,20 +143,6 @@
             this.propertyRoom.ToolbarVisible = false;
             this.propertyRoom.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyRoom_PropertyValueChanged);
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuDeleteRoom});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(143, 26);
-            // 
-            // mnuDeleteRoom
-            // 
-            this.mnuDeleteRoom.Name = "mnuDeleteRoom";
-            this.mnuDeleteRoom.Size = new System.Drawing.Size(152, 22);
-            this.mnuDeleteRoom.Text = "Delete Room";
-            this.mnuDeleteRoom.Click += new System.EventHandler(this.mnuDeleteRoom_Click);
-            // 
             // UIRoomControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -163,10 +163,10 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UIRoomControl_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
-            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
