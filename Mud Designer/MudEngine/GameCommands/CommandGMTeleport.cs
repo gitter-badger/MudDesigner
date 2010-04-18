@@ -24,14 +24,12 @@ namespace MudDesigner.MudEngine.GameCommands
         public CommandResults Execute(BaseCharacter player, ProjectInformation project, Room room, string command)
         {
             PlayerGM playerGM = new PlayerGM();
-            bool foundGM = false;
-
-                if (player is PlayerGM)
-                {
-                    foundGM = true;
-                }
             
-            if (!foundGM)
+            if (player is PlayerGM)
+            {
+                playerGM = (PlayerGM)player;
+            }
+            else
                 return null;
 
             //TODO: Find the Realm/Zone/Room that the GM specified to teleport to.
