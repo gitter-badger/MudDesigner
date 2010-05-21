@@ -70,7 +70,7 @@ namespace MudDesigner.UIWidgets
 
         void button_Click(object sender, EventArgs e)
         {
-            
+            MessageBox.Show("Widgets are still under development.");
         }
 
         public override void Refresh()
