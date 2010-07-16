@@ -39,7 +39,7 @@ namespace MudEngine.GameObjects.Environment
 
             Zone z = new Zone();
             foreach (var zone in filterQuery)
-                return (Zone)z.Load(zone); ;
+                return (Zone)z.Load(zone);
 
             return null;
         }
