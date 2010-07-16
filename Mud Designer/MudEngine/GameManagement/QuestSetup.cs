@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MudDesigner.MudEngine.GameManagement
+namespace MudEngine.GameManagement
 {
     public class QuestSetup
     {

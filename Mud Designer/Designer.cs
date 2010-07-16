@@ -8,11 +8,12 @@ using System.Text;
 using System.Windows.Forms;
 
 //Mud Designer
-using MudDesigner.MudEngine.FileSystem;
-using MudDesigner.MudEngine.GameManagement;
-using MudDesigner.MudEngine.GameObjects;
-using MudDesigner.MudEngine.GameObjects.Environment;
-using MudDesigner.MudEngine.GameObjects.Items;
+using MudEngine.FileSystem;
+using MudEngine.GameManagement;
+using MudEngine.GameObjects;
+using MudEngine.GameObjects.Characters;
+using MudEngine.GameObjects.Environment;
+using MudEngine.GameObjects.Items;
 using MudDesigner.UIWidgets;
 
 namespace MudDesigner
@@ -36,7 +37,7 @@ namespace MudDesigner
         }
 
         //Currently loaded project
-        ProjectInformation _Project;
+        GameSetup _Project;
         //Used for  temporarily holding an object during load.
         BaseObject _GameObject;
         //Check for if the loaded object is saved yet or not.
@@ -53,7 +54,7 @@ namespace MudDesigner
             //instance a baseObject so that we can store inherited classes
             //for use during our runtime
             _GameObject = new BaseObject();
-            _Project = new ProjectInformation();
+            _Project = new GameSetup();
             _Widget = new RealmWidget();
             IsSaved = true;
 
@@ -61,7 +62,7 @@ namespace MudDesigner
             string projectPath = FileManager.GetDataPath(SaveDataTypes.Root);
 
             if (File.Exists(Path.Combine(projectPath, _Project.Filename)))
-                _Project = (ProjectInformation)_Project.Load(projectPath);
+                _Project = (GameSetup)_Project.Load(projectPath);
 
             //ensure the path exists
             ValidatePath(projectPath);
@@ -236,7 +237,7 @@ namespace MudDesigner
                     return;
                 //Project Information file
                 case ObjectType.Project:
-                    _Project = (ProjectInformation)_Project.Load(FileManager.GetDataPath(SaveDataTypes.Root));
+                    _Project = (GameSetup)_Project.Load(FileManager.GetDataPath(SaveDataTypes.Root));
                     propertyObject.SelectedObject = _Project;
                     break;
                 //Currency File
@@ -578,7 +579,7 @@ namespace MudDesigner
         {
             if (propertyObject.SelectedObject is Zone)
             {
-                MudDesigner.MudEngine.UITypeEditors.UIRoomControl control = new MudDesigner.MudEngine.UITypeEditors.UIRoomControl((Zone)propertyObject.SelectedObject);
+                MudDesigner.Engine.UITypeEditors.UIRoomControl control = new MudDesigner.Engine.UITypeEditors.UIRoomControl((Zone)propertyObject.SelectedObject);
 
                 control.ShowDialog();
             }

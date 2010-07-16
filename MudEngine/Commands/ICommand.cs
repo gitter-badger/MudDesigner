@@ -1,8 +1,10 @@
-﻿using System;
+﻿//Microsoft .NET Framework
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+//MUD Engine
 using MudEngine.Commands;
 using MudEngine.GameObjects.Characters;
 using MudEngine.GameManagement;

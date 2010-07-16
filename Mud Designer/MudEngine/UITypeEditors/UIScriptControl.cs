@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using MudDesigner.MudEngine.GameObjects;
+using MudEngine.GameObjects;
 
-namespace MudDesigner.MudEngine.UITypeEditors
+namespace MudDesigner.Engine.UITypeEditors
 {
     public partial class UIScriptControl : UserControl
     {

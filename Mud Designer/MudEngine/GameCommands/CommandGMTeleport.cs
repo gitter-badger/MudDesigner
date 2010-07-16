@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using MudDesigner.MudEngine.Interfaces;
-using MudDesigner.MudEngine.Characters;
-using MudDesigner.MudEngine.Characters.Controlled;
-using MudDesigner.MudEngine.GameManagement;
-using MudDesigner.MudEngine.GameObjects.Environment;
+using MudDesigner.Engine.Interfaces;
+using MudEngine.GameObjects.Characters;
+using MudEngine.GameObjects.Characters.Controlled;
+using MudEngine.GameManagement;
+using MudEngine.GameObjects.Environment;
 
-namespace MudDesigner.MudEngine.GameCommands
+namespace MudEngine.Commands
 {
     public class CommandGMTeleport : IGameCommand
     {
@@ -21,8 +21,9 @@ namespace MudDesigner.MudEngine.GameCommands
             Override = true;
         }
 
-        public CommandResults Execute(BaseCharacter player, ProjectInformation project, Room room, string command)
+        public CommandResults Execute(BaseCharacter player, GameSetup project, Room room, string command)
         {
+            /* TODO: Re-implement this.
             PlayerGM playerGM = new PlayerGM();
             
             if (player is PlayerGM)
@@ -31,7 +32,7 @@ namespace MudDesigner.MudEngine.GameCommands
             }
             else
                 return null;
-
+            */
             //TODO: Find the Realm/Zone/Room that the GM specified to teleport to.
             return null;
         }

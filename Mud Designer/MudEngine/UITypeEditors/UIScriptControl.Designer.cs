@@ -1,4 +1,4 @@
-﻿namespace MudDesigner.MudEngine.UITypeEditors
+﻿namespace MudDesigner.Engine.UITypeEditors
 {
     partial class UIScriptControl
     {

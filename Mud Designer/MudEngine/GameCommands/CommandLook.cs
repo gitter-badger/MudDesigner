@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using MudDesigner.MudEngine.Characters;
-using MudDesigner.MudEngine.Characters.Controlled;
-using MudDesigner.MudEngine.FileSystem;
-using MudDesigner.MudEngine.GameCommands;
-using MudDesigner.MudEngine.GameManagement;
-using MudDesigner.MudEngine.GameObjects.Environment;
-using MudDesigner.MudEngine.GameObjects.Items;
-using MudDesigner.MudEngine.Interfaces;
+using MudEngine.GameObjects.Characters;
+using MudEngine.GameObjects.Characters.Controlled;
+using MudEngine.FileSystem;
+using MudEngine.Commands;
+using MudEngine.GameManagement;
+using MudEngine.GameObjects.Environment;
+using MudEngine.GameObjects.Items;
+using MudDesigner.Engine.Interfaces;
 
-namespace MudDesigner.MudEngine.GameCommands
+namespace MudEngine.Commands
 {
     public class CommandLook : IGameCommand
     {
         public string Name { get; set; }
         public bool Override { get; set; }
 
-        public CommandResults Execute(BaseCharacter player, ProjectInformation project, Room room, string command)
+        public CommandResults Execute(BaseCharacter player, GameSetup project, Room room, string command)
         {
             StringBuilder desc = new StringBuilder();
 
@@ -31,7 +31,7 @@ namespace MudDesigner.MudEngine.GameCommands
             desc.AppendLine(room.Description);
             foreach (Door door in room.Doorways)
             {
-                if (door.TravelDirection != MudDesigner.MudEngine.GameObjects.AvailableTravelDirections.Down && door.TravelDirection != MudDesigner.MudEngine.GameObjects.AvailableTravelDirections.Up)
+                if (door.TravelDirection != MudEngine.GameObjects.AvailableTravelDirections.Down && door.TravelDirection != MudEngine.GameObjects.AvailableTravelDirections.Up)
                 {
                     desc.AppendLine(door.Description);
                 }

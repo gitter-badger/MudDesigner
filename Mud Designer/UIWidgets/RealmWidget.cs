@@ -8,9 +8,9 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
-using MudDesigner.MudEngine.FileSystem;
-using MudDesigner.MudEngine.GameObjects;
-using MudDesigner.MudEngine.GameObjects.Environment;
+using MudEngine.FileSystem;
+using MudEngine.GameObjects;
+using MudEngine.GameObjects.Environment;
 
 namespace MudDesigner.UIWidgets
 {

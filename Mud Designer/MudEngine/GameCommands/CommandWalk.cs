@@ -4,21 +4,21 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-using MudDesigner.MudEngine.Interfaces;
-using MudDesigner.MudEngine.Characters;
-using MudDesigner.MudEngine.GameManagement;
-using MudDesigner.MudEngine.GameObjects.Environment;
-using MudDesigner.MudEngine.GameObjects;
-using MudDesigner.MudEngine.FileSystem;
+using MudDesigner.Engine.Interfaces;
+using MudEngine.GameObjects.Characters;
+using MudEngine.GameManagement;
+using MudEngine.GameObjects.Environment;
+using MudEngine.GameObjects;
+using MudEngine.FileSystem;
 
-namespace MudDesigner.MudEngine.GameCommands
+namespace MudEngine.Commands
 {
     public class CommandWalk : IGameCommand
     {
         public string Name { get; set; }
         public bool Override { get; set; }
 
-        public CommandResults Execute(BaseCharacter player, ProjectInformation project, Room room, string command)
+        public CommandResults Execute(BaseCharacter player, GameSetup project, Room room, string command)
         {
             string[] words = command.Split(' ');
             List<string> directions = new List<string>();

@@ -8,12 +8,12 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 
-using MudDesigner.MudEngine.GameManagement;
-using MudDesigner.MudEngine.GameObjects;
-using MudDesigner.MudEngine.GameObjects.Environment;
-using MudDesigner.MudEngine.FileSystem;
+using MudEngine.GameManagement;
+using MudEngine.GameObjects;
+using MudEngine.GameObjects.Environment;
+using MudEngine.FileSystem;
 
-namespace MudDesigner.MudEngine.UITypeEditors
+namespace MudDesigner.Engine.UITypeEditors
 {
     public partial class UIRealmControl : Form
     {

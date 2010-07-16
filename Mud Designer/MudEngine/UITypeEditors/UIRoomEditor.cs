@@ -7,10 +7,10 @@ using System.Windows.Forms;
 using System.Drawing.Design;
 using System.IO;
 
-using MudDesigner.MudEngine.GameObjects.Environment;
-using MudDesigner.MudEngine.FileSystem;
+using MudEngine.GameObjects.Environment;
+using MudEngine.FileSystem;
 
-namespace MudDesigner.MudEngine.UITypeEditors
+namespace MudDesigner.Engine.UITypeEditors
 {
     public class UIRoomEditor : System.Drawing.Design.UITypeEditor
     {

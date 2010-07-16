@@ -8,11 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using MudDesigner.MudEngine.FileSystem;
-using MudDesigner.MudEngine.GameObjects;
-using MudDesigner.MudEngine.GameObjects.Environment;
+using MudEngine.FileSystem;
+using MudEngine.GameObjects;
+using MudEngine.GameObjects.Environment;
 
-namespace MudDesigner.MudEngine.UITypeEditors
+namespace MudDesigner.Engine.UITypeEditors
 {
     public partial class UIRoomControl : Form
     {

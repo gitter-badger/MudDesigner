@@ -8,12 +8,12 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
-using MudDesigner.MudEngine.GameObjects;
-using MudDesigner.MudEngine.GameObjects.Environment;
-using MudDesigner.MudEngine.GameManagement;
-using MudDesigner.MudEngine.FileSystem;
+using MudEngine.GameObjects;
+using MudEngine.GameObjects.Environment;
+using MudEngine.GameManagement;
+using MudEngine.FileSystem;
 
-namespace MudDesigner.MudEngine.UITypeEditors
+namespace MudDesigner.Engine.UITypeEditors
 {
     public partial class UIDoorwayControl : Form
     {

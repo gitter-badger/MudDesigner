@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MudDesigner.MudEngine.GameObjects;
-using MudDesigner.MudEngine.GameObjects.Environment;
+using MudEngine.GameObjects;
+using MudEngine.GameObjects.Environment;
 using System.Windows.Forms;
 
-namespace MudDesigner.MudEngine.UITypeEditors
+namespace MudDesigner.Engine.UITypeEditors
 {
     public class UIRealmEditor : System.Drawing.Design.UITypeEditor
     {

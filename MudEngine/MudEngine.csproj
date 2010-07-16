@@ -55,6 +55,7 @@
     <Compile Include="GameObjects\Bag.cs" />
     <Compile Include="GameObjects\BaseObject.cs" />
     <Compile Include="GameObjects\Characters\BaseCharacter.cs" />
+    <Compile Include="GameObjects\Characters\Controlled\PlayerBasic.cs" />
     <Compile Include="GameObjects\Environment\Door.cs" />
     <Compile Include="GameObjects\Environment\Realm.cs" />
     <Compile Include="GameObjects\Environment\Room.cs" />
@@ -66,7 +67,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="GameObjects\Characters\Controlled\" />
     <Folder Include="GameObjects\Characters\NPC\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

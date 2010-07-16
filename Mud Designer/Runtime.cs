@@ -1,4 +1,4 @@
-﻿//.Net Framework
+﻿//Microsoft .NET Framework
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,16 +9,16 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-//Mud Designer
-using MudDesigner.MudEngine.Characters;
-using MudDesigner.MudEngine.Characters.Controlled;
-using MudDesigner.MudEngine.Characters.NPC;
-using MudDesigner.MudEngine.GameCommands;
-using MudDesigner.MudEngine.FileSystem;
-using MudDesigner.MudEngine.GameManagement;
-using MudDesigner.MudEngine.GameObjects;
-using MudDesigner.MudEngine.GameObjects.Environment;
-using MudDesigner.MudEngine.GameObjects.Items;
+//MUD Designer
+using MudEngine.Commands;
+using MudEngine.FileSystem;
+using MudEngine.GameManagement;
+using MudEngine.GameObjects;
+using MudEngine.GameObjects.Characters;
+using MudEngine.GameObjects.Characters.Controlled;
+//using MudEngine.GameObjects.Characters.NPC;
+using MudEngine.GameObjects.Environment;
+using MudEngine.GameObjects.Items;
 
 namespace MudDesigner
 {
@@ -26,13 +26,13 @@ namespace MudDesigner
     {
         PlayerBasic _Player;
         Room _Room;
-        ProjectInformation _Project;
+        GameSetup _Project;
 
         public Runtime()
         {
             InitializeComponent();
             _Player = new PlayerBasic();
-            _Project = new ProjectInformation();
+            _Project = new GameSetup();
             _Room = new Room();
         }
 
@@ -54,7 +54,7 @@ namespace MudDesigner
                         _Room = (Room)obj;
                         break;
                     case "projectinformation":
-                        _Project = (ProjectInformation)obj;
+                        _Project = (GameSetup)obj;
                         break;
                     case "playerbasic":
                         _Player = (PlayerBasic)obj;
@@ -87,7 +87,7 @@ namespace MudDesigner
                 Print("Failed Loading Project Information... Runtime failed to initialize.");
                 return;
             }
-            _Project = (ProjectInformation)_Project.Load(FileManager.GetDataPath(SaveDataTypes.Root));
+            _Project = (GameSetup)_Project.Load(FileManager.GetDataPath(SaveDataTypes.Root));
             if (_Project.InitialLocation.Zone == null && _Project.InitialLocation.Zone == "")
             {
                 Print("No Initial Zone was defined within the Project Information. Please associated a Zone to the Projects Initial Zone setting in order to launch the game.");

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 //MudEngine
-using MudDesigner.MudEngine.FileSystem;
-using MudDesigner.MudEngine.GameManagement;
-using MudDesigner.MudEngine.GameObjects;
+using MudEngine.FileSystem;
+using MudEngine.GameManagement;
+using MudEngine.GameObjects;
 
-namespace MudDesigner.MudEngine.GameManagement
+namespace MudEngine.GameManagement
 {
     public class GameScript
     {

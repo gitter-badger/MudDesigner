@@ -1,15 +1,15 @@
-﻿using System;
+﻿//Microsoft .NET Framework
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Drawing.Design;
 
-//MudEngine
-using MudDesigner.MudEngine;
-using MudDesigner.MudEngine.FileSystem;
-using MudDesigner.MudEngine.GameManagement;
-using MudDesigner.MudEngine.GameObjects;
-using MudDesigner.MudEngine.GameObjects.Environment;
+//MUD Engine
+using MudEngine.FileSystem;
+using MudEngine.GameManagement;
+using MudEngine.GameObjects;
+using MudEngine.GameObjects.Environment;
 
 namespace MudDesigner
 {

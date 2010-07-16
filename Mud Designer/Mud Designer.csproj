@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F0C50EA1-80F7-4CE6-93A3-A4E9F34F0434}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -69,42 +69,17 @@
     <Compile Include="Designer.Designer.cs">
       <DependentUpon>Designer.cs</DependentUpon>
     </Compile>
-    <Compile Include="MudEngine\Characters\BaseCharacter.cs" />
-    <Compile Include="MudEngine\Characters\CharacterClass.cs" />
-    <Compile Include="MudEngine\Characters\CharacterFaction.cs" />
-    <Compile Include="MudEngine\Characters\CharacterRace.cs" />
-    <Compile Include="MudEngine\Characters\Controlled\PlayerAdmin.cs" />
-    <Compile Include="MudEngine\Characters\Controlled\PlayerGM.cs" />
-    <Compile Include="MudEngine\Characters\Controlled\PlayerBasic.cs" />
-    <Compile Include="MudEngine\Characters\NPC\NPCHostile.cs" />
-    <Compile Include="MudEngine\Characters\NPC\NPCFriendly.cs" />
-    <Compile Include="MudEngine\FileSystem\SaveDataTypes.cs" />
-    <Compile Include="MudEngine\GameCommands\CommandEngine.cs" />
     <Compile Include="MudEngine\GameCommands\CommandExit.cs" />
     <Compile Include="MudEngine\GameCommands\CommandGMTeleport.cs" />
     <Compile Include="MudEngine\GameCommands\CommandLook.cs" />
-    <Compile Include="MudEngine\GameCommands\CommandResults.cs" />
     <Compile Include="MudEngine\GameCommands\CommandWalk.cs" />
     <Compile Include="MudEngine\GameManagement\GameScript.cs" />
-    <Compile Include="MudEngine\GameObjects\Bag.cs" />
-    <Compile Include="MudEngine\GameObjects\BaseObject.cs" />
-    <Compile Include="MudEngine\GameObjects\Currency.cs" />
-    <Compile Include="MudEngine\GameObjects\Environment\Door.cs" />
-    <Compile Include="MudEngine\GameObjects\Environment\StartingLocation.cs" />
-    <Compile Include="MudEngine\GameObjects\Environment\Realm.cs" />
-    <Compile Include="MudEngine\GameObjects\Environment\Room.cs" />
-    <Compile Include="MudEngine\GameObjects\Environment\TravelDirections.cs" />
-    <Compile Include="MudEngine\GameObjects\Environment\Zone.cs" />
-    <Compile Include="MudEngine\GameObjects\Items\BaseItem.cs" />
-    <Compile Include="MudEngine\Interfaces\IGameCommand.cs" />
     <Compile Include="MudEngine\Interfaces\IFileIO.cs" />
     <Compile Include="MudEngine\Interfaces\IGameObject.cs" />
     <Compile Include="MudEngine\Interfaces\IPlayer.cs" />
     <Compile Include="MudEngine\Interfaces\IQuest.cs" />
     <Compile Include="MudEngine\Interfaces\IRoom.cs" />
     <Compile Include="MudEngine\Interfaces\IRuleSet.cs" />
-    <Compile Include="MudEngine\GameManagement\ProjectInformation.cs" />
-    <Compile Include="MudEngine\FileSystem\FileManager.cs" />
     <Compile Include="MudEngine\GameManagement\QuestSetup.cs" />
     <Compile Include="MudEngine\UITypeEditors\UIDoorwayEditor.cs" />
     <Compile Include="MudEngine\UITypeEditors\UIDoorwayControl.cs">
@@ -182,7 +157,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="MudEngine\FileSystem\XmlSerialization.cs" />
     <Compile Include="MudEngine\UITypeEditors\UIScriptEditor.cs" />
     <Compile Include="Runtime.cs">
       <SubType>Form</SubType>
@@ -219,6 +193,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MudEngine\MudEngine.csproj">
+      <Project>{498943A8-DF5A-4DB0-B506-0BFF44788657}</Project>
+      <Name>MudEngine</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

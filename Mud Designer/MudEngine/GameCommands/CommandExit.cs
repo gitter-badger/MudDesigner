@@ -4,19 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using MudDesigner.MudEngine.Interfaces;
-using MudDesigner.MudEngine.Characters;
-using MudDesigner.MudEngine.GameManagement;
-using MudDesigner.MudEngine.GameObjects.Environment;
+using MudDesigner.Engine.Interfaces;
+using MudEngine.GameObjects.Characters;
+using MudEngine.GameManagement;
+using MudEngine.Commands;
+using MudEngine.GameObjects.Environment;
 
-namespace MudDesigner.MudEngine.GameCommands
+namespace MudEngine.Commands
 {
     public class CommandExit : IGameCommand
     {
         public bool Override { get; set; }
         public string Name { get; set; }
 
-        public CommandResults Execute(BaseCharacter player, ProjectInformation project, Room room, string command)
+        public CommandResults Execute(BaseCharacter player, GameSetup project, Room room, string command)
         {
             Application.Exit();
 
