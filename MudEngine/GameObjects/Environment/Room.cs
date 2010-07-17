@@ -133,9 +133,9 @@ namespace MudEngine.GameObjects.Environment
         /// <returns></returns>
         public override object Load(string roomName)
         {
-            //Correct the roomname incase it doesnt contain a file extension
-            if (!roomName.ToLower().EndsWith(".room"))
-                roomName += ".room";
+            //Correct the filename incase it doesnt contain a file extension
+            if (!roomName.ToLower().EndsWith(this.GetType().Name.ToLower()))
+                roomName.Insert(roomName.Length, this.GetType().Name.ToLower());
 
             //If the current room does not belong within a Realm, then load it from the
             //Zones root directory
