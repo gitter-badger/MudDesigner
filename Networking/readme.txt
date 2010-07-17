@@ -17,3 +17,7 @@ Well, this project is in C# but i've heard that we're using the a .dll for
  EASIER for me. So for now I have the C++ Socket header here but I will look
  and work on coding it in C#.
    - u8sand
+
+-- Status --
+  - Just found a website and I know where the "winsock control" is.
+  - Currently learning how to use the winsock control, with UDP
