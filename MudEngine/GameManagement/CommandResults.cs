@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MudEngine.Commands
+namespace MudEngine.GameManagement
 {
     public class CommandResults
     {

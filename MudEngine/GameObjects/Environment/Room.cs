@@ -98,6 +98,17 @@ namespace MudEngine.GameObjects.Environment
             }
         }
 
+        /// <summary>
+        /// Gets or Sets if this is the starting room for the Zone that contains it.
+        /// </summary>
+        [Browsable(true)]
+        [Description("Sets if this is the starting room for the Zone that contains it.")]
+        public bool IsStartingRoom
+        {
+            get;
+            set;
+        }
+
         public Room()
         {
             Doorways = new List<Door>();

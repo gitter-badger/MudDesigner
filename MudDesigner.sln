@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual C# Express 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud Designer", "Mud Designer\Mud Designer.csproj", "{F0C50EA1-80F7-4CE6-93A3-A4E9F34F0434}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudEngine", "MudEngine\MudEngine.csproj", "{498943A8-DF5A-4DB0-B506-0BFF44788657}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MUDGame", "MUDGame\MUDGame.csproj", "{048E755C-DD05-47EC-930E-F45146B66F7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F0C50EA1-80F7-4CE6-93A3-A4E9F34F0434}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F0C50EA1-80F7-4CE6-93A3-A4E9F34F0434}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F0C50EA1-80F7-4CE6-93A3-A4E9F34F0434}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F0C50EA1-80F7-4CE6-93A3-A4E9F34F0434}.Release|Any CPU.Build.0 = Release|Any CPU
 		{498943A8-DF5A-4DB0-B506-0BFF44788657}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{498943A8-DF5A-4DB0-B506-0BFF44788657}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{498943A8-DF5A-4DB0-B506-0BFF44788657}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{498943A8-DF5A-4DB0-B506-0BFF44788657}.Release|Any CPU.Build.0 = Release|Any CPU
+		{048E755C-DD05-47EC-930E-F45146B66F7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{048E755C-DD05-47EC-930E-F45146B66F7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{048E755C-DD05-47EC-930E-F45146B66F7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{048E755C-DD05-47EC-930E-F45146B66F7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

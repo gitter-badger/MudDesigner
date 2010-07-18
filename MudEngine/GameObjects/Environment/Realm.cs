@@ -18,11 +18,13 @@ namespace MudEngine.GameObjects.Environment
         [Category("Environment Information")]
         [Description("A collection of Zones that are contained within this Realm. Players can traverse the world be traveling through Rooms that are contained within Zones. Note that it is not required to place a Zone into a Realm.")]
         //[EditorAttribute(typeof(UIRealmEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        public List<string> Zones { get; set; }
+        public List<Zone> Zones { get; set; }
+
+        public bool IsInitialRealm { get; set; }
 
         public Realm()
         {
-            Zones = new List<string>();
+            Zones = new List<Zone>();
         }
 
         /// <summary>
@@ -34,12 +36,12 @@ namespace MudEngine.GameObjects.Environment
         {
             var filterQuery =
                 from zone in Zones
-                where zone == filename
+                where zone.Filename == filename
                 select zone;
 
             Zone z = new Zone();
             foreach (var zone in filterQuery)
-                return (Zone)z.Load(zone);
+                return (Zone)z.Load(zone.Filename);
 
             return null;
         }

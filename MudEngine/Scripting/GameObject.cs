@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using BlitScript;
+using MudEngine.Scripting;
 
 namespace MudEngine.Scripting
 {
@@ -47,12 +47,12 @@ namespace MudEngine.Scripting
                 }
             }
         }
-
+        /* Dynamic Type Instancing isn't supported in .NET 3.5
         public dynamic SetProperty()
         {
             return Instance;
         }
-
+        */
         public object GetProperty(string propertyName)
         {
             string[] tokens = propertyName.Split('.');

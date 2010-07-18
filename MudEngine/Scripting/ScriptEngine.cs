@@ -130,7 +130,7 @@ namespace MudEngine.Scripting
         /// Initializes the script engine, loading the compiled scripts into memory
         /// </summary>
         /// <param name="scriptAssembly"></param>
-        public override void Initialize()
+        public void Initialize()
         {
             if (_ScriptTypes == ScriptTypes.Assembly)
             {

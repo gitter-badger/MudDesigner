@@ -20,13 +20,20 @@ namespace MudEngine.GameManagement
     /// </summary>
     [XmlInclude(typeof(StartingLocation))]
     [XmlInclude(typeof(Currency))]
-    public class GameSetup
+    public class Game
     {
         public enum TimeOfDayOptions
         {
             AlwaysDay,
             AlwaysNight,
             Transition,
+        }
+
+        [Browsable(false)]
+        public bool IsRunning
+        {
+            get;
+            set;
         }
 
         [Category("Company Settings")]
@@ -61,6 +68,9 @@ namespace MudEngine.GameManagement
         /// </summary>
         public bool HideRoomNames { get; set; }
 
+        /// <summary>
+        /// Gets or Sets what time of day the world is currently in.
+        /// </summary>
         [Category("Day Management")]
         [Description("Set what time of day the world will take place in.")]
         public TimeOfDayOptions TimeOfDay
@@ -69,6 +79,9 @@ namespace MudEngine.GameManagement
             set;
         }
 
+        /// <summary>
+        /// Gets or Sets how long in minutes it takes to transition from day to night.
+        /// </summary>
         [Category("Day Management")]
         [Description("Set how long in minutes it takes to transition from day to night.")]
         public int TimeOfDayTransition
@@ -77,6 +90,9 @@ namespace MudEngine.GameManagement
             set;
         }
 
+        /// <summary>
+        /// Gets or Sets how long in minutes a day lasts in the game world.
+        /// </summary>
         [Category("Day Management")]
         [Description("Sets how long in minutes a day lasts in the game world.")]
         public int DayLength
@@ -85,6 +101,9 @@ namespace MudEngine.GameManagement
             set;
         }
 
+        /// <summary>
+        /// Gets or Sets the current working version of the game.
+        /// </summary>
         [Category("Project Settings")]
         [Description("The current working version of the game.")]
         public string Version { get; set; }
@@ -99,9 +118,11 @@ namespace MudEngine.GameManagement
         [DefaultValue("Copper")]
         public string BaseCurrencyName { get; set; }
 
-
-
         //TODO: Add Party support.
+
+        /// <summary>
+        /// Gets or Sets if all objects will be laoded during server startup. Enabling this results in a slower server start time, but faster object access.
+        /// </summary>
         [Category("Project Settings")]
         [Description("If enabled, all objects will be loaded during server startup resulting in a slower server start time, but faster load time during gameplay")]
         public bool PreCacheObjects { get; set; }
@@ -109,12 +130,19 @@ namespace MudEngine.GameManagement
         [Browsable(false)]
         public List<Currency> CurrencyList { get; set; }
 
+        /// <summary>
+        /// Gets or Sets the path to the current project
+        /// </summary>
         [Browsable(false)]
         public string ProjectPath { get; set; }
 
         [Category("Environment Settings")]
         [ReadOnly(true)]
-        public StartingLocation InitialLocation { get; set; }
+        public Realm InitialRealm
+        {
+            get;
+            private set;
+        }
 
         [Browsable(false)]
         public string Story
@@ -133,14 +161,13 @@ namespace MudEngine.GameManagement
         }
         private string _Filename;
 
-        public GameSetup()
+        public Game()
         {
             CurrencyList = new List<Currency>();
             GameTitle = "New Game";
             _Filename = "Game.xml";
             BaseCurrencyAmount = 1;
             BaseCurrencyName = "Copper";
-            InitialLocation = new StartingLocation();
         }
 
         public void Save(string filename)
@@ -160,8 +187,13 @@ namespace MudEngine.GameManagement
             {
                 return null;
             }
-
+            
             return FileManager.Load(fileName, this);
+        }
+
+        public void SetInitialRealm(Realm realm)
+        {
+            InitialRealm = realm;
         }
     }
 }

@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{498943A8-DF5A-4DB0-B506-0BFF44788657}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{048E755C-DD05-47EC-930E-F45146B66F7C}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MudEngine</RootNamespace>
-    <AssemblyName>MudEngine</AssemblyName>
+    <RootNamespace>MUDGame</RootNamespace>
+    <AssemblyName>MUDGame</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -45,34 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\CommandExit.cs" />
-    <Compile Include="GameManagement\CommandEngine.cs" />
-    <Compile Include="GameManagement\CommandResults.cs" />
-    <Compile Include="GameManagement\ICommand.cs" />
-    <Compile Include="FileSystem\FileManager.cs" />
-    <Compile Include="FileSystem\SaveDataTypes.cs" />
-    <Compile Include="FileSystem\XmlSerialization.cs" />
-    <Compile Include="GameManagement\Game.cs" />
-    <Compile Include="GameObjects\Bag.cs" />
-    <Compile Include="GameObjects\BaseObject.cs" />
-    <Compile Include="GameObjects\Characters\BaseCharacter.cs" />
-    <Compile Include="GameObjects\Characters\Controlled\PlayerBasic.cs" />
-    <Compile Include="GameObjects\Environment\Door.cs" />
-    <Compile Include="GameObjects\Environment\Realm.cs" />
-    <Compile Include="GameObjects\Environment\Room.cs" />
-    <Compile Include="GameObjects\Environment\StartingLocation.cs" />
-    <Compile Include="GameObjects\Environment\TravelDirections.cs" />
-    <Compile Include="GameObjects\Environment\Zone.cs" />
-    <Compile Include="GameObjects\Items\BaseItem.cs" />
-    <Compile Include="GameObjects\Currency.cs" />
+    <Compile Include="Environments\Zeroth.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scripting\GameObject.cs" />
-    <Compile Include="Scripting\GameObjectCollection.cs" />
-    <Compile Include="Scripting\ScriptEngine.cs" />
-    <Compile Include="Scripting\StartupObject.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="GameObjects\Characters\NPC\" />
+    <ProjectReference Include="..\MudEngine\MudEngine.csproj">
+      <Project>{498943A8-DF5A-4DB0-B506-0BFF44788657}</Project>
+      <Name>MudEngine</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

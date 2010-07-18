@@ -10,7 +10,7 @@ using MudEngine.GameObjects.Characters;
 using MudEngine.GameManagement;
 using MudEngine.GameObjects.Environment;
 
-namespace MudEngine.Commands
+namespace MudEngine.GameManagement
 {
     public interface IGameCommand
     {
@@ -19,6 +19,6 @@ namespace MudEngine.Commands
         //Used to override commands with the same name
         bool Override { get; set; }
         //Executes the command.
-        CommandResults Execute(BaseCharacter player, GameSetup project, Room room, string command);
+        CommandResults Execute(string command, BaseCharacter player, Game project, Room room);
     }
 }

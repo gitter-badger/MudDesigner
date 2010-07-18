@@ -10,7 +10,7 @@ using MudEngine.GameObjects.Characters;
 using MudEngine.GameObjects.Environment;
 using MudEngine.GameManagement;
 
-namespace MudEngine.Commands
+namespace MudEngine.GameManagement
 {
     public class CommandEngine
     {
@@ -46,14 +46,14 @@ namespace MudEngine.Commands
         /// <param name="Name"></param>
         /// <param name="Parameter"></param>
         /// <returns></returns>
-        public static CommandResults ExecuteCommand(string Name, BaseCharacter player, GameSetup project, Room room, string command)
+        public static CommandResults ExecuteCommand(string command, BaseCharacter player, Game project, Room room)
         {
-            Name = Name.Insert(0, "Command");
+            string commandKey = command.Insert(0, "Command");
             foreach (string key in Commands.Keys)
             {
-                if (Name.ToLower().Contains(key.ToLower()))
+                if (commandKey.ToLower().Contains(key.ToLower()))
                 {
-                    return Commands[key.ToLower()].Execute(player, project, room, command);
+                    return Commands[key.ToLower()].Execute(command, player, project, room);
                 }
             }
 
