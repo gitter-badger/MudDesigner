@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual C# Express 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudEngine", "MudEngine\MudEngine.csproj", "{498943A8-DF5A-4DB0-B506-0BFF44788657}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MUDGame", "MUDGame\MUDGame.csproj", "{048E755C-DD05-47EC-930E-F45146B66F7C}"
