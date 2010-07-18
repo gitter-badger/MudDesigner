@@ -47,12 +47,7 @@ namespace MudEngine.Scripting
                 }
             }
         }
-        /* Dynamic Type Instancing isn't supported in .NET 3.5
-        public dynamic SetProperty()
-        {
-            return Instance;
-        }
-        */
+        
         public object GetProperty(string propertyName)
         {
             string[] tokens = propertyName.Split('.');
@@ -60,12 +55,12 @@ namespace MudEngine.Scripting
 
             return previousProperty.GetValue(Instance, null);
         }
-        /* Dynamic Type Instancing isn't supported in .NET 3.5; Requires 4.0
+        
         public dynamic GetProperty()
         {
             return Instance;
         }
-        */
+        
         public object InvokeMethod(string methodName, params object[] parameters)
         {
             MethodInfo method = Instance.GetType().GetMethod(methodName);
