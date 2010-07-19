@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MudEngine.Networking;
 
 // TODO: everything D:
 
@@ -19,6 +18,7 @@ namespace MudEngine.Networking
         }
 
 
-        private ServerSocket server;
+        //private ServerSocket server;
+        //private ClientSocket[] clients;
     }
 }
