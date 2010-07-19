@@ -2,23 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MudEngine.Networking.ServerSocket;
-using MudEngine.Networking.ClientSocket;
+using MudEngine.Networking.Socket;
 
 // TODO: everything D:
 
 namespace MudEngine.Networking
 {
-    class Server
+    class ClientSocket : Socket
     {
-        public Server()
+        public ClientSocket()
         {
         }
-        public ~Server()
+        public ~ClientSocket()
         {
         }
 
-
-        private ServerSocket server;
+        public string ip;
     }
 }

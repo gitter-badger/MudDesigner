@@ -2,24 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MudEngine.Networking.Socket;
+
+// TODO: everything D:
 
 namespace MudEngine.Networking
 {
-    public const int UDP = 2;
-    class Socket
+    enum SocketType
     {
-        public Socket()
+        TCP = 1,
+        UDP = 2
+    };
+    class ServerSocket : Socket
+    {
+        public ServerSocket()
         {
+            port = 0;
+            stage = 0;
             type = 0;
         }
-        public ~Socket()
+        public ~ServerSocket()
         {
+            port = 0;
+            stage = 0;
             type = 0;
         }
         // all methods return int, 1 = success, -1 = error, > 1 are just extra info w/ success
         //  < -1, known error find it out with: (string)getError(er_code);
 
-        public int init()
+        public int init(int p, SocketType st)
         {
             return 0;
         }
@@ -39,6 +50,14 @@ namespace MudEngine.Networking
         {
             return 0;
         }
+        public int send()
+        {
+            return 0;
+        }
+        public int recv()
+        {
+            return 0;
+        }
         public int end()
         {
             return 0;
@@ -54,7 +73,9 @@ namespace MudEngine.Networking
                 return "Unknown Error";
             }
         }
-        private int type; // 1 = TCP, 2 = UDP
+
         private int stage;
+        private int port;
+        private SocketType type;
     }
 }
