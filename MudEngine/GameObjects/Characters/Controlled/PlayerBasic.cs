@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 
 //MUD Engine
-using MudEngine.GameObjects.Characters;
+using MudEngine.GameObjects.Characters;   
 
 namespace MudEngine.GameObjects.Characters.Controlled
 {
     public class PlayerBasic : BaseCharacter
     {
+
     }
 }

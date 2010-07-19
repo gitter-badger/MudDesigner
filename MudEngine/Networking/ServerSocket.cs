@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MudEngine.Networking.Socket;
 
 // TODO: everything D:
 
@@ -21,7 +20,8 @@ namespace MudEngine.Networking
             stage = 0;
             type = 0;
         }
-        public ~ServerSocket()
+        
+        ~ServerSocket()
         {
             port = 0;
             stage = 0;

@@ -50,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\CommandExit.cs" />
+    <Compile Include="Commands\CommandLook.cs" />
+    <Compile Include="Commands\CommandWalk.cs" />
     <Compile Include="GameManagement\CommandEngine.cs" />
     <Compile Include="GameManagement\CommandResults.cs" />
     <Compile Include="GameManagement\ICommand.cs" />

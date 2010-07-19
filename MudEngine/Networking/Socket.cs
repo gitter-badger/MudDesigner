@@ -12,7 +12,8 @@ namespace MudEngine.Networking
         public Socket()
         {
         }
-        public ~Socket()
+        
+        ~Socket()
         {
         }
 
