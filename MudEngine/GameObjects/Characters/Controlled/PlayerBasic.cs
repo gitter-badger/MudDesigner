@@ -11,6 +11,12 @@ namespace MudEngine.GameObjects.Characters.Controlled
 {
     public class PlayerBasic : BaseCharacter
     {
+        public bool admin {get; private set;}
+
+        public PlayerBasic(bool a = false)
+        {
+            admin = a;
+        }
 
     }
 }

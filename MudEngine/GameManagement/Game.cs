@@ -7,6 +7,8 @@ using System.ComponentModel;
 using System.Xml.Serialization;
 using System.Xml;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 
 //MUD Engine
 using MudEngine.FileSystem;
@@ -194,6 +196,19 @@ namespace MudEngine.GameManagement
         public void SetInitialRealm(Realm realm)
         {
             InitialRealm = realm;
+        }
+
+
+        public MudEngine.GameObjects.Characters.Controlled.PlayerBasic[] player;
+        public MudEngine.Networking.Server server = new MudEngine.Networking.Server();
+        public ProtocolType ServerType = ProtocolType.Tcp;
+        public int ServerPort = 555;
+        public int MaximumPlayers = 1000;
+
+        public void StartServer()
+        {
+            server.InitializeTCP(ServerPort, ref player);
+            server.Start();
         }
     }
 }

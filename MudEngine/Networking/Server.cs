@@ -14,11 +14,12 @@ using System.Threading;
 
 namespace MudEngine.Networking
 {
-    class Server
+    public class Server
     {
         public Server()
         {
             stage = 0;
+            server = new ServerSocket();
         }
         ~Server()
         {
@@ -31,23 +32,29 @@ namespace MudEngine.Networking
             }
             server.CleanUp();
         }
-        public bool InitializeTCP(int port, int max_cons)
+        public bool InitializeTCP(int port, ref MudEngine.GameObjects.Characters.Controlled.PlayerBasic[] pbs)
         {
             if (stage != 0)
                 return false;
             if (server.Initialize(port, ProtocolType.Tcp) < 0)
                 return false;
-            numberOfClients = max_cons;
-            clients = new ClientSocket[max_cons];
+
+            numberOfClients = pbs.Length;
+            clients = new ClientSocket[pbs.Length];
+            players = pbs;
+
             stage++;
             return true;
         }
-        public bool InitializeUDP(int port)
+        public bool InitializeUDP(int port, ref MudEngine.GameObjects.Characters.Controlled.PlayerBasic[] pbs)
         {
             if (stage != 0)
                 return false;
             if (server.Initialize(port, ProtocolType.Udp) < 0)
                 return false;
+
+            players = pbs;
+            
             stage++;
             return true;
         }
@@ -67,6 +74,17 @@ namespace MudEngine.Networking
             serverThread.Start();
             return true;
         }
+        public void EndServer()
+        {
+            stage = 0;
+            if (server.type == ProtocolType.Tcp)
+            {
+                for (int i = 0; i < numberOfClients; i++)
+                    clients[i].CleanUp();
+                numberOfClients = 0;
+            }
+            server.CleanUp();
+        }
         /*
          * ServerThread, if UDP: Accepts messages(ReceiveFrom) and sends in correspondence to the correct player
          * if TCP: Accepts connection and opens a separate thread to receive a data stream between the clien
@@ -75,14 +93,22 @@ namespace MudEngine.Networking
         {
             if (server.type == ProtocolType.Udp)
             {
+
             }
             else
             {
+                /*while (stage == 2)
+                {
+                    
+                }*/
             }
         }
         private Thread serverThread;
         private ServerSocket server;
         private int stage;
+
+        MudEngine.GameObjects.Characters.Controlled.PlayerBasic[] players;
+
         // TCP Stuff:
         private ClientSocket[] clients;
         private int numberOfClients;

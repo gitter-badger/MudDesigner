@@ -105,7 +105,7 @@ namespace MudEngine.Networking
             }
             return 1;
         }
-        public int Accept(ref ClientSocket cs)
+        public int Accept(ClientSocket cs)
         {
             try
             {
@@ -128,7 +128,7 @@ namespace MudEngine.Networking
             }
             return 1;
         }
-        public int SendTo(byte[] ba, int size, SocketFlags sf, ref ClientSocket rcs)
+        public int SendTo(byte[] ba, ClientSocket rcs)
         {
             try
             {
@@ -140,7 +140,7 @@ namespace MudEngine.Networking
                 if (stage == 5)
                 {
                     IPEndPoint ipep = new IPEndPoint(rcs.ip, port);
-                    sock.SendTo(ba, size, sf, ipep);
+                    sock.SendTo(ba, ipep);
                 }
                 else
                     return -2;
@@ -151,7 +151,7 @@ namespace MudEngine.Networking
             }
             return 1;
         }
-        public int ReceiveFrom(ref byte[] ba, int size, SocketFlags sf, ref ClientSocket rcs)
+        public int ReceiveFrom(byte[] ba, ClientSocket rcs)
         {
             try
             {
@@ -164,8 +164,9 @@ namespace MudEngine.Networking
                 {
                     IPEndPoint ipep = new IPEndPoint(IPAddress.Any, 0);
                     EndPoint ep = (EndPoint)ipep;
-                    sock.ReceiveFrom(ba, size, sf, ref ep);
-                    rcs.ip = ipep.Address.Address; // Why am I getting this warning?
+                    sock.ReceiveFrom(ba, ref ep);
+
+                    rcs.ip = ipep.Address;
                 }
                 else
                     return -2;

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Net;
+using System.Net.Sockets;
 
 using MUDGame.Environments;
 
@@ -12,7 +14,7 @@ namespace MUDGame
         //Setup our Fields
         static MudEngine.GameManagement.Game game;
         static MudEngine.GameManagement.CommandEngine commands;
-        static MudEngine.GameObjects.Characters.Controlled.PlayerBasic player;
+        static MudEngine.GameObjects.Characters.Controlled.PlayerBasic admin = new MudEngine.GameObjects.Characters.Controlled.PlayerBasic(true);
 
         static List<MudEngine.GameObjects.Environment.Realm> realmCollection;
 
@@ -37,6 +39,9 @@ namespace MUDGame
             game.TimeOfDayTransition = 30;
             game.Version = "0.1";
             game.Website = "http://MudDesigner.Codeplex.com";
+            game.ServerType = ProtocolType.Tcp;
+            game.ServerPort = 555;
+            game.MaximumPlayers = 1000;
 
             //Create the world
             BuildRealms();
@@ -53,8 +58,14 @@ namespace MUDGame
             if (game.InitialRealm == null)
                 Console.WriteLine("Critical Error: No Initial Realm defined!");
 
+            game.player = new MudEngine.GameObjects.Characters.Controlled.PlayerBasic[1000];
+
             //Start the game.
             MudEngine.GameManagement.CommandEngine.LoadAllCommands();
+
+            // Start the server thread.
+            game.StartServer();
+
             game.IsRunning = true;
 
             while (game.IsRunning)
@@ -62,7 +73,7 @@ namespace MUDGame
                 Console.Write("Command: ");
                 string command = Console.ReadLine();
 
-                MudEngine.GameManagement.CommandEngine.ExecuteCommand(command, player, game, null);
+                MudEngine.GameManagement.CommandEngine.ExecuteCommand(command, admin, game, null);
             }
 
             Console.WriteLine("Press Enter to exit.");

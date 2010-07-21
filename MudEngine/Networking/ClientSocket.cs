@@ -15,18 +15,16 @@ namespace MudEngine.Networking
         public ClientSocket()
         {
             type = 0;
-            ip = 0;
         }
         ~ClientSocket()
         {
             type = 0;
-            ip = 0;
         }
-        public int Send(byte[] ba,int size,SocketFlags sf)
+        public int Send(byte[] ba)
         {
             try
             {
-                sock.Send(ba, size, sf);
+                sock.Send(ba);
             }
             catch (Exception)
             {
@@ -34,11 +32,11 @@ namespace MudEngine.Networking
             }
             return 1;
         }
-        public int Receive(ref byte[] ba, int size, SocketFlags sf)
+        public int Receive(byte[] ba)
         {
             try
             {
-                sock.Receive(ba, size, sf);
+                sock.Receive(ba);
             }
             catch (Exception)
             {
@@ -53,7 +51,6 @@ namespace MudEngine.Networking
                 sock.Disconnect(true);
                 sock.Close();
                 sock.Dispose();
-                ip = 0;
                 type = 0;
             }
             catch (Exception)
@@ -64,7 +61,7 @@ namespace MudEngine.Networking
         }
 
         public ProtocolType type;
-        public long ip;
+        public IPAddress ip;
         public Socket sock;
     }
 }
