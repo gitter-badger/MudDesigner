@@ -14,7 +14,7 @@ namespace MUDGame
         //Setup our Fields
         static MudEngine.GameManagement.Game game;
         static MudEngine.GameManagement.CommandEngine commands;
-        static MudEngine.GameObjects.Characters.Controlled.PlayerBasic admin = new MudEngine.GameObjects.Characters.Controlled.PlayerBasic(true);
+        static MudEngine.GameObjects.Characters.Controlled.PlayerAdmin user;
 
         static List<MudEngine.GameObjects.Environment.Realm> realmCollection;
 
@@ -24,6 +24,7 @@ namespace MUDGame
             game = new MudEngine.GameManagement.Game();
             commands = new MudEngine.GameManagement.CommandEngine();
             realmCollection = new List<MudEngine.GameObjects.Environment.Realm>();
+            user = new MudEngine.GameObjects.Characters.Controlled.PlayerAdmin();
 
             //Setup the game
             game.AutoSave = true;
@@ -73,7 +74,7 @@ namespace MUDGame
                 Console.Write("Command: ");
                 string command = Console.ReadLine();
 
-                MudEngine.GameManagement.CommandEngine.ExecuteCommand(command, admin, game, null);
+                user.ExecuteCommand(command, user, game, null);
             }
 
             Console.WriteLine("Press Enter to exit.");
