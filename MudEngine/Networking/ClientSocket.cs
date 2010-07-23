@@ -10,7 +10,7 @@ using System.Net.Sockets;
 
 namespace MudEngine.Networking
 {
-    class ClientSocket
+    public class ClientSocket
     {
         public ClientSocket()
         {
