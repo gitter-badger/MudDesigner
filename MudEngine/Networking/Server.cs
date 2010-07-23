@@ -32,7 +32,7 @@ namespace MudEngine.Networking
             }
             server.CleanUp();
         }
-        public bool InitializeTCP(int port, ref MudEngine.GameObjects.Characters.Controlled.PlayerBasic[] pbs)
+        public bool InitializeTCP(int port, ref MudEngine.GameObjects.Characters.BaseCharacter[] pbs)
         {
             if (stage != 0)
                 return false;
@@ -41,12 +41,13 @@ namespace MudEngine.Networking
 
             numberOfClients = pbs.Length;
             clients = new ClientSocket[pbs.Length];
+            clientThreads = new Thread[pbs.Length];
             players = pbs;
 
             stage++;
             return true;
         }
-        public bool InitializeUDP(int port, ref MudEngine.GameObjects.Characters.Controlled.PlayerBasic[] pbs)
+        public bool InitializeUDP(int port, ref MudEngine.GameObjects.Characters.BaseCharacter[] pbs)
         {
             if (stage != 0)
                 return false;
@@ -97,20 +98,48 @@ namespace MudEngine.Networking
             }
             else
             {
-                /*while (stage == 2)
+                while (stage == 2)
                 {
-                    
-                }*/
+                    int sub = -1;
+                    do
+                    {
+                        for (int i = 0; i < numberOfClients; i++)
+                        {
+                            if (!clients[i].used)
+                            {
+                                sub = i;
+                                break;
+                            }
+                        }
+                    } while (sub == -1);
+                    server.Accept(clients[sub]);
+                    clients[sub].used = true;
+                    players[sub].Initialize(ref clients[sub]);
+                    ParameterizedThreadStart start = new ParameterizedThreadStart(ReceiveThread);
+                    clientThreads[sub] = new Thread(start);
+                    clientThreads[sub].Start();
+                }
             }
         }
+        private void ReceiveThread(object obj)
+        {
+            int sub = (int)obj;
+            while (stage == 2 && clients[sub].used)
+            {
+                byte[] buf = new byte[256];
+                clients[sub].Receive(buf);
+            }
+        }
+
         private Thread serverThread;
         private ServerSocket server;
         private int stage;
 
-        MudEngine.GameObjects.Characters.Controlled.PlayerBasic[] players;
+        MudEngine.GameObjects.Characters.BaseCharacter[] players;
 
         // TCP Stuff:
         private ClientSocket[] clients;
+        private Thread[] clientThreads;
         private int numberOfClients;
     }
 }

@@ -33,5 +33,12 @@ namespace MudEngine.GameObjects.Characters
             //the command off to the command engine for execution.
             return CommandEngine.ExecuteCommand(command, character, game, room);
         }
+
+        public void Initialize(ref MudEngine.Networking.ClientSocket rcs)
+        {
+            sock = rcs;
+        }
+
+        public MudEngine.Networking.ClientSocket sock;
     }
 }

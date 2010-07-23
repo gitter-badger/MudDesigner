@@ -15,10 +15,12 @@ namespace MudEngine.Networking
         public ClientSocket()
         {
             type = 0;
+            used = false;
         }
         ~ClientSocket()
         {
             type = 0;
+            used = false;
         }
         public int Send(byte[] ba)
         {
@@ -52,6 +54,7 @@ namespace MudEngine.Networking
                 sock.Close();
                 sock.Dispose();
                 type = 0;
+                used = false;
             }
             catch (Exception)
             {
@@ -63,5 +66,6 @@ namespace MudEngine.Networking
         public ProtocolType type;
         public IPAddress ip;
         public Socket sock;
+        public bool used;
     }
 }

@@ -199,7 +199,7 @@ namespace MudEngine.GameManagement
         }
 
 
-        public MudEngine.GameObjects.Characters.Controlled.PlayerBasic[] player;
+        public MudEngine.GameObjects.Characters.BaseCharacter[] player;
         public MudEngine.Networking.Server server = new MudEngine.Networking.Server();
         public ProtocolType ServerType = ProtocolType.Tcp;
         public int ServerPort = 555;
