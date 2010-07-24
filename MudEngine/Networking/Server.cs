@@ -6,6 +6,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
+using MudEngine.GameObjects.Characters;
+using MudEngine.GameObjects.Characters.Controlled;
+
 /* Usage:
  *  Server MUDServer = new Server();
  *  MUDServer.InitializeUDP(666); or MUDServer.InitializeTCP(666);
@@ -32,22 +35,22 @@ namespace MudEngine.Networking
             }
             server.CleanUp();
         }
-        public bool InitializeTCP(int port, ref MudEngine.GameObjects.Characters.BaseCharacter[] pbs)
+        public bool InitializeTCP(int port, ref List<PlayerBasic> pbs)
         {
             if (stage != 0)
                 return false;
             if (server.Initialize(port, ProtocolType.Tcp) < 0)
                 return false;
 
-            numberOfClients = pbs.Length;
-            clients = new ClientSocket[pbs.Length];
-            clientThreads = new Thread[pbs.Length];
+            numberOfClients = pbs.Count;
+            clients = new ClientSocket[pbs.Count];
+            clientThreads = new Thread[pbs.Count];
             players = pbs;
 
             stage++;
             return true;
         }
-        public bool InitializeUDP(int port, ref MudEngine.GameObjects.Characters.BaseCharacter[] pbs)
+        public bool InitializeUDP(int port, ref List<PlayerBasic> pbs)
         {
             if (stage != 0)
                 return false;
@@ -135,7 +138,7 @@ namespace MudEngine.Networking
         private ServerSocket server;
         private int stage;
 
-        MudEngine.GameObjects.Characters.BaseCharacter[] players;
+        List<PlayerBasic> players;
 
         // TCP Stuff:
         private ClientSocket[] clients;

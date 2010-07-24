@@ -9,11 +9,13 @@ using System.Xml;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
 
 //MUD Engine
 using MudEngine.FileSystem;
 using MudEngine.GameObjects;
 using MudEngine.GameObjects.Environment;
+using MudEngine.GameObjects.Characters.Controlled;
 
 namespace MudEngine.GameManagement
 {
@@ -172,6 +174,34 @@ namespace MudEngine.GameManagement
             BaseCurrencyName = "Copper";
         }
 
+        /// <summary>
+        /// Starts the game.
+        /// </summary>
+        public void Start()
+        {
+            this.StartServer();
+
+            scriptEngine = new Scripting.ScriptEngine();
+            scriptEngine.Initialize();
+            scriptEngine.ScriptPath = "Scripts";
+            scriptEngine.ScriptExtension = ".mud";
+            
+            if (System.IO.File.Exists("Scripts.dll"))
+            {
+                Assembly assem = Assembly.LoadFile("Scripts.dll");
+
+                foreach (Type t in assem.GetTypes())
+                {
+                    if (t.BaseType.Name == "PlayerBasic")
+                    {
+                        Scripting.GameObject obj = new Scripting.GameObject();
+                        obj = scriptEngine.GetObject(t.Name);
+                        PlayerCollection.Add((PlayerBasic)obj.Instance);
+                    }
+                }
+            }
+        }
+
         public void Save(string filename)
         {
             string directory = Path.GetDirectoryName(filename);
@@ -199,15 +229,18 @@ namespace MudEngine.GameManagement
         }
 
 
-        public MudEngine.GameObjects.Characters.BaseCharacter[] player;
+        public List<PlayerBasic> PlayerCollection;
+
         public MudEngine.Networking.Server server = new MudEngine.Networking.Server();
         public ProtocolType ServerType = ProtocolType.Tcp;
         public int ServerPort = 555;
         public int MaximumPlayers = 1000;
 
-        public void StartServer()
+        private Scripting.ScriptEngine scriptEngine;
+
+        private void StartServer()
         {
-            server.InitializeTCP(ServerPort, ref player);
+            server.InitializeTCP(ServerPort, ref PlayerCollection);
             server.Start();
         }
     }

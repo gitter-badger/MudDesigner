@@ -59,13 +59,13 @@ namespace MUDGame
             if (game.InitialRealm == null)
                 Console.WriteLine("Critical Error: No Initial Realm defined!");
 
-            game.player = new MudEngine.GameObjects.Characters.Controlled.PlayerBasic[1000];
+            game.PlayerCollection = new List<MudEngine.GameObjects.Characters.Controlled.PlayerBasic>();
 
             //Start the game.
             MudEngine.GameManagement.CommandEngine.LoadAllCommands();
 
             // Start the server thread.
-            game.StartServer();
+            game.Start();
 
             game.IsRunning = true;
 

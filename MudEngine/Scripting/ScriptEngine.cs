@@ -97,7 +97,7 @@ namespace MudEngine.Scripting
                 Directory.Delete("temp", true);
 
             Directory.CreateDirectory("temp");
-            string source = "namespace MUDScripts\n{\n}";
+            string source = "namespace MudScripts\n{\n}";
             foreach (string script in scripts)
             {
                 string tempPath = "temp";
