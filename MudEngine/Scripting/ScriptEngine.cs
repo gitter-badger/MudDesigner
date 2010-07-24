@@ -92,20 +92,51 @@ namespace MudEngine.Scripting
             //Build an array of scripts
             string[] scripts = System.IO.Directory.GetFiles(ScriptPath, "*" + ScriptExtension, System.IO.SearchOption.AllDirectories);
 
+            //Prepare the scripts. MUD Scripts are wrote without defining a namespace
+            if (Directory.Exists("temp"))
+                Directory.Delete("temp", true);
+
+            Directory.CreateDirectory("temp");
+            string source = "namespace MUDScripts\n{\n}";
+            foreach (string script in scripts)
+            {
+                string tempPath = "temp";
+
+                FileStream fr = new FileStream(script, FileMode.Open, FileAccess.Read, FileShare.None);
+                FileStream fw = new FileStream(Path.Combine(tempPath, Path.GetFileName(script)), FileMode.Create, FileAccess.Write);
+                StreamWriter sw = new StreamWriter(fw, System.Text.Encoding.Default);
+                StreamReader sr = new StreamReader(fr, System.Text.Encoding.Default);
+                
+                string content = sr.ReadToEnd();
+                source = source.Insert(source.Length - 1, content);
+                sw.Write(source);
+                sr.Close();
+                sw.Flush();
+                sw.Close();
+            }
+            string oldPath = ScriptPath;
+            ScriptPath = "temp";
+
             //Prepare the compiler.
             Dictionary<string, string> providerOptions = new Dictionary<string,string>();
             providerOptions.Add("CompilerVersion", "v3.5");
 
-            CompilerParameters param = new CompilerParameters(new string[] {"mscorlib.dll", "System.dll", "BlitScript.dll"});
+            CompilerParameters param = new CompilerParameters(new string[] {"mscorlib.dll", "System.dll", "MudEngine.dll"});
             param.GenerateExecutable = false;
             param.GenerateInMemory = true;
             param.OutputAssembly = "Scripts.dll";
             param.IncludeDebugInformation = false;
+            param.TreatWarningsAsErrors = true;
 
             //Compile the scripts with the C# CodeProvider
             CSharpCodeProvider codeProvider = new CSharpCodeProvider(providerOptions);
             CompilerResults results = new CompilerResults(new TempFileCollection());
+            scripts = Directory.GetFiles(ScriptPath, "*.Mud", SearchOption.AllDirectories);
             results = codeProvider.CompileAssemblyFromFile(param, scripts);
+
+            //Delete the temp folder
+            Directory.Delete("temp", true);
+            ScriptPath = oldPath;
 
             //if we encountered errors we need to log them to our ErrorMessages property
             if (results.Errors.Count >= 1)

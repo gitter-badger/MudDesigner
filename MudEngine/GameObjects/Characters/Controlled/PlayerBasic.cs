@@ -14,6 +14,5 @@ namespace MudEngine.GameObjects.Characters.Controlled
         public PlayerBasic()
         {
         }
-
     }
 }
