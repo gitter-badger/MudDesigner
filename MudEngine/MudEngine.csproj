@@ -63,8 +63,6 @@
     <Compile Include="GameObjects\Bag.cs" />
     <Compile Include="GameObjects\BaseObject.cs" />
     <Compile Include="GameObjects\Characters\BaseCharacter.cs" />
-    <Compile Include="GameObjects\Characters\Controlled\PlayerAdmin.cs" />
-    <Compile Include="GameObjects\Characters\Controlled\PlayerBasic.cs" />
     <Compile Include="GameObjects\Environment\Door.cs" />
     <Compile Include="GameObjects\Environment\Realm.cs" />
     <Compile Include="GameObjects\Environment\Room.cs" />
@@ -82,8 +80,11 @@
     <Compile Include="Scripting\ScriptEngine.cs" />
     <Compile Include="Scripting\StartupObject.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="GameObjects\Characters\NPC\" />
+    <None Include="startup.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

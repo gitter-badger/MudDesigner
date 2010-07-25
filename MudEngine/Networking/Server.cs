@@ -7,7 +7,6 @@ using System.Net.Sockets;
 using System.Threading;
 
 using MudEngine.GameObjects.Characters;
-using MudEngine.GameObjects.Characters.Controlled;
 
 /* Usage:
  *  Server MUDServer = new Server();
@@ -35,7 +34,7 @@ namespace MudEngine.Networking
             }
             server.CleanUp();
         }
-        public bool InitializeTCP(int port, ref List<PlayerBasic> pbs)
+        public bool InitializeTCP(int port, ref List<BaseCharacter> pbs)
         {
             if (stage != 0)
                 return false;
@@ -50,7 +49,7 @@ namespace MudEngine.Networking
             stage++;
             return true;
         }
-        public bool InitializeUDP(int port, ref List<PlayerBasic> pbs)
+        public bool InitializeUDP(int port, ref List<BaseCharacter> pbs)
         {
             if (stage != 0)
                 return false;
@@ -138,7 +137,7 @@ namespace MudEngine.Networking
         private ServerSocket server;
         private int stage;
 
-        List<PlayerBasic> players;
+        List<BaseCharacter> players;
 
         // TCP Stuff:
         private ClientSocket[] clients;

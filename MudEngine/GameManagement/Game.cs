@@ -14,8 +14,8 @@ using System.Reflection;
 //MUD Engine
 using MudEngine.FileSystem;
 using MudEngine.GameObjects;
+using MudEngine.GameObjects.Characters;
 using MudEngine.GameObjects.Environment;
-using MudEngine.GameObjects.Characters.Controlled;
 
 namespace MudEngine.GameManagement
 {
@@ -172,6 +172,9 @@ namespace MudEngine.GameManagement
             _Filename = "Game.xml";
             BaseCurrencyAmount = 1;
             BaseCurrencyName = "Copper";
+            scriptEngine.Initialize();
+
+            //Get the new
         }
 
         /// <summary>
@@ -196,7 +199,7 @@ namespace MudEngine.GameManagement
                     {
                         Scripting.GameObject obj = new Scripting.GameObject();
                         obj = scriptEngine.GetObject(t.Name);
-                        PlayerCollection.Add((PlayerBasic)obj.Instance);
+                        PlayerCollection.Add((BaseCharacter)obj.Instance);
                     }
                 }
             }
@@ -229,7 +232,7 @@ namespace MudEngine.GameManagement
         }
 
 
-        public List<PlayerBasic> PlayerCollection;
+        public List<BaseCharacter> PlayerCollection;
 
         public MudEngine.Networking.Server server = new MudEngine.Networking.Server();
         public ProtocolType ServerType = ProtocolType.Tcp;

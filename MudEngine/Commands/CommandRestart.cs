@@ -9,7 +9,6 @@ using System.Net.Sockets;
 
 //MUD Engine
 using MudEngine.GameObjects.Characters;
-using MudEngine.GameObjects.Characters.Controlled;
 using MudEngine.GameManagement;
 using MudEngine.GameObjects.Environment;
 using MudEngine.GameObjects;
@@ -24,7 +23,7 @@ namespace MudEngine.Commands
 
         public CommandResults Execute(string command, BaseCharacter player, Game project, Room room)
         {
-            if (player is PlayerAdmin)
+            if (player.IsAdmin)
             {
                 for (int i = 0; i < project.PlayerCollection.Count; i++)
                     project.PlayerCollection[i].Save(project.PlayerCollection[i].Name + ".dat");

@@ -16,7 +16,20 @@ namespace MudEngine.GameObjects.Characters
 {
     public class BaseCharacter : BaseObject
     {
+        /// <summary>
+        /// The current Room this Character is located at.
+        /// </summary>
         public Room CurrentRoom { get; set; }
+
+        /// <summary>
+        /// Gets or Sets if this Character is controlled by the user. If not user controlled then it will be AI controlled.
+        /// </summary>
+        public Boolean IsControlled { get; set; }
+
+        /// <summary>
+        /// Gets or Sets if this user has Admin privileges or not.
+        /// </summary>
+        public Boolean IsAdmin { get; private set; }
 
         public virtual void OnTravel(AvailableTravelDirections travelDirection)
         {

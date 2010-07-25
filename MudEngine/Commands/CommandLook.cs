@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 
 using MudEngine.GameObjects.Characters;
-using MudEngine.GameObjects.Characters.Controlled;
 using MudEngine.FileSystem;
 using MudEngine.Commands;
 using MudEngine.GameManagement;

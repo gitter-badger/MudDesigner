@@ -9,6 +9,7 @@ using System.IO;
 using System.Text;
 using System.Reflection;
 
+using MudEngine.GameObjects;
 
 namespace MudEngine.Scripting
 {
@@ -97,7 +98,11 @@ namespace MudEngine.Scripting
                 Directory.Delete("temp", true);
 
             Directory.CreateDirectory("temp");
-            string source = "namespace MudScripts\n{\n}";
+
+            //Setup the additional sourcecode that's needed in the script.
+            string[] usingStatements = new string[] { "using System;", "using MudEngine.GameObjects;", "using MudEngine.FileSystem;" };
+            string source = "\nnamespace MudScripts{\n}";
+
             foreach (string script in scripts)
             {
                 string tempPath = "temp";
@@ -108,6 +113,9 @@ namespace MudEngine.Scripting
                 StreamReader sr = new StreamReader(fr, System.Text.Encoding.Default);
                 
                 string content = sr.ReadToEnd();
+                foreach (string statement in usingStatements)
+                    source = source.Insert(0, statement);
+                
                 source = source.Insert(source.Length - 1, content);
                 sw.Write(source);
                 sr.Close();
@@ -135,7 +143,7 @@ namespace MudEngine.Scripting
             results = codeProvider.CompileAssemblyFromFile(param, scripts);
 
             //Delete the temp folder
-            Directory.Delete("temp", true);
+            //Directory.Delete("temp", true);
             ScriptPath = oldPath;
 
             //if we encountered errors we need to log them to our ErrorMessages property
