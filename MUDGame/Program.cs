@@ -14,7 +14,7 @@ namespace MUDGame
         //Setup our Fields
         static MudEngine.GameManagement.Game game;
         static MudEngine.GameManagement.CommandEngine commands;
-        static MudEngine.GameObjects.Characters.Controlled.PlayerAdmin user;
+        static MudEngine.GameObjects.Characters.BaseCharacter player;
 
         static List<MudEngine.GameObjects.Environment.Realm> realmCollection;
 
@@ -24,8 +24,7 @@ namespace MUDGame
             game = new MudEngine.GameManagement.Game();
             commands = new MudEngine.GameManagement.CommandEngine();
             realmCollection = new List<MudEngine.GameObjects.Environment.Realm>();
-            user = new MudEngine.GameObjects.Characters.Controlled.PlayerAdmin();
-
+            
             //Setup the game
             game.AutoSave = true;
             game.BaseCurrencyName = "Copper";
@@ -47,34 +46,32 @@ namespace MUDGame
             //Create the world
             BuildRealms();
 
-            //Setup our starting location
-            foreach (MudEngine.GameObjects.Environment.Realm realm in realmCollection)
-            {
-                if (realm.IsInitialRealm)
-                {
-                    game.SetInitialRealm(realm);
-                    break;
-                }
-            }
-            if (game.InitialRealm == null)
-                Console.WriteLine("Critical Error: No Initial Realm defined!");
-
-            game.PlayerCollection = new List<MudEngine.GameObjects.Characters.Controlled.PlayerBasic>();
-
             //Start the game.
             MudEngine.GameManagement.CommandEngine.LoadAllCommands();
 
+            //Player must be instanced AFTER BuildRealms as it needs Game.InitialRealm.InitialZone.InitialRoom
+            //property so that it can set it's starting room correctly.
+            player = new MudEngine.GameObjects.Characters.BaseCharacter(game);
+
             // Start the server thread.
-            game.Start();
+            if (!game.Start())
+                Console.WriteLine("Error starting game!\nReview Log file for details.");
 
             game.IsRunning = true;
+
+            game.PlayerCollection.Add(player);
 
             while (game.IsRunning)
             {
                 Console.Write("Command: ");
                 string command = Console.ReadLine();
 
-                user.ExecuteCommand(command, user, game, null);
+                object[] result = player.ExecuteCommand(command).Result;
+                foreach (object o in result)
+                {
+                    if (o is string)
+                        Console.WriteLine(o.ToString());
+                }
             }
 
             Console.WriteLine("Press Enter to exit.");
@@ -83,8 +80,8 @@ namespace MUDGame
 
         static private void BuildRealms()
         {
-            Zeroth zeroth = new Zeroth();
-            realmCollection.Add(zeroth.BuildZeroth());
+            Zeroth zeroth = new Zeroth(game);
+            zeroth.BuildZeroth();
         }
     }
 }

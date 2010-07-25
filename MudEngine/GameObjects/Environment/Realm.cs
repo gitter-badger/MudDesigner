@@ -18,13 +18,21 @@ namespace MudEngine.GameObjects.Environment
         [Category("Environment Information")]
         [Description("A collection of Zones that are contained within this Realm. Players can traverse the world be traveling through Rooms that are contained within Zones. Note that it is not required to place a Zone into a Realm.")]
         //[EditorAttribute(typeof(UIRealmEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        public List<Zone> Zones { get; set; }
+        public List<Zone> ZoneCollection { get; private set; }
 
+        /// <summary>
+        /// Gets or Sets if this Realm is the starting realm for the game.
+        /// </summary>
         public bool IsInitialRealm { get; set; }
+
+        /// <summary>
+        /// The Initial Starting Zone for this Realm.
+        /// </summary>
+        public Zone InitialZone { get; private set; }
 
         public Realm()
         {
-            Zones = new List<Zone>();
+            ZoneCollection = new List<Zone>();
         }
 
         /// <summary>
@@ -34,16 +42,31 @@ namespace MudEngine.GameObjects.Environment
         /// <returns></returns>
         public Zone GetZone(string filename)
         {
-            var filterQuery =
-                from zone in Zones
-                where zone.Filename == filename
-                select zone;
-
-            Zone z = new Zone();
-            foreach (var zone in filterQuery)
-                return (Zone)z.Load(zone.Filename);
+            foreach (Zone zone in ZoneCollection)
+            {
+                if (zone.Filename == filename)
+                    return zone;
+            }
 
             return null;
+        }
+
+        public void AddZone(Zone zone)
+        {
+            if (zone.IsInitialZone)
+            {
+                foreach (Zone z in ZoneCollection)
+                {
+                    if (z.IsInitialZone)
+                    {
+                        z.IsInitialZone = false;
+                        break;
+                    }
+                }
+            }
+
+            InitialZone = zone;
+            ZoneCollection.Add(zone);
         }
     }
 }

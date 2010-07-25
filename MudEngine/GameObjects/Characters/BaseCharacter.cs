@@ -31,6 +31,17 @@ namespace MudEngine.GameObjects.Characters
         /// </summary>
         public Boolean IsAdmin { get; private set; }
 
+        /// <summary>
+        /// Gets a reference to the currently running game.
+        /// </summary>
+        public Game Game { get; private set; }
+
+        public BaseCharacter(Game game)
+        {
+            Game = game;
+            CurrentRoom = game.InitialRealm.InitialZone.InitialRoom;
+        }
+
         public virtual void OnTravel(AvailableTravelDirections travelDirection)
         {
             if (CurrentRoom.DoorwayExist(travelDirection.ToString()))
@@ -40,15 +51,16 @@ namespace MudEngine.GameObjects.Characters
             }
         }
 
-        public CommandResults ExecuteCommand(string command, BaseCharacter character, Game game, Room room)
+        public CommandResults ExecuteCommand(string command)
         {
             //TODO: Character class can handle a lot of the command management here, checking various things prior to sending
             //the command off to the command engine for execution.
-            return CommandEngine.ExecuteCommand(command, character, game, room);
+            return CommandEngine.ExecuteCommand(command, this);
         }
 
         public void Initialize(ref MudEngine.Networking.ClientSocket rcs)
         {
+            CurrentRoom = Game.InitialRealm.InitialZone.InitialRoom;
             sock = rcs;
         }
 

@@ -21,17 +21,17 @@ namespace MudEngine.Commands
         public string Name { get; set; }
         public bool Override { get; set; }
 
-        public CommandResults Execute(string command, BaseCharacter player, Game project, Room room)
+        public CommandResults Execute(string command, BaseCharacter player)
         {
             if (player.IsAdmin)
             {
-                for (int i = 0; i < project.PlayerCollection.Count; i++)
-                    project.PlayerCollection[i].Save(project.PlayerCollection[i].Name + ".dat");
-                project.server.EndServer();
-                if (project.ServerType == ProtocolType.Tcp)
-                    project.server.InitializeTCP(555, ref project.PlayerCollection);
+                for (int i = 0; i < player.Game.PlayerCollection.Count; i++)
+                    player.Game.PlayerCollection[i].Save(player.Game.PlayerCollection[i].Name + ".dat");
+                player.Game.Server.EndServer();
+                if (player.Game.ServerType == ProtocolType.Tcp)
+                    player.Game.Server.InitializeTCP(555, ref player.Game.PlayerCollection);
                 else
-                    project.server.InitializeUDP(555, ref project.PlayerCollection);
+                    player.Game.Server.InitializeUDP(555, ref player.Game.PlayerCollection);
                 return new CommandResults("Server Restarted.");
             }
             return new CommandResults("Access Denied.");

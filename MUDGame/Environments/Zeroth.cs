@@ -10,6 +10,13 @@ namespace MUDGame.Environments
 {
     class Zeroth
     {
+        Game game;
+
+        internal Zeroth(Game game)
+        {
+            this.game = game;
+        }
+
         internal Realm BuildZeroth()
         {
             Realm realm = new Realm();
@@ -23,15 +30,15 @@ namespace MUDGame.Environments
             zone.Description = "Your home is small and does not contain many items, but it's still your home and someplace you can relax after your battles.";
             zone.IsSafe = true;
             zone.StatDrain = false;
-            zone.IsStartingZone = true;
+            zone.IsInitialZone = true;
 
             //Build Rooms.
             BuildHome(zone, realm);
 
             zone.Realm = realm.Name;
-            //TODO: Remove this, as Zones and Rooms contain .IsStarting properties now.
-            zone.EntranceRoom = "Bedroom";
-            realm.Zones.Add(zone);
+
+            realm.AddZone(zone);
+            game.AddRealm(realm);
 
             return realm;
         }
@@ -43,14 +50,14 @@ namespace MUDGame.Environments
             bedroom.Description = "This is your bedroom, it's small but comfortable. You have a bed, a book shelf and a rug on the floor.";
             bedroom.Zone = zone.Name;
             bedroom.Realm = realm.Name;
-            bedroom.IsStartingRoom = true;
+            bedroom.IsInitialRoom = true;
 
             Room closet = new Room();
             closet.Name = "Closet";
             closet.Description = "Your closet contains clothing and some shoes.";
             closet.Zone = zone.Name;
             closet.Realm = realm.Name;
-
+            
             Door door = new Door();
             door.TravelDirection = MudEngine.GameObjects.AvailableTravelDirections.West;
             door.ConnectedRoom = "Closet";
@@ -64,8 +71,8 @@ namespace MUDGame.Environments
             closet.Doorways.Add(door);
 
             //Todo: Should work once MUDEngine supports Types
-            zone.Rooms.Add(bedroom);
-            zone.Rooms.Add(closet);
+            zone.AddRoom(bedroom);
+            zone.AddRoom(closet);
         }
     }
 }

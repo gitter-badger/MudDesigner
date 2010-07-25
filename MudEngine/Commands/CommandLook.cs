@@ -17,17 +17,17 @@ namespace MudEngine.Commands
         public string Name { get; set; }
         public bool Override { get; set; }
 
-        public CommandResults Execute(string command, BaseCharacter player, Game project, Room room)
+        public CommandResults Execute(string command, BaseCharacter player)
         {
             StringBuilder desc = new StringBuilder();
 
-            if (room == null)
+            if (player.CurrentRoom == null)
             {
                 return new CommandResults("Not within a created Room.");
             }
 
-            desc.AppendLine(room.Description);
-            foreach (Door door in room.Doorways)
+            desc.AppendLine(player.CurrentRoom.Description);
+            foreach (Door door in player.CurrentRoom.Doorways)
             {
                 if (door.TravelDirection != MudEngine.GameObjects.AvailableTravelDirections.Down && door.TravelDirection != MudEngine.GameObjects.AvailableTravelDirections.Up)
                 {

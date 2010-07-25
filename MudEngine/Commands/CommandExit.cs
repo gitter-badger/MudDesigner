@@ -15,9 +15,9 @@ namespace MudEngine.Commands
         public bool Override { get; set; }
         public string Name { get; set; }
 
-        public CommandResults Execute(string command, BaseCharacter player, Game game, Room room)
+        public CommandResults Execute(string command, BaseCharacter player)
         {
-            game.IsRunning = false;
+            player.Game.IsRunning = false;
 
             return new CommandResults();
         }

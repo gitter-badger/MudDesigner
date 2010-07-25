@@ -103,7 +103,7 @@ namespace MudEngine.GameObjects.Environment
         /// </summary>
         [Browsable(true)]
         [Description("Sets if this is the starting room for the Zone that contains it.")]
-        public bool IsStartingRoom
+        public bool IsInitialRoom
         {
             get;
             set;

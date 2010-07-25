@@ -46,14 +46,14 @@ namespace MudEngine.GameManagement
         /// <param name="Name"></param>
         /// <param name="Parameter"></param>
         /// <returns></returns>
-        public static CommandResults ExecuteCommand(string command, BaseCharacter player, Game project, Room room)
+        public static CommandResults ExecuteCommand(string command, BaseCharacter player)
         {
             string commandKey = command.Insert(0, "Command");
             foreach (string key in Commands.Keys)
             {
                 if (commandKey.ToLower().Contains(key.ToLower()))
                 {
-                    return Commands[key.ToLower()].Execute(command, player, project, room);
+                    return Commands[key.ToLower()].Execute(command, player);
                 }
             }
 

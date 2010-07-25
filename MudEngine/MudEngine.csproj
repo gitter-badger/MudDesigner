@@ -60,6 +60,7 @@
     <Compile Include="FileSystem\SaveDataTypes.cs" />
     <Compile Include="FileSystem\XmlSerialization.cs" />
     <Compile Include="GameManagement\Game.cs" />
+    <Compile Include="GameManagement\Log.cs" />
     <Compile Include="GameObjects\Bag.cs" />
     <Compile Include="GameObjects\BaseObject.cs" />
     <Compile Include="GameObjects\Characters\BaseCharacter.cs" />

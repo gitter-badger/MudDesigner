@@ -58,7 +58,7 @@ namespace MudEngine.GameObjects.Environment
         [Category("Environment Information")]
         [Description("Sets that this Zone is a starting Zone for the game.")]
         [DefaultValue(false)]
-        public bool IsStartingZone
+        public bool IsInitialZone
         {
             get;
             set;
@@ -67,14 +67,17 @@ namespace MudEngine.GameObjects.Environment
         [Category("Environment Information")]
         //[EditorAttribute(typeof(UIRoomEditor), typeof(UITypeEditor))]
         [Description("Collection of Rooms that have been created. Editing the Rooms Collection lets you manage the Zones rooms.")]
-        public List<Room> Rooms { get; set; }
+        public List<Room> RoomCollection { get; private set; }
 
+        /// <summary>
+        /// Gets the initial Room for this Zone.
+        /// </summary>
         [Category("Environment Information")]
-        public string EntranceRoom { get; set; }
+        public Room InitialRoom { get; private set; }
 
         public Zone()
         {
-            Rooms = new List<Room>();
+            RoomCollection = new List<Room>();
             IsSafe = false;
             Realm = "No Realm Associated.";
         }
@@ -84,53 +87,38 @@ namespace MudEngine.GameObjects.Environment
         /// </summary>
         /// <param name="RoomName"></param>
         /// <returns></returns>
-        public Room GetRoomByName(string name)
+        public Room GetRoom(string name)
         {
-            var filterQuery =
-                from room in Rooms
-                where room.Name == name
-                select room;
-
-            foreach (Room room in filterQuery)
+            foreach (Room room in RoomCollection)
             {
-                Room r = new Room();
-                return (Room)r.Load(room.Name, this.Name);
+                if (room.Name == name)
+                    return room;
             }
             return null;
         }
 
         /// <summary>
-        /// Clears out the Zones room collection and re-builds it.
-        /// This is a time consuming process if there are a large amount of
-        /// of rooms, use sparingly.
+        /// Adds the supplied room into the Zones Room collection.
         /// </summary>
-        public void RebuildRoomCollection()
+        /// <param name="room"></param>
+        public void AddRoom(Room room)
         {
-            Rooms = new List<Room>();
-            //Create our collection of Rooms.
-            string realmPath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Realms), this.Realm);
-            string zonePath = Path.Combine(realmPath, this.Name);
-
-            //incase the zone hasn't been saved yet.
-            if (!Directory.Exists(zonePath))
-                return;
-
-            //Zone exists, so it's already been saved.
-            string[] rooms = Directory.GetFiles(zonePath, "*.room");
-
-            //Clear the existing collection of Rooms
-            this.Rooms.Clear();
-            //Build a new one based off of the files 
-            foreach (string file in rooms)
+            if (room.IsInitialRoom)
             {
-                Room r = new Room();
-                r = (Room)r.Load(Path.GetFileNameWithoutExtension(file));
-                //r = (Room)FileManager.Load(file, r);
-                this.Rooms.Add(r);
+                //Look if we already have a initial room. If so change it. Only 1 InitialRoom per Zone permitted.
+                foreach (Room r in RoomCollection)
+                {
+                    if (r.IsInitialRoom)
+                    {
+                        r.IsInitialRoom = false;
+                        break;
+                    }
+                }
             }
 
-            //Save the re-built Room collection
-            this.Save(Path.Combine(zonePath, this.Filename));
+            RoomCollection.Add(room);
+            if (room.IsInitialRoom)
+                InitialRoom = room;
         }
     }
 }

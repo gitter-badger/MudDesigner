@@ -147,6 +147,10 @@ namespace MudEngine.GameManagement
             get;
             private set;
         }
+        /// <summary>
+        /// Gets the collection of Realms currently stored in the Game.
+        /// </summary>
+        public List<Realm> RealmCollection { get; private set; }
 
         [Browsable(false)]
         public string Story
@@ -168,27 +172,27 @@ namespace MudEngine.GameManagement
         public Game()
         {
             CurrencyList = new List<Currency>();
+            scriptEngine = new Scripting.ScriptEngine();
+            RealmCollection = new List<Realm>();
+            PlayerCollection = new List<BaseCharacter>();
+
             GameTitle = "New Game";
             _Filename = "Game.xml";
             BaseCurrencyAmount = 1;
             BaseCurrencyName = "Copper";
-            scriptEngine.Initialize();
-
-            //Get the new
         }
 
         /// <summary>
         /// Starts the game.
         /// </summary>
-        public void Start()
+        public bool Start()
         {
-            this.StartServer();
-
-            scriptEngine = new Scripting.ScriptEngine();
+            //Setup the scripting engine
             scriptEngine.Initialize();
             scriptEngine.ScriptPath = "Scripts";
             scriptEngine.ScriptExtension = ".mud";
             
+            //Load our scripts library
             if (System.IO.File.Exists("Scripts.dll"))
             {
                 Assembly assem = Assembly.LoadFile("Scripts.dll");
@@ -203,6 +207,27 @@ namespace MudEngine.GameManagement
                     }
                 }
             }
+
+            //See if we have an Initial Realm set
+            foreach (Realm r in RealmCollection)
+            {
+                if (r.IsInitialRealm)
+                {
+                    InitialRealm = r;
+                    break;
+                }
+            }
+
+            if (InitialRealm == null)
+            {
+                Log.Write("ERROR: No initial realm set, un-able to finish starting of Game");
+                return false;
+            }
+
+            //Start the Telnet server
+            this.StartServer();
+
+            return true;
         }
 
         public void Save(string filename)
@@ -226,15 +251,29 @@ namespace MudEngine.GameManagement
             return FileManager.Load(fileName, this);
         }
 
-        public void SetInitialRealm(Realm realm)
+        public void AddRealm(Realm realm)
         {
+            if (realm.IsInitialRealm)
+            {
+                foreach (Realm r in RealmCollection)
+                {
+                    if (r.IsInitialRealm)
+                    {
+                        r.IsInitialRealm = false;
+                        break;
+                    }
+                }
+            }
+
+            //TODO: Check for duplicate Realms.
+            RealmCollection.Add(realm);
             InitialRealm = realm;
         }
 
-
+        //TODO: This should be internal only; C# property using get; internal set; so only MudEngine.dll may edit this collection
         public List<BaseCharacter> PlayerCollection;
 
-        public MudEngine.Networking.Server server = new MudEngine.Networking.Server();
+        public MudEngine.Networking.Server Server { get; internal set; }
         public ProtocolType ServerType = ProtocolType.Tcp;
         public int ServerPort = 555;
         public int MaximumPlayers = 1000;
@@ -243,8 +282,9 @@ namespace MudEngine.GameManagement
 
         private void StartServer()
         {
-            server.InitializeTCP(ServerPort, ref PlayerCollection);
-            server.Start();
+            Server = new Networking.Server();
+            Server.InitializeTCP(ServerPort, ref PlayerCollection);
+            Server.Start();
         }
     }
 }

@@ -17,7 +17,7 @@ namespace MudEngine.Commands
         public string Name { get; set; }
         public bool Override { get; set; }
 
-        public CommandResults Execute(string command, BaseCharacter player, Game project, Room room)
+        public CommandResults Execute(string command, BaseCharacter player)
         {
             string[] words = command.Split(' ');
             List<string> directions = new List<string>();
@@ -26,21 +26,22 @@ namespace MudEngine.Commands
                 return new CommandResults("No direction supplied");
             else
             {
-                foreach (Door door in room.Doorways)
+                foreach (Door door in player.CurrentRoom.Doorways)
                 {
                     AvailableTravelDirections direction = TravelDirections.GetTravelDirectionValue(words[1]);
 
                     if (door.TravelDirection == direction)
                     {
-                        room = (Room)room.Load(door.ConnectedRoom);
+                        //TODO: Player.Move() method needed so room loading is handled by player code.
+                        player.CurrentRoom = (Room)player.CurrentRoom.Load(door.ConnectedRoom);
 
-                        CommandResults cmd = CommandEngine.ExecuteCommand("Look", player, project, room);
+                        CommandResults cmd = CommandEngine.ExecuteCommand("Look", player);
                         string lookValue = "";
 
                         if (cmd.Result.Length != 0)
                             lookValue = cmd.Result[0].ToString();
 
-                        return new CommandResults(new object[] { lookValue, room });
+                        return new CommandResults(new object[] { lookValue, player.CurrentRoom });
                     }
                 }
             }
