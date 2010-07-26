@@ -28,14 +28,10 @@ namespace MudEngine.Commands
             {
                 foreach (Door door in player.CurrentRoom.Doorways)
                 {
-                    AvailableTravelDirections direction = TravelDirections.GetTravelDirectionValue(words[1]);
-
-                    if (door.TravelDirection == direction)
+                    if (door.TravelDirection == TravelDirections.GetTravelDirectionValue(words[1]))
                     {
-                        //TODO: Player.Move() method needed so room loading is handled by player code.
-                        //Old Code: player.CurrentRoom = (Room)player.CurrentRoom.Load(door.ConnectedRoom);
-                        
-                        player.Move(direction);
+                        //Move the player into their new room
+                        player.Move(door.TravelDirection);
 
                         CommandResults cmd = CommandEngine.ExecuteCommand("Look", player);
                         string lookValue = "";

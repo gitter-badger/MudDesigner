@@ -39,6 +39,7 @@ namespace MudEngine.GameObjects.Characters
         public BaseCharacter(Game game)
         {
             Game = game;
+            IsAdmin = true;
             CurrentRoom = game.InitialRealm.InitialZone.InitialRoom;
         }
 
