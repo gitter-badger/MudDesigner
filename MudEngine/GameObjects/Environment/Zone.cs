@@ -134,7 +134,7 @@ namespace MudEngine.GameObjects.Environment
             LinkRooms(departureDirection, arrivalRoom, departureRoom, requiredLevel, false, null);
         }
 
-        public void LinkRooms(AvailableTravelDirections departureDirection, Room departureRoom, Room arrivalRoom, Int32 requiredLevel, Boolean isLocked, BaseItem requiredKey)
+        public void LinkRooms(AvailableTravelDirections departureDirection, Room arrivalRoom, Room departureRoom, Int32 requiredLevel, Boolean isLocked, BaseItem requiredKey)
         {
             Door door = new Door();
             door.ArrivalRoom = arrivalRoom;

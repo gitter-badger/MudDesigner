@@ -76,16 +76,16 @@ namespace MudEngine.GameObjects.Characters
             //the command off to the command engine for execution.
             CommandResults result = CommandEngine.ExecuteCommand(command, this);
 
-
-            if (result.Result is string[])
+            if (result.Result != null)
             {
                 StringBuilder sb = new StringBuilder();
-                foreach (string item in result.Result)
-                    sb.AppendLine(item);
-
+                foreach (object item in result.Result)
+                {
+                    if (item is string)
+                        sb.AppendLine(item.ToString());
+                }
                 return sb.ToString();
             }
-
             return "";
         }
 
