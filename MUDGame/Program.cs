@@ -46,14 +46,14 @@ namespace MUDGame
             //Create the world
             BuildRealms();
 
-            //Start the game.
+            //Load all of the available commands from the engine
             MudEngine.GameManagement.CommandEngine.LoadAllCommands();
 
             //Player must be instanced AFTER BuildRealms as it needs Game.InitialRealm.InitialZone.InitialRoom
             //property so that it can set it's starting room correctly.
             player = new MudEngine.GameObjects.Characters.BaseCharacter(game);
 
-            // Start the server thread.
+            // Start the game & server
             if (!game.Start())
                 Console.WriteLine("Error starting game!\nReview Log file for details.");
 
@@ -66,7 +66,11 @@ namespace MUDGame
                 Console.Write("Command: ");
                 string command = Console.ReadLine();
 
+                //TODO: Does the CommandResult really need to return an array of Objects?
+                //All object management should be dealt with by the Game and Player so this should just be an array of strings.
                 object[] result = player.ExecuteCommand(command).Result;
+                
+                //Search through each object in the array returned to us from the command execution and print the strings.
                 foreach (object o in result)
                 {
                     if (o is string)

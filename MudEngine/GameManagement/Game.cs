@@ -199,7 +199,7 @@ namespace MudEngine.GameManagement
 
                 foreach (Type t in assem.GetTypes())
                 {
-                    if (t.BaseType.Name == "PlayerBasic")
+                    if (t.BaseType.Name == "BaseCharacter")
                     {
                         Scripting.GameObject obj = new Scripting.GameObject();
                         obj = scriptEngine.GetObject(t.Name);
