@@ -40,11 +40,11 @@ namespace MudEngine.GameObjects.Environment
         /// </summary>
         /// <param name="zoneName"></param>
         /// <returns></returns>
-        public Zone GetZone(string filename)
+        public Zone GetZone(string name)
         {
             foreach (Zone zone in ZoneCollection)
             {
-                if (zone.Filename == filename)
+                if (zone.Name == name)
                     return zone;
             }
 

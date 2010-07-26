@@ -68,6 +68,12 @@ namespace MUDGame
             Console.WriteLine(game.Story);
             Console.WriteLine();
 
+            //Simple Help info
+            Console.WriteLine("Available Commands are\n  Look\n  Exit\n  Walk 'direction' where direction = north/south/east/west/up/down\n");
+
+            //Invoke the Look command so the player knows whats around him/her
+            Console.WriteLine(player.ExecuteCommand("Look").Result[0]);
+
             while (game.IsRunning)
             {
                 Console.Write("Command: ");
@@ -88,6 +94,7 @@ namespace MUDGame
                 }
             }
 
+            game.End();
             Console.WriteLine("Press Enter to exit.");
             Console.ReadKey();
         }

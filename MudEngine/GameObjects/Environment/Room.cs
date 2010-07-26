@@ -116,11 +116,11 @@ namespace MudEngine.GameObjects.Environment
             IsSafe = false;
         }
 
-        public bool DoorwayExist(string travelDirection)
+        public bool DoorwayExist(AvailableTravelDirections travelDirection)
         {
             foreach (Door door in Doorways)
             {
-                if (door.TravelDirection.ToString().ToLower() == travelDirection.ToLower())
+                if (door.TravelDirection == travelDirection)
                     return true;
             }
 

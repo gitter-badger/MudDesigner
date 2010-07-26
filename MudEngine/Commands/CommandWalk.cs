@@ -33,7 +33,9 @@ namespace MudEngine.Commands
                     if (door.TravelDirection == direction)
                     {
                         //TODO: Player.Move() method needed so room loading is handled by player code.
-                        player.CurrentRoom = (Room)player.CurrentRoom.Load(door.ConnectedRoom);
+                        //Old Code: player.CurrentRoom = (Room)player.CurrentRoom.Load(door.ConnectedRoom);
+                        
+                        player.Move(direction);
 
                         CommandResults cmd = CommandEngine.ExecuteCommand("Look", player);
                         string lookValue = "";

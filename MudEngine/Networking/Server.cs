@@ -80,6 +80,8 @@ namespace MudEngine.Networking
         public void EndServer()
         {
             stage = 0;
+            serverThread.Abort();
+
             if (server.type == ProtocolType.Tcp)
             {
                 for (int i = 0; i < numberOfClients; i++)

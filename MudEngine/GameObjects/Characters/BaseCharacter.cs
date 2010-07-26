@@ -42,13 +42,31 @@ namespace MudEngine.GameObjects.Characters
             CurrentRoom = game.InitialRealm.InitialZone.InitialRoom;
         }
 
+        /// <summary>
+        /// Moves the player from one Room to another if the supplied direction contains a doorway.
+        /// Returns false if no doorway is available.
+        /// </summary>
+        /// <param name="travelDirection"></param>
+        /// <returns></returns>
+        public bool Move(AvailableTravelDirections travelDirection)
+        {
+            //Check if the current room has a doorway in the supplied direction of travel.
+            if (!CurrentRoom.DoorwayExist(travelDirection))
+            {
+                return false;
+            }
+
+            //We have a doorway, lets move to the next room.
+            CurrentRoom = Game.GetRealm(CurrentRoom.Realm).GetZone(CurrentRoom.Zone).GetRoom(CurrentRoom.GetDoor(travelDirection).ConnectedRoom);
+
+            OnTravel(travelDirection);
+
+            return true;
+        }
+
         public virtual void OnTravel(AvailableTravelDirections travelDirection)
         {
-            if (CurrentRoom.DoorwayExist(travelDirection.ToString()))
-            {
-                string connectedRoom = CurrentRoom.GetDoor(travelDirection).ConnectedRoom;
-                CurrentRoom = (Room)CurrentRoom.Load(connectedRoom);
-            }
+            //TODO: Check the Room/Zone/Realm to see if anything needs to occure during travel.
         }
 
         public CommandResults ExecuteCommand(string command)

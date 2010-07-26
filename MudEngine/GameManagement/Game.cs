@@ -230,6 +230,13 @@ namespace MudEngine.GameManagement
             return true;
         }
 
+        public void End()
+        {
+            //Place ending code here for game shut down.
+            //TODO: Save content on shutdown.
+            Server.EndServer();
+        }
+
         public void Save(string filename)
         {
             string directory = Path.GetDirectoryName(filename);
@@ -268,6 +275,17 @@ namespace MudEngine.GameManagement
             //TODO: Check for duplicate Realms.
             RealmCollection.Add(realm);
             InitialRealm = realm;
+        }
+
+        public Realm GetRealm(string realmName)
+        {
+            foreach (Realm realm in RealmCollection)
+            {
+                if (realm.Name == realmName)
+                    return realm;
+            }
+
+            return null;
         }
 
         //TODO: This should be internal only; C# property using get; internal set; so only MudEngine.dll may edit this collection
