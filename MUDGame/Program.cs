@@ -60,6 +60,13 @@ namespace MUDGame
             game.IsRunning = true;
 
             game.PlayerCollection.Add(player);
+            
+            //Send game info to player
+            Console.WriteLine(game.GameTitle);
+            Console.WriteLine(game.Version);
+            Console.WriteLine(game.Website);
+            Console.WriteLine(game.Story);
+            Console.WriteLine();
 
             while (game.IsRunning)
             {
@@ -68,13 +75,16 @@ namespace MUDGame
 
                 //TODO: Does the CommandResult really need to return an array of Objects?
                 //All object management should be dealt with by the Game and Player so this should just be an array of strings.
-                object[] result = player.ExecuteCommand(command).Result;
-                
-                //Search through each object in the array returned to us from the command execution and print the strings.
-                foreach (object o in result)
+                Object[] result = player.ExecuteCommand(command).Result;
+
+                if (result != null)
                 {
-                    if (o is string)
-                        Console.WriteLine(o.ToString());
+                    //Search through each object in the array returned to us from the command execution and print the strings.
+                    foreach (object o in result)
+                    {
+                        if (o is string)
+                            Console.WriteLine(o.ToString());
+                    }
                 }
             }
 
