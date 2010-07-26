@@ -27,13 +27,6 @@ namespace MudEngine.Commands
             }
 
             desc.AppendLine(player.CurrentRoom.Description);
-            foreach (Door door in player.CurrentRoom.Doorways)
-            {
-                if (door.TravelDirection != MudEngine.GameObjects.AvailableTravelDirections.Down && door.TravelDirection != MudEngine.GameObjects.AvailableTravelDirections.Up)
-                {
-                    desc.AppendLine(door.Description);
-                }
-            }
 
             return new CommandResults(desc.ToString());
         }

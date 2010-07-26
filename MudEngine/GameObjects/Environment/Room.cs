@@ -10,6 +10,8 @@ using System.IO;
 
 //MUD Engine
 using MudEngine.FileSystem;
+using MudEngine.GameObjects.Items;
+using MudEngine.GameManagement;
 
 namespace MudEngine.GameObjects.Environment
 {
@@ -17,39 +19,10 @@ namespace MudEngine.GameObjects.Environment
     public class Room : BaseObject
     {
         [Category("Environment Information")]
-        [Description("Shows what rooms are currently created and linked to within this Room.")]
-        [ReadOnly(true)]
-        public string InstalledDoorways
-        {
-            get
-            {
-                string installed = "";
-                if (this.Doorways.Count != 0)
-                {
-                    foreach (Door d in Doorways)
-                    {
-                        installed += d.TravelDirection.ToString() + ",";
-                    }
-                    if (Doorways.Count >= 2)
-                    {
-                        installed = installed.Substring(0, installed.Length - 1);
-                    }
-                    return installed;
-                }
-                else
-                    return "None Installed.";
-            }
-        }
-
-        [Category("Environment Information")]
         [Description("Allows for linking of Rooms together via Doorways")]
         //[EditorAttribute(typeof(UIDoorwayEditor), typeof(UITypeEditor))]
         [RefreshProperties(RefreshProperties.All)]
-        public List<Door> Doorways
-        {
-            get;
-            set;
-        }
+        public List<Door> Doorways { get; internal set; }
 
         [ReadOnly(true)]
         [Description("This is the Zone that the Room is currently assigned to.")]
@@ -116,6 +89,11 @@ namespace MudEngine.GameObjects.Environment
             IsSafe = false;
         }
 
+        /// <summary>
+        /// Checks to see if a doorway in the travelDirection exists.
+        /// </summary>
+        /// <param name="travelDirection"></param>
+        /// <returns></returns>
         public bool DoorwayExist(AvailableTravelDirections travelDirection)
         {
             foreach (Door door in Doorways)
@@ -127,6 +105,11 @@ namespace MudEngine.GameObjects.Environment
             return false;
         }
 
+        /// <summary>
+        /// Gets reference to the Rooms door connected in the supplied travelDirection
+        /// </summary>
+        /// <param name="travelDirection"></param>
+        /// <returns></returns>
         public Door GetDoor(AvailableTravelDirections travelDirection)
         {
             foreach (Door door in this.Doorways)
@@ -135,64 +118,6 @@ namespace MudEngine.GameObjects.Environment
                     return door;
             }
             return null;
-        }
-
-        /// <summary>
-        /// Load a Room that exists within the same Zone as the current Room
-        /// </summary>
-        /// <param name="roomName"></param>
-        /// <returns></returns>
-        public override object Load(string roomName)
-        {
-            //Correct the filename incase it doesnt contain a file extension
-            if (!roomName.ToLower().EndsWith(this.GetType().Name.ToLower()))
-                roomName.Insert(roomName.Length, this.GetType().Name.ToLower());
-
-            //If the current room does not belong within a Realm, then load it from the
-            //Zones root directory
-            if (this.Realm != null || this.Realm != "No Realm Associated.")
-            {
-                return this.Load(roomName, this.Zone);
-            }
-            //This Zone is contained within a Realm so we have to load it from within the
-            //Realm and not from within the Zones root directory
-            else
-                return this.Load(roomName, this.Zone, this.Realm);
-        }
-
-        public object Load(string roomName, string zoneName)
-        {
-            string filename = "";
-            if (!roomName.ToLower().EndsWith(".room"))
-                roomName += ".room";
-
-            if (this.Realm != null && this.Realm != "No Realm Associated.")
-            {
-                return this.Load(roomName, zoneName, this.Realm);
-            }
-            else
-                filename = FileManager.GetDataPath(SaveDataTypes.Zones);
-
-            filename = Path.Combine(filename, zoneName);
-            filename = Path.Combine(filename, "Rooms");
-            filename = Path.Combine(filename, roomName);
-
-            return base.Load(filename);
-        }
-
-        public object Load(string roomName, string zoneName, string realmName)
-        {
-            if (!roomName.ToLower().EndsWith(".room"))
-                roomName += ".room";
-
-            string filename = FileManager.GetDataPath(realmName, zoneName);
-            filename = Path.Combine(filename, "Rooms");
-            filename = Path.Combine(filename, roomName);
-
-            if (realmName == null || realmName == "No Realm Associated.")
-                return this.Load(roomName, zoneName);
-
-            return base.Load(filename);
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Xml.Serialization;
 //MUD Engine
 using MudEngine.FileSystem;
 using MudEngine.GameObjects;
+using MudEngine.GameObjects.Items;
 
 namespace MudEngine.GameObjects.Environment
 {
@@ -116,9 +117,52 @@ namespace MudEngine.GameObjects.Environment
                 }
             }
 
-            RoomCollection.Add(room);
             if (room.IsInitialRoom)
                 InitialRoom = room;
+
+            //TODO: Check for duplicate Rooms.
+            RoomCollection.Add(room);
+        }
+
+        public void LinkRooms(AvailableTravelDirections departureDirection, Room arrivalRoom, Room departureRoom)
+        {
+            LinkRooms(departureDirection, arrivalRoom, departureRoom, 0);
+        }
+
+        public void LinkRooms(AvailableTravelDirections departureDirection, Room arrivalRoom, Room departureRoom, Int32 requiredLevel)
+        {
+            LinkRooms(departureDirection, arrivalRoom, departureRoom, requiredLevel, false, null);
+        }
+
+        public void LinkRooms(AvailableTravelDirections departureDirection, Room departureRoom, Room arrivalRoom, Int32 requiredLevel, Boolean isLocked, BaseItem requiredKey)
+        {
+            Door door = new Door();
+            door.ArrivalRoom = arrivalRoom;
+            door.DepartureRoom = departureRoom;
+
+            if (isLocked)
+            {
+                door.IsLocked = isLocked;
+                door.RequiredKey = requiredKey;
+            }
+
+            door.TravelDirection = departureDirection;
+
+            departureRoom.Doorways.Add(door);
+            
+            //Now we set up the door for the opposite room.
+            door = new Door();
+
+            door.DepartureRoom = arrivalRoom;
+            door.ArrivalRoom = departureRoom;
+            if (isLocked)
+            {
+                door.IsLocked = isLocked;
+                door.RequiredKey = requiredKey;
+            }
+
+            door.TravelDirection = TravelDirections.GetReverseDirection(departureDirection);
+            arrivalRoom.Doorways.Add(door);
         }
     }
 }

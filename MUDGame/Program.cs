@@ -6,24 +6,24 @@ using System.Net;
 using System.Net.Sockets;
 
 using MUDGame.Environments;
+using MudEngine.GameManagement;
+using MudEngine.GameObjects;
+using MudEngine.GameObjects.Characters;
+using MudEngine.GameObjects.Environment;
+using MudEngine.FileSystem;
 
 namespace MUDGame
 {
     class Program
     {
         //Setup our Fields
-        static MudEngine.GameManagement.Game game;
-        static MudEngine.GameManagement.CommandEngine commands;
-        static MudEngine.GameObjects.Characters.BaseCharacter player;
-
-        static List<MudEngine.GameObjects.Environment.Realm> realmCollection;
+        static Game game;
+        static BaseCharacter player;
 
         static void Main(string[] args)
         {
             //Initialize them
-            game = new MudEngine.GameManagement.Game();
-            commands = new MudEngine.GameManagement.CommandEngine();
-            realmCollection = new List<MudEngine.GameObjects.Environment.Realm>();
+            game = new Game();
             
             //Setup the game
             game.AutoSave = true;
@@ -34,8 +34,8 @@ namespace MUDGame
             game.GameTitle = "Test Mud Project";
             game.HideRoomNames = false;
             game.PreCacheObjects = true;
-            game.ProjectPath = MudEngine.FileSystem.FileManager.GetDataPath(MudEngine.FileSystem.SaveDataTypes.Root);
-            game.TimeOfDay = MudEngine.GameManagement.Game.TimeOfDayOptions.Transition;
+            game.ProjectPath = FileManager.GetDataPath(SaveDataTypes.Root);
+            game.TimeOfDay = Game.TimeOfDayOptions.Transition;
             game.TimeOfDayTransition = 30;
             game.Version = "0.1";
             game.Website = "http://MudDesigner.Codeplex.com";
@@ -46,18 +46,15 @@ namespace MUDGame
             //Create the world
             BuildRealms();
 
-            //Load all of the available commands from the engine
-            MudEngine.GameManagement.CommandEngine.LoadAllCommands();
-
             //Player must be instanced AFTER BuildRealms as it needs Game.InitialRealm.InitialZone.InitialRoom
             //property so that it can set it's starting room correctly.
-            player = new MudEngine.GameObjects.Characters.BaseCharacter(game);
+            player = new BaseCharacter(game);
 
-            // Start the game & server
-            if (!game.Start())
+            // Start the game & server.
+            game.Start();
+            
+            if (!game.IsRunning)
                 Console.WriteLine("Error starting game!\nReview Log file for details.");
-
-            game.IsRunning = true;
 
             game.PlayerCollection.Add(player);
             
@@ -72,29 +69,15 @@ namespace MUDGame
             Console.WriteLine("Available Commands are\n  Look\n  Exit\n  Walk 'direction' where direction = north/south/east/west/up/down\n");
 
             //Invoke the Look command so the player knows whats around him/her
-            Console.WriteLine(player.ExecuteCommand("Look").Result[0]);
+            Console.WriteLine(player.ExecuteCommand("Look"));
 
             while (game.IsRunning)
             {
                 Console.Write("Command: ");
-                string command = Console.ReadLine();
-
-                //TODO: Does the CommandResult really need to return an array of Objects?
-                //All object management should be dealt with by the Game and Player so this should just be an array of strings.
-                Object[] result = player.ExecuteCommand(command).Result;
-
-                if (result != null)
-                {
-                    //Search through each object in the array returned to us from the command execution and print the strings.
-                    foreach (object o in result)
-                    {
-                        if (o is string)
-                            Console.WriteLine(o.ToString());
-                    }
-                }
+                Console.WriteLine(player.ExecuteCommand(Console.ReadLine()));
             }
 
-            game.End();
+            // - Exit command handles this now - game.Shutdown();
             Console.WriteLine("Press Enter to exit.");
             Console.ReadKey();
         }

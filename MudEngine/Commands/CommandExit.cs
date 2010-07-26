@@ -17,7 +17,7 @@ namespace MudEngine.Commands
 
         public CommandResults Execute(string command, BaseCharacter player)
         {
-            player.Game.IsRunning = false;
+            player.Game.Shutdown();
 
             return new CommandResults();
         }

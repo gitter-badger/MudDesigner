@@ -65,7 +65,11 @@ namespace MudEngine.GameObjects.Environment
                 }
             }
 
-            InitialZone = zone;
+
+            if (zone.IsInitialZone)
+                InitialZone = zone;
+
+            //TODO: Check fo duplicates
             ZoneCollection.Add(zone);
         }
     }

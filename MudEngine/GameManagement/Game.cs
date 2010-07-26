@@ -34,11 +34,7 @@ namespace MudEngine.GameManagement
         }
 
         [Browsable(false)]
-        public bool IsRunning
-        {
-            get;
-            set;
-        }
+        public bool IsRunning { get; internal set; }
 
         [Category("Company Settings")]
         [Description("The name of the Company or Author building the game.")]
@@ -208,6 +204,9 @@ namespace MudEngine.GameManagement
                 }
             }
 
+            //Load all of the engine commands
+            CommandEngine.LoadAllCommands();
+
             //See if we have an Initial Realm set
             foreach (Realm r in RealmCollection)
             {
@@ -227,14 +226,18 @@ namespace MudEngine.GameManagement
             //Start the Telnet server
             this.StartServer();
 
+            IsRunning = true;
+
             return true;
         }
 
-        public void End()
+        public void Shutdown()
         {
             //Place ending code here for game shut down.
             //TODO: Save content on shutdown.
             Server.EndServer();
+
+            IsRunning = false;
         }
 
         public void Save(string filename)
@@ -272,9 +275,11 @@ namespace MudEngine.GameManagement
                 }
             }
 
+            if (realm.IsInitialRealm)
+                InitialRealm = realm;
+
             //TODO: Check for duplicate Realms.
             RealmCollection.Add(realm);
-            InitialRealm = realm;
         }
 
         public Realm GetRealm(string realmName)

@@ -58,7 +58,7 @@ namespace MudEngine.GameObjects.Characters
             }
 
             //We have a doorway, lets move to the next room.
-            CurrentRoom = Game.GetRealm(CurrentRoom.Realm).GetZone(CurrentRoom.Zone).GetRoom(CurrentRoom.GetDoor(travelDirection).ConnectedRoom);
+            CurrentRoom = CurrentRoom.GetDoor(travelDirection).ArrivalRoom;
 
             OnTravel(travelDirection);
 
@@ -70,11 +70,23 @@ namespace MudEngine.GameObjects.Characters
             //TODO: Check the Room/Zone/Realm to see if anything needs to occure during travel.
         }
 
-        public CommandResults ExecuteCommand(string command)
+        public String ExecuteCommand(string command)
         {
             //TODO: Character class can handle a lot of the command management here, checking various things prior to sending
             //the command off to the command engine for execution.
-            return CommandEngine.ExecuteCommand(command, this);
+            CommandResults result = CommandEngine.ExecuteCommand(command, this);
+
+
+            if (result.Result is string[])
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (string item in result.Result)
+                    sb.AppendLine(item);
+
+                return sb.ToString();
+            }
+
+            return "";
         }
 
         public void Initialize(ref MudEngine.Networking.ClientSocket rcs)

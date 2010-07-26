@@ -42,24 +42,21 @@ namespace MudEngine.GameObjects.Environment
         [Category("Door Settings")]
         public AvailableTravelDirections TravelDirection { get; set; }
 
-        public string ConnectedRoom { get; set; }
+        /// <summary>
+        /// Gets or Sets the Room that the player will be arriving.
+        /// </summary>
+        public Room ArrivalRoom { get; set; }
 
-        [Category("Environment Information")]
-        [Description("The description displayed to the user when a 'Look' command is used.")]
-        public string Description { get; set; }
+        /// <summary>
+        /// Gets or Sets the Room that the user is leaving.
+        /// </summary>
+        public Room DepartureRoom { get; set; }
 
         public Door()
         {
             LevelRequirement = 0;
             IsLocked = false;
             RequiredKey = new BaseItem();
-        }
-
-        public Door(AvailableTravelDirections travelDirection, string connectedRoom)
-            : this()
-        {
-            ConnectedRoom = connectedRoom;
-            TravelDirection = travelDirection;
         }
     }
 }

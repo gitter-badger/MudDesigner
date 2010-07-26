@@ -39,6 +39,11 @@ namespace MudEngine.GameObjects
             set;
         }
 
+        /// <summary>
+        /// A detailed description that treats each entry as a seperete line when outputted to the player
+        /// </summary>
+        public List<string> DetailedDescription { get; set; }
+
         [Category("Object Setup")]
         [Description("The object script that can manipulate the object during the games life.")]
         //[EditorAttribute(typeof(UIScriptEditor), typeof(System.Drawing.Design.UITypeEditor))]
