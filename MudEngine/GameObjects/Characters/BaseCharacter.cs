@@ -12,6 +12,9 @@ using MudEngine.GameObjects;
 using MudEngine.GameObjects.Environment;
 using MudEngine.GameObjects.Items;
 
+using System.Net;
+using System.Net.Sockets;
+
 namespace MudEngine.GameObjects.Characters
 {
     public class BaseCharacter : BaseObject
@@ -32,14 +35,20 @@ namespace MudEngine.GameObjects.Characters
         public Boolean IsAdmin { get; private set; }
 
         /// <summary>
+        /// Gets or Sets if this player is active.
+        /// </summary>
+        public Boolean IsActive { get; private set; }
+
+        /// <summary>
         /// Gets a reference to the currently running game.
         /// </summary>
         public Game Game { get; private set; }
 
-        public BaseCharacter(Game game)
+        public BaseCharacter(Game game,bool admin = false)
         {
             Game = game;
-            IsAdmin = true;
+            IsAdmin = admin;
+            IsActive = false;
             CurrentRoom = game.InitialRealm.InitialZone.InitialRoom;
         }
 
@@ -89,12 +98,44 @@ namespace MudEngine.GameObjects.Characters
             return "";
         }
 
-        public void Initialize(ref MudEngine.Networking.ClientSocket rcs)
+        internal void Initialize()
         {
             CurrentRoom = Game.InitialRealm.InitialZone.InitialRoom;
-            sock = rcs;
-        }
 
-        public MudEngine.Networking.ClientSocket sock;
+            IsActive = true;
+        }
+        internal void Receive(byte[] data)
+        {
+            // convert that data to string
+            String str;
+            System.Text.ASCIIEncoding enc = new System.Text.ASCIIEncoding();
+            str = enc.GetString(data);
+            // execute, and get result
+            str = ExecuteCommand(str);
+            // convert the result back to bytes and send it back
+            System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
+            Send(encoding.GetBytes(str));
+            if (!Game.IsRunning)
+                Clear();
+        }
+        internal void Send(byte[] data)
+        {
+            try
+            {
+                client.Send(data);
+            }
+            catch (Exception) // error, connection failed: close client
+            {
+                Clear();
+            }
+        }
+        internal void Clear()
+        {
+            // TODO: Save();
+            IsActive = false;
+            client.Close();
+            // TODO: Reset game so it can be used again
+        }
+        internal Socket client;
     }
 }

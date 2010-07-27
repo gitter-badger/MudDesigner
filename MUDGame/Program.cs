@@ -54,10 +54,10 @@ namespace MUDGame
 
             //Player must be instanced AFTER BuildRealms as it needs Game.InitialRealm.InitialZone.InitialRoom
             //property so that it can set it's starting room correctly.
-            player = new BaseCharacter(game);
+            player = new BaseCharacter(game,true);
             //Add the player to the game.
             //Note once the server is fully implemented the player will be generated automatically by Game.
-            game.PlayerCollection.Add(player);
+            //game.PlayerCollection.Add(player);
             
             //Send game info to player
             Console.WriteLine(game.GameTitle);

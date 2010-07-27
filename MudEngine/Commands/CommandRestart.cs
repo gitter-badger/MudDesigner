@@ -25,13 +25,10 @@ namespace MudEngine.Commands
         {
             if (player.IsAdmin)
             {
-                for (int i = 0; i < player.Game.PlayerCollection.Count; i++)
+                for (int i = 0; i < player.Game.PlayerCollection./*Count*/Length; i++)
                     player.Game.PlayerCollection[i].Save(player.Game.PlayerCollection[i].Name + ".dat");
                 player.Game.Server.EndServer();
-                if (player.Game.ServerType == ProtocolType.Tcp)
-                    player.Game.Server.InitializeTCP(555, ref player.Game.PlayerCollection);
-                else
-                    player.Game.Server.InitializeUDP(555, ref player.Game.PlayerCollection);
+                player.Game.Server.Initialize(555, ref player.Game.PlayerCollection);
                 return new CommandResults("Server Restarted.");
             }
             return new CommandResults("Access Denied.");

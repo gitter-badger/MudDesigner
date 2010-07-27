@@ -170,7 +170,7 @@ namespace MudEngine.GameManagement
             CurrencyList = new List<Currency>();
             scriptEngine = new Scripting.ScriptEngine();
             RealmCollection = new List<Realm>();
-            PlayerCollection = new List<BaseCharacter>();
+            //PlayerCollection = new List<BaseCharacter>();
 
             GameTitle = "New Game";
             _Filename = "Game.xml";
@@ -199,7 +199,7 @@ namespace MudEngine.GameManagement
                     {
                         Scripting.GameObject obj = new Scripting.GameObject();
                         obj = scriptEngine.GetObject(t.Name);
-                        PlayerCollection.Add((BaseCharacter)obj.Instance);
+                        //PlayerCollection.Add((BaseCharacter)obj.Instance);
                     }
                 }
             }
@@ -294,7 +294,8 @@ namespace MudEngine.GameManagement
         }
 
         //TODO: This should be internal only; C# property using get; internal set; so only MudEngine.dll may edit this collection
-        public List<BaseCharacter> PlayerCollection;
+        //public List<BaseCharacter> PlayerCollection;
+        public BaseCharacter[] PlayerCollection;
 
         public MudEngine.Networking.Server Server { get; internal set; }
         public ProtocolType ServerType = ProtocolType.Tcp;
@@ -305,8 +306,12 @@ namespace MudEngine.GameManagement
 
         private void StartServer()
         {
+            //PlayerCollection = new List<BaseCharacter>(MaximumPlayers);
+            PlayerCollection = new BaseCharacter[MaximumPlayers];
+            for (int i = 0; i < MaximumPlayers; i++)
+                PlayerCollection[i] = new BaseCharacter(this);
             Server = new Networking.Server();
-            Server.InitializeTCP(ServerPort, ref PlayerCollection);
+            Server.Initialize(ServerPort, ref PlayerCollection);
             Server.Start();
         }
     }

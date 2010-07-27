@@ -21,129 +21,110 @@ namespace MudEngine.Networking
         public Server()
         {
             stage = 0;
-            server = new ServerSocket();
+            port = 0;
+            server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         }
         ~Server()
         {
             stage = 0;
-            if (server.type == ProtocolType.Tcp)
-            {
-                for (int i = 0; i < numberOfClients; i++)
-                    clients[i].CleanUp();
-                numberOfClients = 0;
-            }
-            server.CleanUp();
+            port = 0;
         }
-        public bool InitializeTCP(int port, ref List<BaseCharacter> pbs)
+        public bool Initialize(int p, ref /*List<BaseCharacter>*/BaseCharacter[] pbs)
         {
             if (stage != 0)
                 return false;
-            if (server.Initialize(port, ProtocolType.Tcp) < 0)
+            if (p <= 0)
                 return false;
-
-            numberOfClients = pbs.Count;
-            clients = new ClientSocket[pbs.Count];
-            clientThreads = new Thread[pbs.Count];
+            port = p;
+            clientThreads = new Thread[pbs./*Capacity*/Length];
             players = pbs;
-
-            stage++;
-            return true;
-        }
-        public bool InitializeUDP(int port, ref List<BaseCharacter> pbs)
-        {
-            if (stage != 0)
-                return false;
-            if (server.Initialize(port, ProtocolType.Udp) < 0)
-                return false;
-
-            players = pbs;
-            
             stage++;
             return true;
         }
         public bool Start()
         {
-            if (stage != 1)
-                return false;
-            if (server.Start() < 0)
-                return false;
-            if (server.Bind() < 0)
-                return false;
-            if (server.type == ProtocolType.Tcp)
-                if (server.Listen() < 0)
+            try
+            {
+                if (stage != 1)
                     return false;
-            stage++;
-            serverThread = new Thread(ServerThread);
-            serverThread.Start();
+                IPEndPoint ipep = new IPEndPoint(IPAddress.Any, port);
+                server.Bind(ipep);
+                server.Listen(10);
+                stage++;
+                serverThread = new Thread(ServerThread);
+                serverThread.Start();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
             return true;
         }
         public void EndServer()
         {
             stage = 0;
             serverThread.Abort();
-
-            if (server.type == ProtocolType.Tcp)
-            {
-                for (int i = 0; i < numberOfClients; i++)
-                    clients[i].CleanUp();
-                numberOfClients = 0;
-            }
-            server.CleanUp();
+            server.Close();
         }
-        /*
-         * ServerThread, if UDP: Accepts messages(ReceiveFrom) and sends in correspondence to the correct player
-         * if TCP: Accepts connection and opens a separate thread to receive a data stream between the clien
-         */
         private void ServerThread()
         {
-            if (server.type == ProtocolType.Udp)
+            while (stage == 2)
             {
-
-            }
-            else
-            {
-                while (stage == 2)
+                int sub = -1;
+                do
                 {
-                    int sub = -1;
-                    do
+                    for (int i = 0; i < players./*Count*/Length; i++)
                     {
-                        for (int i = 0; i < numberOfClients; i++)
+                        if (!players[i].IsActive)
                         {
-                            if (!clients[i].used)
-                            {
-                                sub = i;
-                                break;
-                            }
+                            sub = i;
+                            break;
                         }
-                    } while (sub == -1);
-                    server.Accept(clients[sub]);
-                    clients[sub].used = true;
-                    players[sub].Initialize(ref clients[sub]);
-                    ParameterizedThreadStart start = new ParameterizedThreadStart(ReceiveThread);
-                    clientThreads[sub] = new Thread(start);
-                    clientThreads[sub].Start();
-                }
+                    }
+                } while (sub < 0);
+                players[sub].client = server.Accept();
+                players[sub].Initialize();
+                //ParameterizedThreadStart start = new ParameterizedThreadStart(ReceiveThread);
+                clientThreads[sub] = new Thread(ReceiveThread);
+                clientThreads[sub].Start((object)sub);
             }
         }
         private void ReceiveThread(object obj)
         {
             int sub = (int)obj;
-            while (stage == 2 && clients[sub].used)
+            while (stage == 2 && players[sub].IsActive)
             {
-                byte[] buf = new byte[256];
-                clients[sub].Receive(buf);
+                try
+                {
+                    byte[] buf = new byte[255];
+                    int recved = players[sub].client.Receive(buf);
+                    if(recved > 0)
+                        players[sub].Receive(buf);
+                }
+                catch (Exception) // error receiving, close player
+                {
+                    players[sub].Clear();
+                }
+            }
+        }
+        public void Disconnect(int sub)
+        {
+            if (sub > 0 && sub < players./*Capacity*/Length)
+            {
+                clientThreads[sub].Abort();
+                players[sub].Clear();
             }
         }
 
         private Thread serverThread;
-        private ServerSocket server;
+        private Socket server;
         private int stage;
+        private int port;
 
-        List<BaseCharacter> players;
+        //List<BaseCharacter> players;
+        BaseCharacter[] players;
 
         // TCP Stuff:
-        private ClientSocket[] clients;
         private Thread[] clientThreads;
-        private int numberOfClients;
     }
 }

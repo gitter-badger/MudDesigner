@@ -72,9 +72,7 @@
     <Compile Include="GameObjects\Environment\Zone.cs" />
     <Compile Include="GameObjects\Items\BaseItem.cs" />
     <Compile Include="GameObjects\Currency.cs" />
-    <Compile Include="Networking\ClientSocket.cs" />
     <Compile Include="Networking\Server.cs" />
-    <Compile Include="Networking\ServerSocket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripting\GameObject.cs" />
     <Compile Include="Scripting\GameObjectCollection.cs" />
