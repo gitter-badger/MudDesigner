@@ -6,7 +6,7 @@ using System.Text;
 
 using MudEngine.FileSystem;
 using MudEngine.GameManagement;
-using MUDGame.Environments; //Pulling this from the example game, no sense re-writing what already exists.
+using MUDGame; //Pulling this from the example game, no sense re-writing what already exists.
 
 namespace MudServer
 {

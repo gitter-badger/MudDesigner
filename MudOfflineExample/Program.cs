@@ -1,30 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Net;
 using System.Net.Sockets;
 
-using MUDGame.Environments;
-using MudEngine.GameManagement;
-using MudEngine.GameObjects;
-using MudEngine.GameObjects.Characters;
-using MudEngine.GameObjects.Environment;
 using MudEngine.FileSystem;
+using MudEngine.GameManagement;
+using MudEngine.GameObjects.Characters;
 
 namespace MUDGame
 {
     class Program
     {
-        //Setup our Fields
-        static Game game;
-        static BaseCharacter player;
-
         static void Main(string[] args)
         {
             //Initialize them
-            game = new Game();
-            
+            Game game = new Game();
+            BaseCharacter player;
+            Zeroth zeroth = new Zeroth(game);
+            zeroth.BuildZeroth();
+
             //Setup the game
             game.AutoSave = true;
             game.BaseCurrencyName = "Copper";
@@ -43,9 +35,6 @@ namespace MUDGame
             game.ServerPort = 555;
             game.MaximumPlayers = 1000;
             game.IsMultiplayer = false; //Disables the server
-
-            //Create the world
-            BuildRealms();
 
             // Start the game & server.
             game.Start();
@@ -82,12 +71,6 @@ namespace MUDGame
             // - Exit command handles this now - game.Shutdown();
             Console.WriteLine("Press Enter to exit.");
             Console.ReadKey();
-        }
-
-        static private void BuildRealms()
-        {
-            Zeroth zeroth = new Zeroth(game);
-            zeroth.BuildZeroth();
         }
     }
 }

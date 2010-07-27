@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using MudEngine.GameManagement;
 using MudEngine.GameObjects;
 using MudEngine.GameObjects.Environment;
 
-namespace MUDGame.Environments
+namespace MUDGame
 {
     internal class Zeroth
     {
