@@ -92,6 +92,7 @@ namespace MudEngine.Networking
         private void ReceiveThread(object obj)
         {
             int sub = (int)obj;
+            MudEngine.GameManagement.Log.Write("Receiving client data...");
             while (stage == 2 && players[sub].IsActive)
             {
                 try

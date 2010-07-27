@@ -1,6 +1,9 @@
-public class Player : MudEngine.GameObjects.Characters.Controlled.PlayerBasic
+public class Player : BaseCharacter
 {
-	public Player()
+	public Game _Game;
+
+	public Player(Game game) : base(game)
 	{
+		_Game = game;
 	}
 }

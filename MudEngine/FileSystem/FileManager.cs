@@ -64,12 +64,11 @@ namespace MudEngine.FileSystem
             string assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().ManifestModule.FullyQualifiedName;
             string assemblyName = System.IO.Path.GetFileName(assemblyPath);
             string installBase = assemblyPath.Substring(0, assemblyPath.Length - assemblyName.Length);
-            string rootPath = System.IO.Path.Combine(installBase, "Project");
 
             if (DataType == SaveDataTypes.Root)
-                return rootPath;
+                return installBase;
             else
-                return System.IO.Path.Combine(rootPath, DataType.ToString());
+                return System.IO.Path.Combine(installBase, DataType.ToString());
         }
 
         public static string GetDataPath(string Realm, string Zone)
@@ -77,11 +76,10 @@ namespace MudEngine.FileSystem
             string assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().ManifestModule.FullyQualifiedName;
             string assemblyName = System.IO.Path.GetFileName(assemblyPath);
             string installBase = assemblyPath.Substring(0, assemblyPath.Length - assemblyName.Length);
-            string rootPath = System.IO.Path.Combine(installBase, "Project");
-            string realmsPath = System.IO.Path.Combine(rootPath, "Realms");
-            string requestRealm = Path.Combine(realmsPath, Realm);
-            string requestedRealmZones = Path.Combine(requestRealm, "Zones");
-            string requestedZone = Path.Combine(requestedRealmZones, Zone);
+            string realmsPath = System.IO.Path.Combine(installBase, "Realms");
+            string requestRealm = Path.Combine(installBase, Realm);
+            string requestedRealmZones = Path.Combine(installBase, "Zones");
+            string requestedZone = Path.Combine(installBase, Zone);
 
             return requestedZone;
         }

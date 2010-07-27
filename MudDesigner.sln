@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudEngine", "MudEngine\MudEngine.csproj", "{498943A8-DF5A-4DB0-B506-0BFF44788657}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MUDGame", "MUDGame\MUDGame.csproj", "{048E755C-DD05-47EC-930E-F45146B66F7C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudOfflineExample", "MudOfflineExample\MudOfflineExample.csproj", "{048E755C-DD05-47EC-930E-F45146B66F7C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MUDCompiler", "MUDCompiler\MUDCompiler.csproj", "{98E974DA-C650-4B88-B2F8-57AC7AE6C34F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudServer", "MudServer\MudServer.csproj", "{5BA65833-A99D-486C-8E74-C11A0713D44A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,16 @@ Global
 		{98E974DA-C650-4B88-B2F8-57AC7AE6C34F}.Release|Mixed Platforms.Build.0 = Release|x86
 		{98E974DA-C650-4B88-B2F8-57AC7AE6C34F}.Release|x86.ActiveCfg = Release|x86
 		{98E974DA-C650-4B88-B2F8-57AC7AE6C34F}.Release|x86.Build.0 = Release|x86
+		{5BA65833-A99D-486C-8E74-C11A0713D44A}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{5BA65833-A99D-486C-8E74-C11A0713D44A}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{5BA65833-A99D-486C-8E74-C11A0713D44A}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{5BA65833-A99D-486C-8E74-C11A0713D44A}.Debug|x86.ActiveCfg = Debug|x86
+		{5BA65833-A99D-486C-8E74-C11A0713D44A}.Debug|x86.Build.0 = Debug|x86
+		{5BA65833-A99D-486C-8E74-C11A0713D44A}.Release|Any CPU.ActiveCfg = Release|x86
+		{5BA65833-A99D-486C-8E74-C11A0713D44A}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{5BA65833-A99D-486C-8E74-C11A0713D44A}.Release|Mixed Platforms.Build.0 = Release|x86
+		{5BA65833-A99D-486C-8E74-C11A0713D44A}.Release|x86.ActiveCfg = Release|x86
+		{5BA65833-A99D-486C-8E74-C11A0713D44A}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

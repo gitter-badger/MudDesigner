@@ -44,10 +44,9 @@ namespace MudEngine.GameObjects.Characters
         /// </summary>
         public Game Game { get; private set; }
 
-        public BaseCharacter(Game game,bool admin = false)
+        public BaseCharacter(Game game)
         {
             Game = game;
-            IsAdmin = admin;
             IsActive = false;
             CurrentRoom = game.InitialRealm.InitialZone.InitialRoom;
         }
@@ -108,16 +107,22 @@ namespace MudEngine.GameObjects.Characters
         {
             // convert that data to string
             String str;
-            System.Text.ASCIIEncoding enc = new System.Text.ASCIIEncoding();
+            System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
             str = enc.GetString(data);
+
+            if (Game.IsDebug)
+                Log.Write("Client entered command: " + str);
+
             // execute, and get result
             str = ExecuteCommand(str);
+            
             // convert the result back to bytes and send it back
             System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
             Send(encoding.GetBytes(str));
             if (!Game.IsRunning)
                 Clear();
         }
+
         internal void Send(byte[] data)
         {
             try

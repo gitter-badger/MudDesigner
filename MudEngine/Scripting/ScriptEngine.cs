@@ -10,6 +10,8 @@ using System.Text;
 using System.Reflection;
 
 using MudEngine.GameObjects;
+using MudEngine.GameObjects.Characters;
+using MudEngine.GameManagement;
 
 namespace MudEngine.Scripting
 {
@@ -27,6 +29,8 @@ namespace MudEngine.Scripting
         public string ScriptPath { get; set; }
         public string InstallPath { get; private set; }
         public GameObjectCollection ObjectCollection { get; private set; }
+
+        public Assembly Assembly { get { return _ScriptAssembly; } private set { _ScriptAssembly = value; } }
 
         /// <summary>
         /// File Extension for the scripts
@@ -100,12 +104,12 @@ namespace MudEngine.Scripting
             Directory.CreateDirectory("temp");
 
             //Setup the additional sourcecode that's needed in the script.
-            string[] usingStatements = new string[] { "using System;", "using MudEngine.GameObjects;", "using MudEngine.FileSystem;" };
-            string source = "\nnamespace MudScripts{\n}";
+            string[] usingStatements = new string[] { "using System;", "using MudEngine.GameObjects;", "using MudEngine.GameObjects.Characters;", "using MudEngine.GameManagement;", "using MudEngine.FileSystem;" };
 
             foreach (string script in scripts)
             {
                 string tempPath = "temp";
+                string source = "\nnamespace MudScripts{\n}";
 
                 FileStream fr = new FileStream(script, FileMode.Open, FileAccess.Read, FileShare.None);
                 FileStream fw = new FileStream(Path.Combine(tempPath, Path.GetFileName(script)), FileMode.Create, FileAccess.Write);
@@ -186,6 +190,7 @@ namespace MudEngine.Scripting
             if (!System.IO.File.Exists("Scripts.dll"))
             {
                 ErrorMessage = "Failed to load Script Assembly!";
+                Log.Write(ErrorMessage);
                 return;
             }
 
@@ -193,16 +198,10 @@ namespace MudEngine.Scripting
 
             foreach (Type type in _ScriptAssembly.GetTypes())
             {
-                //TODO: Re-implement StartupObject instancing only during Initialize calls.
-                //Remaining scripts should be instanced via a ScriptEngine.LoadObjectList() method.
-                //if (type.BaseType == typeof(StartupObject))
-                //{
-                    GameObject gameObject = new GameObject();
-                    gameObject.Instance = Activator.CreateInstance(type);
-                    gameObject.Name = type.Name;
-
-                    ObjectCollection._GameObjects.Add(gameObject);
-                //}
+                if (type.BaseType == typeof(BaseCharacter))
+                {
+                    
+                }
             }
         }
 

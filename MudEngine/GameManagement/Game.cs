@@ -33,8 +33,18 @@ namespace MudEngine.GameManagement
             Transition,
         }
 
+        /// <summary>
+        /// Gets or Sets if this game is currently running.
+        /// </summary>
         [Browsable(false)]
         public bool IsRunning { get; internal set; }
+
+        /// <summary>
+        /// Gets or Sets if this game is running in debug mode. Additional information is sent to the log if enabled.
+        /// </summary>
+        public static bool IsDebug { get; set; }
+
+        public bool IsMultiplayer { get; set; }
 
         [Category("Company Settings")]
         [Description("The name of the Company or Author building the game.")]
@@ -176,6 +186,7 @@ namespace MudEngine.GameManagement
             _Filename = "Game.xml";
             BaseCurrencyAmount = 1;
             BaseCurrencyName = "Copper";
+            IsMultiplayer = true; //default.
         }
 
         /// <summary>
@@ -183,30 +194,26 @@ namespace MudEngine.GameManagement
         /// </summary>
         public bool Start()
         {
-            //Setup the scripting engine
+            Log.Write("Starting Game...");
+            //Setup the scripting engine and load our script library
             scriptEngine.Initialize();
-            scriptEngine.ScriptPath = "Scripts";
-            scriptEngine.ScriptExtension = ".mud";
             
-            //Load our scripts library
-            if (System.IO.File.Exists("Scripts.dll"))
-            {
-                Assembly assem = Assembly.LoadFile("Scripts.dll");
+            Log.Write("Loading internal game commands...");
+            //Loads the MudEngine Game Commands
+            CommandEngine.LoadBaseCommands();
+            //Loads any commands found in the users custom scripts library loaded by the script engine.
+            CommandEngine.LoadCommandLibrary(scriptEngine.Assembly);
 
-                foreach (Type t in assem.GetTypes())
+            //Ensure custom commands are loaded until everything is fleshed out.
+            if (Game.IsDebug)
+            {
+                foreach (string command in CommandEngine.GetCommands())
                 {
-                    if (t.BaseType.Name == "BaseCharacter")
-                    {
-                        Scripting.GameObject obj = new Scripting.GameObject();
-                        obj = scriptEngine.GetObject(t.Name);
-                        //PlayerCollection.Add((BaseCharacter)obj.Instance);
-                    }
+                    Log.Write("Command loaded: " + command);
                 }
             }
 
-            //Load all of the engine commands
-            CommandEngine.LoadAllCommands();
-
+            Log.Write("Initializing location...");
             //See if we have an Initial Realm set
             foreach (Realm r in RealmCollection)
             {
@@ -217,27 +224,36 @@ namespace MudEngine.GameManagement
                 }
             }
 
-            if (InitialRealm == null)
+            if ((InitialRealm == null) || (InitialRealm.InitialZone == null) || (InitialRealm.InitialZone.InitialRoom == null))
             {
-                Log.Write("ERROR: No initial realm set, un-able to finish starting of Game");
+                Log.Write("ERROR: No initial location defined. Game startup failed!");
                 return false;
             }
+            else
+                Log.Write("Initial Location defined -> " + InitialRealm.Name + "." + InitialRealm.InitialZone.Name + "." + InitialRealm.InitialZone.InitialRoom.Name);
 
+            Log.Write("Starting Server...");
             //Start the Telnet server
-            this.StartServer();
+            if (IsMultiplayer)
+                this.StartServer();
 
             IsRunning = true;
 
+            Log.Write("Game startup complete.");
             return true;
         }
 
         public void Shutdown()
         {
+            Log.Write("Server shutdown requested...");
             //Place ending code here for game shut down.
             //TODO: Save content on shutdown.
-            Server.EndServer();
+            if (IsMultiplayer)
+                Server.EndServer();
 
             IsRunning = false;
+
+            Log.Write("Shutdown completed...");
         }
 
         public void Save(string filename)
