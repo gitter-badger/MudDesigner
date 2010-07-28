@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Threading;
 
 using MudEngine.GameObjects.Characters;
+using MudEngine.GameManagement;
 
 /* Usage:
  *  Server MUDServer = new Server();
@@ -84,6 +85,7 @@ namespace MudEngine.Networking
                 } while (sub < 0);
                 players[sub].client = server.Accept();
                 players[sub].Initialize();
+                Log.Write("New Player Connected.");
                 //ParameterizedThreadStart start = new ParameterizedThreadStart(ReceiveThread);
                 clientThreads[sub] = new Thread(ReceiveThread);
                 clientThreads[sub].Start((object)sub);
@@ -92,7 +94,6 @@ namespace MudEngine.Networking
         private void ReceiveThread(object obj)
         {
             int sub = (int)obj;
-            MudEngine.GameManagement.Log.Write("Receiving client data...");
             while (stage == 2 && players[sub].IsActive)
             {
                 try

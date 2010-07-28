@@ -6,6 +6,7 @@ using System.Text;
 
 using MudEngine.FileSystem;
 using MudEngine.GameManagement;
+using MudEngine.GameObjects.Characters;
 using MUDGame; //Pulling this from the example game, no sense re-writing what already exists.
 
 namespace MudServer
@@ -16,9 +17,11 @@ namespace MudServer
         {
             Game game = new Game();
             Zeroth realm = new Zeroth(game);
-
+            
             realm.BuildZeroth();
 
+            BaseCharacter serverAdmin = new BaseCharacter(game);
+            
             //Setup the game
             game.AutoSave = true;
             game.BaseCurrencyName = "Copper";
@@ -40,12 +43,23 @@ namespace MudServer
             Game.IsDebug = true;
 
             game.Start();
+            string command = "";
 
             while (game.IsRunning)
             {
-                Console.Write(Log.GetMessages());
-                Log.FlushMessages();
-                System.Threading.Thread.Sleep(1);
+                if (!Console.KeyAvailable)
+                {
+                    Console.Write(Log.GetMessages());
+                    Log.FlushMessages();
+                    System.Threading.Thread.Sleep(1);
+                }
+                //TODO: Fix Me D:
+                else if (Console.ReadKey().Key == ConsoleKey.Enter)
+                    CommandEngine.ExecuteCommand(command, serverAdmin);
+                else if (Console.ReadKey().Key == ConsoleKey.Backspace)
+                    Log.Write("Backspace is not currently supported :(");
+                else
+                    command += Console.ReadKey().KeyChar;
             }
         }
     }

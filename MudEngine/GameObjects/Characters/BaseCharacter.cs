@@ -110,9 +110,6 @@ namespace MudEngine.GameObjects.Characters
             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
             str = enc.GetString(data);
 
-            if (Game.IsDebug)
-                Log.Write("Client entered command: " + str);
-
             // execute, and get result
             str = ExecuteCommand(str);
             
