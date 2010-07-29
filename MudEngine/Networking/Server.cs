@@ -94,14 +94,20 @@ namespace MudEngine.Networking
         private void ReceiveThread(object obj)
         {
             int sub = (int)obj;
+            List<byte> buffer = new List<byte>();
             while (stage == 2 && players[sub].IsActive)
             {
                 try
                 {
-                    byte[] buf = new byte[255];
+                    byte[] buf = new byte[1];
                     int recved = players[sub].client.Receive(buf);
-                    if(recved > 0)
-                        players[sub].Receive(buf);
+                    if (recved > 0)
+                        buffer.Add(buf[0]);
+                    else if (buffer.Count > 0)
+                    {
+                        players[sub].Send(buffer.ToArray());
+                        buffer.Clear();
+                    }
                 }
                 catch (Exception) // error receiving, close player
                 {
