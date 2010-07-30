@@ -9,6 +9,7 @@ using System.IO;
 
 //MUD Engine
 using MudEngine.FileSystem;
+using MudEngine.GameManagement;
 
 namespace MudEngine.GameObjects
 {
@@ -99,15 +100,17 @@ namespace MudEngine.GameObjects
 
         private string _Filename = "";
         private string _Name = "";
+        internal Game ActiveGame { get; set; }
 
         /// <summary>
         /// Initializes the base object
         /// </summary>
-        public BaseObject()
+        public BaseObject(Game game)
         {
             Script = "";
             _Name = "New " + this.GetType().Name;
             _Filename = _Name + "." + this.GetType().Name;
+            ActiveGame = game;
 
             this.Feel = "You feel nothing.";
             this.Listen = "You hear nothing of interest.";

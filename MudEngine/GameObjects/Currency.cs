@@ -21,7 +21,7 @@ namespace MudEngine.GameObjects
             set;
         }
 
-        public Currency()
+        public Currency(GameManagement.Game game) : base(game)
         {
             this.Name = "New Currency";
             this.Value = 100;

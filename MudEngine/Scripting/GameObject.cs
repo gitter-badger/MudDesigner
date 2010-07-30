@@ -25,6 +25,12 @@ namespace MudEngine.Scripting
         /// </summary>
         public bool IsActive { get; set; }
 
+        public GameObject(object instance, string name)
+        {
+            Instance = instance;
+            Name = name;
+        }
+
         public object CreateObject()
         {
             return Instance;

@@ -82,7 +82,7 @@ namespace MudEngine.GameObjects.Environment
             set;
         }
 
-        public Room()
+        public Room(Game game) :base(game)
         {
             Doorways = new List<Door>();
 

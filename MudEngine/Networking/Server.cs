@@ -30,15 +30,15 @@ namespace MudEngine.Networking
             stage = 0;
             port = 0;
         }
-        public bool Initialize(int p, ref /*List<BaseCharacter>*/BaseCharacter[] pbs)
+        public bool Initialize(int p, ref List<BaseCharacter>/*BaseCharacter[]*/ pbs)
         {
             if (stage != 0)
                 return false;
             if (p <= 0)
                 return false;
             port = p;
-            clientThreads = new Thread[pbs./*Capacity*/Length];
-            players = pbs;
+            clientThreads = new Thread[pbs.Capacity/*Length*/];
+            players = pbs.ToArray();
             stage++;
             return true;
         }

@@ -32,21 +32,16 @@ namespace MudEngine.GameObjects.Characters
         /// <summary>
         /// Gets or Sets if this user has Admin privileges or not.
         /// </summary>
-        public Boolean IsAdmin { get; private set; }
+        public SecurityRoles Role { get; private set; }
 
         /// <summary>
         /// Gets or Sets if this player is active.
         /// </summary>
         public Boolean IsActive { get; private set; }
 
-        /// <summary>
-        /// Gets a reference to the currently running game.
-        /// </summary>
-        public Game Game { get; private set; }
-
-        public BaseCharacter(Game game)
+        public BaseCharacter(Game game) : base(game)
         {
-            Game = game;
+            ActiveGame = game;
             IsActive = false;
             CurrentRoom = game.InitialRealm.InitialZone.InitialRoom;
         }
@@ -99,7 +94,7 @@ namespace MudEngine.GameObjects.Characters
 
         internal void Initialize()
         {
-            CurrentRoom = Game.InitialRealm.InitialZone.InitialRoom;
+            CurrentRoom = ActiveGame.InitialRealm.InitialZone.InitialRoom;
 
             IsActive = true;
         }
@@ -116,7 +111,7 @@ namespace MudEngine.GameObjects.Characters
             // convert the result back to bytes and send it back
             System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
             Send(encoding.GetBytes(str));
-            if (!Game.IsRunning)
+            if (!ActiveGame.IsRunning)
                 Clear();
         }
 

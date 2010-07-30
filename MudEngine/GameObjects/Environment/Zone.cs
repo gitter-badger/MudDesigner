@@ -76,7 +76,7 @@ namespace MudEngine.GameObjects.Environment
         [Category("Environment Information")]
         public Room InitialRoom { get; private set; }
 
-        public Zone()
+        public Zone(GameManagement.Game game) : base(game)
         {
             RoomCollection = new List<Room>();
             IsSafe = false;
@@ -136,7 +136,7 @@ namespace MudEngine.GameObjects.Environment
 
         public void LinkRooms(AvailableTravelDirections departureDirection, Room arrivalRoom, Room departureRoom, Int32 requiredLevel, Boolean isLocked, BaseItem requiredKey)
         {
-            Door door = new Door();
+            Door door = new Door(ActiveGame);
             door.ArrivalRoom = arrivalRoom;
             door.DepartureRoom = departureRoom;
 
@@ -151,7 +151,7 @@ namespace MudEngine.GameObjects.Environment
             departureRoom.Doorways.Add(door);
             
             //Now we set up the door for the opposite room.
-            door = new Door();
+            door = new Door(ActiveGame);
 
             door.DepartureRoom = arrivalRoom;
             door.ArrivalRoom = departureRoom;

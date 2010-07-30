@@ -22,6 +22,10 @@ namespace MudEngine.GameObjects
 
         private List<Items.BaseItem> Items { get; set; }
 
+        public Bag(GameManagement.Game game) : base(game)
+        {
+        }
+
         public void Add(BaseItem item)
         {
             if (Items.Count < Size)

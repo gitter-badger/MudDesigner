@@ -14,7 +14,7 @@ namespace MUDGame
         internal Zeroth(Game game)
         {
             this.game = game;
-            realm = new Realm();
+            realm = new Realm(game);
         }
 
         internal void BuildZeroth()
@@ -31,7 +31,7 @@ namespace MUDGame
         private void BuildHome()
         {
             //Build Zones
-            Zone zone = new Zone();
+            Zone zone = new Zone(game);
             zone.Name = "Home";
             zone.Description = "Your home is small and does not contain many items, but it's still your home and someplace you can relax after your battles.";
             zone.IsSafe = true;
@@ -40,7 +40,7 @@ namespace MUDGame
             zone.Realm = realm.Name;
             realm.AddZone(zone);
             
-            Room bedroom = new Room();
+            Room bedroom = new Room(game);
             bedroom.Name = "Bedroom";
             bedroom.Description = "This is your bedroom, it's small but comfortable. You have a bed, a book shelf and a rug on the floor.\nYou may walk to the WEST to find you Closet.";
             bedroom.Zone = zone.Name;
@@ -48,7 +48,7 @@ namespace MUDGame
             bedroom.IsInitialRoom = true;
             zone.AddRoom(bedroom);
 
-            Room closet = new Room();
+            Room closet = new Room(game);
             closet.Name = "Closet";
             closet.Description = "Your closet contains clothing and some shoes.\nYou may walk to your EAST to find your Room.";
             closet.Zone = zone.Name;

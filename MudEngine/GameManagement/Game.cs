@@ -178,9 +178,9 @@ namespace MudEngine.GameManagement
         public Game()
         {
             CurrencyList = new List<Currency>();
-            scriptEngine = new Scripting.ScriptEngine();
+            scriptEngine = new Scripting.ScriptEngine(this);
             RealmCollection = new List<Realm>();
-            //PlayerCollection = new List<BaseCharacter>();
+            PlayerCollection = new List<BaseCharacter>();
 
             GameTitle = "New Game";
             _Filename = "Game.xml";
@@ -202,7 +202,7 @@ namespace MudEngine.GameManagement
             //Loads the MudEngine Game Commands
             CommandEngine.LoadBaseCommands();
             //Loads any commands found in the users custom scripts library loaded by the script engine.
-            CommandEngine.LoadCommandLibrary(scriptEngine.Assembly);
+            //CommandEngine.LoadCommandLibrary(scriptEngine.Assembly);
 
             //Ensure custom commands are loaded until everything is fleshed out.
             if (Game.IsDebug)
@@ -236,6 +236,9 @@ namespace MudEngine.GameManagement
             //Start the Telnet server
             if (IsMultiplayer)
                 this.StartServer();
+            else
+                //TODO: Need to load a previously saved character or allow for creation of one by user.
+                //PlayerCollection.Add(new BaseCharacter(this)); //If this is single player, then add a new character to the game.
 
             IsRunning = true;
 
@@ -310,8 +313,8 @@ namespace MudEngine.GameManagement
         }
 
         //TODO: This should be internal only; C# property using get; internal set; so only MudEngine.dll may edit this collection
-        //public List<BaseCharacter> PlayerCollection;
-        public BaseCharacter[] PlayerCollection;
+        public List<BaseCharacter> PlayerCollection;
+        //public BaseCharacter[] PlayerCollection;
 
         public MudEngine.Networking.Server Server { get; internal set; }
         public ProtocolType ServerType = ProtocolType.Tcp;
@@ -322,10 +325,9 @@ namespace MudEngine.GameManagement
 
         private void StartServer()
         {
+            //This is handled by the Game() Constructor
             //PlayerCollection = new List<BaseCharacter>(MaximumPlayers);
-            PlayerCollection = new BaseCharacter[MaximumPlayers];
-            for (int i = 0; i < MaximumPlayers; i++)
-                PlayerCollection[i] = new BaseCharacter(this);
+            PlayerCollection.Add(new BaseCharacter(this));
             Server = new Networking.Server();
             Server.Initialize(ServerPort, ref PlayerCollection);
             Server.Start();

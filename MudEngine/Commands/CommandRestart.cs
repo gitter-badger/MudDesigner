@@ -23,12 +23,12 @@ namespace MudEngine.Commands
 
         public CommandResults Execute(string command, BaseCharacter player)
         {
-            if (player.IsAdmin)
+            if (player.Role == SecurityRoles.Admin)
             {
-                for (int i = 0; i < player.Game.PlayerCollection./*Count*/Length; i++)
-                    player.Game.PlayerCollection[i].Save(player.Game.PlayerCollection[i].Name + ".dat");
-                player.Game.Server.EndServer();
-                player.Game.Server.Initialize(555, ref player.Game.PlayerCollection);
+                for (int i = 0; i < player.ActiveGame.PlayerCollection.Count/*Length*/; i++)
+                    player.ActiveGame.PlayerCollection[i].Save(player.ActiveGame.PlayerCollection[i].Name + ".dat");
+                player.ActiveGame.Server.EndServer();
+                player.ActiveGame.Server.Initialize(555, ref player.ActiveGame.PlayerCollection);
                 return new CommandResults("Server Restarted.");
             }
             return new CommandResults("Access Denied.");

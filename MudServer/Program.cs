@@ -39,27 +39,16 @@ namespace MudServer
             game.ServerType = ProtocolType.Tcp;
             game.ServerPort = 555;
             game.MaximumPlayers = 1000;
-
+            game.PlayerCollection.Add(serverAdmin);
             Game.IsDebug = true;
 
             game.Start();
-            string command = "";
 
             while (game.IsRunning)
             {
-                if (!Console.KeyAvailable)
-                {
-                    Console.Write(Log.GetMessages());
-                    Log.FlushMessages();
-                    System.Threading.Thread.Sleep(1);
-                }
-                //TODO: Fix Me D:
-                else if (Console.ReadKey().Key == ConsoleKey.Enter)
-                    CommandEngine.ExecuteCommand(command, serverAdmin);
-                else if (Console.ReadKey().Key == ConsoleKey.Backspace)
-                    Log.Write("Backspace is not currently supported :(");
-                else
-                    command += Console.ReadKey().KeyChar;
+                Console.Write(Log.GetMessages());
+                Log.FlushMessages();
+                System.Threading.Thread.Sleep(1);
             }
         }
     }

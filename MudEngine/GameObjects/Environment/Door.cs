@@ -52,11 +52,11 @@ namespace MudEngine.GameObjects.Environment
         /// </summary>
         public Room DepartureRoom { get; set; }
 
-        public Door()
+        public Door(GameManagement.Game game)
         {
             LevelRequirement = 0;
             IsLocked = false;
-            RequiredKey = new BaseItem();
+            RequiredKey = new BaseItem(game);
         }
     }
 }

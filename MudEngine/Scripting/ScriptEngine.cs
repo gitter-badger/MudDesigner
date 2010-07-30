@@ -30,8 +30,15 @@ namespace MudEngine.Scripting
         public string InstallPath { get; private set; }
         public GameObjectCollection ObjectCollection { get; private set; }
 
-        public Assembly Assembly { get { return _ScriptAssembly; } private set { _ScriptAssembly = value; } }
+        /// <summary>
+        /// Collection of currently loaded objects created from compiled scripts
+        /// </summary>
+        public List<GameObject> GameObjects { get; private set; }
 
+        /// <summary>
+        /// Collection of currently loaded game commecnts that can be used. These must be compiled scripts inheriting from IGameCommand
+        /// </summary>
+        public List<IGameCommand> GameCommands { get; private set; }
         /// <summary>
         /// File Extension for the scripts
         /// </summary>
@@ -59,11 +66,13 @@ namespace MudEngine.Scripting
 
         private ScriptTypes _ScriptTypes;
         private Assembly _ScriptAssembly;
+        private List<Assembly> _AssemblyCollection;
         private string[] _ErrorMessages;
+        Game _Game;
 
-        public ScriptEngine() : this(ScriptTypes.Assembly)
+        public ScriptEngine(Game game) : this(game, ScriptTypes.Assembly)
         {
-            //Empty constructor. Only here for end-user ease of use. ScriptEngine(Game, ScriptTypes) is called from here.
+            _Game = game;
         }
         
 
@@ -71,15 +80,19 @@ namespace MudEngine.Scripting
         /// Instances a new copy of the script engine
         /// </summary>
         /// <param name="scriptTypes">Tells the engine what kind of scripts will be loaded. Source File or assembly based.</param>
-        public ScriptEngine(ScriptTypes scriptTypes)
+        public ScriptEngine(Game game, ScriptTypes scriptTypes)
         {
             //Initialize our engine fields
             _ScriptTypes = scriptTypes;
             ScriptExtension = ".cs";
 
             //Get our current install path
-            ScriptPath = Environment.CurrentDirectory;
+            ScriptPath = Path.Combine(Environment.CurrentDirectory, "Scripts");
             InstallPath = Environment.CurrentDirectory;
+            GameObjects = new List<GameObject>();
+            _AssemblyCollection = new List<Assembly>();
+
+            _Game = game;
         }
 
         /// <summary>
@@ -183,26 +196,48 @@ namespace MudEngine.Scripting
             {
                 InitializeSourceFiles();
             }
+
+            foreach (Assembly assembly in _AssemblyCollection)
+            {
+                foreach (Type t in assembly.GetTypes())
+                {
+                    if (t.BaseType == null)
+                        continue;
+                    if (t.BaseType.Name == "BaseObject")
+                    {
+                        GameObjects.Add(new GameObject(Activator.CreateInstance(t, new object[] {_Game}), t.Name));
+                        continue;
+                    }
+                    else if (t.BaseType.Name == "BaseCharacter")
+                    {
+                        GameObject obj = new GameObject(Activator.CreateInstance(t, new object[] {_Game}), t.Name); 
+                        GameObjects.Add(obj);
+                        obj.GetProperty().CurrentRoom = _Game.InitialRealm.InitialZone.InitialRoom;
+                        continue;
+                    }
+                }
+            }
         }
 
         private void InitializeAssembly()
         {
-            if (!System.IO.File.Exists("Scripts.dll"))
+            if (!Directory.Exists(ScriptPath))
             {
-                ErrorMessage = "Failed to load Script Assembly!";
-                Log.Write(ErrorMessage);
+                Log.Write("Supplied script path does not exist! No scripts loaded.");
+                return;
+            }
+            string[] libraries = Directory.GetFiles(ScriptPath, "*.dll", SearchOption.AllDirectories);
+
+            if (libraries.Length == 0)
+            {
+                Log.Write("Failed to load Script Assembly!");
                 return;
             }
 
-            _ScriptAssembly = Assembly.LoadFile(Path.Combine(InstallPath, "Scripts.dll"));
+            foreach (string library in libraries)
+                _AssemblyCollection.Add(Assembly.LoadFile(library));
 
-            foreach (Type type in _ScriptAssembly.GetTypes())
-            {
-                if (type.BaseType == typeof(BaseCharacter))
-                {
-                    
-                }
-            }
+            _AssemblyCollection.Add(Assembly.GetExecutingAssembly());
         }
 
         private void InitializeSourceFiles()

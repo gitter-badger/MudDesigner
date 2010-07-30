@@ -46,7 +46,8 @@ namespace MUDCompiler
 
         static void CompileScripts()
         {
-            ScriptEngine se = new ScriptEngine(ScriptEngine.ScriptTypes.SourceFiles);
+            MudEngine.GameManagement.Game game = new MudEngine.GameManagement.Game();
+            ScriptEngine se = new ScriptEngine(game, ScriptEngine.ScriptTypes.SourceFiles);
             Console.WriteLine();
             Console.WriteLine("Compiling...");
 

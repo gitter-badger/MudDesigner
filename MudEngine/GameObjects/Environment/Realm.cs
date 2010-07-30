@@ -30,7 +30,7 @@ namespace MudEngine.GameObjects.Environment
         /// </summary>
         public Zone InitialZone { get; private set; }
 
-        public Realm()
+        public Realm(GameManagement.Game game) : base(game)
         {
             ZoneCollection = new List<Zone>();
         }

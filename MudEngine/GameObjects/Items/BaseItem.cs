@@ -8,6 +8,8 @@ namespace MudEngine.GameObjects.Items
 {
     public class BaseItem : BaseObject
     {
-
+        public BaseItem(GameManagement.Game game) : base(game)
+        {
+        }
     }
 }

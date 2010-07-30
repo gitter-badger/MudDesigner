@@ -47,7 +47,7 @@ namespace MUDGame
             player = new BaseCharacter(game);
             //Add the player to the game.
             //Note once the server is fully implemented the player will be generated automatically by Game.
-            //game.PlayerCollection.Add(player);
+            game.PlayerCollection.Add(player);
             
             //Send game info to player
             Console.WriteLine(game.GameTitle);
