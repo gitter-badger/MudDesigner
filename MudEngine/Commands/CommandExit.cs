@@ -17,7 +17,10 @@ namespace MudEngine.Commands
 
         public CommandResults Execute(string command, BaseCharacter player)
         {
-            player.ActiveGame.Shutdown();
+            if (player.ActiveGame.IsMultiplayer)
+                player.Disconnect();
+            else
+                player.ActiveGame.Shutdown();
 
             return new CommandResults();
         }

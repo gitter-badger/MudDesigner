@@ -119,7 +119,7 @@ namespace MudEngine.GameObjects.Characters
             System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
             Send(encoding.GetBytes(str));
             if (!ActiveGame.IsRunning)
-                Clear();
+                Disconnect();
         }
 
         internal void Send(byte[] data)
@@ -130,10 +130,10 @@ namespace MudEngine.GameObjects.Characters
             }
             catch (Exception) // error, connection failed: close client
             {
-                Clear();
+                Disconnect();
             }
         }
-        internal void Clear()
+        internal void Disconnect()
         {
             // TODO: Save();
             Save();
@@ -142,6 +142,7 @@ namespace MudEngine.GameObjects.Characters
             client.Close();
             // TODO: Reset game so it can be used again
         }
+
         internal Socket client;
     }
 }

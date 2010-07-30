@@ -101,17 +101,23 @@ namespace MudEngine.Networking
                 {
                     byte[] buf = new byte[1];
                     int recved = players[sub].client.Receive(buf);
+                    
                     if (recved > 0)
-                        buffer.Add(buf[0]);
-                    else if (buffer.Count > 0)
                     {
-                        players[sub].Send(buffer.ToArray());
-                        buffer.Clear();
+                        if (buf[0] == '\n' && buffer.Count > 0)
+                        {
+                            if (buffer[buffer.Count-1] == '\r')
+                                buffer.RemoveAt(buffer.Count-1);
+                            players[sub].Receive(buffer.ToArray());
+                            buffer.Clear();
+                        }
+                        else
+                            buffer.Add(buf[0]);
                     }
                 }
                 catch (Exception) // error receiving, close player
                 {
-                    players[sub].Clear();
+                    this.Disconnect(sub);
                 }
             }
         }
@@ -120,7 +126,8 @@ namespace MudEngine.Networking
             if (sub > 0 && sub < players./*Capacity*/Length)
             {
                 clientThreads[sub].Abort();
-                players[sub].Clear();
+                if(players[sub].IsActive)
+                    players[sub].Disconnect();
             }
         }
 
