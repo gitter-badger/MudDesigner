@@ -30,20 +30,27 @@ namespace MudEngine.GameObjects.Characters
         public Boolean IsControlled { get; set; }
 
         /// <summary>
-        /// Gets or Sets if this user has Admin privileges or not.
+        /// Gets if this user has Admin privileges or not.
         /// </summary>
         public SecurityRoles Role { get; private set; }
 
         /// <summary>
-        /// Gets or Sets if this player is active.
+        /// Gets or if this character is active.
         /// </summary>
         public Boolean IsActive { get; private set; }
+
+        /// <summary>
+        /// Gets the current inventory of the character
+        /// </summary>
+        public Bag Inventory { get; private set; }
 
         public BaseCharacter(Game game) : base(game)
         {
             ActiveGame = game;
             IsActive = false;
             CurrentRoom = game.InitialRealm.InitialZone.InitialRoom;
+            Inventory = new Bag(game);
+
         }
 
         /// <summary>
@@ -129,6 +136,8 @@ namespace MudEngine.GameObjects.Characters
         internal void Clear()
         {
             // TODO: Save();
+            Save();
+
             IsActive = false;
             client.Close();
             // TODO: Reset game so it can be used again

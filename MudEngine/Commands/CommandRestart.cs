@@ -26,7 +26,7 @@ namespace MudEngine.Commands
             if (player.Role == SecurityRoles.Admin)
             {
                 for (int i = 0; i < player.ActiveGame.PlayerCollection.Length; i++)
-                    player.ActiveGame.PlayerCollection[i].Save(player.ActiveGame.PlayerCollection[i].Name + ".dat");
+                    player.ActiveGame.PlayerCollection[i].Save();
                 player.ActiveGame.Server.EndServer();
                 player.ActiveGame.Server.Initialize(555, ref player.ActiveGame.PlayerCollection);
                 return new CommandResults("Server Restarted.");

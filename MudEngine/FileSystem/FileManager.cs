@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Reflection;
 
 namespace MudEngine.FileSystem
 {
@@ -33,10 +34,18 @@ namespace MudEngine.FileSystem
         /// <param name="o"></param>
         public static void Save(string Filename, object o)
         {
+            Type t = o.GetType();
+
+            foreach (PropertyInfo info in t.GetProperties())
+            {
+                
+            }
+            /*
             if (FileType == OutputFormats.XML)
             {
                 XmlSerialization.Save(Filename, o);
             }
+             */
         }
 
         /// <summary>

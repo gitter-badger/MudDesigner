@@ -64,6 +64,8 @@ namespace MudEngine.GameObjects
             set
             {
                 string extension = "." + this.GetType().Name;
+                if (extension.StartsWith("Base"))
+                    extension = extension.Substring("Base".Length);
                 if (!value.EndsWith(extension))
                     value += extension;
 
@@ -153,12 +155,14 @@ namespace MudEngine.GameObjects
         /// Saves the current object with the supplied filename
         /// </summary>
         /// <param name="filename"></param>
-        public void Save(string filename)
+        public void Save()
         {
-            string directory = Path.GetDirectoryName(filename);
+            string directory = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Root), "Saved", "Players");
+
             if (!Directory.Exists(directory))
                 Directory.CreateDirectory(directory);
-            FileManager.Save(filename, this);
+
+            FileManager.Save(Filename, this);
         }
 
         public override string ToString()
