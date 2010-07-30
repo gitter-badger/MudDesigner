@@ -39,7 +39,6 @@ namespace MudServer
             game.ServerType = ProtocolType.Tcp;
             game.ServerPort = 555;
             game.MaximumPlayers = 1000;
-            game.PlayerCollection.Add(serverAdmin);
             Game.IsDebug = true;
 
             game.Start();
