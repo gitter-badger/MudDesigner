@@ -140,8 +140,10 @@ namespace MudEngine.GameObjects.Characters
 
         internal void Initialize()
         {
-            CurrentRoom = ActiveGame.InitialRealm.InitialZone.InitialRoom;
+            string result = ExecuteCommand("Login");
 
+
+            CurrentRoom = ActiveGame.InitialRealm.InitialZone.InitialRoom;
             IsActive = true;
         }
         internal void Receive(byte[] data)

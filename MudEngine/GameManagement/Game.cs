@@ -197,6 +197,8 @@ namespace MudEngine.GameManagement
             BaseCurrencyAmount = 1;
             BaseCurrencyName = "Copper";
             IsMultiplayer = true; //default.
+            Version = "1.0";
+            Story = "";
         }
 
         /// <summary>
@@ -340,6 +342,20 @@ namespace MudEngine.GameManagement
             Server = new Networking.Server();
             Server.Initialize(ServerPort, ref PlayerCollection);
             Server.Start();
+        }
+
+        public void SendMessage(string message, BaseCharacter player)
+        {
+            SendMessage(message, player, true);
+        }
+
+        public void SendMessage(string message, BaseCharacter player, bool newLine)
+        {
+            System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
+
+            if (newLine)
+                message += "\n\r";
+            player.Send(encoding.GetBytes(message));
         }
     }
 }
