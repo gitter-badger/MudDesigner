@@ -53,7 +53,10 @@
     <Compile Include="Commands\CommandExit.cs" />
     <Compile Include="Commands\CommandLook.cs" />
     <Compile Include="Commands\CommandRestart.cs" />
+    <Compile Include="Commands\CommandSave.cs" />
     <Compile Include="Commands\CommandWalk.cs" />
+    <Compile Include="Commands\CommandLoad.cs" />
+    <Compile Include="FileSystem\SaveDataPaths.cs" />
     <Compile Include="GameManagement\CommandEngine.cs" />
     <Compile Include="GameManagement\CommandResults.cs" />
     <Compile Include="GameManagement\ICommand.cs" />

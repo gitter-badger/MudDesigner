@@ -3,6 +3,7 @@
     public enum SaveDataTypes
     {
         Root,
+        Player,
         Currencies,
         Realms,
         Zones,

@@ -28,39 +28,39 @@ namespace MudEngine.FileSystem
         }
 
         /// <summary>
-        /// Saves the object using the specified output format
+        /// Writes content out to a file.
         /// </summary>
-        /// <param name="Filename"></param>
-        /// <param name="o"></param>
-        public static void Save(string Filename, object o)
+        /// <param name="filename"></param>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        public static void WriteLine(string filename, string value, string name)
         {
-            Type t = o.GetType();
+            if (!File.Exists(filename))
+            {
+                FileStream s = File.Create(filename);
+                s.Close();
+            }
 
-            foreach (PropertyInfo info in t.GetProperties())
+            using (StreamWriter sw = File.AppendText(filename))
             {
-                
+                StringBuilder sb = new StringBuilder();
+                sb.Append(name);
+                sb.Append("=");
+                sb.Append(value);
+                sw.WriteLine(sb.ToString());
+                sw.Close();
             }
-            /*
-            if (FileType == OutputFormats.XML)
-            {
-                XmlSerialization.Save(Filename, o);
-            }
-             */
         }
 
-        /// <summary>
-        /// Loads the object using the specified FileType format
-        /// </summary>
-        /// <param name="Filename"></param>
-        /// <param name="o"></param>
-        /// <returns></returns>
-        public static object Load(string Filename, object o)
+        public static string GetData(string filename, string name)
         {
-            if (FileType == OutputFormats.XML)
+            foreach (string line in File.ReadAllLines(filename))
             {
-                return XmlSerialization.Load(Filename, o);
+                if (line.StartsWith(name))
+                    return line.Substring(name.Length + 1); //Accounts for name=value;
             }
-            else return null;
+
+            return "No data Found.";
         }
 
         /// <summary>

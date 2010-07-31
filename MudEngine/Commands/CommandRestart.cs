@@ -25,8 +25,13 @@ namespace MudEngine.Commands
         {
             if (player.Role == SecurityRoles.Admin)
             {
+                string path = player.ActiveGame.DataPaths.Players;
+                
                 for (int i = 0; i < player.ActiveGame.PlayerCollection.Length; i++)
-                    player.ActiveGame.PlayerCollection[i].Save();
+                {
+                    string filename = Path.Combine(path, player.ActiveGame.PlayerCollection[i].Filename);
+                    player.ActiveGame.PlayerCollection[i].Save(filename);
+                }
                 player.ActiveGame.Server.EndServer();
                 player.ActiveGame.Server.Initialize(555, ref player.ActiveGame.PlayerCollection);
                 return new CommandResults("Server Restarted.");

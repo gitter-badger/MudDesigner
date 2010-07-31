@@ -146,6 +146,11 @@ namespace MudEngine.GameManagement
         [Browsable(false)]
         public string ProjectPath { get; set; }
 
+        /// <summary>
+        /// Gets or Sets the paths to various project related objects.
+        /// </summary>
+        public SaveDataPaths DataPaths { get; set; }
+
         [Category("Environment Settings")]
         [ReadOnly(true)]
         public Realm InitialRealm
@@ -180,7 +185,12 @@ namespace MudEngine.GameManagement
             CurrencyList = new List<Currency>();
             scriptEngine = new Scripting.ScriptEngine(this);
             RealmCollection = new List<Realm>();
-            //PlayerCollection = new List<BaseCharacter>();
+
+            SaveDataPaths paths = new SaveDataPaths();
+            paths.Environment = FileManager.GetDataPath(SaveDataTypes.Realms);
+            paths.Players = FileManager.GetDataPath(SaveDataTypes.Player);
+            DataPaths = paths;
+
 
             GameTitle = "New Game";
             _Filename = "Game.xml";
@@ -263,18 +273,18 @@ namespace MudEngine.GameManagement
             if (!Directory.Exists(directory))
                 Directory.CreateDirectory(directory);
 
-            FileManager.Save(filename, this);
+            //FileManager.Save(filename, this);
         }
 
-        public object Load(string path)
+        public bool Load(string path)
         {
             string fileName = Path.Combine(path, _Filename);
             if (!File.Exists(fileName))
             {
-                return null;
+                return false;
             }
-            
-            return FileManager.Load(fileName, this);
+
+            return true;
         }
 
         public void AddRealm(Realm realm)

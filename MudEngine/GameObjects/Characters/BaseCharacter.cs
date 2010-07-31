@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 //MUD Engine
 using MudEngine.FileSystem;
@@ -51,6 +52,44 @@ namespace MudEngine.GameObjects.Characters
             CurrentRoom = game.InitialRealm.InitialZone.InitialRoom;
             Inventory = new Bag(game);
 
+        }
+
+        public override void Load(string filename)
+        {
+            base.Load(filename);
+
+            this.IsControlled = Convert.ToBoolean(FileManager.GetData(filename, "IsControlled"));
+
+            //Need to re-assign the enumerator value that was previously assigned to the Role property
+            Array values = Enum.GetValues(typeof(SecurityRoles));
+            foreach (int value in values)
+            {
+                //Since enum values are not strings, we can't simply just assign the string to the enum
+                string displayName = Enum.GetName(typeof(SecurityRoles), value);
+
+                //If the value = the string saved, then perform the needed conversion to get our data back
+                if (displayName.ToLower() == FileManager.GetData(filename, "Role").ToLower())
+                {
+                    Role = (SecurityRoles)Enum.Parse(typeof(SecurityRoles), displayName);
+                    break;
+                }
+            }
+
+            //Restore the users current Room.
+            Realm realm = ActiveGame.GetRealm(FileManager.GetData(filename, "CurrentRealm"));
+            Zone zone = realm.GetZone(FileManager.GetData(filename, "CurrentZone"));
+            CurrentRoom = zone.GetRoom(FileManager.GetData(filename, "CurrentRoom"));
+        }
+
+        public override void Save(string filename)
+        {
+            base.Save(filename);
+
+            FileManager.WriteLine(filename, this.IsControlled.ToString(), "IsControlled");
+            FileManager.WriteLine(filename, this.Role.ToString(), "Role");
+            FileManager.WriteLine(filename, this.CurrentRoom.Name, "CurrentRoom");
+            FileManager.WriteLine(filename, this.CurrentRoom.Zone, "CurrentZone");
+            FileManager.WriteLine(filename, this.CurrentRoom.Realm, "CurrentRealm");
         }
 
         /// <summary>
@@ -135,8 +174,8 @@ namespace MudEngine.GameObjects.Characters
         }
         internal void Disconnect()
         {
-            // TODO: Save();
-            Save();
+            string filePath = Path.Combine(ActiveGame.DataPaths.Players, Filename);
+            this.Save(filePath);
 
             IsActive = false;
             client.Close();
