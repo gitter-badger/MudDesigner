@@ -99,21 +99,7 @@ namespace MudEngine.Networking
             {
                 try
                 {
-                    byte[] buf = new byte[1];
-                    int recved = players[sub].client.Receive(buf);
-                    
-                    if (recved > 0)
-                    {
-                        if (buf[0] == '\n' && buffer.Count > 0)
-                        {
-                            if (buffer[buffer.Count-1] == '\r')
-                                buffer.RemoveAt(buffer.Count-1);
-                            players[sub].Receive(buffer.ToArray());
-                            buffer.Clear();
-                        }
-                        else
-                            buffer.Add(buf[0]);
-                    }
+                    players[sub].Receive(players[sub].ReadInput());
                 }
                 catch (Exception) // error receiving, close player
                 {

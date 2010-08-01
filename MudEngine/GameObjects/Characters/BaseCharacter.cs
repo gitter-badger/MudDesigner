@@ -146,28 +146,20 @@ namespace MudEngine.GameObjects.Characters
             CurrentRoom = ActiveGame.InitialRealm.InitialZone.InitialRoom;
             IsActive = true;
         }
-        internal void Receive(byte[] data)
+        internal void Receive(string data)
         {
-            // convert that data to string
-            String str;
-            System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
-            str = enc.GetString(data);
-
-            // execute, and get result
-            str = ExecuteCommand(str);
-            
-            // convert the result back to bytes and send it back
-            System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
-            Send(encoding.GetBytes(str));
+            ExecuteCommand(data);
+            Send(data);
             if (!ActiveGame.IsRunning)
                 Disconnect();
         }
 
-        internal void Send(byte[] data)
+        internal void Send(string data)
         {
             try
             {
-                client.Send(data);
+                System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
+                client.Send(encoding.GetBytes(data));
             }
             catch (Exception) // error, connection failed: close client
             {
@@ -182,6 +174,38 @@ namespace MudEngine.GameObjects.Characters
             IsActive = false;
             client.Close();
             // TODO: Reset game so it can be used again
+        }
+        internal string ReadInput()
+        {
+            List<byte> buffer = new List<byte>();
+            while (true)
+            {
+                try
+                {
+                    byte[] buf = new byte[1];
+                    int recved = client.Receive(buf);
+                    
+                    if (recved > 0)
+                    {
+                        if (buf[0] == '\n' && buffer.Count > 0)
+                        {
+                            if (buffer[buffer.Count-1] == '\r')
+                                buffer.RemoveAt(buffer.Count-1);
+
+                            String str;
+                            System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
+                            str = enc.GetString(buffer.ToArray());
+                            return str;
+                        }
+                        else
+                            buffer.Add(buf[0]);
+                    }
+                }
+                catch (Exception) // error receiving, close player
+                {
+                    Disconnect();
+                }
+            }
         }
 
         internal Socket client;
