@@ -42,8 +42,13 @@ namespace MudEngine.Commands
 
                 if (!foundName)
                 {
-                    isLegal = true;
-                    player.Name = input;
+                    if (input == "")
+                        continue;
+                    else
+                    {
+                        isLegal = true;
+                        player.Name = input;
+                    }
                 }
             }
 

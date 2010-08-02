@@ -214,6 +214,8 @@ namespace MudEngine.GameObjects.Characters
                             String str;
                             List<byte> correctedBuffer = new List<byte>();
                             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
+
+                            /*
                             foreach (byte i in buffer)
                             {
                                 if (i == 255)
@@ -223,7 +225,8 @@ namespace MudEngine.GameObjects.Characters
                                 else
                                     correctedBuffer.Add(i);
                             }
-                            str = enc.GetString(correctedBuffer.ToArray());
+                             */
+                            str = enc.GetString(buffer.ToArray());
                             return str;
                         }
                         else
