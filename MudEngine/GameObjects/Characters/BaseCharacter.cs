@@ -154,11 +154,19 @@ namespace MudEngine.GameObjects.Characters
                 Disconnect();
         }
 
-        internal void Send(string data)
+        /// <summary>
+        /// Sends data to the player.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="newLine"></param>
+        internal void Send(string data, bool newLine)
         {
             try
             {
                 System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
+                if (newLine)
+                    data += "\n\r";
+
                 client.Send(encoding.GetBytes(data));
             }
             catch (Exception) // error, connection failed: close client
@@ -166,11 +174,22 @@ namespace MudEngine.GameObjects.Characters
                 Disconnect();
             }
         }
+
+        /// <summary>
+        /// Sends data to the player.
+        /// </summary>
+        /// <param name="data"></param>
+        internal void Send(string data)
+        {
+            Send(data, true);
+        }
+
         internal void Disconnect()
         {
             string filePath = Path.Combine(ActiveGame.DataPaths.Players, Filename);
             this.Save(filePath);
 
+            Send("Disconnecting...");
             IsActive = false;
             client.Close();
             // TODO: Reset game so it can be used again
@@ -193,8 +212,18 @@ namespace MudEngine.GameObjects.Characters
                                 buffer.RemoveAt(buffer.Count-1);
 
                             String str;
+                            List<byte> correctedBuffer = new List<byte>();
                             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
-                            str = enc.GetString(buffer.ToArray());
+                            foreach (byte i in buffer)
+                            {
+                                if (i == 255)
+                                    continue;
+                                else if (i == 251)
+                                    continue;
+                                else
+                                    correctedBuffer.Add(i);
+                            }
+                            str = enc.GetString(correctedBuffer.ToArray());
                             return str;
                         }
                         else

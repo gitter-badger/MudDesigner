@@ -112,8 +112,12 @@ namespace MudEngine.Networking
             if (sub > 0 && sub < players./*Capacity*/Length)
             {
                 clientThreads[sub].Abort();
-                if(players[sub].IsActive)
+                if (players[sub].IsActive)
+                {
+                    Log.Write("Disconnecting player " + players[sub].Name);
                     players[sub].Disconnect();
+                    Log.Write("Player disconnected.");
+                }
             }
         }
 

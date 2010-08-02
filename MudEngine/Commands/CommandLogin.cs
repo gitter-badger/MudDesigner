@@ -17,14 +17,40 @@ namespace MudEngine.Commands
 
         public CommandResults Execute(string command, BaseCharacter player)
         {
-            player.ActiveGame.SendMessage(player.ActiveGame.GameTitle, player);
-            player.ActiveGame.SendMessage(player.ActiveGame.Version, player);
-            player.ActiveGame.SendMessage(player.ActiveGame.Story, player);
-            player.ActiveGame.SendMessage("", player);
-            player.ActiveGame.SendMessage("Enter Character Name: ", player, false);
+            player.Send(player.ActiveGame.GameTitle);
+            player.Send(player.ActiveGame.Version);
+            player.Send(player.ActiveGame.Story);
+            player.Send("");
 
+            bool isLegal = false;
+
+            while (!isLegal)
+            {
+                player.Send("Enter Character Name: ", false);
+                string input = player.ReadInput();
+                bool foundName = false;
+
+                foreach (BaseCharacter bc in player.ActiveGame.PlayerCollection)
+                {
+                    if (bc.Name == input)
+                    {
+                        player.Send("Character name already taken.");
+                        foundName = true;
+                        break;
+                    }
+                }
+
+                if (!foundName)
+                {
+                    isLegal = true;
+                    player.Name = input;
+                }
+            }
+
+            player.Send("Welcome " + player.Name + "!");
+
+            //string playerName = player.Receive();
             //TODO: Read  user input...
-
             return new CommandResults();
         }
     }

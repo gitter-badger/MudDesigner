@@ -2,7 +2,9 @@
 using System;
 using System.CodeDom;
 using System.CodeDom.Compiler;
+#if !MOBILE
 using Microsoft.CSharp;
+#endif
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
@@ -101,6 +103,7 @@ namespace MudEngine.Scripting
         /// <returns></returns>
         public bool CompileScripts()
         {
+#if !MOBILE
             //Ensure the script path exists.
             if (!System.IO.Directory.Exists(ScriptPath))
             {
@@ -180,6 +183,7 @@ namespace MudEngine.Scripting
             }
             else
                 return true;
+#endif
         }
 
         /// <summary>

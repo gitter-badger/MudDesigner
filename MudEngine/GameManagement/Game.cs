@@ -16,6 +16,7 @@ using MudEngine.FileSystem;
 using MudEngine.GameObjects;
 using MudEngine.GameObjects.Characters;
 using MudEngine.GameObjects.Environment;
+using MudEngine.Scripting;
 
 namespace MudEngine.GameManagement
 {
@@ -26,6 +27,8 @@ namespace MudEngine.GameManagement
     [XmlInclude(typeof(Currency))]
     public class Game
     {
+        #region ==== Properties & Types ====
+        #region Custom Types
         public enum TimeOfDayOptions
         {
             AlwaysDay,
@@ -34,18 +37,59 @@ namespace MudEngine.GameManagement
         }
 
         /// <summary>
+        /// Gets or Sets what time of day the world is currently in.
+        /// </summary>
+        [Category("Day Management")]
+        [Description("Set what time of day the world will take place in.")]
+        public TimeOfDayOptions TimeOfDay
+        {
+            get;
+            set;
+        }
+        #endregion
+
+        #region Game Object Setup
+        /// <summary>
+        /// Gets or Sets if this game is running in debug mode. Additional information is sent to the log if enabled.
+        /// </summary>
+        public static bool IsDebug { get; set; }
+
+        /// <summary>
+        /// Gets or Sets if the game will run with a server or not.
+        /// </summary>
+        public bool IsMultiplayer { get; set; }
+
+        /// <summary>
         /// Gets or Sets if this game is currently running.
         /// </summary>
         [Browsable(false)]
         public bool IsRunning { get; internal set; }
 
         /// <summary>
-        /// Gets or Sets if this game is running in debug mode. Additional information is sent to the log if enabled.
+        /// Gets or Sets if all objects will be laoded during server startup. Enabling this results in a slower server start time, but faster object access.
         /// </summary>
-        public static bool IsDebug { get; set; }
+        [Category("Project Settings")]
+        [Description("If enabled, all objects will be loaded during server startup resulting in a slower server start time, but faster load time during gameplay")]
+        public bool PreCacheObjects { get; set; }
 
-        public bool IsMultiplayer { get; set; }
+        /// <summary>
+        /// Gets or Sets the path to the current project
+        /// </summary>
+        [Browsable(false)]
+        public string ProjectPath { get; set; }
 
+        /// <summary>
+        /// Gets or Sets the paths to various project related objects.
+        /// </summary>
+        public SaveDataPaths DataPaths { get; set; }
+
+        /// <summary>
+        /// Gets the scripting engine used by the game.
+        /// </summary>
+        public ScriptEngine scriptEngine { get; internal set; }
+        #endregion
+
+        #region Game Information
         [Category("Company Settings")]
         [Description("The name of the Company or Author building the game.")]
         /// <summary>
@@ -64,6 +108,13 @@ namespace MudEngine.GameManagement
         [Description("The name of the game displayed to the users, and title bar of the runtime.")]
         public string GameTitle { get; set; }
 
+        /// <summary>
+        /// Gets or Sets the current working version of the game.
+        /// </summary>
+        [Category("Project Settings")]
+        [Description("The current working version of the game.")]
+        public string Version { get; set; }
+
         [Category("Project Settings")]
         [Description("Enable or Disable Auto-saving of players when the player travels")]
         /// <summary>
@@ -79,44 +130,18 @@ namespace MudEngine.GameManagement
         public bool HideRoomNames { get; set; }
 
         /// <summary>
-        /// Gets or Sets what time of day the world is currently in.
-        /// </summary>
-        [Category("Day Management")]
-        [Description("Set what time of day the world will take place in.")]
-        public TimeOfDayOptions TimeOfDay
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Gets or Sets how long in minutes it takes to transition from day to night.
         /// </summary>
         [Category("Day Management")]
         [Description("Set how long in minutes it takes to transition from day to night.")]
-        public int TimeOfDayTransition
-        {
-            get;
-            set;
-        }
+        public int TimeOfDayTransition { get; set; }
 
         /// <summary>
         /// Gets or Sets how long in minutes a day lasts in the game world.
         /// </summary>
         [Category("Day Management")]
         [Description("Sets how long in minutes a day lasts in the game world.")]
-        public int DayLength
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or Sets the current working version of the game.
-        /// </summary>
-        [Category("Project Settings")]
-        [Description("The current working version of the game.")]
-        public string Version { get; set; }
+        public int DayLength { get; set; }
 
         [Category("Game Currency")]
         [DefaultValue(1)]
@@ -127,29 +152,9 @@ namespace MudEngine.GameManagement
         [Category("Game Currency")]
         [DefaultValue("Copper")]
         public string BaseCurrencyName { get; set; }
-
-        //TODO: Add Party support.
-
-        /// <summary>
-        /// Gets or Sets if all objects will be laoded during server startup. Enabling this results in a slower server start time, but faster object access.
-        /// </summary>
-        [Category("Project Settings")]
-        [Description("If enabled, all objects will be loaded during server startup resulting in a slower server start time, but faster load time during gameplay")]
-        public bool PreCacheObjects { get; set; }
-
+        
         [Browsable(false)]
         public List<Currency> CurrencyList { get; set; }
-
-        /// <summary>
-        /// Gets or Sets the path to the current project
-        /// </summary>
-        [Browsable(false)]
-        public string ProjectPath { get; set; }
-
-        /// <summary>
-        /// Gets or Sets the paths to various project related objects.
-        /// </summary>
-        public SaveDataPaths DataPaths { get; set; }
 
         [Category("Environment Settings")]
         [ReadOnly(true)]
@@ -163,46 +168,73 @@ namespace MudEngine.GameManagement
         /// </summary>
         public List<Realm> RealmCollection { get; private set; }
 
-        [Browsable(false)]
-        public string Story
-        {
-            get;
-            set;
-        }
+        /// <summary>
+        /// The Story that is displayed on initial player entry into the game
+        /// </summary>
+        public string Story { get; set; }
+        #endregion
 
-        [Category("Object Setup")]
-        public string Filename
-        {
-            get
-            {
-                return _Filename;
-            }
-        }
-        private string _Filename;
+        #region Networking
+        //TODO: This should be internal only; C# property using get; internal set; so only MudEngine.dll may edit this collection
+        /// <summary>
+        /// Collection of players currently running on the server.
+        /// </summary>
+        internal BaseCharacter[] PlayerCollection;
 
+        /// <summary>
+        /// Gets the current running Server object.
+        /// </summary>
+        public MudEngine.Networking.Server Server { get; internal set; }
+
+        /// <summary>
+        /// Gets or Sets the protocol used by the server.
+        /// </summary>
+        public ProtocolType ServerType { get; set; }
+
+        /// <summary>
+        /// Gets or Sets the port that the server will run on
+        /// </summary>
+        public int ServerPort { get; set; }
+
+        /// <summary>
+        /// Gets or Sets the maximum number of Players permitted to run on this Games server.
+        /// </summary>
+        public int MaximumPlayers { get; set; }
+        #endregion
+        #endregion
+
+        #region ==== Constructors ====
         public Game()
         {
+            //Instance all of the Games Objects.
             CurrencyList = new List<Currency>();
             scriptEngine = new Scripting.ScriptEngine(this);
             RealmCollection = new List<Realm>();
 
+            //Prepare the Save Paths for all of our Game objects.
             SaveDataPaths paths = new SaveDataPaths();
             paths.Environment = FileManager.GetDataPath(SaveDataTypes.Realms);
             paths.Players = FileManager.GetDataPath(SaveDataTypes.Player);
             DataPaths = paths;
 
-
+            //Setup default settings for the Game
             GameTitle = "New Game";
-            _Filename = "Game.xml";
             BaseCurrencyAmount = 1;
             BaseCurrencyName = "Copper";
-            IsMultiplayer = true; //default.
             Version = "1.0";
             Story = "";
-        }
 
+            //Setup default Networking settings
+            IsMultiplayer = true;
+            ServerType = ProtocolType.Tcp;
+            ServerPort = 555;
+            MaximumPlayers = 1000;
+        }
+        #endregion
+
+        #region ==== Methods ====
         /// <summary>
-        /// Starts the game.
+        /// Starts the game and runs the server if IsMultiplayer is true
         /// </summary>
         public bool Start()
         {
@@ -213,8 +245,6 @@ namespace MudEngine.GameManagement
             Log.Write("Loading internal game commands...");
             //Loads the MudEngine Game Commands
             CommandEngine.LoadBaseCommands();
-            //Loads any commands found in the users custom scripts library loaded by the script engine.
-            //CommandEngine.LoadCommandLibrary(scriptEngine.Assembly);
 
             //Ensure custom commands are loaded until everything is fleshed out.
             if (Game.IsDebug)
@@ -236,6 +266,7 @@ namespace MudEngine.GameManagement
                 }
             }
 
+            //Check if any the initial room exists or not.
             if ((InitialRealm == null) || (InitialRealm.InitialZone == null) || (InitialRealm.InitialZone.InitialRoom == null))
             {
                 Log.Write("ERROR: No initial location defined. Game startup failed!");
@@ -249,17 +280,23 @@ namespace MudEngine.GameManagement
             if (IsMultiplayer)
                 this.StartServer();
 
+            //Game is running now.
             IsRunning = true;
 
             Log.Write("Game startup complete.");
             return true;
         }
 
+        /// <summary>
+        /// Shuts down the Game and Server.
+        /// </summary>
         public void Shutdown()
         {
             Log.Write("Server shutdown requested...");
+            
             //Place ending code here for game shut down.
             //TODO: Save content on shutdown.
+
             if (IsMultiplayer)
                 Server.EndServer();
 
@@ -268,29 +305,14 @@ namespace MudEngine.GameManagement
             Log.Write("Shutdown completed...");
         }
 
-        public void Save(string filename)
-        {
-            string directory = Path.GetDirectoryName(filename);
-
-            if (!Directory.Exists(directory))
-                Directory.CreateDirectory(directory);
-
-            //FileManager.Save(filename, this);
-        }
-
-        public bool Load(string path)
-        {
-            string fileName = Path.Combine(path, _Filename);
-            if (!File.Exists(fileName))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
+        /// <summary>
+        /// Adds a Realm to the Games current list of Realms.
+        /// </summary>
+        /// <param name="realm"></param>
         public void AddRealm(Realm realm)
         {
+            //If this Realm is set as Initial then we need to disable any previously
+            //set Realms to avoid conflict.
             if (realm.IsInitialRealm)
             {
                 foreach (Realm r in RealmCollection)
@@ -303,6 +325,7 @@ namespace MudEngine.GameManagement
                 }
             }
 
+            //Set this Realm as the Games initial Realm
             if (realm.IsInitialRealm)
                 InitialRealm = realm;
 
@@ -310,6 +333,11 @@ namespace MudEngine.GameManagement
             RealmCollection.Add(realm);
         }
 
+        /// <summary>
+        /// Gets a Realm currently stored in the Games collection of Realms.
+        /// </summary>
+        /// <param name="realmName"></param>
+        /// <returns></returns>
         public Realm GetRealm(string realmName)
         {
             foreach (Realm realm in RealmCollection)
@@ -321,17 +349,9 @@ namespace MudEngine.GameManagement
             return null;
         }
 
-        //TODO: This should be internal only; C# property using get; internal set; so only MudEngine.dll may edit this collection
-        //public List<BaseCharacter> PlayerCollection;
-        public BaseCharacter[] PlayerCollection;
-
-        public MudEngine.Networking.Server Server { get; internal set; }
-        public ProtocolType ServerType = ProtocolType.Tcp;
-        public int ServerPort = 555;
-        public int MaximumPlayers = 1000;
-
-        private Scripting.ScriptEngine scriptEngine;
-
+        /// <summary>
+        /// Starts the Server.
+        /// </summary>
         private void StartServer()
         {
             //This is handled by the Game() Constructor
@@ -343,19 +363,6 @@ namespace MudEngine.GameManagement
             Server.Initialize(ServerPort, ref PlayerCollection);
             Server.Start();
         }
-
-        public void SendMessage(string message, BaseCharacter player)
-        {
-            SendMessage(message, player, true);
-        }
-
-        public void SendMessage(string message, BaseCharacter player, bool newLine)
-        {
-            System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
-
-            if (newLine)
-                message += "\n\r";
-            player.Send(encoding.GetBytes(message));
-        }
+        #endregion
     }
 }
