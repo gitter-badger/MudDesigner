@@ -147,7 +147,22 @@ namespace MudEngine.GameObjects.Characters
         internal void Initialize()
         {
             client.Receive(new byte[255]);
-            Log.Write("New Player Connected.");
+
+            if (Game.IsDebug)
+                Log.Write("New Player Connected.");
+            
+            Log.Write("Loading internal game commands...");
+            //Loads the MudEngine Game Commands
+            CommandSystem.LoadBaseCommands();
+
+            //Ensure custom commands are loaded until everything is fleshed out.
+            if (Game.IsDebug)
+            {
+                foreach (string command in CommandSystem.GetCommands())
+                {
+                    Log.Write("Command loaded: " + command);
+                }
+            }
 
             string result = ExecuteCommand("Login");
 

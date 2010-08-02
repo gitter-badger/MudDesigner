@@ -242,19 +242,6 @@ namespace MudEngine.GameManagement
             //Setup the scripting engine and load our script library
             scriptEngine.Initialize();
             
-            Log.Write("Loading internal game commands...");
-            //Loads the MudEngine Game Commands
-            CommandEngine.LoadBaseCommands();
-
-            //Ensure custom commands are loaded until everything is fleshed out.
-            if (Game.IsDebug)
-            {
-                foreach (string command in CommandEngine.GetCommands())
-                {
-                    Log.Write("Command loaded: " + command);
-                }
-            }
-
             Log.Write("Initializing location...");
             //See if we have an Initial Realm set
             foreach (Realm r in RealmCollection)
