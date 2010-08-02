@@ -78,7 +78,7 @@ namespace MudEngine.Networking
                     }
                 } while (sub < 0);
                 players[sub].client = server.Accept();
-                players[sub].Initialize();
+                //players[sub].Initialize();
                 clientThreads[sub] = new Thread(ReceiveThread);
                 clientThreads[sub].Start((object)sub);
             }
@@ -86,7 +86,7 @@ namespace MudEngine.Networking
         private void ReceiveThread(object obj)
         {
             int sub = (int)obj;
-            //players[sub].Initialize();
+            players[sub].Initialize();
             while (stage == 2 && players[sub].IsActive)
             {
                 players[sub].Receive(players[sub].ReadInput());

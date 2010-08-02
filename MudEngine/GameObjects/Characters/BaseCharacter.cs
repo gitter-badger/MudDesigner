@@ -45,12 +45,18 @@ namespace MudEngine.GameObjects.Characters
         /// </summary>
         public Bag Inventory { get; private set; }
 
+        /// <summary>
+        /// Gets a working copy of the CommandEngine used by the player.
+        /// </summary>
+        public CommandEngine CommandSystem { get; internal set; }
+
         public BaseCharacter(Game game) : base(game)
         {
             ActiveGame = game;
             IsActive = false;
             CurrentRoom = game.InitialRealm.InitialZone.InitialRoom;
             Inventory = new Bag(game);
+            CommandSystem = new CommandEngine();
 
         }
 
@@ -123,7 +129,7 @@ namespace MudEngine.GameObjects.Characters
         {
             //TODO: Character class can handle a lot of the command management here, checking various things prior to sending
             //the command off to the command engine for execution.
-            CommandResults result = CommandEngine.ExecuteCommand(command, this);
+            CommandResults result = CommandSystem.ExecuteCommand(command, this);
 
             if (result.Result != null)
             {
@@ -191,7 +197,7 @@ namespace MudEngine.GameObjects.Characters
         {
             if (IsActive)
             {
-                string filePath = Path.Combine(ActiveGame.DataPaths.Players, Filename);
+                string filePath ="" /*= Path.Combine(ActiveGame.DataPaths.Players, Filename)*/;
                 this.Save(filePath);
 
                 IsActive = false;

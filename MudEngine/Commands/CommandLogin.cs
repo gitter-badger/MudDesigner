@@ -53,9 +53,6 @@ namespace MudEngine.Commands
             }
 
             player.Send("Welcome " + player.Name + "!");
-
-            //string playerName = player.Receive();
-            //TODO: Read  user input...
             return new CommandResults();
         }
     }

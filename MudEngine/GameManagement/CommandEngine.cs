@@ -14,19 +14,28 @@ using MudEngine.GameManagement;
 
 namespace MudEngine.GameManagement
 {
-    public static class CommandEngine
+    public class CommandEngine
     {
         /// <summary>
         /// Gets or Sets a Dictionary list of available commands to use.
         /// </summary>
-        static internal Dictionary<string, IGameCommand> Commands { get { return _Commands; } set { _Commands = value; } }
-        static Dictionary<string, IGameCommand> _Commands = new Dictionary<string, IGameCommand>();
+        public static Dictionary<string, IGameCommand> CommandCollection { get; set; }
+
+        internal Dictionary<string, IGameCommand> _Commands { get; set; }
+
+        public CommandEngine()
+        {
+            if ((CommandCollection == null) || (CommandCollection.Count == 0))
+                CommandEngine.LoadBaseCommands();
+
+            _Commands = CommandCollection;
+        }
 
         public static List<string> GetCommands()
         {
             List<string> temp = new List<string>();
 
-            foreach (string name in Commands.Keys)
+            foreach (string name in CommandEngine.CommandCollection.Keys)
             {
                 temp.Add(name);
             }
@@ -34,9 +43,22 @@ namespace MudEngine.GameManagement
             return temp;
         }
 
-        public static bool GetCommand(string Name)
+        public static string GetCommand(object Parameter)
         {
-            if (Commands.ContainsKey(Name.ToLower()))
+            List<object> objectList = (List<object>)Parameter;
+
+            foreach (object obj in objectList)
+            {
+                if (obj is string)
+                    return (string)obj;
+            }
+
+            return null;
+        }
+
+        public static bool IsValidCommand(string Name)
+        {
+            if (CommandEngine.CommandCollection.ContainsKey(Name.ToLower()))
                 return true;
             else
                 return false;
@@ -47,17 +69,18 @@ namespace MudEngine.GameManagement
         /// <param name="Name"></param>
         /// <param name="Parameter"></param>
         /// <returns></returns>
-        public static CommandResults ExecuteCommand(string command, BaseCharacter player)
+        public CommandResults ExecuteCommand(string command, BaseCharacter player)
         {
             string commandKey = command.Insert(0, "Command");
             if (Game.IsDebug)
                 Log.Write("Executing command: " + command);
 
-            foreach (string key in Commands.Keys)
+            foreach (string key in player.CommandSystem._Commands.Keys)
             {
                 if (commandKey.ToLower().Contains(key.ToLower()))
                 {
-                    return Commands[key.ToLower()].Execute(command, player);
+                    return player.CommandSystem._Commands[key.ToLower()].Execute(command, player);
+                    //return player.Commands.ExecuteCommand[key.ToLower()]Execute(command, player);
                 }
             }
 
@@ -66,7 +89,7 @@ namespace MudEngine.GameManagement
 
         public static void LoadBaseCommands()
         {
-            LoadCommandLibrary(Assembly.GetExecutingAssembly());
+            LoadCommandLibrary(Assembly.GetExecutingAssembly(), true);
         }
 
         /// <summary>
@@ -109,7 +132,7 @@ namespace MudEngine.GameManagement
             Log.Write("Loading commands within " + Path.GetFileName(commandLibrary.Location));
 
             if (purgeOldCommands)
-                ClearCommands();
+                CommandEngine.ClearCommands();
 
             foreach (Type t in commandLibrary.GetTypes())
             {
@@ -126,17 +149,17 @@ namespace MudEngine.GameManagement
                             command.Name = command.Name.ToLower();
 
                         //Add the command to the commands list if it does not already exist
-                        if (Commands.ContainsKey(command.Name))
+                        if (CommandEngine.CommandCollection.ContainsKey(command.Name))
                         {
                             //Command exists, check if the command is set to override existing commands or not
                             if (command.Override)
                             {
-                                Commands[command.Name] = command;
+                                CommandEngine.CommandCollection[command.Name] = command;
                             }
                         }
                         //Command does not exist, add it to the commands list
                         else
-                            Commands.Add(command.Name, command);
+                            CommandEngine.CommandCollection.Add(command.Name, command);
                     }
                 }
             }
@@ -144,20 +167,7 @@ namespace MudEngine.GameManagement
 
         public static void ClearCommands()
         {
-            _Commands = new Dictionary<string, IGameCommand>();
-        }
-
-        public static string GetCommand(object Parameter)
-        {
-            List<object> objectList = (List<object>)Parameter;
-
-            foreach (object obj in objectList)
-            {
-                if (obj is string)
-                    return (string)obj;
-            }
-
-            return null;
+            CommandEngine.CommandCollection = new Dictionary<string, IGameCommand>();
         }
     }
 }
