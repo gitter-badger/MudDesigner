@@ -38,7 +38,7 @@ namespace MudEngine.GameObjects.Characters
         /// <summary>
         /// Gets or if this character is active.
         /// </summary>
-        public Boolean IsActive { get; private set; }
+        public Boolean IsActive { get; internal set; }
 
         /// <summary>
         /// Gets the current inventory of the character
@@ -50,7 +50,7 @@ namespace MudEngine.GameObjects.Characters
         /// </summary>
         public CommandEngine CommandSystem { get; internal set; }
 
-        public BaseCharacter(Game game) : base(game)
+        public BaseCharacter(Game game)// : base(game)
         {
             ActiveGame = game;
             IsActive = false;
@@ -168,7 +168,6 @@ namespace MudEngine.GameObjects.Characters
 
 
             CurrentRoom = ActiveGame.InitialRealm.InitialZone.InitialRoom;
-            IsActive = true;
         }
         internal void Receive(string data)
         {
@@ -212,12 +211,11 @@ namespace MudEngine.GameObjects.Characters
         {
             if (IsActive)
             {
-                string filePath ="" /*= Path.Combine(ActiveGame.DataPaths.Players, Filename)*/;
+                string filePath =  Path.Combine(ActiveGame.DataPaths.Players, Filename);
                 this.Save(filePath);
 
                 IsActive = false;
                 client.Close();
-                // TODO: Reset game so it can be used again
 
                 Log.Write("Player " + this.Name + " disconnected.");
             }
