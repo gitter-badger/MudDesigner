@@ -9,12 +9,6 @@ using System.Threading;
 using MudEngine.GameObjects.Characters;
 using MudEngine.GameManagement;
 
-/* Usage:
- *  Server MUDServer = new Server();
- *  MUDServer.InitializeUDP(666); or MUDServer.InitializeTCP(666);
- *  MUDServer.Start();
- */
-
 namespace MudEngine.Networking
 {
     public class Server
@@ -30,7 +24,7 @@ namespace MudEngine.Networking
             stage = 0;
             port = 0;
         }
-        public bool Initialize(int p, ref /*List<BaseCharacter>*/BaseCharacter[] pbs)
+        public bool Initialize(int p, ref BaseCharacter[] pbs)
         {
             if (stage != 0)
                 return false;
@@ -74,7 +68,7 @@ namespace MudEngine.Networking
                 int sub = -1;
                 do
                 {
-                    for (int i = 0; i < players./*Count*/Length; i++)
+                    for (int i = 0; i < players.Length; i++)
                     {
                         if (!players[i].IsActive)
                         {
@@ -85,8 +79,6 @@ namespace MudEngine.Networking
                 } while (sub < 0);
                 players[sub].client = server.Accept();
                 players[sub].Initialize();
-                Log.Write("New Player Connected.");
-                //ParameterizedThreadStart start = new ParameterizedThreadStart(ReceiveThread);
                 clientThreads[sub] = new Thread(ReceiveThread);
                 clientThreads[sub].Start((object)sub);
             }
@@ -94,30 +86,19 @@ namespace MudEngine.Networking
         private void ReceiveThread(object obj)
         {
             int sub = (int)obj;
-            List<byte> buffer = new List<byte>();
+            //players[sub].Initialize();
             while (stage == 2 && players[sub].IsActive)
             {
-                try
-                {
-                    players[sub].Receive(players[sub].ReadInput());
-                }
-                catch (Exception) // error receiving, close player
-                {
-                    this.Disconnect(sub);
-                }
+                players[sub].Receive(players[sub].ReadInput());
             }
         }
         public void Disconnect(int sub)
         {
-            if (sub > 0 && sub < players./*Capacity*/Length)
+            if (sub > 0 && sub < players.Length)
             {
                 clientThreads[sub].Abort();
                 if (players[sub].IsActive)
-                {
-                    Log.Write("Disconnecting player " + players[sub].Name);
                     players[sub].Disconnect();
-                    Log.Write("Player disconnected.");
-                }
             }
         }
 
@@ -126,10 +107,8 @@ namespace MudEngine.Networking
         private int stage;
         private int port;
 
-        //List<BaseCharacter> players;
         BaseCharacter[] players;
 
-        // TCP Stuff:
         private Thread[] clientThreads;
     }
 }

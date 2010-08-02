@@ -32,7 +32,7 @@ namespace MudEngine.Commands
 
                 foreach (BaseCharacter bc in player.ActiveGame.PlayerCollection)
                 {
-                    if (bc.Name == input)
+                    if (bc.Name == input) // TODO: Check if that player is still online
                     {
                         player.Send("Character name already taken.");
                         foundName = true;

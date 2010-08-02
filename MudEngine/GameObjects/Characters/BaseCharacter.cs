@@ -140,6 +140,9 @@ namespace MudEngine.GameObjects.Characters
 
         internal void Initialize()
         {
+            client.Receive(new byte[255]);
+            Log.Write("New Player Connected.");
+
             string result = ExecuteCommand("Login");
 
 
@@ -148,7 +151,7 @@ namespace MudEngine.GameObjects.Characters
         }
         internal void Receive(string data)
         {
-            ExecuteCommand(data);
+            data = ExecuteCommand(data);
             Send(data);
             if (!ActiveGame.IsRunning)
                 Disconnect();
@@ -169,7 +172,7 @@ namespace MudEngine.GameObjects.Characters
 
                 client.Send(encoding.GetBytes(data));
             }
-            catch (Exception) // error, connection failed: close client
+            catch (Exception)
             {
                 Disconnect();
             }
@@ -186,13 +189,17 @@ namespace MudEngine.GameObjects.Characters
 
         internal void Disconnect()
         {
-            string filePath = Path.Combine(ActiveGame.DataPaths.Players, Filename);
-            this.Save(filePath);
+            if (IsActive)
+            {
+                string filePath = Path.Combine(ActiveGame.DataPaths.Players, Filename);
+                this.Save(filePath);
 
-            Send("Disconnecting...");
-            IsActive = false;
-            client.Close();
-            // TODO: Reset game so it can be used again
+                IsActive = false;
+                client.Close();
+                // TODO: Reset game so it can be used again
+
+                Log.Write("Player " + this.Name + " disconnected.");
+            }
         }
         internal string ReadInput()
         {
@@ -212,20 +219,7 @@ namespace MudEngine.GameObjects.Characters
                                 buffer.RemoveAt(buffer.Count-1);
 
                             String str;
-                            List<byte> correctedBuffer = new List<byte>();
                             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
-
-                            /*
-                            foreach (byte i in buffer)
-                            {
-                                if (i == 255)
-                                    continue;
-                                else if (i == 251)
-                                    continue;
-                                else
-                                    correctedBuffer.Add(i);
-                            }
-                             */
                             str = enc.GetString(buffer.ToArray());
                             return str;
                         }
@@ -233,9 +227,10 @@ namespace MudEngine.GameObjects.Characters
                             buffer.Add(buf[0]);
                     }
                 }
-                catch (Exception) // error receiving, close player
+                catch (Exception e)
                 {
                     Disconnect();
+                    return e.Message;
                 }
             }
         }
