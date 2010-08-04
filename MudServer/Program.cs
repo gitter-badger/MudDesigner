@@ -20,7 +20,7 @@ namespace MudServer
             
             realm.BuildZeroth();
 
-            BaseCharacter serverAdmin = new BaseCharacter(game);
+            //BaseCharacter serverAdmin = new BaseCharacter(game);
             
             //Setup the game
             game.AutoSave = true;
@@ -39,7 +39,7 @@ namespace MudServer
             game.ServerType = ProtocolType.Tcp;
             game.ServerPort = 555;
             game.MaximumPlayers = 1000;
-            Game.IsDebug = true;
+            Game.IsDebug = false;
 
             game.Start();
 

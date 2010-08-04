@@ -57,17 +57,15 @@ namespace MUDGame
             Console.WriteLine("Available Commands are\n  Look\n  Exit\n  Walk 'direction' where direction = north/south/east/west/up/down\n");
 
             //Invoke the Look command so the player knows whats around him/her
-            Console.WriteLine(player.ExecuteCommand("Look"));
+            player.ExecuteCommand("Look"); //Broken? has not been tested since CommandEngine changes.
 
             while (game.IsRunning)
             {
+                /* No longer needed as player.ExecuteCommand() will place this for us. 
                 Console.Write("Command: ");
-                Console.WriteLine(player.ExecuteCommand(Console.ReadLine()));
+                 */
+                player.ExecuteCommand(Console.ReadLine());
             }
-
-            // - Exit command handles this now - game.Shutdown();
-            Console.WriteLine("Press Enter to exit.");
-            Console.ReadKey();
         }
     }
 }

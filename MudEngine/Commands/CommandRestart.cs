@@ -32,8 +32,17 @@ namespace MudEngine.Commands
                     string filename = Path.Combine(path, player.ActiveGame.PlayerCollection[i].Filename);
                     player.ActiveGame.PlayerCollection[i].Save(filename);
                 }
-                player.ActiveGame.Server.EndServer();
+
+                //player.ActiveGame.Server.EndServer(); //-Handled in Game.Shutdown() below.
+                player.ActiveGame.Shutdown();
+                player.ActiveGame.Start();
+                /* Game.Start() calls this, do we need a reference to the playercollection?
+                 * They should be unloaded anyway and re-loaded during game.start to force a clean restart of all objects.
                 player.ActiveGame.Server.Initialize(555, ref player.ActiveGame.PlayerCollection);
+                 */
+
+                Console.WriteLine("Server Restart Completed.");
+                //This is never printed as CommandResults is no longer outputted to the player console, player.Send is used
                 return new CommandResults("Server Restarted.");
             }
             return new CommandResults("Access Denied.");

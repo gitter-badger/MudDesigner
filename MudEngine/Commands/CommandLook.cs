@@ -19,16 +19,22 @@ namespace MudEngine.Commands
 
         public CommandResults Execute(string command, BaseCharacter player)
         {
-            StringBuilder desc = new StringBuilder();
-
             if (player.CurrentRoom == null)
             {
                 return new CommandResults("Not within a created Room.");
             }
 
-            desc.AppendLine(player.CurrentRoom.Description);
+            if (player.CurrentRoom.DetailedDescription.Count == 0)
+                player.Send(player.CurrentRoom.Description);
+            else
+            {
+                foreach(string entry in player.CurrentRoom.DetailedDescription)
+                {
+                    player.Send(entry);
+                }
+            }
 
-            return new CommandResults(desc.ToString());
+            return new CommandResults();
         }
     }
 }

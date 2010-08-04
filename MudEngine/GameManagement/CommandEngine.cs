@@ -19,23 +19,23 @@ namespace MudEngine.GameManagement
         /// <summary>
         /// Gets or Sets a Dictionary list of available commands to use.
         /// </summary>
-        public Dictionary<string, IGameCommand> CommandCollection { get; set; }
+        public static Dictionary<string, IGameCommand> CommandCollection { get; set; }
 
-        internal Dictionary<string, IGameCommand> _Commands { get; set; }
+        internal Dictionary<string, IGameCommand> __Commands { get; set; }
 
         public CommandEngine()
         {
-            if ((CommandCollection == null) || (CommandCollection.Count == 0))
-                LoadBaseCommands();
+            if ((CommandEngine.CommandCollection == null) || (CommandEngine.CommandCollection.Count == 0))
+                CommandEngine.LoadBaseCommands();
 
-            _Commands = CommandCollection;
+            //_Commands = CommandEngine.CommandCollection;
         }
 
-        public List<string> GetCommands()
+        public static List<string> GetCommands()
         {
             List<string> temp = new List<string>();
 
-            foreach (string name in CommandCollection.Keys)
+            foreach (string name in CommandEngine.CommandCollection.Keys)
             {
                 temp.Add(name);
             }
@@ -43,20 +43,21 @@ namespace MudEngine.GameManagement
             return temp;
         }
 
-        public string GetCommand(object Parameter)
+        public static IGameCommand GetCommand(string command)
         {
-            List<object> objectList = (List<object>)Parameter;
-
-            foreach (object obj in objectList)
+            if (IsValidCommand(command))
             {
-                if (obj is string)
-                    return (string)obj;
+                foreach (IGameCommand cmd in CommandCollection.Values)
+                {
+                    if (cmd.Name.ToLower() == command.ToLower())
+                        return cmd;
+                }
             }
 
             return null;
         }
 
-        public bool IsValidCommand(string Name)
+        public static bool IsValidCommand(string Name)
         {
             if (CommandCollection.ContainsKey(Name.ToLower()))
                 return true;
@@ -75,11 +76,13 @@ namespace MudEngine.GameManagement
             if (Game.IsDebug)
                 Log.Write("Executing command: " + command);
 
-            foreach (string key in CommandCollection.Keys)
+            foreach (string key in CommandEngine.CommandCollection.Keys)
             {
                 if (commandKey.ToLower().Contains(key.ToLower()))
                 {
-                    return player.CommandSystem._Commands[key].Execute(command, player);
+                    IGameCommand cmd = CommandEngine.CommandCollection[key];
+                    return cmd.Execute(command, player);
+                    //return player.CommandSystem._Commands[key].Execute(command, player);
                     //return player.Commands.ExecuteCommand[key.ToLower()]Execute(command, player);
                 }
             }
@@ -87,7 +90,7 @@ namespace MudEngine.GameManagement
             return new CommandResults();
         }
 
-        public void LoadBaseCommands()
+        public static void LoadBaseCommands()
         {
             LoadCommandLibrary(Assembly.GetExecutingAssembly(), true);
         }
@@ -98,12 +101,12 @@ namespace MudEngine.GameManagement
         /// commands dictionary for use with the project
         /// </summary>
         /// <param name="CommandLibrary"></param>
-        public void LoadCommandLibrary()
+        public static void LoadCommandLibrary()
         {
             LoadCommandLibrary(Assembly.GetExecutingAssembly());
         }
 
-        public void LoadCommandLibrary(string libraryFilename)
+        public static void LoadCommandLibrary(string libraryFilename)
         {
             if (System.IO.File.Exists(libraryFilename))
             {
@@ -112,18 +115,18 @@ namespace MudEngine.GameManagement
             }
         }
 
-        public void LoadCommandLibrary(List<Assembly> commandLibraries)
+        public static void LoadCommandLibrary(List<Assembly> commandLibraries)
         {
             foreach (Assembly lib in commandLibraries)
                 LoadCommandLibrary(lib);
         }
 
-        public void LoadCommandLibrary(Assembly commandLibrary)
+        public static void LoadCommandLibrary(Assembly commandLibrary)
         {
             LoadCommandLibrary(commandLibrary, false);
         }
 
-        public void LoadCommandLibrary(Assembly commandLibrary, bool purgeOldCommands)
+        public static void LoadCommandLibrary(Assembly commandLibrary, bool purgeOldCommands)
         {
             //no assembly passed for whatever reason, don't attempt to enumerate through it.
             if (commandLibrary == null)
@@ -165,7 +168,7 @@ namespace MudEngine.GameManagement
             }
         }
 
-        public void ClearCommands()
+        public static void ClearCommands()
         {
             CommandCollection = new Dictionary<string, IGameCommand>();
         }

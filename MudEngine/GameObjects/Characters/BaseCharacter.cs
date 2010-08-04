@@ -125,12 +125,18 @@ namespace MudEngine.GameObjects.Characters
             //TODO: Check the Room/Zone/Realm to see if anything needs to occure during travel.
         }
 
-        public String ExecuteCommand(string command)
+        public void ExecuteCommand(string command)
         {
             //TODO: Character class can handle a lot of the command management here, checking various things prior to sending
             //the command off to the command engine for execution.
-            CommandResults result = CommandSystem.ExecuteCommand(command, this);
+            CommandSystem.ExecuteCommand(command, this);
+            
+            Send(""); //Blank line to help readability.
 
+            //Now that the command has been executed, restore the Command: message
+            Send("Command: ", false);
+
+            /* No longer needed due to player.send() sending content to the player.
             if (result.Result != null)
             {
                 StringBuilder sb = new StringBuilder();
@@ -141,7 +147,7 @@ namespace MudEngine.GameObjects.Characters
                 }
                 return sb.ToString();
             }
-            return "";
+             */
         }
 
         internal void Initialize()
@@ -153,26 +159,27 @@ namespace MudEngine.GameObjects.Characters
             
             Log.Write("Loading internal game commands...");
             //Loads the MudEngine Game Commands
-            CommandSystem.LoadBaseCommands();
+            //CommandSystem.LoadBaseCommands();
 
             //Ensure custom commands are loaded until everything is fleshed out.
             if (Game.IsDebug)
             {
-                foreach (string command in CommandSystem.GetCommands())
+                foreach (string command in CommandEngine.GetCommands())
                 {
                     Log.Write("Command loaded: " + command);
                 }
             }
 
-            string result = ExecuteCommand("Login");
+            ExecuteCommand("Login");
 
-
+            //Set the players initial room
             CurrentRoom = ActiveGame.InitialRealm.InitialZone.InitialRoom;
         }
         internal void Receive(string data)
         {
-            data = ExecuteCommand(data);
-            Send(data);
+            //data = ExecuteCommand(data);
+            ExecuteCommand(data);
+            //Send(data); //Results no longer returned as Player.Send() is used by the commands now.
             if (!ActiveGame.IsRunning)
                 Disconnect();
         }
@@ -190,7 +197,10 @@ namespace MudEngine.GameObjects.Characters
                 if (newLine)
                     data += "\n\r";
 
-                client.Send(encoding.GetBytes(data));
+                if (ActiveGame.IsMultiplayer)
+                    client.Send(encoding.GetBytes(data));
+                else
+                    Console.Write(data);
             }
             catch (Exception)
             {

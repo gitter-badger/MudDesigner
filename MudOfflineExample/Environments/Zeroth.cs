@@ -42,7 +42,8 @@ namespace MUDGame
             
             Room bedroom = new Room(game);
             bedroom.Name = "Bedroom";
-            bedroom.Description = "This is your bedroom, it's small but comfortable. You have a bed, a book shelf and a rug on the floor.\nYou may walk to the WEST to find you Closet.";
+            bedroom.DetailedDescription.Add("This is your bedroom, it's small but comfortable. You have a bed, a book shelf and a rug on the floor.");
+            bedroom.DetailedDescription.Add("You may walk to the WEST to find you Closet.");
             bedroom.Zone = zone.Name;
             bedroom.Realm = realm.Name;
             bedroom.IsInitialRoom = true;
@@ -50,7 +51,8 @@ namespace MUDGame
 
             Room closet = new Room(game);
             closet.Name = "Closet";
-            closet.Description = "Your closet contains clothing and some shoes.\nYou may walk to your EAST to find your Room.";
+            closet.DetailedDescription.Add("Your closet contains clothing and some shoes.");
+            closet.DetailedDescription.Add("You may walk to your EAST to find your Room.");
             closet.Zone = zone.Name;
             closet.Realm = realm.Name;
             zone.AddRoom(closet);

@@ -53,6 +53,7 @@ namespace MudEngine.Commands
             }
 
             player.Send("Welcome " + player.Name + "!");
+            player.CommandSystem.ExecuteCommand("Look", player);
             return new CommandResults();
         }
     }

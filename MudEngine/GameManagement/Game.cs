@@ -238,12 +238,31 @@ namespace MudEngine.GameManagement
         /// </summary>
         public bool Start()
         {
-            Log.Write("Starting Game...");
+            Log.Write("Game Initializing...");
+            
             //Setup the scripting engine and load our script library
             scriptEngine.Initialize();
-            
-            Log.Write("Initializing location...");
+
+            /*
+             * If a custom player script is loaded in the script engine, then the base commands are 
+             * loaded when the script is instanced automatically. If  there is no script then these
+             * don't get loaded and will need to be forced.
+             * This prevents a duplicate "Loading Commands" message in the server console if the 
+             * player script exists and pre-loads the commands during script instancing in ScriptEngine.Initialize()
+             */
+            Log.Write("Initializing Command Engine...");
+            if ((CommandEngine.CommandCollection == null) || (CommandEngine.CommandCollection.Count == 0))
+                CommandEngine.LoadBaseCommands();
+
+            if (IsDebug)
+            {
+                foreach (string command in CommandEngine.CommandCollection.Keys)
+                    Log.Write("Command Loaded: " + command);
+            }
+             
             //See if we have an Initial Realm set
+            //TODO: Check for saved Realm files and load
+            Log.Write("Initializing World...");
             foreach (Realm r in RealmCollection)
             {
                 if (r.IsInitialRealm)
@@ -260,12 +279,14 @@ namespace MudEngine.GameManagement
                 return false;
             }
             else
-                Log.Write("Initial Location defined -> " + InitialRealm.Name + "." + InitialRealm.InitialZone.Name + "." + InitialRealm.InitialZone.InitialRoom.Name);
+                Log.Write("Initial Location loaded-> " + InitialRealm.Name + "." + InitialRealm.InitialZone.Name + "." + InitialRealm.InitialZone.InitialRoom.Name);
 
-            Log.Write("Starting Server...");
             //Start the Telnet server
             if (IsMultiplayer)
+            {
+                Log.Write("Starting Server...");
                 this.StartServer();
+            }
 
             //Game is running now.
             IsRunning = true;

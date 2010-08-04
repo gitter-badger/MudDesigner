@@ -194,6 +194,7 @@ namespace MudEngine.Scripting
         {
             if (_ScriptTypes == ScriptTypes.Assembly)
             {
+                Log.Write("Loading Assembly based scripts...");
                 InitializeAssembly();
             }
             else
@@ -203,6 +204,8 @@ namespace MudEngine.Scripting
 
             foreach (Assembly assembly in _AssemblyCollection)
             {
+                Log.Write("Checking " + Path.GetFileName(assembly.Location) + " for scripts...");
+
                 foreach (Type t in assembly.GetTypes())
                 {
                     if (t.BaseType == null)
@@ -210,6 +213,7 @@ namespace MudEngine.Scripting
                     if (t.BaseType.Name == "BaseObject")
                     {
                         GameObjects.Add(new GameObject(Activator.CreateInstance(t, new object[] {_Game}), t.Name));
+                        Log.Write(t.Name + " script loaded.");
                         continue;
                     }
                     else if (t.BaseType.Name == "BaseCharacter")
@@ -217,6 +221,7 @@ namespace MudEngine.Scripting
                         GameObject obj = new GameObject(Activator.CreateInstance(t, new object[] {_Game}), t.Name); 
                         GameObjects.Add(obj);
                         obj.GetProperty().CurrentRoom = _Game.InitialRealm.InitialZone.InitialRoom;
+                        Log.Write(t.Name + " script loaded.");
                         continue;
                     }
                 }
@@ -234,18 +239,21 @@ namespace MudEngine.Scripting
 
             if (libraries.Length == 0)
             {
-                Log.Write("Failed to load Script Assembly!");
+                Log.Write("No possible script libraries found.");
                 return;
             }
 
             foreach (string library in libraries)
+            {
+                Log.Write("Found possible script libary: " + Path.GetFileName(library));
                 _AssemblyCollection.Add(Assembly.LoadFile(library));
-
+            }
             _AssemblyCollection.Add(Assembly.GetExecutingAssembly());
         }
 
         private void InitializeSourceFiles()
         {
+            Log.Write("Source file scripts is not supported! Please change the script engine settings to load pre-compiled Assemblies!");
         }
 
         public GameObject GetObject(string objectName)

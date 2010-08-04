@@ -33,13 +33,9 @@ namespace MudEngine.Commands
                         //Move the player into their new room
                         player.Move(door.TravelDirection);
 
-                        CommandResults cmd = player.CommandSystem.ExecuteCommand("Look", player);
-                        string lookValue = "";
+                        player.CommandSystem.ExecuteCommand("Look", player);
 
-                        if (cmd.Result.Length != 0)
-                            lookValue = cmd.Result[0].ToString();
-
-                        return new CommandResults(new object[] { lookValue, player.CurrentRoom });
+                        return null;
                     }
                 }
             }
