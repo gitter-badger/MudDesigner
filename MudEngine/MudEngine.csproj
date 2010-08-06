@@ -83,14 +83,8 @@
     <Compile Include="Scripting\GameObject.cs" />
     <Compile Include="Scripting\GameObjectCollection.cs" />
     <Compile Include="Scripting\ScriptEngine.cs" />
-    <Compile Include="Scripting\StartupObject.cs" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <None Include="startup.dat">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

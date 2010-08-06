@@ -56,6 +56,10 @@ namespace MudEngine.FileSystem
         {
             foreach (string line in File.ReadAllLines(filename))
             {
+                //Ignore comments
+                if (line.StartsWith(";"))
+                    continue;
+
                 if (line.StartsWith(name))
                     return line.Substring(name.Length + 1); //Accounts for name=value;
             }

@@ -27,7 +27,7 @@ namespace MUDGame
             game.HideRoomNames = false;
             game.PreCacheObjects = true;
             game.ProjectPath = FileManager.GetDataPath(SaveDataTypes.Root);
-            game.TimeOfDay = Game.TimeOfDayOptions.Transition;
+            game.TimeOfDay = TimeOfDayOptions.Transition;
             game.TimeOfDayTransition = 30;
             game.Version = "0.1";
             game.Website = "http://MudDesigner.Codeplex.com";

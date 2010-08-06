@@ -20,6 +20,16 @@ using MudEngine.Scripting;
 
 namespace MudEngine.GameManagement
 {
+    
+    #region Custom Types
+        public enum TimeOfDayOptions
+        {
+            AlwaysDay,
+            AlwaysNight,
+            Transition,
+        }
+        #endregion
+
     /// <summary>
     /// Manages all of the projects settings.
     /// </summary>
@@ -28,25 +38,6 @@ namespace MudEngine.GameManagement
     public class Game
     {
         #region ==== Properties & Types ====
-        #region Custom Types
-        public enum TimeOfDayOptions
-        {
-            AlwaysDay,
-            AlwaysNight,
-            Transition,
-        }
-
-        /// <summary>
-        /// Gets or Sets what time of day the world is currently in.
-        /// </summary>
-        [Category("Day Management")]
-        [Description("Set what time of day the world will take place in.")]
-        public TimeOfDayOptions TimeOfDay
-        {
-            get;
-            set;
-        }
-        #endregion
 
         #region Game Object Setup
         /// <summary>
@@ -128,6 +119,13 @@ namespace MudEngine.GameManagement
         /// Gets or Sets if room names are hidden during console output.
         /// </summary>
         public bool HideRoomNames { get; set; }
+
+        /// <summary>
+        /// Gets or Sets what time of day the world is currently in.
+        /// </summary>
+        [Category("Day Management")]
+        [Description("Set what time of day the world will take place in.")]
+        public TimeOfDayOptions TimeOfDay { get; set; }
 
         /// <summary>
         /// Gets or Sets how long in minutes it takes to transition from day to night.

@@ -89,6 +89,10 @@ namespace MudEngine.GameObjects.Characters
 
         public override void Save(string filename)
         {
+            //Don't attempt to save a blank filename.
+            if (String.IsNullOrEmpty(filename))
+                return;
+
             base.Save(filename);
 
             FileManager.WriteLine(filename, this.IsControlled.ToString(), "IsControlled");
@@ -224,6 +228,7 @@ namespace MudEngine.GameObjects.Characters
                 string filePath =  Path.Combine(ActiveGame.DataPaths.Players, Filename);
                 this.Save(filePath);
 
+                Send("Goodbye!");
                 IsActive = false;
                 client.Close();
 

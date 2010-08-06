@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
 
+using MudEngine.FileSystem;
 using MudEngine.GameObjects.Characters;
 using MudEngine.GameManagement;
 using MudEngine.Commands;
@@ -22,37 +24,44 @@ namespace MudEngine.Commands
             player.Send(player.ActiveGame.Story);
             player.Send("");
 
-            bool isLegal = false;
+            player.Send("Enter Character Name: ", false);
+            
+            string input = player.ReadInput();
+            Boolean playerFound = false;
+            string savedFile = "";
 
-            while (!isLegal)
+            //See if this character already exists.
+            foreach (string filename in Directory.GetFiles(player.ActiveGame.DataPaths.Players))
             {
-                player.Send("Enter Character Name: ", false);
-                string input = player.ReadInput();
-                bool foundName = false;
-
-                foreach (BaseCharacter bc in player.ActiveGame.PlayerCollection)
+                if (Path.GetFileNameWithoutExtension(filename).ToLower() == input.ToLower())
                 {
-                    if (bc.Name == input)
-                    {
-                        player.Send("Character name already taken.");
-                        foundName = true;
-                        break;
-                    }
-                }
-
-                if (!foundName)
-                {
-                    if (input == "")
-                        continue;
-                    else
-                    {
-                        isLegal = true;
-                        player.Name = input;
-                    }
+                    //TODO: Ask for password.
+                    savedFile = filename;
+                    playerFound = true;
+                    break;
                 }
             }
 
-            player.Send("Welcome " + player.Name + "!");
+            //Next search if there is an existing player already logged in with this name, if so disconnect them.
+            foreach (BaseCharacter character in player.ActiveGame.PlayerCollection)
+            {
+                if (character.Name.ToLower() == input.ToLower())
+                {
+                    character.Disconnect();
+                }
+            }
+
+            //Now assign this name to this player if this is a new toon or load the player if the file exists.
+            if (!playerFound)
+            {
+                player.Name = input;
+                player.Send("Welcome " + player.Name + "!");
+            }
+            else
+            {
+                player.Load(savedFile);
+                player.Send("Welcome back " + player.Name + "!");
+            }
             player.CommandSystem.ExecuteCommand("Look", player);
             return new CommandResults();
         }

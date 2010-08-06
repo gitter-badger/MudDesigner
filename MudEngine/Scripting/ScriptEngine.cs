@@ -11,6 +11,7 @@ using System.IO;
 using System.Text;
 using System.Reflection;
 
+using MudEngine.FileSystem;
 using MudEngine.GameObjects;
 using MudEngine.GameObjects.Characters;
 using MudEngine.GameManagement;
@@ -28,7 +29,19 @@ namespace MudEngine.Scripting
         /// <summary>
         /// Path to the the script files directory
         /// </summary>
-        public string ScriptPath { get; set; }
+        public string ScriptPath
+        {
+            get
+            {
+                return _ScriptPath;
+            }
+            set
+            {
+                _ScriptPath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Root), value);
+            }
+        }
+        string _ScriptPath;
+
         public string InstallPath { get; private set; }
         public GameObjectCollection ObjectCollection { get; private set; }
 
@@ -89,7 +102,7 @@ namespace MudEngine.Scripting
             ScriptExtension = ".cs";
 
             //Get our current install path
-            ScriptPath = Path.Combine(Environment.CurrentDirectory, "Scripts");
+            ScriptPath = "Scripts";
             InstallPath = Environment.CurrentDirectory;
             GameObjects = new List<GameObject>();
             _AssemblyCollection = new List<Assembly>();
@@ -159,12 +172,13 @@ namespace MudEngine.Scripting
             //Compile the scripts with the C# CodeProvider
             CSharpCodeProvider codeProvider = new CSharpCodeProvider(providerOptions);
             CompilerResults results = new CompilerResults(new TempFileCollection());
-            scripts = Directory.GetFiles(ScriptPath, "*.Mud", SearchOption.AllDirectories);
+            scripts = Directory.GetFiles(ScriptPath, "*" + ScriptExtension, SearchOption.AllDirectories);
             results = codeProvider.CompileAssemblyFromFile(param, scripts);
 
             //Delete the temp folder
             //Directory.Delete("temp", true);
             ScriptPath = oldPath;
+            _ScriptAssembly = results.CompiledAssembly;
 
             //if we encountered errors we need to log them to our ErrorMessages property
             if (results.Errors.Count >= 1)
@@ -224,6 +238,11 @@ namespace MudEngine.Scripting
                         Log.Write(t.Name + " script loaded.");
                         continue;
                     }
+                    else if (t.BaseType.Name == "Game")
+                    {
+                        GameObject obj = new GameObject(Activator.CreateInstance(t, null), t.Name);
+                        GameObjects.Add(obj);
+                    }
                 }
             }
         }
@@ -253,7 +272,16 @@ namespace MudEngine.Scripting
 
         private void InitializeSourceFiles()
         {
-            Log.Write("Source file scripts is not supported! Please change the script engine settings to load pre-compiled Assemblies!");
+            string[] scripts = Directory.GetFiles(ScriptPath, "*.cs", SearchOption.AllDirectories);
+
+            if (scripts.Length == 0)
+            {
+                Log.Write("No un-compiled scripts located!");
+                return;
+            }
+
+            CompileScripts();
+            _AssemblyCollection.Add(_ScriptAssembly);
         }
 
         public GameObject GetObject(string objectName)
@@ -267,6 +295,17 @@ namespace MudEngine.Scripting
             {
                 if (gameObject.Name == objectName)
                     return gameObject;
+            }
+
+            return null;
+        }
+
+        public GameObject GetObjectOf(string baseTypeName)
+        {
+            foreach (GameObject obj in GameObjects)
+            {
+                if (obj.Instance.GetType().BaseType.Name == baseTypeName)
+                    return obj;
             }
 
             return null;
