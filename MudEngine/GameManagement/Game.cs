@@ -177,7 +177,7 @@ namespace MudEngine.GameManagement
         /// <summary>
         /// Collection of players currently running on the server.
         /// </summary>
-        internal BaseCharacter[] PlayerCollection;
+        public BaseCharacter[] PlayerCollection;
 
         /// <summary>
         /// Gets the current running Server object.
@@ -237,8 +237,12 @@ namespace MudEngine.GameManagement
         public bool Start()
         {
             Log.Write("Game Initializing...");
+            //First, compile and execute all of the script files.
+            scriptEngine.ScriptType = ScriptEngine.ScriptTypes.SourceFiles;
+            scriptEngine.Initialize();
             
-            //Setup the scripting engine and load our script library
+            //Next, load any pre-compiled libraries.
+            scriptEngine.ScriptType = ScriptEngine.ScriptTypes.Assembly;
             scriptEngine.Initialize();
 
             /*
@@ -274,7 +278,8 @@ namespace MudEngine.GameManagement
             if ((InitialRealm == null) || (InitialRealm.InitialZone == null) || (InitialRealm.InitialZone.InitialRoom == null))
             {
                 Log.Write("ERROR: No initial location defined. Game startup failed!");
-                return false;
+                Log.Write("Players will start in the Abyss. Each player will contain their own instance of this room.");
+                //return false;
             }
             else
                 Log.Write("Initial Location loaded-> " + InitialRealm.Name + "." + InitialRealm.InitialZone.Name + "." + InitialRealm.InitialZone.InitialRoom.Name);

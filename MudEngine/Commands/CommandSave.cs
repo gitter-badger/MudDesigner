@@ -21,7 +21,18 @@ namespace MudEngine.Commands
             string path = player.ActiveGame.DataPaths.Players;
             string filename = Path.Combine(path, player.Filename);
 
-            player.Save(filename);
+            //Temporary hack
+            if (player.ActiveGame.PlayerCollection.Length != 0)
+            {
+                if (player.ActiveGame.PlayerCollection[0].GetType().Name != "BaseCharacter")
+                {
+                    Scripting.GameObject obj = player.ActiveGame.scriptEngine.GetObject(player.ActiveGame.PlayerCollection.GetType().Name);
+
+                    obj.InvokeMethod("Save", new object[] { player.Name });
+                }
+            }
+            else
+                player.Save(filename); //Should never  be called?
 
             return new CommandResults();
         }

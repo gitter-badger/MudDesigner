@@ -50,14 +50,21 @@ namespace MudEngine.GameObjects.Characters
         /// </summary>
         public CommandEngine CommandSystem { get; internal set; }
 
-        public BaseCharacter(Game game)// : base(game)
+        public BaseCharacter(Game game) : base(game)
         {
             ActiveGame = game;
             IsActive = false;
-            CurrentRoom = game.InitialRealm.InitialZone.InitialRoom;
+
+            if ((game.InitialRealm == null) || (game.InitialRealm.InitialZone == null) || (game.InitialRealm.InitialZone.InitialRoom == null))
+            {
+                CurrentRoom = new Room(game);
+                CurrentRoom.Name = "Abyss";
+                CurrentRoom.Description = "You are currently in the abyss.";
+            }
+            else
+                CurrentRoom = game.InitialRealm.InitialZone.InitialRoom;
             Inventory = new Bag(game);
             CommandSystem = new CommandEngine();
-
         }
 
         public override void Load(string filename)
@@ -82,9 +89,28 @@ namespace MudEngine.GameObjects.Characters
             }
 
             //Restore the users current Room.
-            Realm realm = ActiveGame.GetRealm(FileManager.GetData(filename, "CurrentRealm"));
+            Realm realm= ActiveGame.GetRealm(FileManager.GetData(filename, "CurrentRealm"));
+            if (realm == null)
+            {
+                realm = new Realm(ActiveGame);
+                return;
+            }
+
             Zone zone = realm.GetZone(FileManager.GetData(filename, "CurrentZone"));
+            if (zone == null)
+            {
+                zone = new Zone(ActiveGame);
+                return;
+            }
+
             CurrentRoom = zone.GetRoom(FileManager.GetData(filename, "CurrentRoom"));
+            if (CurrentRoom == null)
+            {
+                CurrentRoom = new Room(ActiveGame);
+                CurrentRoom.Name = "Abyss";
+                CurrentRoom.Description = "You are in the Aybss. It is void of all life.";
+                return;
+            }
         }
 
         public override void Save(string filename)
@@ -177,7 +203,14 @@ namespace MudEngine.GameObjects.Characters
             ExecuteCommand("Login");
 
             //Set the players initial room
-            CurrentRoom = ActiveGame.InitialRealm.InitialZone.InitialRoom;
+            if ((ActiveGame.InitialRealm == null) || (ActiveGame.InitialRealm.InitialZone == null) || (ActiveGame.InitialRealm.InitialZone.InitialRoom == null))
+            {
+                CurrentRoom = new Room(ActiveGame);
+                CurrentRoom.Name = "Abyss";
+                CurrentRoom.Description = "You are in the Abyss. It is dark and void of life.";
+            }
+            else
+                CurrentRoom = ActiveGame.InitialRealm.InitialZone.InitialRoom;
         }
         internal void Receive(string data)
         {

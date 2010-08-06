@@ -37,9 +37,12 @@ namespace MudServer
             scriptEngine.Initialize();
 
             GameObject obj = scriptEngine.GetObjectOf("Game");
+            Log.Write(Log.GetMessages());
+            Log.FlushMessages();
 
             if (obj == null)
             {
+                Log.Write("Setting up the Engine Game Manager...");
                 game = new Game();
                 obj = new GameObject(game, "Game");
                 scriptEngine = new ScriptEngine((Game)obj.Instance, ScriptEngine.ScriptTypes.Assembly);
@@ -49,11 +52,23 @@ namespace MudServer
                 game = (Game)obj.Instance;
                 scriptEngine = new ScriptEngine(game, ScriptEngine.ScriptTypes.Assembly);
             }
+            scriptEngine.ScriptPath = FileManager.GetDataPath(SaveDataTypes.Root);
+            //Force TCP
+            game.ServerType = ProtocolType.Tcp;
 
-            scriptEngine.Initialize();
+            //Setup the scripting engine and load our script library
+            //MUST be called before game.Start()
+            //scriptEngine.Initialize();
+            //game.scriptEngine = scriptEngine; //Pass this script engine off to the game to use now.
 
-            Console.WriteLine(game.GameTitle);
-            Console.ReadKey();
+            game.Start();
+
+            while (game.IsRunning)
+            {
+                Console.Write(Log.GetMessages());
+                Log.FlushMessages();
+                System.Threading.Thread.Sleep(1);
+            }
                 
 
             /*

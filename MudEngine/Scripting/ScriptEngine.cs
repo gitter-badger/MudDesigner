@@ -79,7 +79,7 @@ namespace MudEngine.Scripting
             }
         }
 
-        private ScriptTypes _ScriptTypes;
+        internal ScriptTypes ScriptType { get; set; }
         private Assembly _ScriptAssembly;
         private List<Assembly> _AssemblyCollection;
         private string[] _ErrorMessages;
@@ -98,7 +98,7 @@ namespace MudEngine.Scripting
         public ScriptEngine(Game game, ScriptTypes scriptTypes)
         {
             //Initialize our engine fields
-            _ScriptTypes = scriptTypes;
+            ScriptType = scriptTypes;
             ScriptExtension = ".cs";
 
             //Get our current install path
@@ -133,7 +133,7 @@ namespace MudEngine.Scripting
             Directory.CreateDirectory("temp");
 
             //Setup the additional sourcecode that's needed in the script.
-            string[] usingStatements = new string[] { "using System;", "using MudEngine.GameObjects;", "using MudEngine.GameObjects.Characters;", "using MudEngine.GameManagement;", "using MudEngine.FileSystem;" };
+            string[] usingStatements = new string[] { "using System;", "using MudEngine.GameObjects;", "using MudEngine.GameObjects.Characters;", "using MudEngine.GameObjects.Environment;", "using MudEngine.GameObjects.Items;", "using MudEngine.GameManagement;", "using MudEngine.FileSystem;", "using MudEngine.Scripting;" };
 
             foreach (string script in scripts)
             {
@@ -165,7 +165,7 @@ namespace MudEngine.Scripting
             CompilerParameters param = new CompilerParameters(new string[] {"mscorlib.dll", "System.dll", "MudEngine.dll"});
             param.GenerateExecutable = false;
             param.GenerateInMemory = true;
-            param.OutputAssembly = "Scripts.dll";
+            param.OutputAssembly = Path.Combine(oldPath, "Scripts.dll");
             param.IncludeDebugInformation = false;
             param.TreatWarningsAsErrors = true;
 
@@ -178,7 +178,6 @@ namespace MudEngine.Scripting
             //Delete the temp folder
             //Directory.Delete("temp", true);
             ScriptPath = oldPath;
-            _ScriptAssembly = results.CompiledAssembly;
 
             //if we encountered errors we need to log them to our ErrorMessages property
             if (results.Errors.Count >= 1)
@@ -196,7 +195,10 @@ namespace MudEngine.Scripting
                 return false;
             }
             else
+            {
+                _ScriptAssembly = results.CompiledAssembly;
                 return true;
+            }
 #endif
         }
 
@@ -206,7 +208,7 @@ namespace MudEngine.Scripting
         /// <param name="scriptAssembly"></param>
         public void Initialize()
         {
-            if (_ScriptTypes == ScriptTypes.Assembly)
+            if (ScriptType == ScriptTypes.Assembly)
             {
                 Log.Write("Loading Assembly based scripts...");
                 InitializeAssembly();
@@ -234,7 +236,7 @@ namespace MudEngine.Scripting
                     {
                         GameObject obj = new GameObject(Activator.CreateInstance(t, new object[] {_Game}), t.Name); 
                         GameObjects.Add(obj);
-                        obj.GetProperty().CurrentRoom = _Game.InitialRealm.InitialZone.InitialRoom;
+                        //obj.GetProperty().CurrentRoom = _Game.InitialRealm.InitialZone.InitialRoom;
                         Log.Write(t.Name + " script loaded.");
                         continue;
                     }
@@ -245,6 +247,7 @@ namespace MudEngine.Scripting
                     }
                 }
             }
+            _AssemblyCollection.Clear();
         }
 
         private void InitializeAssembly()
@@ -264,6 +267,19 @@ namespace MudEngine.Scripting
 
             foreach (string library in libraries)
             {
+                bool isOK = true;
+
+                foreach (Assembly assembly in _AssemblyCollection)
+                {
+                    if (assembly.ManifestModule.ScopeName == Path.GetFileName(library))
+                    {
+                        isOK = false;
+                        break;
+                    }
+                }
+                if (!isOK)
+                    continue;
+
                 Log.Write("Found possible script libary: " + Path.GetFileName(library));
                 _AssemblyCollection.Add(Assembly.LoadFile(library));
             }
@@ -280,8 +296,16 @@ namespace MudEngine.Scripting
                 return;
             }
 
-            CompileScripts();
-            _AssemblyCollection.Add(_ScriptAssembly);
+            if (!CompileScripts())
+            {
+                Log.Write("Error Compiling Scripts:");
+                foreach (string error in _ErrorMessages)
+                {
+                    Log.Write("Error: " + error);
+                }
+            }
+            else
+                _AssemblyCollection.Add(_ScriptAssembly);
         }
 
         public GameObject GetObject(string objectName)
