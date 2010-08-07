@@ -71,6 +71,7 @@ namespace MudEngine.GameObjects.Environment
 
             //TODO: Check fo duplicates
             ZoneCollection.Add(zone);
+            zone.Realm = Name;
         }
     }
 }

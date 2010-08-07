@@ -37,15 +37,12 @@ namespace MUDGame
             zone.IsSafe = true;
             zone.StatDrain = false;
             zone.IsInitialZone = true;
-            zone.Realm = realm.Name;
             realm.AddZone(zone);
             
             Room bedroom = new Room(game);
             bedroom.Name = "Bedroom";
             bedroom.DetailedDescription.Add("This is your bedroom, it's small but comfortable. You have a bed, a book shelf and a rug on the floor.");
             bedroom.DetailedDescription.Add("You may walk to the WEST to find you Closet.");
-            bedroom.Zone = zone.Name;
-            bedroom.Realm = realm.Name;
             bedroom.IsInitialRoom = true;
             zone.AddRoom(bedroom);
 
@@ -53,8 +50,6 @@ namespace MUDGame
             closet.Name = "Closet";
             closet.DetailedDescription.Add("Your closet contains clothing and some shoes.");
             closet.DetailedDescription.Add("You may walk to your EAST to find your Room.");
-            closet.Zone = zone.Name;
-            closet.Realm = realm.Name;
             zone.AddRoom(closet);
 
             zone.LinkRooms(AvailableTravelDirections.West, closet, bedroom);

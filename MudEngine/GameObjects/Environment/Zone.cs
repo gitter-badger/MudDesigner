@@ -122,6 +122,8 @@ namespace MudEngine.GameObjects.Environment
 
             //TODO: Check for duplicate Rooms.
             RoomCollection.Add(room);
+            room.Zone = Name;
+            room.Realm = Realm;
         }
 
         public void LinkRooms(AvailableTravelDirections departureDirection, Room arrivalRoom, Room departureRoom)

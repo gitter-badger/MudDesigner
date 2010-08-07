@@ -57,19 +57,6 @@ namespace MudEngine.GameManagement
         public bool IsRunning { get; internal set; }
 
         /// <summary>
-        /// Gets or Sets if all objects will be laoded during server startup. Enabling this results in a slower server start time, but faster object access.
-        /// </summary>
-        [Category("Project Settings")]
-        [Description("If enabled, all objects will be loaded during server startup resulting in a slower server start time, but faster load time during gameplay")]
-        public bool PreCacheObjects { get; set; }
-
-        /// <summary>
-        /// Gets or Sets the path to the current project
-        /// </summary>
-        [Browsable(false)]
-        public string ProjectPath { get; set; }
-
-        /// <summary>
         /// Gets or Sets the paths to various project related objects.
         /// </summary>
         public SaveDataPaths DataPaths { get; set; }
@@ -78,6 +65,19 @@ namespace MudEngine.GameManagement
         /// Gets the scripting engine used by the game.
         /// </summary>
         public ScriptEngine scriptEngine { get; internal set; }
+
+        /// <summary>
+        /// Gets or Sets the path to the current project
+        /// </summary>
+        [Browsable(false)]
+        public string ProjectPath { get; set; }
+
+        /// <summary>
+        /// Gets or Sets if all objects will be laoded during server startup. Enabling this results in a slower server start time, but faster object access.
+        /// </summary>
+        [Category("Project Settings")]
+        [Description("If enabled, all objects will be loaded during server startup resulting in a slower server start time, but faster load time during gameplay")]
+        public bool PreCacheObjects { get; set; }
         #endregion
 
         #region Game Information
@@ -105,6 +105,27 @@ namespace MudEngine.GameManagement
         [Category("Project Settings")]
         [Description("The current working version of the game.")]
         public string Version { get; set; }
+        
+        [Browsable(false)]
+        public List<Currency> CurrencyList { get; set; }
+
+        [Category("Environment Settings")]
+        [ReadOnly(true)]
+        public Realm InitialRealm
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the collection of Realms currently stored in the Game.
+        /// </summary>
+        public List<Realm> RealmCollection { get; private set; }
+
+        /// <summary>
+        /// The Story that is displayed on initial player entry into the game
+        /// </summary>
+        public string Story { get; set; }
 
         [Category("Project Settings")]
         [Description("Enable or Disable Auto-saving of players when the player travels")]
@@ -150,26 +171,6 @@ namespace MudEngine.GameManagement
         [Category("Game Currency")]
         [DefaultValue("Copper")]
         public string BaseCurrencyName { get; set; }
-        
-        [Browsable(false)]
-        public List<Currency> CurrencyList { get; set; }
-
-        [Category("Environment Settings")]
-        [ReadOnly(true)]
-        public Realm InitialRealm
-        {
-            get;
-            private set;
-        }
-        /// <summary>
-        /// Gets the collection of Realms currently stored in the Game.
-        /// </summary>
-        public List<Realm> RealmCollection { get; private set; }
-
-        /// <summary>
-        /// The Story that is displayed on initial player entry into the game
-        /// </summary>
-        public string Story { get; set; }
         #endregion
 
         #region Networking
