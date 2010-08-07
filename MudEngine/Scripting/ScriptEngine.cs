@@ -165,7 +165,9 @@ namespace MudEngine.Scripting
             CompilerParameters param = new CompilerParameters(new string[] {"mscorlib.dll", "System.dll", "MudEngine.dll"});
             param.GenerateExecutable = false;
             param.GenerateInMemory = true;
-            param.OutputAssembly = Path.Combine(oldPath, "Scripts.dll");
+            if (!param.GenerateInMemory)
+                param.OutputAssembly = Path.Combine(oldPath, "Scripts.dll");
+
             param.IncludeDebugInformation = false;
             param.TreatWarningsAsErrors = true;
 
@@ -288,6 +290,9 @@ namespace MudEngine.Scripting
 
         private void InitializeSourceFiles()
         {
+            if (!Directory.Exists(ScriptPath))
+                Directory.CreateDirectory(ScriptPath);
+
             string[] scripts = Directory.GetFiles(ScriptPath, "*.cs", SearchOption.AllDirectories);
 
             if (scripts.Length == 0)

@@ -207,7 +207,7 @@ namespace MudEngine.GameManagement
             //Instance all of the Games Objects.
             CurrencyList = new List<Currency>();
             scriptEngine = new Scripting.ScriptEngine(this);
-            RealmCollection = new List<Realm>();
+            RealmCollection = new List<Realm>();            
 
             //Prepare the Save Paths for all of our Game objects.
             SaveDataPaths paths = new SaveDataPaths();
@@ -227,6 +227,12 @@ namespace MudEngine.GameManagement
             ServerType = ProtocolType.Tcp;
             ServerPort = 555;
             MaximumPlayers = 1000;
+
+            //Setup the player arrays
+            //used to be in Start
+            PlayerCollection = new BaseCharacter[MaximumPlayers];
+            for (int i = 0; i < MaximumPlayers; i++)
+                PlayerCollection[i] = new BaseCharacter(this);
         }
         #endregion
 
@@ -237,6 +243,9 @@ namespace MudEngine.GameManagement
         public bool Start()
         {
             Log.Write("Game Initializing...");
+            if (!Directory.Exists(DataPaths.Players))
+                Directory.CreateDirectory(DataPaths.Players);
+
             //First, compile and execute all of the script files.
             scriptEngine.ScriptType = ScriptEngine.ScriptTypes.SourceFiles;
             scriptEngine.Initialize();
@@ -365,11 +374,6 @@ namespace MudEngine.GameManagement
         /// </summary>
         private void StartServer()
         {
-            //This is handled by the Game() Constructor
-            //PlayerCollection = new List<BaseCharacter>(MaximumPlayers);
-            PlayerCollection = new BaseCharacter[MaximumPlayers];
-            for (int i = 0; i < MaximumPlayers; i++)
-                PlayerCollection[i] = new BaseCharacter(this);
             Server = new Networking.Server();
             Server.Initialize(ServerPort, ref PlayerCollection);
             Server.Start();

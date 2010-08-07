@@ -17,6 +17,7 @@ namespace MudServer
     {
         static void Main(string[] args)
         {
+            Log.Write("Launching...");
             ScriptEngine scriptEngine;
             Game game;
 
@@ -26,29 +27,32 @@ namespace MudServer
                 Log.Write("Settings.ini missing!");
                 FileManager.WriteLine("Settings.ini", "Scripts", "ScriptPath");
                 FileManager.WriteLine("Settings.ini", ".cs", "ScriptExtension");
+                Log.Write("Settings.ini re-created with default values");
             }
 
+            Log.Write("Loading settings...");
             scriptEngine = new ScriptEngine(new Game(), ScriptEngine.ScriptTypes.SourceFiles);
             scriptEngine.ScriptPath = FileManager.GetData("Settings.ini", "ScriptPath");
             scriptEngine.ScriptExtension = FileManager.GetData("Settings.ini", "ScriptExtension");
 
             //scriptEngine.CompileScripts();
-
+            Log.Write("Initializing Script Engine for Script Compilation...");
             scriptEngine.Initialize();
 
             GameObject obj = scriptEngine.GetObjectOf("Game");
-            Log.Write(Log.GetMessages());
+            Console.WriteLine(Log.GetMessages());
             Log.FlushMessages();
 
             if (obj == null)
             {
-                Log.Write("Setting up the Engine Game Manager...");
+                Log.Write("Setting up the Default Engine Game Manager...");
                 game = new Game();
                 obj = new GameObject(game, "Game");
                 scriptEngine = new ScriptEngine((Game)obj.Instance, ScriptEngine.ScriptTypes.Assembly);
             }
             else
             {
+                Log.Write("Setting up " + obj.GetProperty().GameTitle + " Manager...");
                 game = (Game)obj.Instance;
                 scriptEngine = new ScriptEngine(game, ScriptEngine.ScriptTypes.Assembly);
             }
@@ -60,6 +64,9 @@ namespace MudServer
             //MUST be called before game.Start()
             //scriptEngine.Initialize();
             //game.scriptEngine = scriptEngine; //Pass this script engine off to the game to use now.
+            Log.Write("Starting " + obj.GetProperty().GameTitle + "...");
+            Console.WriteLine(Log.GetMessages());
+            Log.FlushMessages();
 
             game.Start();
 
@@ -69,43 +76,6 @@ namespace MudServer
                 Log.FlushMessages();
                 System.Threading.Thread.Sleep(1);
             }
-                
-
-            /*
-            Game game = new Game();
-            Zeroth realm = new Zeroth(game);
-            
-            realm.BuildZeroth();
-
-            //BaseCharacter serverAdmin = new BaseCharacter(game);
-            
-            //Setup the game
-            game.AutoSave = true;
-            game.BaseCurrencyName = "Copper";
-            game.BaseCurrencyAmount = 1;
-            game.CompanyName = "Mud Designer";
-            game.DayLength = 60 * 8;
-            game.GameTitle = "Test Mud Project";
-            game.HideRoomNames = false;
-            game.PreCacheObjects = true;
-            game.ProjectPath = FileManager.GetDataPath(SaveDataTypes.Root);
-            game.TimeOfDay = Game.TimeOfDayOptions.Transition;
-            game.TimeOfDayTransition = 30;
-            game.Version = "0.1";
-            game.Website = "http://MudDesigner.Codeplex.com";
-            game.ServerType = ProtocolType.Tcp;
-            game.ServerPort = 555;
-            game.MaximumPlayers = 1000;
-            Game.IsDebug = false;
-
-            game.Start();
-            
-            while (game.IsRunning)
-            {
-                Console.Write(Log.GetMessages());
-                Log.FlushMessages();
-                System.Threading.Thread.Sleep(1);
-            */
         }
     }
 }

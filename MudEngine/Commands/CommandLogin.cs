@@ -62,7 +62,8 @@ namespace MudEngine.Commands
                 player.Load(savedFile);
                 player.Send("Welcome back " + player.Name + "!");
             }
-            player.CommandSystem.ExecuteCommand("Look", player);
+
+            //player.CommandSystem.ExecuteCommand("Look", player); //Handled in BaseCharacter.Initialize() now.
             return new CommandResults();
         }
     }

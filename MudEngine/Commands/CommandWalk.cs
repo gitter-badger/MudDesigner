@@ -39,7 +39,9 @@ namespace MudEngine.Commands
                     }
                 }
             }
-            return new CommandResults("Unable to travel in that direction.");
+            player.Send("Unable to travel in that direction.");
+
+            return null;
         }
     }
 }

@@ -200,8 +200,6 @@ namespace MudEngine.GameObjects.Characters
                 }
             }
 
-            ExecuteCommand("Login");
-
             //Set the players initial room
             if ((ActiveGame.InitialRealm == null) || (ActiveGame.InitialRealm.InitialZone == null) || (ActiveGame.InitialRealm.InitialZone.InitialRoom == null))
             {
@@ -211,6 +209,9 @@ namespace MudEngine.GameObjects.Characters
             }
             else
                 CurrentRoom = ActiveGame.InitialRealm.InitialZone.InitialRoom;
+
+            ExecuteCommand("Login");
+            ExecuteCommand("Look"); //MUST happen after Room setup is completed, otherwise the player default Abyss Room is printed.
         }
         internal void Receive(string data)
         {
