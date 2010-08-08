@@ -62,6 +62,23 @@ namespace MudEngine.Commands
                 player.Load(savedFile);
                 player.Send("Welcome back " + player.Name + "!");
             }
+            
+            //Look to see if there are players in the Room
+            //Let other players know that the user walked in.
+            for (int i = 0; i != player.ActiveGame.PlayerCollection.Length; i++)
+            {
+                if (player.ActiveGame.PlayerCollection[i].Name == player.Name)
+                    continue;
+
+                string room = player.ActiveGame.PlayerCollection[i].CurrentRoom.Name;
+                string realm = player.ActiveGame.PlayerCollection[i].CurrentRoom.Realm;
+                string zone = player.ActiveGame.PlayerCollection[i].CurrentRoom.Zone;
+
+                if ((room == player.CurrentRoom.Name) && (realm == player.CurrentRoom.Realm) && (zone == player.CurrentRoom.Zone))
+                {
+                    player.ActiveGame.PlayerCollection[i].Send(player.Name + " arrived.");
+                }
+            }
 
             //player.CommandSystem.ExecuteCommand("Look", player); //Handled in BaseCharacter.Initialize() now.
             return new CommandResults();

@@ -142,6 +142,22 @@ namespace MudEngine.GameObjects.Characters
                 return false;
             }
 
+            //Let other players know that the user walked out.
+            for (int i = 0; i != ActiveGame.PlayerCollection.Length; i++)
+            {
+                if (ActiveGame.PlayerCollection[i].Name == Name)
+                    continue;
+
+                string room = ActiveGame.PlayerCollection[i].CurrentRoom.Name;
+                string realm = ActiveGame.PlayerCollection[i].CurrentRoom.Realm;
+                string zone = ActiveGame.PlayerCollection[i].CurrentRoom.Zone;
+
+                if ((room == CurrentRoom.Name) && (realm == CurrentRoom.Realm) && (zone == CurrentRoom.Zone))
+                {
+                    ActiveGame.PlayerCollection[i].Send(Name + " walked out towards the " + travelDirection.ToString());
+                }
+            }
+
             //We have a doorway, lets move to the next room.
             CurrentRoom = CurrentRoom.GetDoor(travelDirection).ArrivalRoom;
 
@@ -153,6 +169,21 @@ namespace MudEngine.GameObjects.Characters
         public virtual void OnTravel(AvailableTravelDirections travelDirection)
         {
             //TODO: Check the Room/Zone/Realm to see if anything needs to occure during travel.
+            //Let other players know that the user walked in.
+            for (int i = 0; i != ActiveGame.PlayerCollection.Length; i++)
+            {
+                if (ActiveGame.PlayerCollection[i].Name == Name)
+                    continue;
+
+                string room = ActiveGame.PlayerCollection[i].CurrentRoom.Name;
+                string realm = ActiveGame.PlayerCollection[i].CurrentRoom.Realm;
+                string zone = ActiveGame.PlayerCollection[i].CurrentRoom.Zone;
+
+                if ((room == CurrentRoom.Name) && (realm == CurrentRoom.Realm) && (zone == CurrentRoom.Zone))
+                {
+                    ActiveGame.PlayerCollection[i].Send(Name + " walked in from the " + TravelDirections.GetReverseDirection(travelDirection));
+                }
+            }
         }
 
         public void ExecuteCommand(string command)
@@ -164,7 +195,7 @@ namespace MudEngine.GameObjects.Characters
             Send(""); //Blank line to help readability.
 
             //Now that the command has been executed, restore the Command: message
-            Send("Command: ", false);
+            //Send("Command: ", false);
 
             /* No longer needed due to player.send() sending content to the player.
             if (result.Result != null)
