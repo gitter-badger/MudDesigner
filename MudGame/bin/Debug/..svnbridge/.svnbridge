@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?><ItemProperties xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Properties><Property><Name>svn:ignore</Name><Value>Log.txt
+MudEngine.dll
+MudEngine.pdb
+MudGame.exe
+MudGame.pdb
+MudGame.vshost.exe
+MudGame.vshost.exe.manifest
+Player
+temp
+</Value></Property></Properties></ItemProperties>
