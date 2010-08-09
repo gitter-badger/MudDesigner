@@ -195,7 +195,7 @@ namespace MudEngine.GameObjects.Characters
             Send(""); //Blank line to help readability.
 
             //Now that the command has been executed, restore the Command: message
-            //Send("Command: ", false);
+            Send("Command: ", false);
 
             /* No longer needed due to player.send() sending content to the player.
             if (result.Result != null)
@@ -213,7 +213,8 @@ namespace MudEngine.GameObjects.Characters
 
         internal void Initialize()
         {
-            client.Receive(new byte[255]);
+            if (ActiveGame.IsMultiplayer)
+                client.Receive(new byte[255]);
 
             if (Game.IsDebug)
                 Log.Write("New Player Connected.");
@@ -302,35 +303,42 @@ namespace MudEngine.GameObjects.Characters
         }
         internal string ReadInput()
         {
-            List<byte> buffer = new List<byte>();
-            while (true)
+            if (ActiveGame.IsMultiplayer)
             {
-                try
+                List<byte> buffer = new List<byte>();
+                while (true)
                 {
-                    byte[] buf = new byte[1];
-                    int recved = client.Receive(buf);
-                    
-                    if (recved > 0)
+                    try
                     {
-                        if (buf[0] == '\n' && buffer.Count > 0)
-                        {
-                            if (buffer[buffer.Count-1] == '\r')
-                                buffer.RemoveAt(buffer.Count-1);
+                        byte[] buf = new byte[1];
+                        int recved = client.Receive(buf);
 
-                            String str;
-                            System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
-                            str = enc.GetString(buffer.ToArray());
-                            return str;
+                        if (recved > 0)
+                        {
+                            if (buf[0] == '\n' && buffer.Count > 0)
+                            {
+                                if (buffer[buffer.Count - 1] == '\r')
+                                    buffer.RemoveAt(buffer.Count - 1);
+
+                                String str;
+                                System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
+                                str = enc.GetString(buffer.ToArray());
+                                return str;
+                            }
+                            else
+                                buffer.Add(buf[0]);
                         }
-                        else
-                            buffer.Add(buf[0]);
+                    }
+                    catch (Exception e)
+                    {
+                        Disconnect();
+                        return e.Message;
                     }
                 }
-                catch (Exception e)
-                {
-                    Disconnect();
-                    return e.Message;
-                }
+            }
+            else
+            {
+                return Console.ReadLine();
             }
         }
 

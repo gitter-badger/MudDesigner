@@ -241,7 +241,7 @@ namespace MudEngine.GameManagement
         /// <summary>
         /// Starts the game and runs the server if IsMultiplayer is true
         /// </summary>
-        public bool Start()
+        public virtual bool Start()
         {
             Log.Write("Game Initializing...");
             if (!Directory.Exists(DataPaths.Players))
@@ -300,6 +300,12 @@ namespace MudEngine.GameManagement
                 Log.Write("Starting Server...");
                 this.StartServer();
             }
+            else //Not multiplayer so we change the save locations
+            {
+                SaveDataPaths paths = new SaveDataPaths("World", "Saved");
+                DataPaths = paths;
+                PlayerCollection[0].Initialize();
+            }
 
             //Game is running now.
             IsRunning = true;
@@ -314,16 +320,34 @@ namespace MudEngine.GameManagement
         public void Shutdown()
         {
             Log.Write("Server shutdown requested...");
-            
-            //Place ending code here for game shut down.
-            //TODO: Save content on shutdown.
 
             if (IsMultiplayer)
                 Server.EndServer();
+            
+            Save();
 
             IsRunning = false;
 
             Log.Write("Shutdown completed...");
+        }
+
+        public void Save()
+        {
+            Log.Write("Saving Game world....");
+
+            Log.Write("Saving Game Players...");
+            for (int i = 0; i <= PlayerCollection.Length - 1; i++)
+            {
+                if (PlayerCollection[i].Name == "New BaseCharacter")
+                    continue;
+
+                Log.Write("Saving " + PlayerCollection[i].Name);
+                PlayerCollection[i].Save(Path.Combine(DataPaths.Players, PlayerCollection[i].Filename));
+            }
+        }
+
+        public void Load()
+        {
         }
 
         /// <summary>

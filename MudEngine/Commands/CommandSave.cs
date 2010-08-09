@@ -32,7 +32,7 @@ namespace MudEngine.Commands
                 }
             }
             else
-                player.Save(filename); //Should never  be called?
+                player.Save(filename); //Should never be called?
 
             return new CommandResults();
         }

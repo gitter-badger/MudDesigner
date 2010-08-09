@@ -11,6 +11,7 @@ namespace MudEngine.GameManagement
     public static class Log
     {
         static List<string> cachedMessages = new List<string>();
+        public static Boolean IsVerbose;
 
         public static void Write(string message)
         {
@@ -39,7 +40,7 @@ namespace MudEngine.GameManagement
                 sb.AppendLine(message);
             }
 
-            if (sb.ToString() == "")
+            if ((sb.ToString() == "") || (IsVerbose))
                 return "";
             else
                 return sb.ToString();

@@ -43,11 +43,14 @@ namespace MudEngine.Commands
             }
 
             //Next search if there is an existing player already logged in with this name, if so disconnect them.
-            foreach (BaseCharacter character in player.ActiveGame.PlayerCollection)
+            if (player.ActiveGame.IsMultiplayer)
             {
-                if (character.Name.ToLower() == input.ToLower())
+                for (int i = 0; i <= player.ActiveGame.PlayerCollection.Length - 1; i++)
                 {
-                    character.Disconnect();
+                    if (player.ActiveGame.PlayerCollection[i].Name.ToLower() == input.ToLower())
+                    {
+                        player.ActiveGame.PlayerCollection[i].Disconnect();
+                    }
                 }
             }
 
@@ -65,22 +68,24 @@ namespace MudEngine.Commands
             
             //Look to see if there are players in the Room
             //Let other players know that the user walked in.
-            for (int i = 0; i != player.ActiveGame.PlayerCollection.Length; i++)
+            if (player.ActiveGame.IsMultiplayer)
             {
-                if (player.ActiveGame.PlayerCollection[i].Name == player.Name)
-                    continue;
-
-                string room = player.ActiveGame.PlayerCollection[i].CurrentRoom.Name;
-                string realm = player.ActiveGame.PlayerCollection[i].CurrentRoom.Realm;
-                string zone = player.ActiveGame.PlayerCollection[i].CurrentRoom.Zone;
-
-                if ((room == player.CurrentRoom.Name) && (realm == player.CurrentRoom.Realm) && (zone == player.CurrentRoom.Zone))
+                for (int i = 0; i != player.ActiveGame.PlayerCollection.Length; i++)
                 {
-                    player.ActiveGame.PlayerCollection[i].Send(player.Name + " arrived.");
+                    if (player.ActiveGame.PlayerCollection[i].Name == player.Name)
+                        continue;
+
+                    string room = player.ActiveGame.PlayerCollection[i].CurrentRoom.Name;
+                    string realm = player.ActiveGame.PlayerCollection[i].CurrentRoom.Realm;
+                    string zone = player.ActiveGame.PlayerCollection[i].CurrentRoom.Zone;
+
+                    if ((room == player.CurrentRoom.Name) && (realm == player.CurrentRoom.Realm) && (zone == player.CurrentRoom.Zone))
+                    {
+                        player.ActiveGame.PlayerCollection[i].Send(player.Name + " arrived.");
+                    }
                 }
             }
 
-            //player.CommandSystem.ExecuteCommand("Look", player); //Handled in BaseCharacter.Initialize() now.
             return new CommandResults();
         }
     }
