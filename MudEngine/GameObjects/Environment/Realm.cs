@@ -40,15 +40,29 @@ namespace MudEngine.GameObjects.Environment
         /// </summary>
         /// <param name="zoneName"></param>
         /// <returns></returns>
-        public Zone GetZone(string name)
+        public Zone GetZoneByID(Guid id)
         {
             foreach (Zone zone in ZoneCollection)
             {
-                if (zone.Name == name)
+                if (zone.ID == id)
                     return zone;
             }
 
             return null;
+        }
+
+        public List<Zone> GetZoneByName(string name)
+        {
+
+            List<Zone> zones = new List<Zone>();
+
+            foreach (Zone zone in ZoneCollection)
+            {
+                if (zone.Name == name)
+                    zones.Add(zone);
+            }
+
+            return zones;
         }
 
         public void AddZone(Zone zone)

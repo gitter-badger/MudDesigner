@@ -31,6 +31,9 @@ namespace MudEngine.Commands
             string savedFile = "";
 
             //See if this character already exists.
+            if (!Directory.Exists(player.ActiveGame.DataPaths.Players))
+                Directory.CreateDirectory(player.ActiveGame.DataPaths.Players);
+
             foreach (string filename in Directory.GetFiles(player.ActiveGame.DataPaths.Players))
             {
                 if (Path.GetFileNameWithoutExtension(filename).ToLower() == input.ToLower())

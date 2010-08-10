@@ -121,10 +121,12 @@ namespace MudGame
             {
                 if (lastSaveGap == 30)
                 {
-                    game.Save();
+                    if (game.AutoSave)
+                        game.Save();
                     lastSaveGap = 0;
                 }
 
+                //ServerTime holds the last minute prior to our current minute.
                 if (serverTime.Minute != DateTime.Now.Minute)
                 {
                     serverTime = DateTime.Now;
@@ -141,6 +143,7 @@ namespace MudGame
                 {
                     game.PlayerCollection[0].ExecuteCommand(Console.ReadLine());
                 }
+                game.Update();
             }
         }
     }

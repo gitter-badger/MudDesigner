@@ -178,7 +178,7 @@ namespace MudEngine.Scripting
             results = codeProvider.CompileAssemblyFromFile(param, scripts);
 
             //Delete the temp folder
-            //Directory.Delete("temp", true);
+            Directory.Delete("temp", true);
             ScriptPath = oldPath;
 
             //if we encountered errors we need to log them to our ErrorMessages property

@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\CommandExit.cs" />
+    <Compile Include="Commands\CommandGetTime.cs" />
     <Compile Include="Commands\CommandLook.cs" />
     <Compile Include="Commands\CommandRestart.cs" />
     <Compile Include="Commands\CommandSave.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="FileSystem\SaveDataPaths.cs" />
     <Compile Include="GameManagement\CommandEngine.cs" />
     <Compile Include="GameManagement\CommandResults.cs" />
+    <Compile Include="GameManagement\GameTime.cs" />
     <Compile Include="GameManagement\ICommand.cs" />
     <Compile Include="FileSystem\FileManager.cs" />
     <Compile Include="FileSystem\SaveDataTypes.cs" />

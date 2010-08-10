@@ -20,16 +20,6 @@ using MudEngine.Scripting;
 
 namespace MudEngine.GameManagement
 {
-    
-    #region Custom Types
-        public enum TimeOfDayOptions
-        {
-            AlwaysDay,
-            AlwaysNight,
-            Transition,
-        }
-        #endregion
-
     /// <summary>
     /// Manages all of the projects settings.
     /// </summary>
@@ -78,6 +68,11 @@ namespace MudEngine.GameManagement
         [Category("Project Settings")]
         [Description("If enabled, all objects will be loaded during server startup resulting in a slower server start time, but faster load time during gameplay")]
         public bool PreCacheObjects { get; set; }
+
+        /// <summary>
+        /// Gets a copy of all identifiers being used in the game.
+        /// </summary>
+        internal List<Int32> ObjectIdentifierCollection { get; private set; }
         #endregion
 
         #region Game Information
@@ -141,27 +136,6 @@ namespace MudEngine.GameManagement
         /// </summary>
         public bool HideRoomNames { get; set; }
 
-        /// <summary>
-        /// Gets or Sets what time of day the world is currently in.
-        /// </summary>
-        [Category("Day Management")]
-        [Description("Set what time of day the world will take place in.")]
-        public TimeOfDayOptions TimeOfDay { get; set; }
-
-        /// <summary>
-        /// Gets or Sets how long in minutes it takes to transition from day to night.
-        /// </summary>
-        [Category("Day Management")]
-        [Description("Set how long in minutes it takes to transition from day to night.")]
-        public int TimeOfDayTransition { get; set; }
-
-        /// <summary>
-        /// Gets or Sets how long in minutes a day lasts in the game world.
-        /// </summary>
-        [Category("Day Management")]
-        [Description("Sets how long in minutes a day lasts in the game world.")]
-        public int DayLength { get; set; }
-
         [Category("Game Currency")]
         [DefaultValue(1)]
         [Description("Sets the amount that the base currency is valued at.")]
@@ -171,6 +145,8 @@ namespace MudEngine.GameManagement
         [Category("Game Currency")]
         [DefaultValue("Copper")]
         public string BaseCurrencyName { get; set; }
+
+        public GameTime WorldTime { get; set; }
         #endregion
 
         #region Networking
@@ -208,7 +184,8 @@ namespace MudEngine.GameManagement
             //Instance all of the Games Objects.
             CurrencyList = new List<Currency>();
             scriptEngine = new Scripting.ScriptEngine(this);
-            RealmCollection = new List<Realm>();            
+            RealmCollection = new List<Realm>();
+            WorldTime = new GameTime(this);
 
             //Prepare the Save Paths for all of our Game objects.
             SaveDataPaths paths = new SaveDataPaths();
@@ -234,6 +211,20 @@ namespace MudEngine.GameManagement
             PlayerCollection = new BaseCharacter[MaximumPlayers];
             for (int i = 0; i < MaximumPlayers; i++)
                 PlayerCollection[i] = new BaseCharacter(this);
+
+            GameTime.Time t = new GameTime.Time();
+            t.Hour = 8;
+            t.Minute = 0;
+            t.Second = 0;
+            t.Day = 1;
+            t.Month = 1;
+            t.Year = 2010;
+            WorldTime.InitialGameTime = t;
+            WorldTime.DaysPerMonth = 7;
+            WorldTime.MonthsPerYear = 12;
+            WorldTime.HoursPerDay = 23;
+            WorldTime.MinutesPerHour = 59;
+            WorldTime.SecondsPerMinute = 59;
         }
         #endregion
 
@@ -307,6 +298,8 @@ namespace MudEngine.GameManagement
                 PlayerCollection[0].Initialize();
             }
 
+            WorldTime.Initialize();
+
             //Game is running now.
             IsRunning = true;
 
@@ -331,7 +324,12 @@ namespace MudEngine.GameManagement
             Log.Write("Shutdown completed...");
         }
 
-        public void Save()
+        public virtual void Update()
+        {
+            WorldTime.Update();
+        }
+
+        public virtual void Save()
         {
             Log.Write("Saving Game world....");
 
@@ -344,9 +342,47 @@ namespace MudEngine.GameManagement
                 Log.Write("Saving " + PlayerCollection[i].Name);
                 PlayerCollection[i].Save(Path.Combine(DataPaths.Players, PlayerCollection[i].Filename));
             }
+
+            //Delete the last saved version of the World. We will dump the current version onto disk.
+            if (Directory.Exists(DataPaths.Environment))
+                Directory.Delete(DataPaths.Environment, true);
+
+            //Re-create the environment directory
+            Directory.CreateDirectory(DataPaths.Environment);
+
+            //Loop through each Realm and save it.
+            for (int x = 0; x <= RealmCollection.Count - 1; x++)
+            {
+                string realmFile = Path.Combine(DataPaths.Environment, RealmCollection[x].Filename);
+
+                //Save the Realm
+                RealmCollection[x].Save(realmFile);
+
+                //Loop through each Zone in the Realm and save it.
+                for (int y = 0; y <= RealmCollection[x].ZoneCollection.Count - 1; y++)
+                {
+                    string zonePath = Path.Combine(DataPaths.Environment, Path.GetFileNameWithoutExtension(RealmCollection[x].Filename), Path.GetFileNameWithoutExtension(RealmCollection[x].ZoneCollection[y].Filename));
+
+                    if (!Directory.Exists(zonePath))
+                        Directory.CreateDirectory(zonePath);
+
+                    //Save the Zone.
+                    RealmCollection[x].ZoneCollection[y].Save(Path.Combine(zonePath, RealmCollection[x].ZoneCollection[y].Filename));
+
+                    for (int z = 0; z <= RealmCollection[x].ZoneCollection[y].RoomCollection.Count - 1; z++)
+                    {
+                        if (!Directory.Exists(Path.Combine(zonePath, "Rooms")))
+                            Directory.CreateDirectory(Path.Combine(zonePath, "Rooms"));
+
+                        string roomPath = Path.Combine(zonePath, "Rooms");
+
+                        RealmCollection[x].ZoneCollection[y].RoomCollection[z].Save(Path.Combine(roomPath, RealmCollection[x].ZoneCollection[y].RoomCollection[z].Filename));
+                    }
+                }
+            }
         }
 
-        public void Load()
+        public virtual void Load()
         {
         }
 
@@ -383,12 +419,25 @@ namespace MudEngine.GameManagement
         /// </summary>
         /// <param name="realmName"></param>
         /// <returns></returns>
-        public Realm GetRealm(string realmName)
+        public List<Realm> GetRealmByName(string realmName)
         {
+            List<Realm> realms = new List<Realm>();
+
             foreach (Realm realm in RealmCollection)
             {
                 if (realm.Name == realmName)
-                    return realm;
+                    realms.Add(realm);
+            }
+
+            return realms;
+        }
+
+        public Realm GetRealmByID(Guid id)
+        {
+            foreach (Realm r in RealmCollection)
+            {
+                if (r.ID == id)
+                    return r;
             }
 
             return null;
