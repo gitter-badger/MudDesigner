@@ -89,7 +89,7 @@ namespace MudEngine.GameObjects.Characters
             }
 
             //Restore the users current Room.
-            Realm realm = ActiveGame.GetRealmByID(Guid.Parse(FileManager.GetData(filename, "CurrentRealm")));
+            Realm realm = ActiveGame.GetRealmByID(Convert.ToInt32(FileManager.GetData(filename, "CurrentRealm")));
 
             if (realm == null)
             {
@@ -97,7 +97,7 @@ namespace MudEngine.GameObjects.Characters
                 return;
             }
 
-            Zone zone = realm.GetZoneByID(Guid.Parse(FileManager.GetData(filename, "CurrentZone")));
+            Zone zone = realm.GetZoneByID(Convert.ToInt32(FileManager.GetData(filename, "CurrentZone")));
 
             if (zone == null)
             {
@@ -105,7 +105,7 @@ namespace MudEngine.GameObjects.Characters
                 return;
             }
 
-            CurrentRoom = zone.GetRoomByID(Guid.Parse(FileManager.GetData(filename, "CurrentRoom")));
+            CurrentRoom = zone.GetRoomByID(Convert.ToInt32(FileManager.GetData(filename, "CurrentRoom")));
             if (CurrentRoom == null)
             {
                 CurrentRoom = new Room(ActiveGame);

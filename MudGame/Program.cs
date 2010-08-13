@@ -41,9 +41,7 @@ namespace MudGame
                 Log.IsVerbose = false;
 
             Log.Write("Loading settings...");
-            scriptEngine = new ScriptEngine(new Game(), ScriptEngine.ScriptTypes.SourceFiles);
-            scriptEngine.ScriptPath = FileManager.GetData(SettingsFile, "ScriptPath");
-            scriptEngine.ScriptExtension = FileManager.GetData(SettingsFile, "ScriptExtension");
+            scriptEngine = new ScriptEngine(new Game(), ScriptEngine.ScriptTypes.Both);
 
             //scriptEngine.CompileScripts();
             Log.Write("Initializing Script Engine for Script Compilation...");
@@ -66,7 +64,6 @@ namespace MudGame
                 game = (Game)obj.Instance;
                 scriptEngine = new ScriptEngine(game, ScriptEngine.ScriptTypes.Assembly);
             }
-            scriptEngine.ScriptPath = FileManager.GetDataPath(SaveDataTypes.Root);
             //Force TCP
             game.ServerType = ProtocolType.Tcp;
 
@@ -111,38 +108,8 @@ namespace MudGame
                 }
             }
 
-
-            DateTime serverTime = new DateTime();
-            DateTime systemTime = DateTime.Now;
-
-            int lastSaveGap = 0;
-
             while (game.IsRunning)
             {
-                if (lastSaveGap == 30)
-                {
-                    if (game.AutoSave)
-                        game.Save();
-                    lastSaveGap = 0;
-                }
-
-                //ServerTime holds the last minute prior to our current minute.
-                if (serverTime.Minute != DateTime.Now.Minute)
-                {
-                    serverTime = DateTime.Now;
-                    lastSaveGap++;
-                }
-
-                if (game.IsMultiplayer)
-                {
-                    Console.Write(Log.GetMessages());
-                    Log.FlushMessages();
-                    System.Threading.Thread.Sleep(1);
-                }
-                else
-                {
-                    game.PlayerCollection[0].ExecuteCommand(Console.ReadLine());
-                }
                 game.Update();
             }
         }

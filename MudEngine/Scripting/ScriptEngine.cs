@@ -23,7 +23,8 @@ namespace MudEngine.Scripting
         public enum ScriptTypes
         {
             Assembly,
-            SourceFiles
+            SourceFiles,
+            Both
         }
 
         /// <summary>
@@ -83,6 +84,7 @@ namespace MudEngine.Scripting
         private Assembly _ScriptAssembly;
         private List<Assembly> _AssemblyCollection;
         private string[] _ErrorMessages;
+        private string _SettingsFile;
         Game _Game;
 
         public ScriptEngine(Game game) : this(game, ScriptTypes.Assembly)
@@ -98,11 +100,17 @@ namespace MudEngine.Scripting
         public ScriptEngine(Game game, ScriptTypes scriptTypes)
         {
             //Initialize our engine fields
-            ScriptType = scriptTypes;
-            ScriptExtension = ".cs";
+            _SettingsFile = "Settings.ini";
+
+            ScriptExtension = FileManager.GetData(_SettingsFile, "ScriptExtension");
+            if (String.IsNullOrEmpty(ScriptExtension))
+                ScriptExtension = ".cs";
 
             //Get our current install path
-            ScriptPath = "Scripts";
+            ScriptPath = FileManager.GetData(_SettingsFile, "ScriptPath");
+            if (String.IsNullOrEmpty(ScriptPath))
+                ScriptPath = "Scripts";
+
             InstallPath = Environment.CurrentDirectory;
             GameObjects = new List<GameObject>();
             _AssemblyCollection = new List<Assembly>();
@@ -210,13 +218,15 @@ namespace MudEngine.Scripting
         /// <param name="scriptAssembly"></param>
         public void Initialize()
         {
-            if (ScriptType == ScriptTypes.Assembly)
+            if ((ScriptType == ScriptTypes.Assembly) || (ScriptType == ScriptTypes.Both))
             {
-                Log.Write("Loading Assembly based scripts...");
+                Log.Write("Loading Assembly based Scripts...");
                 InitializeAssembly();
             }
-            else
+            
+            if ((ScriptType == ScriptTypes.SourceFiles) || (ScriptType == ScriptTypes.Both))
             {
+                Log.Write("Loading Source File based Scripts...");
                 InitializeSourceFiles();
             }
 

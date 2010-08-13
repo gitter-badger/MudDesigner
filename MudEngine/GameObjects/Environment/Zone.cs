@@ -88,7 +88,7 @@ namespace MudEngine.GameObjects.Environment
         /// </summary>
         /// <param name="RoomName"></param>
         /// <returns></returns>
-        public Room GetRoomByID(Guid id)
+        public Room GetRoomByID(Int32 id)
         {
             foreach (Room room in RoomCollection)
             {

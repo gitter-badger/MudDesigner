@@ -35,6 +35,9 @@ namespace MudEngine.Commands
 
                         player.CommandSystem.ExecuteCommand("Look", player);
 
+                        if (player.ActiveGame.AutoSave)
+                            player.Save(player.Filename);
+
                         return null;
                     }
                 }

@@ -72,7 +72,7 @@ namespace MudEngine.GameManagement
         /// <summary>
         /// Gets a copy of all identifiers being used in the game.
         /// </summary>
-        internal List<Int32> ObjectIdentifierCollection { get; private set; }
+        internal List<BaseObject> WorldObjects { get; private set; }
         #endregion
 
         #region Game Information
@@ -125,9 +125,15 @@ namespace MudEngine.GameManagement
         [Category("Project Settings")]
         [Description("Enable or Disable Auto-saving of players when the player travels")]
         /// <summary>
-        /// Gets or Sets if the game autosaves when the player changes locations.
+        /// Gets or Sets if the Game world is automatically saved at a specified interval.
+        /// Players will be saved every-time they change location.
         /// </summary>
         public bool AutoSave { get; set; }
+
+        /// <summary>
+        /// Gets or Sets the interval in which the Game will automatically save every game object.
+        /// </summary>
+        public Int32 AutoSaveInterval { get; set; }
 
         [Category("Project Settings")]
         [Description("Hide Room names from being outputted to the console.")]
@@ -185,6 +191,7 @@ namespace MudEngine.GameManagement
             CurrencyList = new List<Currency>();
             scriptEngine = new Scripting.ScriptEngine(this);
             RealmCollection = new List<Realm>();
+            WorldObjects = new List<BaseObject>();
             WorldTime = new GameTime(this);
 
             //Prepare the Save Paths for all of our Game objects.
@@ -238,12 +245,8 @@ namespace MudEngine.GameManagement
             if (!Directory.Exists(DataPaths.Players))
                 Directory.CreateDirectory(DataPaths.Players);
 
-            //First, compile and execute all of the script files.
-            scriptEngine.ScriptType = ScriptEngine.ScriptTypes.SourceFiles;
-            scriptEngine.Initialize();
-            
-            //Next, load any pre-compiled libraries.
-            scriptEngine.ScriptType = ScriptEngine.ScriptTypes.Assembly;
+            //Load both pre-compiled and file based scripts
+            scriptEngine.ScriptType = ScriptEngine.ScriptTypes.Both;
             scriptEngine.Initialize();
 
             /*
@@ -326,7 +329,38 @@ namespace MudEngine.GameManagement
 
         public virtual void Update()
         {
+
+            DateTime serverTime = new DateTime();
+            DateTime systemTime = DateTime.Now;
+
+            int lastSaveGap = 0;
+
             WorldTime.Update();
+            
+            if (lastSaveGap == AutoSaveInterval)
+            {
+                if (AutoSave)
+                    Save();
+                lastSaveGap = 0;
+            }
+
+            //ServerTime holds the last minute prior to our current minute.
+            if (serverTime.Minute != DateTime.Now.Minute)
+            {
+                serverTime = DateTime.Now;
+                lastSaveGap++;
+            }
+
+            if (IsMultiplayer)
+            {
+                Console.Write(Log.GetMessages());
+                Log.FlushMessages();
+                System.Threading.Thread.Sleep(1);
+            }
+            else
+            {
+                PlayerCollection[0].ExecuteCommand(Console.ReadLine());
+            }
         }
 
         public virtual void Save()
@@ -414,6 +448,23 @@ namespace MudEngine.GameManagement
             RealmCollection.Add(realm);
         }
 
+        public void AddObject(BaseObject obj)
+        {
+            
+        }
+
+        internal void RemoveObject(BaseObject obj)
+        {
+            foreach (BaseObject o in WorldObjects)
+            {
+                if (o == obj)
+                {
+                    WorldObjects.Remove(o);
+                    break;
+                }
+            }
+        }
+
         /// <summary>
         /// Gets a Realm currently stored in the Games collection of Realms.
         /// </summary>
@@ -432,7 +483,7 @@ namespace MudEngine.GameManagement
             return realms;
         }
 
-        public Realm GetRealmByID(Guid id)
+        public Realm GetRealmByID(Int32 id)
         {
             foreach (Realm r in RealmCollection)
             {
