@@ -56,13 +56,13 @@ namespace MudGame
                 Log.Write("Setting up the Default Engine Game Manager...");
                 game = new Game();
                 obj = new GameObject(game, "Game");
-                scriptEngine = new ScriptEngine((Game)obj.Instance, ScriptEngine.ScriptTypes.Assembly);
+                scriptEngine = new ScriptEngine((Game)obj.Instance, ScriptEngine.ScriptTypes.Both);
             }
             else
             {
                 Log.Write("Setting up " + obj.GetProperty().GameTitle + " Manager...");
                 game = (Game)obj.Instance;
-                scriptEngine = new ScriptEngine(game, ScriptEngine.ScriptTypes.Assembly);
+                scriptEngine = new ScriptEngine(game, ScriptEngine.ScriptTypes.Both);
             }
             //Force TCP
             game.ServerType = ProtocolType.Tcp;

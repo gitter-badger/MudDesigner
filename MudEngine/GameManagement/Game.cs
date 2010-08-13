@@ -109,13 +109,8 @@ namespace MudEngine.GameManagement
         public Realm InitialRealm
         {
             get;
-            private set;
+            internal set;
         }
-
-        /// <summary>
-        /// Gets the collection of Realms currently stored in the Game.
-        /// </summary>
-        public List<Realm> RealmCollection { get; private set; }
 
         /// <summary>
         /// The Story that is displayed on initial player entry into the game
@@ -153,6 +148,8 @@ namespace MudEngine.GameManagement
         public string BaseCurrencyName { get; set; }
 
         public GameTime WorldTime { get; set; }
+
+        public GameWorld World { get; set; }
         #endregion
 
         #region Networking
@@ -190,8 +187,7 @@ namespace MudEngine.GameManagement
             //Instance all of the Games Objects.
             CurrencyList = new List<Currency>();
             scriptEngine = new Scripting.ScriptEngine(this);
-            RealmCollection = new List<Realm>();
-            WorldObjects = new List<BaseObject>();
+            World = new GameWorld(this);
             WorldTime = new GameTime(this);
 
             //Prepare the Save Paths for all of our Game objects.
@@ -265,29 +261,9 @@ namespace MudEngine.GameManagement
                 foreach (string command in CommandEngine.CommandCollection.Keys)
                     Log.Write("Command Loaded: " + command);
             }
-             
-            //See if we have an Initial Realm set
-            //TODO: Check for saved Realm files and load
-            Log.Write("Initializing World...");
-            foreach (Realm r in RealmCollection)
-            {
-                if (r.IsInitialRealm)
-                {
-                    InitialRealm = r;
-                    break;
-                }
-            }
 
-            //Check if any the initial room exists or not.
-            if ((InitialRealm == null) || (InitialRealm.InitialZone == null) || (InitialRealm.InitialZone.InitialRoom == null))
-            {
-                Log.Write("ERROR: No initial location defined. Game startup failed!");
-                Log.Write("Players will start in the Abyss. Each player will contain their own instance of this room.");
-                //return false;
-            }
-            else
-                Log.Write("Initial Location loaded-> " + InitialRealm.Name + "." + InitialRealm.InitialZone.Name + "." + InitialRealm.InitialZone.InitialRoom.Name);
-
+            World.Start();
+           
             //Start the Telnet server
             if (IsMultiplayer)
             {
@@ -384,114 +360,12 @@ namespace MudEngine.GameManagement
             //Re-create the environment directory
             Directory.CreateDirectory(DataPaths.Environment);
 
-            //Loop through each Realm and save it.
-            for (int x = 0; x <= RealmCollection.Count - 1; x++)
-            {
-                string realmFile = Path.Combine(DataPaths.Environment, RealmCollection[x].Filename);
-
-                //Save the Realm
-                RealmCollection[x].Save(realmFile);
-
-                //Loop through each Zone in the Realm and save it.
-                for (int y = 0; y <= RealmCollection[x].ZoneCollection.Count - 1; y++)
-                {
-                    string zonePath = Path.Combine(DataPaths.Environment, Path.GetFileNameWithoutExtension(RealmCollection[x].Filename), Path.GetFileNameWithoutExtension(RealmCollection[x].ZoneCollection[y].Filename));
-
-                    if (!Directory.Exists(zonePath))
-                        Directory.CreateDirectory(zonePath);
-
-                    //Save the Zone.
-                    RealmCollection[x].ZoneCollection[y].Save(Path.Combine(zonePath, RealmCollection[x].ZoneCollection[y].Filename));
-
-                    for (int z = 0; z <= RealmCollection[x].ZoneCollection[y].RoomCollection.Count - 1; z++)
-                    {
-                        if (!Directory.Exists(Path.Combine(zonePath, "Rooms")))
-                            Directory.CreateDirectory(Path.Combine(zonePath, "Rooms"));
-
-                        string roomPath = Path.Combine(zonePath, "Rooms");
-
-                        RealmCollection[x].ZoneCollection[y].RoomCollection[z].Save(Path.Combine(roomPath, RealmCollection[x].ZoneCollection[y].RoomCollection[z].Filename));
-                    }
-                }
-            }
+            //Save the Game World.
+            World.Save();
         }
 
         public virtual void Load()
         {
-        }
-
-        /// <summary>
-        /// Adds a Realm to the Games current list of Realms.
-        /// </summary>
-        /// <param name="realm"></param>
-        public void AddRealm(Realm realm)
-        {
-            //If this Realm is set as Initial then we need to disable any previously
-            //set Realms to avoid conflict.
-            if (realm.IsInitialRealm)
-            {
-                foreach (Realm r in RealmCollection)
-                {
-                    if (r.IsInitialRealm)
-                    {
-                        r.IsInitialRealm = false;
-                        break;
-                    }
-                }
-            }
-
-            //Set this Realm as the Games initial Realm
-            if (realm.IsInitialRealm)
-                InitialRealm = realm;
-
-            //TODO: Check for duplicate Realms.
-            RealmCollection.Add(realm);
-        }
-
-        public void AddObject(BaseObject obj)
-        {
-            
-        }
-
-        internal void RemoveObject(BaseObject obj)
-        {
-            foreach (BaseObject o in WorldObjects)
-            {
-                if (o == obj)
-                {
-                    WorldObjects.Remove(o);
-                    break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets a Realm currently stored in the Games collection of Realms.
-        /// </summary>
-        /// <param name="realmName"></param>
-        /// <returns></returns>
-        public List<Realm> GetRealmByName(string realmName)
-        {
-            List<Realm> realms = new List<Realm>();
-
-            foreach (Realm realm in RealmCollection)
-            {
-                if (realm.Name == realmName)
-                    realms.Add(realm);
-            }
-
-            return realms;
-        }
-
-        public Realm GetRealmByID(Int32 id)
-        {
-            foreach (Realm r in RealmCollection)
-            {
-                if (r.ID == id)
-                    return r;
-            }
-
-            return null;
         }
 
         /// <summary>

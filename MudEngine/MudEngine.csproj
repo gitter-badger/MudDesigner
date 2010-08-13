@@ -62,6 +62,7 @@
     <Compile Include="GameManagement\CommandEngine.cs" />
     <Compile Include="GameManagement\CommandResults.cs" />
     <Compile Include="GameManagement\GameTime.cs" />
+    <Compile Include="GameManagement\GameWorld.cs" />
     <Compile Include="GameManagement\ICommand.cs" />
     <Compile Include="FileSystem\FileManager.cs" />
     <Compile Include="FileSystem\SaveDataTypes.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="GameManagement\SecurityRoles.cs" />
     <Compile Include="GameObjects\Bag.cs" />
     <Compile Include="GameObjects\BaseObject.cs" />
+    <Compile Include="GameObjects\Characters\BaseAI.cs" />
     <Compile Include="GameObjects\Characters\BaseCharacter.cs" />
     <Compile Include="GameObjects\Environment\Door.cs" />
     <Compile Include="GameObjects\Environment\Realm.cs" />

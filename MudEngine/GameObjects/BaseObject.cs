@@ -19,7 +19,22 @@ namespace MudEngine.GameObjects
         [Description("The Display Name assigned to this object.")]
         //Required to refresh Filename property in the editors propertygrid
         [RefreshProperties(RefreshProperties.All)]
-        public string Name { get; set; }
+        public string Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                _Name = value;
+                if (this.GetType().Name.StartsWith("Base"))
+                    Filename = value + "." + this.GetType().Name.Substring("Base".Length);
+                else
+                    Filename = value + "." + this.GetType().Name;
+            }
+        }
+        private string _Name;
 
         public Int32 ID { get; internal set; }
 
@@ -82,14 +97,14 @@ namespace MudEngine.GameObjects
             //but different Identifiers. Letting there be multiple versions
             //of the same object.
 
-            ActiveGame.AddObject(this);
+            //ActiveGame.World.AddObject(this);
         }
 
 
         ~BaseObject()
         {
             //We must free up this ID so that it can be used by other objects being instanced.
-            ActiveGame.RemoveObject(this);
+            //ActiveGame.World.RemoveObject(this);
         }
 
         private bool ShouldSerializeName()
