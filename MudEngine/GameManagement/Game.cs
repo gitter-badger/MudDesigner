@@ -356,7 +356,7 @@ namespace MudEngine.GameManagement
                     continue;
 
                 Log.Write("Saving " + PlayerCollection[i].Name);
-                PlayerCollection[i].Save(Path.Combine(DataPaths.Players, PlayerCollection[i].Filename));
+                PlayerCollection[i].ExecuteCommand("Save");
             }
 
             //Delete the last saved version of the World. We will dump the current version onto disk.

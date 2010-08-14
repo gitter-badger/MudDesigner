@@ -7,4 +7,14 @@ MudGame.vshost.exe
 MudGame.vshost.exe.manifest
 Player
 temp
+</Value></Property><Property><Name>svn:ignore</Name><Value>Log.txt
+MudEngine.dll
+MudEngine.pdb
+MudGame.exe
+MudGame.pdb
+MudGame.vshost.exe
+MudGame.vshost.exe.manifest
+Player
+temp
+Realms
 </Value></Property></Properties></ItemProperties>

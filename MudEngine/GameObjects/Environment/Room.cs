@@ -91,6 +91,8 @@ namespace MudEngine.GameObjects.Environment
 
         public override void Save(String path)
         {
+            path = Path.Combine(path, "Rooms");
+
             base.Save(path);
 
             String filename = Path.Combine(path, Filename);
