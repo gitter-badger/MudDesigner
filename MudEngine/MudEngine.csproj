@@ -58,6 +58,7 @@
     <Compile Include="Commands\CommandWalk.cs" />
     <Compile Include="Commands\CommandLoad.cs" />
     <Compile Include="Commands\CommandLogin.cs" />
+    <Compile Include="Commands\CommandClear.cs" />
     <Compile Include="FileSystem\SaveDataPaths.cs" />
     <Compile Include="GameManagement\CommandEngine.cs" />
     <Compile Include="GameManagement\CommandResults.cs" />

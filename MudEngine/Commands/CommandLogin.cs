@@ -62,6 +62,9 @@ namespace MudEngine.Commands
             {
                 player.Name = input;
                 player.Send("Welcome " + player.Name + "!");
+
+                //Save the new player.
+                player.Save(player.ActiveGame.DataPaths.Players);
             }
             else
             {

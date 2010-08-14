@@ -35,31 +35,24 @@ namespace MudEngine.GameObjects.Environment
             ZoneCollection = new List<Zone>();
         }
 
-        /// <summary>
-        /// Returns the requested Zone if the Zone exists within this Realm.
-        /// </summary>
-        /// <param name="zoneName"></param>
-        /// <returns></returns>
-        public Zone GetZoneByID(Int32 id)
+        public override void Save(string path)
         {
-            foreach (Zone zone in ZoneCollection)
-            {
-                if (zone.ID == id)
-                    return zone;
-            }
+            base.Save(path);
 
-            return null;
+            //TODO: Save Realm collections and Zone to file.
         }
 
-        public List<Zone> GetZoneByName(string name)
+        public List<Zone> GetZoneByFilename(string filename)
         {
 
             List<Zone> zones = new List<Zone>();
 
             foreach (Zone zone in ZoneCollection)
             {
-                if (zone.Name == name)
+                if (zone.Filename == filename)
+                {
                     zones.Add(zone);
+                }
             }
 
             return zones;
@@ -85,7 +78,7 @@ namespace MudEngine.GameObjects.Environment
 
             //TODO: Check fo duplicates
             ZoneCollection.Add(zone);
-            zone.Realm = Name;
+            zone.Realm = Filename;
         }
     }
 }

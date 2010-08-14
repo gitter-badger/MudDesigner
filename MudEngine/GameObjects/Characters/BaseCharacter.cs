@@ -97,15 +97,38 @@ namespace MudEngine.GameObjects.Characters
                 return;
             }
 
-            Zone zone = realm.GetZoneByID(Convert.ToInt32(FileManager.GetData(filename, "CurrentZone")));
-
-            if (zone == null)
+            List<Zone> zones = realm.GetZoneByFilename(FileManager.GetData(filename, "CurrentZone"));
+            Zone zone = new Zone(ActiveGame);
+            if (zones.Count == 0)
             {
-                zone = new Zone(ActiveGame);
+                Log.Write("Error: Failed to find " + FileManager.GetData(filename, "CurrentZone") + " zone.");
                 return;
             }
+            else if (zones.Count == 1)
+            {
+                zone = zones[0];
+            }
+            else
+            {
+                //TODO: determin which zone is the appropriate zone to assign if more than one exists.
+            }
 
-            CurrentRoom = zone.GetRoomByID(Convert.ToInt32(FileManager.GetData(filename, "CurrentRoom")));
+            List<Room> rooms = zone.GetRoomByFilename(FileManager.GetData(filename, "CurrentRoom"));
+
+            if (rooms.Count == 0)
+            {
+                Log.Write("Error: Failed to find " + FileManager.GetData(filename, "CurrentRoom") + " room.");
+                return;
+            }
+            else if (rooms.Count == 1)
+            {
+                CurrentRoom = rooms[0];
+            }
+            else
+            {
+                //TODO: Loop through each found room and determin in some manor what should be the correct Room to assign.
+            }
+
             if (CurrentRoom == null)
             {
                 CurrentRoom = new Room(ActiveGame);
@@ -115,19 +138,17 @@ namespace MudEngine.GameObjects.Characters
             }
         }
 
-        public override void Save(string filename)
+        public override void Save(string path)
         {
-            //Don't attempt to save a blank filename.
-            if (String.IsNullOrEmpty(filename))
-                return;
+            base.Save(path);
 
-            base.Save(filename);
+            path = Path.Combine(path, Filename);
 
-            FileManager.WriteLine(filename, this.IsControlled.ToString(), "IsControlled");
-            FileManager.WriteLine(filename, this.Role.ToString(), "Role");
-            FileManager.WriteLine(filename, this.CurrentRoom.Name, "CurrentRoom");
-            FileManager.WriteLine(filename, this.CurrentRoom.Zone, "CurrentZone");
-            FileManager.WriteLine(filename, this.CurrentRoom.Realm, "CurrentRealm");
+            FileManager.WriteLine(path, this.IsControlled.ToString(), "IsControlled");
+            FileManager.WriteLine(path, this.Role.ToString(), "Role");
+            FileManager.WriteLine(path, this.CurrentRoom.Filename, "CurrentRoom");
+            FileManager.WriteLine(path, this.CurrentRoom.Zone, "CurrentZone");
+            FileManager.WriteLine(path, this.CurrentRoom.Realm, "CurrentRealm");
         }
 
         /// <summary>
@@ -150,11 +171,11 @@ namespace MudEngine.GameObjects.Characters
                 if (ActiveGame.PlayerCollection[i].Name == Name)
                     continue;
 
-                string room = ActiveGame.PlayerCollection[i].CurrentRoom.Name;
+                string room = ActiveGame.PlayerCollection[i].CurrentRoom.Filename;
                 string realm = ActiveGame.PlayerCollection[i].CurrentRoom.Realm;
                 string zone = ActiveGame.PlayerCollection[i].CurrentRoom.Zone;
 
-                if ((room == CurrentRoom.Name) && (realm == CurrentRoom.Realm) && (zone == CurrentRoom.Zone))
+                if ((room == CurrentRoom.Filename) && (realm == CurrentRoom.Realm) && (zone == CurrentRoom.Zone))
                 {
                     ActiveGame.PlayerCollection[i].Send(Name + " walked out towards the " + travelDirection.ToString());
                 }
@@ -289,12 +310,34 @@ namespace MudEngine.GameObjects.Characters
             Send(data, true);
         }
 
+        internal void FlushConsole()
+        {
+            try
+            {
+                if (ActiveGame.IsMultiplayer)
+                {
+                    System.Text.ASCIIEncoding encoding = new ASCIIEncoding();
+
+                    //\x1B is hex
+                    //[2J is terminal sequences for clearing the screen.
+                    client.Send(encoding.GetBytes("\x1B[2J"));
+                    //[H is terminal sequence for sending the cursor back to its home position.
+                    client.Send(encoding.GetBytes("\x1B[H"));
+                }
+                else
+                    Console.Clear();
+            }
+            catch
+            {
+                Disconnect();
+            }
+        }
+
         internal void Disconnect()
         {
             if (IsActive)
             {
-                string filePath =  Path.Combine(ActiveGame.DataPaths.Players, Filename);
-                this.Save(filePath);
+                this.Save(ActiveGame.DataPaths.Players);
 
                 Send("Goodbye!");
                 IsActive = false;

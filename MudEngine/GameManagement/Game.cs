@@ -229,6 +229,11 @@ namespace MudEngine.GameManagement
             WorldTime.MinutesPerHour = 59;
             WorldTime.SecondsPerMinute = 59;
         }
+
+        ~Game()
+        {
+            Server = null;
+        }
         #endregion
 
         #region ==== Methods ====

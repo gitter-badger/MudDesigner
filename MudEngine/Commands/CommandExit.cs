@@ -43,7 +43,7 @@ namespace MudEngine.Commands
             {
                 //Save the player prior to attempting to shutdown.
                 //Player saving is handled in the server disconnect code but not in game shutdown.
-                player.Save(Path.Combine(player.ActiveGame.DataPaths.Players, player.Filename));
+                player.Save(player.ActiveGame.DataPaths.Players);
                 player.ActiveGame.Shutdown();
             }
             return new CommandResults();

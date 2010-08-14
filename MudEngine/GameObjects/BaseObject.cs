@@ -36,8 +36,6 @@ namespace MudEngine.GameObjects
         }
         private string _Name;
 
-        public Int32 ID { get; internal set; }
-
         [Category("Object Setup")]
         [Description("A brief description of this object. The description is displayed to users when they use a command for investigating an object")]
         public string Description { get; set; }
@@ -90,21 +88,11 @@ namespace MudEngine.GameObjects
             this.Name = DefaultName();
 
             this.Filename = DefaultName() + "." + this.GetType().Name;
-
-            //This must be called on instancing of the object. 
-            //It is unique and will be used for saving the object.
-            //Allows for multiple objects with the same Name property
-            //but different Identifiers. Letting there be multiple versions
-            //of the same object.
-
-            //ActiveGame.World.AddObject(this);
         }
 
 
         ~BaseObject()
         {
-            //We must free up this ID so that it can be used by other objects being instanced.
-            //ActiveGame.World.RemoveObject(this);
         }
 
         private bool ShouldSerializeName()
@@ -160,22 +148,24 @@ namespace MudEngine.GameObjects
         {
         }
 
-        public virtual void Save(string filename)
+        public virtual void Save(string path)
         {
-            string path = Path.GetDirectoryName(filename);
+            if (String.IsNullOrEmpty(path))
+                return;
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
-            if (File.Exists(filename))
-                File.Delete(filename);
+            path = Path.Combine(path, Filename);
 
-            FileManager.WriteLine(filename, this.Name, "Name");
-            FileManager.WriteLine(filename, this.ID.ToString(), "Identifier");
-            FileManager.WriteLine(filename, this.Description, "Description");
-            FileManager.WriteLine(filename, this.Feel, "Feel");
-            FileManager.WriteLine(filename, this.Listen, "Listen");
-            FileManager.WriteLine(filename, this.Smell, "Smell");
+            if (File.Exists(path))
+                File.Delete(path);
+
+            FileManager.WriteLine(path, this.Name, "Name");
+            FileManager.WriteLine(path, this.Description, "Description");
+            FileManager.WriteLine(path, this.Feel, "Feel");
+            FileManager.WriteLine(path, this.Listen, "Listen");
+            FileManager.WriteLine(path, this.Smell, "Smell");
         }
 
         public virtual void Load(string filename)

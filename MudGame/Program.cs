@@ -15,13 +15,14 @@ namespace MudGame
     static class Program
     {
         const string SettingsFile = "Settings.ini";
+        static Game game;
 
         static void Main(string[] args)
         {
 
             Log.Write("Launching...");
             ScriptEngine scriptEngine;
-            Game game;
+            
 
             //Re-create the settings file if it is missing
             if (!File.Exists(SettingsFile))
@@ -111,6 +112,7 @@ namespace MudGame
             while (game.IsRunning)
             {
                 game.Update();
+                System.Threading.Thread.Sleep(1);
             }
         }
     }

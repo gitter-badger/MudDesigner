@@ -84,21 +84,6 @@ namespace MudEngine.GameObjects.Environment
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="RoomName"></param>
-        /// <returns></returns>
-        public Room GetRoomByID(Int32 id)
-        {
-            foreach (Room room in RoomCollection)
-            {
-                if (room.ID == id)
-                    return room;
-            }
-            return null;
-        }
-
-        /// <summary>
         /// Adds the supplied room into the Zones Room collection.
         /// </summary>
         /// <param name="room"></param>
@@ -122,8 +107,24 @@ namespace MudEngine.GameObjects.Environment
 
             //TODO: Check for duplicate Rooms.
             RoomCollection.Add(room);
-            room.Zone = Name;
+            room.Zone = Filename;
             room.Realm = Realm;
+        }
+
+        public List<Room> GetRoomByFilename(string filename)
+        {
+
+            List<Room> rooms = new List<Room>();
+
+            foreach (Room r in RoomCollection)
+            {
+                if (r.Filename == filename)
+                {
+                    rooms.Add(r);
+                }
+            }
+
+            return rooms;
         }
 
         public void LinkRooms(AvailableTravelDirections departureDirection, Room arrivalRoom, Room departureRoom)
