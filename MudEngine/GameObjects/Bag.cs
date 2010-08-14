@@ -14,7 +14,7 @@ namespace MudEngine.GameObjects
         /// <summary>
         /// Gets or Sets the size of the bag.
         /// </summary>
-        public int Size
+        public Int32 Size
         {
             get;
             set;
@@ -32,7 +32,7 @@ namespace MudEngine.GameObjects
                 Items.Add(item);
         }
 
-        public int GetSlotsRemaining()
+        public Int32 GetSlotsRemaining()
         {
             return Size - Items.Count;
         }

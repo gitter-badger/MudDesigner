@@ -90,35 +90,10 @@ namespace MudEngine.GameManagement
         public void Save()
         {
             //Save all of the Environments
-            for (int x = 0; x <= Realms.Count - 1; x++)
+            for (Int32 x = 0; x <= Realms.Count - 1; x++)
             {
-                string realmFile = Path.Combine(_Game.DataPaths.Environment, Realms[x].Filename);
-
-                //Save the Realm
-                Realms[x].Save(realmFile);
-
-                //Loop through each Zone in the Realm and save it.
-                for (int y = 0; y <= Realms[x].ZoneCollection.Count - 1; y++)
-                {
-                    string zonePath = Path.Combine(_Game.DataPaths.Environment, Path.GetFileNameWithoutExtension(Realms[x].Filename), Path.GetFileNameWithoutExtension(Realms[x].ZoneCollection[y].Filename));
-
-                    if (!Directory.Exists(zonePath))
-                        Directory.CreateDirectory(zonePath);
-
-                    //Save the Zone.
-                    Realms[x].ZoneCollection[y].Save(Path.Combine(zonePath, Realms[x].ZoneCollection[y].Filename));
-
-                    for (int z = 0; z <= Realms[x].ZoneCollection[y].RoomCollection.Count - 1; z++)
-                    {
-                        if (!Directory.Exists(Path.Combine(zonePath, "Rooms")))
-                            Directory.CreateDirectory(Path.Combine(zonePath, "Rooms"));
-
-                        string roomPath = Path.Combine(zonePath, "Rooms");
-
-                        Realms[x].ZoneCollection[y].RoomCollection[z].Save(Path.Combine(roomPath, Realms[x].ZoneCollection[y].RoomCollection[z].Filename));
-                    }
-                }
-            } //Complete Environment saving.
+                Realms[x].Save(_Game.DataPaths.Environment);
+            }
         }
 
         /// <summary>
@@ -156,7 +131,7 @@ namespace MudEngine.GameManagement
         /// <param name="objectType">Determins the Type of object to perform the search for. Using Standard will search for objects that inherit from BaseObject, but none of BaseObjects child Types.</param>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public BaseObject GetObject(ObjectTypes objectType, string filename)
+        public BaseObject GetObject(ObjectTypes objectType, String filename)
         {
             BaseObject obj = new BaseObject(_Game);
 
@@ -190,7 +165,7 @@ namespace MudEngine.GameManagement
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        private Realm GetRealm(string filename)
+        private Realm GetRealm(String filename)
         {
             foreach (Realm r in Realms)
             {

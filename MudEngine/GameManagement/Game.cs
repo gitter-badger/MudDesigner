@@ -17,6 +17,7 @@ using MudEngine.GameObjects;
 using MudEngine.GameObjects.Characters;
 using MudEngine.GameObjects.Environment;
 using MudEngine.Scripting;
+using MudEngine.Networking;
 
 namespace MudEngine.GameManagement
 {
@@ -33,18 +34,18 @@ namespace MudEngine.GameManagement
         /// <summary>
         /// Gets or Sets if this game is running in debug mode. Additional information is sent to the log if enabled.
         /// </summary>
-        public static bool IsDebug { get; set; }
+        public static Boolean IsDebug { get; set; }
 
         /// <summary>
         /// Gets or Sets if the game will run with a server or not.
         /// </summary>
-        public bool IsMultiplayer { get; set; }
+        public Boolean IsMultiplayer { get; set; }
 
         /// <summary>
         /// Gets or Sets if this game is currently running.
         /// </summary>
         [Browsable(false)]
-        public bool IsRunning { get; internal set; }
+        public Boolean IsRunning { get; internal set; }
 
         /// <summary>
         /// Gets or Sets the paths to various project related objects.
@@ -60,14 +61,14 @@ namespace MudEngine.GameManagement
         /// Gets or Sets the path to the current project
         /// </summary>
         [Browsable(false)]
-        public string ProjectPath { get; set; }
+        public String ProjectPath { get; set; }
 
         /// <summary>
         /// Gets or Sets if all objects will be laoded during server startup. Enabling this results in a slower server start time, but faster object access.
         /// </summary>
         [Category("Project Settings")]
         [Description("If enabled, all objects will be loaded during server startup resulting in a slower server start time, but faster load time during gameplay")]
-        public bool PreCacheObjects { get; set; }
+        public Boolean PreCacheObjects { get; set; }
 
         /// <summary>
         /// Gets a copy of all identifiers being used in the game.
@@ -81,25 +82,25 @@ namespace MudEngine.GameManagement
         /// <summary>
         /// Gets or Sets the name of the company
         /// </summary>
-        public string CompanyName { get; set; }
+        public String CompanyName { get; set; }
 
         [Category("Company Settings")]
         [Description("The website URL that a player can visit to view additional information related to the game")]
         /// <summary>
         /// Gets or Sets the companies website for this project
         /// </summary>
-        public string Website { get; set; }
+        public String Website { get; set; }
 
         [Category("Project Settings")]
         [Description("The name of the game displayed to the users, and title bar of the runtime.")]
-        public string GameTitle { get; set; }
+        public String GameTitle { get; set; }
 
         /// <summary>
         /// Gets or Sets the current working version of the game.
         /// </summary>
         [Category("Project Settings")]
         [Description("The current working version of the game.")]
-        public string Version { get; set; }
+        public String Version { get; set; }
         
         [Browsable(false)]
         public List<Currency> CurrencyList { get; set; }
@@ -115,7 +116,7 @@ namespace MudEngine.GameManagement
         /// <summary>
         /// The Story that is displayed on initial player entry into the game
         /// </summary>
-        public string Story { get; set; }
+        public String Story { get; set; }
 
         [Category("Project Settings")]
         [Description("Enable or Disable Auto-saving of players when the player travels")]
@@ -123,7 +124,7 @@ namespace MudEngine.GameManagement
         /// Gets or Sets if the Game world is automatically saved at a specified interval.
         /// Players will be saved every-time they change location.
         /// </summary>
-        public bool AutoSave { get; set; }
+        public Boolean AutoSave { get; set; }
 
         /// <summary>
         /// Gets or Sets the interval in which the Game will automatically save every game object.
@@ -135,17 +136,17 @@ namespace MudEngine.GameManagement
         /// <summary>
         /// Gets or Sets if room names are hidden during console output.
         /// </summary>
-        public bool HideRoomNames { get; set; }
+        public Boolean HideRoomNames { get; set; }
 
         [Category("Game Currency")]
         [DefaultValue(1)]
         [Description("Sets the amount that the base currency is valued at.")]
-        public uint BaseCurrencyAmount { get; set; }
+        public Int32 BaseCurrencyAmount { get; set; }
 
 
         [Category("Game Currency")]
         [DefaultValue("Copper")]
-        public string BaseCurrencyName { get; set; }
+        public String BaseCurrencyName { get; set; }
 
         public GameTime WorldTime { get; set; }
 
@@ -162,7 +163,7 @@ namespace MudEngine.GameManagement
         /// <summary>
         /// Gets the current running Server object.
         /// </summary>
-        public MudEngine.Networking.Server Server { get; internal set; }
+        public Server Server { get; internal set; }
 
         /// <summary>
         /// Gets or Sets the protocol used by the server.
@@ -172,12 +173,12 @@ namespace MudEngine.GameManagement
         /// <summary>
         /// Gets or Sets the port that the server will run on
         /// </summary>
-        public int ServerPort { get; set; }
+        public Int32 ServerPort { get; set; }
 
         /// <summary>
         /// Gets or Sets the maximum number of Players permitted to run on this Games server.
         /// </summary>
-        public int MaximumPlayers { get; set; }
+        public Int32 MaximumPlayers { get; set; }
         #endregion
         #endregion
 
@@ -212,7 +213,7 @@ namespace MudEngine.GameManagement
             //Setup the player arrays
             //used to be in Start
             PlayerCollection = new BaseCharacter[MaximumPlayers];
-            for (int i = 0; i < MaximumPlayers; i++)
+            for (Int32 i = 0; i < MaximumPlayers; i++)
                 PlayerCollection[i] = new BaseCharacter(this);
 
             GameTime.Time t = new GameTime.Time();
@@ -240,7 +241,7 @@ namespace MudEngine.GameManagement
         /// <summary>
         /// Starts the game and runs the server if IsMultiplayer is true
         /// </summary>
-        public virtual bool Start()
+        public virtual Boolean Start()
         {
             Log.Write("Game Initializing...");
             if (!Directory.Exists(DataPaths.Players))
@@ -263,7 +264,7 @@ namespace MudEngine.GameManagement
 
             if (IsDebug)
             {
-                foreach (string command in CommandEngine.CommandCollection.Keys)
+                foreach (String command in CommandEngine.CommandCollection.Keys)
                     Log.Write("Command Loaded: " + command);
             }
 
@@ -314,7 +315,7 @@ namespace MudEngine.GameManagement
             DateTime serverTime = new DateTime();
             DateTime systemTime = DateTime.Now;
 
-            int lastSaveGap = 0;
+            Int32 lastSaveGap = 0;
 
             WorldTime.Update();
             
@@ -349,7 +350,7 @@ namespace MudEngine.GameManagement
             Log.Write("Saving Game world....");
 
             Log.Write("Saving Game Players...");
-            for (int i = 0; i <= PlayerCollection.Length - 1; i++)
+            for (Int32 i = 0; i <= PlayerCollection.Length - 1; i++)
             {
                 if (PlayerCollection[i].Name == "New BaseCharacter")
                     continue;

@@ -9,11 +9,11 @@ namespace MudEngine.Commands
 {
     public class CommandGetTime : MudEngine.GameManagement.IGameCommand
     {
-        public string Name { get; set; }
+        public String Name { get; set; }
 
-        public bool Override { get; set; }
+        public Boolean Override { get; set; }
 
-        public MudEngine.GameManagement.CommandResults Execute(string command, BaseCharacter player)
+        public MudEngine.GameManagement.CommandResults Execute(String command, BaseCharacter player)
         {
             player.Send(player.ActiveGame.WorldTime.GetCurrentWorldTime());
 

@@ -22,7 +22,7 @@ namespace MudEngine.GameManagement
             this.Result = Result;
         }
 
-        public CommandResults(string message)
+        public CommandResults(String message)
         {
             this.Result = new object[] { message };
         }

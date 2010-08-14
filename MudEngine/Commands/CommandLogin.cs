@@ -14,10 +14,10 @@ namespace MudEngine.Commands
 {
     public class CommandLogin : IGameCommand
     {
-        public bool Override { get; set; }
-        public string Name { get; set; }
+        public Boolean Override { get; set; }
+        public String Name { get; set; }
 
-        public CommandResults Execute(string command, BaseCharacter player)
+        public CommandResults Execute(String command, BaseCharacter player)
         {
             player.Send(player.ActiveGame.GameTitle);
             player.Send(player.ActiveGame.Version);
@@ -26,15 +26,15 @@ namespace MudEngine.Commands
 
             player.Send("Enter Character Name: ", false);
             
-            string input = player.ReadInput();
+            String input = player.ReadInput();
             Boolean playerFound = false;
-            string savedFile = "";
+            String savedFile = "";
 
             //See if this character already exists.
             if (!Directory.Exists(player.ActiveGame.DataPaths.Players))
                 Directory.CreateDirectory(player.ActiveGame.DataPaths.Players);
 
-            foreach (string filename in Directory.GetFiles(player.ActiveGame.DataPaths.Players))
+            foreach (String filename in Directory.GetFiles(player.ActiveGame.DataPaths.Players))
             {
                 if (Path.GetFileNameWithoutExtension(filename).ToLower() == input.ToLower())
                 {
@@ -48,7 +48,7 @@ namespace MudEngine.Commands
             //Next search if there is an existing player already logged in with this name, if so disconnect them.
             if (player.ActiveGame.IsMultiplayer)
             {
-                for (int i = 0; i <= player.ActiveGame.PlayerCollection.Length - 1; i++)
+                for (Int32 i = 0; i <= player.ActiveGame.PlayerCollection.Length - 1; i++)
                 {
                     if (player.ActiveGame.PlayerCollection[i].Name.ToLower() == input.ToLower())
                     {
@@ -76,14 +76,14 @@ namespace MudEngine.Commands
             //Let other players know that the user walked in.
             if (player.ActiveGame.IsMultiplayer)
             {
-                for (int i = 0; i != player.ActiveGame.PlayerCollection.Length; i++)
+                for (Int32 i = 0; i != player.ActiveGame.PlayerCollection.Length; i++)
                 {
                     if (player.ActiveGame.PlayerCollection[i].Name == player.Name)
                         continue;
 
-                    string room = player.ActiveGame.PlayerCollection[i].CurrentRoom.Name;
-                    string realm = player.ActiveGame.PlayerCollection[i].CurrentRoom.Realm;
-                    string zone = player.ActiveGame.PlayerCollection[i].CurrentRoom.Zone;
+                    String room = player.ActiveGame.PlayerCollection[i].CurrentRoom.Name;
+                    String realm = player.ActiveGame.PlayerCollection[i].CurrentRoom.Realm;
+                    String zone = player.ActiveGame.PlayerCollection[i].CurrentRoom.Zone;
 
                     if ((room == player.CurrentRoom.Name) && (realm == player.CurrentRoom.Realm) && (zone == player.CurrentRoom.Zone))
                     {

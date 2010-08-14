@@ -14,10 +14,10 @@ namespace MudEngine.Commands
 {
     public class CommandLook : IGameCommand
     {
-        public string Name { get; set; }
-        public bool Override { get; set; }
+        public String Name { get; set; }
+        public Boolean Override { get; set; }
 
-        public CommandResults Execute(string command, BaseCharacter player)
+        public CommandResults Execute(String command, BaseCharacter player)
         {
             if (player.CurrentRoom == null)
             {
@@ -28,7 +28,7 @@ namespace MudEngine.Commands
                 player.Send(player.CurrentRoom.Description);
             else
             {
-                foreach(string entry in player.CurrentRoom.DetailedDescription)
+                foreach(String entry in player.CurrentRoom.DetailedDescription)
                 {
                     player.Send(entry);
                 }

@@ -67,7 +67,7 @@ namespace MudEngine.GameObjects.Characters
             CommandSystem = new CommandEngine();
         }
 
-        public override void Load(string filename)
+        public override void Load(String filename)
         {
             base.Load(filename);
 
@@ -75,12 +75,12 @@ namespace MudEngine.GameObjects.Characters
 
             //Need to re-assign the enumerator value that was previously assigned to the Role property
             Array values = Enum.GetValues(typeof(SecurityRoles));
-            foreach (int value in values)
+            foreach (Int32 value in values)
             {
-                //Since enum values are not strings, we can't simply just assign the string to the enum
-                string displayName = Enum.GetName(typeof(SecurityRoles), value);
+                //Since enum values are not strings, we can't simply just assign the String to the enum
+                String displayName = Enum.GetName(typeof(SecurityRoles), value);
 
-                //If the value = the string saved, then perform the needed conversion to get our data back
+                //If the value = the String saved, then perform the needed conversion to get our data back
                 if (displayName.ToLower() == FileManager.GetData(filename, "Role").ToLower())
                 {
                     Role = (SecurityRoles)Enum.Parse(typeof(SecurityRoles), displayName);
@@ -138,7 +138,7 @@ namespace MudEngine.GameObjects.Characters
             }
         }
 
-        public override void Save(string path)
+        public override void Save(String path)
         {
             base.Save(path);
 
@@ -157,7 +157,7 @@ namespace MudEngine.GameObjects.Characters
         /// </summary>
         /// <param name="travelDirection"></param>
         /// <returns></returns>
-        public bool Move(AvailableTravelDirections travelDirection)
+        public Boolean Move(AvailableTravelDirections travelDirection)
         {
             //Check if the current room has a doorway in the supplied direction of travel.
             if (!CurrentRoom.DoorwayExist(travelDirection))
@@ -166,14 +166,14 @@ namespace MudEngine.GameObjects.Characters
             }
 
             //Let other players know that the user walked out.
-            for (int i = 0; i != ActiveGame.PlayerCollection.Length; i++)
+            for (Int32 i = 0; i != ActiveGame.PlayerCollection.Length; i++)
             {
                 if (ActiveGame.PlayerCollection[i].Name == Name)
                     continue;
 
-                string room = ActiveGame.PlayerCollection[i].CurrentRoom.Filename;
-                string realm = ActiveGame.PlayerCollection[i].CurrentRoom.Realm;
-                string zone = ActiveGame.PlayerCollection[i].CurrentRoom.Zone;
+                String room = ActiveGame.PlayerCollection[i].CurrentRoom.Filename;
+                String realm = ActiveGame.PlayerCollection[i].CurrentRoom.Realm;
+                String zone = ActiveGame.PlayerCollection[i].CurrentRoom.Zone;
 
                 if ((room == CurrentRoom.Filename) && (realm == CurrentRoom.Realm) && (zone == CurrentRoom.Zone))
                 {
@@ -193,14 +193,14 @@ namespace MudEngine.GameObjects.Characters
         {
             //TODO: Check the Room/Zone/Realm to see if anything needs to occure during travel.
             //Let other players know that the user walked in.
-            for (int i = 0; i != ActiveGame.PlayerCollection.Length; i++)
+            for (Int32 i = 0; i != ActiveGame.PlayerCollection.Length; i++)
             {
                 if (ActiveGame.PlayerCollection[i].Name == Name)
                     continue;
 
-                string room = ActiveGame.PlayerCollection[i].CurrentRoom.Name;
-                string realm = ActiveGame.PlayerCollection[i].CurrentRoom.Realm;
-                string zone = ActiveGame.PlayerCollection[i].CurrentRoom.Zone;
+                String room = ActiveGame.PlayerCollection[i].CurrentRoom.Name;
+                String realm = ActiveGame.PlayerCollection[i].CurrentRoom.Realm;
+                String zone = ActiveGame.PlayerCollection[i].CurrentRoom.Zone;
 
                 if ((room == CurrentRoom.Name) && (realm == CurrentRoom.Realm) && (zone == CurrentRoom.Zone))
                 {
@@ -209,7 +209,7 @@ namespace MudEngine.GameObjects.Characters
             }
         }
 
-        public void ExecuteCommand(string command)
+        public void ExecuteCommand(String command)
         {
             //TODO: Character class can handle a lot of the command management here, checking various things prior to sending
             //the command off to the command engine for execution.
@@ -226,7 +226,7 @@ namespace MudEngine.GameObjects.Characters
                 StringBuilder sb = new StringBuilder();
                 foreach (object item in result.Result)
                 {
-                    if (item is string)
+                    if (item is String)
                         sb.AppendLine(item.ToString());
                 }
                 return sb.ToString();
@@ -249,7 +249,7 @@ namespace MudEngine.GameObjects.Characters
             //Ensure custom commands are loaded until everything is fleshed out.
             if (Game.IsDebug)
             {
-                foreach (string command in CommandEngine.GetCommands())
+                foreach (String command in CommandEngine.GetCommands())
                 {
                     Log.Write("Command loaded: " + command);
                 }
@@ -268,7 +268,7 @@ namespace MudEngine.GameObjects.Characters
             ExecuteCommand("Login");
             ExecuteCommand("Look"); //MUST happen after Room setup is completed, otherwise the player default Abyss Room is printed.
         }
-        internal void Receive(string data)
+        internal void Receive(String data)
         {
             //data = ExecuteCommand(data);
             ExecuteCommand(data);
@@ -282,7 +282,7 @@ namespace MudEngine.GameObjects.Characters
         /// </summary>
         /// <param name="data"></param>
         /// <param name="newLine"></param>
-        internal void Send(string data, bool newLine)
+        internal void Send(String data, Boolean newLine)
         {
             try
             {
@@ -305,7 +305,7 @@ namespace MudEngine.GameObjects.Characters
         /// Sends data to the player.
         /// </summary>
         /// <param name="data"></param>
-        internal void Send(string data)
+        internal void Send(String data)
         {
             Send(data, true);
         }
@@ -346,7 +346,7 @@ namespace MudEngine.GameObjects.Characters
                 Log.Write("Player " + this.Name + " disconnected.");
             }
         }
-        internal string ReadInput()
+        internal String ReadInput()
         {
             if (ActiveGame.IsMultiplayer)
             {
@@ -356,7 +356,7 @@ namespace MudEngine.GameObjects.Characters
                     try
                     {
                         byte[] buf = new byte[1];
-                        int recved = client.Receive(buf);
+                        Int32 recved = client.Receive(buf);
 
                         if (recved > 0)
                         {

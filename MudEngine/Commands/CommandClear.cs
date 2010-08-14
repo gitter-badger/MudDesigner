@@ -14,10 +14,10 @@ namespace MudEngine.Commands
 {
     public class CommandClear : IGameCommand
     {
-        public bool Override { get; set; }
-        public string Name { get; set; }
+        public Boolean Override { get; set; }
+        public String Name { get; set; }
 
-        public CommandResults Execute(string command, BaseCharacter player)
+        public CommandResults Execute(String command, BaseCharacter player)
         {
             player.FlushConsole();
 

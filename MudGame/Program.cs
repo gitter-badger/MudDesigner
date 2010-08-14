@@ -14,10 +14,10 @@ namespace MudGame
 {
     static class Program
     {
-        const string SettingsFile = "Settings.ini";
+        const String SettingsFile = "Settings.ini";
         static Game game;
 
-        static void Main(string[] args)
+        static void Main(String[] args)
         {
 
             Log.Write("Launching...");
@@ -61,7 +61,7 @@ namespace MudGame
             }
             else
             {
-                Log.Write("Setting up " + obj.GetProperty().GameTitle + " Manager...");
+                Log.Write("Setting up " + obj.GetProperty("GameTitle") + " Manager...");
                 game = (Game)obj.Instance;
                 scriptEngine = new ScriptEngine(game, ScriptEngine.ScriptTypes.Both);
             }
@@ -109,10 +109,31 @@ namespace MudGame
                 }
             }
 
+            Console.Title = game.GameTitle;
+
+            if (game.IsMultiplayer)
+                Console.Title += " server running.";
+
+            List<char> buf = new List<char>();
+
             while (game.IsRunning)
             {
                 game.Update();
                 System.Threading.Thread.Sleep(1);
+
+                StringBuilder sb = new StringBuilder();
+
+                ConsoleKeyInfo info = Console.ReadKey();
+
+                if (info.KeyChar == '\r')
+                {
+                    foreach (char c in buf)
+                        sb.Append(c);
+
+                    game.PlayerCollection[0].ExecuteCommand(sb.ToString());
+                }
+                else
+                    buf.Add(info.KeyChar);
             }
         }
     }

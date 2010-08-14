@@ -10,12 +10,12 @@ namespace MudEngine.GameManagement
 {
     public static class Log
     {
-        static List<string> cachedMessages = new List<string>();
+        static List<String> cachedMessages = new List<String>();
         public static Boolean IsVerbose;
 
-        public static void Write(string message)
+        public static void Write(String message)
         {
-            string filename = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Root), "Log.txt");
+            String filename = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Root), "Log.txt");
             StreamWriter sw;
 
             if (File.Exists(filename))
@@ -30,12 +30,11 @@ namespace MudEngine.GameManagement
             cachedMessages.Add(message);
         }
 
-        public static string GetMessages()
+        public static String GetMessages()
         {
-            string messages = "";
             StringBuilder sb = new StringBuilder();
 
-            foreach (string message in cachedMessages)
+            foreach (String message in cachedMessages)
             {
                 sb.AppendLine(message);
             }
@@ -48,7 +47,7 @@ namespace MudEngine.GameManagement
 
         public static void FlushMessages()
         {
-            cachedMessages = new List<string>();
+            cachedMessages = new List<String>();
         }
     }
 }

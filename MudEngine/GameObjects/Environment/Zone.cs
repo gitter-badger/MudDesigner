@@ -20,7 +20,7 @@ namespace MudEngine.GameObjects.Environment
         [Category("Environment Information")]
         [DefaultValue(0)]
         [Description("The amount to drain each stat by if StatDrain is enabled.")]
-        public int StatDrainAmount
+        public Int32 StatDrainAmount
         {
             get;
             set;
@@ -29,7 +29,7 @@ namespace MudEngine.GameObjects.Environment
         [Category("Environment Information")]
         [Description("Enable or Disable the ability for draining stats while traversing.")]
         [DefaultValue(false)]
-        public bool StatDrain
+        public Boolean StatDrain
         {
             get;
             set;
@@ -38,7 +38,7 @@ namespace MudEngine.GameObjects.Environment
         [ReadOnly(true)]
         [Category("Environment Information")]
         [Description("The Realm that this Zone is assigned to. It is not required to be contained within a Realm.")]
-        public string Realm
+        public String Realm
         {
             get;
             set;
@@ -47,7 +47,7 @@ namespace MudEngine.GameObjects.Environment
         [Category("Environment Information")]
         [Description("Determins if the Player can be attacked within this Room or not.")]
         [DefaultValue(false)]
-        public bool IsSafe
+        public Boolean IsSafe
         {
             get;
             set;
@@ -59,7 +59,7 @@ namespace MudEngine.GameObjects.Environment
         [Category("Environment Information")]
         [Description("Sets that this Zone is a starting Zone for the game.")]
         [DefaultValue(false)]
-        public bool IsInitialZone
+        public Boolean IsInitialZone
         {
             get;
             set;
@@ -81,6 +81,28 @@ namespace MudEngine.GameObjects.Environment
             RoomCollection = new List<Room>();
             IsSafe = false;
             Realm = "No Realm Associated.";
+        }
+
+        public override void Save(String path)
+        {
+            path = Path.Combine(path, Path.GetFileNameWithoutExtension(Filename));
+
+            base.Save(path);
+
+            String filename  = Path.Combine(path, Filename);
+
+            FileManager.WriteLine(filename, this.IsInitialZone.ToString(), "IsInitialZone");
+            FileManager.WriteLine(filename, this.IsSafe.ToString(), "IsSafe");
+            FileManager.WriteLine(filename, this.Realm, "Realm");
+            FileManager.WriteLine(filename, this.StatDrain.ToString(), "StatDrain");
+            FileManager.WriteLine(filename, this.StatDrainAmount.ToString(), "StatDrainAmount");
+            FileManager.WriteLine(filename, this.InitialRoom.Filename, "InitialRoom");
+
+            foreach (Room r in RoomCollection)
+            {
+                FileManager.WriteLine(filename, r.Filename, "Room");
+                r.Save(path);
+            }
         }
 
         /// <summary>
@@ -111,7 +133,7 @@ namespace MudEngine.GameObjects.Environment
             room.Realm = Realm;
         }
 
-        public List<Room> GetRoomByFilename(string filename)
+        public List<Room> GetRoomByFilename(String filename)
         {
 
             List<Room> rooms = new List<Room>();

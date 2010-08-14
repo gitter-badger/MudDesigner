@@ -39,13 +39,13 @@ namespace MudEngine.GameObjects
             }
         }
 
-        public static AvailableTravelDirections GetTravelDirectionValue(string Direction)
+        public static AvailableTravelDirections GetTravelDirectionValue(String Direction)
         {
             Array values = Enum.GetValues(typeof(AvailableTravelDirections));
 
-            foreach (int value in values)
+            foreach (Int32 value in values)
             {
-                string displayName = Enum.GetName(typeof(AvailableTravelDirections), value);
+                String displayName = Enum.GetName(typeof(AvailableTravelDirections), value);
 
                 if (displayName.ToLower() == Direction.ToLower())
                     return (AvailableTravelDirections)Enum.Parse(typeof(AvailableTravelDirections), displayName);

@@ -10,7 +10,7 @@ namespace MudEngine.FileSystem
 {
     internal class XmlSerialization
     {
-        internal static void Save(string Filename, object o)
+        internal static void Save(String Filename, object o)
         {
             Stream stream = File.Create(Filename);
 
@@ -25,7 +25,7 @@ namespace MudEngine.FileSystem
         /// </summary>
         /// <param name="Filename">The Xml document to deserialize.</param>
         /// <returns></returns>
-        internal static object Load(string Filename, object o)
+        internal static object Load(String Filename, object o)
         {
             Stream stream = File.OpenRead(Filename);
 

@@ -23,7 +23,7 @@ namespace MudEngine.GameObjects.Environment
         /// <summary>
         /// Gets or Sets if this Realm is the starting realm for the game.
         /// </summary>
-        public bool IsInitialRealm { get; set; }
+        public Boolean IsInitialRealm { get; set; }
 
         /// <summary>
         /// The Initial Starting Zone for this Realm.
@@ -35,14 +35,24 @@ namespace MudEngine.GameObjects.Environment
             ZoneCollection = new List<Zone>();
         }
 
-        public override void Save(string path)
+        public override void Save(String path)
         {
+            path = Path.Combine(path, Path.GetFileNameWithoutExtension(Filename));
             base.Save(path);
 
-            //TODO: Save Realm collections and Zone to file.
+            String filename = Path.Combine(path, Filename);
+
+            FileManager.WriteLine(filename, this.IsInitialRealm.ToString(), "IsInitialRealm");
+            FileManager.WriteLine(filename, this.InitialZone.Filename, "InitialZone");
+
+            foreach (Zone z in ZoneCollection)
+            {
+                FileManager.WriteLine(filename, z.Filename, "ZoneCollection");
+                z.Save(path);
+            }
         }
 
-        public List<Zone> GetZoneByFilename(string filename)
+        public List<Zone> GetZoneByFilename(String filename)
         {
 
             List<Zone> zones = new List<Zone>();

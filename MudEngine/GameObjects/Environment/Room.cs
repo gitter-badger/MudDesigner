@@ -27,7 +27,7 @@ namespace MudEngine.GameObjects.Environment
         [ReadOnly(true)]
         [Description("This is the Zone that the Room is currently assigned to.")]
         [Category("Environment Information")]
-        public string Zone
+        public String Zone
         {
             get;
             set;
@@ -36,7 +36,7 @@ namespace MudEngine.GameObjects.Environment
         [ReadOnly(true)]
         [Description("This is the Realm that the Room belongs to.")]
         [Category("Environment Information")]
-        public string Realm
+        public String Realm
         {
             get;
             set;
@@ -45,18 +45,18 @@ namespace MudEngine.GameObjects.Environment
         [Category("Environment Information")]
         [DefaultValue(false)]
         [Description("Determins if the Player can be attacked within this Room or not.")]
-        public bool IsSafe
+        public Boolean IsSafe
         {
             get;
             set;
         }
 
         [Browsable(false)]
-        public string InstallPath
+        public String InstallPath
         {
             get
             {
-                string zonePath = "";
+                String zonePath = "";
                 if (this.Realm == null || this.Realm == "No Realm Associated.")
                 {
                     zonePath = FileManager.GetDataPath(SaveDataTypes.Zones);
@@ -65,8 +65,8 @@ namespace MudEngine.GameObjects.Environment
                 else
                     zonePath = FileManager.GetDataPath(this.Realm, this.Zone);
 
-                string roomPath = Path.Combine(zonePath, "Rooms");
-                string filename = Path.Combine(roomPath, this.Filename);
+                String roomPath = Path.Combine(zonePath, "Rooms");
+                String filename = Path.Combine(roomPath, this.Filename);
                 return filename;
             }
         }
@@ -76,7 +76,7 @@ namespace MudEngine.GameObjects.Environment
         /// </summary>
         [Browsable(true)]
         [Description("Sets if this is the starting room for the Zone that contains it.")]
-        public bool IsInitialRoom
+        public Boolean IsInitialRoom
         {
             get;
             set;
@@ -89,12 +89,19 @@ namespace MudEngine.GameObjects.Environment
             IsSafe = false;
         }
 
+        public override void Save(String path)
+        {
+            base.Save(path);
+
+            String filename = Path.Combine(path, Filename);
+        }
+
         /// <summary>
         /// Checks to see if a doorway in the travelDirection exists.
         /// </summary>
         /// <param name="travelDirection"></param>
         /// <returns></returns>
-        public bool DoorwayExist(AvailableTravelDirections travelDirection)
+        public Boolean DoorwayExist(AvailableTravelDirections travelDirection)
         {
             foreach (Door door in Doorways)
             {

@@ -18,18 +18,18 @@ namespace MudEngine.Commands
 {
     class CommandRestart : IGameCommand
     {
-        public string Name { get; set; }
-        public bool Override { get; set; }
+        public String Name { get; set; }
+        public Boolean Override { get; set; }
 
-        public CommandResults Execute(string command, BaseCharacter player)
+        public CommandResults Execute(String command, BaseCharacter player)
         {
             if (player.Role == SecurityRoles.Admin)
             {
-                string path = player.ActiveGame.DataPaths.Players;
+                String path = player.ActiveGame.DataPaths.Players;
                 
-                for (int i = 0; i < player.ActiveGame.PlayerCollection.Length; i++)
+                for (Int32 i = 0; i < player.ActiveGame.PlayerCollection.Length; i++)
                 {
-                    string filename = Path.Combine(path, player.ActiveGame.PlayerCollection[i].Filename);
+                    String filename = Path.Combine(path, player.ActiveGame.PlayerCollection[i].Filename);
                     player.ActiveGame.PlayerCollection[i].Save(filename);
                 }
 

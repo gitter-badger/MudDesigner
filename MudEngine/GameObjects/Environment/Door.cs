@@ -17,7 +17,7 @@ namespace MudEngine.GameObjects.Environment
     {
         [Category("Door Settings")]
         [DefaultValue(false)]
-        public bool IsLocked
+        public Boolean IsLocked
         {
             get;
             set;
@@ -33,7 +33,7 @@ namespace MudEngine.GameObjects.Environment
 
         [Category("Door Settings")]
         [DefaultValue(0)]
-        public int LevelRequirement
+        public Int32 LevelRequirement
         {
             get;
             set;

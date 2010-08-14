@@ -9,7 +9,7 @@ namespace MUDCompiler
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main(String[] args)
         {
             Console.WriteLine("===========================");
             Console.WriteLine("MUD Engine Content Compiler");
@@ -20,7 +20,7 @@ namespace MUDCompiler
             Console.WriteLine("2): Exit Compiler");
             Console.Write("Enter Selection: ");
 
-            string command = Console.ReadLine();
+            String command = Console.ReadLine();
 
             //command error checking.
             if (String.IsNullOrEmpty(command))

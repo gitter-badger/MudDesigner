@@ -7,7 +7,7 @@ namespace MudEngine.FileSystem
 {
         public struct SaveDataPaths
         {
-            public string Players 
+            public String Players 
             {
                 get
                 {
@@ -19,7 +19,7 @@ namespace MudEngine.FileSystem
                 }
             }
 
-            public string Environment
+            public String Environment
             {
                 get
                 {
@@ -30,10 +30,10 @@ namespace MudEngine.FileSystem
                     _Environment = value;
                 }
             }
-            private string _Players;
-            private string _Environment;
+            private String _Players;
+            private String _Environment;
 
-            public SaveDataPaths(string environment, string players)
+            public SaveDataPaths(String environment, String players)
             {
                 _Players = players;
                 _Environment = environment;

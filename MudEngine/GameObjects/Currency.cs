@@ -15,7 +15,7 @@ namespace MudEngine.GameObjects
         /// <summary>
         /// The value of this currency. It should be how many 'base currency' it takes to equal 1 of this currency
         /// </summary>
-        public int Value
+        public Int32 Value
         {
             get;
             set;

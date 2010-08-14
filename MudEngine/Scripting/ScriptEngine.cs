@@ -30,7 +30,7 @@ namespace MudEngine.Scripting
         /// <summary>
         /// Path to the the script files directory
         /// </summary>
-        public string ScriptPath
+        public String ScriptPath
         {
             get
             {
@@ -41,9 +41,9 @@ namespace MudEngine.Scripting
                 _ScriptPath = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Root), value);
             }
         }
-        string _ScriptPath;
+        String _ScriptPath;
 
-        public string InstallPath { get; private set; }
+        public String InstallPath { get; private set; }
         public GameObjectCollection ObjectCollection { get; private set; }
 
         /// <summary>
@@ -58,33 +58,33 @@ namespace MudEngine.Scripting
         /// <summary>
         /// File Extension for the scripts
         /// </summary>
-        public string ScriptExtension { get; set; }
+        public String ScriptExtension { get; set; }
 
         /// <summary>
         /// Error Messages logged during script compilation
         /// </summary>
-        public string ErrorMessage 
+        public String ErrorMessage 
         { 
             get
             {
-                string errorMessages = "Script Compilation Failed!\n";
+                String errorMessages = "Script Compilation Failed!\n";
                 //Construct our error message.
-                foreach (string error in _ErrorMessages)
+                foreach (String error in _ErrorMessages)
                     errorMessages += error + "\n";
 
                 return errorMessages;
             }
             private set
             {
-                _ErrorMessages = new string[] { value };
+                _ErrorMessages = new String[] { value };
             }
         }
 
         internal ScriptTypes ScriptType { get; set; }
         private Assembly _ScriptAssembly;
         private List<Assembly> _AssemblyCollection;
-        private string[] _ErrorMessages;
-        private string _SettingsFile;
+        private String[] _ErrorMessages;
+        private String _SettingsFile;
         Game _Game;
 
         public ScriptEngine(Game game) : this(game, ScriptTypes.Assembly)
@@ -123,7 +123,7 @@ namespace MudEngine.Scripting
         /// Compiles a collection of scripts stored in ScriptEngine.ScriptPath. Not supported on XBox360.
         /// </summary>
         /// <returns></returns>
-        public bool CompileScripts()
+        public Boolean CompileScripts()
         {
 #if !MOBILE
             //Ensure the script path exists.
@@ -133,7 +133,7 @@ namespace MudEngine.Scripting
                 return false;
             }
             //Build an array of scripts
-            string[] scripts = System.IO.Directory.GetFiles(ScriptPath, "*" + ScriptExtension, System.IO.SearchOption.AllDirectories);
+            String[] scripts = System.IO.Directory.GetFiles(ScriptPath, "*" + ScriptExtension, System.IO.SearchOption.AllDirectories);
 
             //Prepare the scripts. MUD Scripts are wrote without defining a namespace
             if (Directory.Exists("temp"))
@@ -142,20 +142,20 @@ namespace MudEngine.Scripting
             Directory.CreateDirectory("temp");
 
             //Setup the additional sourcecode that's needed in the script.
-            string[] usingStatements = new string[] { "using System;", "using MudEngine.GameObjects;", "using MudEngine.GameObjects.Characters;", "using MudEngine.GameObjects.Environment;", "using MudEngine.GameObjects.Items;", "using MudEngine.GameManagement;", "using MudEngine.FileSystem;", "using MudEngine.Scripting;" };
+            String[] usingStatements = new String[] { "using System;", "using MudEngine.GameObjects;", "using MudEngine.GameObjects.Characters;", "using MudEngine.GameObjects.Environment;", "using MudEngine.GameObjects.Items;", "using MudEngine.GameManagement;", "using MudEngine.FileSystem;", "using MudEngine.Scripting;" };
 
-            foreach (string script in scripts)
+            foreach (String script in scripts)
             {
-                string tempPath = "temp";
-                string source = "\nnamespace MudScripts{\n}";
+                String tempPath = "temp";
+                String source = "\nnamespace MudScripts{\n}";
 
                 FileStream fr = new FileStream(script, FileMode.Open, FileAccess.Read, FileShare.None);
                 FileStream fw = new FileStream(Path.Combine(tempPath, Path.GetFileName(script)), FileMode.Create, FileAccess.Write);
                 StreamWriter sw = new StreamWriter(fw, System.Text.Encoding.Default);
                 StreamReader sr = new StreamReader(fr, System.Text.Encoding.Default);
                 
-                string content = sr.ReadToEnd();
-                foreach (string statement in usingStatements)
+                String content = sr.ReadToEnd();
+                foreach (String statement in usingStatements)
                     source = source.Insert(0, statement);
                 
                 source = source.Insert(source.Length - 1, content);
@@ -164,14 +164,14 @@ namespace MudEngine.Scripting
                 sw.Flush();
                 sw.Close();
             }
-            string oldPath = ScriptPath;
+            String oldPath = ScriptPath;
             ScriptPath = "temp";
 
             //Prepare the compiler.
-            Dictionary<string, string> providerOptions = new Dictionary<string,string>();
+            Dictionary<String, String> providerOptions = new Dictionary<String,String>();
             providerOptions.Add("CompilerVersion", "v3.5");
 
-            CompilerParameters param = new CompilerParameters(new string[] {"mscorlib.dll", "System.dll", "MudEngine.dll"});
+            CompilerParameters param = new CompilerParameters(new String[] {"mscorlib.dll", "System.dll", "MudEngine.dll"});
             param.GenerateExecutable = false;
             param.GenerateInMemory = true;
             if (!param.GenerateInMemory)
@@ -193,10 +193,10 @@ namespace MudEngine.Scripting
             //if we encountered errors we need to log them to our ErrorMessages property
             if (results.Errors.Count >= 1)
             {
-                List<string> errorCollection = new List<string>();
+                List<String> errorCollection = new List<String>();
                 foreach (CompilerError error in results.Errors)
                 {
-                    string prefix = "Error: ";
+                    String prefix = "Error: ";
                     if (error.IsWarning)
                         prefix = "Warning: ";
 
@@ -270,7 +270,7 @@ namespace MudEngine.Scripting
                 Log.Write("Supplied script path does not exist! No scripts loaded.");
                 return;
             }
-            string[] libraries = Directory.GetFiles(ScriptPath, "*.dll", SearchOption.AllDirectories);
+            String[] libraries = Directory.GetFiles(ScriptPath, "*.dll", SearchOption.AllDirectories);
 
             if (libraries.Length == 0)
             {
@@ -278,9 +278,9 @@ namespace MudEngine.Scripting
                 return;
             }
 
-            foreach (string library in libraries)
+            foreach (String library in libraries)
             {
-                bool isOK = true;
+                Boolean isOK = true;
 
                 foreach (Assembly assembly in _AssemblyCollection)
                 {
@@ -304,7 +304,7 @@ namespace MudEngine.Scripting
             if (!Directory.Exists(ScriptPath))
                 Directory.CreateDirectory(ScriptPath);
 
-            string[] scripts = Directory.GetFiles(ScriptPath, "*.cs", SearchOption.AllDirectories);
+            String[] scripts = Directory.GetFiles(ScriptPath, "*.cs", SearchOption.AllDirectories);
 
             if (scripts.Length == 0)
             {
@@ -315,7 +315,7 @@ namespace MudEngine.Scripting
             if (!CompileScripts())
             {
                 Log.Write("Error Compiling Scripts:");
-                foreach (string error in _ErrorMessages)
+                foreach (String error in _ErrorMessages)
                 {
                     Log.Write("Error: " + error);
                 }
@@ -324,7 +324,7 @@ namespace MudEngine.Scripting
                 _AssemblyCollection.Add(_ScriptAssembly);
         }
 
-        public GameObject GetObject(string objectName)
+        public GameObject GetObject(String objectName)
         {
             IEnumerable<GameObject> objectQuery =
                 from gameObject in ObjectCollection._GameObjects
@@ -340,7 +340,7 @@ namespace MudEngine.Scripting
             return null;
         }
 
-        public GameObject GetObjectOf(string baseTypeName)
+        public GameObject GetObjectOf(String baseTypeName)
         {
             foreach (GameObject obj in GameObjects)
             {

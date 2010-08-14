@@ -13,10 +13,10 @@ namespace MudEngine.Commands
 {
     public class CommandSave : IGameCommand
     {
-        public bool Override { get; set; }
-        public string Name { get; set; }
+        public Boolean Override { get; set; }
+        public String Name { get; set; }
 
-        public CommandResults Execute(string command, BaseCharacter player)
+        public CommandResults Execute(String command, BaseCharacter player)
         {
             /*
             if (player.ActiveGame.PlayerCollection.Length != 0)

@@ -1,4 +1,6 @@
-﻿//MUD Engine
+﻿using System;
+
+//MUD Engine
 using MudEngine.FileSystem;
 using MudEngine.GameObjects;
 using MudEngine.GameObjects.Environment;
@@ -7,13 +9,13 @@ namespace MudEngine.GameObjects.Environment
 {
     public struct StartingLocation
     {
-        public string Room;
-        public string Zone;
-        public string Realm;
+        public String Room;
+        public String Zone;
+        public String Realm;
 
-        public override string ToString()
+        public override String ToString()
         {
-            if (string.IsNullOrEmpty(Room))
+            if (String.IsNullOrEmpty(Room))
                 return "No initial location defined.";
             else
             {

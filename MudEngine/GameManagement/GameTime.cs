@@ -9,12 +9,12 @@ namespace MudEngine.GameManagement
     {
         public struct Time
         {
-            public int Year { get; set; }
-            public int Month { get; set; }
-            public int Day { get; set; }
-            public int Hour { get; set; }
-            public int Minute { get; set; }
-            public int Second { get; set; }
+            public Int32 Year { get; set; }
+            public Int32 Month { get; set; }
+            public Int32 Day { get; set; }
+            public Int32 Hour { get; set; }
+            public Int32 Minute { get; set; }
+            public Int32 Second { get; set; }
             private GameTime gameTime;
         }
         
@@ -45,37 +45,37 @@ namespace MudEngine.GameManagement
         /// <summary>
         /// Gets or Sets how many Hours it takes to make a full day in the World
         /// </summary>
-        public int HoursPerDay { get; set; }
+        public Int32 HoursPerDay { get; set; }
 
         /// <summary>
         /// Gets or Sets how many minutes it takes to make a full Hour
         /// </summary>
-        public int MinutesPerHour { get; set; }
+        public Int32 MinutesPerHour { get; set; }
 
         /// <summary>
         /// Gets or Sets how many seconds it takes to make a full minute
         /// </summary>
-        public int SecondsPerMinute { get; set; }
+        public Int32 SecondsPerMinute { get; set; }
 
         /// <summary>
         /// Gets or Sets how many Days it takes to make a full month in the world
         /// </summary>
-        public int DaysPerMonth { get; set; }
+        public Int32 DaysPerMonth { get; set; }
 
         /// <summary>
         /// Gets or Sets how many Months it takes to make a full Year in the world
         /// </summary>
-        public int MonthsPerYear { get; set; }
+        public Int32 MonthsPerYear { get; set; }
 
         /// <summary>
         /// Gets or Sets the name of each Day in a Week.
         /// </summary>
-        public List<string> DayNames { get; set; }
+        public List<String> DayNames { get; set; }
 
         /// <summary>
         /// Gets or Sets the name of each Month in a Year.
         /// </summary>
-        public List<string> MonthNames { get; set; }
+        public List<String> MonthNames { get; set; }
 
         /// <summary>
         /// Gets or Sets what time of day the world is currently in.
@@ -85,12 +85,12 @@ namespace MudEngine.GameManagement
         /// <summary>
         /// Gets or Sets what time of day that it begins to transition to night.
         /// </summary>
-        public int DawnTime { get; set; }
+        public Int32 DawnTime { get; set; }
 
         /// <summary>
         /// /Gets or Sets what time of day that it begins to transition into day time.
         /// </summary>
-        public int SunriseTime { get; set; }
+        public Int32 SunriseTime { get; set; }
 
         /// <summary>
         /// Gets or Sets the initial Time that the world starts in.
@@ -103,8 +103,8 @@ namespace MudEngine.GameManagement
 
             ServerStartTime = DateTime.Now;
 
-            DayNames = new List<string>();
-            MonthNames = new List<string>();
+            DayNames = new List<String>();
+            MonthNames = new List<String>();
 
             DayNames.Add("Monday");
             DayNames.Add("Tuesday");
@@ -240,7 +240,7 @@ namespace MudEngine.GameManagement
             CurrentWorldTime = t;
         }
 
-        public string GetCurrentWorldTime()
+        public String GetCurrentWorldTime()
         {
             if (DayNames.Count < CurrentWorldTime.Day)
             {
@@ -251,8 +251,8 @@ namespace MudEngine.GameManagement
                 return "Not enough Month names specified to match up with MonthsPerYear property.";
             }
 
-            string day = DayNames[CurrentWorldTime.Day - 1];
-            string month = MonthNames[CurrentWorldTime.Month - 1];
+            String day = DayNames[CurrentWorldTime.Day - 1];
+            String month = MonthNames[CurrentWorldTime.Month - 1];
 
             return day + ", " + month + " " + CurrentWorldTime.Day + ", " + CurrentWorldTime.Year + ": " + CurrentWorldTime.Hour + ":" + CurrentWorldTime.Minute + ":" + CurrentWorldTime.Second;
         }

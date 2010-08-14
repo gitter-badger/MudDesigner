@@ -14,13 +14,13 @@ namespace MudEngine.Commands
 {
     public class CommandWalk : IGameCommand
     {
-        public string Name { get; set; }
-        public bool Override { get; set; }
+        public String Name { get; set; }
+        public Boolean Override { get; set; }
 
-        public CommandResults Execute(string command, BaseCharacter player)
+        public CommandResults Execute(String command, BaseCharacter player)
         {
-            string[] words = command.Split(' ');
-            List<string> directions = new List<string>();
+            String[] words = command.Split(' ');
+            List<String> directions = new List<String>();
 
             if (words.Length == 1)
                 return new CommandResults("No direction supplied");

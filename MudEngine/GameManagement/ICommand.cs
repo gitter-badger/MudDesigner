@@ -15,10 +15,10 @@ namespace MudEngine.GameManagement
     public interface IGameCommand
     {
         //Name of the command
-        string Name { get; set; }
+        String Name { get; set; }
         //Used to override commands with the same name
-        bool Override { get; set; }
+        Boolean Override { get; set; }
         //Executes the command.
-        CommandResults Execute(string command, BaseCharacter player);
+        CommandResults Execute(String command, BaseCharacter player);
     }
 }

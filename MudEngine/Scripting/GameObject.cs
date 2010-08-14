@@ -18,14 +18,14 @@ namespace MudEngine.Scripting
         /// <summary>
         /// The Type name for this object
         /// </summary>
-        public string Name { get; set; }
+        public String Name { get; set; }
 
         /// <summary>
         /// Determins if this object will recieve Update/Draw calls from the ScriptEngine
         /// </summary>
-        public bool IsActive { get; set; }
+        public Boolean IsActive { get; set; }
 
-        public GameObject(object instance, string name)
+        public GameObject(object instance, String name)
         {
             Instance = instance;
             Name = name;
@@ -36,27 +36,27 @@ namespace MudEngine.Scripting
             return Instance;
         }
 
-        public bool DeleteObject()
+        public Boolean DeleteObject()
         {
             return true;
         }
 
-        public void SetProperty(string propertyName, object propertyValue)
+        public void SetProperty(String propertyName, object propertyValue)
         {
             PropertyInfo propertyInfo = Instance.GetType().GetProperty(propertyName);
 
-            if (propertyValue is string)
+            if (propertyValue is String)
             {
-                if (propertyInfo.PropertyType.Name is string)
+                if (propertyInfo.PropertyType.Name is String)
                 {
                     propertyInfo.SetValue(Instance, propertyValue, null);
                 }
             }
         }
         
-        public object GetProperty(string propertyName)
+        public object GetProperty(String propertyName)
         {
-            string[] tokens = propertyName.Split('.');
+            String[] tokens = propertyName.Split('.');
             PropertyInfo previousProperty = Instance.GetType().GetProperty(tokens[0]);
 
             return previousProperty.GetValue(Instance, null);
@@ -67,7 +67,7 @@ namespace MudEngine.Scripting
             return Instance;
         }
         
-        public object InvokeMethod(string methodName, params object[] parameters)
+        public object InvokeMethod(String methodName, params object[] parameters)
         {
             MethodInfo method = Instance.GetType().GetMethod(methodName);
 

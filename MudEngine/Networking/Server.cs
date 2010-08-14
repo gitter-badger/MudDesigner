@@ -24,7 +24,7 @@ namespace MudEngine.Networking
             stage = 0;
             port = 0;
         }
-        public bool Initialize(int p, ref BaseCharacter[] pbs)
+        public Boolean Initialize(Int32 p, ref BaseCharacter[] pbs)
         {
             if (stage != 0)
                 return false;
@@ -36,7 +36,7 @@ namespace MudEngine.Networking
             stage++;
             return true;
         }
-        public bool Start()
+        public Boolean Start()
         {
             try
             {
@@ -65,10 +65,10 @@ namespace MudEngine.Networking
         {
             while (stage == 2)
             {
-                int sub = -1;
+                Int32 sub = -1;
                 do
                 {
-                    for (int i = 0; i < players.Length; i++)
+                    for (Int32 i = 0; i < players.Length; i++)
                     {
                         if (!players[i].IsActive)
                         {
@@ -86,14 +86,14 @@ namespace MudEngine.Networking
         }
         private void ReceiveThread(object obj)
         {
-            int sub = (int)obj;
+            Int32 sub = (Int32)obj;
             players[sub].Initialize();
             while (stage == 2 && players[sub].IsActive)
             {
                 players[sub].Receive(players[sub].ReadInput());
             }
         }
-        public void Disconnect(int sub)
+        public void Disconnect(Int32 sub)
         {
             if (sub > 0 && sub < players.Length)
             {
@@ -105,8 +105,8 @@ namespace MudEngine.Networking
 
         private Thread serverThread;
         private Socket server;
-        private int stage;
-        private int port;
+        private Int32 stage;
+        private Int32 port;
 
         BaseCharacter[] players;
 

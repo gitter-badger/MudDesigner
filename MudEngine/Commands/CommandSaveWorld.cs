@@ -1,27 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
+using System.Text;
 
 using MudEngine.FileSystem;
-using MudEngine.GameManagement;
-using MudEngine.GameObjects;
 using MudEngine.GameObjects.Characters;
+using MudEngine.GameManagement;
+using MudEngine.Commands;
+using MudEngine.GameObjects.Environment;
 
 namespace MudEngine.Commands
 {
-    public class CommandLoad : IGameCommand
+    public class CommandSaveWorld : IGameCommand
     {
         public Boolean Override { get; set; }
         public String Name { get; set; }
 
         public CommandResults Execute(String command, BaseCharacter player)
         {
-            String path = player.ActiveGame.DataPaths.Players;
-            String filename = Path.Combine(path, player.Filename);
-
-            player.Load(filename);
+            if ((player.Role == SecurityRoles.Admin) || (player.Role == SecurityRoles.GM))
+            {
+                player.ActiveGame.Save();
+            }
 
             return new CommandResults();
         }

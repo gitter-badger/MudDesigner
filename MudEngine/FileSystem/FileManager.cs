@@ -33,7 +33,7 @@ namespace MudEngine.FileSystem
         /// <param name="filename"></param>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        public static void WriteLine(string filename, string value, string name)
+        public static void WriteLine(String filename, String value, String name)
         {
             if (!File.Exists(filename))
             {
@@ -52,9 +52,9 @@ namespace MudEngine.FileSystem
             }
         }
 
-        public static string GetData(string filename, string name)
+        public static String GetData(String filename, String name)
         {
-            foreach (string line in File.ReadAllLines(filename))
+            foreach (String line in File.ReadAllLines(filename))
             {
                 //Ignore comments
                 if (line.StartsWith(";"))
@@ -72,11 +72,11 @@ namespace MudEngine.FileSystem
         /// </summary>
         /// <param name="DataType"></param>
         /// <returns></returns>
-        public static string GetDataPath(SaveDataTypes DataType)
+        public static String GetDataPath(SaveDataTypes DataType)
         {
-            string assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().ManifestModule.FullyQualifiedName;
-            string assemblyName = System.IO.Path.GetFileName(assemblyPath);
-            string installBase = assemblyPath.Substring(0, assemblyPath.Length - assemblyName.Length);
+            String assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().ManifestModule.FullyQualifiedName;
+            String assemblyName = System.IO.Path.GetFileName(assemblyPath);
+            String installBase = assemblyPath.Substring(0, assemblyPath.Length - assemblyName.Length);
 
             if (DataType == SaveDataTypes.Root)
                 return installBase;
@@ -84,20 +84,20 @@ namespace MudEngine.FileSystem
                 return System.IO.Path.Combine(installBase, DataType.ToString());
         }
 
-        public static string GetDataPath(string Realm, string Zone)
+        public static String GetDataPath(String Realm, String Zone)
         {
-            string assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().ManifestModule.FullyQualifiedName;
-            string assemblyName = System.IO.Path.GetFileName(assemblyPath);
-            string installBase = assemblyPath.Substring(0, assemblyPath.Length - assemblyName.Length);
-            string realmsPath = System.IO.Path.Combine(installBase, "Realms");
-            string requestRealm = Path.Combine(installBase, Realm);
-            string requestedRealmZones = Path.Combine(installBase, "Zones");
-            string requestedZone = Path.Combine(installBase, Zone);
+            String assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().ManifestModule.FullyQualifiedName;
+            String assemblyName = System.IO.Path.GetFileName(assemblyPath);
+            String installBase = assemblyPath.Substring(0, assemblyPath.Length - assemblyName.Length);
+            String realmsPath = System.IO.Path.Combine(installBase, "Realms");
+            String requestRealm = Path.Combine(installBase, Realm);
+            String requestedRealmZones = Path.Combine(installBase, "Zones");
+            String requestedZone = Path.Combine(installBase, Zone);
 
             return requestedZone;
         }
 
-        public static string GetDataPath(string Realm, string Zone, string Room)
+        public static String GetDataPath(String Realm, String Zone, String Room)
         {
             return System.IO.Path.Combine(GetDataPath(Realm, Zone), Room);
         }
