@@ -16,14 +16,12 @@ namespace MudEngine.Commands
         public Boolean Override { get; set; }
         public String Name { get; set; }
 
-        public CommandResults Execute(String command, BaseCharacter player)
+        public void Execute(String command, BaseCharacter player)
         {
             String path = player.ActiveGame.DataPaths.Players;
             String filename = Path.Combine(path, player.Filename);
 
             player.Load(filename);
-
-            return new CommandResults();
         }
     }
 }

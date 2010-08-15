@@ -17,7 +17,7 @@ namespace MudEngine.Commands
         public Boolean Override { get; set; }
         public String Name { get; set; }
 
-        public CommandResults Execute(String command, BaseCharacter player)
+        public void Execute(String command, BaseCharacter player)
         {
             if (player.ActiveGame.IsMultiplayer)
             {
@@ -46,7 +46,6 @@ namespace MudEngine.Commands
                 player.Save(player.ActiveGame.DataPaths.Players);
                 player.ActiveGame.Shutdown();
             }
-            return new CommandResults();
         }
     }
 }

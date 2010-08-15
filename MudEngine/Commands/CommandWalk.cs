@@ -17,13 +17,16 @@ namespace MudEngine.Commands
         public String Name { get; set; }
         public Boolean Override { get; set; }
 
-        public CommandResults Execute(String command, BaseCharacter player)
+        public void Execute(String command, BaseCharacter player)
         {
             String[] words = command.Split(' ');
             List<String> directions = new List<String>();
 
             if (words.Length == 1)
-                return new CommandResults("No direction supplied");
+            {
+                player.Send("No direction provided!");
+                return;
+            }
             else
             {
                 foreach (Door door in player.CurrentRoom.Doorways)
@@ -38,13 +41,11 @@ namespace MudEngine.Commands
                         if (player.ActiveGame.AutoSave)
                             player.Save(player.ActiveGame.DataPaths.Players);
 
-                        return null;
+                        return;
                     }
                 }
             }
             player.Send("Unable to travel in that direction.");
-
-            return null;
         }
     }
 }

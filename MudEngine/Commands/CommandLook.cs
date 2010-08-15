@@ -17,11 +17,12 @@ namespace MudEngine.Commands
         public String Name { get; set; }
         public Boolean Override { get; set; }
 
-        public CommandResults Execute(String command, BaseCharacter player)
+        public void Execute(String command, BaseCharacter player)
         {
             if (player.CurrentRoom == null)
             {
-                return new CommandResults("Not within a created Room.");
+                player.Send("You are not within any Room.");
+                return;
             }
 
             if (player.CurrentRoom.DetailedDescription.Count == 0)
@@ -33,8 +34,6 @@ namespace MudEngine.Commands
                     player.Send(entry);
                 }
             }
-
-            return new CommandResults();
         }
     }
 }

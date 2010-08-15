@@ -13,12 +13,9 @@ namespace MudEngine.Commands
 
         public Boolean Override { get; set; }
 
-        public MudEngine.GameManagement.CommandResults Execute(String command, BaseCharacter player)
+        public void Execute(String command, BaseCharacter player)
         {
             player.Send(player.ActiveGame.WorldTime.GetCurrentWorldTime());
-
-            return new GameManagement.CommandResults();
-
         }
     }
 }

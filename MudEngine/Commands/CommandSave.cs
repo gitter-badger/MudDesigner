@@ -16,22 +16,9 @@ namespace MudEngine.Commands
         public Boolean Override { get; set; }
         public String Name { get; set; }
 
-        public CommandResults Execute(String command, BaseCharacter player)
+        public void Execute(String command, BaseCharacter player)
         {
-            /*
-            if (player.ActiveGame.PlayerCollection.Length != 0)
-            {
-                if (player.GetType().Name != "BaseCharacter")
-                {
-                    Scripting.GameObject obj = player.ActiveGame.scriptEngine.GetObject(player.ActiveGame.PlayerCollection.GetType().Name);
-
-                    obj.InvokeMethod("Save", new object[] { player.ActiveGame.DataPaths.Players });
-                }
-            }
-            else */
                 player.Save(player.ActiveGame.DataPaths.Players);
-
-            return new CommandResults();
         }
     }
 }

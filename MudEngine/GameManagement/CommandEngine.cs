@@ -70,7 +70,7 @@ namespace MudEngine.GameManagement
         /// <param name="Name"></param>
         /// <param name="Parameter"></param>
         /// <returns></returns>
-        public CommandResults ExecuteCommand(String command, BaseCharacter player)
+        public void ExecuteCommand(String command, BaseCharacter player)
         {
             String commandKey = command.Insert(0, "Command");
 
@@ -79,13 +79,10 @@ namespace MudEngine.GameManagement
                 if (commandKey.ToLower().Contains(key.ToLower()))
                 {
                     IGameCommand cmd = CommandEngine.CommandCollection[key];
-                    return cmd.Execute(command, player);
-                    //return player.CommandSystem._Commands[key].Execute(command, player);
-                    //return player.Commands.ExecuteCommand[key.ToLower()]Execute(command, player);
+                    cmd.Execute(command, player);
+                    return;
                 }
             }
-
-            return new CommandResults();
         }
 
         public static void LoadBaseCommands()

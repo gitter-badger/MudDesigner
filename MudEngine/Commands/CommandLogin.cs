@@ -17,7 +17,7 @@ namespace MudEngine.Commands
         public Boolean Override { get; set; }
         public String Name { get; set; }
 
-        public CommandResults Execute(String command, BaseCharacter player)
+        public void Execute(String command, BaseCharacter player)
         {
             player.Send(player.ActiveGame.GameTitle);
             player.Send(player.ActiveGame.Version);
@@ -131,8 +131,6 @@ namespace MudEngine.Commands
                     }
                 }
             }
-
-            return new CommandResults();
         }
     }
 }

@@ -19,6 +19,6 @@ namespace MudEngine.GameManagement
         //Used to override commands with the same name
         Boolean Override { get; set; }
         //Executes the command.
-        CommandResults Execute(String command, BaseCharacter player);
+        void Execute(String command, BaseCharacter player);
     }
 }
