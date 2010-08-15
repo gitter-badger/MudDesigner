@@ -2,4 +2,9 @@
 MudEngine.pdb
 MudGame.exe
 MudGame.pdb
+</Value></Property><Property><Name>svn:ignore</Name><Value>MudEngine.dll
+MudEngine.pdb
+MudGame.exe
+MudGame.pdb
+Scripts
 </Value></Property></Properties></ItemProperties>

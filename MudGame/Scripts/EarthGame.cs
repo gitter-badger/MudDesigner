@@ -1,11 +1,12 @@
-public class MyGame : Game
+public class EarthGame : Game
 {
-       public California Cali;
+       public WorldCalifornia Cali;
 
-    public MyGame()
+    public EarthGame()
         : base()
  {
-     GameTitle = "Mud Designer Example Game";
+     GameTitle = "Planet Earth MUD";
+     Story = "The planet Earth reproduced in a MUD for your playing enjoyment!";
      IsMultiplayer = true;
 
      CompanyName = "Mud Designer Team";
@@ -13,7 +14,7 @@ public class MyGame : Game
      Version = "Example Game Version 1.0";
      MaximumPlayers = 5000;
 
-     Cali = new California(this);
+     Cali = new WorldCalifornia(this);
      Cali.Create();
  }
 }

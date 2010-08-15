@@ -83,6 +83,8 @@ namespace MudEngine.GameManagement
                     return;
                 }
             }
+
+            player.Send("Invalid Command.");
         }
 
         public static void LoadBaseCommands()

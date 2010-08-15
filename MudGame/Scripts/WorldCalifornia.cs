@@ -1,8 +1,8 @@
-public class California
+public class WorldCalifornia
 {
  private Game _Game;
 
- public California(Game game)
+ public WorldCalifornia(Game game)
  {
   _Game = game;
  }

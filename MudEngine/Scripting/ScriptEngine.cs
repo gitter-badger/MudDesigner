@@ -259,6 +259,9 @@ namespace MudEngine.Scripting
                         GameObjects.Add(obj);
                     }
                 }
+
+                //Lastly, send this assembly off to the CommandEngine so we can load commands from it for use as well.
+                CommandEngine.LoadCommandLibrary(assembly);
             }
             _AssemblyCollection.Clear();
         }

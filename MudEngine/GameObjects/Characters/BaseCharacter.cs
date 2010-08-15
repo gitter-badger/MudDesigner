@@ -228,7 +228,7 @@
                 Send("Command: ", false);
             }
 
-            public void Create(string playerName, string password)
+            public virtual void Create(string playerName, string password)
             {
                 Name = playerName;
                 Password = password;
@@ -244,7 +244,7 @@
                     return false;
             }
 
-            internal void Initialize()
+            public virtual void Initialize()
             {
                 if (ActiveGame.IsMultiplayer)
                     client.Receive(new byte[255]);
@@ -286,7 +286,7 @@
             /// </summary>
             /// <param name="data"></param>
             /// <param name="newLine"></param>
-            internal void Send(String data, Boolean newLine)
+            public void Send(String data, Boolean newLine)
             {
                 try
                 {
@@ -309,12 +309,12 @@
             /// Sends data to the player.
             /// </summary>
             /// <param name="data"></param>
-            internal void Send(String data)
+            public void Send(String data)
             {
                 Send(data, true);
             }
 
-            internal void FlushConsole()
+            public void FlushConsole()
             {
                 try
                 {
@@ -337,7 +337,7 @@
                 }
             }
 
-            internal void Disconnect()
+            public void Disconnect()
             {
                 if (IsActive)
                 {
@@ -350,7 +350,8 @@
                     Log.Write(Name + " disconnected.");
                 }
             }
-            internal String ReadInput()
+
+            public String ReadInput()
             {
                 if (ActiveGame.IsMultiplayer)
                 {

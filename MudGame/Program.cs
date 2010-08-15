@@ -19,14 +19,16 @@ namespace MudGame
 
         static void Main(String[] args)
         {
-            //Re-create the settings file if it is missing
+            //Re-create the settings file if it is missing. Don't push any log messages until we know that this is
+            //verbose or not
+            Log.Write("Loading Settings...", false);
             if (!File.Exists(SettingsFile))
             {
-                Log.Write("Settings.ini missing!");
+                Log.Write("Settings.ini missing!", false);
                 FileManager.WriteLine(SettingsFile, "Scripts", "ScriptPath");
                 FileManager.WriteLine(SettingsFile, ".cs", "ScriptExtension");
                 FileManager.WriteLine(SettingsFile, "True", "ServerEnabled");
-                Log.Write("Settings.ini re-created with default values");
+                Log.Write("Settings.ini re-created with default values", false);
             }
 
             if (FileManager.GetData(SettingsFile, "ServerEnabled").ToLower() == "false")
@@ -36,11 +38,12 @@ namespace MudGame
             else
                 Log.IsVerbose = false;
 
+            //Get are cached log messages and go forward from here.
+            Console.Write(Log.GetMessages());
+            Log.FlushMessages();
 
             Log.Write("Launching...", true);
             ScriptEngine scriptEngine;
-
-            Log.Write("Loading settings...", true);
             scriptEngine = new ScriptEngine(new Game(), ScriptEngine.ScriptTypes.Both);
 
             //scriptEngine.CompileScripts();
