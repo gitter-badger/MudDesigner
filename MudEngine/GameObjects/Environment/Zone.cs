@@ -79,6 +79,7 @@ namespace MudEngine.GameObjects.Environment
         public Zone(GameManagement.Game game) : base(game)
         {
             RoomCollection = new List<Room>();
+            InitialRoom = new Room(game);
             IsSafe = false;
             Realm = "No Realm Associated.";
         }
@@ -98,10 +99,45 @@ namespace MudEngine.GameObjects.Environment
             FileManager.WriteLine(filename, this.StatDrainAmount.ToString(), "StatDrainAmount");
             FileManager.WriteLine(filename, this.InitialRoom.Filename, "InitialRoom");
 
+            String roomPath = Path.Combine(path, "Rooms");
             foreach (Room r in RoomCollection)
             {
-                FileManager.WriteLine(filename, r.Filename, "Room");
-                r.Save(path);
+                FileManager.WriteLine(filename, r.Filename, "RoomCollection");
+                r.Save(roomPath);
+            }
+        }
+
+        public override void Load(string filename)
+        {
+            base.Load(filename);
+
+            this.IsInitialZone = Convert.ToBoolean(FileManager.GetData(filename, "IsInitialZone"));
+            this.IsSafe = Convert.ToBoolean(FileManager.GetData(filename, "IsSafe"));
+            this.Realm = FileManager.GetData(filename, "Realm");
+            this.StatDrain = Convert.ToBoolean(FileManager.GetData(filename, "StatDrain"));
+            this.StatDrainAmount = Convert.ToInt32(FileManager.GetData(filename, "StatDrainAmount"));
+                
+            //Load the InitialRoom
+            String roomFile = FileManager.GetData(filename, "InitialRoom");
+            String realmPath = Path.Combine(ActiveGame.DataPaths.Environment, Path.GetFileNameWithoutExtension(this.Realm));
+            String zonePath = Path.Combine(realmPath, "Zones", Path.GetFileNameWithoutExtension(this.Filename));
+            String roomPath = Path.Combine(zonePath, "Rooms");
+
+            //Now get the rooms in the zone
+            foreach (String room in FileManager.GetCollectionData(filename, "RoomCollection"))
+            {
+                Room r = new Room(ActiveGame);
+                r.Load(Path.Combine(roomPath, room));
+            }
+
+            //Set the initial Room.
+            foreach (Room r in RoomCollection)
+            {
+                if (r.IsInitialRoom)
+                {
+                    InitialRoom = r;
+                    break;
+                }
             }
         }
 

@@ -170,11 +170,23 @@ namespace MudEngine.GameObjects
 
         public virtual void Load(String filename)
         {
+            if (String.IsNullOrEmpty(filename))
+                return;
+
+            if (!File.Exists(filename))
+            {
+                Log.Write("Error: Attempted to load file " + filename);
+                return;
+            }
             this.Name = FileManager.GetData(filename, "Name");
             this.Description = FileManager.GetData(filename, "Description");
             this.Feel = FileManager.GetData(filename, "Feel");
             this.Listen = FileManager.GetData(filename, "Listen");
             this.Smell = FileManager.GetData(filename, "Smell");
+
+            //Set the Filename property based off the physical filename, as setting this.Name sets a default filename
+            //which might not match that of the actual physical filename on the harddrive.
+            this.Filename = Path.GetFileName(filename);
         }
         #endregion
     }

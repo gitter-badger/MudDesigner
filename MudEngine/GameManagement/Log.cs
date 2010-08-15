@@ -12,8 +12,14 @@ namespace MudEngine.GameManagement
     {
         static List<String> cachedMessages = new List<String>();
         public static Boolean IsVerbose;
-
-        public static void Write(String message)
+        
+        /// <summary>
+        /// Writes a message to the log file and if pushMessage is true it will ignore placing the message
+        /// into the cachedmessages for later pooling, but push it directly to the console.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="pushMessage"></param>
+        public static void Write(String message, Boolean pushMessage)
         {
             String filename = Path.Combine(FileManager.GetDataPath(SaveDataTypes.Root), "Log.txt");
             StreamWriter sw;
@@ -23,11 +29,20 @@ namespace MudEngine.GameManagement
             else
                 sw = File.CreateText(filename);
 
-            sw.WriteLine(message);
+            sw.WriteLine(DateTime.Now.ToString() + ": " + message);
             sw.Close();
 
             //Add to the cache so consoles can get these messages if they want to.
-            cachedMessages.Add(message);
+            //If Pushmessage=true then we skip caching and dump it straight to the console
+            if ((pushMessage) && (!IsVerbose))
+                Console.WriteLine(message);
+            else
+                cachedMessages.Add(message);
+        }
+    
+        public static void Write(String message)
+        {
+            Write(message, true);
         }
 
         public static String GetMessages()

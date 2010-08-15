@@ -192,10 +192,7 @@ namespace MudEngine.GameManagement
             WorldTime = new GameTime(this);
 
             //Prepare the Save Paths for all of our Game objects.
-            SaveDataPaths paths = new SaveDataPaths();
-            paths.Environment = FileManager.GetDataPath(SaveDataTypes.Realms);
-            paths.Players = FileManager.GetDataPath(SaveDataTypes.Player);
-            DataPaths = paths;
+            DataPaths = new SaveDataPaths("World", "Player");
 
             //Setup default settings for the Game
             GameTitle = "New Game";
@@ -229,11 +226,14 @@ namespace MudEngine.GameManagement
             WorldTime.HoursPerDay = 23;
             WorldTime.MinutesPerHour = 59;
             WorldTime.SecondsPerMinute = 59;
+
+            AutoSave = true;
+            AutoSaveInterval = 30;
         }
 
         ~Game()
         {
-            Server = null;
+            Save();
         }
         #endregion
 
@@ -287,6 +287,9 @@ namespace MudEngine.GameManagement
 
             //Game is running now.
             IsRunning = true;
+
+            //Load the game and world if it was previously saved.
+            Load();
 
             Log.Write("Game startup complete.");
             return true;
@@ -354,8 +357,6 @@ namespace MudEngine.GameManagement
             {
                 if (PlayerCollection[i].Name == "New BaseCharacter")
                     continue;
-
-                Log.Write("Saving " + PlayerCollection[i].Name);
                 PlayerCollection[i].ExecuteCommand("Save");
             }
 
@@ -368,10 +369,82 @@ namespace MudEngine.GameManagement
 
             //Save the Game World.
             World.Save();
+
+            //Save the Game
+            String filename = GameTitle + ".ini";
+
+            if (File.Exists(filename))
+                File.Delete(filename);
+
+            FileManager.WriteLine(filename, this.AutoSave.ToString(), "AutoSave");
+            FileManager.WriteLine(filename, this.AutoSaveInterval.ToString(), "AutoSaveInterval");
+            FileManager.WriteLine(filename, this.BaseCurrencyAmount.ToString(), "BaseCurrencyAmount");
+            FileManager.WriteLine(filename, this.BaseCurrencyName, "BaseCurrencyName");
+            FileManager.WriteLine(filename, this.CompanyName, "CompanyName");
+            FileManager.WriteLine(filename, this.DataPaths.Environment, "DataPathEnvironment");
+            FileManager.WriteLine(filename, this.DataPaths.Players, "DataPathPlayers");
+            FileManager.WriteLine(filename, this.GameTitle, "GameTitle");
+            FileManager.WriteLine(filename, this.HideRoomNames.ToString(), "HideRoomNames");
+            FileManager.WriteLine(filename, this.InitialRealm.Filename, "InitialRealm");
+            FileManager.WriteLine(filename, this.IsMultiplayer.ToString(), "IsMultiplayer");
+            FileManager.WriteLine(filename, this.MaximumPlayers.ToString(), "MaximumPlayers");
+            FileManager.WriteLine(filename, this.PreCacheObjects.ToString(), "PreCacheObjects");
+            FileManager.WriteLine(filename, this.ServerPort.ToString(), "ServerPort");
+            FileManager.WriteLine(filename, this.ServerType.ToString(), "ServerType");
+            FileManager.WriteLine(filename, this.Version, "Version");
+            FileManager.WriteLine(filename, this.Website, "Website");
+
+            //TODO: Save WorldTime
+            //TODO: Save Story
+            //TODO: Save Server Information
+            //TODO: Save Currency Lists
+            //TODO: Save Script Engine information
         }
 
         public virtual void Load()
         {
+            String filename = GameTitle + ".ini";
+
+            if (!File.Exists(filename))
+                return;
+
+            Log.Write("Restoring Game Settings...");
+            this.AutoSave = Convert.ToBoolean(FileManager.GetData(filename, "AutoSave"));
+            this.AutoSaveInterval = Convert.ToInt32(FileManager.GetData(filename, "AutoSaveInterval"));
+            this.BaseCurrencyAmount = Convert.ToInt32(FileManager.GetData(filename, "BaseCurrencyAmount"));
+            this.BaseCurrencyName = FileManager.GetData(filename, "BaseCurrencyName");
+            this.CompanyName = FileManager.GetData(filename, "CompanyName");
+            this.DataPaths = new SaveDataPaths(FileManager.GetData(filename, "DataPathEnvironment"), FileManager.GetData(filename, "DataPathPlayers"));
+            this.GameTitle = FileManager.GetData(filename, "GameTitle");
+            this.HideRoomNames = Convert.ToBoolean(FileManager.GetData(filename, "HideRoomNames"));
+            this.InitialRealm = new Realm(this);
+            this.IsMultiplayer = Convert.ToBoolean(FileManager.GetData(filename, "IsMultiplayer"));
+            this.MaximumPlayers = Convert.ToInt32(FileManager.GetData(filename, "MaximumPlayers"));
+            this.PreCacheObjects = Convert.ToBoolean(FileManager.GetData(filename, "PreCacheObjects"));
+            this.ServerPort = Convert.ToInt32(FileManager.GetData(filename, "ServerPort"));
+            this.Version = FileManager.GetData(filename, "Version");
+            this.Website = FileManager.GetData(filename, "Webite");
+
+            //Need to re-assign the enumerator value that was previously assigned to the ServerType property
+            Array values = Enum.GetValues(typeof(ProtocolType));
+            foreach (Int32 value in values)
+            {
+                //Since enum values are not strings, we can't simply just assign the String to the enum
+                String displayName = Enum.GetName(typeof(ProtocolType), value);
+
+                //If the value = the String saved, then perform the needed conversion to get our data back
+                if (displayName.ToLower() == FileManager.GetData(filename, "ServerType").ToLower())
+                {
+                    ServerType = (ProtocolType)Enum.Parse(typeof(ProtocolType), displayName);
+                    break;
+                }
+            }
+
+            //Restore the world.
+            Log.Write("Restoring World Environments...");
+            World.Load();
+
+            Log.Write("Game Restore complete.");
         }
 
         /// <summary>

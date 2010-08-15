@@ -73,8 +73,6 @@ namespace MudEngine.GameManagement
         public CommandResults ExecuteCommand(String command, BaseCharacter player)
         {
             String commandKey = command.Insert(0, "Command");
-            if (Game.IsDebug)
-                Log.Write("Executing command: " + command);
 
             foreach (String key in CommandEngine.CommandCollection.Keys)
             {

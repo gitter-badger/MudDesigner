@@ -60,11 +60,28 @@ namespace MudEngine.FileSystem
                 if (line.StartsWith(";"))
                     continue;
 
-                if (line.StartsWith(name))
+                if (line.ToLower().StartsWith(name.ToLower()))
                     return line.Substring(name.Length + 1); //Accounts for name=value;
             }
 
             return "No data Found.";
+        }
+
+        public static List<String> GetCollectionData(String filename, String item)
+        {
+            List<String> items = new List<string>();
+
+            foreach (String line in File.ReadAllLines(filename))
+            {
+                //Ignore comments
+                if (line.StartsWith(";"))
+                    continue;
+
+                if (line.ToLower().StartsWith(item.ToLower()))
+                    items.Add(line.Substring(item.Length + 1)); //Accounts for name=value;
+            }
+
+            return items;
         }
 
         /// <summary>

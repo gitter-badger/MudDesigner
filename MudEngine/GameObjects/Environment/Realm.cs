@@ -33,6 +33,35 @@ namespace MudEngine.GameObjects.Environment
         public Realm(GameManagement.Game game) : base(game)
         {
             ZoneCollection = new List<Zone>();
+            InitialZone = new Zone(game);
+        }
+
+        public override void Load(string filename)
+        {
+            base.Load(filename);
+
+            IsInitialRealm = Convert.ToBoolean(FileManager.GetData(filename, "IsInitialRealm"));
+
+            String zoneFile = FileManager.GetData(filename, "InitialZone");
+            String realmPath = filename.Substring(0, filename.Length - Path.GetFileName(filename).Length);
+            String zonePath = Path.Combine(realmPath, "Zones", Path.GetFileNameWithoutExtension(zoneFile));
+
+            //Load all zones
+            foreach (String zone in FileManager.GetCollectionData(filename, "ZoneCollection"))
+            {
+                Zone z = new Zone(ActiveGame);
+                z.Load(Path.Combine(zonePath, zone));
+            }
+
+            //Set the initial zone.
+            foreach (Zone z in ZoneCollection)
+            {
+                if (z.IsInitialZone)
+                {
+                    InitialZone = z;
+                    break;
+                }
+            }
         }
 
         public override void Save(String path)
@@ -45,10 +74,12 @@ namespace MudEngine.GameObjects.Environment
             FileManager.WriteLine(filename, this.IsInitialRealm.ToString(), "IsInitialRealm");
             FileManager.WriteLine(filename, this.InitialZone.Filename, "InitialZone");
 
+            String zonePath = Path.Combine(path, "Zones");
             foreach (Zone z in ZoneCollection)
             {
                 FileManager.WriteLine(filename, z.Filename, "ZoneCollection");
-                z.Save(path);
+                
+                z.Save(zonePath);
             }
         }
 

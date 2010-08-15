@@ -136,6 +136,12 @@ namespace MudEngine.GameObjects.Characters
                 CurrentRoom.Description = "You are in the Aybss. It is void of all life.";
                 return;
             }
+
+            //TODO: Load player Inventory.
+            /* Due to private accessor Inv needs to be restored via
+             * foreach (Item in Inventory)
+             *      this.AddItem(Item);
+             */
         }
 
         public override void Save(String path)
@@ -211,40 +217,18 @@ namespace MudEngine.GameObjects.Characters
 
         public void ExecuteCommand(String command)
         {
-            //TODO: Character class can handle a lot of the command management here, checking various things prior to sending
-            //the command off to the command engine for execution.
             CommandSystem.ExecuteCommand(command, this);
             
             Send(""); //Blank line to help readability.
 
             //Now that the command has been executed, restore the Command: message
             Send("Command: ", false);
-
-            /* No longer needed due to player.send() sending content to the player.
-            if (result.Result != null)
-            {
-                StringBuilder sb = new StringBuilder();
-                foreach (object item in result.Result)
-                {
-                    if (item is String)
-                        sb.AppendLine(item.ToString());
-                }
-                return sb.ToString();
-            }
-             */
         }
 
         internal void Initialize()
         {
             if (ActiveGame.IsMultiplayer)
                 client.Receive(new byte[255]);
-
-            if (Game.IsDebug)
-                Log.Write("New Player Connected.");
-            
-            Log.Write("Loading internal game commands...");
-            //Loads the MudEngine Game Commands
-            //CommandSystem.LoadBaseCommands();
 
             //Ensure custom commands are loaded until everything is fleshed out.
             if (Game.IsDebug)
@@ -266,6 +250,7 @@ namespace MudEngine.GameObjects.Characters
                 CurrentRoom = ActiveGame.InitialRealm.InitialZone.InitialRoom;
 
             ExecuteCommand("Login");
+            Log.Write(Name + " has logged in.");
             ExecuteCommand("Look"); //MUST happen after Room setup is completed, otherwise the player default Abyss Room is printed.
         }
         internal void Receive(String data)
@@ -343,7 +328,7 @@ namespace MudEngine.GameObjects.Characters
                 IsActive = false;
                 client.Close();
 
-                Log.Write("Player " + this.Name + " disconnected.");
+                Log.Write(Name + " disconnected.");
             }
         }
         internal String ReadInput()

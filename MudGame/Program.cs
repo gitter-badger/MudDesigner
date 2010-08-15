@@ -19,11 +19,6 @@ namespace MudGame
 
         static void Main(String[] args)
         {
-
-            Log.Write("Launching...");
-            ScriptEngine scriptEngine;
-            
-
             //Re-create the settings file if it is missing
             if (!File.Exists(SettingsFile))
             {
@@ -41,27 +36,29 @@ namespace MudGame
             else
                 Log.IsVerbose = false;
 
-            Log.Write("Loading settings...");
+
+            Log.Write("Launching...", true);
+            ScriptEngine scriptEngine;
+
+            Log.Write("Loading settings...", true);
             scriptEngine = new ScriptEngine(new Game(), ScriptEngine.ScriptTypes.Both);
 
             //scriptEngine.CompileScripts();
-            Log.Write("Initializing Script Engine for Script Compilation...");
+            Log.Write("Initializing Script Engine for Script Compilation...", true);
             scriptEngine.Initialize();
 
             GameObject obj = scriptEngine.GetObjectOf("Game");
-            Console.WriteLine(Log.GetMessages());
-            Log.FlushMessages();
+            //Console.WriteLine(Log.GetMessages());
+            //Log.FlushMessages();
 
             if (obj == null)
             {
-                Log.Write("Setting up the Default Engine Game Manager...");
                 game = new Game();
                 obj = new GameObject(game, "Game");
                 scriptEngine = new ScriptEngine((Game)obj.Instance, ScriptEngine.ScriptTypes.Both);
             }
             else
             {
-                Log.Write("Setting up " + obj.GetProperty("GameTitle") + " Manager...");
                 game = (Game)obj.Instance;
                 scriptEngine = new ScriptEngine(game, ScriptEngine.ScriptTypes.Both);
             }
@@ -72,9 +69,11 @@ namespace MudGame
             //MUST be called before game.Start()
             //scriptEngine.Initialize();
             //game.scriptEngine = scriptEngine; //Pass this script engine off to the game to use now.
-            Log.Write("Starting " + obj.GetProperty().GameTitle + "...");
-            Console.WriteLine(Log.GetMessages());
-            Log.FlushMessages();
+            Log.Write("");
+            Log.Write("Starting " + obj.GetProperty().GameTitle + "...", true);
+            Log.Write("");
+            //Console.WriteLine(Log.GetMessages());
+            //Log.FlushMessages();
 
             //Server is only enabled if the option is in the settings file
             //Allows developers to remove the option from the settings file and letting
@@ -93,7 +92,7 @@ namespace MudGame
             //Make sure the Game is in fact running.
             if (!game.IsRunning)
             {
-                Console.WriteLine("Error starting game!\nReview Log file for details.");
+                Log.Write("Error starting game!\nReview Log file for details.", true);
                 return;
             }
 
@@ -104,7 +103,7 @@ namespace MudGame
             {
                 if ((game.PlayerCollection[0] == null) || (game.PlayerCollection[0].Name == "New BaseCharacter"))
                 {
-                    Console.WriteLine("Error! No player available for creation!");
+                    Log.Write("Error! No player available for creation!", true);
                     return;
                 }
             }
@@ -116,25 +115,20 @@ namespace MudGame
 
             List<char> buf = new List<char>();
 
-            while (game.IsRunning)
+            try
             {
-                game.Update();
-                System.Threading.Thread.Sleep(1);
-
-                StringBuilder sb = new StringBuilder();
-
-                ConsoleKeyInfo info = Console.ReadKey();
-
-                if (info.KeyChar == '\r')
+                while (game.IsRunning)
                 {
-                    foreach (char c in buf)
-                        sb.Append(c);
-
-                    game.PlayerCollection[0].ExecuteCommand(sb.ToString());
+                    game.Update();
+                    System.Threading.Thread.Sleep(1);
                 }
-                else
-                    buf.Add(info.KeyChar);
             }
+            catch (Exception ex)
+            {
+                Log.Write("Critical Error! " + ex.Message);
+            }
+            //Save the game on shut-down.
+            game.Save();
         }
     }
 }

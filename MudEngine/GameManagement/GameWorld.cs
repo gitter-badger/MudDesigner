@@ -47,7 +47,7 @@ namespace MudEngine.GameManagement
         /// <summary>
         /// Gets the collection of Realms currently available in the game world
         /// </summary>
-        public List<Realm> Realms { get; private set; }
+        public List<Realm> RealmCollection { get; private set; }
 
         private Game _Game;
 
@@ -58,7 +58,7 @@ namespace MudEngine.GameManagement
             Objects = new List<BaseObject>();
             Items = new List<BaseItem>();
             Characters = new List<BaseCharacter>();
-            Realms = new List<Realm>();
+            RealmCollection = new List<Realm>();
         }
 
         public void Start()
@@ -66,7 +66,7 @@ namespace MudEngine.GameManagement
             //See if we have an Initial Realm set
             //TODO: Check for saved Realm files and load
             Log.Write("Initializing World...");
-            foreach (Realm r in Realms)
+            foreach (Realm r in RealmCollection)
             {
                 if (r.IsInitialRealm)
                 {
@@ -90,9 +90,34 @@ namespace MudEngine.GameManagement
         public void Save()
         {
             //Save all of the Environments
-            for (Int32 x = 0; x <= Realms.Count - 1; x++)
+            for (Int32 x = 0; x <= RealmCollection.Count - 1; x++)
             {
-                Realms[x].Save(_Game.DataPaths.Environment);
+                RealmCollection[x].Save(_Game.DataPaths.Environment);
+            }
+        }
+
+        public void Load()
+        {
+            String filename = _Game.GameTitle + ".ini";
+
+            //Restore initial realm
+            String realmFile = FileManager.GetData(filename, "InitialRealm");
+            String realmFolder = Path.GetFileNameWithoutExtension(realmFile);
+            String realmPath = Path.Combine(_Game.DataPaths.Environment, realmFolder, realmFile);
+
+            foreach (String realm in FileManager.GetCollectionData(filename, "RealmCollection"))
+            {
+                Realm r = new Realm(_Game);
+                r.Load(Path.Combine(realmPath, realm));
+            }
+
+            foreach (Realm r in RealmCollection)
+            {
+                if (r.IsInitialRealm)
+                {
+                    _Game.InitialRealm = r;
+                    break;
+                }
             }
         }
 
@@ -106,7 +131,7 @@ namespace MudEngine.GameManagement
             //set Realms to avoid conflict.
             if (realm.IsInitialRealm)
             {
-                foreach (Realm r in Realms)
+                foreach (Realm r in RealmCollection)
                 {
                     if (r.IsInitialRealm)
                     {
@@ -121,7 +146,7 @@ namespace MudEngine.GameManagement
                 _Game.InitialRealm = realm;
 
             //TODO: Check for duplicate Realms.
-            Realms.Add(realm);
+            RealmCollection.Add(realm);
         }
 
         /// <summary>
@@ -167,7 +192,7 @@ namespace MudEngine.GameManagement
         /// <returns></returns>
         private Realm GetRealm(String filename)
         {
-            foreach (Realm r in Realms)
+            foreach (Realm r in RealmCollection)
             {
                 if (r.Filename == filename)
                     return r;

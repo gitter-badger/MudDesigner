@@ -91,11 +91,14 @@ namespace MudEngine.GameObjects.Environment
 
         public override void Save(String path)
         {
-            path = Path.Combine(path, "Rooms");
-
             base.Save(path);
 
             String filename = Path.Combine(path, Filename);
+
+            FileManager.WriteLine(filename, IsInitialRoom.ToString(), "IsInitialRoom");
+            FileManager.WriteLine(filename, this.IsSafe.ToString(), "IsSafe");
+            FileManager.WriteLine(filename, this.Realm, "Realm");
+            FileManager.WriteLine(filename, this.Zone, "Zone");
         }
 
         /// <summary>
