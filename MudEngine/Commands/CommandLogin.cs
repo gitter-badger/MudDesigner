@@ -24,52 +24,92 @@ namespace MudEngine.Commands
             player.Send(player.ActiveGame.Story);
             player.Send("");
 
-            player.Send("Enter Character Name: ", false);
-            
-            String input = player.ReadInput();
             Boolean playerFound = false;
+            Boolean playerLegal = false;
             String savedFile = "";
+            String playerName = "";
 
+            while (!playerLegal)
+            {
+                player.Send("Enter Character Name: ", false);
+                 playerName = player.ReadInput();
+
+                if (!String.IsNullOrEmpty(playerName))
+                    playerLegal = true;
+            }
+            
             //See if this character already exists.
             if (!Directory.Exists(player.ActiveGame.DataPaths.Players))
                 Directory.CreateDirectory(player.ActiveGame.DataPaths.Players);
 
-            foreach (String filename in Directory.GetFiles(player.ActiveGame.DataPaths.Players))
-            {
-                if (Path.GetFileNameWithoutExtension(filename).ToLower() == input.ToLower())
-                {
-                    //TODO: Ask for password.
-                    savedFile = filename;
-                    playerFound = true;
-                    break;
-                }
-            }
+            Boolean passwordLegal = false;
+            String playerPwrd = "";
 
-            //Next search if there is an existing player already logged in with this name, if so disconnect them.
-            if (player.ActiveGame.IsMultiplayer)
+            while (!passwordLegal)
             {
-                for (Int32 i = 0; i <= player.ActiveGame.PlayerCollection.Length - 1; i++)
+                player.Send("Enter Password: ", false);
+                playerPwrd = player.ReadInput();
+
+                if (!String.IsNullOrEmpty(playerPwrd))
+                    passwordLegal = true;
+
+                if (playerPwrd.Length < 6)
                 {
-                    if (player.ActiveGame.PlayerCollection[i].Name.ToLower() == input.ToLower())
+                    passwordLegal = false;
+                    player.Send("Invalid Password, minimum password length is 6 characters");
+                }
+
+                if (passwordLegal)
+                {
+                    foreach (String filename in Directory.GetFiles(player.ActiveGame.DataPaths.Players))
                     {
-                        player.ActiveGame.PlayerCollection[i].Disconnect();
+                        if (Path.GetFileNameWithoutExtension(filename).ToLower() == playerName.ToLower())
+                        {
+                            //TODO: Ask for password.
+                            savedFile = filename;
+                            playerFound = true;
+                            break;
+                        }
+                    }
+
+                    //Loop through all the players currently logged in and disconnect anyone that is currently logged 
+                    //in with this account.
+                    if (playerFound)
+                    {
+                        if (player.ActiveGame.IsMultiplayer)
+                        {
+                            for (Int32 i = 0; i <= player.ActiveGame.PlayerCollection.Length - 1; i++)
+                            {
+                                if (player.ActiveGame.PlayerCollection[i].Name.ToLower() == playerName.ToLower())
+                                {
+                                    player.ActiveGame.PlayerCollection[i].Disconnect();
+                                }
+                            }
+                        }
+                    }
+
+                    //Now assign this name to this player if this is a new toon or load the player if the file exists.
+                    if (!playerFound)
+                    {
+                        player.Create(playerName, playerPwrd);
+                        player.Send("Welcome " + player.Name + "!");
+                    }
+                    else
+                    {
+                        BaseCharacter p = new BaseCharacter(player.ActiveGame);
+                        p.Load(savedFile);
+                        if (p.VarifyPassword(playerPwrd))
+                        {
+                            player.Load(savedFile);
+                            player.Send("Welcome back " + player.Name + "!");
+                        }
+                        else
+                        {
+                            passwordLegal = false;
+                            player.Send("Invalid password.");
+                        }
                     }
                 }
-            }
-
-            //Now assign this name to this player if this is a new toon or load the player if the file exists.
-            if (!playerFound)
-            {
-                player.Name = input;
-                player.Send("Welcome " + player.Name + "!");
-
-                //Save the new player.
-                player.Save(player.ActiveGame.DataPaths.Players);
-            }
-            else
-            {
-                player.Load(savedFile);
-                player.Send("Welcome back " + player.Name + "!");
             }
             
             //Look to see if there are players in the Room

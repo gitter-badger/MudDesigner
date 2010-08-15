@@ -230,11 +230,6 @@ namespace MudEngine.GameManagement
             AutoSave = true;
             AutoSaveInterval = 30;
         }
-
-        ~Game()
-        {
-            Save();
-        }
         #endregion
 
         #region ==== Methods ====
