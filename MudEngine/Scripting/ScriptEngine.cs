@@ -169,7 +169,7 @@ namespace MudEngine.Scripting
 
             //Prepare the compiler.
             Dictionary<String, String> providerOptions = new Dictionary<String,String>();
-            providerOptions.Add("CompilerVersion", "v3.5");
+            providerOptions.Add("CompilerVersion", "v4.0");
 
             CompilerParameters param = new CompilerParameters(new String[] {"mscorlib.dll", "System.dll", "MudEngine.dll"});
             param.GenerateExecutable = false;
@@ -182,6 +182,7 @@ namespace MudEngine.Scripting
 
             //Compile the scripts with the C# CodeProvider
             CSharpCodeProvider codeProvider = new CSharpCodeProvider(providerOptions);
+            //codeProvider.LanguageOptions = LanguageOptions.CaseInsensitive;
             CompilerResults results = new CompilerResults(new TempFileCollection());
             scripts = Directory.GetFiles(ScriptPath, "*" + ScriptExtension, SearchOption.AllDirectories);
             results = codeProvider.CompileAssemblyFromFile(param, scripts);
