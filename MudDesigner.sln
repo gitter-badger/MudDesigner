@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudEngine", "MudEngine\MudEngine.csproj", "{498943A8-DF5A-4DB0-B506-0BFF44788657}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MUDCompiler", "MUDCompiler\MUDCompiler.csproj", "{98E974DA-C650-4B88-B2F8-57AC7AE6C34F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudGame", "MudGame\MudGame.csproj", "{0C47648F-8751-4A71-98ED-A3D0845627E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudClient", "MudClient\MudClient.csproj", "{970B3390-7485-41A5-8465-CFF2580501B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,16 @@ Global
 		{0C47648F-8751-4A71-98ED-A3D0845627E2}.Release|Mixed Platforms.Build.0 = Release|x86
 		{0C47648F-8751-4A71-98ED-A3D0845627E2}.Release|x86.ActiveCfg = Release|x86
 		{0C47648F-8751-4A71-98ED-A3D0845627E2}.Release|x86.Build.0 = Release|x86
+		{970B3390-7485-41A5-8465-CFF2580501B6}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{970B3390-7485-41A5-8465-CFF2580501B6}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{970B3390-7485-41A5-8465-CFF2580501B6}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{970B3390-7485-41A5-8465-CFF2580501B6}.Debug|x86.ActiveCfg = Debug|x86
+		{970B3390-7485-41A5-8465-CFF2580501B6}.Debug|x86.Build.0 = Debug|x86
+		{970B3390-7485-41A5-8465-CFF2580501B6}.Release|Any CPU.ActiveCfg = Release|x86
+		{970B3390-7485-41A5-8465-CFF2580501B6}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{970B3390-7485-41A5-8465-CFF2580501B6}.Release|Mixed Platforms.Build.0 = Release|x86
+		{970B3390-7485-41A5-8465-CFF2580501B6}.Release|x86.ActiveCfg = Release|x86
+		{970B3390-7485-41A5-8465-CFF2580501B6}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
