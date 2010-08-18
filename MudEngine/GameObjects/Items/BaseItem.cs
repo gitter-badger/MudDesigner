@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using MudEngine.GameManagement;
+
 namespace MudEngine.GameObjects.Items
 {
     public class BaseItem : BaseObject
     {
-        public BaseItem(GameManagement.Game game) : base(game)
+        public BaseItem(Game game) : base(game)
         {
         }
     }

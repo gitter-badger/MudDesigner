@@ -39,21 +39,28 @@
         {
             //Instance a new Realm.
             Realm realm = new Realm(player.ActiveGame);
+            Boolean isLegalName = false;
 
-            //Get the name of this Realm from the player.
-            player.Send("Realm Name: ", false);
-            realm.Name = player.ReadInput();
-
-            //Check if a Realm with this name already exists.
-            foreach (Realm r in player.ActiveGame.World.RealmCollection)
+            while (!isLegalName)
             {
-                if (r.Name == realm.Name)
+                isLegalName = true;
+                //Get the name of this Realm from the player.
+                player.Send("Realm Name: ", false);
+                realm.Name = player.ReadInput();
+
+                //Check if a Realm with this name already exists.
+                foreach (Realm r in player.ActiveGame.World.RealmCollection)
                 {
-                    player.Send("Realm already exists!");
+                    if (r.Name == realm.Name)
+                    {
+                        player.Send("Realm already exists!");
+                        isLegalName = false;
+                    }
                 }
             }
 
             player.ActiveGame.World.AddRealm(realm);
+            Log.Write(player.Name + " has created a Realm called " + realm.Name);
             player.Send(realm.Name + " has been created and added to the world.");
         }
 
@@ -122,6 +129,7 @@
                 }
             }
 
+            Log.Write(player.Name + " has created a Zone called " + zone.Name + " within the Realm " + realm.Name);
             player.Send(zone.Name + " has been created and added to Realm " + realm.Name + ".");
         }
     }

@@ -331,6 +331,7 @@ namespace MudEngine.GameManagement
                 lastSaveGap++;
             }
 
+
             if (IsMultiplayer)
             {
                 Console.Write(Log.GetMessages());
