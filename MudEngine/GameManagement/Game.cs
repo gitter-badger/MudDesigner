@@ -213,20 +213,6 @@ namespace MudEngine.GameManagement
             for (Int32 i = 0; i < MaximumPlayers; i++)
                 PlayerCollection[i] = new BaseCharacter(this);
 
-            GameTime.Time t = new GameTime.Time();
-            t.Hour = 8;
-            t.Minute = 0;
-            t.Second = 0;
-            t.Day = 1;
-            t.Month = 1;
-            t.Year = 2010;
-            WorldTime.InitialGameTime = t;
-            WorldTime.DaysPerMonth = 7;
-            WorldTime.MonthsPerYear = 12;
-            WorldTime.HoursPerDay = 23;
-            WorldTime.MinutesPerHour = 59;
-            WorldTime.SecondsPerMinute = 59;
-
             AutoSave = true;
             AutoSaveInterval = 30;
         }

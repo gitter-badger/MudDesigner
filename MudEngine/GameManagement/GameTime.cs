@@ -129,8 +129,8 @@ namespace MudEngine.GameManagement
 
             Time t = new Time();
             t.Second = 0;
-            t.Minute = 1;
-            t.Hour = 8;
+            t.Minute = 0;
+            t.Hour = 1;
             t.Day = 1;
             t.Month = 1;
             t.Year = 2010;
@@ -142,9 +142,9 @@ namespace MudEngine.GameManagement
 
             DayTransitions = TimeOfDayOptions.Transition;
 
-            SecondsPerMinute = 60;
-            MinutesPerHour = 60;
-            HoursPerDay = 24;
+            SecondsPerMinute = 5;
+            MinutesPerHour = 5;
+            HoursPerDay = 5;
             DaysPerMonth = 31;
             MonthsPerYear = 12;
 
@@ -155,6 +155,7 @@ namespace MudEngine.GameManagement
         {
             Time t = InitialGameTime;
             CurrentWorldTime = t;
+            CurrentSystemTime = DateTime.Now;
         }
 
         public virtual void Update()
@@ -169,6 +170,7 @@ namespace MudEngine.GameManagement
                 CurrentSystemTime = DateTime.Now;
                 Int32 amount = Math.Abs(ts.Seconds);
                 IncrementSecond(amount);
+                Log.Write(GetCurrentWorldTime());
             }
         }
 
@@ -179,9 +181,9 @@ namespace MudEngine.GameManagement
 
             if (CurrentWorldTime.Second == SecondsPerMinute)
             {
-                t.Second = 0;
                 IncrementMinute(1);
                 t = CurrentWorldTime;
+                t.Second = 0;
             }
             else if (CurrentWorldTime.Second > SecondsPerMinute)
             {
@@ -204,8 +206,10 @@ namespace MudEngine.GameManagement
 
             if (CurrentWorldTime.Minute == MinutesPerHour)
             {
-                t.Minute = 0;
                 IncrementHour(1);
+                t = CurrentWorldTime;
+                t.Minute = 0;
+
             }
             else if (CurrentWorldTime.Minute > MinutesPerHour)
             {
@@ -228,8 +232,9 @@ namespace MudEngine.GameManagement
 
             if (CurrentWorldTime.Hour == HoursPerDay)
             {
-                t.Hour = 0;
                 IncrementDay();
+                t = CurrentWorldTime;
+                t.Hour = 0;
             }
             else if (CurrentWorldTime.Hour > HoursPerDay)
             {
@@ -253,8 +258,9 @@ namespace MudEngine.GameManagement
             //TODO: Finish GameTime syncing with Server Time.
             if (CurrentWorldTime.Day == DaysPerMonth)
             {
-                t.Day = 1;
                 IncrementMonth();
+                t = CurrentWorldTime;
+                t.Day = 1;
             }
             else
                 t.Day++;
@@ -269,8 +275,9 @@ namespace MudEngine.GameManagement
 
             if (CurrentWorldTime.Month == MonthsPerYear)
             {
-                t.Month = 1;
                 IncrementYear();
+                t = CurrentWorldTime;
+                t.Month = 1;
             }
             else
                 t.Month++;
