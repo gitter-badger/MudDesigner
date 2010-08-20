@@ -142,11 +142,11 @@ namespace MudEngine.GameManagement
 
             DayTransitions = TimeOfDayOptions.Transition;
 
-            SecondsPerMinute = 5;
-            MinutesPerHour = 5;
-            HoursPerDay = 5;
-            DaysPerMonth = 31;
-            MonthsPerYear = 12;
+            SecondsPerMinute = 1;
+            MinutesPerHour = 1;
+            HoursPerDay = 1;
+            DaysPerMonth = 3;
+            MonthsPerYear = 3;
 
             CurrentWorldTime = InitialGameTime;
         }
@@ -170,7 +170,7 @@ namespace MudEngine.GameManagement
                 CurrentSystemTime = DateTime.Now;
                 Int32 amount = Math.Abs(ts.Seconds);
                 IncrementSecond(amount);
-                Log.Write(GetCurrentWorldTime());
+                //Log.Write(GetCurrentWorldTime());
             }
         }
 
@@ -310,6 +310,52 @@ namespace MudEngine.GameManagement
             String month = MonthNames[CurrentWorldTime.Month - 1];
 
             return day + ", " + month + " " + CurrentWorldTime.Day + ", " + CurrentWorldTime.Year + ": " + CurrentWorldTime.Hour + ":" + CurrentWorldTime.Minute + ":" + CurrentWorldTime.Second;
+        }
+
+        public Int32 GetCurrentSecond()
+        {
+            return CurrentWorldTime.Second;
+        }
+
+        public Int32 GetCurrentMinute()
+        {
+            return CurrentWorldTime.Minute;
+        }
+
+        public Int32 GetCurrentHour()
+        {
+            return CurrentWorldTime.Hour;
+        }
+
+        public Int32 GetCurrentDayNumber()
+        {
+            return CurrentWorldTime.Day;
+        }
+
+        public String GetCurrentDayName()
+        {
+            if (DayNames.Count > CurrentWorldTime.Day)
+                return "No Day Name available for the current Date.";
+            else
+                return DayNames[CurrentWorldTime.Day - 1];//Days start at 1, array index starts at 0
+        }
+
+        public Int32 GetCurrentMonthNumber()
+        {
+            return CurrentWorldTime.Month;
+        }
+
+        public String GetCurrentMonthName()
+        {
+            if (MonthNames.Count > CurrentWorldTime.Month)
+                return "No Month Name available for the current Date.";
+            else
+                return MonthNames[CurrentWorldTime.Month - 1]; //Day starts at 1, array index starts at 0.
+        }
+
+        public Int32 GetCurrentYear()
+        {
+            return CurrentWorldTime.Year;
         }
     }
 }

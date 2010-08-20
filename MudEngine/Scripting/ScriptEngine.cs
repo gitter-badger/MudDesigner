@@ -142,7 +142,7 @@ namespace MudEngine.Scripting
             Directory.CreateDirectory("temp");
 
             //Setup the additional sourcecode that's needed in the script.
-            String[] usingStatements = new String[] { "using System;", "using MudEngine.GameObjects;", "using MudEngine.GameObjects.Characters;", "using MudEngine.GameObjects.Environment;", "using MudEngine.GameObjects.Items;", "using MudEngine.GameManagement;", "using MudEngine.FileSystem;", "using MudEngine.Scripting;" };
+            String[] usingStatements = new String[] { "using System;", "using System.Collections.Generic;", "using MudEngine.GameObjects;", "using MudEngine.GameObjects.Characters;", "using MudEngine.GameObjects.Environment;", "using MudEngine.GameObjects.Items;", "using MudEngine.GameManagement;", "using MudEngine.FileSystem;", "using MudEngine.Scripting;" };
 
             foreach (String script in scripts)
             {

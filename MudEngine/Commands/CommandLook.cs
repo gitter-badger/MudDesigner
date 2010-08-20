@@ -16,7 +16,7 @@ namespace MudEngine.Commands
     {
         public String Name { get; set; }
         public Boolean Override { get; set; }
-
+        public List<String> Help { get; set; }
         public void Execute(String command, BaseCharacter player)
         {
             if (player.CurrentRoom == null)

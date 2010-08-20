@@ -16,6 +16,13 @@ namespace MudEngine.Commands
     {
         public Boolean Override { get; set; }
         public String Name { get; set; }
+        public List<String> Help { get; set; }
+
+        public CommandExit()
+        {
+            Help = new List<string>();
+            Help.Add("Exits the game cleanly.");
+        }
 
         public void Execute(String command, BaseCharacter player)
         {

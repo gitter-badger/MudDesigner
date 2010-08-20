@@ -18,6 +18,10 @@ namespace MudEngine.GameManagement
         String Name { get; set; }
         //Used to override commands with the same name
         Boolean Override { get; set; }
+
+        //Used when the player enters the help command
+        List<String> Help { get; set; }
+
         //Executes the command.
         void Execute(String command, BaseCharacter player);
     }

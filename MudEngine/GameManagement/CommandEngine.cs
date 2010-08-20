@@ -57,6 +57,11 @@ namespace MudEngine.GameManagement
             return null;
         }
 
+        public static String GetCommandName(IGameCommand command)
+        {
+            return command.Name.Substring("Command".Length);
+        }
+
         public static Boolean IsValidCommand(String Name)
         {
             if (CommandCollection.ContainsKey(Name.ToLower()))

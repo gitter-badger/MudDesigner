@@ -34,6 +34,7 @@ namespace MudEngine.GameManagement
 
             //Add to the cache so consoles can get these messages if they want to.
             //If Pushmessage=true then we skip caching and dump it straight to the console
+            //TODO: Allow for enabling critical error messages being forced into the console, regardless if !IsMultiplayer
             if ((pushMessage) && (!IsVerbose))
                 Console.WriteLine(message);
             else

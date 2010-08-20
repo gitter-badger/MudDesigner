@@ -12,6 +12,13 @@ namespace MudEngine.Commands
         public String Name { get; set; }
 
         public Boolean Override { get; set; }
+        public List<String> Help { get; set; }
+
+        public CommandGetTime()
+        {
+            Help = new List<string>();
+            Help.Add("Gives you the current time and date in the game world.");
+        }
 
         public void Execute(String command, BaseCharacter player)
         {
