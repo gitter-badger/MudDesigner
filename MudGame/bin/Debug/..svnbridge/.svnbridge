@@ -29,4 +29,18 @@ temp
 Realms
 Mud Designer Example Game.ini
 World
+</Value></Property><Property><Name>svn:ignore</Name><Value>Log.txt
+MudEngine.dll
+MudEngine.pdb
+MudGame.exe
+MudGame.pdb
+MudGame.vshost.exe
+MudGame.vshost.exe.manifest
+Player
+temp
+Realms
+Mud Designer Example Game.ini
+World
+Planet Earth MUD.ini
+Saved
 </Value></Property></Properties></ItemProperties>

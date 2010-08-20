@@ -154,11 +154,10 @@ namespace MudEngine.GameManagement
         #endregion
 
         #region Networking
-        //TODO: This should be internal only; C# property using get; internal set; so only MudEngine.dll may edit this collection
         /// <summary>
         /// Collection of players currently running on the server.
         /// </summary>
-        public BaseCharacter[] PlayerCollection;
+        protected BaseCharacter[] PlayerCollection;
 
         /// <summary>
         /// Gets the current running Server object.
@@ -279,7 +278,7 @@ namespace MudEngine.GameManagement
         /// <summary>
         /// Shuts down the Game and Server.
         /// </summary>
-        public void Shutdown()
+        public virtual void Shutdown()
         {
             Log.Write("Server shutdown requested...");
 
@@ -427,6 +426,11 @@ namespace MudEngine.GameManagement
             World.Load();
 
             Log.Write("Game Restore complete.");
+        }
+
+        public BaseCharacter[] GetPlayerCollection()
+        {
+            return PlayerCollection;
         }
 
         /// <summary>

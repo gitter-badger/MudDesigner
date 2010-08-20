@@ -2,4 +2,9 @@
 CommandCreate.cs
 CommandSay.cs
 EarthGame.cs
+</Value></Property><Property><Name>svn:ignore</Name><Value>CommandClear.cs
+CommandCreate.cs
+CommandSay.cs
+EarthGame.cs
+CommandHelp.cs
 </Value></Property></Properties></ItemProperties>

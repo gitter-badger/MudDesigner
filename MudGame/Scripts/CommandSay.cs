@@ -12,7 +12,7 @@ public class CommandSay : IGameCommand
 
         String message = command.Substring("Say ".Length);
 
-        foreach (BaseCharacter p in player.ActiveGame.PlayerCollection)
+        foreach (BaseCharacter p in player.ActiveGame.GetPlayerCollection())
         {
             if ((p.CurrentRoom.Realm == player.CurrentRoom.Realm) && (p.CurrentRoom.Zone == player.CurrentRoom.Zone) && (p.CurrentRoom.Filename == player.CurrentRoom.Filename))
             {

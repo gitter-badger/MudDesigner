@@ -104,7 +104,7 @@ namespace MudGame
             //scripts might miss this, so we check for it.
             if (!game.IsMultiplayer)
             {
-                if ((game.PlayerCollection[0] == null) || (game.PlayerCollection[0].Name == "New BaseCharacter"))
+                if ((game.GetPlayerCollection()[0] == null) || (game.GetPlayerCollection()[0].Name == "New BaseCharacter"))
                 {
                     Log.Write("Error! No player available for creation!", true);
                     return;

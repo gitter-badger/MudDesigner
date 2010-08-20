@@ -175,18 +175,18 @@
                 }
 
                 //Let other players know that the user walked out.
-                for (Int32 i = 0; i != ActiveGame.PlayerCollection.Length; i++)
+                for (Int32 i = 0; i != ActiveGame.GetPlayerCollection().Length; i++)
                 {
-                    if (ActiveGame.PlayerCollection[i].Name == Name)
+                    if (ActiveGame.GetPlayerCollection()[i].Name == Name)
                         continue;
 
-                    String room = ActiveGame.PlayerCollection[i].CurrentRoom.Filename;
-                    String realm = ActiveGame.PlayerCollection[i].CurrentRoom.Realm;
-                    String zone = ActiveGame.PlayerCollection[i].CurrentRoom.Zone;
+                    String room = ActiveGame.GetPlayerCollection()[i].CurrentRoom.Filename;
+                    String realm = ActiveGame.GetPlayerCollection()[i].CurrentRoom.Realm;
+                    String zone = ActiveGame.GetPlayerCollection()[i].CurrentRoom.Zone;
 
                     if ((room == CurrentRoom.Filename) && (realm == CurrentRoom.Realm) && (zone == CurrentRoom.Zone))
                     {
-                        ActiveGame.PlayerCollection[i].Send(Name + " walked out towards the " + travelDirection.ToString());
+                        ActiveGame.GetPlayerCollection()[i].Send(Name + " walked out towards the " + travelDirection.ToString());
                     }
                 }
 
@@ -202,18 +202,18 @@
             {
                 //TODO: Check the Room/Zone/Realm to see if anything needs to occure during travel.
                 //Let other players know that the user walked in.
-                for (Int32 i = 0; i != ActiveGame.PlayerCollection.Length; i++)
+                for (Int32 i = 0; i != ActiveGame.GetPlayerCollection().Length; i++)
                 {
-                    if (ActiveGame.PlayerCollection[i].Name == Name)
+                    if (ActiveGame.GetPlayerCollection()[i].Name == Name)
                         continue;
 
-                    String room = ActiveGame.PlayerCollection[i].CurrentRoom.Name;
-                    String realm = ActiveGame.PlayerCollection[i].CurrentRoom.Realm;
-                    String zone = ActiveGame.PlayerCollection[i].CurrentRoom.Zone;
+                    String room = ActiveGame.GetPlayerCollection()[i].CurrentRoom.Name;
+                    String realm = ActiveGame.GetPlayerCollection()[i].CurrentRoom.Realm;
+                    String zone = ActiveGame.GetPlayerCollection()[i].CurrentRoom.Zone;
 
                     if ((room == CurrentRoom.Name) && (realm == CurrentRoom.Realm) && (zone == CurrentRoom.Zone))
                     {
-                        ActiveGame.PlayerCollection[i].Send(Name + " walked in from the " + TravelDirections.GetReverseDirection(travelDirection));
+                        ActiveGame.GetPlayerCollection()[i].Send(Name + " walked in from the " + TravelDirections.GetReverseDirection(travelDirection));
                     }
                 }
             }

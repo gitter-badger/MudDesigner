@@ -29,18 +29,18 @@ namespace MudEngine.Commands
             if (player.ActiveGame.IsMultiplayer)
             {
                 //Let other players know that the user walked in.
-                for (Int32 i = 0; i != player.ActiveGame.PlayerCollection.Length; i++)
+                for (Int32 i = 0; i != player.ActiveGame.GetPlayerCollection().Length; i++)
                 {
-                    if (player.ActiveGame.PlayerCollection[i].Name == player.Name)
+                    if (player.ActiveGame.GetPlayerCollection()[i].Name == player.Name)
                         continue;
 
-                    String room = player.ActiveGame.PlayerCollection[i].CurrentRoom.Name;
-                    String realm = player.ActiveGame.PlayerCollection[i].CurrentRoom.Realm;
-                    String zone = player.ActiveGame.PlayerCollection[i].CurrentRoom.Zone;
+                    String room = player.ActiveGame.GetPlayerCollection()[i].CurrentRoom.Name;
+                    String realm = player.ActiveGame.GetPlayerCollection()[i].CurrentRoom.Realm;
+                    String zone = player.ActiveGame.GetPlayerCollection()[i].CurrentRoom.Zone;
 
                     if ((room == player.CurrentRoom.Name) && (realm == player.CurrentRoom.Realm) && (zone == player.CurrentRoom.Zone))
                     {
-                        player.ActiveGame.PlayerCollection[i].Send(player.Name + " has left.");
+                        player.ActiveGame.GetPlayerCollection()[i].Send(player.Name + " has left.");
                     }
                 }
 

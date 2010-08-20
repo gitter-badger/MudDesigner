@@ -65,7 +65,6 @@ namespace MudEngine.Commands
                     {
                         if (Path.GetFileNameWithoutExtension(filename).ToLower() == playerName.ToLower())
                         {
-                            //TODO: Ask for password.
                             savedFile = filename;
                             playerFound = true;
                             break;
@@ -78,11 +77,11 @@ namespace MudEngine.Commands
                     {
                         if (player.ActiveGame.IsMultiplayer)
                         {
-                            for (Int32 i = 0; i <= player.ActiveGame.PlayerCollection.Length - 1; i++)
+                            for (Int32 i = 0; i <= player.ActiveGame.GetPlayerCollection().Length - 1; i++)
                             {
-                                if (player.ActiveGame.PlayerCollection[i].Name.ToLower() == playerName.ToLower())
+                                if (player.ActiveGame.GetPlayerCollection()[i].Name.ToLower() == playerName.ToLower())
                                 {
-                                    player.ActiveGame.PlayerCollection[i].Disconnect();
+                                    player.ActiveGame.GetPlayerCollection()[i].Disconnect();
                                 }
                             }
                         }
@@ -116,18 +115,18 @@ namespace MudEngine.Commands
             //Let other players know that the user walked in.
             if (player.ActiveGame.IsMultiplayer)
             {
-                for (Int32 i = 0; i != player.ActiveGame.PlayerCollection.Length; i++)
+                for (Int32 i = 0; i != player.ActiveGame.GetPlayerCollection().Length; i++)
                 {
-                    if (player.ActiveGame.PlayerCollection[i].Name == player.Name)
+                    if (player.ActiveGame.GetPlayerCollection()[i].Name == player.Name)
                         continue;
 
-                    String room = player.ActiveGame.PlayerCollection[i].CurrentRoom.Name;
-                    String realm = player.ActiveGame.PlayerCollection[i].CurrentRoom.Realm;
-                    String zone = player.ActiveGame.PlayerCollection[i].CurrentRoom.Zone;
+                    String room = player.ActiveGame.GetPlayerCollection()[i].CurrentRoom.Name;
+                    String realm = player.ActiveGame.GetPlayerCollection()[i].CurrentRoom.Realm;
+                    String zone = player.ActiveGame.GetPlayerCollection()[i].CurrentRoom.Zone;
 
                     if ((room == player.CurrentRoom.Name) && (realm == player.CurrentRoom.Realm) && (zone == player.CurrentRoom.Zone))
                     {
-                        player.ActiveGame.PlayerCollection[i].Send(player.Name + " arrived.");
+                        player.ActiveGame.GetPlayerCollection()[i].Send(player.Name + " arrived.");
                     }
                 }
             }
