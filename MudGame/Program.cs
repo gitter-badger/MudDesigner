@@ -15,10 +15,11 @@ namespace MudGame
     static class Program
     {
         const String SettingsFile = "Settings.ini";
-        static Game game;
-
+        
         static void Main(String[] args)
         {
+            dynamic game = new Game();
+
             //Re-create the settings file if it is missing. Don't push any log messages until we know that this is
             //verbose or not
             Log.Write("Loading Settings...", false);

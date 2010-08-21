@@ -122,10 +122,61 @@ namespace MudEngine.GameManagement
         }
 
         /// <summary>
+        /// Adds a object to the game world. Any Game Object can be supplied as a parameter.
+        /// </summary>
+        /// <param name="worldObject"></param>
+        public Boolean AddObject(dynamic worldObject)
+        {
+            //Check if this object is a Realm
+            if (worldObject is Realm)
+            {
+                ///Add it to the Worlds Realm collection
+                this.RealmCollection.Add(worldObject);
+            }
+            //Check if this object is a Zone
+            else if (worldObject is Zone)
+            {
+                //Query the Realm collection to find the Realm this Zone belongs to.
+                var realmQuery = 
+                    from r in RealmCollection 
+                    where r.Filename == worldObject.Realm 
+                    select r;
+                //Add the zone to the Realm we found
+                if (realmQuery.FirstOrDefault() != null)
+                    realmQuery.FirstOrDefault().AddZone(worldObject);
+                else
+                {
+                    Log.Write("Error: Attempted to add Zone " + worldObject.Filename + " to a unspecified Realm.");
+                    return false;
+                }
+            }
+            else if (worldObject is Room)
+            {
+                var realmQuery =
+                    from r in RealmCollection
+                    where r.Filename == worldObject.Realm
+                    select r;
+                var zoneQuery =
+                    from z in realmQuery.FirstOrDefault().ZoneCollection
+                    where z.Filename == worldObject.Zone
+                    select z;
+                if (zoneQuery.FirstOrDefault() != null)
+                    zoneQuery.FirstOrDefault().AddRoom(worldObject);
+                else
+                {
+                    Log.Write("Error: Attempted to add Room " + worldObject.Filename + " to a unspecified Realm and/or Zone");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Adds a Realm to the Games current list of Realms.
         /// </summary>
         /// <param name="realm"></param>
-        public void AddRealm(Realm realm)
+        private void AddRealm(Realm realm)
         {
             //If this Realm is set as Initial then we need to disable any previously
             //set Realms to avoid conflict.

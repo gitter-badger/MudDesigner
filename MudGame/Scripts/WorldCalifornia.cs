@@ -14,7 +14,7 @@ public class WorldCalifornia
      myRealm.Name = "California";
      myRealm.Description = "The Beaches of California are relaxing and fun to be at.";
      myRealm.IsInitialRealm = true;
-     _Game.World.AddRealm(myRealm);
+     _Game.World.AddObject(myRealm);
 
      Zone myZone = new Zone(_Game);
      myZone.Name = "San Diego";
