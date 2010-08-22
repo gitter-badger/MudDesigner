@@ -74,8 +74,8 @@
     <Compile Include="GameManagement\SecurityRoles.cs" />
     <Compile Include="GameObjects\Bag.cs" />
     <Compile Include="GameObjects\BaseObject.cs" />
-    <Compile Include="GameObjects\Characters\BaseAI.cs" />
     <Compile Include="GameObjects\Characters\BaseCharacter.cs" />
+    <Compile Include="GameObjects\Characters\BaseStats.cs" />
     <Compile Include="GameObjects\Environment\Door.cs" />
     <Compile Include="GameObjects\Environment\MyRealm.cs" />
     <Compile Include="GameObjects\Environment\Realm.cs" />

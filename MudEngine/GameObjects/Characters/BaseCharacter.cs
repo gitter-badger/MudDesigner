@@ -26,10 +26,33 @@
             /// </summary>
             public Room CurrentRoom { get; set; }
 
+            public String CurrentWorldLocation
+            {
+                get
+                {
+                    return CurrentRoom.Realm + "." + CurrentRoom.Zone + "." + CurrentRoom.Filename;
+                }
+            }
+
             /// <summary>
             /// Gets or Sets if this Character is controlled by the user. If not user controlled then it will be AI controlled.
             /// </summary>
-            public Boolean IsControlled { get; set; }
+            public Boolean IsControlled
+            {
+                get
+                {
+                    return _IsControlled;
+                }
+                set
+                {
+                    if (value)
+                    {
+                        //TODO: Begin AI initialization
+                    }
+                    _IsControlled = value;
+                }
+            }
+            private Boolean _IsControlled;
 
             /// <summary>
             /// Gets if this user has Admin privileges or not.
