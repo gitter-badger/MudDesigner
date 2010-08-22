@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MudEngine")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Mud Designer Game Engine")]
+[assembly: AssemblyDescription("Provides the needed classes for constructing a complete networkable MUD game.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MudEngine")]
+[assembly: AssemblyCompany("Mud Designer")]
+[assembly: AssemblyProduct("Mud Designer Game Engine")]
 [assembly: AssemblyCopyright("Copyright ©  2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
