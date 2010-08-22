@@ -131,6 +131,12 @@ namespace MudEngine.GameManagement
         /// </summary>
         public Int32 AutoSaveInterval { get; set; }
 
+        /// <summary>
+        /// Gets or Sets the minimum number of characters required to create a 'legal' password.
+        /// Default value is 6 characters required for a password during character creation.
+        /// </summary>
+        public Int32 MinimumPasswordSize { get; set; }
+
         [Category("Project Settings")]
         [Description("Hide Room names from being outputted to the console.")]
         /// <summary>
@@ -214,6 +220,8 @@ namespace MudEngine.GameManagement
 
             AutoSave = true;
             AutoSaveInterval = 30;
+
+            MinimumPasswordSize = 6;
         }
         #endregion
 

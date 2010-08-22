@@ -17,6 +17,13 @@ namespace MudEngine.Commands
         public Boolean Override { get; set; }
         public String Name { get; set; }
         public List<String> Help { get; set; }
+
+        public CommandSaveWorld()
+        {
+            Help = new List<string>();
+            Help.Add("Saves the game world.");
+        }
+
         public void Execute(String command, BaseCharacter player)
         {
             if ((player.Role == SecurityRoles.Admin) || (player.Role == SecurityRoles.GM))

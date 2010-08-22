@@ -1,7 +1,7 @@
-/// <summary>
-/// The Clear command is used to clear the players terminal screen of all text.
+﻿/// <summary>
+/// The Save command will save the current player to a hard-disk file.
 /// </summary>
-public class CommandClear : IGameCommand
+public class CommandSave : IGameCommand
 {
     /// <summary>
     /// Used by the Command Engine to allow for overriding any other commands that contain the same name.
@@ -25,10 +25,10 @@ public class CommandClear : IGameCommand
     /// <summary>
     /// Constructor for the class.
     /// </summary>
-    public CommandClear()
+    public CommandSave()
     {
         Help = new List<String>();
-        Help.Add("The Clear command is used to clear the screen of all text.");
+        Help.Add("Saves your character immediately.");
     }
 
     /// <summary>
@@ -36,7 +36,7 @@ public class CommandClear : IGameCommand
     /// </summary>
     public void Execute(String command, BaseCharacter player)
     {
-        //Call the flush method  to clear the players console screen of all text.
-        player.FlushConsole();
+        //Save the player to the hard-disk.
+        player.Save(player.ActiveGame.DataPaths.Players);
     }
 }

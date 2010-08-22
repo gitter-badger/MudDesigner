@@ -142,7 +142,20 @@ namespace MudEngine.Scripting
             Directory.CreateDirectory("temp");
 
             //Setup the additional sourcecode that's needed in the script.
-            String[] usingStatements = new String[] { "using System;", "using System.Collections.Generic;", "using MudEngine.GameObjects;", "using MudEngine.GameObjects.Characters;", "using MudEngine.GameObjects.Environment;", "using MudEngine.GameObjects.Items;", "using MudEngine.GameManagement;", "using MudEngine.FileSystem;", "using MudEngine.Scripting;" };
+            String[] usingStatements = new String[] 
+            { 
+                "using System;", 
+                "using System.Collections.Generic;", 
+                "using System.Text;",
+                "using System.Linq;",
+                "using MudEngine.GameObjects;", 
+                "using MudEngine.GameObjects.Characters;", 
+                "using MudEngine.GameObjects.Environment;", 
+                "using MudEngine.GameObjects.Items;", 
+                "using MudEngine.GameManagement;", 
+                "using MudEngine.FileSystem;", 
+                "using MudEngine.Scripting;" 
+            };
 
             foreach (String script in scripts)
             {
@@ -171,7 +184,15 @@ namespace MudEngine.Scripting
             Dictionary<String, String> providerOptions = new Dictionary<String,String>();
             providerOptions.Add("CompilerVersion", "v4.0");
 
-            CompilerParameters param = new CompilerParameters(new String[] {"mscorlib.dll", "System.dll", "MudEngine.dll"});
+            String[] referencedAssemblies = new String[]
+            {
+                "mscorlib.dll",
+                "System.dll",
+                "System.Core.dll",
+                "MudEngine.dll"
+            };
+
+            CompilerParameters param = new CompilerParameters(referencedAssemblies);
             param.GenerateExecutable = false;
             param.GenerateInMemory = true;
             if (!param.GenerateInMemory)

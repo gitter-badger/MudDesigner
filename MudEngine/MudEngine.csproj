@@ -50,16 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\CommandExit.cs" />
-    <Compile Include="Commands\CommandGetTime.cs" />
-    <Compile Include="Commands\CommandLook.cs" />
     <Compile Include="Commands\CommandRestart.cs" />
-    <Compile Include="Commands\CommandSave.cs" />
-    <Compile Include="Commands\CommandWalk.cs" />
-    <Compile Include="Commands\CommandLoad.cs" />
     <Compile Include="Commands\CommandLogin.cs" />
     <Compile Include="Commands\CommandSaveWorld.cs" />
-    <Compile Include="Commands\CommandLinkRoom.cs" />
     <Compile Include="FileSystem\SaveDataPaths.cs" />
     <Compile Include="GameManagement\CommandEngine.cs" />
     <Compile Include="GameManagement\CommandResults.cs" />
@@ -77,7 +70,6 @@
     <Compile Include="GameObjects\Characters\BaseCharacter.cs" />
     <Compile Include="GameObjects\Characters\BaseStats.cs" />
     <Compile Include="GameObjects\Environment\Door.cs" />
-    <Compile Include="GameObjects\Environment\MyRealm.cs" />
     <Compile Include="GameObjects\Environment\Realm.cs" />
     <Compile Include="GameObjects\Environment\Room.cs" />
     <Compile Include="GameObjects\Environment\StartingLocation.cs" />

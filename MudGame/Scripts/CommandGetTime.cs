@@ -1,7 +1,8 @@
-/// <summary>
-/// The Clear command is used to clear the players terminal screen of all text.
+﻿/// <summary>
+/// The GetTime command is used to print the current in-game time to the player.
+/// This command will print the day, month and year along with hour, minute and seconds.
 /// </summary>
-public class CommandClear : IGameCommand
+public class CommandGetTime : IGameCommand
 {
     /// <summary>
     /// Used by the Command Engine to allow for overriding any other commands that contain the same name.
@@ -25,18 +26,22 @@ public class CommandClear : IGameCommand
     /// <summary>
     /// Constructor for the class.
     /// </summary>
-    public CommandClear()
+    public CommandGetTime()
     {
-        Help = new List<String>();
-        Help.Add("The Clear command is used to clear the screen of all text.");
+        //Instance the help collection and add our help information to it.
+        Help = new List<string>();
+        Help.Add("Gives you the current time and date in the game world.");
     }
 
     /// <summary>
-    /// Constructor for the class.
+    /// Executes the Command.
+    /// This method is called from the Command Engine, it is not recommended that you call this method directly.
     /// </summary>
+    /// <param name="command"></param>
+    /// <param name="player"></param>
     public void Execute(String command, BaseCharacter player)
     {
-        //Call the flush method  to clear the players console screen of all text.
-        player.FlushConsole();
+        //Send the returned String containing the World Time to the player.
+        player.Send(player.ActiveGame.WorldTime.GetCurrentWorldTime());
     }
 }

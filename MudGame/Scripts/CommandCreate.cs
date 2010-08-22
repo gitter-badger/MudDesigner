@@ -1,15 +1,40 @@
-﻿public class CommandCreate : IGameCommand
+﻿/// <summary>
+/// The Create command is used to dynamically create content within the game world.
+/// Content is created at run-time while the server/game is running and players are connected.
+/// Newly created content will be available for players to use/traverse immediately after creation is completed.
+/// Rooms that are created may be linked together using the LinkRoom command.
+/// </summary>
+public class CommandCreate : IGameCommand
 {
+    /// <summary>
+    /// Used by the Command Engine to allow for overriding any other commands that contain the same name.
+    /// TODO: Does Overriding Commands still work? This is part of some old code I wrote several years back and might be broke.
+    /// </summary>
     public Boolean Override { get; set; }
+
+    /// <summary>
+    /// The name of the command.
+    /// If Override is set to true, this command will override any other command that contains the same name.
+    /// </summary>
     public String Name { get; set; }
+
+    /// <summary>
+    /// A collection of strings that contains helpfull information for this Command.
+    /// When the user enteres 'Help Exit' the game will print the content of this collection.
+    /// This is treated like a virtual book, each entry in the collection is printed as a new line.
+    /// </summary>
     public List<String> Help { get; set; }
 
+    /// <summary>
+    /// Constructor for the class.
+    /// </summary>
     public CommandCreate()
     {
         Help = new List<string>();
-        Help.Add("Allows for the creation of environment objects.");
-        Help.Add("Linking of Rooms are not supported yet.");
-        //Help.Add("In order to link Rooms together use the LinkRoom command.");
+        Help.Add("Provides Admins the ability to create content dynamically within the game world.");
+        Help.Add("Content is created at run-time while the server/game is running and players are connected.");
+        Help.Add("Newly created content will be available for players to use/traverse immediately after creation is completed.");
+        Help.Add("Rooms that are created may be linked together using the LinkRoom command.");
     }
 
     public void Execute(String command, BaseCharacter player)
