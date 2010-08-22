@@ -129,7 +129,7 @@ namespace MudEngine.Commands
                         //if any player exists on the server already with this name.
                         BaseCharacter p = new BaseCharacter(player.ActiveGame);
                         p.Load(savedFile);
-                        
+
                         //Varify their password. If their password is matching the one on file, and the 
                         //current Active Game is a multiplayer game, then scan for other other currently
                         //logged in with this account.
@@ -150,25 +150,24 @@ namespace MudEngine.Commands
                             //Now that we have no duplicate connections, load the real player.
                             //no need to re-varify password as we have already done this above.
                             player.Load(savedFile);
-                        }
-                    }
-                    else
-                    {
-                        player.Load(savedFile);
-                        if (player.VarifyPassword(playerPwrd))
-                        {
                             player.Send("Welcome back " + player.Name + "!");
                         }
                         else
                         {
-                            passwordLegal = false;
-                            player.Send("Invalid password.");
-                            //Don't keep a reference to the already loaded character. The player will need to
-                            //re-enter their credentials.
-                            player = new BaseCharacter(player.ActiveGame);
+                            if (!p.VarifyPassword(playerPwrd))
+                            {
+                                player.Send("Invalid password!");
+                                passwordLegal = false;
+                            }
                         }
                     }
+                    else
+                    {
+                        player.Create(playerName, playerPwrd);
+                        player.Send("Welcome " + playerName + "!");
+                    }
                 }
+
             }
             
             //Look to see if there are players in the Room, if there are then we need to let 
