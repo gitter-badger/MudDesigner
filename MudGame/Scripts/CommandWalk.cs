@@ -59,9 +59,9 @@ public class CommandWalk : IGameCommand
 
         //Note that you could have placed each direction in manually "Help.Add("West")" etc. however this would
         //prove an issue with maintanence if directions were changed within the engine, new ones added or old ones removed.
-        //Getting the travel directions the way we did always ensures that the help command will always every 
+        //Getting the travel directions the way we did always ensures that the help command will always show every 
         //available travel direction contained within the engine, regardless if we add or remove directions internally or not.
-        //It's a dynamic way of storing our directions.
+        //It's a dynamic way of displaying our directions.
     }
 
     /// <summary>
@@ -94,8 +94,15 @@ public class CommandWalk : IGameCommand
                     //The matches the users direction, so move the player in the direction supplied by the user.
                     player.Move(door.TravelDirection);
 
+                    //BAD - Don't invoke commands directly by the player as it causes issues for them client-side.
+                    //Always invoke the command internally, passing a reference to the player instead.
+                    //player.CommandSystem.ExecuteCommand("Look", player); 
+                    
                     //Use the Look command to print the contents of the new Room to the Player.
-                    player.CommandSystem.ExecuteCommand("Look", player);
+                    //Good - Correct way of invoking commands automatically for the player.
+                    //The command will be executed for which ever player is passed as a reference.
+                    CommandLook look = new CommandLook();
+                    look.Execute("look", player);
 
                     //If the current Active Game has Auto-Save enabled, we will save the player.
                     if (player.ActiveGame.AutoSave)
