@@ -20,6 +20,7 @@ namespace MudEngine.Commands
     {
         public String Name { get; set; }
         public Boolean Override { get; set; }
+
         public List<String> Help { get; set; }
 
         public CommandRestart()

@@ -53,7 +53,6 @@
     <Compile Include="Commands\CommandRestart.cs" />
     <Compile Include="Commands\CommandLogin.cs" />
     <Compile Include="Commands\CommandSaveWorld.cs" />
-    <Compile Include="Commands\CommandList.cs" />
     <Compile Include="FileSystem\SaveDataPaths.cs" />
     <Compile Include="GameManagement\CommandEngine.cs" />
     <Compile Include="GameManagement\GameTime.cs" />

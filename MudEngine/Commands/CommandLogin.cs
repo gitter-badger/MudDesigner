@@ -27,7 +27,6 @@ namespace MudEngine.Commands
         /// </summary>
         public Boolean Override { get; set; }
 
-        /// <summary>
         /// The name of the command.
         /// If Override is set to true, this command will override any other command that contains the same name.
         /// </summary>
