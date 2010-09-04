@@ -43,7 +43,8 @@ public class CommandSay : IGameCommand
         if (command.Length <= 4)
         {
             //If no message content, print the help for the command to the player.
-            player.ExecuteCommand("Help Say");
+            CommandHelp help = new CommandHelp();
+            help.Execute("Help Say", player);
             return; //nothing to say, don't say anything at all.
         }
 

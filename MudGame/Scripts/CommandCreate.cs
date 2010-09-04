@@ -108,6 +108,8 @@ public class CommandCreate : IGameCommand
                 player.Send(env[0] + " created.");
                 Log.Write(player.Name + " created a Realm called " + realm.Filename);
             }
+
+            //Check if this Zone is a valid Zone. if it returns true, then the 'zone' field will reference the new Zone
             Boolean validZone = ValidateZone(env[0], env[1], player);
 
             if (validZone)
