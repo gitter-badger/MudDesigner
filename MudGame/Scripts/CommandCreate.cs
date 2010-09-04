@@ -82,6 +82,7 @@ public class CommandCreate : IGameCommand
             if (validRealm)
             {
                 player.ActiveGame.World.AddRealm(realm);
+                Log.Write(player.Name + " created a Realm called " + realm.Filename);
                 player.Send(env[0] + " created.");
             }
             //Add the 'realm' Field that was instanced via ValidateRealm
@@ -105,6 +106,7 @@ public class CommandCreate : IGameCommand
             {
                 player.ActiveGame.World.AddRealm(realm);
                 player.Send(env[0] + " created.");
+                Log.Write(player.Name + " created a Realm called " + realm.Filename);
             }
             Boolean validZone = ValidateZone(env[0], env[1], player);
 
@@ -112,6 +114,7 @@ public class CommandCreate : IGameCommand
             {
                 realm.AddZone(zone);
                 player.Send(env[1] + " created.");
+                Log.Write(player.Name + " created a Zone called " + zone.Filename);
             }
             else
             {
@@ -131,6 +134,7 @@ public class CommandCreate : IGameCommand
             {
                 player.ActiveGame.World.AddRealm(realm);
                 player.Send(env[0] + " created.");
+                Log.Write(player.Name + " created a Realm called " + realm.Filename);
             }
 
             Boolean validZone = ValidateZone(env[0], env[1], player);
@@ -139,6 +143,7 @@ public class CommandCreate : IGameCommand
             {
                 realm.AddZone(zone);
                 player.Send(env[1] + " created.");
+                Log.Write(player.Name + " created a Zone called " + zone.Filename);
             }
 
             Boolean validRoom = ValidateRoom(env[0], env[1], env[2], player);
@@ -147,6 +152,7 @@ public class CommandCreate : IGameCommand
             {
                 zone.AddRoom(room);
                 player.Send(env[2] + " created.");
+                Log.Write(player.Name + " created a Room called " + room.Filename);
             }
             else
             {
