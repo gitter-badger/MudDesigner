@@ -34,7 +34,7 @@ public class WorldCalifornia
         myRealm.IsInitialRealm = true;
 
         //Add the Realm to the current Active Game World.
-        _Game.World.AddObject(myRealm);
+        _Game.World.AddRealm(myRealm);
 
         //Get a new Instance of a Zone.
         Zone myZone = new Zone(_Game);

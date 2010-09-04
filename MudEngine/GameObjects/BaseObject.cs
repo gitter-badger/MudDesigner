@@ -6,6 +6,7 @@ using System.Text;
 using System.ComponentModel;
 using System.Xml.Serialization;
 using System.IO;
+using System.Reflection;
 
 //MUD Engine
 using MudEngine.FileSystem;
@@ -116,6 +117,10 @@ namespace MudEngine.GameObjects
             return this.Name;
         }
 
+        public virtual void Start()
+        {
+        }
+
         public virtual void OnEnter()
         {
         }
@@ -166,6 +171,9 @@ namespace MudEngine.GameObjects
             FileManager.WriteLine(filename, this.Feel, "Feel");
             FileManager.WriteLine(filename, this.Listen, "Listen");
             FileManager.WriteLine(filename, this.Smell, "Smell");
+
+            foreach (String line in DetailedDescription)
+                FileManager.WriteLine(filename, line, "DetailedDescription");
         }
 
         public virtual void Load(String filename)
@@ -183,6 +191,11 @@ namespace MudEngine.GameObjects
             this.Feel = FileManager.GetData(filename, "Feel");
             this.Listen = FileManager.GetData(filename, "Listen");
             this.Smell = FileManager.GetData(filename, "Smell");
+
+            List<String> data = FileManager.GetCollectionData(filename, "DetailedDescription");
+
+            foreach (String line in data)
+                DetailedDescription.Add(line);
 
             //Set the Filename property based off the physical filename, as setting this.Name sets a default filename
             //which might not match that of the actual physical filename on the harddrive.

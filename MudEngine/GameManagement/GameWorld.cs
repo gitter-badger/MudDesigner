@@ -83,7 +83,7 @@ namespace MudEngine.GameManagement
                 //return false;
             }
             else
-                Log.Write("Initial Location loaded-> " + _Game.InitialRealm.Name + "." + _Game.InitialRealm.InitialZone.Name + "." + _Game.InitialRealm.InitialZone.InitialRoom.Name);
+                Log.Write("Initial Location loaded: " + _Game.InitialRealm.InitialZone.InitialRoom.RoomLocationWithoutExtension);
 
         }
 
@@ -100,83 +100,56 @@ namespace MudEngine.GameManagement
         {
             String filename = _Game.GameTitle + ".ini";
 
-            //Restore initial realm
+            //Get the Initial Realm information from saved file.
             String realmFile = FileManager.GetData(filename, "InitialRealm");
             String realmFolder = Path.GetFileNameWithoutExtension(realmFile);
             String realmPath = Path.Combine(_Game.DataPaths.Environment, realmFolder, realmFile);
 
+            Log.Write("Restoring Game World...");
+
+            //Loop through each RealmCollection data entry stored in the _Game saved file.
             foreach (String realm in FileManager.GetCollectionData(filename, "RealmCollection"))
             {
+                Log.Write("Restoring Realm " + realm);
+
                 Realm r = new Realm(_Game);
-                r.Load(Path.Combine(realmPath, realm));
+
+                //Restore the Realm objects properties from file.
+                r.Load(Path.Combine(_Game.DataPaths.Environment, Path.GetFileNameWithoutExtension(realm), realm));
+
+                //Loop through each of the Realm objects instanced during startup and find one matching the loaded filename
+                for (int x = 0; x != RealmCollection.Count; x++)
+                {
+                    //If the filenames match, then overwrite the pre-loaded Realm with the restored Realm with the saved data.
+                    if (RealmCollection[x].Filename == r.Filename)
+                    {
+                        RealmCollection[x] = r;
+                        break;
+                    }
+                }
             }
+
 
             foreach (Realm r in RealmCollection)
             {
                 if (r.IsInitialRealm)
                 {
                     _Game.InitialRealm = r;
-                    break;
                 }
-            }
-        }
 
-        /// <summary>
-        /// Adds a object to the game world. Any Game Object can be supplied as a parameter.
-        /// </summary>
-        /// <param name="worldObject"></param>
-        public Boolean AddObject(dynamic worldObject)
-        {
-            //Check if this object is a Realm
-            if (worldObject is Realm)
-            {
-                ///Add it to the Worlds Realm collection
-                this.RealmCollection.Add(worldObject);
-            }
-            //Check if this object is a Zone
-            else if (worldObject is Zone)
-            {
-                //Query the Realm collection to find the Realm this Zone belongs to.
-                var realmQuery = 
-                    from r in RealmCollection 
-                    where r.Filename == worldObject.Realm 
-                    select r;
-                //Add the zone to the Realm we found
-                if (realmQuery.FirstOrDefault() != null)
-                    realmQuery.FirstOrDefault().AddZone(worldObject);
-                else
+                foreach (Zone z in r.ZoneCollection)
                 {
-                    Log.Write("Error: Attempted to add Zone " + worldObject.Filename + " to a unspecified Realm.");
-                    return false;
+                    Log.Write("Restoring Zone: " + z.Filename);
+                    z.RestoreLinkedRooms();
                 }
             }
-            else if (worldObject is Room)
-            {
-                var realmQuery =
-                    from r in RealmCollection
-                    where r.Filename == worldObject.Realm
-                    select r;
-                var zoneQuery =
-                    from z in realmQuery.FirstOrDefault().ZoneCollection
-                    where z.Filename == worldObject.Zone
-                    select z;
-                if (zoneQuery.FirstOrDefault() != null)
-                    zoneQuery.FirstOrDefault().AddRoom(worldObject);
-                else
-                {
-                    Log.Write("Error: Attempted to add Room " + worldObject.Filename + " to a unspecified Realm and/or Zone");
-                    return false;
-                }
-            }
-
-            return true;
         }
 
         /// <summary>
         /// Adds a Realm to the Games current list of Realms.
         /// </summary>
         /// <param name="realm"></param>
-        private void AddRealm(Realm realm)
+        public void AddRealm(Realm realm)
         {
             //If this Realm is set as Initial then we need to disable any previously
             //set Realms to avoid conflict.
@@ -201,47 +174,11 @@ namespace MudEngine.GameManagement
         }
 
         /// <summary>
-        /// Returs a reference to an object that matches the supplied Type and filename.
-        /// Object MUST inherit from BaseObject or one of its child classes in order to be found.
-        /// </summary>
-        /// <param name="objectType">Determins the Type of object to perform the search for. Using Standard will search for objects that inherit from BaseObject, but none of BaseObjects child Types.</param>
-        /// <param name="filename"></param>
-        /// <returns></returns>
-        public BaseObject GetObject(ObjectTypes objectType, String filename)
-        {
-            BaseObject obj = new BaseObject(_Game);
-
-            switch (objectType)
-            {
-                case ObjectTypes.Standard:
-
-                    break;
-                case ObjectTypes.Character:
-
-                    break;
-                case ObjectTypes.Item:
-
-                    break;
-                case ObjectTypes.Realm:
-                    obj = GetRealm(filename);
-                    break;
-                case ObjectTypes.Zone:
-
-                    break;
-                case ObjectTypes.Room:
-                    
-                    break;
-            }
-
-            return obj;
-        }
-
-        /// <summary>
         /// Returns a reference to the Realm contained within the Realms collection if it exists.
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        private Realm GetRealm(String filename)
+        public Realm GetRealm(String filename)
         {
             foreach (Realm r in RealmCollection)
             {
@@ -250,6 +187,14 @@ namespace MudEngine.GameManagement
             }
 
             return null;
+        }
+
+        public virtual void Update()
+        {
+            foreach (BaseCharacter character in Characters)
+            {
+                character.Update();
+            }
         }
     }
 }

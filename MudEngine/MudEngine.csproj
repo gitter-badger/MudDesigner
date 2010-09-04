@@ -55,7 +55,6 @@
     <Compile Include="Commands\CommandSaveWorld.cs" />
     <Compile Include="FileSystem\SaveDataPaths.cs" />
     <Compile Include="GameManagement\CommandEngine.cs" />
-    <Compile Include="GameManagement\CommandResults.cs" />
     <Compile Include="GameManagement\GameTime.cs" />
     <Compile Include="GameManagement\GameWorld.cs" />
     <Compile Include="GameManagement\ICommand.cs" />

@@ -219,7 +219,7 @@ namespace MudEngine.GameManagement
                 PlayerCollection[i] = new BaseCharacter(this);
 
             AutoSave = true;
-            AutoSaveInterval = 30;
+            AutoSaveInterval = 1;
 
             MinimumPasswordSize = 6;
         }
@@ -266,7 +266,7 @@ namespace MudEngine.GameManagement
             }
             else //Not multiplayer so we change the save locations
             {
-                SaveDataPaths paths = new SaveDataPaths("World", "Saved");
+                SaveDataPaths paths = new SaveDataPaths("World", "Player");
                 DataPaths = paths;
                 PlayerCollection[0].Initialize();
             }
@@ -302,28 +302,9 @@ namespace MudEngine.GameManagement
 
         public virtual void Update()
         {
-
-            DateTime serverTime = new DateTime();
-            DateTime systemTime = DateTime.Now;
-
-            Int32 lastSaveGap = 0;
-
             WorldTime.Update();
             
-            if (lastSaveGap == AutoSaveInterval)
-            {
-                if (AutoSave)
-                    Save();
-                lastSaveGap = 0;
-            }
-
-            //ServerTime holds the last minute prior to our current minute.
-            if (serverTime.Minute != DateTime.Now.Minute)
-            {
-                serverTime = DateTime.Now;
-                lastSaveGap++;
-            }
-
+            World.Update();
 
             if (IsMultiplayer)
             {
@@ -383,6 +364,11 @@ namespace MudEngine.GameManagement
             FileManager.WriteLine(filename, this.Version, "Version");
             FileManager.WriteLine(filename, this.Website, "Website");
 
+            foreach (Realm r in World.RealmCollection)
+            {
+                FileManager.WriteLine(filename, r.Filename, "RealmCollection");
+            }
+
             //TODO: Save WorldTime
             //TODO: Save Story
             //TODO: Save Server Information
@@ -430,7 +416,6 @@ namespace MudEngine.GameManagement
             }
 
             //Restore the world.
-            Log.Write("Restoring World Environments...");
             World.Load();
 
             Log.Write("Game Restore complete.");

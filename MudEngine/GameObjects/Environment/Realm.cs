@@ -51,16 +51,12 @@ namespace MudEngine.GameObjects.Environment
             {
                 Zone z = new Zone(ActiveGame);
                 z.Load(Path.Combine(zonePath, zone));
-            }
 
-            //Set the initial zone.
-            foreach (Zone z in ZoneCollection)
-            {
+                //Check if this is the initial Zone.
                 if (z.IsInitialZone)
-                {
                     InitialZone = z;
-                    break;
-                }
+
+                ZoneCollection.Add(z);
             }
         }
 
@@ -83,7 +79,7 @@ namespace MudEngine.GameObjects.Environment
             }
         }
 
-        public List<Zone> GetZoneByFilename(String filename)
+        public List<Zone> GetZone(String filename)
         {
 
             List<Zone> zones = new List<Zone>();

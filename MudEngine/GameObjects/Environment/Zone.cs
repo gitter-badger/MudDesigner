@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 
 //MUD Engine
 using MudEngine.FileSystem;
+using MudEngine.GameManagement;
 using MudEngine.GameObjects;
 using MudEngine.GameObjects.Items;
 
@@ -76,7 +77,8 @@ namespace MudEngine.GameObjects.Environment
         [Category("Environment Information")]
         public Room InitialRoom { get; private set; }
 
-        public Zone(GameManagement.Game game) : base(game)
+        public Zone(GameManagement.Game game)
+            : base(game)
         {
             RoomCollection = new List<Room>();
             InitialRoom = new Room(game);
@@ -90,7 +92,7 @@ namespace MudEngine.GameObjects.Environment
 
             base.Save(path);
 
-            String filename  = Path.Combine(path, Filename);
+            String filename = Path.Combine(path, Filename);
 
             FileManager.WriteLine(filename, this.IsInitialZone.ToString(), "IsInitialZone");
             FileManager.WriteLine(filename, this.IsSafe.ToString(), "IsSafe");
@@ -116,7 +118,7 @@ namespace MudEngine.GameObjects.Environment
             this.Realm = FileManager.GetData(filename, "Realm");
             this.StatDrain = Convert.ToBoolean(FileManager.GetData(filename, "StatDrain"));
             this.StatDrainAmount = Convert.ToInt32(FileManager.GetData(filename, "StatDrainAmount"));
-                
+
             //Load the InitialRoom
             String roomFile = FileManager.GetData(filename, "InitialRoom");
             String realmPath = Path.Combine(ActiveGame.DataPaths.Environment, Path.GetFileNameWithoutExtension(this.Realm));
@@ -128,6 +130,7 @@ namespace MudEngine.GameObjects.Environment
             {
                 Room r = new Room(ActiveGame);
                 r.Load(Path.Combine(roomPath, room));
+                RoomCollection.Add(r);
             }
 
             //Set the initial Room.
@@ -185,6 +188,63 @@ namespace MudEngine.GameObjects.Environment
             return rooms;
         }
 
+        public void RestoreLinkedRooms()
+        {
+            //Iterate through each Room within this Zones collection and link it with it's corresponding Room.
+            foreach (Room r in RoomCollection)
+            {
+                String filename = ActiveGame.DataPaths.Environment + "\\" + Path.GetFileNameWithoutExtension(r.Realm) + "\\Zones\\" + Path.GetFileNameWithoutExtension(r.Zone) + "\\" + "Rooms\\" + r.Filename;
+                //Get how many doors this Room contains
+                Int32 count = Convert.ToInt32(FileManager.GetData(filename, "DoorwayCount"));
+
+                List<String> data = new List<string>();
+
+                data = FileManager.GetDataSpan(filename, 5, "DoorwayArrivalRoom", true);
+
+                //If no doors, then skip to the next room in the collection.
+                if ((count == 0) || (data.Count == 0))
+                    continue;
+
+                for (int x = 0; x < (count * 5); x += 5)
+                {
+                    Door d = new Door(ActiveGame);
+                    Int32 index = x;
+
+                    //Restore the Arrival Room first.
+                    if (!d.SetRoom(Door.RoomTravelType.Arrival, data[index]))
+                    {
+                        Log.Write("Error: Failed to set the Arrival Doorway for Room " + r.RoomLocationWithoutExtension);
+                    }
+
+                    if (!d.SetRoom(Door.RoomTravelType.Departure, data[index + 1]))
+                    {
+                        Log.Write("Error: Failed to set the departure Doorway for Room " + r.RoomLocationWithoutExtension);
+                    }
+
+                    //Restore settings.
+                    d.IsLocked = Convert.ToBoolean(data[index + 2]);
+                    d.LevelRequirement = Convert.ToInt32(data[index + 3]);
+
+                    //Restore the travel direction enum value.
+                    Array values = Enum.GetValues(typeof(AvailableTravelDirections));
+                    foreach (Int32 value in values)
+                    {
+                        //Since enum values are not strings, we can't simply just assign the String to the enum
+                        String displayName = Enum.GetName(typeof(AvailableTravelDirections), value);
+
+                        //If the value = the String saved, then perform the needed conversion to get our data back
+                        if (displayName.ToLower() == data[index + 4].ToLower())
+                        {
+                            d.TravelDirection = (AvailableTravelDirections)Enum.Parse(typeof(AvailableTravelDirections), displayName);
+                            break;
+                        }
+                    }
+
+                    r.Doorways.Add(d);
+                }
+            }
+        }
+
         public void LinkRooms(AvailableTravelDirections departureDirection, Room arrivalRoom, Room departureRoom)
         {
             LinkRooms(departureDirection, arrivalRoom, departureRoom, 0);
@@ -210,7 +270,7 @@ namespace MudEngine.GameObjects.Environment
             door.TravelDirection = departureDirection;
 
             departureRoom.Doorways.Add(door);
-            
+
             //Now we set up the door for the opposite room.
             door = new Door(ActiveGame);
 

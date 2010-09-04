@@ -117,8 +117,6 @@ namespace MudGame
             if (game.IsMultiplayer)
                 Console.Title += " server running.";
 
-            List<char> buf = new List<char>();
-
             try
             {
                 while (game.IsRunning)
@@ -131,9 +129,6 @@ namespace MudGame
             {
                 Log.Write("Critical Error! " + ex.Message);
             }
-            //The Game should save itself during shutdown, requiring to save it on the runtime end will
-            //present possible issues with 3rd party runtimes not saving if they don't know better to do so.
-            //game.Save();
         }
     }
 }

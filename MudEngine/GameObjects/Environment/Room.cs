@@ -51,26 +51,6 @@ namespace MudEngine.GameObjects.Environment
             set;
         }
 
-        [Browsable(false)]
-        public String InstallPath
-        {
-            get
-            {
-                String zonePath = "";
-                if (this.Realm == null || this.Realm == "No Realm Associated.")
-                {
-                    zonePath = FileManager.GetDataPath(SaveDataTypes.Zones);
-                    zonePath = Path.Combine(zonePath, this.Zone);
-                }
-                else
-                    zonePath = FileManager.GetDataPath(this.Realm, this.Zone);
-
-                String roomPath = Path.Combine(zonePath, "Rooms");
-                String filename = Path.Combine(roomPath, this.Filename);
-                return filename;
-            }
-        }
-
         /// <summary>
         /// Gets or Sets if this is the starting room for the Zone that contains it.
         /// </summary>
@@ -82,6 +62,30 @@ namespace MudEngine.GameObjects.Environment
             set;
         }
 
+        /// <summary>
+        /// Gets the current complete location for this Room, including Realm and Zone paths.
+        /// This includes the objects Filenames.
+        /// </summary>
+        public String RoomLocation
+        {
+            get
+            {
+                return this.Realm + ">" + Zone + ">" + Filename;
+            }
+        }
+
+        /// <summary>
+        /// Gets the current complete location for this Room, including Realm and Zone paths.
+        /// This includes the objects Filenames without their file extension.
+        /// </summary>
+        public String RoomLocationWithoutExtension
+        {
+            get
+            {
+                return Path.GetFileNameWithoutExtension(Realm) + ">" + Path.GetFileNameWithoutExtension(Zone) + ">" + Path.GetFileNameWithoutExtension(Filename);
+            }
+        }
+
         public Room(Game game) :base(game)
         {
             Doorways = new List<Door>();
@@ -89,6 +93,11 @@ namespace MudEngine.GameObjects.Environment
             IsSafe = false;
         }
 
+        /// <summary>
+        /// Saves the Room to file within the Game.DataPath.Environment path.
+        /// Room is saved within a Realm/Zone/Room directory structure
+        /// </summary>
+        /// <param name="path"></param>
         public override void Save(String path)
         {
             base.Save(path);
@@ -99,6 +108,34 @@ namespace MudEngine.GameObjects.Environment
             FileManager.WriteLine(filename, this.IsSafe.ToString(), "IsSafe");
             FileManager.WriteLine(filename, this.Realm, "Realm");
             FileManager.WriteLine(filename, this.Zone, "Zone");
+
+            FileManager.WriteLine(filename, Doorways.Count.ToString(), "DoorwayCount");
+
+            foreach (Door d in Doorways)
+            {
+                FileManager.WriteLine(filename, d.ArrivalRoom.RoomLocation, "DoorwayArrivalRoom");
+                FileManager.WriteLine(filename, d.DepartureRoom.RoomLocation, "DoorwayDepartureRoom");
+                FileManager.WriteLine(filename, d.IsLocked.ToString(), "DoorwayIsLocked");
+                FileManager.WriteLine(filename, d.LevelRequirement.ToString(), "DoorwayLevelRequirement");
+                FileManager.WriteLine(filename, d.TravelDirection.ToString(), "DoorwayTravelDirection");
+                //TODO: Save Doorway Keys
+            }
+        }
+
+        public override void Load(string filename)
+        {
+            base.Load(filename);
+
+            this.IsInitialRoom = Convert.ToBoolean(FileManager.GetData(filename, "IsInitialRoom"));
+            this.IsSafe = Convert.ToBoolean(FileManager.GetData(filename, "IsSafe"));
+            this.Realm = FileManager.GetData(filename, "Realm");
+            this.Zone = FileManager.GetData(filename, "Zone");
+
+            //SetRoomToDoorNorth
+            //SetRoomToDoorEast
+            //etc...
+
+            //Restoring Doorways performed by Zone.RestoreLinkedRooms() Called via GameWorld.Load();
         }
 
         /// <summary>

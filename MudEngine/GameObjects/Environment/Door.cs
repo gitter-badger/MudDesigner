@@ -8,6 +8,7 @@ using System.ComponentModel;
 
 //MUD Engine
 using MudEngine.GameObjects.Items;
+using MudEngine.GameManagement;
 
 namespace MudEngine.GameObjects.Environment
 {
@@ -15,6 +16,12 @@ namespace MudEngine.GameObjects.Environment
     [Serializable]
     public class Door
     {
+        public enum RoomTravelType
+        {
+            Arrival,
+            Departure
+        }
+    
         [Category("Door Settings")]
         [DefaultValue(false)]
         public Boolean IsLocked
@@ -52,11 +59,68 @@ namespace MudEngine.GameObjects.Environment
         /// </summary>
         public Room DepartureRoom { get; set; }
 
+        private Game _Game;
+
         public Door(GameManagement.Game game)
         {
             LevelRequirement = 0;
             IsLocked = false;
             RequiredKey = new BaseItem(game);
+
+            _Game = game;
+        }
+
+        public Boolean SetRoom(RoomTravelType roomType, String roomPath)
+        {
+            String[] path = roomPath.Split('>');
+
+            if (path.Length > 3)
+            {
+                Log.Write("Error in Door.SetRoom(" + roomType.ToString() + ", " + roomPath + ") does not contain a full Room Path.");
+                return false;
+            }
+
+            //TODO: Load the Realm via Game.World if it isn't loaded yet. Ensures that the Realm is only ever loaded once.
+            if (_Game.World.GetRealm(path[0]) != null)
+            {
+                Realm r = _Game.World.GetRealm(path[0]);
+
+                //TODO: Load the Zone via Game.World.GetRealm(). Ensures that only 1 instance of the Realm is loaded.
+                if (r.GetZone(path[1]) != null)
+                {
+                    List<Zone> zlist = r.GetZone(path[1]);
+
+                    Zone z = zlist[0];
+
+                    //TODO: Load the Room via Game.World.GetRealm().GetZone(). Ensures that the Room is only loaded once in memory.
+                    if (z.GetRoomByFilename(path[2]) != null)
+                    {
+                        List<Room> rlist = z.GetRoomByFilename(path[2]);
+
+                        if (roomType == RoomTravelType.Arrival)
+                            ArrivalRoom = rlist[0];
+                        else
+                            DepartureRoom = rlist[0];
+
+                        return true;
+                    }
+                    else
+                    {
+                        Log.Write("Error in Door.SetRoom(" + roomType.ToString() + ", " + roomPath + ") does not contain a valid Room");
+                        return false;
+                    }//GetRoom
+                }//GetZone
+                else
+                {
+                    Log.Write("Error in Door.SetRoom(" + roomType.ToString() + ", " + roomPath + ") does not contain a valid zone.");
+                    return false;
+                }
+            }//GetRealm
+            else
+            {
+                Log.Write("Error in Door.SetRoom(" + roomType.ToString() + ", " + roomPath + ") does not contain a valid Realm");
+                return false;
+            }
         }
     }
 }

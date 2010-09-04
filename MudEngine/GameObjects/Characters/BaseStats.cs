@@ -69,6 +69,12 @@ namespace MudEngine.GameObjects.Characters
         /// undead, the wild empathy of druids and rangers, and a paladin's lay on hands ability.
         /// </summary>
         public Int32 Charisma { get; set; }
+
+        /// <summary>
+        /// Experiance is given to the player based off activities that they perform.
+        /// </summary>
+        public Int32 Experiance { get; set; }
+
         
     }
 }

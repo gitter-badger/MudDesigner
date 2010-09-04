@@ -20,12 +20,30 @@
     {
         public class BaseCharacter : BaseObject
         {
+            /// <summary>
+            /// Password for the player's account.
+            /// </summary>
             private String Password { get; set; }
+
+            /// <summary>
+            /// The last time that the AI (if IsControlled=false) performed any major changes like traversing Rooms etc.
+            /// </summary>
+            private GameTime.Time _LastUpdate;
+
+            /// <summary>
+            /// Gets or Sets if the AI (if IsControlled=false) cannot move from it's CurrentRoom.
+            /// This is used by Shop keeper type NPC's
+            /// </summary>
+            public Boolean IsStatic { get; set; }
+
             /// <summary>
             /// The current Room this Character is located at.
             /// </summary>
             public Room CurrentRoom { get; set; }
 
+            /// <summary>
+            /// Gets the complete path to the Characters current location, including Realm, Zone and Room.
+            /// </summary>
             public String CurrentWorldLocation
             {
                 get
@@ -114,7 +132,7 @@
                 }
 
                 //Restore the users current Room.
-                Realm realm = (Realm)ActiveGame.World.GetObject(ObjectTypes.Realm, FileManager.GetData(filename, "CurrentRealm"));
+                Realm realm = (Realm)ActiveGame.World.GetRealm(FileManager.GetData(filename, "CurrentRealm"));
 
                 if (realm == null)
                 {
@@ -122,7 +140,7 @@
                     return;
                 }
 
-                List<Zone> zones = realm.GetZoneByFilename(FileManager.GetData(filename, "CurrentZone"));
+                List<Zone> zones = realm.GetZone(FileManager.GetData(filename, "CurrentZone"));
                 Zone zone = new Zone(ActiveGame);
                 if (zones.Count == 0)
                 {
@@ -181,6 +199,13 @@
                 FileManager.WriteLine(path, this.CurrentRoom.Filename, "CurrentRoom");
                 FileManager.WriteLine(path, this.CurrentRoom.Zone, "CurrentZone");
                 FileManager.WriteLine(path, this.CurrentRoom.Realm, "CurrentRealm");
+            }
+
+            public virtual void Update()
+            {
+                //TODO: Update AI logic.
+                //TODO: AI Logic: Don't attack anything if CurrentRoom.IsSafe
+                //TODO: Add Stat modifiers for Zone and Rooms.
             }
 
             /// <summary>

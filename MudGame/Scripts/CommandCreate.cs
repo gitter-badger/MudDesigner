@@ -127,7 +127,7 @@ public class CommandCreate : IGameCommand
             }
         }
 
-        player.ActiveGame.World.AddObject(realm);
+        player.ActiveGame.World.AddRealm(realm);
         Log.Write(player.Name + " has created a Realm called " + realm.Name);
         player.Send(realm.Name + " has been created and added to the world.");
     }

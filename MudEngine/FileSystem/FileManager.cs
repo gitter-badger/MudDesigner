@@ -85,6 +85,79 @@ namespace MudEngine.FileSystem
         }
 
         /// <summary>
+        /// Gets a collection of data from a file spanning 
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="startingLine"></param>
+        /// <param name="endingLine"></param>
+        /// <returns></returns>
+        public static List<String> GetDataSpan(String filename, Int32 linesToSpan)
+        {
+            List<String> items = new List<String>();
+            Int32 currentLine = 1;
+
+            foreach (String line in File.ReadAllLines(filename))
+            {
+                if (line.StartsWith(";"))
+                    continue;
+
+                items.Add(line);
+
+                if (currentLine == linesToSpan)
+                    break;
+                else
+                    currentLine++;
+            }
+
+            return items;
+        }
+
+        public static List<String> GetDataSpan(String filename, Int32 linesToSpan, String startingValue, Boolean spanAllSimilar)
+        {
+            List<String> items = new List<String>();
+            String[] fileData = File.ReadAllLines(filename);
+            Int32 line = 0;
+
+            while (line <= fileData.Length)
+            {
+                if (fileData[line].StartsWith(";"))
+                    continue;
+                else if (fileData[line].ToLower().StartsWith(startingValue.ToLower()))
+                {
+                    Boolean isComplete = false;
+
+                    while (!isComplete)
+                    {
+                        Int32 startingLine = line;
+
+                        //Exception prevention first.
+                        if (line >= fileData.Length)
+                        {
+                            isComplete = true;
+                            continue;
+                        }
+                        if (fileData[line].ToLower().StartsWith(startingValue.ToLower()))
+                        {
+                            for (Int32 i = startingLine; i != (startingLine + linesToSpan); i++)
+                            {
+                                String[] content = fileData[i].Split('=');
+                                items.Add(content[1]);
+                                line++;
+                            }
+
+                            if (!spanAllSimilar)
+                                isComplete = true;
+                        }
+                    }
+                }
+
+                line++;
+            }
+
+            return items;
+        }
+
+        /// <summary>
         /// Returns the complete path to the specified data's save folder.
         /// </summary>
         /// <param name="DataType"></param>

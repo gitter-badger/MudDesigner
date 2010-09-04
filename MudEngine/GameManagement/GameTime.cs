@@ -97,6 +97,8 @@ namespace MudEngine.GameManagement
         /// </summary>
         public Time InitialGameTime { get; set; }
 
+        private Int32 _LastSavedTime = 0;
+
         public GameTime(Game game)
         {
             ActiveGame = game;
@@ -172,6 +174,23 @@ namespace MudEngine.GameManagement
                 IncrementSecond(amount);
                 //Log.Write(GetCurrentWorldTime());
             }
+
+            DateTime systemTime = DateTime.Now;
+
+            if (_LastSavedTime == ActiveGame.AutoSaveInterval)
+            {
+                if (ActiveGame.AutoSave)
+                    ActiveGame.Save();
+                _LastSavedTime = 0;
+            }
+
+            //ServerTime holds the last minute prior to our current minute.
+            if (CurrentSystemTime.Minute != DateTime.Now.Minute)
+            {
+                _LastSavedTime++;
+            }
+
+            CurrentSystemTime = DateTime.Now;
         }
 
         public void IncrementSecond(Int32 amount)
