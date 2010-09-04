@@ -41,10 +41,15 @@ namespace MudEngine.Commands
             Help = new List<string>();
             Help.Add("Using the List command, you can view a generated list of filenames that pertain to a supplied object type.");
             Help.Add("Usage: List 'ItemType'");
-            Help.Add("  Example: List Realms");
-            Help.Add("This will list all of the Realms by Filename for you to review.");
-            Help.Add("To view child objects of a Type, use the '>' separator.");
-            Help.Add("  Example: List MyRealmName>Zones");
+            Help.Add("Usage: List 'ItemName>ItemType'");
+            Help.Add("");
+            Help.Add("Supported Listable ItemTypes are as follows:");
+            Help.Add("Players");
+            Help.Add("Realms");
+            Help.Add("Zones");
+            Help.Add("RealmName>Rooms");
+            Help.Add("RealmName>Zones");
+            Help.Add("RealmName>ZoneName>Rooms");
         }
 
         public void Execute(String command, BaseCharacter player)
@@ -77,6 +82,16 @@ namespace MudEngine.Commands
                             {
                                 p.Load(file);
                                 player.Send(p.Name + " | ", false);
+                            }
+                            break;
+                        case "zones":
+                            player.Send("Currently loaded Zones. This spans across every Realm in the world.");
+                            foreach (Realm r in player.ActiveGame.World.RealmCollection)
+                            {
+                                foreach (Zone z in r.ZoneCollection)
+                                {
+                                    player.Send(Path.GetFileNameWithoutExtension(r.Filename) + ">" + Path.GetFileNameWithoutExtension(z.Filename));
+                                }
                             }
                             break;
                         default:
