@@ -81,7 +81,7 @@ public class WorldCalifornia
         //Note that assigning a new Filename must be done AFTER assigning the objects Name property a value.
         //Each time a objects Name property is assigned a value, it automatically generates a filename.
         //If a Filename is assigned prior to assigning the Name property, your previous Filename will be over-wrote.
-        myHallway.Filename = myHallway.Name + "1.Zone";
+        myHallway.Filename = myHallway.Name + "1.Room";
 
         //Add the Room to the previously created Zone.
         myZone.AddRoom(myHallway);

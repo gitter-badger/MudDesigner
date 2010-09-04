@@ -118,7 +118,7 @@ namespace MudEngine.FileSystem
             String[] fileData = File.ReadAllLines(filename);
             Int32 line = 0;
 
-            while (line <= fileData.Length)
+            while (line <= fileData.Length - 1)
             {
                 if (fileData[line].StartsWith(";"))
                     continue;

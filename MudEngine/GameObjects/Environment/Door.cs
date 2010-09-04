@@ -93,9 +93,9 @@ namespace MudEngine.GameObjects.Environment
                     Zone z = zlist[0];
 
                     //TODO: Load the Room via Game.World.GetRealm().GetZone(). Ensures that the Room is only loaded once in memory.
-                    if (z.GetRoomByFilename(path[2]) != null)
+                    if (z.GetRoom(path[2]) != null)
                     {
-                        List<Room> rlist = z.GetRoomByFilename(path[2]);
+                        List<Room> rlist = z.GetRoom(path[2]);
 
                         if (roomType == RoomTravelType.Arrival)
                             ArrivalRoom = rlist[0];

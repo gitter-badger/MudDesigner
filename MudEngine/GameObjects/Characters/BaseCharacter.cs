@@ -156,7 +156,7 @@
                     //TODO: determin which zone is the appropriate zone to assign if more than one exists.
                 }
 
-                List<Room> rooms = zone.GetRoomByFilename(FileManager.GetData(filename, "CurrentRoom"));
+                List<Room> rooms = zone.GetRoom(FileManager.GetData(filename, "CurrentRoom"));
 
                 if (rooms.Count == 0)
                 {

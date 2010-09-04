@@ -106,8 +106,7 @@ namespace MudEngine.GameObjects.Environment
 
             FileManager.WriteLine(filename, IsInitialRoom.ToString(), "IsInitialRoom");
             FileManager.WriteLine(filename, this.IsSafe.ToString(), "IsSafe");
-            FileManager.WriteLine(filename, this.Realm, "Realm");
-            FileManager.WriteLine(filename, this.Zone, "Zone");
+            FileManager.WriteLine(filename, this.RoomLocationWithoutExtension, "RoomLocation");
 
             FileManager.WriteLine(filename, Doorways.Count.ToString(), "DoorwayCount");
 
@@ -128,8 +127,16 @@ namespace MudEngine.GameObjects.Environment
 
             this.IsInitialRoom = Convert.ToBoolean(FileManager.GetData(filename, "IsInitialRoom"));
             this.IsSafe = Convert.ToBoolean(FileManager.GetData(filename, "IsSafe"));
-            this.Realm = FileManager.GetData(filename, "Realm");
-            this.Zone = FileManager.GetData(filename, "Zone");
+            String[] env = FileManager.GetData(filename, "RoomLocation").Split('>');
+
+            if (env.Length != 3)
+            {
+                Log.Write("ERROR: Room " + filename + " does not contain a proper location path in Room.RoomLocation. Path is " + FileManager.GetData(filename, "RoomLocation"));
+                return;
+            }
+
+            this.Realm = env[0] + ".Realm";
+            this.Zone = env[1] + ".Zone";
 
             //SetRoomToDoorNorth
             //SetRoomToDoorEast

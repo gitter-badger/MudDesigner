@@ -117,6 +117,8 @@ namespace MudEngine.GameManagement
                 //Restore the Realm objects properties from file.
                 r.Load(Path.Combine(_Game.DataPaths.Environment, Path.GetFileNameWithoutExtension(realm), realm));
 
+                Boolean isFound = false;
+
                 //Loop through each of the Realm objects instanced during startup and find one matching the loaded filename
                 for (int x = 0; x != RealmCollection.Count; x++)
                 {
@@ -124,9 +126,13 @@ namespace MudEngine.GameManagement
                     if (RealmCollection[x].Filename == r.Filename)
                     {
                         RealmCollection[x] = r;
+                        isFound = true;
                         break;
                     }
                 }
+
+                if (!isFound)
+                    RealmCollection.Add(r);
             }
 
 
@@ -182,7 +188,7 @@ namespace MudEngine.GameManagement
         {
             foreach (Realm r in RealmCollection)
             {
-                if (r.Filename == filename)
+                if (r.Filename.ToLower() == filename.ToLower())
                     return r;
             }
 

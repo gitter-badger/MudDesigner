@@ -25,6 +25,11 @@ public class CommandCreate : IGameCommand
     /// </summary>
     public List<String> Help { get; set; }
 
+    //Private fields that are used during the creation of the environments.
+    private Realm realm;
+    private Zone zone;
+    private Room room;
+
     /// <summary>
     /// Constructor for the class.
     /// </summary>
@@ -35,305 +40,200 @@ public class CommandCreate : IGameCommand
         Help.Add("Content is created at run-time while the server/game is running and players are connected.");
         Help.Add("Newly created content will be available for players to use/traverse immediately after creation is completed.");
         Help.Add("Rooms that are created may be linked together using the LinkRoom command.");
+        Help.Add("You may create Realms by simply supplying a Realm name. If you wish to create a Zone, you must specify the Realm name followed by a '>' then the Zone name.");
+        Help.Add("Example: 'Create MyRealm>MyZone'");
+        Help.Add("The same concept is applied for creating Rooms.");
+        Help.Add("Example: 'Create MyRealm>MyZone>MyRoom'");
+        Help.Add("Creating just a single Realm is used by supplying only the Realm name.");
+        Help.Add("Example: 'Create MyRealm'");
     }
 
+    /// <summary>
+    /// This will execute the command allowing Admins to generate environment objects dynamically on-the-fly.
+    /// </summary>
+    /// <param name="command"></param>
+    /// <param name="player"></param>
     public void Execute(String command, BaseCharacter player)
     {
-        if ((player.Role == SecurityRoles.Player) || (player.Role == SecurityRoles.NPC))
+        //Check if the player has the proper security role in order to create content for the game world.
+        if ((player.Role != SecurityRoles.Admin) && (player.Role != SecurityRoles.GM))
         {
-            return; //Don't let them know this even exists.
-        }
-
-        //Build our create menu.
-        player.Send("");
-        player.Send("Welcome to " + player.ActiveGame.GameTitle + " World Creation Tool.");
-        player.Send("What would you like to create?");
-        player.Send("");
-        player.Send("1: Realm");
-        player.Send("2: Zone");
-        player.Send("3: Room");
-        player.Send("4: Exit Tool");
-        player.Send("At point during creation, you may type 'Cancel' to exit with no changes saved.");
-        player.Send("");
-        player.Send("Selection: ", false);
-
-        Int32 selection = 0;
-        String input = player.ReadInput();
-
-        //Allows for aborting the creation tool if the user wants too.
-        if (input.ToLower() == "cancel")
-        {
-            player.Send("Creation aborted.");
+            Log.Write("Player " + player.Name + " attempted to invoke the Create command without having the correct security role assigned!");
             return;
         }
 
-        try
+        //Split the supplied string up. It wil give us an array of strings with the supplied
+        //object names if the admin has specified environment objects for creation.
+        String[] env = command.ToLower().Substring("Create ".Length).Split('>');
+
+        //No objects specified, so the admin didn't use the command correctly.
+        if (env.Length == 0)
         {
-            selection = Convert.ToInt32(input);
-        }
-        catch (Exception)
-        {
-            Log.Write("Invalid selection!");
-            player.Send("Invalid selection!");
-            player.Send("Creation aborted.");
+            player.Send("Invalid use of the 'Create' command. Please try 'Help Create' for help using the command.");
             return;
         }
-        //Fire off what ever Method we need to, according to the users input.
-        switch (selection)
+        //Only 1 object name supplied, so we assume the admin wants a Realm created with the supplied name.
+        else if (env.Length == 1)
         {
-            case 1:
-                CreateRealm(player);
-                break;
-            case 2:
-                CreateZone(player);
-                break;
-            case 3:
-                CreateRoom(player);
-                break;
-            case 4:
+            //Check if the supplied name is a valid Realm name, and if the Realm can be created.
+            //If it's valid, the Realm is instanced and stored in our private Field 'realm'
+            Boolean validRealm = ValidateRealm(env[0], player);
+
+            if (validRealm)
+            {
+                player.ActiveGame.World.AddRealm(realm);
+                player.Send(env[0] + " created.");
+            }
+            //Add the 'realm' Field that was instanced via ValidateRealm
+            else
+            {
+                Log.Write("Failed to validate realm during dynamic Creation.");
+                player.Send("Failed to create Realm! Please ensure a duplicate file name does not exist!");
                 return;
+            }
+        }
+        //Recieved two names, so we assume the admin wants a Zone created.
+        //If the Realm that is supplied for this Zone does not create, we will create it.
+        else if (env.Length == 2)
+        {
+            //Check if the Realm name supplied already exists. If it does, this will return false (Invalid name due to already existing)
+            //If it returns true, then the Realm is valid, meaning non already exists, so we will create it.
+            Boolean validRealm = ValidateRealm(env[0], player);
+
+            //Add the Realm to the game world since this Zone is being created in a non-existant Realm.
+            if (validRealm)
+            {
+                player.ActiveGame.World.AddRealm(realm);
+                player.Send(env[0] + " created.");
+            }
+            Boolean validZone = ValidateZone(env[0], env[1], player);
+
+            if (validZone)
+            {
+                realm.AddZone(zone);
+                player.Send(env[1] + " created.");
+            }
+            else
+            {
+                Log.Write("Failed to validate Zone during dynamic creation.");
+                player.Send("Failed to create Zone! Please ensure a duplicate filename does not exist!");
+                return;
+            }
+        }
+        else if (env.Length == 3)
+        {
+            //Check if the Realm name supplied already exists. If it does, this will return false (Invalid name due to already existing)
+            //If it returns true, then the Realm is valid, meaning non already exists, so we will create it.
+            Boolean validRealm = ValidateRealm(env[0], player);
+
+            //Add the Realm to the game world since this Zone is being created in a non-existant Realm.
+            if (validRealm)
+            {
+                player.ActiveGame.World.AddRealm(realm);
+                player.Send(env[0] + " created.");
+            }
+
+            Boolean validZone = ValidateZone(env[0], env[1], player);
+
+            if (validZone)
+            {
+                realm.AddZone(zone);
+                player.Send(env[1] + " created.");
+            }
+
+            Boolean validRoom = ValidateRoom(env[0], env[1], env[2], player);
+
+            if (validRoom)
+            {
+                zone.AddRoom(room);
+                player.Send(env[2] + " created.");
+            }
+            else
+            {
+                Log.Write("Failed to validate Room during dynamic creation.");
+                player.Send("Failed to create Room! Please ensure a duplicate filename does not exist!");
+                return;
+            }
         }
     }
 
-    //Creates a Realm.
-    public void CreateRealm(BaseCharacter player)
+    /// <summary>
+    /// Validates if the supplied Realm filename exists in the game world or not.
+    /// Returns True if it does not exist; False if it does exist (As if it exists it's not a valid name to use during creation).
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="player"></param>
+    /// <returns></returns>
+    private Boolean ValidateRealm(String name, BaseCharacter player)
     {
-        //Instance a new Realm.
-        Realm realm = new Realm(player.ActiveGame);
-        Boolean isLegalName = false;
-
-        while (!isLegalName)
+        if (player.ActiveGame.World.GetRealm(name + ".Realm") != null)
         {
-            isLegalName = true;
-            //Get the name of this Realm from the player.
-            player.Send("Realm Name: ", false);
-            realm.Name = player.ReadInput();
-
-            //Check for canceling
-            if (realm.Name.ToLower() == "cancel")
-            {
-                player.Send("Creation aborted.");
-                return;
-            }
-
-            //Check if a Realm with this name already exists.
-            foreach (Realm r in player.ActiveGame.World.RealmCollection)
-            {
-                if (r.Name == realm.Name)
-                {
-                    player.Send("Realm already exists!");
-                    isLegalName = false;
-                }
-            }
+            realm = player.ActiveGame.World.GetRealm(name + ".Realm");
+            return false;
         }
 
-        player.ActiveGame.World.AddRealm(realm);
-        Log.Write(player.Name + " has created a Realm called " + realm.Name);
-        player.Send(realm.Name + " has been created and added to the world.");
+        realm = new Realm(player.ActiveGame);
+        realm.Name = name;
+
+        return true;
     }
 
-    public void CreateZone(BaseCharacter player)
+    /// <summary>
+    /// Validates if the supplied Zone filename exists in the game world or not.
+    /// Returns True if it does not exist; False if it does exist (As if it exists it's not a valid name to use during creation).
+    /// If the Zones owning Realm does not exist, it returns false and fails.
+    /// </summary>
+    /// <param name="realmName"></param>
+    /// <param name="zoneName"></param>
+    /// <param name="player"></param>
+    /// <returns></returns>
+    private Boolean ValidateZone(String realmName, String zoneName, BaseCharacter player)
     {
-        player.Send("Select which Realm this Zone will belong to.");
-        Boolean isValidRealm = false;
-        String input = "";
-        Realm realm = new Realm(player.ActiveGame);
-
-        while (!isValidRealm)
+        if (realm == null)
         {
-            isValidRealm = true;//Default to true, assume the user entered a valid name.
-            foreach (Realm r in player.ActiveGame.World.RealmCollection)
-            {
-                player.Send(r.Filename + " | ", false);
-            }
-
-            player.Send("");
-            player.Send("Selection: ", false);
-
-            input = player.ReadInput();
-
-            if (input.ToLower() == "cancel")
-            {
-                player.Send("Zone creation aborted.");
-                return;
-            }
-
-            //Ensure it's a valid name, if not then loop back and try again.
-            foreach (Realm r in player.ActiveGame.World.RealmCollection)
-            {
-                if (r.Filename.ToLower() == input.ToLower())
-                {
-                    isValidRealm = true;
-                    realm = r;
-                    break;
-                }
-                else
-                {
-                    isValidRealm = false;
-                }
-            }
-
-            if (!isValidRealm)
-                player.Send("That Realm does not exist! Please try again.");
+            player.Send("Unable to validate Zone due to invalid Realm.");
+            return false;
         }
 
-        Zone zone = new Zone(player.ActiveGame);
-        //realm.AddZone(zone);
-
-        Boolean isValidZone = false;
-        player.Send(""); //blank line
-
-        while (!isValidZone)
+        if (realm.GetZone(zoneName + ".Zone").Count != 0)
         {
-            isValidZone = true; //assume the user will enter a correct value.
-            player.Send("Enter a name for this Zone: ", false);
-            String name = player.ReadInput();
-
-            if (String.IsNullOrEmpty(name))
-                continue;
-
-            foreach (Zone z in realm.ZoneCollection)
-            {
-                if (z.Name == name)
-                {
-                    isValidZone = false;
-                    break;
-                }
-            }
-
-            if (isValidZone)
-            {
-                zone.Name = name;
-            }
+            zone = realm.GetZone(zoneName + ".Zone")[0];
+            return false;
         }
 
-        Log.Write(player.Name + " has created a Zone called " + zone.Name + " within the Realm " + realm.Name);
-        player.Send(zone.Name + " has been created and added to Realm " + realm.Name + ".");
-        realm.AddZone(zone);
+        zone = new Zone(player.ActiveGame);
+        zone.Name = zoneName;
+
+        return true;
     }
 
-    public void CreateRoom(BaseCharacter player)
+    /// <summary>
+    /// Validates if the supplied Room filename exists in the game world or not.
+    /// Returns True if it does not exist; False if it does exist (As if it exists it's not a valid name to use during creation).
+    /// If the Rooms owning Zone or Realm does not exist, it returns false and fails.
+    /// </summary>
+    /// <param name="realmName"></param>
+    /// <param name="zoneName"></param>
+    /// <param name="roomName"></param>
+    /// <param name="player"></param>
+    /// <returns></returns>
+    private Boolean ValidateRoom(String realmName, String zoneName, String roomName, BaseCharacter player)
     {
-        player.Send("Select which Realm this Zone will belong to.");
-        Boolean isValidRealm = false;
-        String input = "";
-        Realm realm = new Realm(player.ActiveGame);
-
-        while (!isValidRealm)
+        if ((realm == null) || (zone == null))
         {
-            isValidRealm = true;//Default to true, assume the user entered a valid name.
-            foreach (Realm r in player.ActiveGame.World.RealmCollection)
-            {
-                player.Send(r.Filename + " | ", false);
-            }
-
-            player.Send("");
-            player.Send("Selection: ", false);
-
-            input = player.ReadInput();
-
-            if (input.ToLower() == "cancel")
-            {
-                player.Send("Zone creation aborted.");
-                return;
-            }
-
-            //Ensure it's a valid name, if not then loop back and try again.
-            foreach (Realm r in player.ActiveGame.World.RealmCollection)
-            {
-                if (r.Filename.ToLower() == input.ToLower())
-                {
-                    isValidRealm = true;
-                    realm = r;
-                    break;
-                }
-                else
-                {
-                    isValidRealm = false;
-                }
-            }
-
-            if (!isValidRealm)
-                player.Send("That Realm does not exist! Please try again.");
+            player.Send("Unable to validate Room due to invalid Realm or Zone.");
+            return false;
         }
 
-        Zone zone = new Zone(player.ActiveGame);
-        //realm.AddZone(zone);
-
-        Boolean isValidZone = false;
-        player.Send(""); //blank line
-
-        while (!isValidZone)
+        if (zone.GetRoom(roomName + ".Room").Count != 0)
         {
-            isValidZone = true;//Default to true, assume the user entered a valid name.
-            foreach (Zone z in realm.ZoneCollection)
-            {
-                player.Send(z.Filename + " | ", false);
-            }
-
-            player.Send("");
-            player.Send("Selection: ", false);
-
-            input = player.ReadInput();
-
-            if (input.ToLower() == "cancel")
-            {
-                player.Send("Room creation aborted.");
-                return;
-            }
-
-            //Ensure it's a valid name, if not then loop back and try again.
-            foreach (Zone z in realm.ZoneCollection)
-            {
-                if (z.Filename.ToLower() == input.ToLower())
-                {
-                    isValidZone = true;
-                    zone = z;
-                    break;
-                }
-                else
-                {
-                    isValidZone = false;
-                }
-            }
-
-            if (!isValidZone)
-                player.Send("That Zone does not exist! Please try again.");
+            room = zone.GetRoom(roomName + ".Room")[0];
+            return false;
         }
 
-        //Create the Room.
-        Room room = new Room(player.ActiveGame);
+        room = new Room(player.ActiveGame);
+        room.Name = roomName;
 
-        Boolean isValidRoom = false;
-        player.Send(""); //blank line
-
-        while (!isValidRoom)
-        {
-            isValidRoom = true; //assume the user will enter a correct value.
-            player.Send("Enter a name for this Room: ", false);
-            String name = player.ReadInput();
-
-            if (String.IsNullOrEmpty(name))
-                continue;
-
-            foreach (Room r in zone.RoomCollection)
-            {
-                if (r.Name == name)
-                {
-                    isValidRoom = false;
-                    break;
-                }
-            }
-
-            if (isValidRoom)
-            {
-                room.Name = name;
-            }
-        }
-
-
-        Log.Write(player.Name + " has created a Room called " + zone.Name + " within the Zone " + realm.Name + "->" + zone.Name);
-        player.Send(room.Name + " has been created and added to " + realm.Name + "->" + zone.Name + ".");
-        zone.AddRoom(room);
+        return true;
     }
 }

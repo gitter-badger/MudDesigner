@@ -99,13 +99,15 @@ namespace MudEngine.GameObjects.Environment
             FileManager.WriteLine(filename, this.Realm, "Realm");
             FileManager.WriteLine(filename, this.StatDrain.ToString(), "StatDrain");
             FileManager.WriteLine(filename, this.StatDrainAmount.ToString(), "StatDrainAmount");
-            FileManager.WriteLine(filename, this.InitialRoom.Filename, "InitialRoom");
+
+            if (this.InitialRoom.Name != "New Room")
+                FileManager.WriteLine(filename, this.InitialRoom.Filename, "InitialRoom");
 
             String roomPath = Path.Combine(path, "Rooms");
             foreach (Room r in RoomCollection)
             {
                 FileManager.WriteLine(filename, r.Filename, "RoomCollection");
-                r.Save(roomPath);
+                 r.Save(roomPath);
             }
         }
 
@@ -119,28 +121,16 @@ namespace MudEngine.GameObjects.Environment
             this.StatDrain = Convert.ToBoolean(FileManager.GetData(filename, "StatDrain"));
             this.StatDrainAmount = Convert.ToInt32(FileManager.GetData(filename, "StatDrainAmount"));
 
-            //Load the InitialRoom
-            String roomFile = FileManager.GetData(filename, "InitialRoom");
-            String realmPath = Path.Combine(ActiveGame.DataPaths.Environment, Path.GetFileNameWithoutExtension(this.Realm));
-            String zonePath = Path.Combine(realmPath, "Zones", Path.GetFileNameWithoutExtension(this.Filename));
-            String roomPath = Path.Combine(zonePath, "Rooms");
-
             //Now get the rooms in the zone
             foreach (String room in FileManager.GetCollectionData(filename, "RoomCollection"))
             {
                 Room r = new Room(ActiveGame);
-                r.Load(Path.Combine(roomPath, room));
+                String path = Path.Combine(ActiveGame.DataPaths.Environment, Path.GetFileNameWithoutExtension(this.Realm), "Zones", Path.GetFileNameWithoutExtension(this.Filename), "Rooms");
+                r.Load(Path.Combine(path, room));
                 RoomCollection.Add(r);
-            }
 
-            //Set the initial Room.
-            foreach (Room r in RoomCollection)
-            {
                 if (r.IsInitialRoom)
-                {
-                    InitialRoom = r;
-                    break;
-                }
+                    this.InitialRoom = r;
             }
         }
 
@@ -172,14 +162,14 @@ namespace MudEngine.GameObjects.Environment
             room.Realm = Realm;
         }
 
-        public List<Room> GetRoomByFilename(String filename)
+        public List<Room> GetRoom(String filename)
         {
 
             List<Room> rooms = new List<Room>();
 
             foreach (Room r in RoomCollection)
             {
-                if (r.Filename == filename)
+                if (r.Filename.ToLower() == filename.ToLower())
                 {
                     rooms.Add(r);
                 }

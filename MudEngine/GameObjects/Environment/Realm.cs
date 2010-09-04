@@ -42,15 +42,12 @@ namespace MudEngine.GameObjects.Environment
 
             IsInitialRealm = Convert.ToBoolean(FileManager.GetData(filename, "IsInitialRealm"));
 
-            String zoneFile = FileManager.GetData(filename, "InitialZone");
-            String realmPath = filename.Substring(0, filename.Length - Path.GetFileName(filename).Length);
-            String zonePath = Path.Combine(realmPath, "Zones", Path.GetFileNameWithoutExtension(zoneFile));
-
             //Load all zones
             foreach (String zone in FileManager.GetCollectionData(filename, "ZoneCollection"))
             {
                 Zone z = new Zone(ActiveGame);
-                z.Load(Path.Combine(zonePath, zone));
+                String path = Path.Combine(ActiveGame.DataPaths.Environment, Path.GetFileNameWithoutExtension(this.Filename), "Zones", Path.GetFileNameWithoutExtension(zone));
+                z.Load(Path.Combine(path, zone));
 
                 //Check if this is the initial Zone.
                 if (z.IsInitialZone)
@@ -68,7 +65,8 @@ namespace MudEngine.GameObjects.Environment
             String filename = Path.Combine(path, Filename);
 
             FileManager.WriteLine(filename, this.IsInitialRealm.ToString(), "IsInitialRealm");
-            FileManager.WriteLine(filename, this.InitialZone.Filename, "InitialZone");
+            if (this.InitialZone.Name != "New Zone")
+                FileManager.WriteLine(filename, this.InitialZone.Filename, "InitialZone");
 
             String zonePath = Path.Combine(path, "Zones");
             foreach (Zone z in ZoneCollection)
@@ -86,7 +84,7 @@ namespace MudEngine.GameObjects.Environment
 
             foreach (Zone zone in ZoneCollection)
             {
-                if (zone.Filename == filename)
+                if (zone.Filename.ToLower() == filename.ToLower())
                 {
                     zones.Add(zone);
                 }

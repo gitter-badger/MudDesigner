@@ -327,7 +327,7 @@ namespace MudEngine.GameManagement
             {
                 if (PlayerCollection[i].Name == "New BaseCharacter")
                     continue;
-                PlayerCollection[i].ExecuteCommand("Save");
+                PlayerCollection[i].Save(this.DataPaths.Players);
             }
 
             //Delete the last saved version of the World. We will dump the current version onto disk.
@@ -355,7 +355,10 @@ namespace MudEngine.GameManagement
             FileManager.WriteLine(filename, this.DataPaths.Players, "DataPathPlayers");
             FileManager.WriteLine(filename, this.GameTitle, "GameTitle");
             FileManager.WriteLine(filename, this.HideRoomNames.ToString(), "HideRoomNames");
-            FileManager.WriteLine(filename, this.InitialRealm.Filename, "InitialRealm");
+
+            if (this.InitialRealm.Name != "New Realm")
+                FileManager.WriteLine(filename, this.InitialRealm.Filename, "InitialRealm");
+
             FileManager.WriteLine(filename, this.IsMultiplayer.ToString(), "IsMultiplayer");
             FileManager.WriteLine(filename, this.MaximumPlayers.ToString(), "MaximumPlayers");
             FileManager.WriteLine(filename, this.PreCacheObjects.ToString(), "PreCacheObjects");
