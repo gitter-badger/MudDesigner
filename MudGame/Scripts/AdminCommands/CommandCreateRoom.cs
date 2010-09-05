@@ -45,6 +45,14 @@ class CommandCreateRoom : IGameCommand
                 return;
             }
 
+
+            if ((String.IsNullOrEmpty(player.CurrentRoom.Realm)) || (String.IsNullOrEmpty(player.CurrentRoom.Zone)))
+            {
+                player.Send("You are not currently within a pre-existing Zone.");
+                player.Send("Use the Teleport command to teleport yourself into a valid Zone before using the CreateRoom command.");
+                return;
+            }
+
             Room r = new Room(player.ActiveGame);
             r.Realm = player.CurrentRoom.Realm;
             r.Zone = player.CurrentRoom.Zone;

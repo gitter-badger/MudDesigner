@@ -149,6 +149,12 @@ namespace MudEngine.Commands
                             //Now that we have no duplicate connections, load the real player.
                             //no need to re-varify password as we have already done this above.
                             player.Load(savedFile);
+
+                            //If this is a single player game then we need to assign the player to the game collection.
+                            //Multiplayer games have this handled by the server automatically.
+                            if (!player.ActiveGame.IsMultiplayer)
+                                player.ActiveGame.GetPlayerCollection()[0] = player;
+
                             player.Send("Welcome back " + player.Name + "!");
                         }
                         else

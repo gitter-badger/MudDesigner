@@ -75,7 +75,7 @@ namespace MudEngine.GameObjects.Environment
         /// Gets the initial Room for this Zone.
         /// </summary>
         [Category("Environment Information")]
-        public Room InitialRoom { get; private set; }
+        public Room InitialRoom { get; set; }
 
         public Zone(GameManagement.Game game)
             : base(game)
@@ -175,6 +175,8 @@ namespace MudEngine.GameObjects.Environment
         {
 
             List<Room> rooms = new List<Room>();
+            if (!filename.ToLower().EndsWith(".room"))
+                filename += ".Room";
 
             foreach (Room r in RoomCollection)
             {

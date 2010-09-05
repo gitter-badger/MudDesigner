@@ -54,6 +54,8 @@
     <Compile Include="Commands\CommandLogin.cs" />
     <Compile Include="Commands\CommandSaveWorld.cs" />
     <Compile Include="Commands\CommandEditRealm.cs" />
+    <Compile Include="Commands\CommandEditZone.cs" />
+    <Compile Include="Commands\CommandEditRoom.cs" />
     <Compile Include="FileSystem\SaveDataPaths.cs" />
     <Compile Include="GameManagement\CommandEngine.cs" />
     <Compile Include="GameManagement\GameTime.cs" />

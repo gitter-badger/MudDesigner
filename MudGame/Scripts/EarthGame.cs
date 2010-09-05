@@ -39,7 +39,7 @@ public class EarthGame : Game
 
         //Create a new instance of our California realm script, we must pass a reference to our EarthGame
         //to the script so that it may add the Realm to our Game world. That is done by using the 'this' keyword.
-        Cali = new WorldCalifornia(this);
+        //Cali = new WorldCalifornia(this);
 
         //Calling the create method within the california script.
         //Cali.Create();

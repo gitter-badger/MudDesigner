@@ -28,7 +28,7 @@ namespace MudEngine.GameObjects.Environment
         /// <summary>
         /// The Initial Starting Zone for this Realm.
         /// </summary>
-        public Zone InitialZone { get; private set; }
+        public Zone InitialZone { get; set; }
 
         public Realm(GameManagement.Game game) : base(game)
         {
@@ -81,6 +81,9 @@ namespace MudEngine.GameObjects.Environment
         {
 
             List<Zone> zones = new List<Zone>();
+
+            if (!filename.ToLower().EndsWith(".zone"))
+                filename += ".zone";
 
             foreach (Zone zone in ZoneCollection)
             {

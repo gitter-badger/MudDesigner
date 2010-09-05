@@ -13,55 +13,73 @@ using MudEngine.GameObjects.Environment;
 
 namespace MudEngine.Commands
 {
-    public class CommandEditRealm : IGameCommand
+    public class CommandEditRoom : IGameCommand
     {
         public Boolean Override { get; set; }
 
         public String Name { get; set; }
         public List<String> Help { get; set; }
 
-        private Realm realm;
+        private Room room;
         BaseCharacter player;
 
-        public CommandEditRealm()
+        public CommandEditRoom()
         {
             Help = new List<string>();
 
             Help.Add("Use the Edit command to edit existing objects properties.");
-            Help.Add("Usage: Edit ObjectType ObjectName");
-            Help.Add("Usage: Edit ObjectType FullyQualifiedName");
-            Help.Add("Example: 'Edit Realm MyRealm'");
+            Help.Add("Usage: EditRoom Realm>Room>Room");
+            Help.Add("Example: EditRoom MyRealmName>MyRoom>MyRoom");
         }
 
         public void Execute(String command, BaseCharacter player)
         {
             if ((player.Role == SecurityRoles.Admin) || (player.Role == SecurityRoles.GM))
             {
-                //Get the admin-entered realm filename
-                String filename = command.Substring("EditRealm".Length).Trim() + ".Realm";
+                //Get the admin-entered room filename
+                String[] tokens = command.Substring("EditRoom".Length).Trim().Split('>');
+
+                if (tokens.Length == 0)
+                {
+                    player.Send("Room Editing canceled. No Room name was supplied.");
+                    return;
+                }
+                else if (tokens.Length <= 2)
+                {
+                    player.Send("Room Editing canceled. You must use the Rooms fully qualified path.");
+                    IGameCommand gc = CommandEngine.GetCommand("CommandHelp");
+                    gc.Execute("Help EditRoom", player);
+                    return;
+                }
+
+                String filename = tokens[2]; //Room filename is the 3rd index in the array.
 
                 //Raise the scope of the player reference to class level instead of method level.
                 this.player = player;
 
-                //Check if the filename field is empty, if so then nothing was provided by the admin
-                if (String.IsNullOrEmpty(filename))
+                //We have a filename, retrieve the Room the admin wants to edit.
+                if ((player.ActiveGame.World.GetRealm(tokens[0]) == null) || (player.ActiveGame.World.GetRealm(tokens[0]).GetZone(tokens[1])[0] == null))
                 {
-                    player.Send("Realm Editing canceled. No Realm name was supplied.");
+                    player.Send("Room editing canceled. Rooms owning Realm or Zone does not exists.");
                     return;
                 }
 
-                //We have a filename, retrieve the Realm the admin wants to edit.
-                realm = player.ActiveGame.World.GetRealm(filename);
-                
-                //If no Realm was retrieved (due to it not existing), let the admin know
-                //that the Realm filename was not valid.
-                if (realm == null)
+                if (player.ActiveGame.World.GetRealm(tokens[0]).GetZone(tokens[1])[0].GetRoom(filename).Count == 0)
                 {
-                    player.Send("Realm Editing canceled. The supplied Realm name is not valid.");
+                    player.Send("Room Editing canceled. The supplied Room does not exist.");
                     return;
                 }
-                    //Otherwise, the Realm does exist and was retrieved.
-                    //Lets build our Editing menu's and allow for Realm Editing.
+                room = player.ActiveGame.World.GetRealm(tokens[0]).GetZone(tokens[1])[0].GetRoom(filename)[0];
+
+                //If no Room was retrieved (due to it not existing), let the admin know
+                //that the Room filename was not valid.
+                if (room == null)
+                {
+                    player.Send("Room Editing canceled. The supplied Room name is not valid.");
+                    return;
+                }
+                //Otherwise, the Room does exist and was retrieved.
+                //Lets build our Editing menu's and allow for Room Editing.
                 else
                 {
                     //Construct the main editing menu.
@@ -74,10 +92,10 @@ namespace MudEngine.Commands
                     {
                         value = Convert.ToInt32(player.ReadInput());
                     }
-                        //If a non-numeric value is supplied, the conversion failed. This is us catching that failure.
+                    //If a non-numeric value is supplied, the conversion failed. This is us catching that failure.
                     catch
                     {
-                        player.Send("Realm Editing canceled. The supplied value was not numeric!");
+                        player.Send("Room Editing canceled. The supplied value was not numeric!");
                         return;
                     }
 
@@ -95,12 +113,14 @@ namespace MudEngine.Commands
         private void BuildMenuMain()
         {
             player.FlushConsole();
-            player.Send(Path.GetFileNameWithoutExtension(realm.Filename));
+            player.Send(Path.GetFileNameWithoutExtension(room.Filename));
             player.Send("Select from the available options below:");
             player.Send("1: Descriptions");
             player.Send("2: Names");
             player.Send("3: Senses");
-            player.Send("4: Initial Realm");
+            player.Send("4: Initial Room");
+            player.Send("5: Settings");
+            player.Send("6: Doorways");
             player.Send("9: Exit");
             player.Send("Enter numeric selection: ", false);
         }
@@ -111,7 +131,7 @@ namespace MudEngine.Commands
         private void BuildMenuDescriptions()
         {
             player.FlushConsole();
-            player.Send(Path.GetFileNameWithoutExtension(realm.Filename));
+            player.Send(Path.GetFileNameWithoutExtension(room.Filename));
             player.Send("Select from the available options below:");
             player.Send("1: Simple Description");
             player.Send("2: Detailed Descriptions");
@@ -125,19 +145,19 @@ namespace MudEngine.Commands
         private void BuildMenuNames()
         {
             player.FlushConsole();
-            player.Send(Path.GetFileNameWithoutExtension(realm.Filename));
-            player.Send("When you assign a Realm Name, the Filename is overwrote with your RealmName as a filename.");
-            player.Send("Example: RealmName of 'ExampleRealm' would automatically set a Filename of 'ExampleRealm.Realm'");
+            player.Send(Path.GetFileNameWithoutExtension(room.Filename));
+            player.Send("When you assign a Room Name, the Filename is overwrote with your RoomName as a filename.");
+            player.Send("Example: RoomName of 'ExampleRoom' would automatically set a Filename of 'ExampleRoom.Room'");
             player.Send("");
 
-            player.Send("If you wish to have multiple Realms with the same visible name, you will need to specify a different Filename for each Realm.");
+            player.Send("If you wish to have multiple Rooms with the same visible name, you will need to specify a different Filename for each Room.");
             player.Send("Filenames are what you use when accessing objects as a Admin. Typically without the file extension.");
-            player.Send("Example: A Realm with a Visible name of \"My Test Realm\" can have a filename of \"Test.Realm\". You would access this object as a Admin by specifying a object name of \"Test\"");
+            player.Send("Example: A Room with a Visible name of \"My Test Room\" can have a filename of \"Test.Room\". You would access this object as a Admin by specifying a object name of \"Test\"");
             player.Send("Select from the available options below:");
             player.Send("");
-            
-            player.Send("1: Realm Visibile Name");
-            player.Send("2: Realm Filename");
+
+            player.Send("1: Room Visibile Name");
+            player.Send("2: Room Filename");
             player.Send("9: Exit");
             player.Send("Enter numeric selection: ", false);
         }
@@ -145,10 +165,10 @@ namespace MudEngine.Commands
         private void BuildMenuSenses()
         {
             player.FlushConsole();
-            player.Send(Path.GetFileName(realm.Filename));
+            player.Send(Path.GetFileName(room.Filename));
             player.Send("Senses are what allow the players to get a better understanding of the environment around them.");
             player.Send("Choose what sense you would like to edit, make your adjustments and press 'ENTER' to save the changes.");
-            player.Send("Senses defined for Realms will be applied as the default for every Zone created within a Realm.");
+            player.Send("Senses defined for Rooms will override any senses defined for it's parent Zone or Realm.");
             player.Send("Select from the available options below:");
             player.Send("1: Feel Sense");
             player.Send("2: Listen Sense");
@@ -159,21 +179,21 @@ namespace MudEngine.Commands
         private void BuildMenuInitial()
         {
             player.FlushConsole();
-            player.Send(realm.Name);
-            player.Send("Initial Realm Settings.");
-            player.Send("The Initial Realm setting determins if the Realm will be the starting location for all newly created players or not.");
-            if (realm.IsInitialRealm)
+            player.Send(room.Name);
+            player.Send("Initial Room Settings.");
+            player.Send("The Initial Room setting determins if the Room will be the starting location for all newly created players or not.");
+            if (room.IsInitialRoom)
             {
-                player.Send("If you disable this Realm from being the Initial Realm, new players will not have a starting location assigned to them.");
-                player.Send("You will need to enable Initial Realm on another Realm in order for new players to have a starting location.");
+                player.Send("If you disable this Room from being the Initial Room, new players will not have a starting location assigned to them.");
+                player.Send("You will need to enable Initial Room on another Room in order for new players to have a starting location.");
                 player.Send("Select from the available options below:");
-                player.Send("1: Disable Initial Realm");
+                player.Send("1: Disable Initial Room");
             }
             else
             {
-                player.Send("If you enable Initial Realm, then new players will start at this location from now on.");
+                player.Send("If you enable Initial Room, then new players will start at this location from now on.");
                 player.Send("Select from the available options below:");
-                player.Send("1: Enable Initial Realm");
+                player.Send("1: Enable Initial Room");
             }
             player.Send("9: Exit");
             player.Send("Enter numeric selection: ", false);
@@ -199,7 +219,7 @@ namespace MudEngine.Commands
                     }
                     catch
                     {
-                        player.Send("Realm Editing canceled. The supplied value was not numeric!");
+                        player.Send("Room Editing canceled. The supplied value was not numeric!");
                         return;
                     }
 
@@ -214,7 +234,7 @@ namespace MudEngine.Commands
                     }
                     catch
                     {
-                        player.Send("Realm Editing canceled. The supplied value was not numeric!");
+                        player.Send("Room Editing canceled. The supplied value was not numeric!");
                         return;
                     }
 
@@ -231,11 +251,15 @@ namespace MudEngine.Commands
                     }
                     catch
                     {
-                        player.Send("Realm Editing canceled. The supplied value was not numeric!");
+                        player.Send("Room Editing canceled. The supplied value was not numeric!");
                         return;
                     }
 
                     ParseInitialSelection(entry);
+                    break;
+                case 5: //Settings
+                    break;
+                case 6: //Doorways
                     break;
                 case 9:
                     break;
@@ -246,23 +270,24 @@ namespace MudEngine.Commands
 
         /// <summary>
         /// This method parses the admins menu selection from the Description menu
-        /// and adjusts the Realms descriptions as specified by the admin
+        /// and adjusts the Rooms descriptions as specified by the admin
         /// </summary>
         /// <param name="value"></param>
         private void ParseDescriptionSelection(Int32 value)
         {
             String input = "";
+
             switch (value)
             {
-                    //Simple Description
+                //Simple Description
                 case 1:
                     player.FlushConsole();
-                    player.Send("Enter a simple description for this Realm.");
+                    player.Send("Enter a simple description for this Room.");
                     player.Send("Simple Descriptions are single line only.");
                     player.Send("To create a blank description, you may simply press ENTER.");
                     player.Send("To cancel editing this description, you may type 'Exit'");
-                    if (!String.IsNullOrEmpty(realm.Description))
-                        player.Send("Current Description: " + realm.Description);
+                    if (!String.IsNullOrEmpty(room.Description))
+                        player.Send("Current Description: " + room.Description);
 
                     player.Send("Entry: ", false);
                     //Read in the admins new simple description
@@ -271,14 +296,13 @@ namespace MudEngine.Commands
                     if (input.ToLower() == "exit")
                         return;
                     else
-                        realm.Description = input;
+                        room.Description = input;
 
                     //Save the game world.
                     player.ActiveGame.Save();
                     player.Send("New Simple Description saved.");
                     break;
-                    //Detailed Description
-                case 2:
+                case 2://Detailed Description
                     Boolean isEditing = true;
                     Int32 line = 1;
 
@@ -289,7 +313,7 @@ namespace MudEngine.Commands
                         line = 1; //reset our line to the first line, so we can re-print the content to the admin.
 
                         //print some help info to the admin
-                        player.Send("Enter a Detailed Description for this Realm.");
+                        player.Send("Enter a Detailed Description for this Room.");
                         player.Send("Detailed Descriptions are multi-lined descriptions.");
                         player.Send("When you are finished entering a line, press ENTER to save it and move onto the next line.");
                         player.Send("When you are finished, you may type 'Exit' to save your changes and quit the Description editor.");
@@ -304,7 +328,7 @@ namespace MudEngine.Commands
 
                         //Loop through each description currently within the collection
                         //This will include lines created within this loop as well.
-                        foreach (String desc in realm.DetailedDescription)
+                        foreach (String desc in room.DetailedDescription)
                         {
                             player.Send(line.ToString() + ": " + desc);
                             line++;
@@ -322,7 +346,7 @@ namespace MudEngine.Commands
                         else if (input.ToLower().StartsWith("edit"))
                         {
                             //Retrieve the line number from the users input.
-                            String editLine= input.Substring("edit".Length).Trim();
+                            String editLine = input.Substring("edit".Length).Trim();
 
                             //If no line number was provided, cancel.
                             if (String.IsNullOrEmpty(editLine))
@@ -338,19 +362,19 @@ namespace MudEngine.Commands
 
                                 //Make sure the line number specified isn't greater than the number
                                 //of lines we currently have.
-                                if (realm.DetailedDescription.Count >= line)
+                                if (room.DetailedDescription.Count >= line)
                                 {
                                     //Get the new description for this line...
                                     player.Send("New Description: ", false);
                                     input = player.ReadInput();
                                     //-1 correction due to collection index starting at 0 and not 1.
                                     //replace the existing description with the new one.
-                                    realm.DetailedDescription[line - 1] = input;
+                                    room.DetailedDescription[line - 1] = input;
                                 }
                                 //Let the admin know that the line number specified does not exist.
                                 else
                                 {
-                                    player.Send("Line Editing canceled. The Realm does not contain that many Description lines.");
+                                    player.Send("Line Editing canceled. The Room does not contain that many Description lines.");
                                 }
                             }
                         }
@@ -370,7 +394,7 @@ namespace MudEngine.Commands
                             else if (clear == "all")
                             {
                                 //Wipe out every line of description.
-                                realm.DetailedDescription.Clear();
+                                room.DetailedDescription.Clear();
                             }
                             //Admin specified a single line. Find the admins specified line number for clearing.
                             else
@@ -379,19 +403,19 @@ namespace MudEngine.Commands
                                 Int32 i = Convert.ToInt32(clear);
 
                                 //make sure the line number provided does in-fact exist.
-                                if (realm.DetailedDescription.Count >= i)
+                                if (room.DetailedDescription.Count >= i)
                                     //Remove the specified line number for the descriptions collection.
-                                    realm.DetailedDescription.Remove(realm.DetailedDescription[i - 1]);
+                                    room.DetailedDescription.Remove(room.DetailedDescription[i - 1]);
                                 //Line provided is larger than the number of lines available to check. Cancel.
                                 else
-                                    player.Send("Line Clearing canceled. The Realm does not contain that many description lines.");
+                                    player.Send("Line Clearing canceled. The Room  does not contain that many description lines.");
                             }
                         }
                         //No special tokens provided, so we assume this line is a description. 
                         //Add the contents to the realm's detailed description collection.
                         else
                         {
-                            realm.DetailedDescription.Add(input);
+                            room.DetailedDescription.Add(input);
                         }
                     }
 
@@ -415,39 +439,39 @@ namespace MudEngine.Commands
             {
                 case 1: //Visible Name
                     player.FlushConsole();
-                    player.Send("Enter a new Visible name for this Realm.");
+                    player.Send("Enter a new Visible name for this Room.");
                     player.Send("Enter Value: ", false);
 
-                    //Get the new name for this Realm
+                    //Get the new name for this Room
                     String newName = player.ReadInput();
 
                     //Ensure the new name is not blank.
                     if (String.IsNullOrEmpty(newName))
                     {
-                        player.Send("Realm Name Editing canceled. No name supplied.");
+                        player.Send("Room Name Editing canceled. No name supplied.");
                     }
-                    //We have a valid name, so lets try assigning it to the Realm
+                    //We have a valid name, so lets try assigning it to the Room
                     else
                     {
-                        //Check to see if the supplied name already exists by checking for a existing Realm
+                        //Check to see if the supplied name already exists by checking for a existing Room
                         //that has a matching filename.
-                        if (player.ActiveGame.World.GetRealm(newName + ".Realm") == null)
+                        if (player.ActiveGame.World.GetRealm(room.Realm).GetZone(room.Zone)[0].GetRoom(newName + ".room").Count == 0)
                         {
-                            //No matching Realm was found, so we can go ahead and make the change.
-                            //Store the new name within this Realm
-                            String oldName = realm.Filename;
-                            realm.Name = newName;
+                            //No matching Room was found, so we can go ahead and make the change.
+                            //Store the new name within this Room
+                            String oldName = room.Filename;
+                            room.Name = newName;
 
-                            //Update all of the objects that are within the Realm to have the
+                            //Update all of the objects that are within the Room to have the
                             //new name assigned to them.
-                            UpdateRealmObjects(oldName);
+                            UpdateRoomObjects(oldName);
 
-                            //TODO: Any Items/NPC's etc within this Realm will need to be updated as well.
+                            //TODO: Any Items/NPC's etc within this Room will need to be updated as well.
                         }
                         else
                         {
-                            player.Send("Realm Name Editing canceled. " + newName + " already exists within the World.");
-                            player.Send("If you want to keep the provided Visible Name for this Realm, you must create a unique Filename.");
+                            player.Send("Room Name Editing canceled. " + newName + " already exists within the Zone.");
+                            player.Send("If you want to keep the provided Visible Name for this Room, you must create a unique Filename.");
                             player.Send("Would you like to assign a unique Filename now?");
                             player.Send("1: Yes");
                             player.Send("2: No");
@@ -459,8 +483,8 @@ namespace MudEngine.Commands
                                 {
                                     case 1:
                                         player.FlushConsole();
-                                        player.Send("The default filename for this Realm (using the new Visible Name) is currently:");
-                                        player.Send(newName + ".Realm");
+                                        player.Send("The default filename for this Room (using the new Visible Name) is currently:");
+                                        player.Send(newName + ".Room");
                                         player.Send("Please supply a different filename:");
                                         player.Send("Enter Value: ", false);
 
@@ -468,58 +492,58 @@ namespace MudEngine.Commands
 
                                         if (String.IsNullOrEmpty(filename))
                                         {
-                                            player.Send("Realm Name Editing Canceled. No filename supplied.");
+                                            player.Send("Room Name Editing Canceled. No filename supplied.");
                                         }
                                         else
                                         {
-                                            if (player.ActiveGame.World.GetRealm(filename) != null)
+                                            if (player.ActiveGame.World.GetRealm(room.Realm).GetZone(filename)[0].GetRoom(filename)[0] != null)
                                             {
-                                                player.Send("Realm Name Editing Canceled. A Realm with this filename already exists!");
+                                                player.Send("Room Name Editing Canceled. A Room with this filename already exists!");
                                             }
                                             else
                                             {
-                                                String oldName = realm.Filename;
-                                                realm.Name = newName;
-                                                realm.Filename = filename;
+                                                String oldName = room.Filename;
+                                                room.Name = newName;
+                                                room.Filename = filename;
 
-                                                UpdateRealmObjects(oldName);
+                                                UpdateRoomObjects(oldName);
                                             }
                                         }
                                         break;
                                     case 2:
-                                        player.Send("Realm Name Editing Canceled. A Realm with this filename already exists!");
+                                        player.Send("Room Name Editing Canceled. A Room with this filename already exists!");
                                         break;
                                 }
                             }
                             catch
                             {
-                                player.Send("Realm Name Editing canceled. The supplied value was not numeric.");
+                                player.Send("Room Name Editing canceled. The supplied value was not numeric.");
                             }
                         }
                     }
                     player.ActiveGame.Save();
                     break;
-                case 2: //Realm Filename
+                case 2: //Room Filename
                     player.FlushConsole();
-                    player.Send("Enter a new Filenamename for this Realm.");
+                    player.Send("Enter a new Filenamename for this Room.");
                     player.Send("Enter Value: ", false);
 
                     String fname = player.ReadInput();
 
                     if (String.IsNullOrEmpty(fname))
                     {
-                        player.Send("Realm Name Editing canceled. No name supplied.");
+                        player.Send("Room Name Editing canceled. No name supplied.");
                     }
-                    else if (player.ActiveGame.World.GetRealm(fname) != null)
+                    else if (player.ActiveGame.World.GetRealm(room.Realm).GetZone(room.Zone)[0].GetRoom(fname).Count != 0)
                     {
-                        player.Send("Realm Name Editing canceled. A Realm with this filename already exists!");
+                        player.Send("Room Name Editing canceled. A Room with this filename already exists!");
                     }
                     else
                     {
                         String oldName = "";
-                        oldName = realm.Filename;
-                        realm.Filename = fname;
-                        UpdateRealmObjects(oldName);
+                        oldName = room.Filename;
+                        room.Filename = fname;
+                        UpdateRoomObjects(oldName);
                         player.ActiveGame.Save();
                     }
                     break;
@@ -535,43 +559,43 @@ namespace MudEngine.Commands
             switch (value)
             {
                 case 1: //Feel
-                    player.Send("Enter the new default FEEL description for this Realm.");
+                    player.Send("Enter the new default FEEL description for this Room.");
                     player.Send("If you wish to clear the current description, just press ENTER to save a blank description.");
 
-                    if (!String.IsNullOrEmpty(realm.Feel))
+                    if (!String.IsNullOrEmpty(room.Feel))
                     {
                         player.Send("Current Value: ", false);
-                        player.Send(realm.Feel);
+                        player.Send(room.Feel);
                     }
-                    
+
                     player.Send("Enter Value: ", false);
-                    realm.Feel = player.ReadInput();
+                    room.Feel = player.ReadInput();
                     break;
                 case 2: //Listen
-                    player.Send("Enter the new default LISTEN description for this Realm.");
+                    player.Send("Enter the new default LISTEN description for this Room.");
                     player.Send("If you wish to clear the current description, just press ENTER to save a blank description.");
-                    
-                    if (!String.IsNullOrEmpty(realm.Listen))
+
+                    if (!String.IsNullOrEmpty(room.Listen))
                     {
                         player.Send("Current Value: ", false);
-                        player.Send(realm.Listen);
+                        player.Send(room.Listen);
                     }
-                    
+
                     player.Send("Enter value: ", false);
-                    realm.Listen = player.ReadInput();
+                    room.Listen = player.ReadInput();
                     break;
                 case 3: //Smell
-                    player.Send("Enter the new default SMELL description for this Realm.");
+                    player.Send("Enter the new default SMELL description for this Room.");
                     player.Send("If you wish to clear the current description, just press ENTER to save a blank description.");
-                    
-                    if (!String.IsNullOrEmpty(realm.Smell))
+
+                    if (!String.IsNullOrEmpty(room.Smell))
                     {
                         player.Send("Current Value: ", false);
-                        player.Send(realm.Smell);
+                        player.Send(room.Smell);
                     }
-                    
+
                     player.Send("Enter value: ", false);
-                    realm.Smell = player.ReadInput();
+                    room.Smell = player.ReadInput();
                     break;
                 case 9: //Exit
                     return;
@@ -583,18 +607,34 @@ namespace MudEngine.Commands
             switch (value)
             {
                 case 1: //Enable/Disable Initial Realm
-                    if (realm.IsInitialRealm)
+                    if (player.ActiveGame.InitialRealm == null)
                     {
-                        realm.IsInitialRealm = false;
-                        player.ActiveGame.InitialRealm = null;
+                        player.Send("Room Initial editing canceled. You must have a Initial Realm defined before setting a Initial Room.");
+                        return;
+                    }
+
+                    if (player.ActiveGame.InitialRealm.InitialZone == null)
+                    {
+                        player.Send("Room Initial editing canceled. You must have a Initial Zone before setting a Initial Room.");
+                        return;
+                    }
+
+                    if ((player.ActiveGame.InitialRealm.Filename == room.Realm) && (player.ActiveGame.InitialRealm.InitialZone.Filename == room.Zone))
+                    {
+                        if (room.IsInitialRoom)
+                        {
+                            room.IsInitialRoom = false;
+                            player.ActiveGame.InitialRealm.InitialZone.InitialRoom = null;
+                        }
+                        else
+                        {
+                            room.IsInitialRoom = true;
+                            player.ActiveGame.InitialRealm.InitialZone.InitialRoom = room;
+                        }
                     }
                     else
                     {
-                        realm.IsInitialRealm = true;
-                        if (player.ActiveGame.InitialRealm != null)
-                            player.ActiveGame.InitialRealm.IsInitialRealm = false;
-
-                        player.ActiveGame.InitialRealm = realm;
+                        player.Send("Room Initial editing canceled. You cannot define this Room as initial if it's parent Zone or Realm is not set as Initial.");
                     }
                     break;
                 case 9: //Exit
@@ -604,27 +644,32 @@ namespace MudEngine.Commands
             player.ActiveGame.Save();
         }
 
-        private void UpdateRealmObjects(String oldName)
+        /// <summary>
+        /// This method is used when the Rooms name or filename has changed.
+        /// It updates all objects that refer to this Rooms filename/roomname
+        /// </summary>
+        /// <param name="oldName"></param>
+        private void UpdateRoomObjects(String oldName)
         {
-            //Check if this Realm is the initial Realm. If so then we need to update the
-            //current Game so that when it launches, it checks the new Realm and not the old
+            //Check if this Room is the initial Room. If so then we need to update the
+            //current Game so that when it launches, it checks the new Room and not the old
             //one.
-            if (realm.IsInitialRealm)
+            if ((room.IsInitialRoom) && (player.ActiveGame.InitialRealm.InitialZone.Filename == room.Zone))
             {
-                player.ActiveGame.InitialRealm = realm;
+                player.ActiveGame.InitialRealm.InitialZone.InitialRoom = room;
             }
 
             //Loop through each player currently logged in and see if they are currently
-            //within the selected Realm. If they are then we need to change their current
-            //Realm to the new one.
+            //within the selected Room. If they are then we need to change their current
+            //Room to the new one.
             foreach (BaseCharacter p in player.ActiveGame.GetPlayerCollection())
             {
                 if (p.Name.StartsWith("Base"))
                     continue;
 
-                if (p.CurrentRoom.Realm == oldName)
+                if (p.CurrentRoom.Filename == oldName)
                 {
-                    p.CurrentRoom.Realm = realm.Filename;
+                    p.CurrentRoom = room;
                     p.Save(player.ActiveGame.DataPaths.Players);
                 }
             }
@@ -640,33 +685,32 @@ namespace MudEngine.Commands
             {
                 BaseCharacter ch = new BaseCharacter(player.ActiveGame);
                 ch.Load(file);
-                if (ch.CurrentRoom.Realm == oldName)
+                if (ch.CurrentRoom.Filename == oldName)
                 {
-                    ch.CurrentRoom.Realm = realm.Filename;
+                    ch.CurrentRoom = room;
                     ch.Save(player.ActiveGame.DataPaths.Players);
                 }
             }
 
-            //Next, we need to loop through every Zone and Door within this Realm
-            //and update their Realm names to match the new one
-            foreach (Realm r in player.ActiveGame.World.RealmCollection)
+            //Next, we need to loop through every Room within this Room
+            //and update their Rooms names to match the new one
+            foreach(Realm r in player.ActiveGame.World.RealmCollection)
             {
-                foreach (Zone z in realm.ZoneCollection)
+                foreach (Zone z in r.ZoneCollection)
                 {
-                    if (z.Realm == oldName)
-                        z.Realm = realm.Filename;
+                    if (z.InitialRoom.Filename == oldName)
+                    {
+                        z.InitialRoom = room;
+                    }
 
                     foreach (Room rm in z.RoomCollection)
                     {
-                        if (rm.Realm == oldName)
-                            rm.Realm = realm.Filename;
-
                         foreach (Door d in rm.Doorways)
                         {
-                            if (d.ArrivalRoom.Realm == oldName)
-                                d.ArrivalRoom.Realm = realm.Filename;
-                            if (d.DepartureRoom.Realm == oldName)
-                                d.DepartureRoom.Realm = realm.Filename;
+                            if (d.ArrivalRoom.Filename == oldName)
+                                d.ArrivalRoom = room;
+                            if (d.DepartureRoom.Filename == oldName)
+                                d.DepartureRoom = room;
                         }
                     }
                 }

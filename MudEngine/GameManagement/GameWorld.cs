@@ -190,6 +190,9 @@ namespace MudEngine.GameManagement
         /// <returns></returns>
         public Realm GetRealm(String filename)
         {
+            if (!filename.ToLower().EndsWith(".realm"))
+                filename += ".realm";
+
             foreach (Realm r in RealmCollection)
             {
                 if (r.Filename.ToLower() == filename.ToLower())
