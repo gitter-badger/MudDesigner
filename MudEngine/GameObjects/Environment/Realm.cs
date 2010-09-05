@@ -114,6 +114,15 @@ namespace MudEngine.GameObjects.Environment
             //TODO: Check fo duplicates
             ZoneCollection.Add(zone);
             zone.Realm = Filename;
+
+            //Set the Zones default senses to that of the Realm provided the Zone does 
+            //not already have a sense description assigned to it.
+            if ((!String.IsNullOrEmpty(this.Feel)) && (String.IsNullOrEmpty(zone.Feel)))
+                zone.Feel = this.Feel;
+            if ((!String.IsNullOrEmpty(this.Listen)) && (String.IsNullOrEmpty(zone.Listen)))
+                zone.Listen = this.Listen;
+            if ((!String.IsNullOrEmpty(this.Smell)) && (String.IsNullOrEmpty(zone.Smell)))
+                zone.Smell = this.Smell;
         }
     }
 }

@@ -160,6 +160,15 @@ namespace MudEngine.GameObjects.Environment
             RoomCollection.Add(room);
             room.Zone = Filename;
             room.Realm = Realm;
+
+            //Set the Rooms default senses to that of the Zones provided the Room does 
+            //not already have a sense description assigned to it.
+            if ((!String.IsNullOrEmpty(this.Feel)) && (String.IsNullOrEmpty(room.Feel)))
+                room.Feel = this.Feel;
+            if ((!String.IsNullOrEmpty(this.Listen)) && (String.IsNullOrEmpty(room.Listen)))
+                room.Listen = this.Listen;
+            if ((!String.IsNullOrEmpty(this.Smell)) && (String.IsNullOrEmpty(room.Smell)))
+                room.Smell = this.Smell;
         }
 
         public List<Room> GetRoom(String filename)

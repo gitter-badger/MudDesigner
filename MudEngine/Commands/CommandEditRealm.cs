@@ -31,7 +31,6 @@ namespace MudEngine.Commands
             Help.Add("Usage: Edit ObjectType ObjectName");
             Help.Add("Usage: Edit ObjectType FullyQualifiedName");
             Help.Add("Example: 'Edit Realm MyRealm'");
-            Help.Add("Example: 'Edit Room MyRealm>MyZone>Bedroom'");
         }
 
         public void Execute(String command, BaseCharacter player)
@@ -102,7 +101,7 @@ namespace MudEngine.Commands
             player.Send("2: Names");
             player.Send("3: Senses");
             player.Send("4: Initial Realm");
-            player.Send("5: Exit");
+            player.Send("9: Exit");
             player.Send("Enter numeric selection: ", false);
         }
 
@@ -116,7 +115,7 @@ namespace MudEngine.Commands
             player.Send("Select from the available options below:");
             player.Send("1: Simple Description");
             player.Send("2: Detailed Descriptions");
-            player.Send("3: Exit");
+            player.Send("9: Exit");
             player.Send("Enter a numeric selection: ", false);
         }
 
@@ -139,7 +138,44 @@ namespace MudEngine.Commands
             
             player.Send("1: Realm Visibile Name");
             player.Send("2: Realm Filename");
-            player.Send("3: Exit");
+            player.Send("9: Exit");
+            player.Send("Enter numeric selection: ", false);
+        }
+
+        private void BuildMenuSenses()
+        {
+            player.FlushConsole();
+            player.Send(Path.GetFileName(realm.Filename));
+            player.Send("Senses are what allow the players to get a better understanding of the environment around them.");
+            player.Send("Choose what sense you would like to edit, make your adjustments and press 'ENTER' to save the changes.");
+            player.Send("Senses defined for Realms will be applied as the default for every Zone created within a Realm.");
+            player.Send("Select from the available options below:");
+            player.Send("1: Feel Sense");
+            player.Send("2: Listen Sense");
+            player.Send("3: Smell Sense");
+            player.Send("9: Exit");
+        }
+
+        private void BuildMenuInitial()
+        {
+            player.FlushConsole();
+            player.Send(realm.Name);
+            player.Send("Initial Realm Settings.");
+            player.Send("The Initial Realm setting determins if the Realm will be the starting location for all newly created players or not.");
+            if (realm.IsInitialRealm)
+            {
+                player.Send("If you disable this Realm from being the Initial Realm, new players will not have a starting location assigned to them.");
+                player.Send("You will need to enable Initial Realm on another Realm in order for new players to have a starting location.");
+                player.Send("Select from the available options below:");
+                player.Send("1: Disable Initial Realm");
+            }
+            else
+            {
+                player.Send("If you enable Initial Realm, then new players will start at this location from now on.");
+                player.Send("Select from the available options below:");
+                player.Send("1: Enable Initial Realm");
+            }
+            player.Send("9: Exit");
             player.Send("Enter numeric selection: ", false);
         }
 
@@ -154,9 +190,8 @@ namespace MudEngine.Commands
 
             switch (value)
             {
-                case 1:
-                    //User wants to edit the descriptions of this Realm.
-                    //So lets build the menu and parse their menu selections.
+                case 1: //Descriptions
+                    //build the menu and parse their menu selections.
                     BuildMenuDescriptions();
                     try
                     {
@@ -170,9 +205,8 @@ namespace MudEngine.Commands
 
                     ParseDescriptionSelection(entry);
                     break;
-                case 2:
-                    //User wants to edit the names of this Realm.
-                    //So lets build the menu and parse their menu selections.
+                case 2: //Names
+                    //build the menu and parse their menu selections.
                     BuildMenuNames();
                     try
                     {
@@ -186,13 +220,24 @@ namespace MudEngine.Commands
 
                     ParseNameSelection(entry);
                     break;
-                case 3:
-                    //User wants to edit the Senses of this Realm.
+                case 3://Senses
                     break;
-                case 4:
-                    //User wants to edit the Initial Realm settings of this Realm.
+                case 4: //Initial Realm
+                    //build the menu and parse their menu selections
+                    BuildMenuInitial();
+                    try
+                    {
+                        entry = Convert.ToInt32(player.ReadInput());
+                    }
+                    catch
+                    {
+                        player.Send("Realm Editing canceled. The supplied value was not numeric!");
+                        return;
+                    }
+
+                    ParseInitialSelection(entry);
                     break;
-                case 5:
+                case 9:
                     break;
                 default:
                     break;
@@ -344,6 +389,8 @@ namespace MudEngine.Commands
                     player.ActiveGame.Save();
                     player.Send("Detailed Description saved.");
                     break;
+                case 9:
+                    break;
             }
         }
 
@@ -356,8 +403,7 @@ namespace MudEngine.Commands
         {
             switch (value)
             {
-                //Admin wants to edit the visible name
-                case 1:
+                case 1: //Visible Name
                     player.FlushConsole();
                     player.Send("Enter a new Visible name for this Realm.");
                     player.Send("Enter Value: ", false);
@@ -443,8 +489,7 @@ namespace MudEngine.Commands
                     }
                     player.ActiveGame.Save();
                     break;
-                    //Filename
-                case 2:
+                case 2: //Realm Filename
                     player.FlushConsole();
                     player.Send("Enter a new Filenamename for this Realm.");
                     player.Send("Enter Value: ", false);
@@ -461,13 +506,68 @@ namespace MudEngine.Commands
                     }
                     else
                     {
-                        String oldName = realm.Filename;
+                        String oldName = "";
+                        oldName = realm.Filename;
                         realm.Filename = fname;
                         UpdateRealmObjects(oldName);
                         player.ActiveGame.Save();
                     }
                     break;
+                case 9: //Exit
+                    return;
             }
+        }
+
+        private void ParseSensesSelection(Int32 value)
+        {
+            player.FlushConsole();
+
+            switch (value)
+            {
+                case 1: //Feel
+                    player.Send("Enter the new default FEEL description for this Realm.");
+                    player.Send("If you wish to clear the current description, just press ENTER to save a blank description.");
+                    player.Send("Enter Value: ", false);
+                    realm.Feel = player.ReadInput();
+                    break;
+                case 2: //Listen
+                    player.Send("Enter the new default LISTEN description for this Realm.");
+                    player.Send("If you wish to clear the current description, just press ENTER to save a blank description.");
+                    player.Send("Enter value: ", false);
+                    realm.Listen = player.ReadInput();
+                    break;
+                case 3: //Smell
+                    player.Send("Enter the new default SMELL description for this Realm.");
+                    player.Send("If you wish to clear the current description, just press ENTER to save a blank description.");
+                    player.Send("Enter value: ", false);
+                    realm.Smell = player.ReadInput();
+                    break;
+                case 9: //Exit
+                    return;
+            }
+        }
+
+        private void ParseInitialSelection(Int32 value)
+        {
+            switch (value)
+            {
+                case 1: //Enable/Disable Initial Realm
+                    if (realm.IsInitialRealm)
+                    {
+                        realm.IsInitialRealm = false;
+                        player.ActiveGame.InitialRealm = null;
+                    }
+                    else
+                    {
+                        realm.IsInitialRealm = true;
+                        player.ActiveGame.InitialRealm = realm;
+                    }
+                    break;
+                case 9: //Exit
+                    return;
+            }
+
+            player.ActiveGame.Save();
         }
 
         private void UpdateRealmObjects(String oldName)
