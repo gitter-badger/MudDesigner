@@ -6,6 +6,8 @@ using System.Text;
 using System.IO;
 using System.Reflection;
 
+using MudEngine.GameManagement;
+
 namespace MudEngine.FileSystem
 {
     /// <summary>
@@ -54,6 +56,11 @@ namespace MudEngine.FileSystem
 
         public static String GetData(String filename, String name)
         {
+            if (!File.Exists(filename))
+            {
+                Log.Write("Error: Failed attempting to load " + filename + ". File does not exist.");
+                return "No data Found." ;
+            }
             foreach (String line in File.ReadAllLines(filename))
             {
                 //Ignore comments

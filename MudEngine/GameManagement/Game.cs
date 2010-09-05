@@ -219,7 +219,7 @@ namespace MudEngine.GameManagement
                 PlayerCollection[i] = new BaseCharacter(this);
 
             AutoSave = true;
-            AutoSaveInterval = 1;
+            AutoSaveInterval = 60;
 
             MinimumPasswordSize = 6;
         }
@@ -356,7 +356,7 @@ namespace MudEngine.GameManagement
             FileManager.WriteLine(filename, this.GameTitle, "GameTitle");
             FileManager.WriteLine(filename, this.HideRoomNames.ToString(), "HideRoomNames");
 
-            if (this.InitialRealm.Name != "New Realm")
+            if ((this.InitialRealm != null) && (this.InitialRealm.Name != "New Realm"))
                 FileManager.WriteLine(filename, this.InitialRealm.Filename, "InitialRealm");
 
             FileManager.WriteLine(filename, this.IsMultiplayer.ToString(), "IsMultiplayer");
@@ -387,35 +387,43 @@ namespace MudEngine.GameManagement
                 return;
 
             Log.Write("Restoring Game Settings...");
-            this.AutoSave = Convert.ToBoolean(FileManager.GetData(filename, "AutoSave"));
-            this.AutoSaveInterval = Convert.ToInt32(FileManager.GetData(filename, "AutoSaveInterval"));
-            this.BaseCurrencyAmount = Convert.ToInt32(FileManager.GetData(filename, "BaseCurrencyAmount"));
-            this.BaseCurrencyName = FileManager.GetData(filename, "BaseCurrencyName");
-            this.CompanyName = FileManager.GetData(filename, "CompanyName");
-            this.DataPaths = new SaveDataPaths(FileManager.GetData(filename, "DataPathEnvironment"), FileManager.GetData(filename, "DataPathPlayers"));
-            this.GameTitle = FileManager.GetData(filename, "GameTitle");
-            this.HideRoomNames = Convert.ToBoolean(FileManager.GetData(filename, "HideRoomNames"));
-            this.InitialRealm = new Realm(this);
-            this.IsMultiplayer = Convert.ToBoolean(FileManager.GetData(filename, "IsMultiplayer"));
-            this.MaximumPlayers = Convert.ToInt32(FileManager.GetData(filename, "MaximumPlayers"));
-            this.PreCacheObjects = Convert.ToBoolean(FileManager.GetData(filename, "PreCacheObjects"));
-            this.ServerPort = Convert.ToInt32(FileManager.GetData(filename, "ServerPort"));
-            this.Version = FileManager.GetData(filename, "Version");
-            this.Website = FileManager.GetData(filename, "Webite");
-
-            //Need to re-assign the enumerator value that was previously assigned to the ServerType property
-            Array values = Enum.GetValues(typeof(ProtocolType));
-            foreach (Int32 value in values)
+            try
             {
-                //Since enum values are not strings, we can't simply just assign the String to the enum
-                String displayName = Enum.GetName(typeof(ProtocolType), value);
+                this.AutoSave = Convert.ToBoolean(FileManager.GetData(filename, "AutoSave"));
+                this.AutoSaveInterval = Convert.ToInt32(FileManager.GetData(filename, "AutoSaveInterval"));
+                this.BaseCurrencyAmount = Convert.ToInt32(FileManager.GetData(filename, "BaseCurrencyAmount"));
+                this.BaseCurrencyName = FileManager.GetData(filename, "BaseCurrencyName");
+                this.CompanyName = FileManager.GetData(filename, "CompanyName");
+                this.DataPaths = new SaveDataPaths(FileManager.GetData(filename, "DataPathEnvironment"), FileManager.GetData(filename, "DataPathPlayers"));
+                this.GameTitle = FileManager.GetData(filename, "GameTitle");
+                this.HideRoomNames = Convert.ToBoolean(FileManager.GetData(filename, "HideRoomNames"));
+                this.InitialRealm = new Realm(this);
+                this.IsMultiplayer = Convert.ToBoolean(FileManager.GetData(filename, "IsMultiplayer"));
+                this.MaximumPlayers = Convert.ToInt32(FileManager.GetData(filename, "MaximumPlayers"));
+                this.PreCacheObjects = Convert.ToBoolean(FileManager.GetData(filename, "PreCacheObjects"));
+                this.ServerPort = Convert.ToInt32(FileManager.GetData(filename, "ServerPort"));
+                this.Version = FileManager.GetData(filename, "Version");
+                this.Website = FileManager.GetData(filename, "Webite");
 
-                //If the value = the String saved, then perform the needed conversion to get our data back
-                if (displayName.ToLower() == FileManager.GetData(filename, "ServerType").ToLower())
+                //Need to re-assign the enumerator value that was previously assigned to the ServerType property
+                Array values = Enum.GetValues(typeof(ProtocolType));
+                foreach (Int32 value in values)
                 {
-                    ServerType = (ProtocolType)Enum.Parse(typeof(ProtocolType), displayName);
-                    break;
+                    //Since enum values are not strings, we can't simply just assign the String to the enum
+                    String displayName = Enum.GetName(typeof(ProtocolType), value);
+
+                    //If the value = the String saved, then perform the needed conversion to get our data back
+                    if (displayName.ToLower() == FileManager.GetData(filename, "ServerType").ToLower())
+                    {
+                        ServerType = (ProtocolType)Enum.Parse(typeof(ProtocolType), displayName);
+                        break;
+                    }
                 }
+            }
+            catch
+            {
+                Log.Write("Critical Error: Unable to complete Game.Load() due to error during loading of file data.");
+                return; 
             }
 
             //Restore the world.

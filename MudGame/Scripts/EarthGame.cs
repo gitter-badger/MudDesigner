@@ -42,6 +42,6 @@ public class EarthGame : Game
         Cali = new WorldCalifornia(this);
 
         //Calling the create method within the california script.
-        Cali.Create();
+        //Cali.Create();
     }
 }

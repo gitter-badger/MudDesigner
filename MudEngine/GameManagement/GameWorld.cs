@@ -129,6 +129,10 @@ namespace MudEngine.GameManagement
                         isFound = true;
                         break;
                     }
+                    else
+                    {
+                        RealmCollection.Add(r);
+                    }
                 }
 
                 if (!isFound)

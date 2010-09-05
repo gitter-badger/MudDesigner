@@ -316,9 +316,12 @@
                 else
                     CurrentRoom = ActiveGame.InitialRealm.InitialZone.InitialRoom;
 
-                ExecuteCommand("Login");
+                IGameCommand gc = CommandEngine.GetCommand("CommandLogin");
+                gc.Execute("Login", this);
                 Log.Write(Name + " has logged in.");
-                ExecuteCommand("Look"); //MUST happen after Room setup is completed, otherwise the player default Abyss Room is printed.
+                gc = CommandEngine.GetCommand("CommandLook");
+                gc.Execute("Look", this); //MUST happen after Room setup is completed, otherwise the player default Abyss Room is printed.
+                this.Send("Command: ", false);
             }
             internal void Receive(String data)
             {
