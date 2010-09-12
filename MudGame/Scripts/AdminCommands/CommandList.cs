@@ -57,26 +57,56 @@ public class CommandList : IGameCommand
                 switch (data[0])
                 {
                     case "realms":
-                        player.Send("Currently loaded Realm files:");
-                        foreach (Realm r in player.ActiveGame.World.RealmCollection)
-                            player.Send(r.Filename + " | ", false);
+                        if (player.ActiveGame.World.RealmCollection.Count == 0)
+                            player.Send("There are currently no loaded Realm files.");
+                        else
+                        {
+                            player.Send("Currently loaded Realm files:");
+                            foreach (Realm r in player.ActiveGame.World.RealmCollection)
+                                player.Send(r.Filename + " | ", false);
+                        }
                         break;
                     case "players":
-                        player.Send("Players with created characters:");
-                        BaseCharacter p = new BaseCharacter(player.ActiveGame);
-                        foreach (String file in System.IO.Directory.GetFiles(player.ActiveGame.DataPaths.Players, "*.character"))
+                        if (System.IO.Directory.GetFiles(player.ActiveGame.DataPaths.Players, "*.character").Length == 0)
+                            player.Send("There are currently no characters created on this server.");
+                        else
                         {
-                            p.Load(file);
-                            player.Send(p.Name + " | ", false);
+                            player.Send("Players with created characters:");
+                            BaseCharacter p = new BaseCharacter(player.ActiveGame);
+                            foreach (String file in System.IO.Directory.GetFiles(player.ActiveGame.DataPaths.Players, "*.character"))
+                            {
+                                p.Load(file);
+                                player.Send(p.Name + " | ", false);
+                            }
                         }
                         break;
                     case "zones":
-                        player.Send("Currently loaded Zones. This spans across every Realm in the world.");
-                        foreach (Realm r in player.ActiveGame.World.RealmCollection)
+                        if (player.ActiveGame.World.RealmCollection.Count == 0)
                         {
-                            foreach (Zone z in r.ZoneCollection)
+                            player.Send("There are currently no Zones created on this server.");
+                        }
+                        else
+                        {
+                            List<String> names = new List<String>();
+                            foreach (Realm r in player.ActiveGame.World.RealmCollection)
                             {
-                                player.Send(System.IO.Path.GetFileNameWithoutExtension(r.Filename) + ">" + System.IO.Path.GetFileNameWithoutExtension(z.Filename));
+                                foreach (Zone z in r.ZoneCollection)
+                                {
+                                    names.Add(System.IO.Path.GetFileNameWithoutExtension(r.Filename) + ">" + System.IO.Path.GetFileNameWithoutExtension(z.Filename));
+                                }
+                            }
+
+                            if (names.Count == 0)
+                            {
+                                player.Send("There are currently no Zones created on this server.");
+                            }
+                            else
+                            {
+                                player.Send("Currently loaded Zones. This spans across every Realm in the world.");
+                                foreach (String name in names)
+                                {
+                                    player.Send(name);
+                                }
                             }
                         }
                         break;

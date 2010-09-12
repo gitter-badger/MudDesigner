@@ -70,7 +70,7 @@ namespace MudEngine.GameObjects.Environment
         {
             get
             {
-                return this.Realm + ">" + Zone + ">" + Filename;
+                return this.Realm + ">" + this.Zone + ">" + this.Filename;
             }
         }
 

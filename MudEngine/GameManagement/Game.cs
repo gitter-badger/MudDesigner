@@ -195,6 +195,7 @@ namespace MudEngine.GameManagement
             scriptEngine = new Scripting.ScriptEngine(this);
             World = new GameWorld(this);
             WorldTime = new GameTime(this);
+            InitialRealm = new Realm(this);
 
             //Prepare the Save Paths for all of our Game objects.
             DataPaths = new SaveDataPaths("World", "Player");
@@ -278,6 +279,17 @@ namespace MudEngine.GameManagement
 
             //Load the game and world if it was previously saved.
             Load();
+
+            String[] env = InitialRealm.InitialZone.InitialRoom.RoomLocation.Split('>');
+            if (env.Length == 3)
+            {
+                if ((String.IsNullOrEmpty(env[0])) || (String.IsNullOrEmpty(env[1])) || (String.IsNullOrEmpty(env[2])))
+                {
+                    Log.Write("Error: No starting location defined!");
+                }
+            }
+            else
+                Log.Write("Error: No starting location defined!");
 
             Log.Write("Game startup complete.");
             return true;
@@ -428,6 +440,16 @@ namespace MudEngine.GameManagement
 
             //Restore the world.
             World.Load();
+
+            //Check if any the initial room exists or not.
+            if ((this.InitialRealm == null) || (this.InitialRealm.InitialZone == null) || (this.InitialRealm.InitialZone.InitialRoom == null))
+            {
+                Log.Write("ERROR: No initial location defined. Game startup failed!");
+                Log.Write("Players will start in the Abyss. Each player will contain their own instance of this room.");
+                //return false;
+            }
+            else
+                Log.Write("Initial Location loaded: " + this.InitialRealm.InitialZone.InitialRoom.RoomLocationWithoutExtension);
 
             Log.Write("Game Restore complete.");
         }

@@ -21,7 +21,8 @@ namespace MudEngine.Commands
         public List<String> Help { get; set; }
 
         private Realm realm;
-        BaseCharacter player;
+        private BaseCharacter player;
+        private Boolean isEditing;
 
         public CommandEditRealm()
         {
@@ -52,7 +53,7 @@ namespace MudEngine.Commands
 
                 //We have a filename, retrieve the Realm the admin wants to edit.
                 realm = player.ActiveGame.World.GetRealm(filename);
-                
+
                 //If no Realm was retrieved (due to it not existing), let the admin know
                 //that the Realm filename was not valid.
                 if (realm == null)
@@ -60,29 +61,35 @@ namespace MudEngine.Commands
                     player.Send("Realm Editing canceled. The supplied Realm name is not valid.");
                     return;
                 }
-                    //Otherwise, the Realm does exist and was retrieved.
-                    //Lets build our Editing menu's and allow for Realm Editing.
+                //Otherwise, the Realm does exist and was retrieved.
+                //Lets build our Editing menu's and allow for Realm Editing.
                 else
                 {
-                    //Construct the main editing menu.
-                    BuildMenuMain();
-
-                    //Find out what menu option the admin wants to use.
-                    Int32 value = 0;
-                    //Attempt to convert the String entered by the admin into a numeric value
-                    try
+                    //Always re-build the menu so the user doesn't need to re-enter the edit command.
+                    //When the user selects the exit option, the loop will end.
+                    isEditing = true;
+                    while (isEditing)
                     {
-                        value = Convert.ToInt32(player.ReadInput());
-                    }
+                        //Construct the main editing menu.
+                        BuildMenuMain();
+
+                        //Find out what menu option the admin wants to use.
+                        Int32 value = 0;
+                        //Attempt to convert the String entered by the admin into a numeric value
+                        try
+                        {
+                            value = Convert.ToInt32(player.ReadInput());
+                        }
                         //If a non-numeric value is supplied, the conversion failed. This is us catching that failure.
-                    catch
-                    {
-                        player.Send("Realm Editing canceled. The supplied value was not numeric!");
-                        return;
-                    }
+                        catch
+                        {
+                            player.Send("Realm Editing canceled. The supplied value was not numeric!");
+                            return;
+                        }
 
-                    //Parse the menu option that the admin supplied.
-                    ParseMenuSelection(value);
+                        //Parse the menu option that the admin supplied.
+                        ParseMenuSelection(value);
+                    }
                     //let the admin know that we have now exited the editor.
                     player.Send("Editing completed.");
                 }
@@ -135,7 +142,7 @@ namespace MudEngine.Commands
             player.Send("Example: A Realm with a Visible name of \"My Test Realm\" can have a filename of \"Test.Realm\". You would access this object as a Admin by specifying a object name of \"Test\"");
             player.Send("Select from the available options below:");
             player.Send("");
-            
+
             player.Send("1: Realm Visibile Name");
             player.Send("2: Realm Filename");
             player.Send("9: Exit");
@@ -238,6 +245,7 @@ namespace MudEngine.Commands
                     ParseInitialSelection(entry);
                     break;
                 case 9:
+                    isEditing = false;
                     break;
                 default:
                     break;
@@ -254,7 +262,7 @@ namespace MudEngine.Commands
             String input = "";
             switch (value)
             {
-                    //Simple Description
+                //Simple Description
                 case 1:
                     player.FlushConsole();
                     player.Send("Enter a simple description for this Realm.");
@@ -277,7 +285,7 @@ namespace MudEngine.Commands
                     player.ActiveGame.Save();
                     player.Send("New Simple Description saved.");
                     break;
-                    //Detailed Description
+                //Detailed Description
                 case 2:
                     Boolean isEditing = true;
                     Int32 line = 1;
@@ -322,7 +330,7 @@ namespace MudEngine.Commands
                         else if (input.ToLower().StartsWith("edit"))
                         {
                             //Retrieve the line number from the users input.
-                            String editLine= input.Substring("edit".Length).Trim();
+                            String editLine = input.Substring("edit".Length).Trim();
 
                             //If no line number was provided, cancel.
                             if (String.IsNullOrEmpty(editLine))
@@ -543,33 +551,33 @@ namespace MudEngine.Commands
                         player.Send("Current Value: ", false);
                         player.Send(realm.Feel);
                     }
-                    
+
                     player.Send("Enter Value: ", false);
                     realm.Feel = player.ReadInput();
                     break;
                 case 2: //Listen
                     player.Send("Enter the new default LISTEN description for this Realm.");
                     player.Send("If you wish to clear the current description, just press ENTER to save a blank description.");
-                    
+
                     if (!String.IsNullOrEmpty(realm.Listen))
                     {
                         player.Send("Current Value: ", false);
                         player.Send(realm.Listen);
                     }
-                    
+
                     player.Send("Enter value: ", false);
                     realm.Listen = player.ReadInput();
                     break;
                 case 3: //Smell
                     player.Send("Enter the new default SMELL description for this Realm.");
                     player.Send("If you wish to clear the current description, just press ENTER to save a blank description.");
-                    
+
                     if (!String.IsNullOrEmpty(realm.Smell))
                     {
                         player.Send("Current Value: ", false);
                         player.Send(realm.Smell);
                     }
-                    
+
                     player.Send("Enter value: ", false);
                     realm.Smell = player.ReadInput();
                     break;

@@ -74,17 +74,6 @@ namespace MudEngine.GameManagement
                     break;
                 }
             }
-
-            //Check if any the initial room exists or not.
-            if ((_Game.InitialRealm == null) || (_Game.InitialRealm.InitialZone == null) || (_Game.InitialRealm.InitialZone.InitialRoom == null))
-            {
-                Log.Write("ERROR: No initial location defined. Game startup failed!");
-                Log.Write("Players will start in the Abyss. Each player will contain their own instance of this room.");
-                //return false;
-            }
-            else
-                Log.Write("Initial Location loaded: " + _Game.InitialRealm.InitialZone.InitialRoom.RoomLocationWithoutExtension);
-
         }
 
         public void Save()

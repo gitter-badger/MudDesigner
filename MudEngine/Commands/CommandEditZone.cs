@@ -21,7 +21,8 @@ namespace MudEngine.Commands
         public List<String> Help { get; set; }
 
         private Zone zone;
-        BaseCharacter player;
+        private BaseCharacter player;
+        private Boolean isEditing;
 
         public CommandEditZone()
         {
@@ -76,25 +77,31 @@ namespace MudEngine.Commands
                 //Lets build our Editing menu's and allow for Zone Editing.
                 else
                 {
-                    //Construct the main editing menu.
-                    BuildMenuMain();
-
-                    //Find out what menu option the admin wants to use.
-                    Int32 value = 0;
-                    //Attempt to convert the String entered by the admin into a numeric value
-                    try
+                    //Always re-build the menu so the user doesn't need to re-enter the edit command.
+                    //When the user selects the exit option, the loop will end.
+                    isEditing = true;
+                    while (isEditing)
                     {
-                        value = Convert.ToInt32(player.ReadInput());
-                    }
-                    //If a non-numeric value is supplied, the conversion failed. This is us catching that failure.
-                    catch
-                    {
-                        player.Send("Zone Editing canceled. The supplied value was not numeric!");
-                        return;
-                    }
+                        //Construct the main editing menu.
+                        BuildMenuMain();
 
-                    //Parse the menu option that the admin supplied.
-                    ParseMenuSelection(value);
+                        //Find out what menu option the admin wants to use.
+                        Int32 value = 0;
+                        //Attempt to convert the String entered by the admin into a numeric value
+                        try
+                        {
+                            value = Convert.ToInt32(player.ReadInput());
+                        }
+                        //If a non-numeric value is supplied, the conversion failed. This is us catching that failure.
+                        catch
+                        {
+                            player.Send("Zone Editing canceled. The supplied value was not numeric!");
+                            return;
+                        }
+
+                        //Parse the menu option that the admin supplied.
+                        ParseMenuSelection(value);
+                    }
                     //let the admin know that we have now exited the editor.
                     player.Send("Editing completed.");
                 }
@@ -113,7 +120,7 @@ namespace MudEngine.Commands
             player.Send("2: Names");
             player.Send("3: Senses");
             player.Send("4: Initial Zone");
-            player.Send("5: Settings");
+           // player.Send("5: Settings");
             player.Send("9: Exit");
             player.Send("Enter numeric selection: ", false);
         }
@@ -253,6 +260,7 @@ namespace MudEngine.Commands
                 case 5: //Settings
                     break;
                 case 9:
+                    isEditing = false;
                     break;
                 default:
                     break;
