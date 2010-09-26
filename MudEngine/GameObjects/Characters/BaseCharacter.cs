@@ -52,6 +52,13 @@
                 }
             }
 
+            protected override string SavePath
+            {
+                get
+                {
+                    return ActiveGame.DataPaths.Players;
+                }
+            }
             /// <summary>
             /// Gets or Sets if this Character is controlled by the user. If not user controlled then it will be AI controlled.
             /// </summary>
@@ -91,6 +98,12 @@
             /// Gets a working copy of the CommandEngine used by the player.
             /// </summary>
             public CommandEngine CommandSystem { get; internal set; }
+
+            /// <summary>
+            /// Gets or Sets the characters stats.
+            /// Note that this will more and likely become Read-Only in the future.
+            /// </summary>
+            public BaseStats Stats { get; set; }
 
             public BaseCharacter(Game game) : base(game)
             {
@@ -187,11 +200,11 @@
                  */
             }
 
-            public override void Save(String path)
+            public override void Save()
             {
-                base.Save(path);
+                base.Save();
 
-                path = Path.Combine(path, Filename);
+                String path = Path.Combine(SavePath, Filename);
 
                 FileManager.WriteLine(path, this.Password, "Password");
                 FileManager.WriteLine(path, this.IsControlled.ToString(), "IsControlled");
@@ -281,7 +294,7 @@
                 Name = playerName;
                 Password = password;
 
-                Save(ActiveGame.DataPaths.Players);
+                Save();
             }
 
             public bool VarifyPassword(string password)
@@ -392,7 +405,7 @@
             {
                 if (IsActive)
                 {
-                    this.Save(ActiveGame.DataPaths.Players);
+                    this.Save();
 
                     Send("Goodbye!");
                     IsActive = false;

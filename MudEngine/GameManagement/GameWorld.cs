@@ -81,7 +81,7 @@ namespace MudEngine.GameManagement
             //Save all of the Environments
             for (Int32 x = 0; x <= RealmCollection.Count - 1; x++)
             {
-                RealmCollection[x].Save(_Game.DataPaths.Environment);
+                RealmCollection[x].Save();
             }
         }
 

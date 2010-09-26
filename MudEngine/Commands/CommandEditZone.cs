@@ -120,7 +120,7 @@ namespace MudEngine.Commands
             player.Send("2: Names");
             player.Send("3: Senses");
             player.Send("4: Initial Zone");
-           // player.Send("5: Settings");
+            player.Send("5: Settings");
             player.Send("9: Exit");
             player.Send("Enter numeric selection: ", false);
         }
@@ -199,6 +199,20 @@ namespace MudEngine.Commands
             player.Send("Enter numeric selection: ", false);
         }
 
+        private void BuildMenuSettings()
+        {
+            player.FlushConsole();
+            player.Send(zone.Name);
+            player.Send("Zone Settings.");
+            player.Send("The following settings are available for you to edit.");
+            player.Send("Select from the available options below:");
+            player.Send("");
+            player.Send("1: Zone is Always Safe.");
+            //player.Send("2: Zone drains stats.");
+            player.Send("9: Exit");
+            player.Send("Enter numeric selection: ", false);
+        }
+
         /// <summary>
         /// This method parses the Admin input based off the main editing menu
         /// and sends the admin to what-ever sub-menu method we need to.
@@ -241,6 +255,19 @@ namespace MudEngine.Commands
                     ParseNameSelection(entry);
                     break;
                 case 3://Senses
+                    BuildMenuSenses();
+
+                    try
+                    {
+                        entry = Convert.ToInt32(player.ReadInput());
+                    }
+                    catch
+                    {
+                        player.Send("Realm Editing Canceled. The supplied value was not numeric!");
+                        return;
+                    }
+
+                    ParseSensesSelection(entry);
                     break;
                 case 4: //Initial Realm
                     //build the menu and parse their menu selections
@@ -258,6 +285,18 @@ namespace MudEngine.Commands
                     ParseInitialSelection(entry);
                     break;
                 case 5: //Settings
+                    BuildMenuSettings();
+                    try
+                    {
+                        entry = Convert.ToInt32(player.ReadInput());
+                    }
+                    catch
+                    {
+                        player.Send("Zone Editing canceled. The supplied value was not numeric!");
+                        return;
+                    }
+
+                    ParseSettingsSelection(entry);
                     break;
                 case 9:
                     isEditing = false;
@@ -630,6 +669,92 @@ namespace MudEngine.Commands
             player.ActiveGame.Save();
         }
 
+        private void ParseSettingsSelection(Int32 value)
+        {
+            Int32 input = 0;
+            switch (value)
+            {
+                case 1://IsSafe property
+                    player.FlushConsole();
+                    player.Send("Setting a Zone to SAFE will allow players to traverse the Zone without fear of being attacked by Monsters.");
+                    player.Send("Even if there are Monsters in the Zone.");
+                    player.Send("This feature can be extended on by writing a script that checks the current time of day, and disables SAFE zone settings at certain times (such as at night) allowing for monsters to attack players at night, but not day.");
+                    player.Send("All Rooms created within this Zone will default to this value, however a Room may override this option.");
+                    player.Send("Please select from one of the available options below:");
+
+                    if (zone.IsSafe)
+                        player.Send("1: Disable Safe Zone");
+                    else
+                        player.Send("1: Enable Safe Zone");
+
+                    player.Send("9: Exit");
+
+                    try
+                    {
+                        input = Convert.ToInt32(player.ReadInput());
+                    }
+                    catch
+                    {
+                        player.Send("Zone Editor Canceled. Entry must be in a numeric format.");
+                        return;
+                    }
+
+                    switch (input)
+                    {
+                        case 1:
+                            if (zone.IsSafe)
+                                zone.IsSafe = false;
+                            else
+                                zone.IsSafe = true;
+                            break;
+                        case 9:
+                            break;
+                    }
+                    break;
+                case 2: //StatDrain property
+                    player.FlushConsole();
+                    player.Send("Enabling STAT DRAIN will cause any Room within the Zone to drain or increase the specified stats on a player.");
+                    player.Send("Please select from the available options below:");
+
+                    if (zone.StatDrain)
+                        player.Send("1: Disable");
+                    else
+                        player.Send("1: Enable");
+
+                    player.Send("2: Edit Affected Stats");
+                    player.Send("9: Exit");
+
+                    try
+                    {
+                        input = Convert.ToInt32(player.ReadInput());
+                    }
+                    catch
+                    {
+                        player.Send("Zone Editor Canceled. Entry must be in a numeric format.");
+                        return;
+                    }
+
+                    switch (input)
+                    {
+                        case 1:
+                            if (zone.StatDrain)
+                                zone.StatDrain = false;
+                            else
+                                zone.StatDrain = true;
+                            break;
+                        case 2:
+                            player.Send("Select which Stat you would like to edit.");
+                            //TODO: Implement stat affects.
+                            break;
+                        case 9:
+                            break;
+                    }
+                    break;
+            }
+
+            player.ActiveGame.Save();
+        }
+
         private void UpdateZoneObjects(String oldName)
         {
             //Check if this Zone is the initial Zone. If so then we need to update the
@@ -655,7 +780,7 @@ namespace MudEngine.Commands
                 if (p.CurrentRoom.Zone == oldName)
                 {
                     p.CurrentRoom.Zone = zone.Filename;
-                    p.Save(player.ActiveGame.DataPaths.Players);
+                    p.Save();
                 }
             }
 
@@ -673,7 +798,7 @@ namespace MudEngine.Commands
                 if (ch.CurrentRoom.Zone == oldName)
                 {
                     ch.CurrentRoom.Zone = zone.Filename;
-                    ch.Save(player.ActiveGame.DataPaths.Players);
+                    ch.Save();
                 }
             }
 

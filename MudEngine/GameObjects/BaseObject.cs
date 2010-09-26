@@ -81,6 +81,8 @@ namespace MudEngine.GameObjects
         }
         String _Filename;
 
+        protected virtual String SavePath { get; set; }
+
         [Category("Environment Information")]
         [Description("If a user asks to use his/her senses to investigate an area, this is one of the results that will be displayed. Senses can be used to assist blind characters.")]
         [DefaultValue("You don't smell anything unsual.")]
@@ -177,8 +179,10 @@ namespace MudEngine.GameObjects
         {
         }
 
-        public virtual void Save(String path)
+        public virtual void Save()
         {
+            string path = this.SavePath;
+
             if (String.IsNullOrEmpty(path))
                 return;
 

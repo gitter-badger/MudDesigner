@@ -37,6 +37,6 @@ public class CommandSave : IGameCommand
     public void Execute(String command, BaseCharacter player)
     {
         //Save the player to the hard-disk.
-        player.Save(player.ActiveGame.DataPaths.Players);
+        player.Save();
     }
 }

@@ -77,6 +77,14 @@ namespace MudEngine.GameObjects.Environment
         [Category("Environment Information")]
         public Room InitialRoom { get; set; }
 
+        protected override String SavePath
+        {
+            get
+            {
+                return Path.Combine(ActiveGame.DataPaths.Environment, Path.GetFileNameWithoutExtension(this.Realm), "Zones", Path.GetFileNameWithoutExtension(Filename));
+            }
+        }
+
         public Zone(GameManagement.Game game)
             : base(game)
         {
@@ -86,13 +94,11 @@ namespace MudEngine.GameObjects.Environment
             Realm = "No Realm Associated.";
         }
 
-        public override void Save(String path)
+        public override void Save()
         {
-            path = Path.Combine(path, Path.GetFileNameWithoutExtension(Filename));
+            base.Save();
 
-            base.Save(path);
-
-            String filename = Path.Combine(path, Filename);
+            String filename = Path.Combine(SavePath, Filename);
 
             FileManager.WriteLine(filename, this.IsInitialZone.ToString(), "IsInitialZone");
             FileManager.WriteLine(filename, this.IsSafe.ToString(), "IsSafe");
@@ -103,11 +109,11 @@ namespace MudEngine.GameObjects.Environment
             if (this.InitialRoom.Name != "New Room")
                 FileManager.WriteLine(filename, this.InitialRoom.Filename, "InitialRoom");
 
-            String roomPath = Path.Combine(path, "Rooms");
+            String roomPath = Path.Combine(SavePath, "Rooms");
             foreach (Room r in RoomCollection)
             {
                 FileManager.WriteLine(filename, r.Filename, "RoomCollection");
-                 r.Save(roomPath);
+                 r.Save();
             }
         }
 

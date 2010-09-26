@@ -228,6 +228,19 @@ namespace MudEngine.Commands
                     ParseNameSelection(entry);
                     break;
                 case 3://Senses
+                    BuildMenuSenses();
+
+                    try
+                    {
+                        entry = Convert.ToInt32(player.ReadInput());
+                    }
+                    catch
+                    {
+                        player.Send("Realm Editing Canceled. The supplied value was not numeric!");
+                        return;
+                    }
+
+                    ParseSensesSelection(entry);
                     break;
                 case 4: //Initial Realm
                     //build the menu and parse their menu selections
@@ -633,7 +646,7 @@ namespace MudEngine.Commands
                 if (p.CurrentRoom.Realm == oldName)
                 {
                     p.CurrentRoom.Realm = realm.Filename;
-                    p.Save(player.ActiveGame.DataPaths.Players);
+                    p.Save();
                 }
             }
 
@@ -651,7 +664,7 @@ namespace MudEngine.Commands
                 if (ch.CurrentRoom.Realm == oldName)
                 {
                     ch.CurrentRoom.Realm = realm.Filename;
-                    ch.Save(player.ActiveGame.DataPaths.Players);
+                    ch.Save();
                 }
             }
 

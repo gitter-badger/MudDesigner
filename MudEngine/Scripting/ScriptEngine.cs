@@ -114,6 +114,7 @@ namespace MudEngine.Scripting
             InstallPath = Environment.CurrentDirectory;
             GameObjects = new List<GameObject>();
             _AssemblyCollection = new List<Assembly>();
+            ObjectCollection = new GameObjectCollection();
             ScriptType = scriptTypes;
 
             _Game = game;

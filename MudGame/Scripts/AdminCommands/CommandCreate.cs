@@ -64,7 +64,7 @@ public class CommandCreate : IGameCommand
 
         //Split the supplied string up. It wil give us an array of strings with the supplied
         //object names if the admin has specified environment objects for creation.
-        String[] env = command.ToLower().Substring("Create ".Length).Split('>');
+        String[] env = command.Substring("Create ".Length).Split('>');
 
         //No objects specified, so the admin didn't use the command correctly.
         if (env.Length == 0)

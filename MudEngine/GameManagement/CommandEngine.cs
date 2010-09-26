@@ -1,4 +1,4 @@
-﻿//Microsoft .NET Framework
+﻿    //Microsoft .NET Framework
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,7 +84,15 @@ namespace MudEngine.GameManagement
                 if (commandKey.ToLower().Contains(key.ToLower()))
                 {
                     IGameCommand cmd = CommandEngine.CommandCollection[key];
-                    cmd.Execute(command, player);
+                    try
+                    {
+                        cmd.Execute(command, player);
+                    }
+                    catch(Exception ex)
+                    {
+                        Log.Write("Fatal Error occured while attempting to execute that command " + command.ToUpper());
+                        Log.Write("Command Error: " + ex.Source + "." + ex.TargetSite.Name + ": " + ex.Message);
+                    }
                     return;
                 }
             }

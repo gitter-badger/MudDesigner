@@ -198,7 +198,7 @@ namespace MudEngine.GameManagement
             InitialRealm = new Realm(this);
 
             //Prepare the Save Paths for all of our Game objects.
-            DataPaths = new SaveDataPaths("World", "Player");
+            DataPaths = new SaveDataPaths("World", "Players");
 
             //Setup default settings for the Game
             GameTitle = "New Game";
@@ -339,7 +339,7 @@ namespace MudEngine.GameManagement
             {
                 if (PlayerCollection[i].Name == "New BaseCharacter")
                     continue;
-                PlayerCollection[i].Save(this.DataPaths.Players);
+                PlayerCollection[i].Save();
             }
 
             //Delete the last saved version of the World. We will dump the current version onto disk.
@@ -395,6 +395,11 @@ namespace MudEngine.GameManagement
         {
             String filename = GameTitle + ".ini";
 
+            this.Load(filename);
+        }
+
+        public virtual void Load(String filename)
+        {
             if (!File.Exists(filename))
                 return;
 

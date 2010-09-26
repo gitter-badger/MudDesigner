@@ -86,6 +86,14 @@ namespace MudEngine.GameObjects.Environment
             }
         }
 
+        protected override string SavePath
+        {
+            get
+            {
+                return Path.Combine(ActiveGame.DataPaths.Environment, Path.GetFileNameWithoutExtension(this.Realm), "Zones", Path.GetFileNameWithoutExtension(this.Zone), "Rooms");
+            }
+        }
+
         public Room(Game game) :base(game)
         {
             Doorways = new List<Door>();
@@ -98,11 +106,11 @@ namespace MudEngine.GameObjects.Environment
         /// Room is saved within a Realm/Zone/Room directory structure
         /// </summary>
         /// <param name="path"></param>
-        public override void Save(String path)
+        public override void Save()
         {
-            base.Save(path);
+            base.Save();
 
-            String filename = Path.Combine(path, Filename);
+            String filename = Path.Combine(this.SavePath, Filename);
 
             FileManager.WriteLine(filename, IsInitialRoom.ToString(), "IsInitialRoom");
             FileManager.WriteLine(filename, this.IsSafe.ToString(), "IsSafe");

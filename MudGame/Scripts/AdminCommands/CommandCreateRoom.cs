@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿
+/// <summary>
 /// This command creates a Room within the players current Realm>Zone.
 /// Admins using this command will not need to supply a fully qualified path like the 'Create' command requires.
 /// However, they are restricted to creating Rooms only within their current Realm>Zone.

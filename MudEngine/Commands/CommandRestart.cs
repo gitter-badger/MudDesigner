@@ -38,7 +38,7 @@ namespace MudEngine.Commands
                 for (Int32 i = 0; i < player.ActiveGame.GetPlayerCollection().Length; i++)
                 {
                     String filename = Path.Combine(path, player.ActiveGame.GetPlayerCollection()[i].Filename);
-                    player.ActiveGame.GetPlayerCollection()[i].Save(filename);
+                    player.ActiveGame.GetPlayerCollection()[i].Save();
                 }
 
                 //player.ActiveGame.Server.EndServer(); //-Handled in Game.Shutdown() below.

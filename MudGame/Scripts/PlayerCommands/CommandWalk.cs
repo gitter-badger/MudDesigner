@@ -96,17 +96,18 @@ public class CommandWalk : IGameCommand
 
                     //BAD - Don't invoke commands directly by the player as it causes issues for them client-side.
                     //Always invoke the command internally, passing a reference to the player instead.
-                    //player.CommandSystem.ExecuteCommand("Look", player); 
+                    //player.ExecuteCommand("Look");
                     
                     //Use the Look command to print the contents of the new Room to the Player.
                     //Good - Correct way of invoking commands automatically for the player.
                     //The command will be executed for which ever player is passed as a reference.
-                    CommandLook look = new CommandLook();
-                    look.Execute("look", player);
-
+                    IGameCommand look = CommandEngine.GetCommand("CommandLook");
+                    if (look != null)
+                        look.Execute("look", player);
+                    
                     //If the current Active Game has Auto-Save enabled, we will save the player.
                     if (player.ActiveGame.AutoSave)
-                        player.Save(player.ActiveGame.DataPaths.Players);
+                        player.Save();
 
                     return;
                 }

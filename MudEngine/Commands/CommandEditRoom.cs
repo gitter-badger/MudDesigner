@@ -38,12 +38,23 @@ namespace MudEngine.Commands
             if ((player.Role == SecurityRoles.Admin) || (player.Role == SecurityRoles.GM))
             {
                 //Get the admin-entered room filename
-                String[] tokens = command.Substring("EditRoom".Length).Trim().Split('>');
+                String[] tokens;
+                String filename;
+
+                //Other scripts calling this script typically don't supply 'EditRoom' within the command argument
+                if (command.ToLower().StartsWith("editroom"))
+                    tokens = command.Substring("EditRoom".Length).Trim().Split('>');
+                else
+                    tokens = command.Trim().Split('>');
 
                 if (tokens.Length == 0)
                 {
                     player.Send("Room Editing canceled. No Room name was supplied.");
                     return;
+                }
+                else if (tokens.Length == 1)
+                {
+                    filename = tokens[0];
                 }
                 else if (tokens.Length <= 2)
                 {
@@ -52,26 +63,36 @@ namespace MudEngine.Commands
                     gc.Execute("Help EditRoom", player);
                     return;
                 }
-
-                String filename = tokens[2]; //Room filename is the 3rd index in the array.
+                else
+                    filename = tokens[2]; //Room filename is the 3rd index in the array.
 
                 //Raise the scope of the player reference to class level instead of method level.
                 this.player = player;
 
-                //We have a filename, retrieve the Room the admin wants to edit.
-                if ((player.ActiveGame.World.GetRealm(tokens[0]) == null) || (player.ActiveGame.World.GetRealm(tokens[0]).GetZone(tokens[1])[0] == null))
+                if (tokens.Length == 3)
                 {
-                    player.Send("Room editing canceled. Rooms owning Realm or Zone does not exists.");
-                    return;
+                    try
+                    {
+                        room = player.ActiveGame.World.GetRealm(tokens[0]).GetZone(tokens[1])[0].GetRoom(filename)[0];
+                    }
+                    catch
+                    {
+                        player.Send("Room Editing canceled. The supplied path does not exist. Did you type the correct names in?");
+                    }
                 }
-
-                if (player.ActiveGame.World.GetRealm(tokens[0]).GetZone(tokens[1])[0].GetRoom(filename).Count == 0)
+                else
                 {
-                    player.Send("Room Editing canceled. The supplied Room does not exist.");
-                    return;
-                }
-                room = player.ActiveGame.World.GetRealm(tokens[0]).GetZone(tokens[1])[0].GetRoom(filename)[0];
+                    try
+                    {
+                        room = player.ActiveGame.World.GetRealm(player.CurrentRoom.Realm).GetZone(player.CurrentRoom.Zone)[0].GetRoom(filename)[0];
+                    }
+                    catch
+                    {
+                        player.Send("Room Editing canceled. The supplied Room does not exist.");
+                        return;
+                    }
 
+                }
                 //If no Room was retrieved (due to it not existing), let the admin know
                 //that the Room filename was not valid.
                 if (room == null)
@@ -125,8 +146,8 @@ namespace MudEngine.Commands
             player.Send("2: Names");
             player.Send("3: Senses");
             player.Send("4: Initial Room");
-            player.Send("5: Settings");
-            //player.Send("6: Doorways");
+            //player.Send("5: Settings");
+            player.Send("6: Doorways");
             player.Send("9: Exit");
             player.Send("Enter numeric selection: ", false);
         }
@@ -205,6 +226,22 @@ namespace MudEngine.Commands
             player.Send("Enter numeric selection: ", false);
         }
 
+        private void BuildMenuDoorways()
+        {
+            player.FlushConsole();
+
+            player.Send(room.Name);
+            player.Send("Doorway setup.");
+            player.Send("You may create and edit doorways from the options available below.");
+            player.Send("Doorways allow you to link two rooms together, giving characters the ability to traverse your game world.");
+            player.Send("Please select from the available options below:");
+            player.Send("1: Create a doorway.");
+            if (room.Doorways.Count != 0)
+                player.Send("2: Edit a doorway.");
+            player.Send("9: Exit");
+            player.Send("Enter a numeric selection: ", false);
+        }
+
         /// <summary>
         /// This method parses the Admin input based off the main editing menu
         /// and sends the admin to what-ever sub-menu method we need to.
@@ -247,6 +284,19 @@ namespace MudEngine.Commands
                     ParseNameSelection(entry);
                     break;
                 case 3://Senses
+                    BuildMenuSenses();
+
+                    try
+                    {
+                        entry = Convert.ToInt32(player.ReadInput());
+                    }
+                    catch
+                    {
+                        player.Send("Realm Editing Canceled. The supplied value was not numeric!");
+                        return;
+                    }
+
+                    ParseSensesSelection(entry);
                     break;
                 case 4: //Initial Realm
                     //build the menu and parse their menu selections
@@ -266,9 +316,21 @@ namespace MudEngine.Commands
                 case 5: //Settings
                     break;
                 case 6: //Doorways
+                    BuildMenuDoorways();
+
+                    try
+                    {
+                        entry = Convert.ToInt32(player.ReadInput());
+                    }
+                    catch
+                    {
+                        player.Send("Room Editing canceled. The supplied value was not numeric!");
+                    }
+
+                    ParseDoorwaySelection(entry);
                     break;
                 case 9:
-                    isEditing = false;  
+                    isEditing = false;
                     break;
                 default:
                     break;
@@ -651,6 +713,252 @@ namespace MudEngine.Commands
             player.ActiveGame.Save();
         }
 
+        private void ParseDoorwaySelection(Int32 value)
+        {
+            Int32 input = 0;
+
+            switch (value)
+            {
+                case 1: //Create doorway
+                    player.FlushConsole();
+                    player.Send("Link Editor:");
+                    player.Send("If you choose to link to a non-existant Room, the Room will be created for you during the link process.");
+                    player.Send("Please select from one of the available options below:");
+                    player.Send("1: Link to a non-existant Room.");
+                    player.Send("2: Link to a existing Room.");
+
+                    try
+                    {
+                        input = Convert.ToInt32(player.ReadInput());
+                    }
+                    catch
+                    {
+                        player.Send("Room Editing Canceled. Supplied value was not numeric!");
+                        return;
+                    }
+                    switch (input)
+                    {
+                        case 1:
+                            LinkNewRoom();
+                            break;
+                        case 2:
+                            LinkExistingRoom();
+                            break;
+                    }
+                    break;
+                case 2: //Edit doorway
+                    break;
+            }
+        }
+
+        private void LinkNewRoom()
+        {
+            player.FlushConsole();
+            player.Send("Please enter the name for the new Room.");
+            player.Send("If you want to link to a different Realm or Zone, please supply their full path.");
+            player.Send("Example: MyRealm>MyZone>NewRoomName");
+            player.Send("If you supply only a Room name, then the Room will be created within the same Realm/Zone as the current Room being edited.");
+            player.Send("Enter Name: ", false);
+
+            Room r = new Room(player.ActiveGame);
+            String roomName = player.ReadInput();
+
+            if (String.IsNullOrEmpty(roomName))
+            {
+                player.Send("Invalid name supplied!");
+                return;
+            }
+
+            r.Name = roomName;
+            player.ActiveGame.World.GetRealm(player.CurrentRoom.Realm).GetZone(player.CurrentRoom.Zone)[0].AddRoom(r);
+
+            player.FlushConsole();
+            player.Send("Please select the direction you want to travel from " + room.Name.ToUpper());
+            Array directions = Enum.GetValues(typeof(AvailableTravelDirections));
+            Int32 number = 1;
+            foreach (Int32 value in directions)
+            {
+                String direction = Enum.GetName(typeof(AvailableTravelDirections), value);
+
+                if (direction == "None")
+                    continue;
+
+                Boolean isUsed = false;
+
+                foreach (Door door in room.Doorways)
+                {
+                    if (door.TravelDirection == (AvailableTravelDirections)Enum.Parse(typeof(AvailableTravelDirections), direction))
+                    {
+                        isUsed = true;
+                    }
+                }
+
+                if (isUsed)
+                    continue;
+
+                player.Send(number + ": " + direction);
+                number++;
+            }
+
+            //TODO Get input for travel direction and link the rooms via Zone.LinkRooms()
+            player.Send("Enter numeric selection: ", false);
+
+            Int32 input = 0;
+
+            try
+            {
+                input = Convert.ToInt32(player.ReadInput());
+            }
+            catch
+            {
+                player.Send("Room Linking canceled! You must supply a valid numeric selection.");
+                return;
+            }
+            AvailableTravelDirections d = AvailableTravelDirections.None;
+            String displayName = Enum.GetName(typeof(AvailableTravelDirections), input + room.Doorways.Count);
+
+            if ((String.IsNullOrEmpty(displayName)) || (displayName == "None"))
+            {
+                player.Send("Invalid direction selected. Linking canceled.");
+                return;
+            }
+
+            d = (AvailableTravelDirections)Enum.Parse(typeof(AvailableTravelDirections), displayName);
+            Zone z = new Zone(player.ActiveGame);
+            z = player.ActiveGame.World.GetRealm(room.Realm).GetZone(room.Zone)[0];
+            z.LinkRooms(d, r, room);
+            //z.AddRoom(r);
+            player.FlushConsole();
+            player.Send("Would you like to edit the properties for the newly created " + r.Name + " room?");
+            player.Send("Available Selections:");
+            player.Send("1: Yes");
+            player.Send("2: No");
+            player.Send("Enter selection: ", false);
+
+            try
+            {
+                input = Convert.ToInt32(player.ReadInput());
+            }
+            catch
+            {
+                player.Send("Invalid selection!");
+                player.Send(r.Name + " created and linked to " + room.Name + ", however no properties for " + r.Name + " were set. Please use EditRoom " + r.Realm + ">" + r.Zone + ">" + r.Name + " to edit them.");
+                return;
+            }
+
+            if (input == 1)
+            {
+                IGameCommand gc = CommandEngine.GetCommand("CommandEditRoom");
+                gc.Execute(r.RoomLocationWithoutExtension, player);
+                isEditing = true; //Previous EditRoom command sets this to False if the admin exits the editing of the new Room.
+            }
+            player.Send(r.Name + " created and linked to " + room.Name);
+        }
+
+        private void LinkExistingRoom()
+        {
+            player.FlushConsole();
+            player.Send("Please enter the name for the existing Room.");
+            player.Send("If you want to link to a different Realm or Zone, please supply their full path.");
+            player.Send("Example: MyRealm>MyZone>NewRoomName");
+            player.Send("If you supply only a Room name, then the Room will be created within the same Realm/Zone as the current Room being edited.");
+            player.Send("Enter Name: ", false);
+
+            Room r = new Room(player.ActiveGame);
+            String roomName = player.ReadInput();
+
+            if (String.IsNullOrEmpty(roomName))
+            {
+                player.Send("Invalid name supplied!");
+                return;
+            }
+
+            r.Name = roomName;
+            player.ActiveGame.World.GetRealm(player.CurrentRoom.Realm).GetZone(player.CurrentRoom.Zone)[0].AddRoom(r);
+
+            player.FlushConsole();
+            player.Send("Please select the direction you want to travel from " + room.Name.ToUpper());
+            Array directions = Enum.GetValues(typeof(AvailableTravelDirections));
+            Int32 number = 1;
+            foreach (Int32 value in directions)
+            {
+                String direction = Enum.GetName(typeof(AvailableTravelDirections), value);
+
+                if (direction == "None")
+                    continue;
+
+                Boolean isUsed = false;
+
+                foreach (Door door in room.Doorways)
+                {
+                    if (door.TravelDirection == (AvailableTravelDirections)Enum.Parse(typeof(AvailableTravelDirections), direction))
+                    {
+                        isUsed = true;
+                    }
+                }
+
+                if (isUsed)
+                    continue;
+
+                player.Send(number + ": " + direction);
+                number++;
+            }
+
+            //TODO Get input for travel direction and link the rooms via Zone.LinkRooms()
+            player.Send("Enter numeric selection: ", false);
+
+            Int32 input = 0;
+
+            try
+            {
+                input = Convert.ToInt32(player.ReadInput());
+            }
+            catch
+            {
+                player.Send("Room Linking canceled! You must supply a valid numeric selection.");
+                return;
+            }
+            AvailableTravelDirections d = AvailableTravelDirections.None;
+            String displayName = Enum.GetName(typeof(AvailableTravelDirections), input + room.Doorways.Count);
+
+            if ((String.IsNullOrEmpty(displayName)) || (displayName == "None"))
+            {
+                player.Send("Invalid direction selected. Linking canceled.");
+                return;
+            }
+
+            d = (AvailableTravelDirections)Enum.Parse(typeof(AvailableTravelDirections), displayName);
+            Zone z = new Zone(player.ActiveGame);
+            z = player.ActiveGame.World.GetRealm(room.Realm).GetZone(room.Zone)[0];
+            z.LinkRooms(d, r, room);
+            //z.AddRoom(r);
+            player.FlushConsole();
+            player.Send("Would you like to edit the properties for the newly created " + r.Name + " room?");
+            player.Send("Available Selections:");
+            player.Send("1: Yes");
+            player.Send("2: No");
+            player.Send("Enter selection: ", false);
+
+            try
+            {
+                input = Convert.ToInt32(player.ReadInput());
+            }
+            catch
+            {
+                player.Send("Invalid selection!");
+                player.Send(r.Name + " created and linked to " + room.Name + ", however no properties for " + r.Name + " were set. Please use EditRoom " + r.Realm + ">" + r.Zone + ">" + r.Name + " to edit them.");
+                return;
+            }
+
+            if (input == 1)
+            {
+                IGameCommand gc = CommandEngine.GetCommand("CommandEditRoom");
+                gc.Execute(r.RoomLocationWithoutExtension, player);
+                isEditing = true; //Previous EditRoom command sets this to False if the admin exits the editing of the new Room.
+            }
+            player.Send(r.Name + " created and linked to " + room.Name);
+        }
+
         /// <summary>
         /// This method is used when the Rooms name or filename has changed.
         /// It updates all objects that refer to this Rooms filename/roomname
@@ -677,7 +985,7 @@ namespace MudEngine.Commands
                 if (p.CurrentRoom.Filename == oldName)
                 {
                     p.CurrentRoom = room;
-                    p.Save(player.ActiveGame.DataPaths.Players);
+                    p.Save();
                 }
             }
 
@@ -695,7 +1003,7 @@ namespace MudEngine.Commands
                 if (ch.CurrentRoom.Filename == oldName)
                 {
                     ch.CurrentRoom = room;
-                    ch.Save(player.ActiveGame.DataPaths.Players);
+                    ch.Save();
                 }
             }
 

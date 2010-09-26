@@ -30,6 +30,14 @@ namespace MudEngine.GameObjects.Environment
         /// </summary>
         public Zone InitialZone { get; set; }
 
+        protected override string SavePath
+        {
+            get
+            {
+                return Path.Combine(ActiveGame.DataPaths.Environment, Path.GetFileNameWithoutExtension(this.Filename));
+            }
+        }
+
         public Realm(GameManagement.Game game) : base(game)
         {
             ZoneCollection = new List<Zone>();
@@ -57,10 +65,10 @@ namespace MudEngine.GameObjects.Environment
             }
         }
 
-        public override void Save(String path)
+        public override void Save()
         {
-            path = Path.Combine(path, Path.GetFileNameWithoutExtension(Filename));
-            base.Save(path);
+            String path = Path.Combine(ActiveGame.DataPaths.Environment, Path.GetFileNameWithoutExtension(Filename));
+            base.Save();
 
             String filename = Path.Combine(path, Filename);
 
@@ -73,7 +81,7 @@ namespace MudEngine.GameObjects.Environment
             {
                 FileManager.WriteLine(filename, z.Filename, "ZoneCollection");
                 
-                z.Save(zonePath);
+                z.Save();
             }
         }
 
