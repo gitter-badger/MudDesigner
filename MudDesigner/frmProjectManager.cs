@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Threading;
 
 using MudEngine.FileSystem;
 using MudEngine.GameManagement;
@@ -23,6 +24,8 @@ namespace MudDesigner
 
         dynamic _Game;
         ScriptEngine _ScriptEngine;
+        Client client;
+        Thread r;
 
         public frmProjectManager()
         {
@@ -64,6 +67,18 @@ namespace MudDesigner
 
             //TODO: Do I need to Re-initialize _ScriptEngine?
 
+            RefreshProjects();
+
+            client = new Client();
+            client.Initialize("localhost", 555);
+
+            comServerType.Items.Add("Local Server");
+            comServerType.Items.Add("Test Server");
+            comServerType.SelectedIndex = 0;
+        }
+
+        private void RefreshProjects()
+        {
             _ProjectFiles = Directory.GetFiles(Environment.CurrentDirectory, "*.ini");
 
             foreach (String filename in _ProjectFiles)
@@ -102,14 +117,41 @@ namespace MudDesigner
 
         private void ShowDesigner()
         {
-            frmDesigner form = new frmDesigner(_Game);
+            frmDesigner form = new frmDesigner(_Game, client);
 
             form.Show();
             this.Hide();
+
+            if (comServerType.SelectedItem.ToString() == "Test Server")
+            {
+            }
+            else
+            {
+                frmInputBox input = new frmInputBox("Enter the Port that your local server is currently running on.");
+
+                input.ShowDialog();
+
+                if (input.IsCancel)
+                    return;
+
+                client.Initialize("localhost", Convert.ToInt32(input.Input));
+                
+                if (!client.Connect() || !client.Send("hello", false)) // test send + client data
+                {
+                    MessageBox.Show("Failed to connect to a local server. Is the server running?", "Mud Designer");
+                    return;
+                }
+            }
+
             while (form.Visible)
             {
                 Application.DoEvents();
             }
+
+            //Refresh the project list incase the project was renamed.
+            lstProjects.Items.Clear();
+
+            RefreshProjects();
 
             this.Show();
             form = null;

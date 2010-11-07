@@ -50,11 +50,13 @@ namespace MudEngine.GameManagement
         /// <summary>
         /// Gets or Sets the paths to various project related objects.
         /// </summary>
+        [Browsable(false)]
         public SaveDataPaths DataPaths { get; set; }
 
         /// <summary>
         /// Gets the scripting engine used by the game.
         /// </summary>
+        [Browsable(false)]
         public ScriptEngine scriptEngine { get; internal set; }
 
         /// <summary>
@@ -68,6 +70,7 @@ namespace MudEngine.GameManagement
         /// </summary>
         [Category("Project Settings")]
         [Description("If enabled, all objects will be loaded during server startup resulting in a slower server start time, but faster load time during gameplay")]
+        [Browsable(false)]
         public Boolean PreCacheObjects { get; set; }
 
         /// <summary>
@@ -154,8 +157,10 @@ namespace MudEngine.GameManagement
         [DefaultValue("Copper")]
         public String BaseCurrencyName { get; set; }
 
+        [Browsable(false)]
         public GameTime WorldTime { get; set; }
 
+        [Browsable(false)]
         public GameWorld World { get; set; }
         #endregion
 
@@ -168,6 +173,7 @@ namespace MudEngine.GameManagement
         /// <summary>
         /// Gets the current running Server object.
         /// </summary>
+        [Browsable(false)]
         public Server Server { get; internal set; }
 
         /// <summary>
