@@ -15,10 +15,11 @@ namespace MudGame
     static class Program
     {
         const String SettingsFile = "Settings.ini";
-        
+        static dynamic _Game;
+
         static void Main(String[] args)
         {
-            dynamic game = new Game();
+            Game game = new Game();
 
             //Re-create the settings file if it is missing. Don't push any log messages until we know that this is
             //verbose or not
@@ -44,8 +45,14 @@ namespace MudGame
             Log.FlushMessages();
 
             Log.Write("Launching...", true);
+            /* - Replaced with new startup sequence.
+             * Engine uses my rScript Scripting Engine instead of a custom Mud Designer script Engine.
+             * Easier to maintain, and works better.
+             * 
+             * TODO - Remove Old Script Engine code.
+             *
             ScriptEngine scriptEngine;
-            scriptEngine = new ScriptEngine(new Game(), ScriptEngine.ScriptTypes.Both);
+            scriptEngine = new ScriptEngine(game, ScriptEngine.ScriptTypes.Both);
 
             //scriptEngine.CompileScripts();
             Log.Write("Initializing Script Engine for Script Compilation...", true);
@@ -73,11 +80,14 @@ namespace MudGame
             //MUST be called before game.Start()
             //scriptEngine.Initialize();
             //game.scriptEngine = scriptEngine; //Pass this script engine off to the game to use now.
+             
+
             Log.Write("");
             Log.Write("Starting " + obj.GetProperty().GameTitle + "...", true);
             Log.Write("");
             //Console.WriteLine(Log.GetMessages());
             //Log.FlushMessages();
+            */
 
             //Server is only enabled if the option is in the settings file
             //Allows developers to remove the option from the settings file and letting
@@ -91,6 +101,7 @@ namespace MudGame
             else
                 game.IsMultiplayer = true;
 
+            //Start the game.
             game.Start();
 
             //Make sure the Game is in fact running.

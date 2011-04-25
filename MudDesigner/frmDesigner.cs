@@ -76,8 +76,9 @@ namespace MudDesigner
             {
                 String Env = _Game.DataPaths.Environment.Replace(e.OldValue.ToString(), e.ChangedItem.Value.ToString());
                 String plyr = _Game.DataPaths.Players.Replace(e.OldValue.ToString(), e.ChangedItem.Value.ToString());
+                String scrpt = _Game.DataPaths.Scripts.Replace(e.OldValue.ToString(), e.ChangedItem.Value.ToString());
 
-                _Game.DataPaths = new SaveDataPaths(Env, plyr);
+                _Game.DataPaths = new SaveDataPaths(Env, plyr,scrpt);
                 
                 _IsRenaming = true;
                 _OldName = e.OldValue.ToString();

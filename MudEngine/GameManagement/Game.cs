@@ -59,6 +59,9 @@ namespace MudEngine.GameManagement
         [Browsable(false)]
         public ScriptEngine scriptEngine { get; internal set; }
 
+        [Browsable(false)]
+        public rScripting.CompileEngine Scripting { get; internal set; }
+
         /// <summary>
         /// Gets or Sets the path to the current project
         /// </summary>
@@ -198,13 +201,14 @@ namespace MudEngine.GameManagement
         {
             //Instance all of the Games Objects.
             CurrencyList = new List<Currency>();
-            scriptEngine = new Scripting.ScriptEngine(this);
+            scriptEngine = new Scripting.ScriptEngine(this); //TODO - Remove
+            Scripting = new rScripting.CompileEngine(".cs");
             World = new GameWorld(this);
             WorldTime = new GameTime(this);
             InitialRealm = new Realm(this);
 
             //Prepare the Save Paths for all of our Game objects.
-            DataPaths = new SaveDataPaths("World", "Players");
+            DataPaths = new SaveDataPaths("World", "Players", "Scripts");
 
             //Setup default settings for the Game
             GameTitle = "New Game";
@@ -242,10 +246,19 @@ namespace MudEngine.GameManagement
             if (!Directory.Exists(DataPaths.Players))
                 Directory.CreateDirectory(DataPaths.Players);
 
-            //Load both pre-compiled and file based scripts
-            scriptEngine.ScriptType = ScriptEngine.ScriptTypes.Both;
-            scriptEngine.Initialize();
+            //Load both pre-compiled and file based scripts - TODO - Remove
+            //scriptEngine.ScriptType = ScriptEngine.ScriptTypes.Both;
+            //scriptEngine.Initialize();
 
+            //Instance the new scripting engine
+            Scripting.Compiler = "C#";
+            Scripting.AddAssemblyReference("MudEngine.dll");
+            if (!Scripting.Compile(DataPaths.Scripts))
+            {
+                Log.Write("CRITICAL ERROR: Game Script Repository failed to compile!");
+                Log.Write(Scripting.Errors);
+            }
+             
             /*
              * If a custom player script is loaded in the script engine, then the base commands are 
              * loaded when the script is instanced automatically. If  there is no script then these
@@ -273,7 +286,7 @@ namespace MudEngine.GameManagement
             }
             else //Not multiplayer so we change the save locations
             {
-                SaveDataPaths paths = new SaveDataPaths("World", "Player");
+                SaveDataPaths paths = new SaveDataPaths("World", "Player", "Scripts");
                 DataPaths = paths;
                 PlayerCollection[0].Initialize();
             }
@@ -371,6 +384,8 @@ namespace MudEngine.GameManagement
             FileManager.WriteLine(filename, this.CompanyName, "CompanyName");
             FileManager.WriteLine(filename, this.DataPaths.Environment, "DataPathEnvironment");
             FileManager.WriteLine(filename, this.DataPaths.Players, "DataPathPlayers");
+            FileManager.WriteLine(filename, this.DataPaths.Scripts, "DataPathScripts");
+
             FileManager.WriteLine(filename, this.GameTitle, "GameTitle");
             FileManager.WriteLine(filename, this.HideRoomNames.ToString(), "HideRoomNames");
 
@@ -417,7 +432,7 @@ namespace MudEngine.GameManagement
                 this.BaseCurrencyAmount = Convert.ToInt32(FileManager.GetData(filename, "BaseCurrencyAmount"));
                 this.BaseCurrencyName = FileManager.GetData(filename, "BaseCurrencyName");
                 this.CompanyName = FileManager.GetData(filename, "CompanyName");
-                this.DataPaths = new SaveDataPaths(FileManager.GetData(filename, "DataPathEnvironment"), FileManager.GetData(filename, "DataPathPlayers"));
+                this.DataPaths = new SaveDataPaths(FileManager.GetData(filename, "DataPathEnvironment"), FileManager.GetData(filename, "DataPathPlayers"), FileManager.GetData(filename, "DataPathScripts"));
                 this.GameTitle = FileManager.GetData(filename, "GameTitle");
                 this.HideRoomNames = Convert.ToBoolean(FileManager.GetData(filename, "HideRoomNames"));
                 this.InitialRealm = new Realm(this);

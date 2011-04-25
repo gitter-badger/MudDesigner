@@ -106,7 +106,7 @@ namespace MudDesigner
 
             _Game.GameTitle = input.Input;
             //Setup save data paths.
-            _Game.DataPaths = new SaveDataPaths(Path.Combine("Projects", _Game.GameTitle, _Game.DataPaths.Environment), Path.Combine("Projects", _Game.GameTitle, _Game.DataPaths.Players));
+            _Game.DataPaths = new SaveDataPaths(Path.Combine("Projects", _Game.GameTitle, _Game.DataPaths.Environment), Path.Combine("Projects", _Game.GameTitle, _Game.DataPaths.Players), Path.Combine("Projects", _Game.GameTitle, _Game.DataPath.Scripts));
 
             _Game.Save();
 

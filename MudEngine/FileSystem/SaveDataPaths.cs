@@ -30,13 +30,28 @@ namespace MudEngine.FileSystem
                     _Environment = value;
                 }
             }
+
+            public String Scripts
+            {
+                get
+                {
+                    return _Scripts;
+                }
+                set
+                {
+                    _Scripts = value;
+                }
+            }
+
             private String _Players;
             private String _Environment;
+            private String _Scripts;
 
-            public SaveDataPaths(String environment, String players)
+            public SaveDataPaths(String environment, String players, String scripts)
             {
                 _Players = players;
                 _Environment = environment;
+                _Scripts = scripts;
             }
         }
 }
