@@ -167,7 +167,7 @@ namespace MudEngine.Scripting
                 FileStream fw = new FileStream(Path.Combine(tempPath, Path.GetFileName(script)), FileMode.Create, FileAccess.Write);
                 StreamWriter sw = new StreamWriter(fw, System.Text.Encoding.Default);
                 StreamReader sr = new StreamReader(fr, System.Text.Encoding.Default);
-                
+                    
                 String content = sr.ReadToEnd();
                 foreach (String statement in usingStatements)
                     source = source.Insert(0, statement);

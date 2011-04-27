@@ -251,8 +251,12 @@ namespace MudEngine.GameManagement
             //scriptEngine.Initialize();
 
             //Instance the new scripting engine
-            Scripting.Compiler = "C#";
+            Scripting.Compiler = "MudScriptCompiler";
+            if (!System.IO.File.Exists("MudEngine.dll"))
+                Log.Write("CRITICAL ERROR: Un-able to locate MudEngine.dll");
+
             Scripting.AddAssemblyReference("MudEngine.dll");
+
             if (!Scripting.Compile(DataPaths.Scripts))
             {
                 Log.Write("CRITICAL ERROR: Game Script Repository failed to compile!");
