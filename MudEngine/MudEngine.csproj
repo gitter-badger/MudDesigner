@@ -86,9 +86,6 @@
     <Compile Include="Networking\Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripting\MudScriptCompiler.cs" />
-    <Compile Include="Scripting\GameObject.cs" />
-    <Compile Include="Scripting\GameObjectCollection.cs" />
-    <Compile Include="Scripting\ScriptEngine.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

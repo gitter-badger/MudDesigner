@@ -60,6 +60,7 @@ namespace MudEngine.Scripting
             //Make sure we have a compiler version supplied.
             if (!CompilerOptions.ContainsKey("CompilerVersion"))
                 CompilerOptions.Add("CompilerVersion", "v4.0");
+
             //Instance a reference to the C# code provider, this is what will perform the compiling.
             CSharpCodeProvider provider = new CSharpCodeProvider(CompilerOptions);
             
@@ -118,7 +119,7 @@ namespace MudEngine.Scripting
             String[] ConvertedScripts = Directory.GetFiles("temp", "*" + this.ScriptExtension, SearchOption.AllDirectories);
 
             //Compile the scripts and provide the Results property with a reference to the compilation results.
-            param.GenerateInMemory = false;
+            param.ReferencedAssemblies.Add("MudEngine.dll");
             Results = provider.CompileAssemblyFromFile(param, ConvertedScripts);
             System.IO.Directory.Delete(modifiedScriptsPath, true);
 
@@ -137,6 +138,9 @@ namespace MudEngine.Scripting
         /// <returns></returns>
         public Boolean Compile(CompilerParameters param, FileInfo scriptFile)
         {
+            //TODO: Add single-file compilation support
+            return false; //Single file compiling not implemented
+
             //Make sure we have a compiler version supplied.
             if (!CompilerOptions.ContainsKey("CompilerVersion"))
                 CompilerOptions.Add("CompilerVersion", "v4.0");
@@ -169,6 +173,9 @@ namespace MudEngine.Scripting
         /// <returns></returns>
         public Boolean Compile(CompilerParameters param, String[] scriptSourceCode)
         {
+            //Source Code compiling not implemented.
+            return false; //TODO: Add source code compiling support.
+
             if (!CompilerOptions.ContainsKey("CompilerVersion"))
                 CompilerOptions.Add("CompilerVersion", "v4.0");
 

@@ -15,7 +15,6 @@ namespace MudGame
     static class Program
     {
         const String SettingsFile = "Settings.ini";
-        static dynamic _Game;
 
         static void Main(String[] args)
         {
@@ -45,49 +44,32 @@ namespace MudGame
             Log.FlushMessages();
 
             Log.Write("Launching...", true);
-            /* - Replaced with new startup sequence.
-             * Engine uses my rScript Scripting Engine instead of a custom Mud Designer script Engine.
-             * Easier to maintain, and works better.
-             * 
-             * TODO - Remove Old Script Engine code.
-             *
-            ScriptEngine scriptEngine;
-            scriptEngine = new ScriptEngine(game, ScriptEngine.ScriptTypes.Both);
 
-            //scriptEngine.CompileScripts();
-            Log.Write("Initializing Script Engine for Script Compilation...", true);
-            scriptEngine.Initialize();
-
-            GameObject obj = scriptEngine.GetObjectOf("Game");
-            //Console.WriteLine(Log.GetMessages());
-            //Log.FlushMessages();
-
-            if (obj == null)
+            //Search for a custom Game Type before we launch our game.
+            //Compile the scripts
+            rScripting.CompileEngine compiler = new rScripting.CompileEngine(".cs");
+            compiler.Compiler = "MudScriptCompiler";
+            if (!compiler.Compile("Scripts"))
             {
-                game = new Game();
-                obj = new GameObject(game, "Game");
-                scriptEngine = new ScriptEngine((Game)obj.Instance, ScriptEngine.ScriptTypes.Both);
+                Log.Write("Failed compiling script files.");
+                Log.Write(compiler.Errors);
             }
-            else
+
+            //If there were errors during compilation, then skip the custom scripts and use the default Game Type.
+            if (!compiler.HasErrors)
             {
-                game = (Game)obj.Instance;
-                scriptEngine = new ScriptEngine(game, ScriptEngine.ScriptTypes.Both);
+                //Search the scripts for a Type inheriting from Game
+                rScripting.LateBinding.ScriptFactory factory = new rScripting.LateBinding.ScriptFactory(compiler.CompiledAssembly);
+                foreach (Type t in compiler.CompiledAssembly.GetTypes())
+                {
+                    if (t.BaseType.Name == "Game")
+                    {
+                        rScripting.LateBinding.ScriptObject obj = factory.GetScript(t.Name);
+                        game = (Game)obj.Instance;
+                        break;
+                    }
+                }
             }
-            //Force TCP
-            game.ServerType = ProtocolType.Tcp;
-
-            //Setup the scripting engine and load our script library
-            //MUST be called before game.Start()
-            //scriptEngine.Initialize();
-            //game.scriptEngine = scriptEngine; //Pass this script engine off to the game to use now.
-             
-
-            Log.Write("");
-            Log.Write("Starting " + obj.GetProperty().GameTitle + "...", true);
-            Log.Write("");
-            //Console.WriteLine(Log.GetMessages());
-            //Log.FlushMessages();
-            */
 
             //Server is only enabled if the option is in the settings file
             //Allows developers to remove the option from the settings file and letting

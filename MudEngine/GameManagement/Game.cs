@@ -52,13 +52,7 @@ namespace MudEngine.GameManagement
         /// </summary>
         [Browsable(false)]
         public SaveDataPaths DataPaths { get; set; }
-
-        /// <summary>
-        /// Gets the scripting engine used by the game.
-        /// </summary>
-        [Browsable(false)]
-        public ScriptEngine scriptEngine { get; internal set; }
-
+        
         [Browsable(false)]
         public rScripting.CompileEngine Scripting { get; internal set; }
 
@@ -201,7 +195,6 @@ namespace MudEngine.GameManagement
         {
             //Instance all of the Games Objects.
             CurrencyList = new List<Currency>();
-            scriptEngine = new Scripting.ScriptEngine(this); //TODO - Remove
             Scripting = new rScripting.CompileEngine(".cs");
             World = new GameWorld(this);
             WorldTime = new GameTime(this);
@@ -246,17 +239,9 @@ namespace MudEngine.GameManagement
             if (!Directory.Exists(DataPaths.Players))
                 Directory.CreateDirectory(DataPaths.Players);
 
-            //Load both pre-compiled and file based scripts - TODO - Remove
-            //scriptEngine.ScriptType = ScriptEngine.ScriptTypes.Both;
-            //scriptEngine.Initialize();
-
-            //Instance the new scripting engine
             Scripting.Compiler = "MudScriptCompiler";
-            if (!System.IO.File.Exists("MudEngine.dll"))
-                Log.Write("CRITICAL ERROR: Un-able to locate MudEngine.dll");
 
-            Scripting.AddAssemblyReference("MudEngine.dll");
-
+            //Check for compiler errors after script compiling completes.
             if (!Scripting.Compile(DataPaths.Scripts))
             {
                 Log.Write("CRITICAL ERROR: Game Script Repository failed to compile!");

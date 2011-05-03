@@ -18,7 +18,8 @@ namespace MUDCompiler
             Console.WriteLine();
             Console.WriteLine("1): Compile Scripts");
             Console.WriteLine("2): Exit Compiler");
-            Console.Write("Enter Selection: ");
+            //Console.Write("Enter Selection: ");
+            Console.WriteLine("Out of engine compiling is currently not supported.");
 
             String command = Console.ReadLine();
 
@@ -46,21 +47,6 @@ namespace MUDCompiler
 
         static void CompileScripts()
         {
-            MudEngine.GameManagement.Game game = new MudEngine.GameManagement.Game();
-            ScriptEngine se = new ScriptEngine(game, ScriptEngine.ScriptTypes.SourceFiles);
-            Console.WriteLine();
-            Console.WriteLine("Compiling...");
-
-            se.Initialize();
-            se.ScriptExtension = ".mud";
-            se.ScriptPath = "Scripts";
-            if (se.CompileScripts())
-                Console.WriteLine("Compiling completed without error.");
-            else
-                Console.WriteLine(se.ErrorMessage); 
-
-            Console.WriteLine("Press any key to exit.");
-            Console.Read();
         }
     }
 }
