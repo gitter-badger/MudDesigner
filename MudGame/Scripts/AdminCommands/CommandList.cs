@@ -24,7 +24,7 @@ public class CommandList : IGameCommand
 
     public CommandList()
     {
-        Help = new List<string>();
+        Help = new List<String>();
         Help.Add("Using the List command, you can view a generated list of filenames that pertain to a supplied object type.");
         Help.Add("Usage: List 'ItemType'");
         Help.Add("Usage: List 'ItemName>ItemType'");

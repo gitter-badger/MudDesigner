@@ -32,7 +32,7 @@ public class CommandExit : IGameCommand
         //Instance the help collection and add our help information to it.
         //Typically the Help content is placed within the constructor, but this particular help document
         //needs to access information from the player, so we will build our Help collection in the Execute command.
-        Help = new List<string>();
+        Help = new List<String>();
         Help.Add("Exits the game."); 
     }
 

@@ -24,7 +24,7 @@ public class CommandTeleport : IGameCommand
 
     public CommandTeleport()
     {
-        Help = new List<string>();
+        Help = new List<String>();
         Help.Add("The Teleport command will teleport a player to a specified Room, regardless of where they are at.");
         Help.Add("Usage: Teleport playername FullyQualifiedRoomPath");
         Help.Add("Example: Teleport Billy MyRealm>MyZone>MyRoom");

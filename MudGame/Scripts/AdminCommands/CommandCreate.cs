@@ -35,7 +35,7 @@ public class CommandCreate : IGameCommand
     /// </summary>
     public CommandCreate()
     {
-        Help = new List<string>();
+        Help = new List<String>();
         Help.Add("Provides Admins the ability to create content dynamically within the game world.");
         Help.Add("Content is created at run-time while the server/game is running and players are connected.");
         Help.Add("Newly created content will be available for players to use/traverse immediately after creation is completed.");
@@ -62,7 +62,7 @@ public class CommandCreate : IGameCommand
             return;
         }
 
-        //Split the supplied string up. It wil give us an array of strings with the supplied
+        //Split the supplied String up. It wil give us an array of strings with the supplied
         //object names if the admin has specified environment objects for creation.
         String[] env = command.Substring("Create ".Length).Split('>');
 

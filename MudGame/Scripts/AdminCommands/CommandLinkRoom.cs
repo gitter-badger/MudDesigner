@@ -31,7 +31,7 @@ public class CommandLinkRoom : IGameCommand
     public CommandLinkRoom()
     {
         //Instance the help collection and add our help information to it.
-        Help = new List<string>();
+        Help = new List<String>();
         Help.Add("Use this to link two previously created Rooms together.");
         //Incase Admins try to use the command, they will know that it's broken.
         //Don't convert this class into a Script until it is fully completed.
@@ -64,7 +64,7 @@ public class CommandLinkRoom : IGameCommand
         player.Send("2: Exit");
 
         //Read the input from the Admin.
-        string input = player.ReadInput();
+        String input = player.ReadInput();
         Int32 value = 0;
 
         //Attempt to convert their input from a String into a numerical value.
@@ -365,7 +365,7 @@ public class CommandLinkRoom : IGameCommand
             //to the screen for the user to see and select from.
             foreach (Int32 v in values)
             {
-                //Since enum values are not strings, we can't simply assign a string value to the enum.
+                //Since enum values are not strings, we can't simply assign a String value to the enum.
                 //The enum needs to be queried to retrieve a value that matches that of 'v' and convert it to a String
                 String displayName = Enum.GetName(typeof(AvailableTravelDirections), v);
 
@@ -381,7 +381,7 @@ public class CommandLinkRoom : IGameCommand
             //Loop through each value found in our original array or values acquired from the AvailableTravelDirections enum.
             foreach (Int32 v in values)
             {
-                //Since enum values are not strings, we can't simply assign a string value to the enum.
+                //Since enum values are not strings, we can't simply assign a String value to the enum.
                 //The enum needs to be queried to retrieve a value that matches that of 'v' and convert it to a String
                 String displayName = Enum.GetName(typeof(AvailableTravelDirections), v);
 

@@ -48,7 +48,7 @@ public class CommandSay : IGameCommand
             return; //nothing to say, don't say anything at all.
         }
 
-        //Get the message out of the command string.
+        //Get the message out of the command String.
         String message = command.Substring("Say ".Length);
 
         //Query the game world and find what players are within the same location as the chatting player.

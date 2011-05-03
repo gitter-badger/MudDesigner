@@ -35,7 +35,7 @@ public class CommandWalk : IGameCommand
         Help.Add("You may use the Look command to see a description of the current Room, and decide where you would like to walk.");
         Help.Add("Usage: Walk 'Direction' where Direction may equal one of the following:");
 
-        //We will construct a string that contains all of the available travel directions for the player.
+        //We will construct a String that contains all of the available travel directions for the player.
         StringBuilder directions = new StringBuilder();
         
         //Store a array of existing values within the AvailableTravelDirection enum. 
@@ -46,11 +46,11 @@ public class CommandWalk : IGameCommand
         //to the screen for the user to see and select from.
         foreach (Int32 v in values)
         {
-            //Since enum values are not strings, we can't simply assign a string value to the enum.
+            //Since enum values are not strings, we can't simply assign a String value to the enum.
             //The enum needs to be queried to retrieve a value that matches that of 'v' and convert it to a String
             String displayName = Enum.GetName(typeof(AvailableTravelDirections), v);
 
-            //Add the current travel direction to our string for later use.
+            //Add the current travel direction to our String for later use.
             directions.Append(displayName + ", ");
         }
 

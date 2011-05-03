@@ -30,7 +30,7 @@ class CommandCreateRoom : IGameCommand
     /// </summary>
     public CommandCreateRoom()
     {
-        Help = new List<string>();
+        Help = new List<String>();
         Help.Add("Creates a Room within the Admin's current Realm>Zone");
     }
 

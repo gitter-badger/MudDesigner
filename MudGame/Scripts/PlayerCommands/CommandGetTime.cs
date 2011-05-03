@@ -29,7 +29,7 @@ public class CommandGetTime : IGameCommand
     public CommandGetTime()
     {
         //Instance the help collection and add our help information to it.
-        Help = new List<string>();
+        Help = new List<String>();
         Help.Add("Gives you the current time and date in the game world.");
     }
 

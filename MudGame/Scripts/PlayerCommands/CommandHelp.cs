@@ -42,7 +42,7 @@ public class CommandHelp : IGameCommand
     {
         //Check if we have a topic that the player wants help with. If there is nothing after the Help word
         //in the command, then the user didn't supply us with a topic.
-        string topic = command.Substring("Help".Length);
+        String topic = command.Substring("Help".Length);
 
         //if the user did not supply us with a topic, we will print every command currently loaded in the engine
         //and tell the user how they can access help information regarding that command.
@@ -70,7 +70,7 @@ public class CommandHelp : IGameCommand
         else
             topic = topic.Trim();
 
-        //Get a reference to the command the player wants help with. We must insert the 'Command' string into the topic,
+        //Get a reference to the command the player wants help with. We must insert the 'Command' String into the topic,
         //as all Commands start with the word Command, however the player never sees the word Command. It's internal only.
         IGameCommand gc = CommandEngine.GetCommand("Command" + topic);
 

@@ -60,10 +60,9 @@ namespace MudEngine.Scripting
             //Make sure we have a compiler version supplied.
             if (!CompilerOptions.ContainsKey("CompilerVersion"))
                 CompilerOptions.Add("CompilerVersion", "v4.0");
-
             //Instance a reference to the C# code provider, this is what will perform the compiling.
             CSharpCodeProvider provider = new CSharpCodeProvider(CompilerOptions);
-
+            
             //Create an array of script files found within the ScriptRepository matching the ScriptExtension properties.
             String[] baseScripts = Directory.GetFiles(scriptRepository, "*" + this.ScriptExtension, SearchOption.AllDirectories);
             String modifiedScriptsPath = "temp";
@@ -75,6 +74,7 @@ namespace MudEngine.Scripting
                 "using System.Collections.Generic;", 
                 "using System.Text;",
                 "using System.Linq;",
+                "using MudEngine.Commands;",
                 "using MudEngine.GameObjects;", 
                 "using MudEngine.GameObjects.Characters;", 
                 "using MudEngine.GameObjects.Environment;", 
@@ -118,7 +118,8 @@ namespace MudEngine.Scripting
             String[] ConvertedScripts = Directory.GetFiles("temp", "*" + this.ScriptExtension, SearchOption.AllDirectories);
 
             //Compile the scripts and provide the Results property with a reference to the compilation results.
-            Results = provider.CompileAssemblyFromFile(param, baseScripts);
+            param.GenerateInMemory = false;
+            Results = provider.CompileAssemblyFromFile(param, ConvertedScripts);
             System.IO.Directory.Delete(modifiedScriptsPath, true);
 
             //if the compiler has errors, return false.
