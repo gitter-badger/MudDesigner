@@ -95,6 +95,13 @@
             public Bag Inventory { get; private set; }
 
             /// <summary>
+            /// Gets the characters Dialog Branch.
+            /// If the Character contains Quests, then the Dialog will only be visible when the Quests are not available 
+            /// to the users.
+            /// </summary>
+            public DialogChat Dialog { get; internal set; }
+
+            /// <summary>
             /// Gets a working copy of the CommandEngine used by the player.
             /// </summary>
             public CommandEngine CommandSystem { get; internal set; }
@@ -167,6 +174,14 @@
                 else
                 {
                     //TODO: determin which zone is the appropriate zone to assign if more than one exists.
+                    foreach (Zone z in zones)
+                    {
+                        if (z.GetRoom(FileManager.GetData(filename, "CurrentRoom")) != null)
+                        {
+                            zone = z;
+                            break;
+                        }
+                    }
                 }
 
                 List<Room> rooms = zone.GetRoom(FileManager.GetData(filename, "CurrentRoom"));
@@ -217,6 +232,8 @@
             public virtual void Update()
             {
                 //TODO: Update AI logic.
+
+                Log.Write("BaseCharacter.Update Called!", true);
                 //TODO: AI Logic: Don't attack anything if CurrentRoom.IsSafe
                 //TODO: Add Stat modifiers for Zone and Rooms.
             }
@@ -276,6 +293,24 @@
                     {
                         ActiveGame.GetPlayerCollection()[i].Send(Name + " walked in from the " + TravelDirections.GetReverseDirection(travelDirection));
                     }
+                }
+            }
+
+            public virtual void OnTalk(String message, BaseCharacter instigator)
+            {
+                //If the instigator is not sending a message to this character, then the
+                //AI can ignore it. No response will be sent.
+                if (!message.ToLower().Substring("say".Length).Trim().Contains(this.Name.ToLower()))
+                    return;
+
+                //If the message was directed at this player, we will only respond
+                //if this character is controlled by AI.
+                if (!this.IsControlled)
+                {
+                    //Instance a new Say command, and send the dialog response that we have saved.
+                    IGameCommand cmd = CommandEngine.GetCommand("Say");
+                    if (cmd != null)
+                        cmd.Execute("say " + this.Dialog.Response, instigator);
                 }
             }
 
