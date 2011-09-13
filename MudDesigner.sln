@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudEngine", "MudEngine\MudEngine.csproj", "{498943A8-DF5A-4DB0-B506-0BFF44788657}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MUDCompiler", "MUDCompiler\MUDCompiler.csproj", "{98E974DA-C650-4B88-B2F8-57AC7AE6C34F}"
@@ -12,6 +12,27 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudDesigner", "MudDesigner\MudDesigner.csproj", "{5B18E552-26D0-4491-8BAC-FF80046F0B0F}"
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 6
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs03
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = MudEngine\\MudEngine.csproj
+		SccProjectName1 = MudEngine
+		SccLocalPath1 = MudEngine
+		SccProjectUniqueName2 = MUDCompiler\\MUDCompiler.csproj
+		SccProjectName2 = MUDCompiler
+		SccLocalPath2 = MUDCompiler
+		SccProjectUniqueName3 = MudGame\\MudGame.csproj
+		SccProjectName3 = MudGame
+		SccLocalPath3 = MudGame
+		SccProjectUniqueName4 = MudClient\\MudClient.csproj
+		SccProjectName4 = MudClient
+		SccLocalPath4 = MudClient
+		SccProjectUniqueName5 = MudDesigner\\MudDesigner.csproj
+		SccProjectName5 = MudDesigner
+		SccLocalPath5 = MudDesigner
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
