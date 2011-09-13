@@ -19,7 +19,7 @@ namespace MUDCompiler
             Console.WriteLine("1): Compile Scripts");
             Console.WriteLine("2): Exit Compiler");
             //Console.Write("Enter Selection: ");
-            Console.WriteLine("Out of engine compiling is currently not supported.");
+            Console.WriteLine("Out of engine compiling is currently not supported.  Please review the documentation regarding in-engine compiling.");
 
             String command = Console.ReadLine();
 
