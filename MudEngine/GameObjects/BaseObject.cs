@@ -44,6 +44,7 @@ namespace MudEngine.GameObjects
         /// <summary>
         /// A detailed description that treats each entry as a seperete line when outputted to the player
         /// </summary>
+        [Browsable(false)] //not visible within any Property Controls
         public List<String> DetailedDescription { get; set; }
 
         [Category("Object Setup")]
@@ -115,11 +116,6 @@ namespace MudEngine.GameObjects
             this.Name = DefaultName();
 
             this.Filename = DefaultName() + "." + this.GetType().Name;
-        }
-
-
-        ~BaseObject()
-        {
         }
 
         private Boolean ShouldSerializeName()
