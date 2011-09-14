@@ -160,13 +160,14 @@ namespace MudEngine.GameObjects.Environment
         /// <returns></returns>
         public Boolean DoorwayExist(AvailableTravelDirections travelDirection)
         {
-            foreach (Door door in Doorways)
-            {
-                if (door.TravelDirection == travelDirection)
-                    return true;
-            }
+            return Doorways.Exists(d => d.TravelDirection == travelDirection);
+            //foreach (Door door in Doorways)
+            //{
+            //    if (door.TravelDirection == travelDirection)
+            //        return true;
+            //}
 
-            return false;
+            //return false;
         }
 
         /// <summary>
@@ -176,12 +177,13 @@ namespace MudEngine.GameObjects.Environment
         /// <returns></returns>
         public Door GetDoor(AvailableTravelDirections travelDirection)
         {
-            foreach (Door door in this.Doorways)
-            {
-                if (door.TravelDirection == travelDirection)
-                    return door;
-            }
-            return null;
+            return Doorways.First(d => d.TravelDirection == travelDirection);
+            //foreach (Door door in this.Doorways)
+            //{
+            //    if (door.TravelDirection == travelDirection)
+            //        return door;
+            //}
+            //return null;
         }
     }
 }
