@@ -13,21 +13,10 @@ using MudEngine.GameObjects.Environment;
 
 namespace MudEngine.Commands
 {
-    public class CommandEditZone : IGameCommand
+    public class CommandEditZone : BaseCommand
     {
-        public Boolean Override { get; set; }
-
-        public String Name { get; set; }
-        public List<String> Help { get; set; }
-
-        private Zone zone;
-        private BaseCharacter player;
-        private Boolean isEditing;
-
         public CommandEditZone()
         {
-            Help = new List<string>();
-
             Help.Add("Use the Edit command to edit existing objects properties.");
             Help.Add("Usage: EditZone Realm>Zone");
             Help.Add("Example: EditZone MyRealmName>MyZone");

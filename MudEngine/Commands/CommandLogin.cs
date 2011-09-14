@@ -19,32 +19,13 @@ namespace MudEngine.Commands
     /// by modifying the source. 
     /// TODO: Update the engine to dynamically look for a Login script rather than relying on CommandLogin.
     /// </summary>
-    public class CommandLogin : IGameCommand
+    public class CommandLogin : BaseCommand
     {
-        /// <summary>
-        /// Used by the Command Engine to allow for overriding any other commands that contain the same name.
-        /// TODO: Does Overriding Commands still work? This is part of some old code I wrote several years back and might be broke.
-        /// </summary>
-        public Boolean Override { get; set; }
-
-        /// The name of the command.
-        /// If Override is set to true, this command will override any other command that contains the same name.
-        /// </summary>
-        public String Name { get; set; }
-
-        /// <summary>
-        /// A collection of strings that contains helpfull information for this Command.
-        /// When the user enteres 'Help Exit' the game will print the content of this collection.
-        /// This is treated like a virtual book, each entry in the collection is printed as a new line.
-        /// </summary>
-        public List<String> Help { get; set; }
-
         /// <summary>
         /// Class constructor
         /// </summary>
         public CommandLogin()
         {
-            Help = new List<string>();
             Help.Add("Logs the player into their respective account.");
         }
 

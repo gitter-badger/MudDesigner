@@ -16,16 +16,10 @@ using MudEngine.FileSystem;
 
 namespace MudEngine.Commands
 {
-    class CommandRestart : IGameCommand
+    class CommandRestart : BaseCommand
     {
-        public String Name { get; set; }
-        public Boolean Override { get; set; }
-
-        public List<String> Help { get; set; }
-
         public CommandRestart()
         {
-            Help = new List<string>();
             Help.Add("Restarts the game server.");
         }
 

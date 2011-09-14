@@ -13,21 +13,10 @@ using MudEngine.GameObjects.Environment;
 
 namespace MudEngine.Commands
 {
-    public class CommandEditRealm : IGameCommand
+    public class CommandEditRealm : BaseCommand
     {
-        public Boolean Override { get; set; }
-
-        public String Name { get; set; }
-        public List<String> Help { get; set; }
-
-        private Realm realm;
-        private BaseCharacter player;
-        private Boolean isEditing;
-
         public CommandEditRealm()
         {
-            Help = new List<string>();
-
             Help.Add("Use the Edit command to edit existing objects properties.");
             Help.Add("Usage: Edit ObjectType ObjectName");
             Help.Add("Usage: Edit ObjectType FullyQualifiedName");
