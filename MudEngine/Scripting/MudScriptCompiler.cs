@@ -139,8 +139,8 @@ namespace MudEngine.Scripting
         public Boolean Compile(CompilerParameters param, FileInfo scriptFile)
         {
             //TODO: Add single-file compilation support
-            return false; //Single file compiling not implemented
-
+            return false; //Single file compiling not implemented. TODO!
+            
             //Make sure we have a compiler version supplied.
             if (!CompilerOptions.ContainsKey("CompilerVersion"))
                 CompilerOptions.Add("CompilerVersion", "v4.0");
