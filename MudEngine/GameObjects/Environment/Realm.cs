@@ -38,12 +38,20 @@ namespace MudEngine.GameObjects.Environment
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="game"></param>
         public Realm(GameManagement.Game game) : base(game)
         {
             ZoneCollection = new List<Zone>();
             InitialZone = new Zone(game);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filename"></param>
         public override void Load(string filename)
         {
             base.Load(filename);
@@ -65,6 +73,9 @@ namespace MudEngine.GameObjects.Environment
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public override void Save()
         {
             String path = Path.Combine(ActiveGame.DataPaths.Environment, Path.GetFileNameWithoutExtension(Filename));
@@ -85,9 +96,13 @@ namespace MudEngine.GameObjects.Environment
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         public List<Zone> GetZone(String filename)
         {
-
             List<Zone> zones = new List<Zone>();
 
             if (!filename.ToLower().EndsWith(".zone"))
@@ -104,6 +119,10 @@ namespace MudEngine.GameObjects.Environment
             return zones;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="zone"></param>
         public void AddZone(Zone zone)
         {
             if (zone.IsInitialZone)
@@ -117,7 +136,6 @@ namespace MudEngine.GameObjects.Environment
                     }
                 }
             }
-
 
             if (zone.IsInitialZone)
                 InitialZone = zone;
