@@ -3,15 +3,20 @@ using System;
 
 namespace MudEngine.GameObjects
 {
-    public enum AvailableTravelDirections
+    [System.Flags]
+    public enum AvailableTravelDirections : uint
     {
         None = 0,
-        North,
-        South,
-        East,
-        West,
-        Up,
-        Down,
+        North = 1,
+        South = 2,
+        East = 4,
+        West = 8,
+        Up = 16,
+        Down = 32,
+        Northeast = North | East,
+        Northwest = North | West,
+        Southeast = South | East,
+        Southwest = South | West
     }
 
     public static class TravelDirections
@@ -19,21 +24,27 @@ namespace MudEngine.GameObjects
         public static AvailableTravelDirections GetReverseDirection(AvailableTravelDirections Direction)
         {
             switch (Direction)
-            {
-                case AvailableTravelDirections.Down:
-                    return AvailableTravelDirections.Up;
-                case AvailableTravelDirections.East:
-                    return AvailableTravelDirections.West;
-                case AvailableTravelDirections.None:
-                    return AvailableTravelDirections.None;
+            {                
                 case AvailableTravelDirections.North:
                     return AvailableTravelDirections.South;
                 case AvailableTravelDirections.South:
                     return AvailableTravelDirections.North;
-                case AvailableTravelDirections.Up:
-                    return AvailableTravelDirections.Down;
+                case AvailableTravelDirections.East:
+                    return AvailableTravelDirections.West;                
                 case AvailableTravelDirections.West:
                     return AvailableTravelDirections.East;
+                case AvailableTravelDirections.Up:
+                    return AvailableTravelDirections.Down;
+                case AvailableTravelDirections.Down:
+                    return AvailableTravelDirections.Up;
+                case AvailableTravelDirections.Northeast:
+                    return AvailableTravelDirections.Southwest;
+                case AvailableTravelDirections.Southwest:
+                    return AvailableTravelDirections.Northeast;
+                case AvailableTravelDirections.Northwest:
+                    return AvailableTravelDirections.Southeast;
+                case AvailableTravelDirections.Southeast:
+                    return AvailableTravelDirections.Northwest;
                 default:
                     return AvailableTravelDirections.None;
             }
