@@ -94,6 +94,8 @@ namespace MudEngine.GameObjects.Environment
             }
         }
 
+        protected TerrainTypes Terrain { get; set; }
+
         public Room(Game game) :base(game)
         {
             Doorways = new List<Door>();

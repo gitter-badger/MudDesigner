@@ -84,6 +84,7 @@
     <Compile Include="GameObjects\Environment\Realm.cs" />
     <Compile Include="GameObjects\Environment\Room.cs" />
     <Compile Include="GameObjects\Environment\StartingLocation.cs" />
+    <Compile Include="GameObjects\Environment\TerrainType.cs" />
     <Compile Include="GameObjects\Environment\TravelDirections.cs" />
     <Compile Include="GameObjects\Environment\Zone.cs" />
     <Compile Include="GameObjects\Items\BaseItem.cs" />
