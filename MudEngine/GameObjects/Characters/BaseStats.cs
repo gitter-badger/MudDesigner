@@ -71,9 +71,9 @@ namespace MudEngine.GameObjects.Characters
         public Int32 Charisma { get; set; }
 
         /// <summary>
-        /// Experiance is given to the player based off activities that they perform.
+        /// Experience is given to the player based off activities that they perform.
         /// </summary>
-        public Int32 Experiance { get; set; }
+        public Int32 Experience { get; set; }
 
         
     }
