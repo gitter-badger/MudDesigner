@@ -19,7 +19,7 @@ namespace MudEngine.Commands
             Help.Add("Saves the game world.");
         }
 
-        public void Execute(String command, BaseCharacter player)
+        public override void Execute(String command, BaseCharacter player)
         {
             if ((player.Role == SecurityRoles.Admin) || (player.Role == SecurityRoles.GM))
             {
