@@ -22,7 +22,7 @@ namespace MudEngine.Commands
             Help.Add("Example: EditRoom MyRealmName>MyRoom>MyRoom");
         }
 
-        public void Execute(String command, BaseCharacter player)
+        public override void Execute(String command, BaseCharacter player)
         {
             if ((player.Role == SecurityRoles.Admin) || (player.Role == SecurityRoles.GM))
             {

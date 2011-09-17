@@ -32,7 +32,7 @@ namespace MudEngine.Commands
         /// <summary>
         /// Constructor for the class.
         /// </summary>
-        public void Execute(String command, BaseCharacter player)
+        public override void Execute(String command, BaseCharacter player)
         {
             //Print the basic Active Game's information to the connecting player.
             player.Send(player.ActiveGame.GameTitle);

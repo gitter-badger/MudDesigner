@@ -23,7 +23,7 @@ namespace MudEngine.Commands
             Help.Add("Restarts the game server.");
         }
 
-        public void Execute(String command, BaseCharacter player)
+        public override void Execute(String command, BaseCharacter player)
         {
             if (player.Role == SecurityRoles.Admin)
             {
