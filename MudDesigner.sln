@@ -11,9 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudClient", "MudClient\MudC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudDesigner", "MudDesigner\MudDesigner.csproj", "{5B18E552-26D0-4491-8BAC-FF80046F0B0F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rScripting", "rScripting\rScripting.csproj", "{BC1B32DA-7209-4B32-8171-A190EF21F5D6}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 6
+		SccNumberOfProjects = 7
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs03
 		SccLocalPath0 = .
@@ -32,6 +34,9 @@ Global
 		SccProjectUniqueName5 = MudDesigner\\MudDesigner.csproj
 		SccProjectName5 = MudDesigner
 		SccLocalPath5 = MudDesigner
+		SccProjectUniqueName6 = rScripting\\rScripting.csproj
+		SccProjectName6 = rScripting
+		SccLocalPath6 = rScripting
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +97,16 @@ Global
 		{5B18E552-26D0-4491-8BAC-FF80046F0B0F}.Release|Mixed Platforms.Build.0 = Release|x86
 		{5B18E552-26D0-4491-8BAC-FF80046F0B0F}.Release|x86.ActiveCfg = Release|x86
 		{5B18E552-26D0-4491-8BAC-FF80046F0B0F}.Release|x86.Build.0 = Release|x86
+		{BC1B32DA-7209-4B32-8171-A190EF21F5D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC1B32DA-7209-4B32-8171-A190EF21F5D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC1B32DA-7209-4B32-8171-A190EF21F5D6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BC1B32DA-7209-4B32-8171-A190EF21F5D6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BC1B32DA-7209-4B32-8171-A190EF21F5D6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BC1B32DA-7209-4B32-8171-A190EF21F5D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC1B32DA-7209-4B32-8171-A190EF21F5D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC1B32DA-7209-4B32-8171-A190EF21F5D6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{BC1B32DA-7209-4B32-8171-A190EF21F5D6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{BC1B32DA-7209-4B32-8171-A190EF21F5D6}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
