@@ -16,9 +16,11 @@ namespace MudEngine.Commands
         //public String Name { get; set; }
         public List<String> Help { get; set; }
 
-        private Realm realm;
-        private BaseCharacter player;
-        private Boolean isEditing;
+        protected Realm realm;
+        protected Zone zone;
+        protected Room room;
+        protected BaseCharacter player;
+        protected Boolean isEditing;
 
         public BaseCommand()
         {
