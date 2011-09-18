@@ -141,6 +141,7 @@ namespace MudEngine.Scripting
             //TODO: Add single-file compilation support
             return false; //Single file compiling not implemented. TODO!
             
+            /**** Unreachable Code at the moment
             //Make sure we have a compiler version supplied.
             if (!CompilerOptions.ContainsKey("CompilerVersion"))
                 CompilerOptions.Add("CompilerVersion", "v4.0");
@@ -163,6 +164,7 @@ namespace MudEngine.Scripting
                 return false;
             else
                 return true;
+            ***/
         }
 
         /// <summary>
@@ -176,6 +178,7 @@ namespace MudEngine.Scripting
             //Source Code compiling not implemented.
             return false; //TODO: Add source code compiling support.
 
+            /**** Unreachable code at the moment
             if (!CompilerOptions.ContainsKey("CompilerVersion"))
                 CompilerOptions.Add("CompilerVersion", "v4.0");
 
@@ -195,6 +198,7 @@ namespace MudEngine.Scripting
                 return false;
             else
                 return true;
+            ****/
         }
     }
 }

@@ -1,36 +1,15 @@
-﻿
-/// <summary>
+﻿/// <summary>
 /// This command creates a Room within the players current Realm>Zone.
 /// Admins using this command will not need to supply a fully qualified path like the 'Create' command requires.
 /// However, they are restricted to creating Rooms only within their current Realm>Zone.
 /// </summary>
-class CommandCreateRoom : IGameCommand
+public class CommandCreateRoom : BaseCommand
 {
-    /// <summary>
-    /// Used by the Command Engine to allow for overriding any other commands that contain the same name.
-    /// TODO: Does Overriding Commands still work? This is part of some old code I wrote several years back and might be broke.
-    /// </summary>
-    public Boolean Override { get; set; }
-
-    /// <summary>
-    /// The name of the command.
-    /// If Override is set to true, this command will override any other command that contains the same name.
-    /// </summary>
-    public String Name { get; set; }
-
-    /// <summary>
-    /// A collection of strings that contains helpfull information for this Command.
-    /// When the user enteres 'Help Exit' the game will print the content of this collection.
-    /// This is treated like a virtual book, each entry in the collection is printed as a new line.
-    /// </summary>
-    public List<String> Help { get; set; }
-
     /// <summary>
     /// Constructor for the class.
     /// </summary>
     public CommandCreateRoom()
     {
-        Help = new List<String>();
         Help.Add("Creates a Room within the Admin's current Realm>Zone");
     }
 
