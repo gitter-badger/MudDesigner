@@ -10,7 +10,7 @@ public class CommandTeleport : BaseCommand
         Help.Add("Example: Teleport Billy MyRealm>MyZone>MyRoom");
     }
 
-    public void Execute(String command, BaseCharacter player)
+    public override void Execute(String command, BaseCharacter player)
     {
         command = command.Substring("teleport".Length).Trim();
         String[] data = command.ToLower().Split(' ');

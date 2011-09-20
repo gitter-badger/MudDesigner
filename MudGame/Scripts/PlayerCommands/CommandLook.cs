@@ -17,7 +17,7 @@ public class CommandLook : BaseCommand
     /// <summary>
     /// Constructor for the class.
     /// </summary>
-    public void Execute(String command, BaseCharacter player)
+    public override void Execute(String command, BaseCharacter player)
     {
         //If the players Room is null, then we need to let them know that they are
         //currently not residing within a Room. If this occures for some reason, the player will

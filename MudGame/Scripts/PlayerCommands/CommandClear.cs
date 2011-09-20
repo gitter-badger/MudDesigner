@@ -14,7 +14,7 @@ public class CommandClear : BaseCommand
     /// <summary>
     /// Constructor for the class.
     /// </summary>
-    public void Execute(String command, BaseCharacter player)
+    public override void Execute(String command, BaseCharacter player)
     {
         //Call the flush method  to clear the players console screen of all text.
         player.FlushConsole();

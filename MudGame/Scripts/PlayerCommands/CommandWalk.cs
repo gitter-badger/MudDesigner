@@ -47,7 +47,7 @@ public class CommandWalk : BaseCommand
     /// <summary>
     /// Constructor for the class.
     /// </summary>
-    public void Execute(String command, BaseCharacter player)
+    public override void Execute(String command, BaseCharacter player)
     {
         //Since the walk command requires a second word (ex: walk north)
         //we split the words into an array so they are seperate.

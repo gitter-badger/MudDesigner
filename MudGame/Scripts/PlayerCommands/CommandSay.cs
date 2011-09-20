@@ -17,7 +17,7 @@ public class CommandSay : BaseCommand
     /// <summary>
     /// Constructor for the class.
     /// </summary>
-    public void Execute(String command, BaseCharacter player)
+    public override void Execute(String command, BaseCharacter player)
     {
         //Check if the user only said 'Say ' or 'Say' with no message content.
         if (command.Length <= 4)

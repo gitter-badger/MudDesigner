@@ -19,7 +19,7 @@ public class CommandExit : BaseCommand
     /// </summary>
     /// <param name="command"></param>
     /// <param name="player"></param>
-    public void Execute(String command, BaseCharacter player)
+    public override void Execute(String command, BaseCharacter player)
     {
         //Check if the game is multiplayer. 
         //Multiplayer games require disconnecting from the server and letting other players in the same Room know

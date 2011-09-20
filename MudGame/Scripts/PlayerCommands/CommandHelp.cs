@@ -18,7 +18,7 @@ public class CommandHelp : BaseCommand
     /// <summary>
     /// Constructor for the class.
     /// </summary>
-    public void Execute(String command, BaseCharacter player)
+    public override void Execute(String command, BaseCharacter player)
     {
         //Check if we have a topic that the player wants help with. If there is nothing after the Help word
         //in the command, then the user didn't supply us with a topic.

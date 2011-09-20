@@ -18,7 +18,7 @@ public class CommandGetTime : BaseCommand
     /// </summary>
     /// <param name="command"></param>
     /// <param name="player"></param>
-    public void Execute(String command, BaseCharacter player)
+    public override void Execute(String command, BaseCharacter player)
     {
         //Send the returned String containing the World Time to the player.
         player.Send(player.ActiveGame.WorldTime.GetCurrentWorldTime());

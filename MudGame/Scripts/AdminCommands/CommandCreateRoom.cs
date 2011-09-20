@@ -13,7 +13,7 @@ public class CommandCreateRoom : BaseCommand
         Help.Add("Creates a Room within the Admin's current Realm>Zone");
     }
 
-    public void Execute(String command, BaseCharacter player)
+    public override void Execute(String command, BaseCharacter player)
     {
         if ((player.Role == SecurityRoles.Admin) || (player.Role == SecurityRoles.GM))
         {

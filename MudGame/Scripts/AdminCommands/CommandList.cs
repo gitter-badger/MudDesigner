@@ -18,7 +18,7 @@ public class CommandList : BaseCommand
         Help.Add("RealmName>ZoneName>Rooms");
     }
 
-    public void Execute(String command, BaseCharacter player)
+    public override void Execute(String command, BaseCharacter player)
     {
         command = command.Substring("List".Length).Trim();
         String[] data = command.ToLower().Split('>');

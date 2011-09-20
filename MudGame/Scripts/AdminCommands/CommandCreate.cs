@@ -28,7 +28,7 @@ public class CommandCreate : BaseCommand
     /// </summary>
     /// <param name="command"></param>
     /// <param name="player"></param>
-    public void Execute(String command, BaseCharacter player)
+    public override void Execute(String command, BaseCharacter player)
     {
         //Check if the player has the proper security role in order to create content for the game world.
         if ((player.Role != SecurityRoles.Admin) && (player.Role != SecurityRoles.GM))
