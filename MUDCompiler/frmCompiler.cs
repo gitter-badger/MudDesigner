@@ -11,6 +11,8 @@ namespace MUDCompiler
 {
     public partial class frmCompiler : Form
     {
+        MudEngine.GameManagement.Game game = new MudEngine.GameManagement.Game();
+
         public frmCompiler()
         {
             InitializeComponent();
@@ -45,6 +47,7 @@ namespace MUDCompiler
         private void openScriptToolStripMenuItem_Click(object sender, EventArgs e)
         {
             rScripting.CompileEngine engine = new rScripting.CompileEngine();
+            engine.Compiler = "MudScriptCompiler";
 
             OpenFileDialog browse = new OpenFileDialog();
             browse.ShowDialog();

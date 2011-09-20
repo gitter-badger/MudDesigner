@@ -149,7 +149,12 @@ namespace MudEngine.GameManagement
 
             foreach (Type t in commandLibrary.GetTypes())
             {
-                if (t.GetInterface(typeof(IGameCommand).FullName) != null)
+                if (t.IsAbstract)
+                    continue;
+
+                Type inter = t.GetInterface("IGameCommand");
+
+                if (inter != null)
                 {
                     //Use activator to create an instance
                     IGameCommand command = (IGameCommand)Activator.CreateInstance(t);

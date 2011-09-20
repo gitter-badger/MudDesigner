@@ -49,6 +49,10 @@ namespace MudEngine.Scripting
         /// </summary>
         public Dictionary<String, String> CompilerOptions { get; set; }
 
+        public MudScriptCompiler()
+        {
+        }
+
         /// <summary>
         /// Compiles the source files found within the scriptRepository directory matching the ICompiler.ScriptExtension
         /// The Compiler defaults to the C# 4.0 compiler if none other is supplied via the ICompiler.CompilerOptions argument.
