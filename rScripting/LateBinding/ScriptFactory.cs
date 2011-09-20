@@ -42,12 +42,12 @@ namespace rScripting.LateBinding
             //See if a file exists first with this assembly name.
             if (File.Exists(assembly))
             {
-                a = Assembly.Load(new AssemblyName(assembly));
+                a = Assembly.Load(assembly);
             }
             //If not, then try and load it differently
             else
             {
-                a = Assembly.Load(assembly);
+                a = Assembly.Load(new AssemblyName(assembly));
             }
 
             if (a == null)
