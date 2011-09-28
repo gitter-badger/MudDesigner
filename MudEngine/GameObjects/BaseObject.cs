@@ -178,43 +178,6 @@ namespace MudEngine.GameObjects
         {
         }
 
-        public virtual void NewSave()
-        {
-            ScriptObject obj = new ScriptObject(this);
-            PropertyInfo[] prop = this.GetType().GetProperties();
-
-            string path = this.SavePath;
-
-            if (String.IsNullOrEmpty(path))
-                return;
-
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
-
-            string filename = Path.Combine(path, Filename);
-
-            if (File.Exists(filename))
-                File.Delete(filename);
-
-            foreach (var p in prop)
-            {
-                object[] attributes = p.GetCustomAttributes(typeof(MudEngine.Attributes.ParseProperty), false);
-
-                foreach (Attribute a in attributes)
-                {
-                    if (a.GetType().Name == "ParseProperty")
-                    {
-                        ParseProperty(p);
-                    }
-                }
-                FileManager.WriteLine(filename, obj.GetProperty(p.Name).ToString(), p.Name);
-            }
-        }
-
-        private void ParseProperty(PropertyInfo propety)
-        {
-        }
-
         public virtual void Save()
         {
             string path = this.SavePath;

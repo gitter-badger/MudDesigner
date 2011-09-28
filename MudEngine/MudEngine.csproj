@@ -54,8 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\ParseProperty.cs" />
-    <Compile Include="Commands\BaseCommand.cs" />
+    <Compile Include="Core\BaseCommand.cs" />
     <Compile Include="Commands\CommandRestart.cs" />
     <Compile Include="Commands\CommandLogin.cs" />
     <Compile Include="Commands\CommandSaveWorld.cs" />
@@ -98,7 +97,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Networking\" />
     <Folder Include="Objects\" />
     <Folder Include="World\" />
   </ItemGroup>

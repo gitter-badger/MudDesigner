@@ -6,7 +6,6 @@ using System.Text;
 using System.IO;
 
 //MUD Engine
-using MudEngine.Attributes;
 using MudEngine.FileSystem;
 using MudEngine.Commands;
 using MudEngine.GameManagement;
@@ -40,7 +39,6 @@ namespace MudEngine.GameObjects.Characters
         /// <summary>
         /// The current Room this Character is located at.
         /// </summary>
-        [ParseProperty(typeof(Room))]
         public Room CurrentRoom { get; set; }
 
         /// <summary>
