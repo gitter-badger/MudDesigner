@@ -62,30 +62,33 @@
     <Compile Include="Commands\CommandEditZone.cs" />
     <Compile Include="Commands\CommandEditRoom.cs" />
     <Compile Include="DAL\SaveDataPaths.cs" />
-    <Compile Include="GameManagement\CommandEngine.cs" />
+    <Compile Include="Commands\CommandSystem.cs" />
     <Compile Include="GameManagement\GameTime.cs" />
     <Compile Include="GameManagement\GameWorld.cs" />
-    <Compile Include="GameManagement\ICommand.cs" />
     <Compile Include="DAL\FileManager.cs" />
     <Compile Include="DAL\SaveDataTypes.cs" />
     <Compile Include="DAL\XmlSerialization.cs" />
     <Compile Include="GameManagement\Game.cs" />
+    <Compile Include="GameManagement\ICommand.cs" />
     <Compile Include="GameManagement\Log.cs" />
     <Compile Include="GameManagement\SecurityRoles.cs" />
-    <Compile Include="GameObjects\Bag.cs" />
-    <Compile Include="GameObjects\BaseObject.cs" />
-    <Compile Include="GameObjects\Characters\BaseCharacter.cs" />
-    <Compile Include="GameObjects\Characters\BaseStats.cs" />
-    <Compile Include="GameObjects\Characters\DialogChat.cs" />
-    <Compile Include="GameObjects\Environment\Door.cs" />
-    <Compile Include="GameObjects\Environment\Realm.cs" />
-    <Compile Include="GameObjects\Environment\Room.cs" />
-    <Compile Include="GameObjects\Environment\StartingLocation.cs" />
-    <Compile Include="GameObjects\Environment\TerrainType.cs" />
-    <Compile Include="GameObjects\Environment\TravelDirections.cs" />
-    <Compile Include="GameObjects\Environment\Zone.cs" />
-    <Compile Include="GameObjects\Items\BaseItem.cs" />
-    <Compile Include="GameObjects\Currency.cs" />
+    <Compile Include="Items\Bag.cs" />
+    <Compile Include="Core\BaseObject.cs" />
+    <Compile Include="Core\BaseCharacter.cs" />
+    <Compile Include="GameManagement\BaseStats.cs" />
+    <Compile Include="Communication\DialogChat.cs" />
+    <Compile Include="Scripting\CompileEngine.cs" />
+    <Compile Include="Scripting\ScriptFactory.cs" />
+    <Compile Include="Scripting\ScriptObject.cs" />
+    <Compile Include="World\Door.cs" />
+    <Compile Include="World\Realm.cs" />
+    <Compile Include="World\Room.cs" />
+    <Compile Include="World\StartingLocation.cs" />
+    <Compile Include="World\TerrainType.cs" />
+    <Compile Include="World\TravelDirections.cs" />
+    <Compile Include="World\Zone.cs" />
+    <Compile Include="Core\BaseItem.cs" />
+    <Compile Include="Items\Currency.cs" />
     <Compile Include="Communication\Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripting\MudScriptCompiler.cs" />
@@ -96,10 +99,7 @@
       <Name>rScripting</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Objects\" />
-    <Folder Include="World\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
