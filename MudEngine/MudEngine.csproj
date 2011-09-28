@@ -57,19 +57,19 @@
     <Compile Include="Core\BaseCommand.cs" />
     <Compile Include="DAL\SaveDataPaths.cs" />
     <Compile Include="Commands\CommandSystem.cs" />
-    <Compile Include="GameManagement\GameTime.cs" />
-    <Compile Include="GameManagement\GameWorld.cs" />
+    <Compile Include="Game\GameTime.cs" />
+    <Compile Include="Game\GameWorld.cs" />
     <Compile Include="DAL\FileManager.cs" />
     <Compile Include="DAL\SaveDataTypes.cs" />
     <Compile Include="DAL\XmlSerialization.cs" />
-    <Compile Include="GameManagement\Game.cs" />
-    <Compile Include="GameManagement\ICommand.cs" />
-    <Compile Include="GameManagement\Log.cs" />
-    <Compile Include="GameManagement\SecurityRoles.cs" />
+    <Compile Include="Game\Game.cs" />
+    <Compile Include="Game\ICommand.cs" />
+    <Compile Include="Game\Log.cs" />
+    <Compile Include="Game\SecurityRoles.cs" />
     <Compile Include="Items\Bag.cs" />
     <Compile Include="Core\BaseObject.cs" />
     <Compile Include="Core\BaseCharacter.cs" />
-    <Compile Include="GameManagement\BaseStats.cs" />
+    <Compile Include="Game\BaseStats.cs" />
     <Compile Include="Communication\DialogChat.cs" />
     <Compile Include="Scripting\CompileEngine.cs" />
     <Compile Include="Scripting\ScriptFactory.cs" />
@@ -93,7 +93,9 @@
       <Name>rScripting</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="GameManagement\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
