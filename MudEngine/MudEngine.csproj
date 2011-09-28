@@ -54,7 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\ParseProperty.cs" />
+    <Compile Include="Core\ParseProperty.cs" />
     <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Commands\CommandRestart.cs" />
     <Compile Include="Commands\CommandLogin.cs" />
@@ -96,6 +96,12 @@
       <Project>{BC1B32DA-7209-4B32-8171-A190EF21F5D6}</Project>
       <Name>rScripting</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Attributes\" />
+    <Folder Include="Communication\" />
+    <Folder Include="Objects\" />
+    <Folder Include="World\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
