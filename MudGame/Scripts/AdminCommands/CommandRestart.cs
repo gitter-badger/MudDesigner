@@ -1,22 +1,4 @@
-﻿//Microsoft.NET Framework
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Net;
-using System.Net.Sockets;
-
-//MUD Engine
-using MudEngine.GameObjects.Characters;
-using MudEngine.GameManagement;
-using MudEngine.GameObjects.Environment;
-using MudEngine.GameObjects;
-using MudEngine.FileSystem;
-
-namespace MudEngine.Commands
-{
-    class CommandRestart : BaseCommand
+﻿public class CommandRestart : BaseCommand
     {
         public CommandRestart()
         {

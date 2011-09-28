@@ -1,18 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using System.Text;
-
-using MudEngine.FileSystem;
-using MudEngine.GameObjects.Characters;
-using MudEngine.GameManagement;
-using MudEngine.Commands;
-using MudEngine.GameObjects.Environment;
-
-namespace MudEngine.Commands
-{
-    /// <summary>
+﻿    /// <summary>
     /// The Login command is used internally by the game engine.
     /// This command will not be available as a Script due to the engine requiring that it exists.
     /// Any changes needing to be made to this command to customize it in some manor will need to be done
