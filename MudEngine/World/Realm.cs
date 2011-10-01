@@ -9,10 +9,11 @@ using System.ComponentModel;
 //MUD Engine
 using MudEngine.FileSystem;
 using MudEngine.GameObjects;
+using MudEngine.Core;
 
 namespace MudEngine.GameObjects.Environment
 {
-    public class Realm : BaseObject
+    public class Realm : BaseEnvironment
     {
 
         [Category("Environment Information")]

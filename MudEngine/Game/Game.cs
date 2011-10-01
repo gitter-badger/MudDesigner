@@ -18,6 +18,7 @@ using MudEngine.GameObjects.Characters;
 using MudEngine.GameObjects.Environment;
 using MudEngine.Scripting;
 using MudEngine.Networking;
+using MudEngine.Core;
 
 namespace MudEngine.GameManagement
 {
@@ -26,7 +27,7 @@ namespace MudEngine.GameManagement
     /// </summary>
     [XmlInclude(typeof(StartingLocation))]
     [XmlInclude(typeof(Currency))]
-    public class Game
+    public class Game : BaseGame
     {
         #region ==== Properties & Types ====
 

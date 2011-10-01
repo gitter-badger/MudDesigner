@@ -15,9 +15,9 @@ using MudEngine.GameManagement;
 using rScripting;
 using rScripting.LateBinding;
 
-namespace MudEngine.GameObjects
+namespace MudEngine.Core
 {
-    public class BaseObject
+    public abstract class BaseObject
     {
         [Category("Object Setup")]
         [Description("The Display Name assigned to this object.")]
@@ -87,37 +87,18 @@ namespace MudEngine.GameObjects
 
         protected virtual String SavePath { get; set; }
 
-        [Category("Environment Information")]
-        [Description("If a user asks to use his/her senses to investigate an area, this is one of the results that will be displayed. Senses can be used to assist blind characters.")]
-        [DefaultValue("You don't smell anything unsual.")]
-        public String Smell { get; set; }
-
-        [Category("Environment Information")]
-        [Description("If a user asks to use his/her senses to investigate an area, this is one of the results that will be displayed. Senses can be used to assist blind characters.")]
-        [DefaultValue("You hear nothing of interest.")]
-        public String Listen { get; set; }
-
-        [Category("Environment Information")]
-        [Description("If a user asks to use his/her senses to investigate an area, this is one of the results that will be displayed. Senses can be used to assist blind characters.")]
-        [DefaultValue("You feel nothing.")]
-        public String Feel { get; set; }
-
-        public Game ActiveGame { get; set; }
+        public BaseGame ActiveGame { get; set; }
 
         /// <summary>
         /// Initializes the base object
         /// </summary>
-        public BaseObject(Game game)
+        public BaseObject(BaseGame game)
         {
             Name = "New " + this.GetType().Name;
             ActiveGame = game;
             DetailedDescription = new List<String>();
 
-            this.Feel = "You feel nothing.";
-            this.Listen = "You hear nothing of interest.";
-            this.Smell = "You don't smell anything unsual.";
             this.Name = DefaultName();
-
             this.Filename = DefaultName() + "." + this.GetType().Name;
         }
 
@@ -142,39 +123,7 @@ namespace MudEngine.GameObjects
             return this.Name;
         }
 
-        public virtual void Start()
-        {
-        }
-
-        public virtual void OnEnter()
-        {
-        }
-
-        public virtual void OnExit()
-        {
-        }
-
-        public virtual void OnCreate()
-        {
-        }
-
-        public virtual void OnDestroy()
-        {
-        }
-
-        public virtual void OnEquip()
-        {
-        }
-
-        public virtual void OnUnequip()
-        {
-        }
-
-        public virtual void OnMount()
-        {
-        }
-
-        public virtual void OnDismount()
+        public virtual void Initialize()
         {
         }
 
@@ -195,9 +144,6 @@ namespace MudEngine.GameObjects
 
             FileManager.WriteLine(filename, this.Name, "Name");
             FileManager.WriteLine(filename, this.Description, "Description");
-            FileManager.WriteLine(filename, this.Feel, "Feel");
-            FileManager.WriteLine(filename, this.Listen, "Listen");
-            FileManager.WriteLine(filename, this.Smell, "Smell");
 
             foreach (String line in DetailedDescription)
                 FileManager.WriteLine(filename, line, "DetailedDescription");
@@ -215,10 +161,6 @@ namespace MudEngine.GameObjects
             }
             this.Name = FileManager.GetData(filename, "Name");
             this.Description = FileManager.GetData(filename, "Description");
-            this.Feel = FileManager.GetData(filename, "Feel");
-            this.Listen = FileManager.GetData(filename, "Listen");
-            this.Smell = FileManager.GetData(filename, "Smell");
-
             List<String> data = FileManager.GetCollectionData(filename, "DetailedDescription");
 
             foreach (String line in data)

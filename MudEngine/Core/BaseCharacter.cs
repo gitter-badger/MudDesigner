@@ -11,7 +11,8 @@ using MudEngine.Commands;
 using MudEngine.GameManagement;
 using MudEngine.GameObjects;
 using MudEngine.GameObjects.Environment;
-using MudEngine.GameObjects.Items;
+using MudEngine.Items;
+using MudEngine.Core;
 
 using System.Net;
 using System.Net.Sockets;
@@ -372,6 +373,24 @@ namespace MudEngine.GameObjects.Characters
             gc.Execute("Look", this); //MUST happen after Room setup is completed, otherwise the player default Abyss Room is printed.
             this.Send("Command: ", false);
         }
+
+        public virtual void OnCreate()
+        {
+        }
+
+        public virtual void OnDestroy()
+        {
+        }
+
+        public virtual void OnEquip()
+        {
+        }
+
+        public virtual void OnUnequip()
+        {
+        }
+
+
         internal void Receive(String data)
         {
             //data = ExecuteCommand(data);

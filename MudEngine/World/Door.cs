@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 using System.ComponentModel;
 
 //MUD Engine
-using MudEngine.GameObjects.Items;
+using MudEngine.Core;
 using MudEngine.GameManagement;
 
 namespace MudEngine.GameObjects.Environment

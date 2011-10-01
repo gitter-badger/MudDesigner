@@ -11,7 +11,8 @@ using System.Xml.Serialization;
 using MudEngine.FileSystem;
 using MudEngine.GameManagement;
 using MudEngine.GameObjects;
-using MudEngine.GameObjects.Items;
+using MudEngine.Items;
+using MudEngine.Core;
 
 namespace MudEngine.GameObjects.Environment
 {

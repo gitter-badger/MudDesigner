@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 
 //MUD Engine
-using MudEngine.GameObjects.Items;
+using MudEngine.Core;
 
-namespace MudEngine.GameObjects
+namespace MudEngine.Items
 {
-    public class Bag : BaseObject
+    public class Bag : BaseItem
     {
         /// <summary>
         /// Gets or Sets the size of the bag.
@@ -20,7 +20,7 @@ namespace MudEngine.GameObjects
             set;
         }
 
-        private List<Items.BaseItem> Items { get; set; }
+        private List<BaseItem> Items { get; set; }
 
         public Bag(GameManagement.Game game) : base(game)
         {

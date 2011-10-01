@@ -10,7 +10,7 @@ using System.IO;
 
 //MUD Engine
 using MudEngine.FileSystem;
-using MudEngine.GameObjects.Items;
+using MudEngine.Core;
 using MudEngine.GameManagement;
 
 namespace MudEngine.GameObjects.Environment

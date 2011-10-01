@@ -5,9 +5,11 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 
+using MudEngine.Core;
+
 namespace MudEngine.GameObjects
 {
-    public class Currency : BaseObject
+    public class Currency : BaseItem
     {
         [Category("Currency Settings")]
         [Description("The value of the currency is based off the BaseCurrencyValue set in the Project Information. If BaseCurrencyValue is 1, and a new Currency is 10, then it will take 10 BaseCurrency to equal 1 of the new Currencies.")]

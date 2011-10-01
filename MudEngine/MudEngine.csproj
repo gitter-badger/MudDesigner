@@ -55,6 +55,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\BaseCommand.cs" />
+    <Compile Include="Core\BaseEnvironment.cs" />
+    <Compile Include="Core\BaseGame.cs" />
     <Compile Include="DAL\SaveDataPaths.cs" />
     <Compile Include="Commands\CommandSystem.cs" />
     <Compile Include="Game\GameTime.cs" />
@@ -93,9 +95,7 @@
       <Name>rScripting</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GameManagement\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

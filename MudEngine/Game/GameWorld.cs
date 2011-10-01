@@ -11,7 +11,7 @@ using MudEngine.GameManagement;
 using MudEngine.GameObjects;
 using MudEngine.GameObjects.Characters;
 using MudEngine.GameObjects.Environment;
-using MudEngine.GameObjects.Items;
+using MudEngine.Core;
 using MudEngine.Scripting;
 
 namespace MudEngine.GameManagement

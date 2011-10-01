@@ -6,7 +6,7 @@ using System.Text;
 
 using MudEngine.GameManagement;
 
-namespace MudEngine.GameObjects.Items
+namespace MudEngine.Core
 {
     public class BaseItem : BaseObject
     {
