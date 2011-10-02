@@ -66,10 +66,6 @@
       <Project>{498943A8-DF5A-4DB0-B506-0BFF44788657}</Project>
       <Name>MudEngine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\rScripting\rScripting.csproj">
-      <Project>{BC1B32DA-7209-4B32-8171-A190EF21F5D6}</Project>
-      <Name>rScripting</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="frmCompiler.resx">

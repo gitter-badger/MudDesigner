@@ -11,16 +11,18 @@ namespace MUDCompiler
 {
     public partial class frmCompiler : Form
     {
-        MudEngine.GameManagement.Game game = new MudEngine.GameManagement.Game();
+        //MudEngine.GameManagement.Game game = new MudEngine.GameManagement.Game();
 
         public frmCompiler()
         {
             InitializeComponent();
+
+            MessageBox.Show("Mud Compiler application needs to be re-wrote to support Alpha 2.0");
         }
 
         private void openDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            rScripting.CompileEngine engine = new rScripting.CompileEngine();
+/*            rScripting.CompileEngine engine = new rScripting.CompileEngine();
 
             FolderBrowserDialog browse = new FolderBrowserDialog();
             browse.ShowDialog();
@@ -37,7 +39,7 @@ namespace MUDCompiler
                 txtConsole.Text = "Compiled without error.";
             else
                 txtConsole.Text = engine.Errors;
-        }
+*/        }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -46,7 +48,7 @@ namespace MUDCompiler
 
         private void openScriptToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            rScripting.CompileEngine engine = new rScripting.CompileEngine();
+/*            rScripting.CompileEngine engine = new rScripting.CompileEngine();
             engine.Compiler = "MudScriptCompiler";
 
             OpenFileDialog browse = new OpenFileDialog();
@@ -65,6 +67,6 @@ namespace MUDCompiler
                 txtConsole.Text = "Compiled without error.";
             else
                 txtConsole.Text = engine.Errors;
-        }
+*/        }
     }
 }

@@ -51,18 +51,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
-    <Compile Include="frmDesigner.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmDesigner.Designer.cs">
-      <DependentUpon>frmDesigner.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmInputBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmInputBox.Designer.cs">
-      <DependentUpon>frmInputBox.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmProjectManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,12 +59,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="frmDesigner.resx">
-      <DependentUpon>frmDesigner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmInputBox.resx">
-      <DependentUpon>frmInputBox.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmProjectManager.resx">
       <DependentUpon>frmProjectManager.cs</DependentUpon>
     </EmbeddedResource>

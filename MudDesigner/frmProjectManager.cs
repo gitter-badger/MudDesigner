@@ -9,10 +9,6 @@ using System.Windows.Forms;
 using System.IO;
 using System.Threading;
 
-using MudEngine.FileSystem;
-using MudEngine.GameManagement;
-using MudEngine.Scripting;
-
 namespace MudDesigner
 {
     public partial class frmProjectManager : Form
@@ -20,8 +16,6 @@ namespace MudDesigner
         public frmProjectManager()
         {
             InitializeComponent();
-
-            
         }
 
         private void RefreshProjects()

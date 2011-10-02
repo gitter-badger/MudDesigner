@@ -54,20 +54,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClassesPendingMigration\GameTime.cs" />
     <Compile Include="ClassesPendingMigration\GameWorld.cs" />
-    <Compile Include="ClassesPendingMigration\Game.cs" />
-    <Compile Include="ClassesPendingMigration\ICommand.cs" />
     <Compile Include="ClassesPendingMigration\Log.cs" />
-    <Compile Include="ClassesPendingMigration\SecurityRoles.cs" />
-    <Compile Include="ClassesPendingMigration\BaseStats.cs" />
+    <Compile Include="Communication\OldServer.cs" />
+    <Compile Include="Communication\Server.cs" />
+    <Compile Include="Core\BaseCharacter.cs" />
+    <Compile Include="Core\BaseCommand.cs" />
+    <Compile Include="Core\BaseEnvironment.cs" />
+    <Compile Include="Core\BaseGame.cs" />
+    <Compile Include="Core\BaseItem.cs" />
+    <Compile Include="Core\BaseObject.cs" />
+    <Compile Include="Core\BaseServer.cs" />
+    <Compile Include="Core\ICharacter.cs" />
+    <Compile Include="Core\ICommand.cs" />
+    <Compile Include="Core\ICommunicate.cs" />
+    <Compile Include="Core\ICompiler.cs" />
+    <Compile Include="Core\IEnvironment.cs" />
+    <Compile Include="Core\IGameComponent.cs" />
+    <Compile Include="Core\IObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\rScripting\rScripting.csproj">
-      <Project>{BC1B32DA-7209-4B32-8171-A190EF21F5D6}</Project>
-      <Name>rScripting</Name>
-    </ProjectReference>
+    <Compile Include="Runtime\CommandSystem.cs" />
+    <Compile Include="Runtime\MudCompiler.cs" />
+    <Compile Include="Runtime\ScriptFactory.cs" />
+    <Compile Include="Runtime\ScriptObject.cs" />
+    <Compile Include="Runtime\ScriptSystem.cs" />
+    <Compile Include="World\Door.cs" />
+    <Compile Include="World\Room.cs" />
+    <Compile Include="World\TerrainType.cs" />
+    <Compile Include="World\TravelDirections.cs" />
+    <Compile Include="World\Zone.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
