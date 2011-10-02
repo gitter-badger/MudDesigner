@@ -11,7 +11,13 @@ namespace MudGame
     {
         static void Main(String[] args)
         {
-            
+            MudGame game = new MudGame();
+            game.Initialize();
+
+            while (game.IsRunning)
+            {
+                game.Update();
+            }
         }
     }
 }
