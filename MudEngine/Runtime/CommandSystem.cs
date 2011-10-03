@@ -94,10 +94,9 @@ namespace MudEngine.Runtime
             {
                 //All commands implement the ICommand interface.
                 //If that interface is not present on this Type, skip and go to the next one.
-                if (!type.IsInterface)
-                    continue;
-
                 if (type.GetInterface("ICommand") == null)
+                    continue;
+                else if (type.IsAbstract)
                     continue;
 
                 ICommand cmd = (ICommand)Activator.CreateInstance(type);

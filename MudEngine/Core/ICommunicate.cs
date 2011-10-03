@@ -12,6 +12,7 @@ namespace MudEngine.Core
         int Port { get; set; }
         ICommand LoginCommand { get; set; }
 
+        void Shutdown();
         void OnConnect(object client);
         void OnDisconnect(object client);
         void RecieveData(string data);

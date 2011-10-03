@@ -51,16 +51,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
-    <Compile Include="frmProjectManager.cs">
+    <Compile Include="frmDesigner.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmProjectManager.Designer.cs">
-      <DependentUpon>frmProjectManager.cs</DependentUpon>
+    <Compile Include="frmDesigner.Designer.cs">
+      <DependentUpon>frmDesigner.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="frmProjectManager.resx">
-      <DependentUpon>frmProjectManager.cs</DependentUpon>
+    <EmbeddedResource Include="frmDesigner.resx">
+      <DependentUpon>frmDesigner.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

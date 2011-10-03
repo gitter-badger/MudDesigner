@@ -8,6 +8,7 @@ using System.Text;
 using MudEngine.Core;
 using MudEngine.Runtime;
 using MudEngine.Communication;
+using MudGame.Characters;
 
 namespace MudGame
 {
@@ -22,11 +23,6 @@ namespace MudGame
         /// Gets a reference to the games command execution system
         /// </summary>
         protected CommandSystem CommandSystem { get; private set; }
-
-        /// <summary>
-        /// Gets a reference to the games networking server.
-        /// </summary>
-        public Server Server { get; private set; }
 
         public MudGame()
             : base()
@@ -47,31 +43,36 @@ namespace MudGame
             this.Version = "Alpha 2.0";
 
             //Add the engine.dll.
-            this.ScriptSystem.AddAssemblyReference(Assembly.GetExecutingAssembly().GetName().Name + ".dll");
+            string assembly = Assembly.GetExecutingAssembly().GetName().Name + ".dll";
+            this.ScriptSystem.AddAssemblyReference(assembly);
 
             //If a scripts directory exists, compile them.
             if (Directory.Exists("Scripts"))
             {
                 this.ScriptSystem.Compile("Scripts");
-                if (this.ScriptSystem.HasErrors)
+               // if (this.ScriptSystem.HasErrors)
                     //TODO: Output script system compile errors
-                    return; //temp.  Shouldn't return.
+                    //return; //temp.  Shouldn't return.
             }
 
             //Scripts are compiled, now load all of the commands, if any script commands exist.
+            CommandSystem.LoadCommandLibrary(Assembly.GetExecutingAssembly());
             CommandSystem.LoadCommandLibrary(ScriptSystem.CompiledAssembly);
 
-            //TODO: Iitialize the game world.
+            //TODO: Initialize the game world.
 
             //TODO: Load previously saved state.
 
             //TODO: Enable server.
-            this.EnableServer = true; //Starts the server.
+            if (this.EnableServer)
+                this.Server.Initialize();
+
+            this.IsRunning = true;
         }
 
         public override void Shutdown()
         {
-            if (this.EnableServer)
+            if (Server.IsRunning)
                 this.EnableServer = false;
 
             this.Save();
@@ -79,12 +80,15 @@ namespace MudGame
 
         public override void Update()
         {
-            throw new NotImplementedException();
+            if (this.Server.IsRunning)
+                this.Server.Update();
         }
 
         public override void OnConnect(System.Net.Sockets.TcpClient client)
         {
-            throw new NotImplementedException();
+            MudCharacter character = new MudCharacter(this);
+            character.Role = CharacterRoles.Player;
+            character.OnConnect(client);
         }
 
         public override void OnDisconnect(System.Net.Sockets.TcpClient client)

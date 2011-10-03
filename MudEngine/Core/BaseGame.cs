@@ -10,12 +10,7 @@ namespace MudEngine.Core
 {
     public abstract class BaseGame : BaseObject
     {
-        /// <summary>
-        /// Enables or Disables the server.
-        /// </summary>
-        [Category("Game Settings")]
-        [Description("Enables or Disabels the server.")]
-        public bool EnableServer { get; set; }
+        private bool _EnableServer;
 
         /// <summary>
         /// Enables or Disables the Auto Save feature.
@@ -48,6 +43,10 @@ namespace MudEngine.Core
         /// Gets a reference to the collection of players currently connected to the server
         /// </summary>
         public Dictionary<TcpClient, ICharacter> ConnectedPlayers { get; private set; }
+
+        public BaseServer Server { get; protected set; }
+
+        public bool EnableServer { get; set; }
 
         /// <summary>
         /// Gets or Sets the current version of the game.

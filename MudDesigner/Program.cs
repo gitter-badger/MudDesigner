@@ -15,7 +15,7 @@ namespace MudDesigner
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmProjectManager());
+            Application.Run(new frmDesigner());
         }
     }
 }

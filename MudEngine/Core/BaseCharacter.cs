@@ -91,51 +91,13 @@ namespace MudEngine.Core
             throw new NotImplementedException();
         }
 
-        public void OnConnect(TcpClient client)
-        {
-            this._ConnectedClient = client;
+        public abstract void OnConnect(TcpClient client);
 
-            NetworkStream clientStream = this._ConnectedClient.GetStream();
+        public abstract void OnTravel(World.AvailableTravelDirections travelDirection);
 
-            //Stores messages recieved from the client
-            byte[] message = new byte[4096];
-            int bytesRead;
+        public abstract void OnTalk(string message, ICharacter instigator);
 
-            while (true)
-            {
-                bytesRead = 0;
 
-                try
-                {
-                    bytesRead = clientStream.Read(message, 0, 4096);
-                }
-                catch
-                {
-                    break; //error occured.  Re-try
-                }
-
-                if (bytesRead == 0)
-                {
-                    break; //Disconnected.
-                }
-
-                ASCIIEncoding encoder = new ASCIIEncoding();
-                string data = encoder.GetString(message, 0, bytesRead);
-                //RecieveData(data);
-            }
-
-            //TODO: Call ActiveGame.OnDisconnect();
-            //newClient.Close(); //Disconnect the client.
-        }
-
-        public void OnTravel(World.AvailableTravelDirections travelDirection)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnTalk(string message, ICharacter instigator)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void Send(string message);
     }
 }

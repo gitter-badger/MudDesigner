@@ -13,12 +13,13 @@ namespace MudEngine.Core
         /// </summary>
         [Browsable(false)]
         public List<string> Help { get; set; }
-
+        
         public BaseCommand()
         {
             Help = new List<string>();
+            this.Name = this.GetType().Name.Substring("Command".Length);
         }
-
+        
         /// <summary>
         /// Executes the command for the character supplied.
         /// </summary>
@@ -26,17 +27,7 @@ namespace MudEngine.Core
         /// <param name="character"></param>
         public abstract void Execute(string command, ICharacter character);
 
-        public string Name
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public string Name {get;set;}
 
         public string Description
         {

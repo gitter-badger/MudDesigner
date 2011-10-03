@@ -15,7 +15,9 @@ namespace MudEngine.Core
         public ICommand LoginCommand { get; set; }
 
         public BaseGame ActiveGame { get; private set; }
-        
+
+        public bool IsRunning { get; private set; }
+
         public BaseServer(BaseGame game)
         {
             this.ActiveGame = game;
@@ -24,10 +26,11 @@ namespace MudEngine.Core
         public virtual void Initialize()
         {
         }
+        public abstract void Shutdown();
 
         public virtual void Update()
         {
-            throw new NotImplementedException();
+            return; //stub.
         }
 
         public abstract void OnConnect(object client);

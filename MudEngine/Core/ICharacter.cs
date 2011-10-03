@@ -20,5 +20,6 @@ namespace MudEngine.Core
         void OnTravel(AvailableTravelDirections travelDirection);
         void OnTalk(string message, ICharacter instigator);
         void OnConnect(TcpClient client);
+        void Send(string message);
     }
 }

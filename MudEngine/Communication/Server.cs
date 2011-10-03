@@ -27,7 +27,6 @@ namespace MudEngine.Communication
         public Server(BaseGame game) : base(game)
         {
             this._Listener = new TcpListener(IPAddress.Any, 555);
-            this._Connect = new Thread(new ThreadStart(ListenForConnections));
             this._ClientCollection = new Dictionary<BaseCharacter, Thread>();
         }
 
@@ -40,7 +39,6 @@ namespace MudEngine.Communication
             : base(game)
         {
             this._Listener = new TcpListener(IPAddress.Any, port);
-            this._Connect = new Thread(new ThreadStart(ListenForConnections));
             this._ClientCollection = new Dictionary<BaseCharacter, Thread>();
         }
 
@@ -61,12 +59,22 @@ namespace MudEngine.Communication
 
         public override void Initialize()
         {
+            this._Connect = new Thread(new ThreadStart(ListenForConnections));
             this._Connect.Start();
+        }
+
+        public override void Shutdown()
+        {
         }
 
         public override void OnConnect(object client)
         {
-            this.ActiveGame.OnConnect((TcpClient)client);
+            TcpClient c = (TcpClient)client;
+            NetworkStream ns = c.GetStream();
+            ASCIIEncoding encoder = new ASCIIEncoding();
+            ns.Write(encoder.GetBytes("WELCOME!!!!"), 0, "WELCOME!!!!".Length);
+            ns.Flush();
+           // this.ActiveGame.OnConnect((TcpClient)client);
         }
 
         public override void OnDisconnect(object client)

@@ -359,7 +359,7 @@ namespace MudEngine.Runtime
             Type compiler = typeof(ICompiler);
 
             //Internal CSharpRaw compiler Type specified, so we'll use that.
-            if ((this.Compiler.ToLower() == "MudCompiler") || (this.Compiler.ToLower() == "mc"))
+            if ((this.Compiler.ToLower() == "mudcompiler") || (this.Compiler.ToLower() == "mc"))
             {
                 compiler = typeof(MudCompiler);
                 return compiler;
