@@ -72,8 +72,8 @@ namespace MudEngine.Communication
             TcpClient c = (TcpClient)client;
             NetworkStream ns = c.GetStream();
             ASCIIEncoding encoder = new ASCIIEncoding();
-            ns.Write(encoder.GetBytes("WELCOME!!!!"), 0, "WELCOME!!!!".Length);
-            ns.Flush();
+            //ns.Write(encoder.GetBytes("WELCOME!!!!"), 0, "WELCOME!!!!".Length);
+            //ns.Flush();
            // this.ActiveGame.OnConnect((TcpClient)client);
         }
 
