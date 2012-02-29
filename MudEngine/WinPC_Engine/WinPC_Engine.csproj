@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\BaseCommand.cs" />
     <Compile Include="Core\CommandSystem.cs" />
     <Compile Include="Core\Interfaces\ICommand.cs" />
     <Compile Include="Core\Interfaces\IGameComponent.cs" />
