@@ -27,11 +27,6 @@ namespace WinPC_Server
             StandardGame game = new StandardGame("Sample Game");
             game.Start();
 
-            StandardCharacter character = new StandardCharacter(game, "Player 1", "Connected player to the server");
-            character.Password = "1233456";
-            character.Immovable = true;
-            character.Save("Character1.txt");
-
             //Setup our Server console input class
             ConsoleInput input = new ConsoleInput();
 
