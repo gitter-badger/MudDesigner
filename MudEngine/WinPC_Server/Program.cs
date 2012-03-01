@@ -4,9 +4,13 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Xml.Linq;
 
 using MudEngine.Game;
+using MudEngine.Game.Characters;
+using MudEngine.GameScripts;
 using MudEngine.Core;
+using MudEngine.DAL;
 
 namespace WinPC_Server
 {
@@ -22,6 +26,11 @@ namespace WinPC_Server
             //Instance and start the game.  This will start the server.
             StandardGame game = new StandardGame("Sample Game");
             game.Start();
+
+            StandardCharacter character = new StandardCharacter(game, "Player 1", "Connected player to the server");
+            character.Password = "1233456";
+            character.Immovable = true;
+            character.Save("Character1.txt");
 
             //Setup our Server console input class
             ConsoleInput input = new ConsoleInput();

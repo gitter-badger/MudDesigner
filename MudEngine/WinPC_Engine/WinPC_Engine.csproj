@@ -51,11 +51,13 @@
     <Compile Include="Core\Interfaces\ISavable.cs" />
     <Compile Include="Core\Interfaces\IUpdatable.cs" />
     <Compile Include="Core\Logger.cs" />
+    <Compile Include="Core\ObjectCollection.cs" />
     <Compile Include="DAL\DataPaths.cs" />
-    <Compile Include="DAL\XmlParser.cs" />
+    <Compile Include="DAL\XMLData.cs" />
     <Compile Include="GameScripts\Commands\CommandSay.cs" />
     <Compile Include="Game\Characters\CharacterRoles.cs" />
     <Compile Include="Game\Characters\CharacterStats.cs" />
+    <Compile Include="Game\Characters\MyCharacter.cs" />
     <Compile Include="Game\Characters\StandardCharacter.cs" />
     <Compile Include="GameScripts\BaseScript.cs" />
     <Compile Include="Game\StandardGame.cs" />
@@ -63,10 +65,15 @@
     <Compile Include="Networking\ConnectionManager.cs" />
     <Compile Include="Networking\Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripting\CompileEngine.cs" />
+    <Compile Include="Scripting\CSharp.cs" />
+    <Compile Include="Scripting\ICompiler.cs" />
+    <Compile Include="Scripting\ScriptEnumerator.cs" />
+    <Compile Include="Scripting\ScriptFactory.cs" />
+    <Compile Include="Scripting\ScriptObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Game\Objects\" />
-    <Folder Include="Scripting\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

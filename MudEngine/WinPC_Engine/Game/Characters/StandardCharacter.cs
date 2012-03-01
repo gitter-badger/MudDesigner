@@ -6,6 +6,7 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Xml.Linq;
 
 using MudEngine.GameScripts;
 using MudEngine.Core.Interfaces;
@@ -47,18 +48,18 @@ namespace MudEngine.Game.Characters
 
         protected CommandSystem Commands { get; private set; }
 
-        public StandardCharacter(String name, String description, StandardGame game) : base(name, description)
+        public StandardCharacter(StandardGame game, String name, String description) : base(game, name, description)
         {
             this.Game = game;
 
             //Instance this Characters personal Command System with a copy of the command
             //collection already loaded and prepared by the Active Game.
             this.Commands = new CommandSystem(CommandSystem.Commands);
-
+            
             this.OnConnectEvent += new OnConnectHandler(OnConnect);
         }
 
-        public StandardCharacter(String name, String description, StandardGame game, Socket connection) : this(name, description, game)
+        public StandardCharacter(StandardGame game, String name, String description, Socket connection) : this(game, name, description)
         {
             this._Connection = connection;
 
@@ -67,6 +68,18 @@ namespace MudEngine.Game.Characters
 
             this._Writer.AutoFlush = true; //Flushes the stream automatically.
             this._InitialMessage = true; //Strips Telnet client garbage text from initial message sent from client.
+        }
+
+        public override bool Save(String filename)
+        {
+            base.Save(filename, true);
+
+            SaveData.AddSaveData("Immovable", Immovable.ToString());
+            SaveData.AddSaveData("Password", Password);
+
+            this.SaveData.Save(filename);
+
+            return true;
         }
 
         internal void ExecuteCommand(string command)
@@ -174,11 +187,6 @@ namespace MudEngine.Game.Characters
             {
                 throw new NotImplementedException();
             }
-        }
-
-        public void Save(string path)
-        {
-            throw new NotImplementedException();
         }
 
         public void Load(string filename)

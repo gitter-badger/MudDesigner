@@ -29,7 +29,7 @@ namespace MudEngine.Networking
                 Connections = new List<StandardCharacter>();
 
             //Instance a new character and provide it with the Socket.
-            StandardCharacter character = new StandardCharacter("New Player", "New networked client.", game, connection);
+            StandardCharacter character = new StandardCharacter(game, "New Player", "New networked client.",  connection);
             
             //Add it to the Connections collection
             Connections.Add(character);
