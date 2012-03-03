@@ -21,7 +21,7 @@ namespace MudEngine.Core.Interfaces
         /// <param name="path"></param>
         Boolean Save(String filename);
 
-        Boolean Save(String filename, Boolean ignoreignoreFileWrite);
+        Boolean Save(String filename, Boolean ignoreFileWrite);
 
         /// <summary>
         /// Load method for retrieving saved data from file.

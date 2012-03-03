@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Net.Sockets;
 
 namespace MudEngine.Core.Interfaces
 {
@@ -24,6 +25,6 @@ namespace MudEngine.Core.Interfaces
         /// <summary>
         /// Method for connecting a object to the server.
         /// </summary>
-        void Connect();
+        void Connect(Socket connection);
     }
 }

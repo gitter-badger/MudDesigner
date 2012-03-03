@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Xml.Linq;
+using System.Text.RegularExpressions;
 
 using MudEngine.GameScripts;
 using MudEngine.Core.Interfaces;
@@ -24,6 +25,8 @@ namespace MudEngine.Game.Characters
         /// Gets a reference to the currently active game.
         /// </summary>
         public StandardGame Game { get; private set; }
+
+        public string Filename { get; set; }
 
         /// <summary>
         /// Gets what this Characters role on the server is.
@@ -43,23 +46,27 @@ namespace MudEngine.Game.Characters
         /// </summary>
         public Boolean Immovable { get; set; }
 
+        public Boolean Enabled { get; set; }
+
         //TODO: Add current location to characters
         //public IEnvironment CurrentLocation
 
         protected CommandSystem Commands { get; private set; }
 
-        public StandardCharacter(StandardGame game, String name, String description) : base(game, name, description)
+        public StandardCharacter(StandardGame game, String name, String description)
+            : base(game, name, description)
         {
             this.Game = game;
 
             //Instance this Characters personal Command System with a copy of the command
             //collection already loaded and prepared by the Active Game.
             this.Commands = new CommandSystem(CommandSystem.Commands);
-            
+
             this.OnConnectEvent += new OnConnectHandler(OnConnect);
         }
 
-        public StandardCharacter(StandardGame game, String name, String description, Socket connection) : this(game, name, description)
+        public StandardCharacter(StandardGame game, String name, String description, Socket connection)
+            : this(game, name, description)
         {
             this._Connection = connection;
 
@@ -82,23 +89,93 @@ namespace MudEngine.Game.Characters
             return true;
         }
 
-        internal void ExecuteCommand(string command)
-        {
-            //Process commands here.
-            if (this._InitialMessage)
-            {
-                command = this.CleanString(command);
-                this._InitialMessage = false;
-            }
 
-            this.Commands.Execute(command, this);
+        public override void Load(string filename)
+        {
+            base.Load(filename);
         }
 
-        public void SendMessage(string message)
+        public void Initialize()
         {
-            lock (this)
+            //throw new NotImplementedException();
+            this.Enabled = true;
+        }
+
+        public void Destroy()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void ExecuteCommand(string command)
+        {
+            if (this.Enabled)
             {
-                _Writer.WriteLine(message);
+                Commands.Execute(command, this);
+
+                SendMessage("");
+                SendMessage("Command:", false);
+            }
+        }
+
+        public void SendMessage(String data)
+        {
+            this.SendMessage(data, true);
+        }
+
+        public void SendMessage(String data, Boolean newLine)
+        {
+            try
+            {
+                System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
+                if (newLine)
+                    data += "\n\r";
+
+                this._Connection.Send(encoding.GetBytes(data));
+            }
+            catch (Exception)
+            {
+                Disconnect();
+            }
+        }
+
+        public String GetInput()
+        {
+            string input = String.Empty;
+
+            while (true)
+            {
+                try
+                {
+                    byte[] buf = new byte[1];
+                    Int32 recved = this._Connection.Receive(buf);
+
+                    if (recved > 0)
+                    {
+                        if (buf[0] == '\n' && buffer.Count > 0)
+                        {
+                            if (buffer[buffer.Count - 1] == '\r')
+                                buffer.RemoveAt(buffer.Count - 1);
+
+                            System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
+                            input = enc.GetString(buffer.ToArray());
+                            buffer.Clear();
+                            return input;
+                        }
+                        else
+                            buffer.Add(buf[0]);
+                    }
+                    else if (recved == 0) //Disconnected
+                    {
+                        this.Enabled = false;
+                        return "Disconnected.";
+                    }
+                }
+                catch (Exception e)
+                {
+                    //Flag as disabled 
+                    this.Enabled = false;
+                    return e.Message;
+                }
             }
         }
 
@@ -108,21 +185,16 @@ namespace MudEngine.Game.Characters
 
             //Close our currently open socket.
             this._Connection.Close();
-
+            //this._LoopThread.Abort();
             //Remove this character from the Connection Manager
-            ConnectionManager.RemoveConnection(this);
+            //ConnectionManager.RemoveConnection(this, );
             Console.WriteLine("Disconnect Complete.");
-
-            //Stop the Update() thread.
-            this._LoopThread.Abort();
         }
 
-        public void Connect()
+        public void Connect(Socket connection)
         {
-            _LoopThread = new Thread(Update);
-            _LoopThread.Start();
+            this._Connection = connection;
 
-            this.SendMessage("");
             OnConnectEvent();
         }
 
@@ -133,8 +205,9 @@ namespace MudEngine.Game.Characters
                 while (this.Game.Enabled)
                 {
                     _Writer.Flush();
-                    String line = _Reader.ReadLine();
-                    ExecuteCommand(line);
+                    //String line = CleanString(GetInput());
+                    //Console.WriteLine(line);
+                    //ExecuteCommand(line);
                 }
             }
             catch
@@ -146,8 +219,9 @@ namespace MudEngine.Game.Characters
             }
         }
 
-        String CleanString(string line)
+        String CleanString(String line)
         {
+            /*
             if ((!String.IsNullOrEmpty(line)) && (line.Length > 0))
             {
                 System.Text.StringBuilder sb = new System.Text.StringBuilder(line.Length);
@@ -162,46 +236,43 @@ namespace MudEngine.Game.Characters
             }
             else
                 return String.Empty;
+             * */
+
+            Regex invalidChars = new Regex(
+    @"(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x9F\uFEFF\uFFFE\uFFFF]",
+    RegexOptions.Compiled);
+
+            if (String.IsNullOrEmpty(line))
+                return "";
+            else
+                return invalidChars.Replace(line, "");
         }
 
         public delegate void OnConnectHandler();
         public event OnConnectHandler OnConnectEvent;
         public void OnConnect()
         {
-            _Writer.WriteLine(this.Game.Server.MOTD);
+            this.SendMessage(this.Game.Server.MOTD);
+        }
+
+        public delegate void OnDisconnectHandler();
+        public event OnDisconnectHandler OnDisconnectEvent;
+        public void OnDisconnect()
+        {
+
+        }
+
+        public delegate void OnLoginHandler();
+        public event OnLoginHandler OnLoginEvent;
+        public void OnLogin()
+        {
+
         }
 
         private Socket _Connection;
-        private Thread _LoopThread;
         private StreamReader _Reader;
         private StreamWriter _Writer;
         private Boolean _InitialMessage;
-
-        public string Filename
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public void Load(string filename)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Initialize()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Destroy()
-        {
-            throw new NotImplementedException();
-        }
+        private List<byte> buffer = new List<byte>();
     }
 }

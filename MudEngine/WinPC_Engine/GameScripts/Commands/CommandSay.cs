@@ -33,7 +33,7 @@ namespace MudEngine.GameScripts.Commands
 
             //Loop through each character on the server and broadcast the message.
             //TODO: This should only broadcast to characters that are in the same Environment.
-            foreach (StandardCharacter c in ConnectionManager.Connections)
+            foreach (StandardCharacter c in character.Game.Server.ConnectionManager.GetConnectedCharacters())
             {
                 //Only broadcast this message to those that are not the broadcastor.
                 if (c != character)

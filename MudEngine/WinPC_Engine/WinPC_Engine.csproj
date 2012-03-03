@@ -54,6 +54,7 @@
     <Compile Include="Core\ObjectCollection.cs" />
     <Compile Include="DAL\DataPaths.cs" />
     <Compile Include="DAL\XMLData.cs" />
+    <Compile Include="GameScripts\Commands\CommandLogin.cs" />
     <Compile Include="GameScripts\Commands\CommandSay.cs" />
     <Compile Include="Game\Characters\CharacterRoles.cs" />
     <Compile Include="Game\Characters\CharacterStats.cs" />

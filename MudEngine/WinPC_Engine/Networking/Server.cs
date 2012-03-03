@@ -14,103 +14,83 @@ using MudEngine.Game.Characters;
 
 namespace MudEngine.Networking
 {
+    public enum ServerStatus
+    {
+        Stopped = 0,
+        Starting = 1,
+        Running = 2,
+    } 
+
     [Category("Networking")]
     public class Server
     {
-        [Category("Networking")]
-        [Description("The name of this server")]
-        public String Name { get; set; }
+        public ServerStatus Status { get; private set; }
 
-        [Category("Networking")]
-        public Int32 Port { get; set; }
+        public Int32 Port { get; private set; }
 
-        [Category("Networking")]
-        [Description("The Message Of The Day that is presented to users when they connect.")]
-        public String MOTD { get; set; }
+        public Int32 MaxConnections { get; private set; }
 
-        [Category("Networking")]
-        [Description("Maximum number of people that can connect and play on this server at any time.")]
-        public Int32 MaxConnections { get; set; }
+        public Int32 MaxQueuedConnections { get; private set; }
 
-        [Category("Networking")]
-        [Description("Maximum number of poeple that can be queued for connection.")]
-        public Int32 QueuedConnectionLimit { get; set; }
+        public ConnectionManager ConnectionManager { get; private set; }
 
-        [Browsable(false)]
         public Boolean Enabled { get; private set; }
 
-        /// <summary>
-        /// Sets up a server on the specified port.
-        /// </summary>
-        /// <param name="port"></param>
-        /// <param name="maxConnections"></param>
-        public Server(Int32 port)
-        {
-            Logger.WriteLine("Initializing Mud Server Settings");
-            this.Port = port;
-            this.MaxConnections = 50;
-            this.QueuedConnectionLimit = 20;
-            this.Name = "New Server";
-            this.MOTD = "Welcome to a sample Mud Engine game server!";
+        public String MOTD { get; set; }
 
+        public Server(StandardGame game, Int32 port)
+        {
+            this.Port = port;
+            this.Status = ServerStatus.Stopped;
+            this.MaxConnections = 100;
+            this.MaxQueuedConnections = 10;
+
+            this._Game = game;
             this._Server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            this._Server.Bind(new IPEndPoint(IPAddress.Any, this.Port));
         }
 
-        /// <summary>
-        /// Starts the game server.  It will listen on a different thread of incoming connections
-        /// </summary>
-        public void Start(StandardGame game)
+        public void Start(Int32 maxConnections, Int32 maxQueueSize)
         {
-            //Start the server.
-            Logger.WriteLine("Starting Mud Server.");
+            if (this.Status != ServerStatus.Stopped)
+                return;
 
-            //Start listening for connections
-            this._Server.Listen(this.QueuedConnectionLimit);
+            this.Status = ServerStatus.Starting;
 
-            //Launch the new connections listener on a new thread.
-            this._ConnectionPool = new Thread(AcceptConnection);
-            this._ConnectionPool.Start();
+            this.MaxConnections = maxConnections;
+            this.ConnectionManager = new ConnectionManager(this.MaxConnections);
 
-            //Flag the server as enabled.
-            this.Enabled = true;
+            try
+            {
+                IPEndPoint ip = new IPEndPoint(IPAddress.Any, this.Port);
+                this._Server.Bind(ip);
+                this._Server.Listen(this.MaxQueuedConnections);
 
-            //Save a reference to the currently active game
-            this._Game = game;
+                this.Status = ServerStatus.Running;
+                this.Enabled = true;
 
-            Logger.WriteLine("Server started.");
+                this._ServerThread = new Thread(ServerLoop);
+                this._ServerThread.Start();
+            }
+            catch
+            {
+                this.Status = ServerStatus.Stopped;
+            }
         }
 
         public void Stop()
         {
-            //Flag the server as disabled.
-            this.Enabled = false;
-
-            //Stop the thread from listening for accepting new conections
-            this._ConnectionPool.Abort();
-
-            //Disconnect all of the currently connected clients.
-            ConnectionManager.DisconnectAll();
-
-            //Stop the server.
-            this._Server.Close();
         }
 
-        private void AcceptConnection()
+        private void ServerLoop()
         {
-            //While the server is enabled, constantly check for new connections.
-            while (this.Enabled)
+            while (this.Status == ServerStatus.Running)
             {
-                //Grab the new connection.
-                Socket incomingConnection = this._Server.Accept();
-                
-                //Send it to the Connection Manager so a Character can be instanced.
-                ConnectionManager.AddConnection(this._Game, incomingConnection);
+                this.ConnectionManager.AddConnection(this._Game, this._Server.Accept());
             }
         }
 
-        private Socket _Server;
-        private Thread _ConnectionPool;
         private StandardGame _Game;
+        private Socket _Server;
+        private Thread _ServerThread;
     }
 }

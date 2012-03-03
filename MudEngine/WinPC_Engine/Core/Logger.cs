@@ -11,6 +11,16 @@ namespace MudEngine.Core
     /// </summary>
     public static class Logger
     {
+        public enum Importance
+        {
+            Critical = 0,
+            Error = 1,
+            Warning = 2,
+            Information = 3,
+            Chat = 4,
+            All = 5
+        }
+
         /// <summary>
         /// The Log Filename for the engine log.
         /// </summary>
@@ -40,6 +50,10 @@ namespace MudEngine.Core
 
             //Clear the cache.
             _Messages.Clear();
+        }
+
+        public static void WriteLine(String message, Importance importance)
+        {
         }
 
         /// <summary>

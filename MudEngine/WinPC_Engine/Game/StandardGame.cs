@@ -23,10 +23,6 @@ namespace MudEngine.Game
 
         public Boolean Multiplayer { get; set; }
 
-        public Int32 MaximumPlayers { get; set; }
-
-        public Int32 MaxQueueSize { get; set; }
-
         public Int32 MinimumPasswordSize { get; set; }
 
         public Boolean AutoSave { get; set; }
@@ -49,18 +45,14 @@ namespace MudEngine.Game
             this.Description = "A sample Mud game created using the Mud Designer kit.";
             this.Version = "1.0";
             this.Multiplayer = true;
-            this.MaximumPlayers = 50;
             this.MinimumPasswordSize = 8;
-            this.MaxQueueSize = 20;
             this.AutoSave = true;
          
             //Setup our server.
-            this.Server = new Server(port);
-
-            this.Server.Port = port;
+            this.Server = new Server(this, port);
         }
 
-        public Boolean Start()
+        public Boolean Start(Int32 maxPlayers, Int32 maxQueueSize)
         {
             Logger.WriteLine("Starting up Standard Game");
             
@@ -74,7 +66,7 @@ namespace MudEngine.Game
             //Load World
 
             //Start our server.
-            this.Server.Start(this);
+            this.Server.Start(maxPlayers, maxQueueSize);
 
             //If the server started without error, flag the Game as enabled.
             if (this.Server.Enabled)

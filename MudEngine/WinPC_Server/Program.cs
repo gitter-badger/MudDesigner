@@ -23,9 +23,19 @@ namespace WinPC_Server
             Logger.Enabled = true;
             Logger.ConsoleOutPut = true;
 
-            //Instance and start the game.  This will start the server.
+            //Instance and setup our game
             StandardGame game = new StandardGame("Sample Game");
-            game.Start();
+            game.AutoSave = true;
+            game.Debugging = true;
+            game.Description = "This is a very simple game that was created to demonstrate MUD game creation with the Mud Designer Game Engine.";
+            game.HiddenRoomNames = false;
+            game.Multiplayer = true;
+            game.Server.MOTD = "Welcome to the Sample Game desmontratio server!";
+            game.Version = "1.0";
+            game.Website = "http://muddesigner.codeplex.com";
+
+            //Start the game and server.
+            game.Start(100, 20);
 
             //Setup our Server console input class
             ConsoleInput input = new ConsoleInput();
@@ -38,7 +48,7 @@ namespace WinPC_Server
             while (game.Enabled)
             {
                 //Check the queued Console Input
-                if (input.Message.Equals("exit"))
+                if (input.Message.ToLower().Equals("exit"))
                 {
                     //If the server console has a exit command entered.
                     //stop the game.  This will set game.Enabled to false.

@@ -59,20 +59,20 @@ namespace MudEngine.GameScripts
             return true;
         }
 
-        public virtual Boolean Load(String filename)
+        public virtual void Load(String filename)
         {
             try
             {
                 if (!File.Exists(filename))
-                    return false;
+                    return;
 
                 XElement data = XElement.Load(filename);
             }
             catch
             {
-                return false;
+                return;
             }
-            return true;
+            return;
         }
 
         public override string ToString()
