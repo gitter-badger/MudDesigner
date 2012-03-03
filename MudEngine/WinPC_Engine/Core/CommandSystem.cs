@@ -9,8 +9,15 @@ using MudEngine.Game.Characters;
 
 namespace MudEngine.Core
 {
+    /// <summary>
+    /// The command system will process string based commands and execute any class that implements ICommand.
+    /// ICommand.Name must match the command string passed in CommandSystem.Execute()
+    /// </summary>
     public class CommandSystem
     {
+        /// <summary>
+        /// A collection of all command classes and their associated Name key.
+        /// </summary>
         public static Dictionary<string, ICommand> Commands
         {
             get
@@ -26,8 +33,16 @@ namespace MudEngine.Core
         }
         private static Dictionary<String, ICommand> _Commands;
 
+        /// <summary>
+        /// A copy of the Static CommandSystem.Commands property that this instance will use.
+        /// </summary>
         public Dictionary<String, ICommand> CommandCollection { get; private set; }
 
+        /// <summary>
+        /// Constructor that accepts a collection of Commands that have already been loaded.
+        /// Use the static method CommandSystem.LoadCommands() or CommandSystem.LoadCommandLibrary()
+        /// </summary>
+        /// <param name="commands"></param>
         public CommandSystem(Dictionary<String, ICommand> commands)
         {
             this.CommandCollection = new Dictionary<string, ICommand>();
@@ -37,6 +52,10 @@ namespace MudEngine.Core
             //LoadCommands();
         }
 
+        /// <summary>
+        /// Returns a collection of Commands that this instance is currently using.
+        /// </summary>
+        /// <returns></returns>
         public List<ICommand> GetCommands()
         {
             List<ICommand> collection = new List<ICommand>();
@@ -47,6 +66,11 @@ namespace MudEngine.Core
             return collection;
         }
 
+        /// <summary>
+        /// Returns a command that is matching the supplied String.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         public ICommand GetCommand(string command)
         {
             foreach (ICommand c in CommandSystem.Commands.Values)
@@ -58,6 +82,11 @@ namespace MudEngine.Core
             return null;
         }
 
+        /// <summary>
+        /// Returns true or false if the command name supplied exists.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         public bool IsValidCommand(string command)
         {
             if (CommandSystem.Commands.ContainsKey(command))
@@ -66,17 +95,30 @@ namespace MudEngine.Core
                 return false;
         }
 
+        /// <summary>
+        /// Takes the supplied string command and searches for a Command class that matches it.
+        /// If found, it will execute the command class.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="character"></param>
         public void Execute(string command, StandardCharacter character)
         {
+            //All Types that implement ICommand must have their class name begin with Command.
+            //We must insert the 'Command' string into the beginning of the users Command
+            //If user Types "Say" we change it to "CommandSay" and then look for a Type matching "CommandSay"
             string key = command.Insert(0, "Command");
 
+            //Loop through each Key in the Commands collection
             foreach (string k in CommandSystem.Commands.Keys)
             {
+                //Check to see if the Key (Command Name) matches the Command we are looking for.
                 if (key.ToLower().Contains(k.ToLower()))
                 {
+                    //Grab a reference to the Command
                     ICommand cmd = CommandSystem.Commands[k];
                     try
                     {
+                        //Execute the command
                         cmd.Execute(command, character);
                     }
                     catch (Exception ex)
@@ -88,28 +130,45 @@ namespace MudEngine.Core
                     return;
                 }
             }
-
-            //TODO: Inform player that this was not a valid command.
+            
+            //Let the player know that it was not a valid command.
+            character.SendMessage("Invalid Command Used.");
         }
 
+        /// <summary>
+        /// Loads all of the commands found in the currently loaded assembly.
+        /// </summary>
         public static void LoadCommands()
         {
             LoadCommandLibrary(Assembly.GetExecutingAssembly(), true);
         }
         
+        /// <summary>
+        /// Loads all of the commands found within the assembly specified.
+        /// </summary>
+        /// <param name="commandLibrary"></param>
         public static void LoadCommandLibrary(Assembly commandLibrary)
         {
             LoadCommandLibrary(commandLibrary, true);
         }
 
+        /// <summary>
+        /// Loads all of the commands found within the assembly specified.
+        /// All existing commands will be purged.  If there are existing instances of CommandSystem being used
+        /// they will need to refresh their private Command collection via the static Property CommandSystem.Commands
+        /// </summary>
+        /// <param name="commandLibrary"></param>
+        /// <param name="purgeLoadedCommands"></param>
         public static void LoadCommandLibrary(Assembly commandLibrary, bool purgeLoadedCommands)
         {
+            //Check if we need to purge all of the commands.
             if (purgeLoadedCommands)
                 PurgeCommands();
 
             if (commandLibrary == null)
                 return;
 
+            //Loop through each Type in the assembly provided.
             foreach (Type type in commandLibrary.GetTypes())
             {
                 //All commands implement the ICommand interface.
@@ -119,8 +178,11 @@ namespace MudEngine.Core
                 else if (type.IsAbstract)
                     continue;
 
+                //Create a instance of the Type for use.
                 ICommand cmd = (ICommand)Activator.CreateInstance(type);
 
+                //If we have a instance, lets make sure we don't already have a command
+                //with that name.  If not, add it to the Commands collection.
                 if (cmd != null)
                 {
                     //Fail safe measures.  Ensure that we always have a name assigned to the commands.
@@ -138,6 +200,10 @@ namespace MudEngine.Core
             }
         }
 
+        /// <summary>
+        /// Purges the global Command collection.  This does not affect any class that is using
+        /// a Instance of this Type.
+        /// </summary>
         public static void PurgeCommands()
         {
             Commands.Clear();
