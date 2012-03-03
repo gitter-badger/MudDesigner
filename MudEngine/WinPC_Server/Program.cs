@@ -30,7 +30,7 @@ namespace WinPC_Server
             game.Description = "This is a very simple game that was created to demonstrate MUD game creation with the Mud Designer Game Engine.";
             game.HiddenRoomNames = false;
             game.Multiplayer = true;
-            game.Server.MOTD = "Welcome to the Sample Game demonstration server!";
+            game.Server.MOTD = "Welcome to the Sample Game demonstration server!  This is the Servers MOTD!";
             game.Version = "1.0";
             game.Website = "http://muddesigner.codeplex.com";
 

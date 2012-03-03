@@ -19,7 +19,7 @@ namespace MudEngine.Game.Characters
     /// <summary>
     /// Standard Character class used by all character based objects
     /// </summary>
-    public class StandardCharacter : BaseScript, INetworked, ISavable, IUpdatable, IGameComponent
+    public class StandardCharacter : BaseScript, INetworked, ISavable, IGameComponent
     {
         /// <summary>
         /// Gets a reference to the currently active game.
@@ -63,6 +63,8 @@ namespace MudEngine.Game.Characters
             this.Commands = new CommandSystem(CommandSystem.Commands);
 
             this.OnConnectEvent += new OnConnectHandler(OnConnect);
+            this.OnDisconnectEvent += new OnDisconnectHandler(OnDisconnect);
+            this.OnLoginEvent += new OnLoginHandler(OnLogin);
         }
 
         public StandardCharacter(StandardGame game, String name, String description, Socket connection)
@@ -75,24 +77,6 @@ namespace MudEngine.Game.Characters
 
             this._Writer.AutoFlush = true; //Flushes the stream automatically.
             this._InitialMessage = true; //Strips Telnet client garbage text from initial message sent from client.
-        }
-
-        public override bool Save(String filename)
-        {
-            base.Save(filename, true);
-
-            SaveData.AddSaveData("Immovable", Immovable.ToString());
-            SaveData.AddSaveData("Password", Password);
-
-            this.SaveData.Save(filename);
-
-            return true;
-        }
-
-
-        public override void Load(string filename)
-        {
-            base.Load(filename);
         }
 
         public void Initialize()
@@ -110,6 +94,23 @@ namespace MudEngine.Game.Characters
             this.Commands = null;
         }
 
+        public override bool Save(String filename)
+        {
+            base.Save(filename, true);
+
+            SaveData.AddSaveData("Immovable", Immovable.ToString());
+            SaveData.AddSaveData("Password", Password);
+
+            this.SaveData.Save(filename);
+
+            return true;
+        }
+
+        public override void Load(string filename)
+        {
+            base.Load(filename);
+        }
+
         internal void ExecuteCommand(string command)
         {
             if (this.Enabled)
@@ -119,6 +120,28 @@ namespace MudEngine.Game.Characters
                 SendMessage("");
                 SendMessage("Command:", false);
             }
+        }
+
+        public void Connect(Socket connection)
+        {
+            this._Connection = connection;
+
+            OnConnectEvent();
+        }
+
+        public void Disconnect()
+        {
+            Console.WriteLine("Disconnecting...");
+
+            //Purge all of this characters commands.
+            this.Destroy();
+
+            //Close our currently open socket.
+            this._Connection.Close();
+
+            this.OnDisconnectEvent();
+
+            Console.WriteLine("Disconnect Complete.");
         }
 
         public void SendMessage(String data)
@@ -183,49 +206,6 @@ namespace MudEngine.Game.Characters
             }
         }
 
-        public void Disconnect()
-        {
-            Console.WriteLine("Disconnecting...");
-
-            //Purge all of this characters commands.
-            this.Destroy();
-
-            //Close our currently open socket.
-            this._Connection.Close();
-            //this._LoopThread.Abort();
-            //Remove this character from the Connection Manager
-            //ConnectionManager.RemoveConnection(this, );
-            Console.WriteLine("Disconnect Complete.");
-        }
-
-        public void Connect(Socket connection)
-        {
-            this._Connection = connection;
-
-            OnConnectEvent();
-        }
-
-        public void Update()
-        {
-            try
-            {
-                while (this.Game.Enabled)
-                {
-                    _Writer.Flush();
-                    //String line = CleanString(GetInput());
-                    //Console.WriteLine(line);
-                    //ExecuteCommand(line);
-                }
-            }
-            catch
-            {
-            }
-            finally
-            {
-                this.Disconnect();
-            }
-        }
-
         String CleanString(String line)
         {
             /*
@@ -266,7 +246,6 @@ namespace MudEngine.Game.Characters
         public event OnDisconnectHandler OnDisconnectEvent;
         public void OnDisconnect()
         {
-
         }
 
         public delegate void OnLoginHandler();

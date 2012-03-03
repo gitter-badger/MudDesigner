@@ -7,6 +7,7 @@ using System.Text;
 using MudEngine.Networking;
 using MudEngine.Core;
 using MudEngine.Game.Characters;
+using MudEngine.DAL;
 
 namespace MudEngine.Game
 {
@@ -74,6 +75,11 @@ namespace MudEngine.Game
         public Server Server { get; protected set; }
 
         /// <summary>
+        /// Gets or Sets the paths that content is saved to.
+        /// </summary>
+        public DataPaths SavePaths { get; set; }
+
+        /// <summary>
         /// StandardGame constructor.  If no Port number is provided, 4000 is used.
         /// </summary>
         /// <param name="name"></param>
@@ -99,6 +105,15 @@ namespace MudEngine.Game
          
             //Setup our server.
             this.Server = new Server(this, port);
+
+            //Setup default save paths.
+            DataPaths paths = new DataPaths();
+            paths.Environments = @"\Environment";
+            paths.Characters = @"\Characters";
+            paths.Players = @"\SavedPlayer";
+            paths.Scripts = @"\Scripts";
+
+            this.SavePaths = paths;
         }
 
         /// <summary>

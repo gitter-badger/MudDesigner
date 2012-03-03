@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 using MudEngine.Core.Interface;
 using MudEngine.Game;
@@ -29,12 +30,46 @@ namespace MudEngine.GameScripts.Commands
 
         public void Execute(string command, Game.Characters.StandardCharacter character)
         {
+            StandardGame game = character.Game;
+
             character.SendMessage("Please enter character name: ");
             String name = String.Empty;
 
             while (String.IsNullOrEmpty(name))
             {
-                name = character.GetInput();
+                character.SendMessage("Enter your character name: ", false);
+
+                String name = String.Empty;
+                Boolean isFound = false;
+
+                while (String.IsNullOrEmpty(name))
+                {
+                    name = character.GetInput();
+
+                    if (String.IsNullOrEmpty(name))
+                        continue;
+
+                    //Look if the file exists.
+                    if (File.Exists(game.SavePaths.Players + @"\" + name))
+                        isFound = true;
+                    else
+                    {
+                        character.SendMessage("Enter your password: ", false);
+
+                        String password = character.GetInput();
+
+                        if (String.IsNullOrEmpty(password))
+                        {
+                            //Reset the process if no password supplied.
+                            name = String.Empty;
+                            continue;
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                }
             }
             
         }

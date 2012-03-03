@@ -21,8 +21,13 @@ namespace MudEngine.DAL
         public String Environments { get; set; }
 
         /// <summary>
-        /// Path to the engines saved objects (Equipment etc).
+        /// Gets the Path to the Characters save directory
         /// </summary>
-        public String Objects { get; set; }
+        public String Characters { get; set; }
+
+        /// <summary>
+        /// Gets the path to the saved players directory.
+        /// </summary>
+        public String Players { get; set; }
     }
 }
