@@ -45,9 +45,13 @@ namespace WinPC_Server
             Thread inputThread = new Thread(input.GetInput);
             inputThread.Start();
             */
+
             //Game loops until it is disabled.
             while (game.Enabled)
             {
+                //Only Game World components are updated.
+                //All Players are updated independently of this
+                //on their own Threads.
                 game.Update();
             }
 

@@ -39,7 +39,7 @@ namespace MudEngine.GameScripts.Commands
             {
                 character.SendMessage("Enter your character name: ", false);
 
-                String name = String.Empty;
+                name = String.Empty;
                 Boolean isFound = false;
 
                 while (String.IsNullOrEmpty(name))
