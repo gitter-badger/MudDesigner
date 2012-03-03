@@ -28,8 +28,15 @@ namespace MudEngine.DAL
 
         public Boolean Save(String filename)
         {
-            this.SaveData.Save(filename);
-            return true;
+            try
+            {
+                this.SaveData.Save(filename);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

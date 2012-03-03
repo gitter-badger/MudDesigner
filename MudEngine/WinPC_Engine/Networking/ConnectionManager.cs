@@ -75,6 +75,7 @@ namespace MudEngine.Networking
         /// <param name="character"></param>
         public void RemoveConnection(StandardCharacter character)
         {
+            character.Save(character.Filename);
             character.Disconnect();
             foreach (StandardCharacter c in this._ConnectedCharacters)
             {

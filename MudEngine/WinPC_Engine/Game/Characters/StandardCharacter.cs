@@ -101,9 +101,13 @@ namespace MudEngine.Game.Characters
             this.Enabled = true;
         }
 
+        /// <summary>
+        /// Destroys any resources used by this character.
+        /// Assumes that Save() has already been invoked.
+        /// </summary>
         public void Destroy()
         {
-            throw new NotImplementedException();
+            this.Commands = null;
         }
 
         internal void ExecuteCommand(string command)
@@ -182,6 +186,9 @@ namespace MudEngine.Game.Characters
         public void Disconnect()
         {
             Console.WriteLine("Disconnecting...");
+
+            //Purge all of this characters commands.
+            this.Destroy();
 
             //Close our currently open socket.
             this._Connection.Close();

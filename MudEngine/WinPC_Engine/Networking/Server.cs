@@ -79,6 +79,15 @@ namespace MudEngine.Networking
 
         public void Stop()
         {
+            this.ConnectionManager.DisconnectAll();
+         
+            this._ServerThread.Abort();
+
+            this._Server.Close();
+            this._Server = null;
+
+            this.Enabled = false;
+            this.Status = ServerStatus.Stopped;
         }
 
         private void ServerLoop()

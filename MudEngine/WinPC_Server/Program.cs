@@ -38,28 +38,28 @@ namespace WinPC_Server
             game.Start(100, 20);
 
             //Setup our Server console input class
+            /*
             ConsoleInput input = new ConsoleInput();
 
             //Run the console input on its own thread.
             Thread inputThread = new Thread(input.GetInput);
             inputThread.Start();
-
+            */
             //Game loops until it is disabled.
             while (game.Enabled)
             {
-                //Check the queued Console Input
-                if (input.Message.ToLower().Equals("exit"))
-                {
-                    //If the server console has a exit command entered.
-                    //stop the game.  This will set game.Enabled to false.
-                    game.Stop();
-                }
-                else
-                    input.Message = String.Empty;
+                game.Update();
             }
 
             //Kill the Console Input thread.
+            /*
             inputThread.Abort();
+            inputThread = null;
+            input = null;
+            */
+            game = null;
+
+            System.Windows.Forms.Application.Exit();
         }
     }
 }
