@@ -140,6 +140,7 @@ namespace MudEngine.Game.Characters
 
             SaveData.AddSaveData("Immovable", Immovable.ToString());
             SaveData.AddSaveData("Password", Password);
+            SaveData.AddSaveData("Role", this.Role.ToString());
 
             if (this.SaveData.Save(filename))
             {
@@ -156,6 +157,29 @@ namespace MudEngine.Game.Characters
 
             this.Immovable = Convert.ToBoolean(this.SaveData.GetData("Immovable"));
             this.Password = this.SaveData.GetData("Password");
+
+            String role = this.SaveData.GetData("Role");
+
+            this.Role = GetRole(role);
+        }
+
+        private CharacterRoles GetRole(String role)
+        {
+            //Blow all of the available values up into an array.
+            Array values = Enum.GetValues(typeof(CharacterRoles));
+
+            //Loop through each available value, converting it into a string.
+            foreach (Int32 value in values)
+            {
+                //Get the string representation of the current value
+                String displayName = Enum.GetName(typeof(CharacterRoles), value);
+
+                //Check if this value matches that of the supplied one.
+                //If so, return it as a enum
+                if (displayName.ToLower() == role.ToLower())
+                    return (CharacterRoles)Enum.Parse(typeof(CharacterRoles), displayName);
+            }
+            return CharacterRoles.Player;
         }
 
         /// <summary>
@@ -165,7 +189,7 @@ namespace MudEngine.Game.Characters
         /// <returns></returns>
         public Boolean ExecuteCommand(string command)
         {
-            if (this.Enabled)
+            if (this.Enabled && this.Connected)
             {
                 Boolean result = Commands.Execute(command, this);
 
@@ -207,6 +231,7 @@ namespace MudEngine.Game.Characters
         public void Disconnect()
         {
             Console.WriteLine("Disconnecting...");
+            this.Save(this.Filename);
 
             //Purge all of this characters commands.
             this.Destroy();
@@ -215,6 +240,7 @@ namespace MudEngine.Game.Characters
             this._Connection.Close();
 
             this.LoggedIn = false;
+            this.Connected = false;
 
             this.OnDisconnectEvent();
         }
@@ -269,14 +295,16 @@ namespace MudEngine.Game.Characters
                     }
                     else if (recved == 0) //Disconnected
                     {
-                        this.Enabled = false;
+                        this.Connected = false;
+                        this.LoggedIn = false;
                         return "Disconnected.";
                     }
                 }
                 catch (Exception e)
                 {
                     //Flag as disabled 
-                    this.Enabled = false;
+                    this.Connected = false;
+                    this.LoggedIn = false;
                     return e.Message;
                 }
             }
@@ -340,9 +368,27 @@ namespace MudEngine.Game.Characters
         public void SetRole(StandardCharacter adminCharacter, StandardCharacter subordinateCharacter, CharacterRoles role)
         {
             //Check to make sure the admin character is truly a admin
-            if (adminCharacter.Role == CharacterRoles.Admin)
+            //The Server Owner can change anyone characters Roles at any time regardless of the ServerOwners current Role.
+            if (adminCharacter.Role == CharacterRoles.Admin || adminCharacter.Name == this.Game.Server.ServerOwner)
             {
-                subordinateCharacter.Role = role;
+                //Do not allow any other Admins on the server to remove the ServerOwner from Admin status.
+                //Server owners can not have any other Role but Admin unless they change it themselves.
+                if (subordinateCharacter.Name == this.Game.Server.ServerOwner && adminCharacter.Name != this.Game.Server.ServerOwner)
+                {
+                    //Tell the admin that is attempting to change the server owner that it's not allowed.
+                    adminCharacter.SendMessage("You can not change the role of the Master admin.");
+                    //Warn the server owner in the event this is a malicious attempt to take over the server.
+                    subordinateCharacter.SendMessage(adminCharacter.Name + " attempted to change your server role!");
+                    //Exit with no changes.
+                    return;
+                }
+                //This was not the server owner, so change the role.
+                else
+                {
+                    subordinateCharacter.Role = role;
+                    subordinateCharacter.SendMessage("Your role was changed to " + role.ToString());
+                    adminCharacter.SendMessage("You changed player '" + subordinateCharacter.Name + "' to the role of " + role.ToString());
+                }
             }
             else
             {

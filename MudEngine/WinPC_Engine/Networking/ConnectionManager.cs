@@ -39,7 +39,17 @@ namespace MudEngine.Networking
             this._ConnectedThreads.Add(new Thread(ReceiveDataThread));
 
             Int32 index = this._ConnectedThreads.Count - 1;
+            this._ConnectedThreads[index].Name = character.Name;
             this._ConnectedThreads[index].Start(index);
+        }
+
+        public StandardCharacter GetConnectedCharacter(String characterName)
+        {
+            var v = from player in this._ConnectedCharacters
+                    where characterName == player.Name.ToLower()
+                    select player;
+
+            return v.First();
         }
         
         public StandardCharacter[] GetConnectedCharacters()
@@ -76,7 +86,6 @@ namespace MudEngine.Networking
         /// <param name="character"></param>
         public void RemoveConnection(StandardCharacter character)
         {
-            character.Save(character.Filename);
             character.Disconnect();
             foreach (StandardCharacter c in this._ConnectedCharacters)
             {
