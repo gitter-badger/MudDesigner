@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.IO;
 
 using MudEngine.Core.Interface;
@@ -55,6 +56,36 @@ namespace MudEngine.GameScripts.Commands
 
                 //Get the supplied name
                 name = character.GetInput();
+
+                //Entering their username is the first time input has been
+                //made by the user.  Expect their Telnet client to send Header
+                //information, so we strip it out by forcing only a whole
+                //word to be saved and everything else discarded.
+                //Note that this wouldn't work if first and last names were supported
+                //as this only returns the first word found and that is all.
+                Match m = Regex.Match(name, @"\w+");
+                name = m.Value;
+
+                //Make sure no illegal characters are in the name such as underbars or asteriks
+                if (!name.All(Char.IsLetterOrDigit))
+                {
+                    character.SendMessage("Invalid character name supplied.  Only letters and numbers are allowed.");
+                    name = String.Empty;
+                    continue;
+                }
+
+                //Uncomment this if first/last name combinations are used in
+                //the game.  Note that this does support numbers and other
+                //special characters.  If you do not want them, you will need
+                //to modify the Regular Expression Evaluator below.
+                /*
+                MatchCollection m = Regex.Matches(name, @"\w+");
+                name = String.Empty;
+                foreach (Match word in m)
+                {
+                    name += word.Value + " ";
+                }
+                */
 
                 //Check if the name entered is blank. Ensure that we remove leading and ending spaces
                 if (String.IsNullOrEmpty(name))

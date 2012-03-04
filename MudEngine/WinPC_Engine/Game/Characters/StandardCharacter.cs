@@ -212,7 +212,7 @@ namespace MudEngine.Game.Characters
                             input = enc.GetString(buffer.ToArray());
                             buffer.Clear();
                             //Return a trimmed string.
-                            return CleanString(input);
+                            return input;
                         }
                         else
                             buffer.Add(buf[0]);
@@ -234,29 +234,6 @@ namespace MudEngine.Game.Characters
 
         public void FlushBuffer()
         {
-        }
-
-        String CleanString(String line)
-        {
-            /*
-            if ((!String.IsNullOrEmpty(line)) && (line.Length > 0))
-            {
-                System.Text.StringBuilder sb = new System.Text.StringBuilder(line.Length);
-                foreach (char c in line)
-                {
-                    if (char.IsSymbol(c)) continue;
-
-                    sb.Append(char.IsControl(c) ? ' ' : c);
-                }
-                String newLine = sb.ToString().Trim().Substring(2).Trim();
-                return newLine;
-            }
-            else
-                return String.Empty;
-             * */
-            Match m = Regex.Match(line, @"\w+"); // Regex.Replace(line, @"[^\u0000-\u007F]", "");
-            line = m.Value;
-            return line.Trim();
         }
 
         public delegate void OnConnectHandler();
