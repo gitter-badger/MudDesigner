@@ -13,7 +13,7 @@ namespace MudEngine.Core.Interfaces
         /// <summary>
         /// Objects filename.
         /// </summary>
-        String Filename { get; set; }
+        String Filename { get; }
 
         /// <summary>
         /// Save method for dumping the object to physical file.

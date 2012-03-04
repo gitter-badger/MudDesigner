@@ -38,6 +38,14 @@ namespace MudEngine.Networking
 
         public String MOTD { get; set; }
 
+        /// <summary>
+        /// Gets or Sets the owning Character that has access to all Admin commands.
+        /// Only the ServerOwner can change the Roles of other Characters.  If there
+        /// is no ServerOwner specified then other Characters can not have their Roles
+        /// elevated from that of Player.
+        /// </summary>
+        public String ServerOwner { get; set; }
+
         public Server(StandardGame game, Int32 port)
         {
             this.Port = port;

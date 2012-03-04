@@ -35,15 +35,13 @@ namespace MudEngine.Networking
             StandardCharacter character = new StandardCharacter(game, "New Player", "New networked client.",  connection);
 
             //Invoke the Characters Server connection method
-            character.Initialize();
-            character.Connect(connection);
             this._ConnectedCharacters.Add(character);
             this._ConnectedThreads.Add(new Thread(ReceiveDataThread));
 
             Int32 index = this._ConnectedThreads.Count - 1;
             this._ConnectedThreads[index].Start(index);
         }
-
+        
         public StandardCharacter[] GetConnectedCharacters()
         {
             return this._ConnectedCharacters.ToArray();
@@ -53,8 +51,11 @@ namespace MudEngine.Networking
         {
             StandardCharacter character = this._ConnectedCharacters[(Int32)index];
 
+            character.Initialize();
+            character.Connect();
+
             while (character.Game.Server.Status == ServerStatus.Running &&
-                character.Enabled)
+                character.Connected)
             {
                 try
                 {
@@ -83,7 +84,9 @@ namespace MudEngine.Networking
                 {
                     Int32 index = _ConnectedCharacters.IndexOf(c);
                     this._ConnectedCharacters.Remove(character);
-                    this._ConnectedThreads[index].Abort();
+                    Thread t = this._ConnectedThreads[index];
+                    this._ConnectedThreads.Remove(this._ConnectedThreads[index]);
+                    t.Abort();
                 }
             }
         }

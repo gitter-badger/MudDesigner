@@ -54,6 +54,34 @@ namespace MudEngine.DAL
                 return String.Empty;
         }
 
+        public String GetFilePath(DataTypes objectType, String filename)
+        {
+            String result = String.Empty;
+
+            switch (objectType)
+            {
+                case DataTypes.Players:
+                    result = Path.Combine(this._Players, filename + this.GetExtension(DataTypes.Players));
+                    break;
+            }
+
+            return result;
+        }
+
+        public String GetExtension(DataTypes objectType)
+        {
+            String result = String.Empty;
+
+            switch (objectType)
+            {
+                case DataTypes.Players:
+                    result = ".player";
+                    break;  
+            }
+
+            return result;
+        }
+
         private String _InstallRoot;
         private String _Players;
         private String _Environments;

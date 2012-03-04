@@ -8,6 +8,7 @@ using System.IO;
 
 using MudEngine.Game;
 using MudEngine.DAL;
+using MudEngine.Core;
 
 namespace MudEngine.GameScripts
 {
@@ -44,6 +45,7 @@ namespace MudEngine.GameScripts
 
             try
             {
+                this.SaveData = new XMLData(this.GetType().Name);
                 this.SaveData.AddSaveData("Name", Name);
                 this.SaveData.AddSaveData("ID", ID);
                 this.SaveData.AddSaveData("Description", Description);
@@ -65,11 +67,15 @@ namespace MudEngine.GameScripts
             {
                 if (!File.Exists(filename))
                     return;
+                this.SaveData.Load(filename);
 
-                //XElement data = XElement.Load(filename);
+                this.Name = this.SaveData.GetData("Name");
+                this.ID = this.SaveData.GetData("ID");
+                this.Description = this.SaveData.GetData("Description");
             }
-            catch
+            catch (Exception ex)
             {
+                Logger.WriteLine(ex.Message);
                 return;
             }
             return;

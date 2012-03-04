@@ -47,7 +47,7 @@ namespace MudEngine.GameScripts.Commands
             String name = String.Empty;
 
             //Repeat the login process until we get a valid name.
-            while (String.IsNullOrEmpty(name))
+            while (String.IsNullOrEmpty(name) && character.Connected)
             {
                 character.SendMessage("Enter your character name: ", false);
 
@@ -92,9 +92,9 @@ namespace MudEngine.GameScripts.Commands
                     continue;
 
                 //Look if the file exists.
-                String filename = game.SavePaths.GetPath(DAL.DataTypes.Players) + name;
+                String filename = game.SavePaths.GetFilePath(DAL.DataTypes.Players, name);
 
-                if (File.Exists(game.SavePaths.GetPath(DAL.DataTypes.Players) + name))
+                if (File.Exists(filename))
                     isFound = true;
 
                 //if the character name supplied exists, load it.
@@ -112,10 +112,10 @@ namespace MudEngine.GameScripts.Commands
                     }
 
                     //Load the character from file.
-                    character.Load(game.SavePaths.GetPath(DAL.DataTypes.Players) + name);
+                    character.Load(filename);
 
                     //Check if the characters password matches that of the saved player password
-                    if ("1234" != password)
+                    if (character.Password != password)
                     {
                         //No match, bail.
                         character.SendMessage("Invalid password provided.");
@@ -127,7 +127,6 @@ namespace MudEngine.GameScripts.Commands
                         character.SendMessage("Welcome back " + character.Name + "!");
                         return true;
                     }
-
                 }
                 else
                 {
@@ -135,19 +134,29 @@ namespace MudEngine.GameScripts.Commands
                     String result = character.GetInput();
                     if (result.ToLower() == "yes")
                     {
-                        return CreateCharacter(name);
+                        //Store the character name.
+                        character.Name = name;
+
+
+                        if (!character.ExecuteSilentCommand("CreatePlayer"))
+                        {
+                            name = String.Empty;
+                            continue;
+                        }
+                        else
+                        {
+                            //We complete the login process..
+                            character.SendMessage(character.Name + " created!");
+                            return true;
+                        }
                     }
                     else
                     {
+                        name = String.Empty;
                         continue;
                     }
                 }
             }
-            return false;
-        }
-
-        private Boolean CreateCharacter(String name)
-        {
             return false;
         }
 

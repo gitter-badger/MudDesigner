@@ -33,6 +33,7 @@ namespace WinPC_Server
             game.Server.MOTD = "Welcome to the Sample Game demonstration server!  This is the Servers MOTD!";
             game.Version = "1.0";
             game.Website = "http://muddesigner.codeplex.com";
+            game.Server.ServerOwner = "Akiyuki";
 
             //Start the game and server.
             game.Start(100, 20);

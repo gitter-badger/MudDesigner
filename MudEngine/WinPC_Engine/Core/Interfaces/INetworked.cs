@@ -25,6 +25,6 @@ namespace MudEngine.Core.Interfaces
         /// <summary>
         /// Method for connecting a object to the server.
         /// </summary>
-        void Connect(Socket connection);
+        void Connect();
     }
 }

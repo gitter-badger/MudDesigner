@@ -26,7 +26,13 @@ namespace MudEngine.Game.Characters
         /// </summary>
         public StandardGame Game { get; private set; }
 
-        public string Filename { get; set; }
+        public string Filename
+        {
+            get
+            {
+                return this.Game.SavePaths.GetFilePath(DAL.DataTypes.Players, this.Name);
+            }
+        }
 
         /// <summary>
         /// Gets what this Characters role on the server is.
@@ -48,11 +54,14 @@ namespace MudEngine.Game.Characters
 
         /// <summary>
         /// Gets or Sets if this character is enabled.
+        /// When disabled, they can not enter commands.
+        /// Characters can have LoggedIn and Connected TRUE with Enabled false resulting in a player connected to
+        /// the server but unable to interact.
         /// </summary>
         public Boolean Enabled { get; set; }
 
         /// <summary>
-        /// Gets or Sets if this client is fully logged into the account.
+        /// Gets or Sets if this client is fully logged into the account and located in the World.
         /// </summary>
         public Boolean LoggedIn
         {
@@ -68,6 +77,11 @@ namespace MudEngine.Game.Characters
             }
         }
 
+        /// <summary>
+        /// Gets if the user is currently connected to a server or not.
+        /// </summary>
+        public Boolean Connected { get; set; }
+
         //TODO: Add current location to characters
         //public IEnvironment CurrentLocation
 
@@ -77,6 +91,8 @@ namespace MudEngine.Game.Characters
             : base(game, name, description)
         {
             this.Game = game;
+
+            this.Role = CharacterRoles.Player;
 
             //Instance this Characters personal Command System with a copy of the command
             //collection already loaded and prepared by the Active Game.
@@ -115,12 +131,21 @@ namespace MudEngine.Game.Characters
 
         public override bool Save(String filename)
         {
+            return this.Save(filename, true);
+        }
+
+        public override bool Save(String filename, Boolean verbose)
+        {
             base.Save(filename, true);
 
             SaveData.AddSaveData("Immovable", Immovable.ToString());
             SaveData.AddSaveData("Password", Password);
 
-            this.SaveData.Save(filename);
+            if (this.SaveData.Save(filename))
+            {
+                if (!verbose)
+                    this.SendMessage("Save completed.");
+            }
 
             return true;
         }
@@ -128,9 +153,17 @@ namespace MudEngine.Game.Characters
         public override void Load(string filename)
         {
             base.Load(filename);
+
+            this.Immovable = Convert.ToBoolean(this.SaveData.GetData("Immovable"));
+            this.Password = this.SaveData.GetData("Password");
         }
 
-        internal Boolean ExecuteCommand(string command)
+        /// <summary>
+        /// Executes the specified command if it exists in the Command library.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        public Boolean ExecuteCommand(string command)
         {
             if (this.Enabled)
             {
@@ -141,16 +174,33 @@ namespace MudEngine.Game.Characters
 
                 return result;
             }
-            else 
+            else
                 return false;
         }
 
-        public void Connect(Socket connection)
+        /// <summary>
+        /// Executes the spcified command if it exists in the Command library.
+        /// This method is verbose.  Only messages sent from the Commands will be presented to the player.
+        /// The standard new line and "Command: " message is skipped with this method.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        public Boolean ExecuteSilentCommand(string command)
         {
-            this._Connection = connection;
+            if (this.Enabled)
+            {
+                Boolean result = Commands.Execute(command, this);
 
+                return result;
+            }
+            else
+                return false;
+        }
+
+        public void Connect()
+        {
             //this.Initialize();
-
+            this.Connected = true;
             OnConnectEvent();
         }
 
@@ -164,9 +214,9 @@ namespace MudEngine.Game.Characters
             //Close our currently open socket.
             this._Connection.Close();
 
-            this.OnDisconnectEvent();
+            this.LoggedIn = false;
 
-            Console.WriteLine("Disconnect Complete.");
+            this.OnDisconnectEvent();
         }
 
         public void SendMessage(String data)
@@ -246,13 +296,31 @@ namespace MudEngine.Game.Characters
             this.SendMessage(String.Empty);
 
             //Log the user in.
-            this.LoggedIn = this.ExecuteCommand("Login");
+            Boolean result = this.ExecuteSilentCommand("Login");
+            this.SendMessage(String.Empty);
+
+            //Flags the character as fully logged in.
+            //This will automatically invoke the OnLoggedIn method
+            //which will present the user with the server MOTD
+            this.LoggedIn = result;
+            //Provide a blank line between the character loggin info
+            //and the characters actual first in-game Command prompt.
+            this.SendMessage(String.Empty);
+
+            //Make sure we are logged in.
+            if (!this.LoggedIn)
+            {
+                this.Disconnect();
+            }
+
+            this.ExecuteCommand("Look");
         }
 
         public delegate void OnDisconnectHandler();
         public event OnDisconnectHandler OnDisconnectEvent;
         public void OnDisconnect()
         {
+            Console.WriteLine("Disconnect Complete.");
         }
 
         public delegate void OnLoginHandler();
@@ -260,6 +328,26 @@ namespace MudEngine.Game.Characters
         public void OnLogin()
         {
             this.SendMessage(this.Game.Server.MOTD);
+
+            //Check to see if this user is the servers owner.
+            if (this.Name == this.Game.Server.ServerOwner)
+            {
+                //Set the role accordingly.
+                this.Role = CharacterRoles.Admin;
+            }
+        }
+
+        public void SetRole(StandardCharacter adminCharacter, StandardCharacter subordinateCharacter, CharacterRoles role)
+        {
+            //Check to make sure the admin character is truly a admin
+            if (adminCharacter.Role == CharacterRoles.Admin)
+            {
+                subordinateCharacter.Role = role;
+            }
+            else
+            {
+                adminCharacter.SendMessage("You do not have the rights to perform this command.");
+            }
         }
 
         private Socket _Connection;

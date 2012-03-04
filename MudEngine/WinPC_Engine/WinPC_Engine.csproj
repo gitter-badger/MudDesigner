@@ -58,6 +58,7 @@
     <Compile Include="GameScripts\Commands\CommandLogin.cs" />
     <Compile Include="GameScripts\Commands\CommandSay.cs" />
     <Compile Include="GameScripts\Commands\CommandStop.cs" />
+    <Compile Include="GameScripts\Commands\CommandCreatePlayer.cs" />
     <Compile Include="Game\Characters\CharacterRoles.cs" />
     <Compile Include="Game\Characters\CharacterStats.cs" />
     <Compile Include="Game\Characters\MyCharacter.cs" />

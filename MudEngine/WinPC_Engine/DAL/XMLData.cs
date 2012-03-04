@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using System.Reflection;
 
 using MudEngine.GameScripts;
+using MudEngine.Core;
 
 namespace MudEngine.DAL
 {
@@ -19,11 +20,23 @@ namespace MudEngine.DAL
         public XMLData(String objectType)
         {
             SaveData = new XElement(objectType);
+            this._RootNode = objectType;
         }
 
         public void AddSaveData(String property, String value)
         {
             this.SaveData.Add(new XElement(property, value));
+        }
+
+        public String GetData(String property)
+        {
+            foreach (XElement element in SaveData.Elements())
+            {
+                if (element.Name.LocalName == property)
+                    return element.Value;
+            }
+
+            return String.Empty;
         }
 
         public Boolean Save(String filename)
@@ -38,5 +51,22 @@ namespace MudEngine.DAL
                 return false;
             }
         }
+
+        public Boolean Load(String filename)
+        {
+            try
+            {
+                this.SaveData = XElement.Load(filename);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLine(ex.Message);
+                return false;
+            }
+        }
+
+        private String _RootNode;
     }
 }
