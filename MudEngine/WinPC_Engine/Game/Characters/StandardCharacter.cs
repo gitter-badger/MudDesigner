@@ -310,10 +310,6 @@ namespace MudEngine.Game.Characters
             }
         }
 
-        public void FlushBuffer()
-        {
-        }
-
         public delegate void OnConnectHandler();
         public event OnConnectHandler OnConnectEvent;
         public void OnConnect()
@@ -324,6 +320,7 @@ namespace MudEngine.Game.Characters
             this.SendMessage(String.Empty);
 
             //Log the user in.
+            //TODO: What happens if result = false?
             Boolean result = this.ExecuteSilentCommand("Login");
             this.SendMessage(String.Empty);
 
