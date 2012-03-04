@@ -5,7 +5,7 @@ using System.Text;
 
 using MudEngine.Game.Characters;
 
-namespace MudEngine.Core.Interface
+namespace MudEngine.Core.Interfaces
 {
     public interface ICommand
     {

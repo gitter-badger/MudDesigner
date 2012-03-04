@@ -71,9 +71,14 @@ namespace MudEngine.Game
         public Boolean Debugging { get; set; }
 
         /// <summary>
-        /// Gets or reference to the currently running Server.
+        /// Gets a reference to the currently running Server.
         /// </summary>
         public Server Server { get; protected set; }
+
+        /// <summary>
+        /// Gets a reference to the current Game World
+        /// </summary>
+        public World World { get; protected set; }
 
         /// <summary>
         /// Gets or Sets the paths that content is saved to.
@@ -113,6 +118,8 @@ namespace MudEngine.Game
             this.SavePaths = paths;
 
             SetupPaths();
+
+            this.World = new World(this);
         }
 
         /// <summary>
@@ -134,6 +141,7 @@ namespace MudEngine.Game
             CommandSystem.LoadCommands();
 
             //Load World
+            this.World.CreateRealm("Azeroth", "The realm of Azeroth is full of jungles and small villages");
 
             //Start our server.
             this.Server.Start(maxPlayers, maxQueueSize);

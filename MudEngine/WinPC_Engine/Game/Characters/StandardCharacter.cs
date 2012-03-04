@@ -13,6 +13,7 @@ using MudEngine.GameScripts;
 using MudEngine.Core.Interfaces;
 using MudEngine.Networking;
 using MudEngine.Core;
+using MudEngine.Game.Environment;
 
 namespace MudEngine.Game.Characters
 {
@@ -24,7 +25,6 @@ namespace MudEngine.Game.Characters
         /// <summary>
         /// Gets a reference to the currently active game.
         /// </summary>
-        public StandardGame Game { get; private set; }
 
         public string Filename
         {
@@ -87,11 +87,11 @@ namespace MudEngine.Game.Characters
 
         protected CommandSystem Commands { get; private set; }
 
+        public Room CurrentRoom { get; private set; }
+
         public StandardCharacter(StandardGame game, String name, String description)
             : base(game, name, description)
         {
-            this.Game = game;
-
             this.Role = CharacterRoles.Player;
 
             //Instance this Characters personal Command System with a copy of the command
@@ -114,7 +114,7 @@ namespace MudEngine.Game.Characters
             this._Writer.AutoFlush = true; //Flushes the stream automatically.
         }
 
-        public void Initialize()
+        public virtual void Initialize()
         {
             //throw new NotImplementedException();
             this.Enabled = true;
@@ -124,7 +124,7 @@ namespace MudEngine.Game.Characters
         /// Destroys any resources used by this character.
         /// Assumes that Save() has already been invoked.
         /// </summary>
-        public void Destroy()
+        public virtual void Destroy()
         {
             this.Commands = null;
         }
@@ -163,31 +163,12 @@ namespace MudEngine.Game.Characters
             this.Role = GetRole(role);
         }
 
-        private CharacterRoles GetRole(String role)
-        {
-            //Blow all of the available values up into an array.
-            Array values = Enum.GetValues(typeof(CharacterRoles));
-
-            //Loop through each available value, converting it into a string.
-            foreach (Int32 value in values)
-            {
-                //Get the string representation of the current value
-                String displayName = Enum.GetName(typeof(CharacterRoles), value);
-
-                //Check if this value matches that of the supplied one.
-                //If so, return it as a enum
-                if (displayName.ToLower() == role.ToLower())
-                    return (CharacterRoles)Enum.Parse(typeof(CharacterRoles), displayName);
-            }
-            return CharacterRoles.Player;
-        }
-
         /// <summary>
         /// Executes the specified command if it exists in the Command library.
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        public Boolean ExecuteCommand(string command)
+        public virtual Boolean ExecuteCommand(string command)
         {
             if (this.Enabled && this.Connected)
             {
@@ -209,7 +190,7 @@ namespace MudEngine.Game.Characters
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        public Boolean ExecuteSilentCommand(string command)
+        public virtual Boolean ExecuteSilentCommand(string command)
         {
             if (this.Enabled)
             {
@@ -245,12 +226,12 @@ namespace MudEngine.Game.Characters
             this.OnDisconnectEvent();
         }
 
-        public void SendMessage(String data)
+        public virtual void SendMessage(String data)
         {
             this.SendMessage(data, true);
         }
 
-        public void SendMessage(String data, Boolean newLine)
+        public virtual void SendMessage(String data, Boolean newLine)
         {
             try
             {
@@ -391,6 +372,25 @@ namespace MudEngine.Game.Characters
             {
                 adminCharacter.SendMessage("You do not have the rights to perform this command.");
             }
+        }
+
+        private CharacterRoles GetRole(String role)
+        {
+            //Blow all of the available values up into an array.
+            Array values = Enum.GetValues(typeof(CharacterRoles));
+
+            //Loop through each available value, converting it into a string.
+            foreach (Int32 value in values)
+            {
+                //Get the string representation of the current value
+                String displayName = Enum.GetName(typeof(CharacterRoles), value);
+
+                //Check if this value matches that of the supplied one.
+                //If so, return it as a enum
+                if (displayName.ToLower() == role.ToLower())
+                    return (CharacterRoles)Enum.Parse(typeof(CharacterRoles), displayName);
+            }
+            return CharacterRoles.Player;
         }
 
         private Socket _Connection;

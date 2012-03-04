@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using MudEngine.Core.Interface;
+using MudEngine.Core.Interfaces;
 using MudEngine.Game;
 using MudEngine.Game.Characters;
 using MudEngine.Networking;

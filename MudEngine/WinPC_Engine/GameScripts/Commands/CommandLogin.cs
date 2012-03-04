@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
 
-using MudEngine.Core.Interface;
+using MudEngine.Core.Interfaces;
 using MudEngine.Game;
 using MudEngine.Game.Characters;
 using MudEngine.Game.Environment;

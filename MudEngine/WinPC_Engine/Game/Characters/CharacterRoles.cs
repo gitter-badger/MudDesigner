@@ -13,6 +13,7 @@ namespace MudEngine.Game.Characters
         Admin,
         Immortal,
         GM,
+        Builder,
         QuestGiver,
         Player,
         NPC

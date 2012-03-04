@@ -55,6 +55,7 @@
     <Compile Include="Core\ObjectCollection.cs" />
     <Compile Include="DAL\DataPaths.cs" />
     <Compile Include="DAL\XMLData.cs" />
+    <Compile Include="GameScripts\Commands\CommandLook.cs" />
     <Compile Include="GameScripts\Commands\CommandLogin.cs" />
     <Compile Include="GameScripts\Commands\CommandSay.cs" />
     <Compile Include="GameScripts\Commands\CommandStop.cs" />
@@ -65,8 +66,13 @@
     <Compile Include="Game\Characters\MyCharacter.cs" />
     <Compile Include="Game\Characters\StandardCharacter.cs" />
     <Compile Include="GameScripts\BaseScript.cs" />
+    <Compile Include="Game\Environment\Doorway.cs" />
+    <Compile Include="Game\Environment\Realm.cs" />
+    <Compile Include="Game\Environment\Room.cs" />
+    <Compile Include="Game\Environment\Zone.cs" />
     <Compile Include="Game\StandardGame.cs" />
     <Compile Include="Game\Environment\TravelDirections.cs" />
+    <Compile Include="Game\World.cs" />
     <Compile Include="Networking\ConnectionManager.cs" />
     <Compile Include="Networking\Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

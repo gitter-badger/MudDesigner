@@ -23,10 +23,13 @@ namespace MudEngine.GameScripts
 
         public XMLData SaveData { get; protected set; }
 
+        public StandardGame Game { get; private set; }
+
         public BaseScript(StandardGame game, String name, String description)
         {
             this.Name = name;
             this.Description = description;
+            this.Game = game;
 
             this.ID = Guid.NewGuid().ToString();
 
