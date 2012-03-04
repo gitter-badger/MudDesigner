@@ -28,13 +28,24 @@ namespace MudEngine.GameScripts.Commands
             Description = "Account login command.";
         }
 
-        public void Execute(string command, Game.Characters.StandardCharacter character)
+        public Boolean Execute(string command, Game.Characters.StandardCharacter character)
         {
+            //reference to the Characters Game.
             StandardGame game = character.Game;
+
+            //Store a reference to this character for other methods within this class.
+            this._Character = character;
+
+            if (character.LoggedIn)
+            {
+                character.SendMessage("You are already logged in!");
+                return false;
+            }
 
             character.SendMessage("Please enter character name: ");
             String name = String.Empty;
 
+            //Repeat the login process until we get a valid name.
             while (String.IsNullOrEmpty(name))
             {
                 character.SendMessage("Enter your character name: ", false);
@@ -42,36 +53,73 @@ namespace MudEngine.GameScripts.Commands
                 name = String.Empty;
                 Boolean isFound = false;
 
-                while (String.IsNullOrEmpty(name))
+                //Get the supplied name
+                name = character.GetInput();
+
+                //Check if the name entered is blank. Ensure that we remove leading and ending spaces
+                if (String.IsNullOrEmpty(name))
+                    continue;
+
+                //Look if the file exists.
+                String filename = game.SavePaths.GetPath(DAL.DataTypes.Players) + name;
+
+                if (File.Exists(game.SavePaths.GetPath(DAL.DataTypes.Players) + name))
+                    isFound = true;
+
+                //if the character name supplied exists, load it.
+                if (isFound)
                 {
-                    name = character.GetInput();
+                    //Perform a password check
+                    character.SendMessage("Please enter a password for " + name);
+                    String password = character.GetInput();
 
-                    if (String.IsNullOrEmpty(name))
+                    //If the password is empty, then restart the process.
+                    if (String.IsNullOrEmpty(password))
+                    {
+                        name = String.Empty;
                         continue;
+                    }
 
-                    //Look if the file exists.
-                    if (File.Exists(game.SavePaths.Players + @"\" + name))
-                        isFound = true;
+                    //Load the character from file.
+                    character.Load(game.SavePaths.GetPath(DAL.DataTypes.Players) + name);
+
+                    //Check if the characters password matches that of the saved player password
+                    if ("1234" != password)
+                    {
+                        //No match, bail.
+                        character.SendMessage("Invalid password provided.");
+                        name = String.Empty;
+                        continue;
+                    }
+                    else //End our loading.
+                    {
+                        character.SendMessage("Welcome back " + character.Name + "!");
+                        return true;
+                    }
+
+                }
+                else
+                {
+                    character.SendMessage("No character with that name was found.  Create a new one? (Yes/No)");
+                    String result = character.GetInput();
+                    if (result.ToLower() == "yes")
+                    {
+                        return CreateCharacter(name);
+                    }
                     else
                     {
-                        character.SendMessage("Enter your password: ", false);
-
-                        String password = character.GetInput();
-
-                        if (String.IsNullOrEmpty(password))
-                        {
-                            //Reset the process if no password supplied.
-                            name = String.Empty;
-                            continue;
-                        }
-                        else
-                        {
-
-                        }
+                        continue;
                     }
                 }
             }
-            
+            return false;
         }
+
+        private Boolean CreateCharacter(String name)
+        {
+            return false;
+        }
+
+        private StandardCharacter _Character;
     }
 }

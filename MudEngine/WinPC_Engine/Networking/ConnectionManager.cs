@@ -35,6 +35,7 @@ namespace MudEngine.Networking
             StandardCharacter character = new StandardCharacter(game, "New Player", "New networked client.",  connection);
 
             //Invoke the Characters Server connection method
+            character.Initialize();
             character.Connect(connection);
             this._ConnectedCharacters.Add(character);
             this._ConnectedThreads.Add(new Thread(ReceiveDataThread));
@@ -51,7 +52,6 @@ namespace MudEngine.Networking
         private void ReceiveDataThread(Object index)
         {
             StandardCharacter character = this._ConnectedCharacters[(Int32)index];
-            character.Initialize();
 
             while (character.Game.Server.Status == ServerStatus.Running &&
                 character.Enabled)

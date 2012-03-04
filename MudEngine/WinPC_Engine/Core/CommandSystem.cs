@@ -58,12 +58,7 @@ namespace MudEngine.Core
         /// <returns></returns>
         public List<ICommand> GetCommands()
         {
-            List<ICommand> collection = new List<ICommand>();
-
-            foreach (ICommand c in CommandSystem.Commands.Values)
-                collection.Add(c);
-
-            return collection;
+            return CommandSystem.Commands.Values.ToList();
         }
 
         /// <summary>
@@ -101,7 +96,7 @@ namespace MudEngine.Core
         /// </summary>
         /// <param name="command"></param>
         /// <param name="character"></param>
-        public void Execute(string command, StandardCharacter character)
+        public Boolean Execute(string command, StandardCharacter character)
         {
             //All Types that implement ICommand must have their class name begin with Command.
             //We must insert the 'Command' string into the beginning of the users Command
@@ -119,20 +114,20 @@ namespace MudEngine.Core
                     try
                     {
                         //Execute the command
-                        cmd.Execute(command, character);
+                        return cmd.Execute(command, character);
                     }
                     catch (Exception ex)
                     {
                         Logger.WriteLine("Error: " + ex.Message);
                         Console.WriteLine("Error: " + ex.Message);
                     }
-
-                    return;
                 }
             }
             
             //Let the player know that it was not a valid command.
+            //TODO: Implement another way of performing this.  I don't want game related classes tied to the system.
             character.SendMessage("Invalid Command Used.");
+            return false;
         }
 
         /// <summary>

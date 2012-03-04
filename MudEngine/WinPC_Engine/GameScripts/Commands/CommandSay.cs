@@ -24,7 +24,7 @@ namespace MudEngine.GameScripts.Commands
             this.Description = "Chat command that allows objects to communicate.";
         }
 
-        public void Execute(string command, StandardCharacter character)
+        public Boolean Execute(string command, StandardCharacter character)
         {
             //Grab a reference to the character for simplifying access.
             StandardGame game = character.Game;
@@ -42,6 +42,8 @@ namespace MudEngine.GameScripts.Commands
 
             //Send a different copy of the message to the broadcastor.
             character.SendMessage("You say: " + message);
+
+            return true;
         }
     }
 }

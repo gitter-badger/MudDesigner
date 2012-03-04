@@ -46,7 +46,27 @@ namespace MudEngine.Game.Characters
         /// </summary>
         public Boolean Immovable { get; set; }
 
+        /// <summary>
+        /// Gets or Sets if this character is enabled.
+        /// </summary>
         public Boolean Enabled { get; set; }
+
+        /// <summary>
+        /// Gets or Sets if this client is fully logged into the account.
+        /// </summary>
+        public Boolean LoggedIn
+        {
+            get
+            {
+                return this._LoggedIn;
+            }
+            private set
+            {
+                if (value)
+                    this.OnLoginEvent();
+                this._LoggedIn = value;
+            }
+        }
 
         //TODO: Add current location to characters
         //public IEnvironment CurrentLocation
@@ -76,7 +96,6 @@ namespace MudEngine.Game.Characters
             this._Writer = new StreamWriter(new NetworkStream(this._Connection, true));
 
             this._Writer.AutoFlush = true; //Flushes the stream automatically.
-            this._InitialMessage = true; //Strips Telnet client garbage text from initial message sent from client.
         }
 
         public void Initialize()
@@ -111,20 +130,26 @@ namespace MudEngine.Game.Characters
             base.Load(filename);
         }
 
-        internal void ExecuteCommand(string command)
+        internal Boolean ExecuteCommand(string command)
         {
             if (this.Enabled)
             {
-                Commands.Execute(command, this);
+                Boolean result = Commands.Execute(command, this);
 
                 SendMessage("");
                 SendMessage("Command:", false);
+
+                return result;
             }
+            else 
+                return false;
         }
 
         public void Connect(Socket connection)
         {
             this._Connection = connection;
+
+            //this.Initialize();
 
             OnConnectEvent();
         }
@@ -186,7 +211,8 @@ namespace MudEngine.Game.Characters
                             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
                             input = enc.GetString(buffer.ToArray());
                             buffer.Clear();
-                            return input;
+                            //Return a trimmed string.
+                            return CleanString(input);
                         }
                         else
                             buffer.Add(buf[0]);
@@ -204,6 +230,10 @@ namespace MudEngine.Game.Characters
                     return e.Message;
                 }
             }
+        }
+
+        public void FlushBuffer()
+        {
         }
 
         String CleanString(String line)
@@ -224,22 +254,22 @@ namespace MudEngine.Game.Characters
             else
                 return String.Empty;
              * */
-
-            Regex invalidChars = new Regex(
-    @"(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x9F\uFEFF\uFFFE\uFFFF]",
-    RegexOptions.Compiled);
-
-            if (String.IsNullOrEmpty(line))
-                return "";
-            else
-                return invalidChars.Replace(line, "");
+            Match m = Regex.Match(line, @"\w+"); // Regex.Replace(line, @"[^\u0000-\u007F]", "");
+            line = m.Value;
+            return line.Trim();
         }
 
         public delegate void OnConnectHandler();
         public event OnConnectHandler OnConnectEvent;
         public void OnConnect()
         {
-            this.SendMessage(this.Game.Server.MOTD);
+            //Greet the user with the game information
+            this.SendMessage(this.Game.Name);
+            this.SendMessage(this.Game.Description);
+            this.SendMessage(String.Empty);
+
+            //Log the user in.
+            this.LoggedIn = this.ExecuteCommand("Login");
         }
 
         public delegate void OnDisconnectHandler();
@@ -252,13 +282,13 @@ namespace MudEngine.Game.Characters
         public event OnLoginHandler OnLoginEvent;
         public void OnLogin()
         {
-
+            this.SendMessage(this.Game.Server.MOTD);
         }
 
         private Socket _Connection;
         private StreamReader _Reader;
         private StreamWriter _Writer;
-        private Boolean _InitialMessage;
+        private Boolean _LoggedIn;
         private List<byte> buffer = new List<byte>();
     }
 }

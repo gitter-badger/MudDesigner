@@ -66,7 +66,7 @@ namespace MudEngine.GameScripts
                 if (!File.Exists(filename))
                     return;
 
-                XElement data = XElement.Load(filename);
+                //XElement data = XElement.Load(filename);
             }
             catch
             {

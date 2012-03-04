@@ -13,6 +13,6 @@ namespace MudEngine.Core.Interface
         string Description { get; set; }
         List<string> Help { get; set; }
 
-        void Execute(string command, StandardCharacter character);
+        Boolean Execute(string command, StandardCharacter character);
     }
 }

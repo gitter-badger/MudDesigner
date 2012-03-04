@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 using MudEngine.Networking;
 using MudEngine.Core;
@@ -108,12 +109,10 @@ namespace MudEngine.Game
 
             //Setup default save paths.
             DataPaths paths = new DataPaths();
-            paths.Environments = @"\Environment";
-            paths.Characters = @"\Characters";
-            paths.Players = @"\SavedPlayer";
-            paths.Scripts = @"\Scripts";
 
             this.SavePaths = paths;
+
+            SetupPaths();
         }
 
         /// <summary>
@@ -168,6 +167,12 @@ namespace MudEngine.Game
         public void Update()
         {
 
+        }
+
+        private void SetupPaths()
+        {
+            if (!Directory.Exists(this.SavePaths.GetPath(DataTypes.Players)))
+                Directory.CreateDirectory(this.SavePaths.GetPath(DataTypes.Players));
         }
     }
 }
