@@ -22,6 +22,7 @@ namespace MudEngine.Game.Characters
     /// </summary>
     public class StandardCharacter : BaseScript, INetworked, ISavable, IGameComponent
     {
+        #region Properties
         /// <summary>
         /// Gets a reference to the currently active game.
         /// </summary>
@@ -89,6 +90,9 @@ namespace MudEngine.Game.Characters
 
         public Room CurrentRoom { get; private set; }
 
+        #endregion
+
+        #region Constructors
         public StandardCharacter(StandardGame game, String name, String description)
             : base(game, name, description)
         {
@@ -101,6 +105,9 @@ namespace MudEngine.Game.Characters
             this.OnConnectEvent += new OnConnectHandler(OnConnect);
             this.OnDisconnectEvent += new OnDisconnectHandler(OnDisconnect);
             this.OnLoginEvent += new OnLoginHandler(OnLogin);
+            this.OnWalkEvent += new OnWalkHandler(OnWalk);
+            this.OnEnterEvent += new OnEnterHandler(OnEnter);
+            this.OnLeaveEvent += new OnLeaveHandler(OnLeave);
         }
 
         public StandardCharacter(StandardGame game, String name, String description, Socket connection)
@@ -113,7 +120,9 @@ namespace MudEngine.Game.Characters
 
             this._Writer.AutoFlush = true; //Flushes the stream automatically.
         }
+        #endregion
 
+        #region Inherited Methods
         public virtual void Initialize()
         {
             //throw new NotImplementedException();
@@ -162,7 +171,9 @@ namespace MudEngine.Game.Characters
 
             this.Role = GetRole(role);
         }
+        #endregion
 
+        #region Networking Methods
         /// <summary>
         /// Executes the specified command if it exists in the Command library.
         /// </summary>
@@ -211,7 +222,6 @@ namespace MudEngine.Game.Characters
 
         public void Disconnect()
         {
-            Console.WriteLine("Disconnecting...");
             this.Save(this.Filename);
 
             //Purge all of this characters commands.
@@ -290,7 +300,9 @@ namespace MudEngine.Game.Characters
                 }
             }
         }
+        #endregion
 
+        #region Event Methods
         public delegate void OnConnectHandler();
         public event OnConnectHandler OnConnectEvent;
         public void OnConnect()
@@ -326,7 +338,6 @@ namespace MudEngine.Game.Characters
         public event OnDisconnectHandler OnDisconnectEvent;
         public void OnDisconnect()
         {
-            Console.WriteLine("Disconnect Complete.");
         }
 
         public delegate void OnLoginHandler();
@@ -343,6 +354,44 @@ namespace MudEngine.Game.Characters
             }
         }
 
+        public delegate void OnWalkHandler(AvailableTravelDirections direction);
+        public event OnWalkHandler OnWalkEvent;
+        public void OnWalk(AvailableTravelDirections direction)
+        {
+            if (this.CurrentRoom.DoorwayExists(direction))
+            {
+                this.CurrentRoom = this.CurrentRoom.GetDoorway(direction).ArrivalRoom;
+            }
+            else
+                return;
+        }
+
+        public delegate void OnLeaveHandler(Room departingRoom, Room targetRoom, AvailableTravelDirections direction);
+        public event OnLeaveHandler OnLeaveEvent;
+        public void OnLeave(Room departingRoom, Room targetRoom, AvailableTravelDirections direction)
+        {
+            //This character was forced moved so we have no direction
+            if (direction == AvailableTravelDirections.None)
+                departingRoom.SendMessageToOccupants(this.Name + " has left the room.", this);
+            else
+                departingRoom.SendMessageToOccupants(this.Name + " has left the room heading " + direction.ToString(), this);
+        }
+
+        public delegate void OnEnterHandler(Room departingRoom, Room targetRoom, AvailableTravelDirections direction);
+        public event OnEnterHandler OnEnterEvent;
+        public void OnEnter(Room departingRoom, Room targetRoom, AvailableTravelDirections direction)
+        {
+            //This character was forced moved so we have no direction
+            if (direction == AvailableTravelDirections.None)
+                targetRoom.SendMessageToOccupants(this.Name + " has entered the room.");
+            else
+                targetRoom.SendMessageToOccupants(this.Name + " has entered the room from the " + direction.ToString(), this);
+
+            this.ExecuteCommand("Look");
+        }
+        #endregion
+
+        #region Character Methods
         public void SetRole(StandardCharacter adminCharacter, StandardCharacter subordinateCharacter, CharacterRoles role)
         {
             //Check to make sure the admin character is truly a admin
@@ -392,6 +441,33 @@ namespace MudEngine.Game.Characters
             }
             return CharacterRoles.Player;
         }
+        #endregion
+
+        #region World Methods
+        public virtual void Walk(AvailableTravelDirections direction)
+        {
+            Room r = this.CurrentRoom;
+
+            this.OnWalkEvent(direction);
+
+            //If we didn't go anywhere, do nothing.
+            if (this.CurrentRoom == r)
+                return;
+
+            OnLeaveEvent(r, this.CurrentRoom, direction);
+            OnEnterEvent(r, this.CurrentRoom, direction);
+        }
+
+        public virtual void Move(Room room)
+        {
+            if (this.CurrentRoom != null)
+                this.CurrentRoom.SendMessageToOccupants(this.Name + " has left the room.", this);
+            
+            this.CurrentRoom = room;
+            this.CurrentRoom.AddOccupant(this);
+            this.CurrentRoom.SendMessageToOccupants(this.Name + " has entered the room.", this);
+        }
+        #endregion
 
         private Socket _Connection;
         private StreamReader _Reader;

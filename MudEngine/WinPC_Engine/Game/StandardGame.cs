@@ -9,6 +9,7 @@ using MudEngine.Networking;
 using MudEngine.Core;
 using MudEngine.Game.Characters;
 using MudEngine.DAL;
+using MudEngine.Game.Environment;
 
 namespace MudEngine.Game
 {
@@ -141,7 +142,7 @@ namespace MudEngine.Game
             CommandSystem.LoadCommands();
 
             //Load World
-            this.World.CreateRealm("Azeroth", "The realm of Azeroth is full of jungles and small villages");
+            this.World.Initialize();
 
             //Start our server.
             this.Server.Start(maxPlayers, maxQueueSize);

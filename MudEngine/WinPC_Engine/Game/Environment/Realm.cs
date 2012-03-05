@@ -50,10 +50,12 @@ namespace MudEngine.Game.Environment
             throw new NotImplementedException();
         }
 
-        public void CreateZone(String name, String description)
+        public Zone CreateZone(String name, String description)
         {
             Zone zone = new Zone(this.Game, name, description);
             this._ZoneCollection.Add(zone);
+            zone.Realm = this;
+            return zone;
         }
 
         public Zone GetZone(String name)

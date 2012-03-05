@@ -25,8 +25,6 @@ namespace MudEngine.GameScripts.Commands
 
         public bool Execute(string command, StandardCharacter character)
         {
-            
-
             return false;
         }
     }

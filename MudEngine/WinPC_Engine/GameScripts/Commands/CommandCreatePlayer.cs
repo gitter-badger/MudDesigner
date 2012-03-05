@@ -80,6 +80,8 @@ namespace MudEngine.GameScripts.Commands
                 }
             }
 
+            character.Move(game.World.StartLocation);
+
             //TODO: Create a class and setup Stats.
             character.Save(character.Filename, false); 
 

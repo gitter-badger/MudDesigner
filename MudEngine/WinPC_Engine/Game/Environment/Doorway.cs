@@ -21,9 +21,18 @@ namespace MudEngine.Game.Environment
 
         public Room DepartureRoom { get; private set; }
 
-        public Doorway(StandardGame game)
+        public Doorway(Room arrival, Room departure, AvailableTravelDirections direction)
         {
+            this.TravelDirection = direction;
+            this.ArrivalRoom = arrival;
+            this.DepartureRoom = departure;
+
             this.LevelRequirement = 0;
+        }
+
+        public override string ToString()
+        {
+            return "{" + this.GetType().Name + "}: " + this.DepartureRoom.Name + "->" + this.TravelDirection.ToString() + "->" + this.ArrivalRoom.Name;
         }
     }
 }

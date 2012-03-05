@@ -4,17 +4,44 @@ using System.Linq;
 using System.Text;
 
 using MudEngine.Game.Environment;
+using MudEngine.Core.Interfaces;
 
 namespace MudEngine.Game
 {
-    public class World
+    public class World : IGameComponent
     {
+        /// <summary>
+        /// Gets a reference to the currently running game.
+        /// </summary>
         public StandardGame Game { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets the starting location for new characters.
+        /// </summary>
+        public Room StartLocation { get; set; }
 
         public World(StandardGame game)
         {
             this.Game = game;
             this._RealmCollection = new List<Realm>();
+        }
+
+        public void Initialize()
+        {
+            Realm realm = new Realm(this.Game, "Azeroth", "");
+            Zone zone = realm.CreateZone("Bablo", "");
+
+            zone.CreateRoom("Bedroom", "");
+            zone.CreateRoom("Hallway", "");
+
+            zone.LinkRooms("Bedroom", "Hallway", AvailableTravelDirections.East);
+
+            this.StartLocation = zone.GetRoom("Bedroom");
+        }
+
+        public void Destroy()
+        {
+            throw new NotImplementedException();
         }
 
         public void CreateRealm(String name, String description)

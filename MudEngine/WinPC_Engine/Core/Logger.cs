@@ -54,14 +54,6 @@ namespace MudEngine.Core
 
         public static void WriteLine(String message, Importance importance)
         {
-        }
-
-        /// <summary>
-        /// Writes a single line to the engine log file.
-        /// </summary>
-        /// <param name="message"></param>
-        public static void WriteLine(String message)
-        {
             //Only write to log if enabled.
             if (!Enabled)
                 return;
@@ -96,6 +88,16 @@ namespace MudEngine.Core
             {
                 throw new Exception("Unable to write message (" + message + ") to log file (" + LogFilename + ").");
             }
+        }
+
+        /// <summary>
+        /// Writes a single line to the engine log file.
+        /// </summary>
+        /// <param name="message"></param>
+        public static void WriteLine(String message)
+        {
+            //Just output as typical informational stuff.
+            Logger.WriteLine(message, Importance.Information);
         }
 
         /// <summary>

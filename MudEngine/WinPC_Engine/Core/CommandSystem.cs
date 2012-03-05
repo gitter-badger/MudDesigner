@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 
+using MudEngine.Core;
 using MudEngine.Core.Interfaces;
 using MudEngine.Game.Characters;
 

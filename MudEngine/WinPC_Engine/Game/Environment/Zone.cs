@@ -6,6 +6,7 @@ using System.Text;
 using MudEngine.Core.Interfaces;
 using MudEngine.GameScripts;
 using MudEngine.Game.Characters;
+using MudEngine.Core;
 
 namespace MudEngine.Game.Environment
 {
@@ -18,7 +19,7 @@ namespace MudEngine.Game.Environment
 
         public Boolean Safe { get; set; }
 
-        public String Realm { get; private set; }
+        public Realm Realm { get; set; }
 
         public Zone(StandardGame game, String name, String description) : base(game, name, description)
         {
@@ -45,9 +46,46 @@ namespace MudEngine.Game.Environment
             throw new NotImplementedException();
         }
 
-        public void CreateRoom(String name, String description)
+        public Room CreateRoom(String name, String description)
         {
+            Room room = new Room(this.Game, name, description, this);
+            foreach(Room r in this._RoomCollection)
+            {
+                if (r.Name == name)
+                {
+                    Logger.WriteLine("An attempt to create a duplicate Room was stopped.  Room '" + name + "' was not created within the Zone '" + this.Name + "'");
+                    return null;
+                }
+            }
 
+            this._RoomCollection.Add(room);
+            return room;
+        }
+
+        public Boolean LinkRooms(String departingRoom, String arrivalRoom, AvailableTravelDirections direction)
+        {
+            Room depart, arrival;
+
+            depart = this.GetRoom(departingRoom);
+            arrival = this.GetRoom(arrivalRoom);
+
+            if (depart == null || arrivalRoom == null)
+                return false;
+
+            Boolean result = depart.LinkRooms(direction, arrival);
+
+            return result;
+        }
+
+        public Room GetRoom(String room)
+        {
+            foreach (Room r in this._RoomCollection)
+            {
+                if (r.Name == room)
+                    return r;
+            }
+
+            return null;
         }
 
         private List<Room> _RoomCollection;

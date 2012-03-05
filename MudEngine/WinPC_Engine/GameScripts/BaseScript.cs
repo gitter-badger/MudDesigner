@@ -87,9 +87,9 @@ namespace MudEngine.GameScripts
         public override string ToString()
         {
             if (String.IsNullOrEmpty(this.Name))
-                return this.GetType().Name + " without Name";
+                return "{" + this.GetType().Name + "}:" + "Without Name";
             else
-                return this.Name;
+                return "{" + this.GetType().Name + "}:" + this.Name;
         }
     }
 }
