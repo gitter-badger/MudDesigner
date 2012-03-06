@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 using System.IO;
 
 using MudEngine.Networking;
@@ -10,6 +11,7 @@ using MudEngine.Core;
 using MudEngine.Game.Characters;
 using MudEngine.DAL;
 using MudEngine.Game.Environment;
+using MudEngine.Scripting;
 
 namespace MudEngine.Game
 {
@@ -64,7 +66,7 @@ namespace MudEngine.Game
         /// <summary>
         /// Gets if the game is currently running or not.
         /// </summary>
-        public Boolean Enabled { get; private set; }
+        public Boolean Enabled { get; protected set; }
 
         /// <summary>
         /// Gets or Sets if the game is in debug more or not.
@@ -86,6 +88,8 @@ namespace MudEngine.Game
         /// </summary>
         public DataPaths SavePaths { get; set; }
 
+        public ScriptFactory ScriptFactory { get; set; }
+
         /// <summary>
         /// StandardGame constructor.  If no Port number is provided, 4000 is used.
         /// </summary>
@@ -101,7 +105,7 @@ namespace MudEngine.Game
         /// <param name="port"></param>
         public StandardGame(String name, Int32 port)
         {
-            Logger.WriteLine("Initializing Standard Mud Game");
+            Logger.WriteLine("Initializing Mud Game");
             this.Name = name;
             this.Website = "http://scionwest.net";
             this.Description = "A sample Mud game created using the Mud Designer kit.";
@@ -123,6 +127,27 @@ namespace MudEngine.Game
             this.World = new World(this);
         }
 
+        public StandardGame Initialize()
+        {
+            CompileEngine compiler = new CompileEngine();
+            compiler.AddAssemblyReference(Path.Combine(this.SavePaths.GetPath(DataTypes.Root), Assembly.GetExecutingAssembly().Location));
+            Boolean result = compiler.Compile(this.SavePaths.GetPath(DataTypes.Scripts));
+
+            if (result)
+            {
+                ScriptFactory factory = new ScriptFactory(compiler.CompiledAssembly);
+                StandardGame game = (StandardGame)factory.FindInheritedScripted("StandardGame", "Mud Game");
+
+                if (game == null)
+                    return null;
+                else
+                    return game;
+            }
+
+            return null;
+
+        }
+
         /// <summary>
         /// Starts the game by getting all of the game scripts, loading the world
         /// loading all of the games commands and starting the server.
@@ -130,19 +155,36 @@ namespace MudEngine.Game
         /// <param name="maxPlayers"></param>
         /// <param name="maxQueueSize"></param>
         /// <returns></returns>
-        public Boolean Start(Int32 maxPlayers, Int32 maxQueueSize)
+        public virtual Boolean Start(Int32 maxPlayers, Int32 maxQueueSize)
         {
-            Logger.WriteLine("Starting up Standard Game");
+            Logger.WriteLine("Starting up " + this.Name);
             
             //Instance Script Engine
-
-            //Compile any scripts
+            CompileEngine compiler = new CompileEngine("cs");
+            //compiler.AddAssemblyReference(Assembly.GetExecutingAssembly().FullName);
+            compiler.AddAssemblyReference(Path.Combine(this.SavePaths.GetPath(DataTypes.Root), Assembly.GetExecutingAssembly().Location));
             
-            //Load our Commands
+            //Compile any scripts
+            Boolean result = compiler.Compile(this.SavePaths.GetPath(DataTypes.Scripts));
+            if (!result)
+            {
+                Logger.WriteLine(compiler.Errors, Logger.Importance.Error);
+
+                //Fail safe in the event compiling fails.  Just use this assembly.
+                this.ScriptFactory = new ScriptFactory(Assembly.GetExecutingAssembly());
+            }
+            else
+            {
+                this.ScriptFactory = new ScriptFactory(compiler.CompiledAssembly);
+            }
+
+            //Load the default engine Commands
             CommandSystem.LoadCommands();
+            CommandSystem.LoadCommandLibrary(this.ScriptFactory.Assembly, false);
 
             //Load World
             this.World.Initialize();
+            this.World.Load();
 
             //Start our server.
             this.Server.Start(maxPlayers, maxQueueSize);
@@ -180,8 +222,16 @@ namespace MudEngine.Game
 
         private void SetupPaths()
         {
+            if (!Directory.Exists(this.SavePaths.GetPath(DataTypes.Characters)))
+                Directory.CreateDirectory(this.SavePaths.GetPath(DataTypes.Characters));
+            if (!Directory.Exists(this.SavePaths.GetPath(DataTypes.Environments)))
+                Directory.CreateDirectory(this.SavePaths.GetPath(DataTypes.Environments));
+            if (!Directory.Exists(this.SavePaths.GetPath(DataTypes.Equipment)))
+                Directory.CreateDirectory(this.SavePaths.GetPath(DataTypes.Equipment));
             if (!Directory.Exists(this.SavePaths.GetPath(DataTypes.Players)))
                 Directory.CreateDirectory(this.SavePaths.GetPath(DataTypes.Players));
+            if (!Directory.Exists(this.SavePaths.GetPath(DataTypes.Scripts)))
+                Directory.CreateDirectory(this.SavePaths.GetPath(DataTypes.Scripts));
         }
     }
 }

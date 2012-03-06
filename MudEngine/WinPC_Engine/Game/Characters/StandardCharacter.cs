@@ -267,7 +267,7 @@ namespace MudEngine.Game.Characters
                 {
                     byte[] buf = new byte[1];
                     Int32 recved = this._Connection.Receive(buf);
-
+                    
                     if (recved > 0)
                     {
                         if (buf[0] == '\n' && buffer.Count > 0)

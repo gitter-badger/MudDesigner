@@ -14,7 +14,7 @@ using MudEngine.GameScripts;
 
 namespace MudEngine.GameScripts.Commands
 {
-    public class CommandCreatePlayer : ICommand
+    public class CreatePlayer : ICommand
     {
 
         public string Name { get; set; }
@@ -23,7 +23,7 @@ namespace MudEngine.GameScripts.Commands
 
         public List<string> Help { get; set; }
 
-        public CommandCreatePlayer()
+        public CreatePlayer()
         {
             Help = new List<string>();
             Name = "CreatePlayer";

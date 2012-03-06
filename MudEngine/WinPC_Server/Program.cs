@@ -24,28 +24,16 @@ namespace WinPC_Server
             Logger.ConsoleOutPut = true;
 
             //Instance and setup our game
-            StandardGame game = new StandardGame("Sample Game");
-            game.AutoSave = true;
-            game.Debugging = true;
-            game.Description = "This is a very simple game that was created to demonstrate MUD game creation with the Mud Designer Game Engine.";
-            game.HiddenRoomNames = false;
-            game.Multiplayer = true;
-            game.Server.MOTD = "Welcome to the Sample Game demonstration server!  This is the Servers MOTD!";
-            game.Version = "1.0";
-            game.Website = "http://muddesigner.codeplex.com";
-            game.Server.ServerOwner = "Akiyuki";
+            StandardGame game = new StandardGame("Sample Mud Game"); 
+            StandardGame g = game.Initialize();
 
+            //Check if 'g' is null.  If it's not, then we have a custom game
+            //that was found and we will use that.  Otherwise use the default.
+            if (g != null)
+                game = g;
+            
             //Start the game and server.
             game.Start(100, 20);
-
-            //Setup our Server console input class
-            /*
-            ConsoleInput input = new ConsoleInput();
-
-            //Run the console input on its own thread.
-            Thread inputThread = new Thread(input.GetInput);
-            inputThread.Start();
-            */
 
             //Game loops until it is disabled.
             while (game.Enabled)

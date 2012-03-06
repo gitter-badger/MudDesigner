@@ -10,7 +10,7 @@ using MudEngine.Core.Interfaces;
 
 namespace MudEngine.GameScripts.Commands
 {
-    public class CommandLook : ICommand
+    public class Look : ICommand
     {
         public string Name { get; set; }
 
@@ -18,7 +18,7 @@ namespace MudEngine.GameScripts.Commands
 
         public List<string> Help { get; set; }
 
-        public CommandLook()
+        public Look()
         {
             this.Name = "Look";
         }

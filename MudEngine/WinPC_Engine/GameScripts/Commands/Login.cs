@@ -13,7 +13,7 @@ using MudEngine.GameScripts;
 
 namespace MudEngine.GameScripts.Commands
 {
-    public class CommandLogin : ICommand
+    public class Login : ICommand
     {
 
         public string Name { get; set; }
@@ -22,10 +22,10 @@ namespace MudEngine.GameScripts.Commands
 
         public List<string> Help { get; set; }
 
-        public CommandLogin()
+        public Login()
         {
             Help = new List<string>();
-            Name = "Login";
+            //Name = "Login";
             Description = "Account login command.";
         }
 

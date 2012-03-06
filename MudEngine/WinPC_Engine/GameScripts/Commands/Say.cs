@@ -10,7 +10,7 @@ using MudEngine.Networking;
 
 namespace MudEngine.GameScripts.Commands
 {
-    public class CommandSay : ICommand
+    public class Say : ICommand
     {
         public string Name { get; set; }
 
@@ -18,7 +18,7 @@ namespace MudEngine.GameScripts.Commands
 
         public List<string> Help { get; set; }
 
-        public CommandSay()
+        public Say()
         {
             this.Name = "Say";
             this.Description = "Chat command that allows objects to communicate.";

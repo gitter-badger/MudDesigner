@@ -10,7 +10,7 @@ using MudEngine.Networking;
 
 namespace MudEngine.GameScripts.Commands
 {
-    public class CommandSetRole : ICommand
+    public class SetRole : ICommand
     {
         public string Name { get; set; }
 
@@ -18,7 +18,7 @@ namespace MudEngine.GameScripts.Commands
 
         public List<string> Help { get; set; }
 
-        public CommandSetRole()
+        public SetRole()
         {
             this.Name = "SetRole";
             this.Description = "Chat command that allows objects to communicate.";
@@ -50,7 +50,7 @@ namespace MudEngine.GameScripts.Commands
             {
                 StandardCharacter target = game.Server.ConnectionManager.GetConnectedCharacter(names[0].ToLower());
 
-                this.SetRole(character, target);
+                this.ApplyRole(character, target);
             }
             else
             {
@@ -61,7 +61,7 @@ namespace MudEngine.GameScripts.Commands
             return false;
         }
 
-        public void SetRole(StandardCharacter admin, StandardCharacter target)
+        public void ApplyRole(StandardCharacter admin, StandardCharacter target)
         {
             admin.SendMessage("Please choose from one of the available Roles:");
 

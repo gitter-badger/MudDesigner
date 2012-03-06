@@ -11,7 +11,7 @@ using MudEngine.Networking;
 
 namespace MudEngine.GameScripts.Commands
 {
-    public class CommandStop : ICommand
+    public class Stop : ICommand
     {
         public string Name { get; set; }
 
@@ -19,7 +19,7 @@ namespace MudEngine.GameScripts.Commands
 
         public List<string> Help { get; set; }
 
-        public CommandStop()
+        public Stop()
         {
             this.Name = "Stop";
             this.Description = "Chat command that allows objects to communicate.";

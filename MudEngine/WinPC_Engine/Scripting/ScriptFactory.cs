@@ -11,6 +11,8 @@ namespace MudEngine.Scripting
 {
     public class ScriptFactory
     {
+        public Assembly Assembly { get; private set; }
+
         //The assembly loaded that will be used.
         private List<Assembly> _AssemblyCollection;
 
@@ -23,7 +25,7 @@ namespace MudEngine.Scripting
         {
             Assembly a;
             _AssemblyCollection = new List<Assembly>();
-            
+
             //See if a file exists first with this assembly name.
             if (File.Exists(assembly))
             {
@@ -51,6 +53,8 @@ namespace MudEngine.Scripting
             _AssemblyCollection = new List<Assembly>();
             //Add the supplied assembly to our AssemblyCollection
             _AssemblyCollection.Add(assembly);
+
+            this.Assembly = assembly;
         }
 #endif
         /// <summary>
@@ -80,7 +84,7 @@ namespace MudEngine.Scripting
         /// Adds another assembly to the factories assembly collection.
         /// </summary>
         /// <param name="assembly">Provides a reference to the assembly that will be added to the collection.</param>
-        public void AddAssembly (Assembly assembly)
+        public void AddAssembly(Assembly assembly)
         {
             //Add the supplied assembly to our AssemblyCollection
             _AssemblyCollection.Add(assembly);
@@ -95,8 +99,7 @@ namespace MudEngine.Scripting
                 return new BaseScript(game, "New Object", String.Empty);
 
             try
-            {  
-#if WINDOWS_PC
+            {
                 foreach (Assembly a in _AssemblyCollection)
                 {
                     //The assembly can be null if accessing after a failed compilation.
@@ -116,17 +119,6 @@ namespace MudEngine.Scripting
                     if (foundScript)
                         break;
                 }
-#elif WINDOWS_PHONE
-                foreach (Type t in Assembly.GetExecutingAssembly().GetTypes())
-                {
-                    if (t.Name == scriptName)
-                    {
-                        script = t;
-                        foundScript = true;
-                        break;
-                    }
-                }
-#endif
             }
             catch
             {
@@ -143,6 +135,53 @@ namespace MudEngine.Scripting
                 Logger.WriteLine("ERROR: Failed to locate and instance script (" + scriptName + ")");
                 return new BaseScript(game, "New Object", String.Empty);
             }
+        }
+
+        public Object FindInheritedScripted(String baseScript, params Object[] arguments)
+        {
+            Type script = typeof(BaseScript);
+            Boolean foundScript = false;
+
+            if (this._AssemblyCollection.Count == 0)
+                return null;
+
+            try
+            {
+                foreach (Assembly a in _AssemblyCollection)
+                {
+                    if (a == null)
+                        continue;
+
+                    foreach (Type t in a.GetTypes())
+                    {
+                        if (t.BaseType.Name == baseScript)
+                        {
+                            script = t;
+                            foundScript = true;
+                            break;
+                        }
+                    }
+
+                    if (foundScript)
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLine(ex.Message);
+            }
+
+            try
+            {
+                Object obj = Activator.CreateInstance(script, arguments);
+                return obj;
+            }
+            catch
+            {
+                return null;
+            }
+
+
         }
     }
 }

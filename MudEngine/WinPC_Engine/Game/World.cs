@@ -39,6 +39,14 @@ namespace MudEngine.Game
             this.StartLocation = zone.GetRoom("Bedroom");
         }
 
+        public void Save()
+        {
+        }
+
+        public void Load()
+        {
+        }
+
         public void Destroy()
         {
             throw new NotImplementedException();

@@ -55,12 +55,27 @@
     <Compile Include="Core\ObjectCollection.cs" />
     <Compile Include="DAL\DataPaths.cs" />
     <Compile Include="DAL\XMLData.cs" />
-    <Compile Include="GameScripts\Commands\CommandLook.cs" />
-    <Compile Include="GameScripts\Commands\CommandLogin.cs" />
-    <Compile Include="GameScripts\Commands\CommandSay.cs" />
-    <Compile Include="GameScripts\Commands\CommandStop.cs" />
-    <Compile Include="GameScripts\Commands\CommandCreatePlayer.cs" />
-    <Compile Include="GameScripts\Commands\CommandSetRole.cs" />
+    <None Include="GameScripts\Commands\Look.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="GameScripts\Commands\Login.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="GameScripts\Commands\Say.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="GameScripts\Commands\Stop.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="GameScripts\Commands\CreatePlayer.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="GameScripts\Commands\SetRole.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="GameScripts\SampleGame.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Compile Include="Game\Characters\CharacterRoles.cs" />
     <Compile Include="Game\Characters\CharacterStats.cs" />
     <Compile Include="Game\Characters\MyCharacter.cs" />
