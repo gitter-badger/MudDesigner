@@ -49,7 +49,8 @@ namespace MudEngine.Core
                 System.IO.File.Delete(LogFilename);
 
             //Clear the cache.
-            _Messages.Clear();
+            if (_Messages != null)
+                _Messages.Clear();
         }
 
         public static void WriteLine(String message, Importance importance)

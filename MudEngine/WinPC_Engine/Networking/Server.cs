@@ -59,6 +59,7 @@ namespace MudEngine.Networking
 
         public void Start(Int32 maxConnections, Int32 maxQueueSize)
         {
+            Logger.WriteLine("Game Server System Starting...");
             if (this.Status != ServerStatus.Stopped)
                 return;
 
@@ -78,10 +79,14 @@ namespace MudEngine.Networking
 
                 this._ServerThread = new Thread(ServerLoop);
                 this._ServerThread.Start();
+
+                Logger.WriteLine("Server status: Running");
             }
             catch
             {
+                Logger.WriteLine("Failed to star the Engines Networking Server!");
                 this.Status = ServerStatus.Stopped;
+                Logger.WriteLine("Server status: Stopped");
             }
         }
 

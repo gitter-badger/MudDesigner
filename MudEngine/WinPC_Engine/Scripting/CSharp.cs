@@ -6,6 +6,8 @@ using System.IO;
 using Microsoft.CSharp;
 #endif
 
+using MudEngine.Core;
+
 namespace MudEngine.Scripting
 {
     /// <summary>
@@ -51,14 +53,18 @@ namespace MudEngine.Scripting
             //Create an array of script files found within the ScriptRepository matching the ScriptExtension properties.
             String[] scripts = Directory.GetFiles(scriptRepository, "*" + this.ScriptExtension, SearchOption.AllDirectories);
 
-            //Compile the scripts and provide the Results property with a reference to the compilation results.
-            Results = provider.CompileAssemblyFromFile(param, scripts);
-
-            //if the compiler has errors, return false.
-            if (Results.Errors.HasErrors)
-                return false;
+            if (scripts.Length > 0)
+            {
+                //Compile the scripts and provide the Results property with a reference to the compilation results.
+                Results = provider.CompileAssemblyFromFile(param, scripts);
+                //if the compiler has errors, return false.
+                if (Results.Errors.HasErrors)
+                    return false;
+                else
+                    return true;
+            }
             else
-                return true;
+                return false;
         }
 
         /// <summary>

@@ -5,6 +5,7 @@ using System.Text;
 
 using MudEngine.Game.Environment;
 using MudEngine.Core.Interfaces;
+using MudEngine.Core;
 
 namespace MudEngine.Game
 {
@@ -28,15 +29,22 @@ namespace MudEngine.Game
 
         public void Initialize()
         {
+            Logger.WriteLine("Initializing game world...");
             Realm realm = new Realm(this.Game, "Azeroth", "");
+            realm.Initialize();
+
+            //Zone initialize method is called by Realm.
             Zone zone = realm.CreateZone("Bablo", "");
 
+            //Room initialize method is called by Zone
             zone.CreateRoom("Bedroom", "");
             zone.CreateRoom("Hallway", "");
 
             zone.LinkRooms("Bedroom", "Hallway", AvailableTravelDirections.East);
 
             this.StartLocation = zone.GetRoom("Bedroom");
+
+            Logger.WriteLine("Initialization completed.");
         }
 
         public void Save()
@@ -45,6 +53,7 @@ namespace MudEngine.Game
 
         public void Load()
         {
+            Logger.WriteLine("World Loading has not been implemented as of yet!");
         }
 
         public void Destroy()

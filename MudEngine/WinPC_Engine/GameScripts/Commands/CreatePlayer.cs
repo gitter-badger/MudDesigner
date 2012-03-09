@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.IO;
 using System.Diagnostics;
 
+using MudEngine.Core;
 using MudEngine.Core.Interfaces;
 using MudEngine.Game;
 using MudEngine.Game.Characters;
@@ -43,7 +44,7 @@ namespace MudEngine.GameScripts.Commands
 
             //Don't allow anything other than the Login command to start the
             //character creation process.
-            if (callingType != "CommandLogin")
+            if (callingType != "Login")
             {
                 character.SendMessage("Invalid Command Used.");
                 return false;
@@ -80,11 +81,19 @@ namespace MudEngine.GameScripts.Commands
                 }
             }
 
-            character.Move(game.World.StartLocation);
+            try
+            {
 
-            //TODO: Create a class and setup Stats.
-            character.Save(character.Filename, false); 
+                character.Move(game.World.StartLocation);
 
+                //TODO: Create a class and setup Stats.
+                character.Save(character.Filename, false);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLine(ex.Message);
+                return false;
+            }
             return true;
         }
     }

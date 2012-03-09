@@ -143,9 +143,9 @@ namespace MudEngine.Core
         /// Loads all of the commands found within the assembly specified.
         /// </summary>
         /// <param name="commandLibrary"></param>
-        public static void LoadCommandLibrary(Assembly commandLibrary)
+        public static ICommand[] LoadCommandLibrary(Assembly commandLibrary)
         {
-            LoadCommandLibrary(commandLibrary, true);
+            return LoadCommandLibrary(commandLibrary, true);
         }
 
         /// <summary>
@@ -155,14 +155,20 @@ namespace MudEngine.Core
         /// </summary>
         /// <param name="commandLibrary"></param>
         /// <param name="purgeLoadedCommands"></param>
-        public static void LoadCommandLibrary(Assembly commandLibrary, bool purgeLoadedCommands)
+        public static ICommand[] LoadCommandLibrary(Assembly commandLibrary, bool purgeLoadedCommands)
         {
             //Check if we need to purge all of the commands.
             if (purgeLoadedCommands)
                 PurgeCommands();
 
             if (commandLibrary == null)
-                return;
+                return null;
+
+            //Custom commands are temporarily stored here.
+            //Since Commands are stored in the general Command collection
+            //that can contain internal commands as well, we want to
+            //return only what we just loaded.
+            List<ICommand> commandsFound = new List<ICommand>();
 
             //Loop through each Type in the assembly provided.
             foreach (Type type in commandLibrary.GetTypes())
@@ -192,8 +198,14 @@ namespace MudEngine.Core
 
                     //Everything checks out ok. Add the command to our collection.
                     Commands.Add(cmd.Name, cmd);
+                    commandsFound.Add(cmd);
                 }
             }
+
+            if (commandsFound.Count > 0)
+                return commandsFound.ToArray();
+            else
+                return null;
         }
 
         /// <summary>

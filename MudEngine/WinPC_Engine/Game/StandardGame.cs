@@ -12,6 +12,7 @@ using MudEngine.Game.Characters;
 using MudEngine.DAL;
 using MudEngine.Game.Environment;
 using MudEngine.Scripting;
+using MudEngine.Core.Interfaces;
 
 namespace MudEngine.Game
 {
@@ -105,7 +106,6 @@ namespace MudEngine.Game
         /// <param name="port"></param>
         public StandardGame(String name, Int32 port)
         {
-            Logger.WriteLine("Initializing Mud Game");
             this.Name = name;
             this.Website = "http://scionwest.net";
             this.Description = "A sample Mud game created using the Mud Designer kit.";
@@ -118,19 +118,27 @@ namespace MudEngine.Game
             this.Server = new Server(this, port);
 
             //Setup default save paths.
-            DataPaths paths = new DataPaths();
-
-            this.SavePaths = paths;
+            this.SavePaths = new DataPaths();
 
             SetupPaths();
 
             this.World = new World(this);
         }
 
+        /// <summary>
+        /// Runs a script compiler and scans for custom scripts that
+        /// inherit StandardGame and then returns them.  This provides
+        /// support for custom Game rules via Script.
+        /// </summary>
+        /// <returns></returns>
         public StandardGame Initialize()
         {
+            //Instance a new compiler
             CompileEngine compiler = new CompileEngine();
+            Logger.WriteLine("Checking for custom Game scripts.");
+
             compiler.AddAssemblyReference(Path.Combine(this.SavePaths.GetPath(DataTypes.Root), Assembly.GetExecutingAssembly().Location));
+
             Boolean result = compiler.Compile(this.SavePaths.GetPath(DataTypes.Scripts));
 
             if (result)
@@ -139,11 +147,18 @@ namespace MudEngine.Game
                 StandardGame game = (StandardGame)factory.FindInheritedScripted("StandardGame", "Mud Game");
 
                 if (game == null)
+                {
+                    Logger.WriteLine("No custom Game rules located.  Defaulting to Standard setup.");
                     return null;
+                }
                 else
+                {
+                    Logger.WriteLine("Located " + game.GetType().Name + " ruleset.");
                     return game;
+                }
             }
-
+            else
+                Logger.WriteLine("Failed to perform startup compilation! " + compiler.Errors);
             return null;
 
         }
@@ -158,13 +173,15 @@ namespace MudEngine.Game
         public virtual Boolean Start(Int32 maxPlayers, Int32 maxQueueSize)
         {
             Logger.WriteLine("Starting up " + this.Name);
-            
+
             //Instance Script Engine
+            Logger.WriteLine("Preparing script engine...");
             CompileEngine compiler = new CompileEngine("cs");
             //compiler.AddAssemblyReference(Assembly.GetExecutingAssembly().FullName);
             compiler.AddAssemblyReference(Path.Combine(this.SavePaths.GetPath(DataTypes.Root), Assembly.GetExecutingAssembly().Location));
             
             //Compile any scripts
+            Logger.WriteLine("Compiling game scripts.");
             Boolean result = compiler.Compile(this.SavePaths.GetPath(DataTypes.Scripts));
             if (!result)
             {
@@ -175,12 +192,32 @@ namespace MudEngine.Game
             }
             else
             {
+                Logger.WriteLine("Compilation completed.");
                 this.ScriptFactory = new ScriptFactory(compiler.CompiledAssembly);
             }
 
             //Load the default engine Commands
+            Logger.WriteLine("Loading internal game commands.");
             CommandSystem.LoadCommands();
-            CommandSystem.LoadCommandLibrary(this.ScriptFactory.Assembly, false);
+            if (CommandSystem.Commands.Count > 0)
+            {
+                foreach (ICommand command in CommandSystem.Commands.Values)
+                    Logger.WriteLine("Loaded Command: " + command.Name);
+            }
+            else
+                Logger.WriteLine("No internal game commands located.");
+
+            Logger.WriteLine("Loading scripted game commands.");
+            ICommand[] commands = CommandSystem.LoadCommandLibrary(this.ScriptFactory.Assembly, false);
+            if (commands.Length > 0)
+            {
+                foreach (ICommand command in commands)
+                {
+                    Logger.WriteLine("Loaded Command: " + command.Name);
+                }
+            }
+            else
+                Logger.WriteLine("No scripted game commands located.");
 
             //Load World
             this.World.Initialize();

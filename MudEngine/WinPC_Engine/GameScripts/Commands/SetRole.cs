@@ -39,7 +39,7 @@ namespace MudEngine.GameScripts.Commands
                 names.Add(match.Value.ToLower());
             }
 
-            if (names.Count < 1)
+            if (names.Count < 1 && character.Role == CharacterRoles.Admin)
             {
                 character.SendMessage("You must provide a target character name.");
                 ShowHelp(character);

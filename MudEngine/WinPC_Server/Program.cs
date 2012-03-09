@@ -22,6 +22,8 @@ namespace WinPC_Server
             Logger.LogFilename = "StandardGame.Log";
             Logger.Enabled = true;
             Logger.ConsoleOutPut = true;
+            Logger.ClearLog(); //Delete previous file.
+            Logger.WriteLine("Server app starting...");
 
             //Instance and setup our game
             StandardGame game = new StandardGame("Sample Mud Game"); 
@@ -33,7 +35,12 @@ namespace WinPC_Server
                 game = g;
             
             //Start the game and server.
-            game.Start(100, 20);
+            Boolean started = game.Start(100, 20);
+
+            if (started)
+                Logger.WriteLine(game.GetType().Name + " started and running.");
+            else
+                Logger.WriteLine(game.GetType().Name + " failed to start!");
 
             //Game loops until it is disabled.
             while (game.Enabled)

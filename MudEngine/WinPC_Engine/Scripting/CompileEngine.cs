@@ -7,6 +7,9 @@ using System.Text;
 #if WINDOWS_PC
 using Microsoft.CSharp;
 #endif
+
+using MudEngine.Core;
+
 namespace MudEngine.Scripting
 {
     /// <summary>
@@ -170,7 +173,7 @@ namespace MudEngine.Scripting
                 this._CompileMessages = new string[] { "Compilation Failed.", "Unable to locate the specified compiler of Type '" + Compiler + "'." };
                 return false;
             }
-            
+
             //Get the compiler parameters.
             CompilerParameters param = GetParameters();
 
@@ -406,7 +409,6 @@ namespace MudEngine.Scripting
                         break;
                 }
             }
-
 
             return compiler;
         }
