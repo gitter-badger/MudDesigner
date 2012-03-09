@@ -82,6 +82,7 @@
     <Compile Include="Game\Characters\StandardCharacter.cs" />
     <Compile Include="GameScripts\BaseScript.cs" />
     <Compile Include="Game\Environment\Doorway.cs" />
+    <Compile Include="Game\Environment\Environment.cs" />
     <Compile Include="Game\Environment\Realm.cs" />
     <Compile Include="Game\Environment\Room.cs" />
     <Compile Include="Game\Environment\Zone.cs" />

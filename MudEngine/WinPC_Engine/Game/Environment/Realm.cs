@@ -11,43 +11,11 @@ using MudEngine.GameScripts;
 
 namespace MudEngine.Game.Environment
 {
-    public class Realm : BaseScript, IGameComponent, ISavable, IUpdatable
+    public class Realm : Environment
     {
-        public string Filename { get; set; }
-
         public Realm(StandardGame game, String name, String description) : base(game, name, description)
         {
             this._ZoneCollection = new List<Zone>();
-        }
-
-        public void Initialize()
-        {
-
-        }
-
-        public void Destroy()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Save(string filename)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Save(string filename, bool ignoreFileWrite)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Load(string filename)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update()
-        {
-            throw new NotImplementedException();
         }
 
         public Zone CreateZone(String name, String description)
