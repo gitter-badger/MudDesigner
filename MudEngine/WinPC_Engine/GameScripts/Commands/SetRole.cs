@@ -51,14 +51,13 @@ namespace MudEngine.GameScripts.Commands
                 StandardCharacter target = game.Server.ConnectionManager.GetConnectedCharacter(names[0].ToLower());
 
                 this.ApplyRole(character, target);
+
+                return true;
             }
             else
             {
-                character.SendMessage("Invalid Command Used.");
-                return true;
+                return false;
             }
-
-            return false;
         }
 
         public void ApplyRole(StandardCharacter admin, StandardCharacter target)

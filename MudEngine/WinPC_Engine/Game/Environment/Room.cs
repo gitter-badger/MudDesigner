@@ -10,7 +10,7 @@ using MudEngine.Game.Characters;
 using MudEngine.GameScripts;
 namespace MudEngine.Game.Environment
 {
-    public class Room : BaseScript, IUpdatable
+    public class Room : Environment
     {
         public Zone Zone { get; private set; }
 
@@ -24,11 +24,6 @@ namespace MudEngine.Game.Environment
             this._Doors = new List<Doorway>();
             this.Occupants = new List<StandardCharacter>();
             this.Zone = zone;
-        }
-
-        public void Update()
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>

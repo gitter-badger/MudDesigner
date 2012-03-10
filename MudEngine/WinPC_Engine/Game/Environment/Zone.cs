@@ -10,7 +10,7 @@ using MudEngine.Core;
 
 namespace MudEngine.Game.Environment
 {
-    public class Zone : BaseScript, IGameComponent, ISavable, IUpdatable
+    public class Zone : Environment
     {
         /// <summary>
         /// Gets or Sets the what stats 
@@ -24,26 +24,6 @@ namespace MudEngine.Game.Environment
         public Zone(StandardGame game, String name, String description) : base(game, name, description)
         {
             this._RoomCollection = new List<Room>();
-        }
-
-        public void Initialize()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Destroy()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string Filename
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public void Update()
-        {
-            throw new NotImplementedException();
         }
 
         public Room CreateRoom(String name, String description)

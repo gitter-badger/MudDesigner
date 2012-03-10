@@ -125,9 +125,6 @@ namespace MudEngine.Core
                 }
             }
             
-            //Let the player know that it was not a valid command.
-            //TODO: Implement another way of performing this.  I don't want game related classes tied to the system.
-            character.SendMessage("Invalid Command Used.");
             return false;
         }
 
@@ -205,7 +202,7 @@ namespace MudEngine.Core
             if (commandsFound.Count > 0)
                 return commandsFound.ToArray();
             else
-                return null;
+                return new List<ICommand>().ToArray() ;
         }
 
         /// <summary>

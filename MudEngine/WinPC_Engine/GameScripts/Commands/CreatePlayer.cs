@@ -46,7 +46,6 @@ namespace MudEngine.GameScripts.Commands
             //character creation process.
             if (callingType != "Login")
             {
-                character.SendMessage("Invalid Command Used.");
                 return false;
             }
 

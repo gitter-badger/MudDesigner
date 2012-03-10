@@ -40,7 +40,6 @@ namespace MudEngine.GameScripts.Commands
             {
                 //Since a non-admin character attempted this command,
                 //tell them they used a invalid command
-                character.SendMessage("Invalid command used.");
                 return false;
             }
         }

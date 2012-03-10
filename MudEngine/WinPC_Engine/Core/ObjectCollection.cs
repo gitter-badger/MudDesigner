@@ -123,10 +123,18 @@ namespace MudEngine.Core
         /// <returns></returns>
         public BaseScript this[Int32 index]
         {
-            //TODO: Perform some exception handling here.
-            //TODO: Don't allow setting if isReadOnly=true
-            get { return (BaseScript)this.scriptCollection[index]; }
-            set { this.scriptCollection[index] = value; }
+            get 
+            {
+                if (index <= this.Count - 1)
+                    return (BaseScript)this.scriptCollection[index];
+                else //If the index is out of bounds, just return the last item in the collection.
+                    return (BaseScript)this.scriptCollection[this.scriptCollection.Count - 1];
+            }
+            set 
+            { 
+                if (!this.IsReadOnly)
+                    this.scriptCollection[index] = value; 
+            }
         }
         #endregion
 

@@ -45,7 +45,10 @@ namespace MudEngine.Game.Characters
         /// </summary>
         public CharacterStats Stats { get; protected set; }
 
-        //TODO: Should be Private/Protected?
+        /// <summary>
+        /// User account password
+        /// </summary>
+        //TODO: Character passwords should be a private set.
         public String Password { get; set; }
 
         /// <summary>
@@ -82,9 +85,6 @@ namespace MudEngine.Game.Characters
         /// Gets if the user is currently connected to a server or not.
         /// </summary>
         public Boolean Connected { get; set; }
-
-        //TODO: Add current location to characters
-        //public IEnvironment CurrentLocation
 
         protected CommandSystem Commands { get; private set; }
 
@@ -181,9 +181,14 @@ namespace MudEngine.Game.Characters
         /// <returns></returns>
         public virtual Boolean ExecuteCommand(string command)
         {
+                Boolean result = false;
+
             if (this.Enabled && this.Connected)
             {
-                Boolean result = Commands.Execute(command, this);
+                result = Commands.Execute(command, this);
+
+                if (!result)
+                    this.SendMessage("Invalid Command used.");
 
                 SendMessage("");
                 SendMessage("Command:", false);
@@ -191,7 +196,9 @@ namespace MudEngine.Game.Characters
                 return result;
             }
             else
+            {
                 return false;
+            }
         }
 
         /// <summary>
@@ -313,8 +320,8 @@ namespace MudEngine.Game.Characters
             this.SendMessage(String.Empty);
 
             //Log the user in.
-            //TODO: What happens if result = false?
             Boolean result = this.ExecuteSilentCommand("Login");
+
             this.SendMessage(String.Empty);
 
             //Flags the character as fully logged in.
