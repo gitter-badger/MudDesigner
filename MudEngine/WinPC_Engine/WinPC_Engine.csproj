@@ -78,7 +78,6 @@
     </None>
     <Compile Include="Game\Characters\CharacterRoles.cs" />
     <Compile Include="Game\Characters\CharacterStats.cs" />
-    <Compile Include="Game\Characters\MyCharacter.cs" />
     <Compile Include="Game\Characters\StandardCharacter.cs" />
     <Compile Include="GameScripts\BaseScript.cs" />
     <Compile Include="Game\Environment\Doorway.cs" />

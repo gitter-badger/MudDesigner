@@ -74,11 +74,16 @@ namespace MudEngine.Game.Environment
             try { this.Filename = this.SaveData.GetData("Filename"); }
             catch { LoadFailedMessage("Filename"); }
 
-            this.Enabled = Convert.ToBoolean(this.SaveData.GetData("Enabled"));
+            try { this.Enabled = Convert.ToBoolean(this.SaveData.GetData("Enabled")); }
+            catch { this.LoadFailedMessage("Enabled");}
 
-            String role = this.SaveData.GetData("RequiredRole");
+            try
+            {
+                String role = this.SaveData.GetData("RequiredRole");
 
-            this.RequiredRole = CharacterRole.GetRole(role);
+                this.RequiredRole = CharacterRole.GetRole(role);
+            }
+            catch { this.LoadFailedMessage("RequiredRole"); }
         }
 
         public void Update()

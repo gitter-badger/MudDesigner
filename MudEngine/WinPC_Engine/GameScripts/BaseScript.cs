@@ -67,22 +67,19 @@ namespace MudEngine.GameScripts
 
         public virtual void Load(String filename)
         {
-            try
-            {
-                if (!File.Exists(filename))
-                    return;
-                this.SaveData.Load(filename);
-
-                this.Name = this.SaveData.GetData("Name");
-                this.ID = this.SaveData.GetData("ID");
-                this.Description = this.SaveData.GetData("Description");
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteLine(ex.Message);
+            if (!File.Exists(filename))
                 return;
-            }
-            return;
+
+            this.SaveData.Load(filename);
+
+            try { this.Name = this.SaveData.GetData("Name"); }
+            catch { this.LoadFailedMessage("Name"); }
+
+            try { this.ID = this.SaveData.GetData("ID"); }
+            catch { this.LoadFailedMessage("ID"); }
+
+            try { this.Description = this.SaveData.GetData("Description"); }
+            catch { this.LoadFailedMessage("Description"); }
         }
 
         public void LoadFailedMessage(String property)
