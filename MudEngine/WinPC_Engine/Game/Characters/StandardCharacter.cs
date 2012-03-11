@@ -164,7 +164,9 @@ namespace MudEngine.Game.Characters
         {
             base.Load(filename);
 
-            this.Immovable = Convert.ToBoolean(this.SaveData.GetData("Immovable"));
+            try { this.Immovable = Convert.ToBoolean(this.SaveData.GetData("Immovable")); }
+            catch { this.LoadFailedMessage("Immovable"); }
+
             this.Password = this.SaveData.GetData("Password");
 
             String role = this.SaveData.GetData("Role");

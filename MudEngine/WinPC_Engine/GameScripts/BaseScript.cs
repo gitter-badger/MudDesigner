@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using System.IO;
+using System.Diagnostics;
 
 using MudEngine.Game;
 using MudEngine.DAL;
@@ -82,6 +83,13 @@ namespace MudEngine.GameScripts
                 return;
             }
             return;
+        }
+
+        public void LoadFailedMessage(String property)
+        {
+            StackTrace trace = new StackTrace();
+            String callingType = trace.GetFrame(1).GetMethod().ReflectedType.Name;
+            Logger.WriteLine("Load failed for " + callingType + "." + property);
         }
 
         public override string ToString()

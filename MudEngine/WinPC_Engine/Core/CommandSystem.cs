@@ -105,13 +105,13 @@ namespace MudEngine.Core
             string key = command.Insert(0, "Command");
 
             //Loop through each Key in the Commands collection
-            foreach (string k in CommandSystem.Commands.Keys)
+            foreach (string k in this.CommandCollection.Keys)
             {
                 //Check to see if the Key (Command Name) matches the Command we are looking for.
                 if (key.ToLower().Contains(k.ToLower()))
                 {
                     //Grab a reference to the Command
-                    ICommand cmd = CommandSystem.Commands[k];
+                    ICommand cmd = this.CommandCollection[k];
                     try
                     {
                         //Execute the command
@@ -120,7 +120,6 @@ namespace MudEngine.Core
                     catch (Exception ex)
                     {
                         Logger.WriteLine("Error: " + ex.Message);
-                        Console.WriteLine("Error: " + ex.Message);
                     }
                 }
             }

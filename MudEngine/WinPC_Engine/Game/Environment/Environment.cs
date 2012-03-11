@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using MudEngine.Core;
 using MudEngine.Core.Interfaces;
 using MudEngine.Game.Characters;
 using MudEngine.Game;
@@ -70,7 +71,9 @@ namespace MudEngine.Game.Environment
         {
             base.Load(filename);
 
-            this.Filename = this.SaveData.GetData("Filename");
+            try { this.Filename = this.SaveData.GetData("Filename"); }
+            catch { LoadFailedMessage("Filename"); }
+
             this.Enabled = Convert.ToBoolean(this.SaveData.GetData("Enabled"));
 
             String role = this.SaveData.GetData("RequiredRole");
