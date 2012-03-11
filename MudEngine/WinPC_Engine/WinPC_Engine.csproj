@@ -35,9 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net">
-      <HintPath>..\Log4Net\V1.2.11\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
@@ -58,22 +55,22 @@
     <Compile Include="Core\ObjectCollection.cs" />
     <Compile Include="DAL\DataPaths.cs" />
     <Compile Include="DAL\XMLData.cs" />
-    <None Include="GameScripts\Commands\Look.cs">
+    <None Include="GameScripts\BaseCommands\Look.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="GameScripts\Commands\Login.cs">
+    <None Include="GameScripts\BaseCommands\Login.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="GameScripts\Commands\Say.cs">
+    <None Include="GameScripts\BaseCommands\Say.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="GameScripts\Commands\Stop.cs">
+    <None Include="GameScripts\BaseCommands\Stop.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="GameScripts\Commands\CreatePlayer.cs">
+    <None Include="GameScripts\BaseCommands\CreatePlayer.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="GameScripts\Commands\SetRole.cs">
+    <None Include="GameScripts\BaseCommands\SetRole.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="GameScripts\SampleGame.cs">
@@ -103,6 +100,7 @@
     <Compile Include="Scripting\ScriptObject.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Config\" />
     <Folder Include="Game\Objects\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

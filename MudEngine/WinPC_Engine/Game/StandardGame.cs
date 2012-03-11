@@ -113,14 +113,15 @@ namespace MudEngine.Game
             this.Multiplayer = true;
             this.MinimumPasswordSize = 8;
             this.AutoSave = true;
-         
-            //Setup our server.
-            this.Server = new Server(this, port);
 
             //Setup default save paths.
             this.SavePaths = new DataPaths();
             this.SavePaths.SetRelativePath("Data", DataTypes.Root);
 
+            //Setup our server.
+            this.Server = new Server(this, port);
+
+            //Instance our World
             this.World = new World(this);
         }
 
