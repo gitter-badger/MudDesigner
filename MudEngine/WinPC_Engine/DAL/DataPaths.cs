@@ -24,21 +24,31 @@ namespace MudEngine.DAL
     {
         public DataPaths()
         {
-            String path = Assembly.GetExecutingAssembly().Location;
-            String assemblyFile = Path.GetFileName(path);
-            this._InstallRoot = path.Substring(0, path.Length - assemblyFile.Length);
+            this._InstallRoot = this.GetInstallPath();
 
-            this.SetAbsolutePath(Path.Combine(this._InstallRoot, "Characters"), DataTypes.Characters);
-            this.SetAbsolutePath(Path.Combine(this._InstallRoot, "Environments"), DataTypes.Environments);
-            this.SetAbsolutePath(Path.Combine(this._InstallRoot, "Equipment"), DataTypes.Equipment);
-            this.SetAbsolutePath(Path.Combine(this._InstallRoot, "Players"), DataTypes.Players);
-            this.SetAbsolutePath(Path.Combine(this._InstallRoot, "GameScripts"), DataTypes.Scripts);
+            this.SetupPaths();
 
             this.SetExtension(DataTypes.Characters, ".character");
             this.SetExtension(DataTypes.Environments, ".environment");
             this.SetExtension(DataTypes.Equipment, ".equipment");
             this.SetExtension(DataTypes.Players, ".player");
             this.SetExtension(DataTypes.Scripts, ".cs");
+        }
+
+        public String GetInstallPath()
+        {
+            String path = Assembly.GetExecutingAssembly().Location;
+            String assemblyFile = Path.GetFileName(path);
+            return path.Substring(0, path.Length - assemblyFile.Length);
+        }
+
+        private void SetupPaths()
+        {
+            this.SetAbsolutePath(Path.Combine(this._InstallRoot, "Characters"), DataTypes.Characters);
+            this.SetAbsolutePath(Path.Combine(this._InstallRoot, "Environments"), DataTypes.Environments);
+            this.SetAbsolutePath(Path.Combine(this._InstallRoot, "Equipment"), DataTypes.Equipment);
+            this.SetAbsolutePath(Path.Combine(this._InstallRoot, "Players"), DataTypes.Players);
+            this.SetAbsolutePath(Path.Combine(this._InstallRoot, "GameScripts"), DataTypes.Scripts);
         }
 
         public void SetAbsolutePath(String path, DataTypes objectType)
@@ -63,11 +73,42 @@ namespace MudEngine.DAL
                 case DataTypes.Scripts:
                     this._Scripts = path;
                     break;
+                case DataTypes.Root:
+                    this._InstallRoot = path;
+                    this.SetupPaths(); //Re-Setup all the paths since the root has changed.
+                    break;
             }
         }
 
         public void SetRelativePath(String path, DataTypes objectType)
         {
+            if (!path.EndsWith(@"\"))
+                path = path.Insert(path.Length, @"\");
+
+            String correctedPath = Path.Combine(this._InstallRoot, path);
+
+            switch (objectType)
+            {
+                case DataTypes.Characters:
+                    this._Characters = correctedPath;
+                    break;
+                case DataTypes.Environments:
+                    this._Environments = correctedPath;
+                    break;
+                case DataTypes.Equipment:
+                    this._Equipment = correctedPath;
+                    break;
+                case DataTypes.Players:
+                    this._Players = correctedPath;
+                    break;
+                case DataTypes.Scripts:
+                    this._Scripts = correctedPath;
+                    break;
+                case DataTypes.Root:
+                    this._InstallRoot = Path.Combine(this.GetInstallPath(), path);
+                    this.SetupPaths(); //Re-setup all the paths since the root has changed.
+                    break;
+            }
         }
 
         public String GetPath(DataTypes objectType)

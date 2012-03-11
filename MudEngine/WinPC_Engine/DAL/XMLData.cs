@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using System.Reflection;
+using System.IO;
 
 using MudEngine.GameScripts;
 using MudEngine.Core;
@@ -41,6 +42,11 @@ namespace MudEngine.DAL
 
         public Boolean Save(String filename)
         {
+            if (!Directory.Exists(Path.GetDirectoryName(filename)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(filename));
+            }
+
             try
             {
                 this.SaveData.Save(filename);

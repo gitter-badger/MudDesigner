@@ -51,6 +51,8 @@ namespace MudEngine.Scripting
             //Instance a reference to the C# code provider, this is what will perform the compiling.
             CSharpCodeProvider provider = new CSharpCodeProvider(CompilerOptions);
             //Create an array of script files found within the ScriptRepository matching the ScriptExtension properties.
+            if (!Directory.Exists(scriptRepository))
+                Directory.CreateDirectory(scriptRepository);
             String[] scripts = Directory.GetFiles(scriptRepository, "*" + this.ScriptExtension, SearchOption.AllDirectories);
 
             if (scripts.Length > 0)
@@ -64,7 +66,10 @@ namespace MudEngine.Scripting
                     return true;
             }
             else
+            {
+                Results = new CompilerResults(new TempFileCollection());
                 return false;
+            }
         }
 
         /// <summary>

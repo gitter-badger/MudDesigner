@@ -15,7 +15,7 @@ namespace MudEngine.Core
         #region Public Properties
         public Boolean IsReadOnly
         {
-            get { return this.isReadOnly; }
+            get { return this.isReadOnly; } //TODO: Rename to ReadOnly and _ReadOnly
         }
         #endregion
 

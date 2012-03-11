@@ -119,8 +119,7 @@ namespace MudEngine.Game
 
             //Setup default save paths.
             this.SavePaths = new DataPaths();
-
-            SetupPaths();
+            this.SavePaths.SetRelativePath("Data", DataTypes.Root);
 
             this.World = new World(this);
         }
