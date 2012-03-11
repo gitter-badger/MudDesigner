@@ -18,6 +18,14 @@ namespace MudEngine.GameScripts
         [DefaultValue("Scripted Object")]
         public String Name { get; set; }
 
+        public String Filename
+        {
+            get
+            {
+                return Path.Combine(this.Game.SavePaths.GetPath(DataTypes.Root), this.Name + "." + this.Game.SavePaths.GetExtension(DataTypes.Root));
+            }
+        }
+
         public String ID { get; set; }
 
         public String Description { get; set; }
@@ -37,15 +45,15 @@ namespace MudEngine.GameScripts
             this.SaveData = new XMLData(this.GetType().Name);
         }
 
-        public virtual Boolean Save(String filename)
+        public virtual Boolean Save()
         {
-            return this.Save(filename, false);
+            return this.Save(false);
         }
 
-        public virtual Boolean Save(String filename, Boolean ignoreFileWrite)
+        public virtual Boolean Save(Boolean ignoreFileWrite)
         {
-            if (File.Exists(filename))
-                File.Delete(filename);
+            if (File.Exists(this.Filename))
+                File.Delete(this.Filename);
 
             try
             {
@@ -55,7 +63,7 @@ namespace MudEngine.GameScripts
                 this.SaveData.AddSaveData("Description", Description);
 
                 if (!ignoreFileWrite)
-                    this.SaveData.Save(filename);
+                    this.SaveData.Save(this.Filename);
             }
             catch
             {

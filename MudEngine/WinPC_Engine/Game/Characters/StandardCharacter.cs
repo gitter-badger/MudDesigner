@@ -27,7 +27,7 @@ namespace MudEngine.Game.Characters
         /// Gets a reference to the currently active game.
         /// </summary>
 
-        public string Filename
+        public new string Filename
         {
             get
             {
@@ -138,20 +138,20 @@ namespace MudEngine.Game.Characters
             this.Commands = null;
         }
 
-        public override bool Save(String filename)
+        public override bool Save()
         {
-            return this.Save(filename, true);
+            return this.Save(true);
         }
 
-        public override bool Save(String filename, Boolean verbose)
+        public override bool Save(Boolean verbose)
         {
-            base.Save(filename, true);
+            base.Save(true);
 
             SaveData.AddSaveData("Immovable", Immovable.ToString());
             SaveData.AddSaveData("Password", Password);
             SaveData.AddSaveData("Role", this.Role.ToString());
 
-            if (this.SaveData.Save(filename))
+            if (this.SaveData.Save(this.Filename))
             {
                 if (!verbose)
                     this.SendMessage("Save completed.");
@@ -236,7 +236,7 @@ namespace MudEngine.Game.Characters
 
         public void Disconnect()
         {
-            this.Save(this.Filename);
+            this.Save();
 
             //Purge all of this characters commands.
             this.Destroy();

@@ -230,6 +230,8 @@ namespace MudEngine.Game
             if (this.Server.Enabled)
                 this.Enabled = true;
 
+            this.World.Save();
+
             return this.Enabled;
         }
 

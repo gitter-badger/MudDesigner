@@ -73,9 +73,9 @@
     <None Include="GameScripts\BaseCommands\SetRole.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="GameScripts\SampleGame.cs">
+    <Compile Include="GameScripts\SampleGame.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Compile>
     <Compile Include="Game\Characters\CharacterRoles.cs" />
     <Compile Include="Game\Characters\CharacterStats.cs" />
     <Compile Include="Game\Characters\StandardCharacter.cs" />

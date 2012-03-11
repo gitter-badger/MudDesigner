@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 using MudEngine.Core;
 using MudEngine.Core.Interfaces;
@@ -11,12 +12,19 @@ using MudEngine.GameScripts;
 
 namespace MudEngine.Game.Environment
 {
-    public class Environment : BaseScript, IGameComponent, ISavable, IUpdatable
+    public abstract class Environment : BaseScript, IGameComponent, ISavable, IUpdatable
     {
         /// <summary>
         /// Gets or Sets the filename for this environment when it is saved.
         /// </summary>
-        public string Filename { get; set; }
+        public new string Filename
+        {
+            get
+            {
+                String path = Path.Combine(this.Game.SavePaths.GetPath(DAL.DataTypes.Environments), this.Name + this.Game.SavePaths.GetExtension(DAL.DataTypes.Environments));
+                return path;
+            }
+        }
 
         /// <summary>
         /// Gets or Sets if this object is enabled.  When disabled, characters can not traverse it.
@@ -53,16 +61,21 @@ namespace MudEngine.Game.Environment
             this.Enabled = false;
         }
 
-        public override bool Save(String filename, Boolean ignoreFileWrite)
+        public override bool Save()
         {
-            base.Save(filename, true);
+            return this.Save(false);
+        }
 
-            SaveData.AddSaveData("Filename", this.Filename);
+        public override bool Save(Boolean ignoreFileWrite)
+        {
+            base.Save(true);
+
+            //SaveData.AddSaveData("Filename", this.Filename);
             SaveData.AddSaveData("Enabled", this.Enabled.ToString());
             SaveData.AddSaveData("RequiredRole", this.RequiredRole.ToString());
 
             if (!ignoreFileWrite)
-                return this.SaveData.Save(filename);
+                return this.SaveData.Save(this.Filename);
             else
                 return true;
         }
@@ -70,10 +83,10 @@ namespace MudEngine.Game.Environment
         public override void Load(string filename)
         {
             base.Load(filename);
-
+            /*
             try { this.Filename = this.SaveData.GetData("Filename"); }
             catch { LoadFailedMessage("Filename"); }
-
+            */
             try { this.Enabled = Convert.ToBoolean(this.SaveData.GetData("Enabled")); }
             catch { this.LoadFailedMessage("Enabled");}
 

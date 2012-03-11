@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 using MudEngine.Core.Interfaces;
 using MudEngine.GameScripts;
@@ -12,6 +13,15 @@ namespace MudEngine.Game.Environment
 {
     public class Zone : Environment
     {
+        public new String Filename
+        {
+            get
+            {
+                String path = Path.Combine(this.Game.SavePaths.GetPath(DAL.DataTypes.Environments), this.Realm.Name, "Zones", this.Name + "." + this.GetType().Name);
+                return path;
+            }
+        }
+
         /// <summary>
         /// Gets or Sets the what stats 
         /// </summary>
@@ -24,6 +34,16 @@ namespace MudEngine.Game.Environment
         public Zone(StandardGame game, String name, String description) : base(game, name, description)
         {
             this._RoomCollection = new List<Room>();
+        }
+
+        public override bool Save()
+        {
+            if (!base.Save(true))
+                return false;
+
+            this.SaveData.AddSaveData("Safe", this.Safe.ToString());
+            this.SaveData.Save(this.Filename);
+            return true;
         }
 
         public Room CreateRoom(String name, String description)

@@ -13,6 +13,15 @@ namespace MudEngine.Game.Environment
 {
     public class Realm : Environment
     {
+        public new String Filename
+        {
+            get
+            {
+                String path = Path.Combine(this.Game.SavePaths.GetPath(DAL.DataTypes.Environments), this.Name, this.Name + "." + this.GetType().Name);
+                return path;
+            }
+        }
+
         public Realm(StandardGame game, String name, String description) : base(game, name, description)
         {
             this._ZoneCollection = new List<Zone>();
@@ -33,6 +42,22 @@ namespace MudEngine.Game.Environment
                     select zone;
 
             return v.First();
+        }
+
+        public override bool Save(Boolean ignoreFileWrite)
+        {
+            if (!base.Save(true))
+                return false;
+
+            foreach (Zone zone in this._ZoneCollection)
+            {
+                this.SaveData.AddSaveData("Zone", zone.Name);
+                zone.Save();
+            }
+
+            this.SaveData.Save(this.Filename);
+
+            return true;
         }
 
         private List<Zone> _ZoneCollection;

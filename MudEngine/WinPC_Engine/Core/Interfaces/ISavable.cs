@@ -19,9 +19,9 @@ namespace MudEngine.Core.Interfaces
         /// Save method for dumping the object to physical file.
         /// </summary>
         /// <param name="path"></param>
-        Boolean Save(String filename);
+        Boolean Save();
 
-        Boolean Save(String filename, Boolean ignoreFileWrite);
+        Boolean Save(Boolean ignoreFileWrite);
 
         /// <summary>
         /// Load method for retrieving saved data from file.

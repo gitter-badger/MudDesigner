@@ -48,7 +48,7 @@ namespace MudEngine.DAL
             this.SetAbsolutePath(Path.Combine(this._InstallRoot, "Environments"), DataTypes.Environments);
             this.SetAbsolutePath(Path.Combine(this._InstallRoot, "Equipment"), DataTypes.Equipment);
             this.SetAbsolutePath(Path.Combine(this._InstallRoot, "Players"), DataTypes.Players);
-            this.SetAbsolutePath(Path.Combine(this._InstallRoot, "GameScripts"), DataTypes.Scripts);
+            this.SetAbsolutePath(Path.Combine(this.GetInstallPath(), "GameScripts"), DataTypes.Scripts);
         }
 
         public void SetAbsolutePath(String path, DataTypes objectType)

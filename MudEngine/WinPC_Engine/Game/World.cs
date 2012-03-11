@@ -49,6 +49,10 @@ namespace MudEngine.Game
 
         public void Save()
         {
+            foreach (Realm realm in this._RealmCollection)
+            {
+                realm.Save();
+            }
         }
 
         public void Load()

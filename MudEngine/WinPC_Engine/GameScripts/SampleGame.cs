@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using MudEngine.Game;
 using MudEngine.DAL;
 using MudEngine.Game.Environment;
 using MudEngine.Game;
@@ -24,6 +23,7 @@ namespace MudEngine.GameScripts
         public override Boolean Start(Int32 maxPlayers, Int32 maxQueueSize)
         {
             this.Server.ServerOwner = "Admin";
+            base.Start(maxPlayers, maxQueueSize);
 
             //Quick demonstration on how to create the initial starting room for new players.
             this.World.CreateRealm("Azeroth", "Starting Realm for beginning players");
@@ -43,6 +43,7 @@ namespace MudEngine.GameScripts
             if (startOK && linked)
             {
                 this.World.StartLocation = bedroom;
+                this.World.Save();
                 return true;
             }
             //Otherwise return false and prevent the game from running.
