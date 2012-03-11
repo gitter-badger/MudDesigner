@@ -17,7 +17,7 @@ namespace MudEngine.Game.Environment
         {
             get
             {
-                String path = Path.Combine(Path.GetDirectoryName(this.Realm.Filename), "Zones", this.Name + "." + this.GetType().Name);
+                String path = Path.Combine(Path.GetDirectoryName(this.Realm.Filename), "Zones", this.Name, this.Name + "." + this.GetType().Name);
                 return path;
             }
         }
@@ -45,6 +45,11 @@ namespace MudEngine.Game.Environment
             this.SaveData.AddSaveData("Safe", this.Safe.ToString());
             this.SaveData.AddSaveData("CharacterStats", this.StatDrain.ToString());
 
+            foreach (Room room in this._RoomCollection)
+            {
+                room.Save();
+            }
+
             return this.SaveData.Save(this.Filename);
         }
 
@@ -62,7 +67,7 @@ namespace MudEngine.Game.Environment
             try
             {
                 String data = this.SaveData.GetData("CharacterStats");
-                String[] stats = data.Split('.');
+                String[] stats = data.Split('>');
                 CharacterStats charStats = new CharacterStats();
 
                 foreach (String stat in stats)
@@ -95,6 +100,13 @@ namespace MudEngine.Game.Environment
             catch
             {
                 this.LoadFailedMessage("CharacterStats");
+            }
+
+            String[] rooms = Directory.GetFiles(Path.Combine(path, "Rooms"));
+            foreach (String room in rooms)
+            {
+                Room r = new Room(this.Game, String.Empty, String.Empty, this);
+                r.Load(room);
             }
         }
 

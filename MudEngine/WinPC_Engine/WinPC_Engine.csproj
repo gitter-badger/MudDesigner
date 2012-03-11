@@ -55,9 +55,9 @@
     <Compile Include="Core\ObjectCollection.cs" />
     <Compile Include="DAL\DataPaths.cs" />
     <Compile Include="DAL\XMLData.cs" />
-    <None Include="GameScripts\BaseCommands\Look.cs">
+    <Compile Include="GameScripts\BaseCommands\Look.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Compile>
     <None Include="GameScripts\BaseCommands\Login.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

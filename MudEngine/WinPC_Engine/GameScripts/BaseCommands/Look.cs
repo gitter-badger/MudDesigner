@@ -25,6 +25,8 @@ namespace MudEngine.GameScripts.Commands
 
         public bool Execute(string command, StandardCharacter character)
         {
+            character.SendMessage(character.CurrentRoom.Name);
+            character.SendMessage(character.CurrentRoom.Description);
             return true;
         }
     }

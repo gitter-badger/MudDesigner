@@ -32,7 +32,28 @@ namespace MudEngine.Game.Environment
 
         public override string ToString()
         {
-            return "{" + this.GetType().Name + "}: " + this.DepartureRoom.Name + "->" + this.TravelDirection.ToString() + "->" + this.ArrivalRoom.Name;
+            if (this.RequiredKey == null)
+            {
+                return
+                    "DepartureRoom-" + this.DepartureRoom.Filename +
+                    ">DepartureZone-" + this.DepartureRoom.Zone.Filename + 
+                    ">ArrivalRoom-" + this.ArrivalRoom.Filename +
+                    ">ArrivalZone-" + this.ArrivalRoom.Zone.Filename + 
+                    ">Locked-" + this.Locked.ToString() +
+                    ">RequiredKey-None" +
+                    ">LevelRequirement-" + this.LevelRequirement.ToString() +
+                    ">TravelDirection-" + this.TravelDirection.ToString();
+            }
+            else
+                return
+                    "DepartureRoom-" + this.DepartureRoom.Filename +
+                    ">DepartureZone-" + this.DepartureRoom.Zone.Filename +
+                    ">ArrivalRoom-" + this.ArrivalRoom.Filename +
+                    ">ArrivalZone-" + this.ArrivalRoom.Zone.Filename + 
+                    ">Locked-" + this.Locked.ToString() +
+                    ">RequiredKey-" + this.RequiredKey.Filename +
+                    ">LevelRequirement-" + this.LevelRequirement.ToString() +
+                    ">TravelDirection-" + this.TravelDirection.ToString();
         }
     }
 }

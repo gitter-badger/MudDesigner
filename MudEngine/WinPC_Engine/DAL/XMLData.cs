@@ -40,6 +40,19 @@ namespace MudEngine.DAL
             return String.Empty;
         }
 
+        public String[] GetDataCollection(String property)
+        {
+            List<String> data = new List<string>();
+
+            foreach (XElement element in SaveData.Elements())
+            {
+                if (element.Name.LocalName == property)
+                    data.Add(element.Value);
+            }
+
+            return data.ToArray();
+        }
+
         public Boolean Save(String filename)
         {
             if (!Directory.Exists(Path.GetDirectoryName(filename)))

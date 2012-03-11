@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 using MudEngine.Core.Interfaces;
 using MudEngine.Core;
@@ -12,6 +13,15 @@ namespace MudEngine.Game.Environment
 {
     public class Room : Environment
     {
+        public new String Filename
+        {
+            get
+            {
+                String path = Path.Combine(this.Game.SavePaths.GetPath(DAL.DataTypes.Environments), this.Zone.Realm.Name, "Zones", this.Zone.Name, "Rooms", this.Name + "." + this.GetType().Name);
+                return path;
+            }
+        }
+
         public Zone Zone { get; private set; }
 
         public Boolean Safe { get; set; }
@@ -24,6 +34,79 @@ namespace MudEngine.Game.Environment
             this._Doors = new List<Doorway>();
             this.Occupants = new List<StandardCharacter>();
             this.Zone = zone;
+        }
+
+        public override bool Save()
+        {
+            if (!base.Save(true))
+                return false;
+
+            this.SaveData.AddSaveData("Safe", this.Safe.ToString());
+
+            foreach (Doorway door in this._Doors)
+            {
+                this.SaveData.AddSaveData("Doorway", door.ToString());
+            }
+
+            return this.SaveData.Save(this.Filename);
+        }
+
+        public override void Load(string filename)
+        {
+            String path = Path.GetDirectoryName(filename);
+            if (!Directory.Exists(path))
+                return;
+
+            base.Load(filename);
+
+            Logger.WriteLine("Loading " + this.Name + "...");
+
+            try { this.Safe = Convert.ToBoolean(this.SaveData.GetData("Safe")); }
+            catch { this.LoadFailedMessage("Safe"); }
+
+            try
+            {
+                String[] data = this.SaveData.GetDataCollection("Doorway");
+
+                foreach (String entry in data)
+                {
+                    String[] values = entry.Split('>');
+
+                    Room departure = new Room(this.Game, String.Empty, String.Empty, this.Zone);
+                    Room arrival = new Room(this.Game, String.Empty, String.Empty, this.Zone);
+
+                    foreach (String value in values)
+                    {
+                        String[] propertyInfo = value.Split('-');
+
+                        switch (propertyInfo[0])
+                        {
+                            case "DepartureRoom":
+                                departure.Load(propertyInfo[1]);
+                                break;
+                            case "DepartureZone":
+                                if (propertyInfo[1] != this.Zone.Filename)
+                                    departure.Zone.Load(propertyInfo[1]);
+                                else
+                                    departure.Zone = this.Zone;
+                                break;
+                            case "ArrivalRoom":
+                                arrival.Load(propertyInfo[1]);
+                                break;
+                            case "ArrivalZone":
+                                if (propertyInfo[1] != this.Zone.Filename)
+                                    arrival.Zone.Load(propertyInfo[1]);
+                                else
+                                    arrival.Zone = this.Zone;
+                                break;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                this.LoadFailedMessage("Doorway");
+            }
         }
 
         /// <summary>

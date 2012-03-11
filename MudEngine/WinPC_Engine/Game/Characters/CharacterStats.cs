@@ -22,12 +22,12 @@ namespace MudEngine.Game.Characters
         {
             return
                   "Strength:" + this.Strength.ToString()
-                + ".Dexterity:" + this.Dexterity.ToString()
-                + ".Constitution:" + this.Constitution.ToString()
-                + ".Intelligence:" + this.Intelligence.ToString()
-                + ".Wisdom:" + this.Wisdom.ToString()
-                + ".Charisma:" + this.Charisma.ToString()
-                + ".Experience:" + this.Experience.ToString();
+                + ">Dexterity:" + this.Dexterity.ToString()
+                + ">Constitution:" + this.Constitution.ToString()
+                + ">Intelligence:" + this.Intelligence.ToString()
+                + ">Wisdom:" + this.Wisdom.ToString()
+                + ">Charisma:" + this.Charisma.ToString()
+                + ">Experience:" + this.Experience.ToString();
         }
     }
 }

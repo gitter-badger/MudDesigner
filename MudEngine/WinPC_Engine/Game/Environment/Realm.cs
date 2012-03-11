@@ -68,7 +68,7 @@ namespace MudEngine.Game.Environment
 
             base.Load(filename);
 
-            String[] zones = Directory.GetFiles(Path.Combine(Path.GetDirectoryName(this.Filename), "Zones"), "*.zone");
+            String[] zones = Directory.GetFiles(Path.Combine(path, "Zones"), "*.zone", SearchOption.AllDirectories);
 
             foreach (String zone in zones)
             {

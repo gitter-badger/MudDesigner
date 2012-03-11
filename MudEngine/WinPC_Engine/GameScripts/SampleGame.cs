@@ -24,7 +24,8 @@ namespace MudEngine.GameScripts
         {
             this.Server.ServerOwner = "Admin";
             base.Start(maxPlayers, maxQueueSize);
-
+            
+            
             //Quick demonstration on how to create the initial starting room for new players.
             this.World.CreateRealm("Azeroth", "Starting Realm for beginning players");
             Zone z = this.World.GetRealm("Azeroth").CreateZone("Bedlam", "Initial Zone for new players.");
@@ -52,6 +53,9 @@ namespace MudEngine.GameScripts
                 this.Enabled = false;
                 return false;
             }
+             
+
+            
         }
     }
 }
