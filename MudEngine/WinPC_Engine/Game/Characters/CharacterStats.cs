@@ -1,4 +1,4 @@
-﻿using System;
+﻿//using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +17,17 @@ namespace MudEngine.Game.Characters
         public int Wisdom { get; set; }
         public int Charisma { get; set; }
         public int Experience { get; set; }
+
+        public override string ToString()
+        {
+            return
+                  "Strength:" + this.Strength.ToString()
+                + ".Dexterity:" + this.Dexterity.ToString()
+                + ".Constitution:" + this.Constitution.ToString()
+                + ".Intelligence:" + this.Intelligence.ToString()
+                + ".Wisdom:" + this.Wisdom.ToString()
+                + ".Charisma:" + this.Charisma.ToString()
+                + ".Experience:" + this.Experience.ToString();
+        }
     }
 }

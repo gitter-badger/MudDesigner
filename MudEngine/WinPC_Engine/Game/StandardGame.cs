@@ -272,5 +272,10 @@ namespace MudEngine.Game
             if (!Directory.Exists(this.SavePaths.GetPath(DataTypes.Scripts)))
                 Directory.CreateDirectory(this.SavePaths.GetPath(DataTypes.Scripts));
         }
+
+        public override string ToString()
+        {
+            return "Game: " + this.Name + " " + this.Version;
+        }
     }
 }

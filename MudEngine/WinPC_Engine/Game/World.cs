@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 using MudEngine.Game.Environment;
 using MudEngine.Core.Interfaces;
@@ -57,7 +58,23 @@ namespace MudEngine.Game
 
         public void Load()
         {
-            Logger.WriteLine("World Loading has not been implemented as of yet!");
+            if (!Directory.Exists(this.Game.SavePaths.GetPath(DAL.DataTypes.Environments)))
+            {
+                return;
+            }
+
+            String[] realmPaths = Directory.GetDirectories(this.Game.SavePaths.GetPath(DAL.DataTypes.Environments));
+
+            foreach (String realm in realmPaths)
+            {
+                String[] realms = Directory.GetFiles(realm);
+
+                foreach (String file in realms)
+                {
+                    Realm r = new Realm(this.Game, String.Empty, String.Empty);
+                    r.Load(file);
+                }
+            }
         }
 
         public void Destroy()

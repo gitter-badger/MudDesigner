@@ -113,23 +113,35 @@ namespace MudEngine.DAL
 
         public String GetPath(DataTypes objectType)
         {
+            //Exception checking
+            String path = String.Empty;
+
             switch (objectType)
             {
                 case DataTypes.Root:
-                    return this._InstallRoot;
+                    path = this._InstallRoot;
+                    break;
                 case DataTypes.Characters:
-                    return this._Characters;
+                    path = this._Characters;
+                    break;
                 case DataTypes.Environments:
-                    return this._Environments;
+                    path =  this._Environments;
+                    break;
                 case DataTypes.Equipment:
-                    return this._Equipment;
+                    path =  this._Equipment;
+                    break;
                 case DataTypes.Players:
-                    return this._Players;
+                    path =  this._Players;
+                    break;
                 case DataTypes.Scripts:
-                    return this._Scripts;
+                    path =  this._Scripts;
+                    break;
             }
 
-            return String.Empty;
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            return path;
         }
 
         public String GetFilePath(DataTypes objectType, String filename)

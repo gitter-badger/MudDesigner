@@ -29,7 +29,7 @@ namespace MudEngine.Game.Environment
 
         public Zone CreateZone(String name, String description)
         {
-            Zone zone = new Zone(this.Game, name, description);
+            Zone zone = new Zone(this.Game, name, description, this);
             this._ZoneCollection.Add(zone);
             zone.Realm = this;
             return zone;
@@ -51,13 +51,33 @@ namespace MudEngine.Game.Environment
 
             foreach (Zone zone in this._ZoneCollection)
             {
-                this.SaveData.AddSaveData("Zone", zone.Name);
                 zone.Save();
             }
 
             this.SaveData.Save(this.Filename);
 
             return true;
+        }
+
+        public override void Load(string filename)
+        {
+            String path = Path.GetDirectoryName(filename);
+
+            if (!Directory.Exists(path))
+                return;
+
+            base.Load(filename);
+
+            String[] zones = Directory.GetFiles(Path.Combine(Path.GetDirectoryName(this.Filename), "Zones"), "*.zone");
+
+            foreach (String zone in zones)
+            {
+                Zone z = new Zone(this.Game, String.Empty, String.Empty, this);
+                z.Load(zone);
+
+                if (z != null)
+                    this._ZoneCollection.Add(z);
+            }
         }
 
         private List<Zone> _ZoneCollection;
