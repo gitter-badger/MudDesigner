@@ -10,10 +10,7 @@ namespace sEngine.Scripting
 
         public ScriptObject(Object instance)
         {
-            if (instance == null)
-                Instance = new Object();
-            else
-                Instance = instance;
+            Instance = instance ?? new Object();
         }
 
         ~ScriptObject()
@@ -83,7 +80,7 @@ namespace sEngine.Scripting
             }
             catch
             {
-                StringBuilder sb = new StringBuilder();
+                var sb = new StringBuilder();
                 sb.Append("Error invoking method. Does the method exist?");
                 return sb.ToString();
             }

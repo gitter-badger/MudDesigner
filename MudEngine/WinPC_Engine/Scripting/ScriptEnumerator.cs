@@ -12,24 +12,24 @@ namespace MudEngine.Scripting
     {
         public ScriptEnumerator(ObjectCollection objectManager)
         {
-            this._ObjectCollection = objectManager;
+            _ObjectCollection = objectManager;
         }
 
         public void Reset()
         {
-            this._currentIndex = -1;
+            _currentIndex = -1;
         }
 
         public BaseScript Current
         {
             get
             {
-                if (this._currentIndex < 0)
+                if (_currentIndex < 0)
                     return null;
-                else if (this._currentIndex > this._ObjectCollection.Length)
+                else if (_currentIndex > _ObjectCollection.Length)
                     return null;
                 else
-                    return this._ObjectCollection[this._currentIndex];
+                    return _ObjectCollection[_currentIndex];
             }
         }
 

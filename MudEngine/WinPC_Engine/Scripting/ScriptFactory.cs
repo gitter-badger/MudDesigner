@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 using MudEngine.Core;
@@ -27,15 +28,7 @@ namespace MudEngine.Scripting
             _AssemblyCollection = new List<Assembly>();
 
             //See if a file exists first with this assembly name.
-            if (File.Exists(assembly))
-            {
-                a = Assembly.Load(new AssemblyName(assembly));
-            }
-            //If not, then try and load it differently
-            else
-            {
-                a = Assembly.Load(assembly);
-            }
+            a = File.Exists(assembly) ? Assembly.Load(new AssemblyName(assembly)) : Assembly.Load(assembly);
 
             if (a == null)
                 return;
@@ -54,7 +47,7 @@ namespace MudEngine.Scripting
             //Add the supplied assembly to our AssemblyCollection
             _AssemblyCollection.Add(assembly);
 
-            this.Assembly = assembly;
+            Assembly = assembly;
         }
 #endif
         /// <summary>
@@ -142,24 +135,18 @@ namespace MudEngine.Scripting
             Type script = typeof(BaseScript);
             Boolean foundScript = false;
 
-            if (this._AssemblyCollection.Count == 0)
+            if (_AssemblyCollection.Count == 0)
                 return null;
 
             try
             {
-                foreach (Assembly a in _AssemblyCollection)
+                foreach (var a in _AssemblyCollection.Where(a => a != null))
                 {
-                    if (a == null)
-                        continue;
-
-                    foreach (Type t in a.GetTypes())
+                    foreach (var t in a.GetTypes().Where(t => t.BaseType.Name == baseScript))
                     {
-                        if (t.BaseType.Name == baseScript)
-                        {
-                            script = t;
-                            foundScript = true;
-                            break;
-                        }
+                        script = t;
+                        foundScript = true;
+                        break;
                     }
 
                     if (foundScript)

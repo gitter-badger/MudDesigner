@@ -2,6 +2,7 @@
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 #if WINDOWS_PC
@@ -102,7 +103,7 @@ namespace MudEngine.Scripting
 
         public CompileEngine(String scriptExtensions)
         {
-            _CompileMessages = new String[] { "No compiler messages available." };
+            _CompileMessages = new[] { "No compiler messages available." };
 
             CompilerOptions = new Dictionary<string, string>();
             Compiler = "C#";
@@ -170,7 +171,7 @@ namespace MudEngine.Scripting
             //Incase a non-default compiler was specified and we could not find it in memory, fail.
             if (compiler.Name == "ICompiler")
             {
-                this._CompileMessages = new string[] { "Compilation Failed.", "Unable to locate the specified compiler of Type '" + Compiler + "'." };
+                _CompileMessages = new[] { "Compilation Failed.", "Unable to locate the specified compiler of Type '" + Compiler + "'." };
                 return false;
             }
 
@@ -183,7 +184,7 @@ namespace MudEngine.Scripting
             //Setup it's properties to match that of our CompileEngine.
             com.AssemblyReferences = AssemblyReferences;
             com.ScriptExtension = ScriptExtension;
-            com.CompilerOptions = this.CompilerOptions;
+            com.CompilerOptions = CompilerOptions;
 
             //Compile the scripts.
             Boolean isSuccess = com.Compile(param, scriptRepository);
@@ -193,13 +194,7 @@ namespace MudEngine.Scripting
             //into our _CompileMessages string.
             if (!isSuccess)
             {
-                List<String> compilerMessages = new List<string>();
-                foreach (String message in com.Results.Output)
-                {
-                    compilerMessages.Add(message);
-                }
-
-                _CompileMessages = compilerMessages.ToArray();
+                _CompileMessages = com.Results.Output.Cast<string>().ToArray();
                 return false;
             }
             else
@@ -224,7 +219,7 @@ namespace MudEngine.Scripting
 #if WINDOWS_PC
             if (!sourceFile.Exists)
             {
-                this._CompileMessages = new String[] { "Error: File " + sourceFile.FullName + " does not exists." };
+                _CompileMessages = new[] { "Error: File " + sourceFile.FullName + " does not exists." };
                 return false;
             }
 
@@ -237,7 +232,7 @@ namespace MudEngine.Scripting
             //Incase a non-default compiler was specified and we could not find it in memory, fail.
             if (compiler.Name == "ICompiler")
             {
-                this._CompileMessages = new string[] { "Compilation Failed.", "Unable to locate the specified compiler of Type '" + Compiler + "'." };
+                _CompileMessages = new[] { "Compilation Failed.", "Unable to locate the specified compiler of Type '" + Compiler + "'." };
                 return false;
             }
 
@@ -250,7 +245,7 @@ namespace MudEngine.Scripting
             //Setup it's properties to match that of our CompileEngine.
             com.AssemblyReferences = AssemblyReferences;
             com.ScriptExtension = ScriptExtension;
-            com.CompilerOptions = this.CompilerOptions;
+            com.CompilerOptions = CompilerOptions;
 
             //Compile the script.
             Boolean isSuccess = com.Compile(param, sourceFile);
@@ -260,13 +255,7 @@ namespace MudEngine.Scripting
             //into our _CompileMessages string.
             if (!isSuccess)
             {
-                List<String> compilerMessages = new List<string>();
-                foreach (String message in com.Results.Output)
-                {
-                    compilerMessages.Add(message);
-                }
-
-                _CompileMessages = compilerMessages.ToArray();
+                _CompileMessages = com.Results.Output.Cast<string>().ToArray();
                 return false;
             }
             else
@@ -298,36 +287,30 @@ namespace MudEngine.Scripting
             //Incase a non-default compiler was specified and we could not find it in memory, fail.
             if (compiler.Name == "ICompiler")
             {
-                this._CompileMessages = new string[] { "Compilation Failed.", "Unable to locate the specified compiler of Type '" + Compiler + "'." };
+                _CompileMessages = new[] { "Compilation Failed.", "Unable to locate the specified compiler of Type '" + Compiler + "'." };
                 return false;
             }
 
             //Get the compiler parameters.
-            CompilerParameters param = GetParameters();
+            var param = GetParameters();
 
             //Create a Instance of the compiler, either custom or internal.
-            ICompiler com = (ICompiler)Activator.CreateInstance(compiler);
+            var com = (ICompiler)Activator.CreateInstance(compiler);
 
             //Setup it's properties to match that of our CompileEngine.
             com.AssemblyReferences = AssemblyReferences;
             com.ScriptExtension = ScriptExtension;
-            com.CompilerOptions = this.CompilerOptions;
+            com.CompilerOptions = CompilerOptions;
 
             //Compile the scripts.
-            Boolean isSuccess = com.Compile(param, sourceCode);
+            var isSuccess = com.Compile(param, sourceCode);
             HasErrors = !isSuccess;
 
             //If the compilation failed, store all of the compiler errors
             //into our _CompileMessages string.
             if (!isSuccess)
             {
-                List<String> compilerMessages = new List<string>();
-                foreach (String message in com.Results.Output)
-                {
-                    compilerMessages.Add(message);
-                }
-
-                _CompileMessages = compilerMessages.ToArray();
+                _CompileMessages = com.Results.Output.Cast<string>().ToArray();
                 return false;
             }
             else
@@ -372,7 +355,7 @@ namespace MudEngine.Scripting
             Type compiler = typeof(ICompiler);
 
             //Internal CSharpRaw compiler Type specified, so we'll use that.
-            if ((this.Compiler.ToLower() == "c#") || (this.Compiler.ToLower() == "csharp"))
+            if ((Compiler.ToLower() == "c#") || (Compiler.ToLower() == "csharp"))
             {
                 compiler = typeof(CSharp);
                 return compiler;
@@ -384,24 +367,20 @@ namespace MudEngine.Scripting
             //Only used if a non-internal compiler is specified
             else
             {   //Non-internal compiler supplied, so loop through every assembly loaded in memory
-                foreach (Assembly a in _Assemblies)
+                foreach (var a in _Assemblies)
                 {
-                    Boolean isCompiler = false;
+                    var isCompiler = false;
 
                     //Create an array of all Types within this assembly
-                    Type[] types = a.GetTypes();
+                    var types = a.GetTypes();
 
                     //Itterate through each Type; See if any implement the ICompiler interface.
-                    foreach (Type t in a.GetTypes())
+                    foreach (var t in a.GetTypes().Where(t => (t.GetInterface("ICompiler") != null) && (t.Name.ToLower() == Compiler.ToLower())))
                     {
-                        //If this Type implements ICompiler, then our compiler field needs to reference the Type.
-                        if ((t.GetInterface("ICompiler") != null) && (t.Name.ToLower() == Compiler.ToLower()))
-                        {
-                            //compiler needs to reference this custom compiler Type.
-                            compiler = t;
-                            isCompiler = true;
-                            break;
-                        }
+                        //compiler needs to reference this custom compiler Type.
+                        compiler = t;
+                        isCompiler = true;
+                        break;
                     }
 
                     //If we found a matching compiler, then exit this loop.
