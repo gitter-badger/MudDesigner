@@ -14,6 +14,8 @@ namespace WinPC.Engine.Directors
 
         public List<Thread> ConnectionThreads { get; private set; }
         public List<Player> ConnectedPlayers { get; private set; }
+
+        
         public IServer Server { get; set; }
 
         public ServerDirector(IServer server)

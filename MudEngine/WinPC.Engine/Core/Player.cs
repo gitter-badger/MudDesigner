@@ -21,5 +21,10 @@ namespace WinPC.Engine.Core
         {
             Connection.Close();
         }
+
+        public void SwitchState(IState state)
+        {
+            CurrentState = state;
+        }
     }
 }

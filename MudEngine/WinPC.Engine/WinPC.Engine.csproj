@@ -65,6 +65,7 @@
     <Compile Include="Abstract.Networking\IServer.cs" />
     <Compile Include="Abstract.Objects\IItem.cs" />
     <Compile Include="Commands\InvalidCommand.cs" />
+    <Compile Include="Commands\SwitchStateCommand.cs" />
     <Compile Include="Core\Logger.cs" />
     <Compile Include="Core\Player.cs" />
     <Compile Include="Directors\ServerDirector.cs" />

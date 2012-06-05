@@ -8,6 +8,7 @@ namespace WinPC.Engine.Commands
     public class InvalidCommand : ICommand
     {
         private Socket Connection { get; set; }
+
         public InvalidCommand(Socket connnection)
         {
             Connection = connnection;

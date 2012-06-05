@@ -38,6 +38,11 @@ namespace WinPC.Engine.States
 
             var input = Director.RecieveInput(Index);
 
+            if (input == "menu")
+            {
+                return new SwitchStateCommand(Director, new MainMenuState(Director), Index);
+            }
+
             return new InvalidCommand(Connection);
         }
     }
