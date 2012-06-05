@@ -5,9 +5,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinPC_Server", "WinPC_Serve
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinPC_Engine", "WinPC_Engine\WinPC_Engine.csproj", "{27C84625-1D4A-4DBF-9770-46D535506485}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinPC.Engine", "WinPC.Engine\WinPC.Engine.csproj", "{9D9E8CAC-8876-4725-9A65-2077DE4322DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinPC.Server", "WinPC.Server\WinPC.Server.csproj", "{161E78DB-10C5-43A6-BC15-0945BC6F941F}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
+		SccNumberOfProjects = 5
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs03
 		SccLocalPath0 = .
@@ -17,6 +21,12 @@ Global
 		SccProjectUniqueName2 = WinPC_Server\\WinPC_Server.csproj
 		SccProjectName2 = WinPC_Server
 		SccLocalPath2 = WinPC_Server
+		SccProjectUniqueName3 = WinPC.Engine\\WinPC.Engine.csproj
+		SccProjectName3 = WinPC.Engine
+		SccLocalPath3 = WinPC.Engine
+		SccProjectUniqueName4 = WinPC.Server\\WinPC.Server.csproj
+		SccProjectName4 = WinPC.Server
+		SccLocalPath4 = WinPC.Server
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +57,26 @@ Global
 		{27C84625-1D4A-4DBF-9770-46D535506485}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{27C84625-1D4A-4DBF-9770-46D535506485}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{27C84625-1D4A-4DBF-9770-46D535506485}.Release|x86.ActiveCfg = Release|Any CPU
+		{9D9E8CAC-8876-4725-9A65-2077DE4322DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D9E8CAC-8876-4725-9A65-2077DE4322DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D9E8CAC-8876-4725-9A65-2077DE4322DD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9D9E8CAC-8876-4725-9A65-2077DE4322DD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9D9E8CAC-8876-4725-9A65-2077DE4322DD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9D9E8CAC-8876-4725-9A65-2077DE4322DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D9E8CAC-8876-4725-9A65-2077DE4322DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D9E8CAC-8876-4725-9A65-2077DE4322DD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9D9E8CAC-8876-4725-9A65-2077DE4322DD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9D9E8CAC-8876-4725-9A65-2077DE4322DD}.Release|x86.ActiveCfg = Release|Any CPU
+		{161E78DB-10C5-43A6-BC15-0945BC6F941F}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{161E78DB-10C5-43A6-BC15-0945BC6F941F}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{161E78DB-10C5-43A6-BC15-0945BC6F941F}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{161E78DB-10C5-43A6-BC15-0945BC6F941F}.Debug|x86.ActiveCfg = Debug|x86
+		{161E78DB-10C5-43A6-BC15-0945BC6F941F}.Debug|x86.Build.0 = Debug|x86
+		{161E78DB-10C5-43A6-BC15-0945BC6F941F}.Release|Any CPU.ActiveCfg = Release|x86
+		{161E78DB-10C5-43A6-BC15-0945BC6F941F}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{161E78DB-10C5-43A6-BC15-0945BC6F941F}.Release|Mixed Platforms.Build.0 = Release|x86
+		{161E78DB-10C5-43A6-BC15-0945BC6F941F}.Release|x86.ActiveCfg = Release|x86
+		{161E78DB-10C5-43A6-BC15-0945BC6F941F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

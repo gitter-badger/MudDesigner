@@ -100,12 +100,12 @@ namespace MudEngine.Networking
             this._Server = null;
 
             this.Enabled = false;
-            this.Status = ServerStatus.Stopped;
+            Status = ServerStatus.Stopped;
         }
 
         private void ServerLoop()
         {
-            while (this.Status == ServerStatus.Running)
+            while (Status == ServerStatus.Running)
             {
                 this.ConnectionManager.AddConnection(this._Game, this._Server.Accept());
             }
