@@ -9,12 +9,15 @@ namespace WinPC.Engine.Core
         public Socket Connection { get; private set; }
         public IState CurrentState { get; private set; }
 
-        public List<byte> buffer = new List<byte>(); 
+        public List<byte> buffer = new List<byte>();
+
+        public string Name { get; set; }
 
         public Player(IState initialState, Socket connection)
         {
             Connection = connection;
             CurrentState = initialState;
+            Name = "Player";
         }
 
         public void Disconnect()
@@ -25,6 +28,11 @@ namespace WinPC.Engine.Core
         public void SwitchState(IState state)
         {
             CurrentState = state;
+        }
+
+        public override string ToString()
+        {
+            return this.Name;
         }
     }
 }

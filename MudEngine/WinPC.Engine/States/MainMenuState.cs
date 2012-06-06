@@ -27,7 +27,6 @@ namespace WinPC.Engine.States
             Connection = Director.ConnectedPlayers[index].Connection;
 
             Director.ConnectedPlayers[index].Connection.Send(Encoding.GetBytes("Your now in the Main Menu State Welcome!! !"+"\n\r"));
-            
 
            
             

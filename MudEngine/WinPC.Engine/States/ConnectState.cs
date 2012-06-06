@@ -4,6 +4,7 @@ using System.Text;
 using WinPC.Engine.Abstract.Core;
 using WinPC.Engine.Commands;
 using WinPC.Engine.Directors;
+using WinPC.Engine.Core;
 
 namespace WinPC.Engine.States
 {
@@ -26,11 +27,17 @@ namespace WinPC.Engine.States
             
             Connection = Director.ConnectedPlayers[index].Connection;
 
-            Director.ConnectedPlayers[index].Connection.Send(Encoding.GetBytes("Welcome to Scionwest's Mud Engine!"+"\n\r"));
-            Director.ConnectedPlayers[index].Connection.Send(Encoding.GetBytes("Please enter your name" + "\n\r"));
+            Connection.Send(Encoding.GetBytes("Welcome to Scionwest's Mud Engine!"+"\n\r"));
+            Connection.Send(Encoding.GetBytes("Please enter your name" + "\n\r"));
 
-           
-            
+            //Just used for testing ServerDirector.GetPlayer method
+            IPlayer player = null;
+            bool validPlayer = Director.GetPlayer("Player", out player);
+
+            //player = player ?? new IPlayer().Create();
+
+            if (validPlayer)
+                Connection.Send(Encoding.GetBytes("Welcome " + player.Name));
         }
 
         public ICommand GetCommand()

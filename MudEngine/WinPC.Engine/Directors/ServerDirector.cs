@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading;
+using System.Linq;
 using WinPC.Engine.Abstract.Directors;
 using WinPC.Engine.Abstract.Networking;
 using WinPC.Engine.Core;
 using WinPC.Engine.States;
+using WinPC.Engine.Abstract.Core;
 
 namespace WinPC.Engine.Directors
 {
@@ -15,7 +17,8 @@ namespace WinPC.Engine.Directors
         public List<Thread> ConnectionThreads { get; private set; }
         public List<Player> ConnectedPlayers { get; private set; }
 
-        
+        public Dictionary<Player, Thread> ConnectedUsers { get; private set; }
+
         public IServer Server { get; set; }
 
         public ServerDirector(IServer server)
@@ -23,7 +26,7 @@ namespace WinPC.Engine.Directors
             Server = server;
             ConnectedPlayers = new List<Player>(Server.MaxConnections);
             ConnectionThreads = new List<Thread>(Server.MaxConnections);
-
+            ConnectedUsers = new Dictionary<Player, Thread>();
         }
 
         public void AddConnection(Socket connection)
@@ -31,8 +34,12 @@ namespace WinPC.Engine.Directors
             var player = new Player(new ConnectState(this), connection);
             ConnectedPlayers.Add(player);
 
+            Thread userThread = new Thread(ReceiveDataThread);
+            
+            //TODO: Replace ConnectedPlayers and ConnectionThreads with ConnectedUsers
+            ConnectedUsers.Add(player, userThread);
 
-            ConnectionThreads.Add(new Thread(ReceiveDataThread));
+            ConnectionThreads.Add(userThread);
             var index = ConnectionThreads.Count - 1;
 
             ConnectionThreads[index].Name = "Player";
@@ -43,11 +50,11 @@ namespace WinPC.Engine.Directors
 
         public void ReceiveDataThread(object index)
         {
-            var player = ConnectedPlayers[(int) index];
+            var player = ConnectedPlayers[(int)index];
 
             while (Server.Enabled)
             {
-                player.CurrentState.Render((int) index);
+                player.CurrentState.Render((int)index);
                 var command = player.CurrentState.GetCommand();
                 command.Execute();
             }
@@ -55,7 +62,7 @@ namespace WinPC.Engine.Directors
 
         public void DisconnectAll()
         {
-            foreach(var player in ConnectedPlayers)
+            foreach (var player in ConnectedPlayers)
             {
                 player.Disconnect();
             }
@@ -100,19 +107,35 @@ namespace WinPC.Engine.Directors
                     }
                     else if (recved == 0) //Disconnected
                     {
-                     //   ConnectedPlayers[index]. Connected = false;
-                      //  this.LoggedIn = false;
+                        //   ConnectedPlayers[index]. Connected = false;
+                        //  this.LoggedIn = false;
                         return "Disconnected.";
                     }
                 }
                 catch (Exception e)
                 {
                     //Flag as disabled 
-                  //  this.Connected = false;
-                  //  this.LoggedIn = false;
+                    //  this.Connected = false;
+                    //  this.LoggedIn = false;
                     return e.Message;
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns a reference to the specified player if s/he is connected to the server.
+        /// </summary>
+        /// <param name="player">Name of the player to return</param>
+        /// <returns></returns>
+        public bool GetPlayer(string name, out IPlayer player)
+        {
+            var connectedPlayer = from p in ConnectedUsers
+                                  where p.Key.Name == name
+                                  select p.Key;
+
+            player = connectedPlayer.First();
+
+            return player == null ? true : false;
         }
     }
 }
