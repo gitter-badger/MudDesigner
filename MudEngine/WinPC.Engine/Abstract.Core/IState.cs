@@ -2,8 +2,7 @@
 {
     public interface IState
     {
-        void Render(int index);
+        void Render(IPlayer player);
         ICommand GetCommand();
-
     }
 }

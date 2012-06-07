@@ -31,6 +31,7 @@ namespace WinPC.Engine.Directors
 
         public void AddConnection(Socket connection)
         {
+            //TODO: Allow support for custom Player Types from scripts.
             var player = new Player(new ConnectState(this), connection);
             ConnectedPlayers.Add(player);
 
@@ -42,20 +43,18 @@ namespace WinPC.Engine.Directors
             ConnectionThreads.Add(userThread);
             var index = ConnectionThreads.Count - 1;
 
-            ConnectionThreads[index].Name = "Player";
-            ConnectionThreads[index].Start(index);
-
-
+            player.Name = "Player";
+            userThread.Start(player);
         }
 
-        public void ReceiveDataThread(object index)
+        public void ReceiveDataThread(object player)
         {
-            var player = ConnectedPlayers[(int)index];
+            var connectedPlayer = (IPlayer)player;
 
             while (Server.Enabled)
             {
-                player.CurrentState.Render((int)index);
-                var command = player.CurrentState.GetCommand();
+                connectedPlayer.CurrentState.Render(connectedPlayer);
+                var command = connectedPlayer.CurrentState.GetCommand();
                 command.Execute();
             }
         }
@@ -78,7 +77,7 @@ namespace WinPC.Engine.Directors
         }
 
 
-        public String RecieveInput(int index)
+        public String RecieveInput(IPlayer player)
         {
             string input = String.Empty;
 
@@ -87,23 +86,24 @@ namespace WinPC.Engine.Directors
                 try
                 {
                     byte[] buf = new byte[1];
-                    Int32 recved = ConnectedPlayers[index].Connection.Receive(buf);
+                    
+                    Int32 recved = player.Connection.Receive(buf);
 
                     if (recved > 0)
                     {
-                        if (buf[0] == '\n' && ConnectedPlayers[index].buffer.Count > 0)
+                        if (buf[0] == '\n' && player.Buffer.Count > 0)
                         {
-                            if (ConnectedPlayers[index].buffer[ConnectedPlayers[index].buffer.Count - 1] == '\r')
-                                ConnectedPlayers[index].buffer.RemoveAt(ConnectedPlayers[index].buffer.Count - 1);
+                            if (player.Buffer[player.Buffer.Count - 1] == '\r')
+                                player.Buffer.RemoveAt(player.Buffer.Count - 1);
 
                             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
-                            input = enc.GetString(ConnectedPlayers[index].buffer.ToArray());
-                            ConnectedPlayers[index].buffer.Clear();
+                            input = enc.GetString(player.Buffer.ToArray());
+                            player.Buffer.Clear();
                             //Return a trimmed string.
                             return input;
                         }
                         else
-                            ConnectedPlayers[index].buffer.Add(buf[0]);
+                            player.Buffer.Add(buf[0]);
                     }
                     else if (recved == 0) //Disconnected
                     {

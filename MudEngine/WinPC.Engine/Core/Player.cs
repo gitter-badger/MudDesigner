@@ -9,7 +9,7 @@ namespace WinPC.Engine.Core
         public Socket Connection { get; private set; }
         public IState CurrentState { get; private set; }
 
-        public List<byte> buffer = new List<byte>();
+        public List<byte> Buffer { get; set; }
 
         public string Name { get; set; }
 
@@ -18,6 +18,8 @@ namespace WinPC.Engine.Core
             Connection = connection;
             CurrentState = initialState;
             Name = "Player";
+
+            Buffer = new List<byte>();
         }
 
         public void Disconnect()

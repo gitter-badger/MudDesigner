@@ -10,38 +10,34 @@ namespace WinPC.Engine.States
     {
 
         public ServerDirector Director { get; private set; }
-        private Socket Connection { get; set; }
-        private ASCIIEncoding Encoding { get; set; }
-        private int Index;
+        
+        private Socket connection { get; set; }
+        private ASCIIEncoding encoding { get; set; }
+        private IPlayer player { get; set; }
 
         public MainMenuState(ServerDirector director)
         {
             Director = director;
-            Encoding = new ASCIIEncoding();
+            encoding = new ASCIIEncoding();
 
         }
-        public void Render(int index)
+        public void Render(IPlayer connectedPlayer)
         {
-            Index = index;
-            
-            Connection = Director.ConnectedPlayers[index].Connection;
+            connection = connectedPlayer.Connection;
+            player = connectedPlayer;
 
-            Director.ConnectedPlayers[index].Connection.Send(Encoding.GetBytes("Your now in the Main Menu State Welcome!! !"+"\n\r"));
-
-           
-            
+            connection.Send(encoding.GetBytes("Your now in the Main Menu State Welcome!! !" + "\n\r"));
         }
 
         public ICommand GetCommand()
         {
-
-            var input = Director.RecieveInput(Index);
+            var input = Director.RecieveInput(player);
 
             if(input == "connect")
             {
-                return new SwitchStateCommand(Director, new ConnectState(Director),Index);
+                return new SwitchStateCommand(Director, new ConnectState(Director),player);
             }
-            return new InvalidCommand(Connection);
+            return new InvalidCommand(connection);
         }
     }
 }

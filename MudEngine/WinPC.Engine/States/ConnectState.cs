@@ -11,46 +11,37 @@ namespace WinPC.Engine.States
     public class ConnectState : IState
     {
         public ServerDirector Director { get; private set; }
-        private Socket Connection { get; set; }
-        private ASCIIEncoding Encoding { get; set; }
-        private int Index;
-        
+
+        private Socket connection;
+        private ASCIIEncoding encoding;
+        private IPlayer player;
+
         public ConnectState(ServerDirector director)
         {
             Director = director;
-            Encoding = new ASCIIEncoding();
+            encoding = new ASCIIEncoding();
 
         }
-        public void Render(int index)
+        public void Render(IPlayer connectedPlayer)
         {
-            Index = index;
-            
-            Connection = Director.ConnectedPlayers[index].Connection;
+            connection = connectedPlayer.Connection;
+            player = connectedPlayer;
 
-            Connection.Send(Encoding.GetBytes("Welcome to Scionwest's Mud Engine!"+"\n\r"));
-            Connection.Send(Encoding.GetBytes("Please enter your name" + "\n\r"));
-
-            //Just used for testing ServerDirector.GetPlayer method
-            IPlayer player = null;
-            bool validPlayer = Director.GetPlayer("Player", out player);
-
-            //player = player ?? new IPlayer().Create();
-
-            if (validPlayer)
-                Connection.Send(Encoding.GetBytes("Welcome " + player.Name));
+            connection.Send(encoding.GetBytes("Welcome to Scionwest's Mud Engine!" + "\n\r"));
+            connection.Send(encoding.GetBytes("Please enter your name" + "\n\r"));
         }
 
         public ICommand GetCommand()
         {
 
-            var input = Director.RecieveInput(Index);
+            var input = Director.RecieveInput(player);
 
             if (input == "menu")
             {
-                return new SwitchStateCommand(Director, new MainMenuState(Director), Index);
+                return new SwitchStateCommand(Director, new MainMenuState(Director), player);
             }
 
-            return new InvalidCommand(Connection);
+            return new InvalidCommand(connection);
         }
     }
 }

@@ -7,16 +7,18 @@ namespace WinPC.Engine.Commands
     {
         private ServerDirector Director { get; set; }
         private IState NewState { get; set; }
-        private int Index { get; set; }
-        public SwitchStateCommand(ServerDirector director, IState newState, int index)
+        private IPlayer player { get; set; }
+
+        public SwitchStateCommand(ServerDirector director, IState newState, IPlayer connectedPlayer)
         {
             Director = director;
             NewState = newState;
+            player = connectedPlayer;
         }
 
         public void Execute()
         {
-            Director.ConnectedPlayers[Index].SwitchState(NewState);
+            player.SwitchState(NewState);
         }
     }
 }
