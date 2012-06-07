@@ -13,35 +13,23 @@ namespace WinPC.Engine.Directors
 {
     public class ServerDirector : IServerDirector
     {
-
-        public List<Thread> ConnectionThreads { get; private set; }
-        public List<Player> ConnectedPlayers { get; private set; }
-
-        public Dictionary<Player, Thread> ConnectedUsers { get; private set; }
+        public Dictionary<IPlayer, Thread> ConnectedPlayers { get; private set; }
 
         public IServer Server { get; set; }
 
         public ServerDirector(IServer server)
         {
             Server = server;
-            ConnectedPlayers = new List<Player>(Server.MaxConnections);
-            ConnectionThreads = new List<Thread>(Server.MaxConnections);
-            ConnectedUsers = new Dictionary<Player, Thread>();
+            ConnectedPlayers = new Dictionary<IPlayer, Thread>(Server.MaxConnections);
         }
 
         public void AddConnection(Socket connection)
         {
             //TODO: Allow support for custom Player Types from scripts.
             var player = new Player(new ConnectState(this), connection);
-            ConnectedPlayers.Add(player);
-
             Thread userThread = new Thread(ReceiveDataThread);
-            
-            //TODO: Replace ConnectedPlayers and ConnectionThreads with ConnectedUsers
-            ConnectedUsers.Add(player, userThread);
 
-            ConnectionThreads.Add(userThread);
-            var index = ConnectionThreads.Count - 1;
+            ConnectedPlayers.Add(player, userThread);
 
             player.Name = "Player";
             userThread.Start(player);
@@ -61,19 +49,13 @@ namespace WinPC.Engine.Directors
 
         public void DisconnectAll()
         {
-            foreach (var player in ConnectedPlayers)
+            foreach (var player in ConnectedPlayers.Keys)
             {
                 player.Disconnect();
-            }
-
-            foreach (var thread in ConnectionThreads)
-            {
-                thread.Abort();
-
+                ConnectedPlayers[player].Abort();
             }
 
             ConnectedPlayers.Clear();
-            ConnectionThreads.Clear();
         }
 
 
@@ -129,7 +111,7 @@ namespace WinPC.Engine.Directors
         /// <returns></returns>
         public bool GetPlayer(string name, out IPlayer player)
         {
-            var connectedPlayer = from p in ConnectedUsers
+            var connectedPlayer = from p in ConnectedPlayers
                                   where p.Key.Name == name
                                   select p.Key;
 
