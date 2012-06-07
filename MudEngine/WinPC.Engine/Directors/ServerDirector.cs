@@ -31,7 +31,6 @@ namespace WinPC.Engine.Directors
 
             ConnectedPlayers.Add(player, userThread);
 
-            player.Name = "Player";
             userThread.Start(player);
         }
 
@@ -41,6 +40,12 @@ namespace WinPC.Engine.Directors
 
             while (Server.Enabled)
             {
+                //TODO: Temp Fail-safe.  Unhandled Exception can cause the server to shut down.
+                //Need a more elegant way to ensure a null player is never used. 
+                //Null players could be caused by 3rd party scripts. 
+                //Would need to check the Dictionary for the null player and abort its thread, then remove the key/value.
+                if (connectedPlayer == null)
+                    break; 
                 connectedPlayer.CurrentState.Render(connectedPlayer);
                 var command = connectedPlayer.CurrentState.GetCommand();
                 command.Execute();
@@ -52,7 +57,7 @@ namespace WinPC.Engine.Directors
             foreach (var player in ConnectedPlayers.Keys)
             {
                 player.Disconnect();
-                ConnectedPlayers[player].Abort();
+                ConnectedPlayers[player].Abort(); //Kill the thread
             }
 
             ConnectedPlayers.Clear();
