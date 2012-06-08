@@ -11,6 +11,14 @@ namespace WinPC.Engine.Core
 
         public List<byte> Buffer { get; set; }
 
+        public bool IsConnected
+        {
+            get
+            {
+                return Connection.Connected;
+            }
+        }
+
         public string Name { get; set; }
 
         public Player(IState initialState, Socket connection)
@@ -25,6 +33,7 @@ namespace WinPC.Engine.Core
         public void Disconnect()
         {
             Connection.Close();
+            Connection = null;
         }
 
         public void SwitchState(IState state)

@@ -33,7 +33,6 @@ namespace WinPC.Engine.States
 
         public ICommand GetCommand()
         {
-
             var input = Director.RecieveInput(player);
 
             if (input == "menu")

@@ -36,19 +36,32 @@ namespace WinPC.Engine.Directors
 
         public void ReceiveDataThread(object player)
         {
-            var connectedPlayer = (IPlayer)player;
+            var connectedUser = (IPlayer)player;
 
             while (Server.Enabled)
             {
-                //TODO: Temp Fail-safe.  Unhandled Exception can cause the server to shut down.
-                //Need a more elegant way to ensure a null player is never used. 
-                //Null players could be caused by 3rd party scripts. 
-                //Would need to check the Dictionary for the null player and abort its thread, then remove the key/value.
-                if (connectedPlayer == null)
-                    break; 
-                connectedPlayer.CurrentState.Render(connectedPlayer);
-                var command = connectedPlayer.CurrentState.GetCommand();
-                command.Execute();
+                if (!connectedUser.IsConnected)
+                {
+                    Thread playerThread = ConnectedPlayers[connectedUser];
+                    ConnectedPlayers.Remove(connectedUser);
+
+                    connectedUser.Disconnect();
+                    connectedUser = null;
+                    playerThread.Abort();
+                }
+
+                //When a user closes the telnet terminal, an exception can be generated
+                //due to accessing a connection that no longer exists.  This will catch that
+                //and ignore, letting the next loop iteration find the disconnect and process.
+                try
+                {
+                    connectedUser.CurrentState.Render(connectedUser);
+                    var command = connectedUser.CurrentState.GetCommand();
+                    command.Execute();
+                }
+                catch(Exception ex)
+                {
+                }
             }
         }
 
@@ -71,9 +84,12 @@ namespace WinPC.Engine.Directors
             while (true)
             {
                 try
-                {
+                           {
                     byte[] buf = new byte[1];
-                    
+
+                    if (!player.Connection.Connected)
+                        return "Disconnected.";
+
                     Int32 recved = player.Connection.Receive(buf);
 
                     if (recved > 0)

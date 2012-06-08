@@ -18,7 +18,6 @@ namespace WinPC.Engine.Commands
         {
             ASCIIEncoding encoding = new ASCIIEncoding();
             Connection.Send(encoding.GetBytes("Invalid Command!" + "\n\r"));
-            
         }
          
     }

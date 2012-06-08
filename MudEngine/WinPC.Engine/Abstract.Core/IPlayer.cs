@@ -8,6 +8,7 @@ namespace WinPC.Engine.Abstract.Core
         IState CurrentState { get; }
         Socket Connection { get; }
         List<byte> Buffer { get; set; }
+        bool IsConnected { get; }
 
         string Name { get; set; }
         void Disconnect();
