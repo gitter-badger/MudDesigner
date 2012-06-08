@@ -42,12 +42,8 @@ namespace WinPC.Engine.Directors
             {
                 if (!connectedUser.IsConnected)
                 {
-                    Thread playerThread = ConnectedPlayers[connectedUser];
-                    ConnectedPlayers.Remove(connectedUser);
-
-                    connectedUser.Disconnect();
-                    connectedUser = null;
-                    playerThread.Abort();
+                    DisconnectPlayer(connectedUser);
+                    break;
                 }
 
                 //When a user closes the telnet terminal, an exception can be generated
@@ -63,6 +59,16 @@ namespace WinPC.Engine.Directors
                 {
                 }
             }
+        }
+
+        private void DisconnectPlayer(IPlayer connectedUser)
+        {
+            Thread playerThread = ConnectedPlayers[connectedUser];
+            ConnectedPlayers.Remove(connectedUser);
+
+            connectedUser.Disconnect();
+            connectedUser = null;
+            playerThread.Abort();
         }
 
         public void DisconnectAll()
