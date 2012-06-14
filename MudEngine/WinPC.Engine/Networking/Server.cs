@@ -7,6 +7,7 @@ using System.Threading;
 using WinPC.Engine.Abstract.Networking;
 using WinPC.Engine.Core;
 using WinPC.Engine.Directors;
+using WinPC.Engine.Abstract.Core;
 
 namespace WinPC.Engine.Networking
 {
@@ -29,13 +30,12 @@ namespace WinPC.Engine.Networking
 
         public string ServerOwner { get; private set; }
 
+        public IGame Game { get; private set; }
+
         private Thread ServerThread { get; set; }
 
 
-        public Server()
-        {
-            
-        }
+        public Server() : this(4000) { }
 
         [Category("Networking")]
         public Server(int port)
@@ -46,7 +46,6 @@ namespace WinPC.Engine.Networking
             MaxQueuedConnections = 10;
 
             Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
         }
 
         public void Start(Int32 maxConnections, Int32 maxQueueSize)
@@ -57,7 +56,8 @@ namespace WinPC.Engine.Networking
 
             Status = ServerStatus.Starting;
 
-            
+            //TODO: Instance IGame class here.  Scan scripts first.
+
             ServerDirector = new ServerDirector(this);
 
             try

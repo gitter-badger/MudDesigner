@@ -26,7 +26,9 @@ namespace WinPC.Engine.Directors
         public void AddConnection(Socket connection)
         {
             //TODO: Allow support for custom Player Types from scripts.
-            var player = new Player(new ConnectState(this), connection);
+            var player = new Player();
+            player.Initialize(new ConnectState(this), connection);
+            
             Thread userThread = new Thread(ReceiveDataThread);
 
             ConnectedPlayers.Add(player, userThread);

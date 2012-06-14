@@ -1,4 +1,5 @@
 ﻿using System;
+using WinPC.Engine.Abstract.Core;
 
 namespace WinPC.Engine.Abstract.Networking
 {
@@ -18,8 +19,9 @@ namespace WinPC.Engine.Abstract.Networking
         bool Enabled { get; }
 
         string MOTD { get; }
-
         string ServerOwner { get; }
+
+        IGame Game { get; }
 
         void Start(Int32 maxConnections, Int32 maxQueueSize);
         void Stop();

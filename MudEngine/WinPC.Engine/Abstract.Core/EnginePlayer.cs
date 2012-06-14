@@ -14,18 +14,17 @@ namespace WinPC.Engine.Abstract.Core
 
         public List<byte> Buffer { get; set; }
 
-        public bool IsConnected { get; }
+        public bool IsConnected
+        {
+            get
+            {
+                return Connection.Connected;
+            }
+        }
 
         public string Name { get; set; }
 
-        public void Initialize(IState initialState, Socket connection)
-        {
-            Connection = connection;
-            CurrentState = initialState;
-            Name = "Unnamed Player";
-
-            Buffer = new List<byte>();
-        }
+        public abstract void Initialize(IState initialState, Socket connection);
 
         public void Disconnect()
         {

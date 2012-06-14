@@ -6,5 +6,9 @@ namespace WinPC.Engine.Core
 {
     public class Player : EnginePlayer
     {
+        public override void Initialize(IState initialState, Socket connection)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
