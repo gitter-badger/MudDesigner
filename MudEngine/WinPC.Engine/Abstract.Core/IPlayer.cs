@@ -11,6 +11,8 @@ namespace WinPC.Engine.Abstract.Core
         bool IsConnected { get; }
 
         string Name { get; set; }
+
+        void Initialize(IState initialState, Socket connection);
         void Disconnect();
         void SwitchState(IState state);
     }
