@@ -20,9 +20,9 @@ namespace WinPC.Server
             Logger.ClearLog(); //Delete previous file.
             Logger.WriteLine("Server app starting...");
 
-            IServer server = new Engine.Networking.Server(4000);
+            IServer server = new WinPC.Engine.Networking.Server(port: 4000);
 
-            server.Start(100,20);
+            server.Start(maxConnections: 100, maxQueueSize: 20);
 
             while (server.Enabled)
             {
@@ -30,9 +30,6 @@ namespace WinPC.Server
             }
 
             server = null;
-            //System.Windows.Forms.Application.Exit();
-
-
         }
     }
 }
