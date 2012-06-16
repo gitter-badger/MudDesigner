@@ -2,6 +2,8 @@
 {
     public interface ISaveable
     {
-         
+        string Filename { get; }
+        
+        bool Save();
     }
 }

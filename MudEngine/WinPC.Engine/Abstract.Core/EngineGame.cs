@@ -16,7 +16,7 @@ namespace WinPC.Engine.Abstract.Core
 
         private IServer server;
 
-        public abstract void Initialize(IServer startedServer);
+        public abstract void Initialize(IServer startedServer, IWorld world);
 
         public virtual void Start()
         {
@@ -29,5 +29,26 @@ namespace WinPC.Engine.Abstract.Core
         }
 
         public abstract void Update();
+
+
+        public IWorld World
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public bool Load(string filename)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string Filename
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public bool Save()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

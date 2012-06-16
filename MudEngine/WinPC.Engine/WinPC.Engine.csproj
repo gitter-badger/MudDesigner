@@ -46,12 +46,15 @@
   <ItemGroup>
     <Compile Include="Abstract.Actions\ILoadable.cs" />
     <Compile Include="Abstract.Actions\ISaveable.cs" />
+    <Compile Include="Abstract.Actions\IUpdatable.cs" />
     <Compile Include="Abstract.Core\EngineGame.cs" />
     <Compile Include="Abstract.Core\EnginePlayer.cs" />
+    <Compile Include="Abstract.Core\EngineWorld.cs" />
     <Compile Include="Abstract.Core\ICommand.cs" />
     <Compile Include="Abstract.Core\IEngine.cs" />
     <Compile Include="Abstract.Core\IGame.cs" />
-    <Compile Include="Abstract.Core\IGameObject.cs" />
+    <Compile Include="Abstract.Core\IWorld.cs" />
+    <Compile Include="Abstract.Objects\IGameObject.cs" />
     <Compile Include="Abstract.Core\IInventory.cs" />
     <Compile Include="Abstract.Core\ILogger.cs" />
     <Compile Include="Abstract.Core\IPlayer.cs" />
@@ -65,19 +68,32 @@
     <Compile Include="Abstract.Directors\IServerDirector.cs" />
     <Compile Include="Abstract.Networking\IConnection.cs" />
     <Compile Include="Abstract.Networking\IServer.cs" />
+    <Compile Include="Abstract.Objects\IEquipmentSlot.cs" />
     <Compile Include="Abstract.Objects\IItem.cs" />
     <Compile Include="Commands\InvalidCommand.cs" />
     <Compile Include="Commands\SwitchStateCommand.cs" />
+    <Compile Include="Core\Game.cs" />
     <Compile Include="Core\Logger.cs" />
     <Compile Include="Core\Player.cs" />
     <Compile Include="Directors\ServerDirector.cs" />
-    <Compile Include="Engine.cs" />
+    <Compile Include="Core\Engine.cs" />
     <Compile Include="Networking\Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Engine.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Engine.settings</DependentUpon>
+    </Compile>
     <Compile Include="States\ConnectState.cs" />
     <Compile Include="States\MainMenuState.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Engine.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Engine.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

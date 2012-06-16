@@ -2,5 +2,6 @@
 {
     public interface ILoadable
     {
+        bool Load(string filename);
     }
 }

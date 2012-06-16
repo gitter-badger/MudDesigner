@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using WinPC.Engine.Abstract.Core;
 
-namespace WinPC.Engine
+namespace WinPC.Engine.Core
 {
     public class Engine : IEngine
     {
