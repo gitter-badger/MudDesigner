@@ -8,9 +8,9 @@ namespace WinPC.Engine.Abstract.Core
 {
     public abstract class EnginePlayer : IPlayer
     {
-        public IState CurrentState { get; private set; }
+        public IState CurrentState { get; protected set; }
 
-        public Socket Connection { get; private set; }
+        public Socket Connection { get; protected set; }
 
         public List<byte> Buffer { get; set; }
 
@@ -24,6 +24,11 @@ namespace WinPC.Engine.Abstract.Core
 
         public string Name { get; set; }
 
+        public EnginePlayer()
+        {
+            Buffer = new List<byte>();
+        }
+
         public abstract void Initialize(IState initialState, Socket connection);
 
         public void Disconnect()
@@ -35,6 +40,11 @@ namespace WinPC.Engine.Abstract.Core
         public void SwitchState(IState state)
         {
             CurrentState = state;
+        }
+
+        public void SendMessage(string message)
+        {
+            Connection.Send(new ASCIIEncoding().GetBytes(message));
         }
 
         public override string ToString()

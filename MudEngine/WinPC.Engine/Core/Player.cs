@@ -8,7 +8,8 @@ namespace WinPC.Engine.Core
     {
         public override void Initialize(IState initialState, Socket connection)
         {
-            throw new System.NotImplementedException();
+            this.Connection = connection;
+            initialState.Render(this);
         }
     }
 }

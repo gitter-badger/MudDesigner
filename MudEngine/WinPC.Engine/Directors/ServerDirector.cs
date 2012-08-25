@@ -92,7 +92,7 @@ namespace WinPC.Engine.Directors
             while (true)
             {
                 try
-                           {
+                {
                     byte[] buf = new byte[1];
 
                     if (!player.Connection.Connected)

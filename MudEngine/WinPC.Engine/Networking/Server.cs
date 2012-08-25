@@ -44,6 +44,8 @@ namespace WinPC.Engine.Networking
             Status = ServerStatus.Stopped;
             MaxConnections = 100;
             MaxQueuedConnections = 10;
+            MOTD = "MUD Designer based game.";
+            ServerOwner = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
 
             Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         }

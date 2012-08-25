@@ -8,7 +8,7 @@ using WinPC.Engine.Core;
 
 namespace WinPC.Engine.States
 {
-    public class ConnectState : IState
+    public class CreatePlayerState : IState
     {
         public ServerDirector Director { get; private set; }
 
@@ -16,7 +16,7 @@ namespace WinPC.Engine.States
         private ASCIIEncoding encoding;
         private IPlayer player;
 
-        public ConnectState(ServerDirector director)
+        public CreatePlayerState(ServerDirector director)
         {
             Director = director;
             encoding = new ASCIIEncoding();
@@ -27,17 +27,19 @@ namespace WinPC.Engine.States
             connection = connectedPlayer.Connection;
             player = connectedPlayer;
 
-            player.SendMessage("Welcome to Scionwest's Mud Engine!" + "\n\r");
-            player.SendMessage(Director.Server.MOTD);
-
-            //Now that the player is connected, start the login process.
-            player.SwitchState(new LoginState(Director));
+            player.SendMessage("Enter your name: ");
         }
+
         public ICommand GetCommand()
         {
             var input = Director.RecieveInput(player);
 
-            if (input == "menu")
+            if (String.IsNullOrEmpty(input))
+            {
+                player.SendMessage("Invalid username.");
+                player.SendMessage("Enter your name: ");
+            }
+            else
             {
                 return new SwitchStateCommand(Director, new MainMenuState(Director), player);
             }

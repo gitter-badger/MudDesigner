@@ -85,6 +85,9 @@
       <DependentUpon>Engine.settings</DependentUpon>
     </Compile>
     <Compile Include="States\ConnectState.cs" />
+    <Compile Include="States\LoginExistingUserState.cs" />
+    <Compile Include="States\CreatePlayerState.cs" />
+    <Compile Include="States\LoginState.cs" />
     <Compile Include="States\MainMenuState.cs" />
   </ItemGroup>
   <ItemGroup>
