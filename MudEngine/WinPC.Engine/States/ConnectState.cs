@@ -35,13 +35,14 @@ namespace WinPC.Engine.States
         }
         public ICommand GetCommand()
         {
+            /*
             var input = Director.RecieveInput(player);
 
             if (input == "menu")
             {
                 return new SwitchStateCommand(Director, new MainMenuState(Director), player);
             }
-
+            */
             return new InvalidCommand(connection);
         }
     }
