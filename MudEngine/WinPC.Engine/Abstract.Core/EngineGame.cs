@@ -10,12 +10,13 @@ namespace WinPC.Engine.Abstract.Core
     public abstract class EngineGame : IGame
     {
         public string Name { get; set; }
-
+        
         public string Description { get; set; }
 
         public string Version { get; set; }
 
         protected IServer server;
+ 
 
         public abstract void Initialize(IServer startedServer, IWorld world);
 

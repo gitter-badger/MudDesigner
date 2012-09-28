@@ -11,6 +11,7 @@ namespace WinPC.Engine.States
     public class ConnectState : IState
     {
         public ServerDirector Director { get; private set; }
+        private int IsLoggingin { get; set; }
 
         private Socket connection;
         private ASCIIEncoding encoding;
@@ -21,6 +22,7 @@ namespace WinPC.Engine.States
             Director = director;
             encoding = new ASCIIEncoding();
 
+
         }
         public void Render(IPlayer connectedPlayer)
         {
@@ -28,7 +30,7 @@ namespace WinPC.Engine.States
             player = connectedPlayer;
 
             player.SendMessage("Welcome to Scionwest's Mud Engine!" + "\n\r");
-            player.SendMessage(Director.Server.MOTD);
+            player.SendMessage(Director.Server.MOTD + "\n\r");
 
             //Now that the player is connected, start the login process.
             player.SwitchState(new LoginState(Director));
