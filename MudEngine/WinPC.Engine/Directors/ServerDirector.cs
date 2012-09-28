@@ -59,6 +59,7 @@ namespace WinPC.Engine.Directors
                 }
                 catch(Exception ex)
                 {
+                    Logger.WriteLine(ex.Message);
                 }
             }
         }

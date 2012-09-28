@@ -6,17 +6,17 @@ using System.IO;
 
 using WinPC.Engine.Abstract.Core;
 using WinPC.Engine.Abstract.Networking;
+using WinPC.Engine.Networking;
 
 namespace WinPC.Engine.Core
 {
     public class Game : EngineGame
     {
-        public IWorld World { get; protected set; }
-
-        private IServer server;
-
         public override void Initialize(IServer startedServer, IWorld world)
         {
+            if (startedServer == null || world == null)
+                return;
+
             server = startedServer;
 
             string worldFile = Path.Combine(@"\Worlds\", WinPC.Engine.Properties.Engine.Default.WorldFile);
@@ -27,7 +27,10 @@ namespace WinPC.Engine.Core
 
         public override void Update()
         {
-            World.Update();
+            if (server.Status == ServerStatus.Running)
+            {
+                World.Update();
+            }
         }
     }
 }

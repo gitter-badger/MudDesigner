@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using WinPC.Engine.Abstract.Networking;
+using WinPC.Engine.Core;
 
 namespace WinPC.Engine.Abstract.Core
 {
@@ -14,9 +15,19 @@ namespace WinPC.Engine.Abstract.Core
 
         public string Version { get; set; }
 
-        private IServer server;
+        protected IServer server;
 
         public abstract void Initialize(IServer startedServer, IWorld world);
+
+        public static IGame GetCustomGame(string className)
+        {
+            Type t = System.Reflection.Assembly.GetExecutingAssembly().GetType(className);
+            if (t == null)
+                return new Game();
+
+            IGame customGame = (IGame)Activator.CreateInstance(t);
+            return customGame;
+        }
 
         public virtual void Start()
         {

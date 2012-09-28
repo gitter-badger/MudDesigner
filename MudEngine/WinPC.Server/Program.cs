@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using WinPC.Engine;
+using WinPC.Engine.Abstract.Core;
 using WinPC.Engine.Abstract.Networking;
 using WinPC.Engine.Core;
 using WinPC.Engine.Networking;
@@ -22,7 +23,12 @@ namespace WinPC.Server
 
             IServer server = new WinPC.Engine.Networking.Server(port: 4000);
 
+            //Pull the custom game info that will be used by this MUD
+            IGame game = Game.GetCustomGame(WinPC.Engine.Properties.Engine.Default.DefaultGame);
+
             server.Start(maxConnections: 100, maxQueueSize: 20);
+            
+            game.Initialize(server, null);
 
             while (server.Enabled)
             {

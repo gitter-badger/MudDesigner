@@ -17,6 +17,7 @@ namespace WinPC.Engine.Abstract.Networking
         int MaxConnections { get; }
         int MaxQueuedConnections { get; }
         bool Enabled { get; }
+        ServerStatus Status { get; }
 
         string MOTD { get; }
         string ServerOwner { get; }
