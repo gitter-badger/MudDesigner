@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MudDesigner.Engine.Abstract.Core;
+using MudDesigner.Engine.Abstract.Environment;
 
-namespace MudDesigner.Engine.Core
+namespace MudDesigner.Engine.Environment
 {
     public class World : EngineWorld
     {

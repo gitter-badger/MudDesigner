@@ -34,7 +34,7 @@ namespace MudDesigner.Engine.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("WinPC.Engine.Core.Game")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Engine.Core.Game")]
         public string DefaultGame {
             get {
                 return ((string)(this["DefaultGame"]));

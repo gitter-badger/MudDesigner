@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using MudDesigner.Engine.Abstract.Actions;
 
-namespace MudDesigner.Engine.Abstract.Core
+namespace MudDesigner.Engine.Abstract.Environment
 {
     public interface IWorld : ILoadable, ISaveable
     {

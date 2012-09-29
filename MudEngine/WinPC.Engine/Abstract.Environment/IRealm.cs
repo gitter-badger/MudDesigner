@@ -1,4 +1,4 @@
-﻿namespace MudDesigner.Engine.Abstract.Core
+﻿namespace MudDesigner.Engine.Abstract.Environment
 {
     public interface IRealm
     {

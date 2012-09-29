@@ -12,7 +12,7 @@ using MudEngine.GameScripts;
 
 namespace MudEngine.Game.Environment
 {
-    public abstract class Environment : BaseScript, IGameComponent, ISavable, IUpdatable
+    public abstract class Environment : BaseScript, IGameComponent, ISavable
     {
         /// <summary>
         /// Gets or Sets the filename for this environment when it is saved.

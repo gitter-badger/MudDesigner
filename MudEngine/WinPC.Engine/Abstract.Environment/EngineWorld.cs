@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MudDesigner.Engine.Abstract.Objects;
+using MudDesigner.Engine.Abstract.Core;
 
-namespace MudDesigner.Engine.Abstract.Core
+namespace MudDesigner.Engine.Abstract.Environment
 {
     
     public class EngineWorld :BaseGameObject, IWorld, IGameObject

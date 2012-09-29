@@ -1,4 +1,4 @@
-﻿namespace MudDesigner.Engine.Abstract.Core
+﻿namespace MudDesigner.Engine.Abstract.Objects
 {
     public interface IInventory
     {

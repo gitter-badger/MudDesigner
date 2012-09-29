@@ -1,9 +1,9 @@
 ﻿using MudDesigner.Engine.Abstract.Networking;
 using MudDesigner.Engine.Abstract.Actions;
-
+using MudDesigner.Engine.Abstract.Environment;
 namespace MudDesigner.Engine.Abstract.Core
 {
-    public interface IGame : ILoadable, ISaveable, IUpdatable
+    public interface IGame : ILoadable, ISaveable
     {
         string Name { get; set; }
         string Description { get; set; }
@@ -11,7 +11,7 @@ namespace MudDesigner.Engine.Abstract.Core
 
         IWorld World { get; }
 
-        bool Initialize(IServer startedServer);
+        bool Initialize(IServer startedServer, IWorld world);
         void Start();
         void Stop();
     }

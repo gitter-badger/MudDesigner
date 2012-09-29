@@ -45,7 +45,7 @@ namespace MudDesigner.Engine.Abstract.Core
         public void SendMessage(string message, bool newLine = true)
         {
             if (newLine)
-                message += Environment.NewLine;
+                message += System.Environment.NewLine;
 
             Connection.Send(new ASCIIEncoding().GetBytes(message));
         }

@@ -6,9 +6,9 @@ using System.Text;
 using MudDesigner.Engine.Abstract.Core;
 using MudDesigner.Engine.Abstract.Actions;
 
-namespace MudDesigner.Engine.Abstract.Core
+namespace MudDesigner.Engine.Abstract.Environment
 {
-    public interface IZone : ILoadable, ISaveable, IUpdatable
+    public interface IZone : ILoadable, ISaveable
     {
     }
 }

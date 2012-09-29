@@ -58,8 +58,7 @@ namespace MudDesigner.Engine.Networking
             Status = ServerStatus.Starting;
 
             Game = game;
-            game.Initialize(this);
-
+            
             ServerDirector = new ServerDirector(this);
 
             try
