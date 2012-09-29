@@ -26,9 +26,7 @@ namespace WinPC.Server
             //Pull the custom game info that will be used by this MUD
             IGame game = Game.GetCustomGame(WinPC.Engine.Properties.Engine.Default.DefaultGame);
 
-            server.Start(maxConnections: 100, maxQueueSize: 20);
-            
-            game.Initialize(server, null);
+            server.Start(maxConnections: 100, maxQueueSize: 20, game: game);
 
             while (server.Enabled)
             {

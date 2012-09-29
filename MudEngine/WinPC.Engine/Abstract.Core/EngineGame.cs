@@ -15,10 +15,13 @@ namespace WinPC.Engine.Abstract.Core
 
         public string Version { get; set; }
 
-        protected IServer server;
- 
+        protected IServer Server { get; set; }
 
-        public abstract void Initialize(IServer startedServer, IWorld world);
+        public IWorld World { get; set; }
+
+        public string Filename { get; set; }
+ 
+        public abstract bool Initialize(IServer startedServer);
 
         public static IGame GetCustomGame(string className)
         {
@@ -42,20 +45,9 @@ namespace WinPC.Engine.Abstract.Core
 
         public abstract void Update();
 
-
-        public IWorld World
-        {
-            get { throw new NotImplementedException(); }
-        }
-
         public bool Load(string filename)
         {
             throw new NotImplementedException();
-        }
-
-        public string Filename
-        {
-            get { throw new NotImplementedException(); }
         }
 
         public bool Save()

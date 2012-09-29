@@ -30,10 +30,9 @@ namespace WinPC.Engine.Networking
 
         public string ServerOwner { get; private set; }
 
-        public IGame Game { get; private set; }
+        public IGame Game { get; protected set; }
 
         private Thread ServerThread { get; set; }
-
 
         public Server() : this(4000) { }
 
@@ -50,7 +49,7 @@ namespace WinPC.Engine.Networking
             Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         }
 
-        public void Start(Int32 maxConnections, Int32 maxQueueSize)
+        public void Start(Int32 maxConnections, Int32 maxQueueSize, IGame game)
         {
             Logger.WriteLine("Game Server System Starting...");
             if (Status != ServerStatus.Stopped)
@@ -58,7 +57,8 @@ namespace WinPC.Engine.Networking
 
             Status = ServerStatus.Starting;
 
-            //TODO: Instance IGame class here.  Scan scripts first.
+            Game = game;
+            game.Initialize(this);
 
             ServerDirector = new ServerDirector(this);
 

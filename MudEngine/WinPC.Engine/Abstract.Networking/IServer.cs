@@ -24,7 +24,7 @@ namespace WinPC.Engine.Abstract.Networking
 
         IGame Game { get; }
 
-        void Start(Int32 maxConnections, Int32 maxQueueSize);
+        void Start(Int32 maxConnections, Int32 maxQueueSize, IGame game);
         void Stop();
         void Running();
  

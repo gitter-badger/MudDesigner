@@ -12,22 +12,23 @@ namespace WinPC.Engine.Core
 {
     public class Game : EngineGame
     {
-        public override void Initialize(IServer startedServer, IWorld world)
+        public override bool Initialize(IServer startedServer)
         {
-            if (startedServer == null || world == null)
-                return;
+            if (startedServer == null)
+                return false;
 
-            server = startedServer;
+            Server = startedServer;
+            
+            
+            //@TODO: Where should we Instance the IGame.World property?
+            //World.Load(WinPC.Engine.Properties.Engine.Default.WorldFile);
 
-            string worldFile = Path.Combine(@"\Worlds\", WinPC.Engine.Properties.Engine.Default.WorldFile);
-
-            if (!World.Load(worldFile))
-                World.Create("Empty World");
+            return true;
         }
 
         public override void Update()
         {
-            if (server.Status == ServerStatus.Running)
+            if (Server.Status == ServerStatus.Running)
             {
                 World.Update();
             }

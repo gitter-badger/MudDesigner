@@ -11,7 +11,7 @@ namespace WinPC.Engine.Abstract.Core
 
         IWorld World { get; }
 
-        void Initialize(IServer startedServer, IWorld world);
+        bool Initialize(IServer startedServer);
         void Start();
         void Stop();
     }
