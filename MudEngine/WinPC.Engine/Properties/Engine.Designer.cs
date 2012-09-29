@@ -25,7 +25,7 @@ namespace WinPC.Engine.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("World.xml")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Temp\\Test\\World.xml")]
         public string WorldFile {
             get {
                 return ((string)(this["WorldFile"]));

@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="WorldFile" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">World.xml</Value>
+      <Value Profile="(Default)">C:\Temp\Test\World.xml</Value>
     </Setting>
     <Setting Name="DefaultGame" Type="System.String" Scope="Application">
       <Value Profile="(Default)">WinPC.Engine.Core.Game</Value>

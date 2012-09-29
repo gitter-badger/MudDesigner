@@ -7,6 +7,7 @@ using WinPC.Engine.Abstract.Core;
 using WinPC.Engine.Abstract.Networking;
 using WinPC.Engine.Core;
 using WinPC.Engine.Networking;
+using System.IO;
 
 namespace WinPC.Server
 {
@@ -22,6 +23,17 @@ namespace WinPC.Server
             Logger.WriteLine("Server app starting...");
 
             IServer server = new WinPC.Engine.Networking.Server(port: 4000);
+
+            string file = Path.Combine(Directory.GetCurrentDirectory(), "Saves", WinPC.Engine.Properties.Engine.Default.WorldFile);
+
+            string fileName = Path.GetFileName(WinPC.Engine.Properties.Engine.Default.WorldFile);
+            string path = Path.GetFullPath(file.Substring(0, file.Length - fileName.Length));
+            string root = Path.GetPathRoot(file);
+
+            root = Path.GetDirectoryName(file);
+
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
 
             //Pull the custom game info that will be used by this MUD
             IGame game = Game.GetCustomGame(WinPC.Engine.Properties.Engine.Default.DefaultGame);

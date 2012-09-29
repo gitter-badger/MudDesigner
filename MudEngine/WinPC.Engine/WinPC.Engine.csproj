@@ -50,6 +50,7 @@
     <Compile Include="Abstract.Core\BaseGameObject.cs" />
     <Compile Include="Abstract.Core\EngineGame.cs" />
     <Compile Include="Abstract.Core\EnginePlayer.cs" />
+    <Compile Include="Abstract.Core\EngineRoom.cs" />
     <Compile Include="Abstract.Core\EngineWorld.cs" />
     <Compile Include="Abstract.Core\ICommand.cs" />
     <Compile Include="Abstract.Core\IEngine.cs" />
