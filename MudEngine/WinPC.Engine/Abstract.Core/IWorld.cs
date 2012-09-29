@@ -6,12 +6,15 @@ using WinPC.Engine.Abstract.Actions;
 
 namespace WinPC.Engine.Abstract.Core
 {
-    public interface IWorld : ILoadable, ISaveable, IUpdatable
+    public interface IWorld : ILoadable, ISaveable, IUpdatable, IList<IRealm>
     {
         List<IRealm> Realms { get; }
         string Name { get; set; }
 
         void Create(string name);
         void Create(string name, List<IRealm> realms);
+
+        IRealm GetRealm(string realmName);
+
     }
 }

@@ -54,6 +54,7 @@
     <Compile Include="Abstract.Core\IEngine.cs" />
     <Compile Include="Abstract.Core\IGame.cs" />
     <Compile Include="Abstract.Core\IWorld.cs" />
+    <Compile Include="Abstract.Core\IZone.cs" />
     <Compile Include="Abstract.Objects\IGameObject.cs" />
     <Compile Include="Abstract.Core\IInventory.cs" />
     <Compile Include="Abstract.Core\ILogger.cs" />

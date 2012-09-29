@@ -20,7 +20,7 @@ namespace WinPC.Engine.Core
             Server = startedServer;
             
             
-            //@TODO: Where should we Instance the IGame.World property?
+            //TODO: Where should we Instance the IGame.World property?
             //World.Load(WinPC.Engine.Properties.Engine.Default.WorldFile);
 
             return true;

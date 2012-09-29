@@ -65,7 +65,7 @@ namespace WinPC.Engine.States
             //can be supported for characters.
             
             //System.Text.RegularExpressions.Match m = System.Text.RegularExpressions.Regex.Match(input, @"\w+");
-            // @ToDO: Scion can you give me how you are reproducing the garbage string on input, I wasn't able to send garblygook as input.
+            //TODO Scion can you give me how you are reproducing the garbage string on input, I wasn't able to send garblygook as input.
 
             if (string.IsNullOrWhiteSpace(input))
                 return new InvalidCommand(_player.Connection);  // FYI we can turn this into InvalidLogin or something.
