@@ -31,12 +31,6 @@ namespace WinPC.Engine.Abstract.Core
             throw new NotImplementedException();
         }
 
-        public void Update()
-        {
-            throw new NotImplementedException();
-        }
-
-
         public void Create(string name)
         {
             throw new NotImplementedException();

@@ -33,7 +33,6 @@ namespace WinPC.Engine.Core
         {
             if (Server.Status == ServerStatus.Running)
             {
-                World.Update();
             }
         }
     }

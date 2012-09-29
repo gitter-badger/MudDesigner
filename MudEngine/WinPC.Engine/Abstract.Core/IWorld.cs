@@ -6,7 +6,7 @@ using WinPC.Engine.Abstract.Actions;
 
 namespace WinPC.Engine.Abstract.Core
 {
-    public interface IWorld : ILoadable, ISaveable, IUpdatable
+    public interface IWorld : ILoadable, ISaveable
     {
         Dictionary<string, IRealm> Realms { get; }
         string Name { get; set; }
