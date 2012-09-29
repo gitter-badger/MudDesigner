@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 using System.Reflection;
-namespace WinPC.Engine.Abstract.Core
+namespace MudDesigner.Engine.Abstract.Core
 {
     public class BaseGameObject
     {

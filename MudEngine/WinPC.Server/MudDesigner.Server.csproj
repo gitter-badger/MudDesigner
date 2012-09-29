@@ -8,8 +8,8 @@
     <ProjectGuid>{161E78DB-10C5-43A6-BC15-0945BC6F941F}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WinPC.Server</RootNamespace>
-    <AssemblyName>WinPC.Server</AssemblyName>
+    <RootNamespace>MudDesigner.Server</RootNamespace>
+    <AssemblyName>MudDesigner.Server</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>

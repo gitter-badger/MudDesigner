@@ -40,5 +40,25 @@ namespace MudDesigner.Engine.Abstract.Core
             {
                 throw new NotImplementedException();
             }
+
+        public Guid Id
+        {
+            get { throw new NotImplementedException(); }
         }
+
+        public GameObjectType Type
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public void Save(System.IO.BinaryWriter writer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Load(IGame game, System.IO.BinaryReader reader)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

@@ -8,8 +8,8 @@
     <ProjectGuid>{9D9E8CAC-8876-4725-9A65-2077DE4322DD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WinPC.Engine</RootNamespace>
-    <AssemblyName>WinPC.Engine</AssemblyName>
+    <RootNamespace>MudDesigner.Engine</RootNamespace>
+    <AssemblyName>MudDesigner.Engine</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>

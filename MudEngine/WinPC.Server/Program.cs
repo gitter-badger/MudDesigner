@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using MudDesigner.Engine;
@@ -23,9 +24,9 @@ namespace MudDesigner.Server
 
             IServer server = new MudDesigner.Engine.Networking.Server(port: 4000);
 
-            string file = Path.Combine(Directory.GetCurrentDirectory(), "Saves", WinPC.Engine.Properties.Engine.Default.WorldFile);
+            string file = Path.Combine(Directory.GetCurrentDirectory(), "Saves", MudDesigner.Engine.Properties.Engine.Default.WorldFile);
 
-            string fileName = Path.GetFileName(WinPC.Engine.Properties.Engine.Default.WorldFile);
+            string fileName = Path.GetFileName(MudDesigner.Engine.Properties.Engine.Default.WorldFile);
             string path = Path.GetFullPath(file.Substring(0, file.Length - fileName.Length));
             string root = Path.GetPathRoot(file);
 

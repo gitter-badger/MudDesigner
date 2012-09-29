@@ -8,7 +8,7 @@ using MudDesigner.Engine.Abstract.Actions;
 
 namespace MudDesigner.Engine.Abstract.Core
 {
-    interface IZone : ILoadable, ISaveable, IUpdatable
+    public interface IZone : ILoadable, ISaveable, IUpdatable
     {
     }
 }
