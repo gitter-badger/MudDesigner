@@ -6,9 +6,9 @@ using WinPC.Engine.Abstract.Actions;
 
 namespace WinPC.Engine.Abstract.Core
 {
-    public interface IWorld : ILoadable, ISaveable, IUpdatable, IList<IRealm>
+    public interface IWorld : ILoadable, ISaveable, IUpdatable
     {
-        List<IRealm> Realms { get; }
+        Dictionary<string, IRealm> Realms { get; }
         string Name { get; set; }
 
         void Create(string name);

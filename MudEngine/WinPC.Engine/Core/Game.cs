@@ -24,6 +24,7 @@ namespace WinPC.Engine.Core
             
             //TODO: Where should we Instance the IGame.World property?
             //World.Load(WinPC.Engine.Properties.Engine.Default.WorldFile);
+            World = new World();
 
             return true;
         }

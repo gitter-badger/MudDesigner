@@ -47,6 +47,7 @@
     <Compile Include="Abstract.Actions\ILoadable.cs" />
     <Compile Include="Abstract.Actions\ISaveable.cs" />
     <Compile Include="Abstract.Actions\IUpdatable.cs" />
+    <Compile Include="Abstract.Core\BaseGameObject.cs" />
     <Compile Include="Abstract.Core\EngineGame.cs" />
     <Compile Include="Abstract.Core\EnginePlayer.cs" />
     <Compile Include="Abstract.Core\EngineWorld.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Core\Game.cs" />
     <Compile Include="Core\Logger.cs" />
     <Compile Include="Core\Player.cs" />
+    <Compile Include="Core\World.cs" />
     <Compile Include="Directors\ServerDirector.cs" />
     <Compile Include="Core\Engine.cs" />
     <Compile Include="Networking\Server.cs" />
