@@ -35,9 +35,27 @@ namespace MudDesigner.Engine.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Engine.Core.Game")]
-        public string DefaultGame {
+        public string DefaultGameType {
             get {
-                return ((string)(this["DefaultGame"]));
+                return ((string)(this["DefaultGameType"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Engine.Environment.World")]
+        public string DefaultWorldType {
+            get {
+                return ((string)(this["DefaultWorldType"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Engine.Core.Game")]
+        public string DefaultPlayerType {
+            get {
+                return ((string)(this["DefaultPlayerType"]));
             }
         }
     }

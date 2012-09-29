@@ -5,7 +5,13 @@
     <Setting Name="WorldFile" Type="System.String" Scope="Application">
       <Value Profile="(Default)">World.sav</Value>
     </Setting>
-    <Setting Name="DefaultGame" Type="System.String" Scope="Application">
+    <Setting Name="DefaultGameType" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MudDesigner.Engine.Core.Game</Value>
+    </Setting>
+    <Setting Name="DefaultWorldType" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MudDesigner.Engine.Environment.World</Value>
+    </Setting>
+    <Setting Name="DefaultPlayerType" Type="System.String" Scope="Application">
       <Value Profile="(Default)">MudDesigner.Engine.Core.Game</Value>
     </Setting>
   </Settings>

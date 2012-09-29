@@ -28,12 +28,9 @@ namespace MudDesigner.Server
             IServer server = new MudDesigner.Engine.Networking.Server(port: 4000);
 
             //Pull the custom game info that will be used by this MUD
-            IGame game = Game.GetCustomGame(MudDesigner.Engine.Properties.Engine.Default.DefaultGame);
+            IGame game = (IGame)Game.GetCustomType(MudDesigner.Engine.Properties.Engine.Default.DefaultGameType);
+            IWorld world = (IWorld)Game.GetCustomType(MudDesigner.Engine.Properties.Engine.Default.DefaultWorldType);
             
-            //Setup up the world.
-            IWorld world = new World();
-            //world.Create("Azeroth");
-
             //It does not matter in what order this is performed, however it is best to start the server
             //after the game.initialize() method is called.  This ensures the game is loaded and ready to go
             //prior to clients connecting to the server.

@@ -102,9 +102,5 @@ namespace MudDesigner.Engine.Networking
                 ServerDirector.AddConnection(Socket.Accept());
             }
         }
-
-      
-
-       
     }
 }

@@ -89,19 +89,20 @@ namespace MudDesigner.Engine.Abstract.Core
             Server = startedServer;
 
             World = world;
+            
 
             return true;
         }
 
-        public static IGame GetCustomGame(string className)
+        public static object GetCustomType(string className)
         {
             
             Type t = System.Reflection.Assembly.GetExecutingAssembly().GetType(className);
             if (t == null)
                 return null;
 
-            IGame customGame = (IGame)Activator.CreateInstance(t);
-            return customGame;
+            object customType = Activator.CreateInstance(t);
+            return customType;
         }
 
         public virtual void Start()
