@@ -42,8 +42,11 @@ namespace WinPC.Engine.Abstract.Core
             CurrentState = state;
         }
 
-        public void SendMessage(string message)
+        public void SendMessage(string message, bool newLine = true)
         {
+            if (newLine)
+                message += Environment.NewLine;
+
             Connection.Send(new ASCIIEncoding().GetBytes(message));
         }
 

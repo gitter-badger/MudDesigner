@@ -15,6 +15,6 @@ namespace WinPC.Engine.Abstract.Core
         void Initialize(IState initialState, Socket connection);
         void Disconnect();
         void SwitchState(IState state);
-        void SendMessage(string message);
+        void SendMessage(string message, bool newLine = true);
     }
 }

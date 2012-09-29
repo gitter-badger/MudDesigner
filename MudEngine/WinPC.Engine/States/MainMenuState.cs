@@ -39,15 +39,16 @@ namespace WinPC.Engine.States
 
 
             // Some Fancy Menu
-            connection.Send(encoding.GetBytes("-----------------------------------------\n\r"));
-            //connection.Send(encoding.GetBytes(string.Format("|{0}|\n\r", Director.Server.Game.Name))); // @ToDo: I'll look into Text Centering stuff.
-            connection.Send(encoding.GetBytes("-----------------------------------------\n\r"));
-            connection.Send(encoding.GetBytes("| [Enter] a town                        |\n\r"));
-            connection.Send(encoding.GetBytes("| [Join] a chat channel                 |\n\r"));
-            connection.Send(encoding.GetBytes("| [Save] my current player              |\n\r"));
-            connection.Send(encoding.GetBytes("| Change some game [Options]            |\n\r"));
-            connection.Send(encoding.GetBytes("| [Quit] the game                       |\n\r"));
-            connection.Send(encoding.GetBytes("-----------------------------------------\n\r")); 
+            player.SendMessage("");
+            player.SendMessage("-----------------------------------------");
+            player.SendMessage(string.Format("|{0}|", Director.Server.Game.Name)); // @ToDo: I'll look into Text Centering stuff.
+            player.SendMessage("-----------------------------------------");
+            player.SendMessage("| [Enter] a town                        |");
+            player.SendMessage("| [Join] a chat channel                 |");
+            player.SendMessage("| [Save] my current player              |");
+            player.SendMessage("| Change some game [Options]            |");
+            player.SendMessage("| [Quit] the game                       |");
+            player.SendMessage("-----------------------------------------"); 
 
 
 

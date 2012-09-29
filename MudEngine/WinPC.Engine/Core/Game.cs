@@ -14,6 +14,8 @@ namespace WinPC.Engine.Core
     {
         public override bool Initialize(IServer startedServer)
         {
+            Name = "AllocateThis! Mud Game";
+
             if (startedServer == null)
                 return false;
 

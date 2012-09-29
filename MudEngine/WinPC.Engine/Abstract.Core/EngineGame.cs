@@ -20,6 +20,8 @@ namespace WinPC.Engine.Abstract.Core
         public IWorld World { get; set; }
 
         public string Filename { get; set; }
+
+        
  
         public abstract bool Initialize(IServer startedServer);
 
