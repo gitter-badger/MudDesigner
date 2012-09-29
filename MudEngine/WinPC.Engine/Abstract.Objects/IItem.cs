@@ -1,4 +1,4 @@
-﻿namespace WinPC.Engine.Abstract.Objects
+﻿namespace MudDesigner.Engine.Abstract.Objects
 {
     public interface IItem
     {

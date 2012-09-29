@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace WinPC.Engine.Abstract.Actions
+namespace MudDesigner.Engine.Abstract.Actions
 {
     public interface IUpdatable
     {

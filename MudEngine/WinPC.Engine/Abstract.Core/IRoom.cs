@@ -1,9 +1,10 @@
-﻿using System;
+﻿namespace MudDesigner.Engine.Abstract.Core
+using System;
 using System.Collections.Generic;
 using System.Collections;
 
-using WinPC
-namespace WinPC.Engine.Abstract.Core
+using MudDesigner;
+namespace MudDesigner.Engine.Abstract.Core
 {
     public interface IRoom
     {
@@ -11,6 +12,6 @@ namespace WinPC.Engine.Abstract.Core
         public bool Safe { get; set; }
         public Dictionary<string, IPlayer> Occupants { get; private set; }
 
-
+         
     }
 }

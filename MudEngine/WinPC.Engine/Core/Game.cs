@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-using WinPC.Engine.Abstract.Core;
-using WinPC.Engine.Abstract.Networking;
-using WinPC.Engine.Networking;
+using MudDesigner.Engine.Abstract.Core;
+using MudDesigner.Engine.Abstract.Networking;
+using MudDesigner.Engine.Networking;
 
-namespace WinPC.Engine.Core
+namespace MudDesigner.Engine.Core
 {
     public class Game : EngineGame
     {

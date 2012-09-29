@@ -51,9 +51,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WinPC.Engine\WinPC.Engine.csproj">
+    <ProjectReference Include="..\WinPC.Engine\MudDesigner.Engine.csproj">
       <Project>{9D9E8CAC-8876-4725-9A65-2077DE4322DD}</Project>
-      <Name>WinPC.Engine</Name>
+      <Name>MudDesigner.Engine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

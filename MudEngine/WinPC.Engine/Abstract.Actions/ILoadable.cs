@@ -1,7 +1,11 @@
-﻿namespace WinPC.Engine.Abstract.Actions
+﻿using System.IO;
+using MudDesigner.Engine.Abstract.Core;
+
+namespace MudDesigner.Engine.Abstract.Actions
 {
     public interface ILoadable
     {
-        bool Load(string filename);
+        void Load(IGame game, BinaryReader reader);
+        
     }
 }

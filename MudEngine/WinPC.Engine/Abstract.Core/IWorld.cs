@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WinPC.Engine.Abstract.Actions;
+using MudDesigner.Engine.Abstract.Actions;
 
-namespace WinPC.Engine.Abstract.Core
+namespace MudDesigner.Engine.Abstract.Core
 {
     public interface IWorld : ILoadable, ISaveable
     {

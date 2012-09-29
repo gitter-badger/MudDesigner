@@ -1,7 +1,9 @@
-﻿namespace WinPC.Engine.Abstract.Actions
+﻿using System.IO;
+
+namespace MudDesigner.Engine.Abstract.Actions
 {
     public interface ISaveable
     {
-        bool Save();
+        void Save(BinaryWriter writer);
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace WinPC.Engine.Abstract.Core
+﻿namespace MudDesigner.Engine.Abstract.Core
 {
     public interface IInventory
     {

@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WinPC.Engine;
-using WinPC.Engine.Abstract.Core;
-using WinPC.Engine.Abstract.Networking;
-using WinPC.Engine.Core;
-using WinPC.Engine.Networking;
-using System.IO;
+using MudDesigner.Engine;
+using MudDesigner.Engine.Abstract.Core;
+using MudDesigner.Engine.Abstract.Networking;
+using MudDesigner.Engine.Core;
+using MudDesigner.Engine.Networking;
 
-namespace WinPC.Server
+namespace MudDesigner.Server
 {
     class Program
     {
@@ -22,7 +21,7 @@ namespace WinPC.Server
             Logger.ClearLog(); //Delete previous file.
             Logger.WriteLine("Server app starting...");
 
-            IServer server = new WinPC.Engine.Networking.Server(port: 4000);
+            IServer server = new MudDesigner.Engine.Networking.Server(port: 4000);
 
             string file = Path.Combine(Directory.GetCurrentDirectory(), "Saves", WinPC.Engine.Properties.Engine.Default.WorldFile);
 
@@ -36,7 +35,7 @@ namespace WinPC.Server
                 Directory.CreateDirectory(path);
 
             //Pull the custom game info that will be used by this MUD
-            IGame game = Game.GetCustomGame(WinPC.Engine.Properties.Engine.Default.DefaultGame);
+            IGame game = Game.GetCustomGame(MudDesigner.Engine.Properties.Engine.Default.DefaultGame);
 
             server.Start(maxConnections: 100, maxQueueSize: 20, game: game);
 

@@ -1,7 +1,7 @@
 ﻿using System.Net.Sockets;
 using System.Collections.Generic;
 
-namespace WinPC.Engine.Abstract.Core
+namespace MudDesigner.Engine.Abstract.Core
 {
     public interface IPlayer
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WinPC.Engine.Core
+namespace MudDesigner.Engine.Core
 {
     /// <summary>
     /// Public Engine Logging Class.

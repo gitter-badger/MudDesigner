@@ -1,7 +1,7 @@
-﻿using WinPC.Engine.Abstract.Core;
-using WinPC.Engine.Directors;
+﻿using MudDesigner.Engine.Abstract.Core;
+using MudDesigner.Engine.Directors;
 
-namespace WinPC.Engine.Commands
+namespace MudDesigner.Engine.Commands
 {
     public class SwitchStateCommand : ICommand
     {

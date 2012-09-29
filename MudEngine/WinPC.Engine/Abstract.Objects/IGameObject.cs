@@ -1,7 +1,22 @@
-﻿namespace WinPC.Engine.Abstract.Objects
+﻿using System;
+using MudDesigner.Engine.Abstract.Actions;
+
+namespace MudDesigner.Engine.Abstract.Objects
 {
-    public interface IGameObject
+    public enum GameObjectType
     {
+        Room,
+        Player,
+        Enemy,
+        Realm,
+        World,
+        Item,
+    }
+
+    public interface IGameObject : ISaveable, ILoadable
+    {
+        Guid Id { get;}
+        GameObjectType Type { get;  }
          
     }
 }

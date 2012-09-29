@@ -1,11 +1,11 @@
 ﻿using System.Net.Sockets;
 using System.Text;
-using WinPC.Engine.Abstract.Core;
-using WinPC.Engine.Commands;
-using WinPC.Engine.Core;
-using WinPC.Engine.Directors;
+using MudDesigner.Engine.Abstract.Core;
+using MudDesigner.Engine.Commands;
+using MudDesigner.Engine.Core;
+using MudDesigner.Engine.Directors;
 
-namespace WinPC.Engine.States
+namespace MudDesigner.Engine.States
 {
     public class MainMenuState : IState
     {

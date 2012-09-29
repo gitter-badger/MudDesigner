@@ -1,4 +1,4 @@
-﻿namespace WinPC.Engine.Abstract.Networking
+﻿namespace MudDesigner.Engine.Abstract.Networking
 {
     public interface IConnection
     {

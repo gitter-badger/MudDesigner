@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Net.Sockets;
 
-namespace WinPC.Engine.Abstract.Core
+namespace MudDesigner.Engine.Abstract.Core
 {
     public abstract class EnginePlayer : IPlayer
     {

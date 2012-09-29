@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using WinPC.Engine.Abstract.Core;
-using WinPC.Engine.Abstract.Objects;
-using WinPC.Engine.Core;
+using MudDesigner.Engine.Abstract.Core;
+using MudDesigner.Engine.Abstract.Objects;
+using MudDesigner.Engine.Core;
 
-namespace WinPC.Engine.Commands
+namespace MudDesigner.Engine.Commands
 {
     public class LoadFileCommand : ICommand
     {

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WinPC.Engine.Properties {
+namespace MudDesigner.Engine.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -25,7 +25,7 @@ namespace WinPC.Engine.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Temp\\Test\\World.xml")]
+        [global::System.Configuration.DefaultSettingValueAttribute("World.sav")]
         public string WorldFile {
             get {
                 return ((string)(this["WorldFile"]));

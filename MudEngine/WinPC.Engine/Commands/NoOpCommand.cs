@@ -1,7 +1,7 @@
 ﻿using System.Net.Sockets;
-using WinPC.Engine.Abstract.Core;
+using MudDesigner.Engine.Abstract.Core;
 
-namespace WinPC.Engine.Commands
+namespace MudDesigner.Engine.Commands
 {
     public class NoOpCommand : ICommand
     {

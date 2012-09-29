@@ -1,7 +1,7 @@
-﻿using WinPC.Engine.Abstract.Networking;
-using WinPC.Engine.Abstract.Actions;
+﻿using MudDesigner.Engine.Abstract.Networking;
+using MudDesigner.Engine.Abstract.Actions;
 
-namespace WinPC.Engine.Abstract.Core
+namespace MudDesigner.Engine.Abstract.Core
 {
     public interface IGame : ILoadable, ISaveable, IUpdatable
     {

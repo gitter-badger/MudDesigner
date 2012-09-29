@@ -1,7 +1,7 @@
 ﻿using System;
-using WinPC.Engine.Abstract.Core;
+using MudDesigner.Engine.Abstract.Core;
 
-namespace WinPC.Engine.Abstract.Networking
+namespace MudDesigner.Engine.Abstract.Networking
 {
     public enum ServerStatus
     {

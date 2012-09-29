@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WinPC.Engine.Abstract.Core;
+using MudDesigner.Engine.Abstract.Core;
 
-namespace WinPC.Engine.Core
+namespace MudDesigner.Engine.Core
 {
     public class Engine : IEngine
     {

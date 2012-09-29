@@ -1,4 +1,4 @@
-﻿namespace WinPC.Engine.Abstract.Directors
+﻿namespace MudDesigner.Engine.Abstract.Directors
 {
     public interface IRuleDirector
     {

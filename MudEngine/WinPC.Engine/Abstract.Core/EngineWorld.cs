@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MudDesigner.Engine.Abstract.Objects;
 
-using System.Reflection;
-
-namespace WinPC.Engine.Abstract.Core
+namespace MudDesigner.Engine.Abstract.Core
 {
-    public class EngineWorld : BaseGameObject, IWorld
+    
+    public class EngineWorld :BaseGameObject, IWorld, IGameObject
     {
         public Dictionary<string, IRealm> Realms { get; protected set; }
 
@@ -37,8 +37,8 @@ namespace WinPC.Engine.Abstract.Core
         }
 
         public void Create(string name, List<IRealm> realms)
-        {
-            throw new NotImplementedException();
+            {
+                throw new NotImplementedException();
+            }
         }
-    }
 }

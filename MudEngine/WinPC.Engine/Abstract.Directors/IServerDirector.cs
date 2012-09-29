@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading;
-using WinPC.Engine.Abstract.Core;
+using MudDesigner.Engine.Abstract.Core;
 
-namespace WinPC.Engine.Abstract.Directors
+namespace MudDesigner.Engine.Abstract.Directors
 {
     public interface IServerDirector
     {

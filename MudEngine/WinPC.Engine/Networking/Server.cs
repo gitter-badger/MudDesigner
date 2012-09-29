@@ -4,12 +4,12 @@ using System.ComponentModel;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using WinPC.Engine.Abstract.Networking;
-using WinPC.Engine.Core;
-using WinPC.Engine.Directors;
-using WinPC.Engine.Abstract.Core;
+using MudDesigner.Engine.Abstract.Networking;
+using MudDesigner.Engine.Core;
+using MudDesigner.Engine.Directors;
+using MudDesigner.Engine.Abstract.Core;
 
-namespace WinPC.Engine.Networking
+namespace MudDesigner.Engine.Networking
 {
     public class Server : IServer
     {

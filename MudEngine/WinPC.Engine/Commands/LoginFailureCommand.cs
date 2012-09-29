@@ -1,8 +1,8 @@
 ﻿using System.Net.Sockets;
 using System.Text;
-using WinPC.Engine.Abstract.Core;
+using MudDesigner.Engine.Abstract.Core;
 
-namespace WinPC.Engine.Commands
+namespace MudDesigner.Engine.Commands
 {
     public class LoginFailureCommand : ICommand
     {

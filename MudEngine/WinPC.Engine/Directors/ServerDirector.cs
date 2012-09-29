@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading;
 using System.Linq;
-using WinPC.Engine.Abstract.Directors;
-using WinPC.Engine.Abstract.Networking;
-using WinPC.Engine.Core;
-using WinPC.Engine.States;
-using WinPC.Engine.Abstract.Core;
+using MudDesigner.Engine.Abstract.Directors;
+using MudDesigner.Engine.Abstract.Networking;
+using MudDesigner.Engine.Core;
+using MudDesigner.Engine.States;
+using MudDesigner.Engine.Abstract.Core;
 
-namespace WinPC.Engine.Directors
+namespace MudDesigner.Engine.Directors
 {
     public class ServerDirector : IServerDirector
     {

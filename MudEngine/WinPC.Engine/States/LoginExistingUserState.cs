@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Text;
-using WinPC.Engine.Abstract.Core;
-using WinPC.Engine.Commands;
-using WinPC.Engine.Directors;
-using WinPC.Engine.Core;
+using MudDesigner.Engine.Abstract.Core;
+using MudDesigner.Engine.Commands;
+using MudDesigner.Engine.Directors;
+using MudDesigner.Engine.Core;
 
-namespace WinPC.Engine.States
+namespace MudDesigner.Engine.States
 {
     public class LoginExistingUserState : IState
     {

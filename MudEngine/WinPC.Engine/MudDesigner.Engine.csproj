@@ -77,7 +77,7 @@
     <Compile Include="Commands\LoadFileCommand.cs" />
     <Compile Include="Commands\LoginFailureCommand.cs" />
     <Compile Include="Commands\NoOpCommand.cs" />
-    <Compile Include="Commands\SaveFileCommand.cs" />
+    <Compile Include="Commands\SaveWorldFileCommand.cs" />
     <Compile Include="Commands\SwitchStateCommand.cs" />
     <Compile Include="Core\Game.cs" />
     <Compile Include="Core\Logger.cs" />
