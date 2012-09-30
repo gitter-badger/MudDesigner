@@ -6,16 +6,16 @@
       <Value Profile="(Default)">World.sav</Value>
     </Setting>
     <Setting Name="DefaultGameType" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">MudDesigner.Engine.Core.Game</Value>
+      <Value Profile="(Default)">MudDesigner.Scripts.Game.Game</Value>
     </Setting>
     <Setting Name="DefaultWorldType" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">MudDesigner.Engine.Environment.World</Value>
+      <Value Profile="(Default)">MudDesigner.Scripts.Environment.World</Value>
     </Setting>
     <Setting Name="DefaultPlayerType" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">MudDesigner.Engine.Core.Game</Value>
+      <Value Profile="(Default)">MudDesigner.Scripts.Game.Player</Value>
     </Setting>
     <Setting Name="LoginSuccessState" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">MudDesigner.Scripts.MainMenuState</Value>
+      <Value Profile="(Default)">MudDesigner.Scripts.States.MainMenuState</Value>
     </Setting>
     <Setting Name="ScriptLibrary" Type="System.Collections.Specialized.StringCollection" Scope="Application">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;

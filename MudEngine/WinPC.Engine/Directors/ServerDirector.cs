@@ -7,7 +7,7 @@ using MudDesigner.Engine.Directors;
 using MudDesigner.Engine.Networking;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.States;
-using MudDesigner.Engine.Core;
+using MudDesigner.Engine.Scripting;
 
 namespace MudDesigner.Engine.Directors
 {
@@ -25,13 +25,13 @@ namespace MudDesigner.Engine.Directors
 
         public void AddConnection(Socket connection)
         {
-            //TODO: Allow support for custom Player Types from scripts.
-            var player = new Player();
+            var player = (IPlayer)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.DefaultPlayerType, null);
             player.Initialize(new ConnectState(this), connection);
             
             Thread userThread = new Thread(ReceiveDataThread);
 
             ConnectedPlayers.Add(player, userThread);
+            player.IsConnected = true;
 
             userThread.Start(player);
         }

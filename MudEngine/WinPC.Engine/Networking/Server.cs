@@ -105,10 +105,10 @@ namespace MudDesigner.Engine.Networking
                 //TODO I removed this due to being hard-coded to a internal engine Type.
                 //If a developer creates a custom copy (as we will for our game as well) then the game won't ever have this called. - JS
                 //var eGame = Game as EngineGame;
-                IGame eGame = (IGame)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.DefaultGameType, null);
-                if(eGame != null)
+
+                if(Game != null)
                 {
-                    if(eGame.LastSave.CompareTo((DateTime.Now.Subtract(TimeSpan.FromMinutes(30.0)))) < 0)
+                    if (Game.LastSave.CompareTo((DateTime.Now.Subtract(TimeSpan.FromMinutes(30.0)))) < 0)
                     {
                     //    eGame.Save();
                         

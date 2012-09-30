@@ -31,7 +31,7 @@ namespace MudDesigner.Server
             Logger.WriteLine("Server app starting...");
 
             //Compile the game scripts
-            CompileEngine.AddAssemblyReference("MudDesigner.Engine");
+            CompileEngine.AddAssemblyReference("MudDesigner.Engine.dll");
             CompileEngine.Compile(MudDesigner.Engine.Properties.Engine.Default.ScriptsPath);
             
             //Add the engine assembly to the Script Factory

@@ -5,7 +5,7 @@ using MudDesigner.Engine.Commands;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Directors;
 
-namespace MudDesigner.Engine.States
+namespace MudDesigner.Scripts.States
 {
     public class MainMenuState : IState
     {

@@ -34,7 +34,7 @@ namespace MudDesigner.Engine.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Engine.Core.Game")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Game.Game")]
         public string DefaultGameType {
             get {
                 return ((string)(this["DefaultGameType"]));
@@ -43,7 +43,7 @@ namespace MudDesigner.Engine.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Engine.Environment.World")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Environment.World")]
         public string DefaultWorldType {
             get {
                 return ((string)(this["DefaultWorldType"]));
@@ -52,7 +52,7 @@ namespace MudDesigner.Engine.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Engine.Core.Game")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Game.Player")]
         public string DefaultPlayerType {
             get {
                 return ((string)(this["DefaultPlayerType"]));
@@ -61,7 +61,7 @@ namespace MudDesigner.Engine.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.MainMenuState")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.States.MainMenuState")]
         public string LoginSuccessState {
             get {
                 return ((string)(this["LoginSuccessState"]));

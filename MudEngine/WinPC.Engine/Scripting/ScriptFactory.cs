@@ -11,10 +11,8 @@ namespace MudDesigner.Engine.Scripting
 {
     public static class ScriptFactory
     {
-        private static Assembly assembly;
-
         //The assembly loaded that will be used.
-        private static List<Assembly> assemblyCollection;
+        private static List<Assembly> assemblyCollection = new List<Assembly>();
 
         /// <summary>
         /// Adds another assembly to the factories assembly collection.
@@ -52,6 +50,8 @@ namespace MudDesigner.Engine.Scripting
 
             foreach (Assembly assembly in assemblyCollection)
             {
+                Type[] types = assembly.GetTypes();
+
                 type = assembly.GetType(className);
                 if (type != null)
                     break;
@@ -61,7 +61,7 @@ namespace MudDesigner.Engine.Scripting
                 return null;
 
             object script;
-            if (args.Length == 0)
+            if (args == null || args.Length == 0)
                 script = Activator.CreateInstance(type);
             else
                 script = Activator.CreateInstance(type, args);
@@ -70,7 +70,7 @@ namespace MudDesigner.Engine.Scripting
 
         public static Object FindInheritedScripted(String baseScript, params Object[] arguments)
         {
-            Type script = typeof(BaseGameObject);
+            Type script = null;
             Boolean foundScript = false;
 
             if (assemblyCollection.Count == 0)
@@ -80,7 +80,8 @@ namespace MudDesigner.Engine.Scripting
             {
                 foreach (var a in assemblyCollection.Where(a => a != null))
                 {
-                    foreach (var t in a.GetTypes().Where(t => t.BaseType.Name == baseScript))
+                    Type[] types = a.GetTypes();
+                    foreach (var t in a.GetTypes().Where(t => t.BaseType.FullName == baseScript))
                     {
                         script = t;
                         foundScript = true;

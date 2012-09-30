@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace MudDesigner.Engine.Objects
+namespace MudDesigner.Engine.Core
 {
     public abstract class BaseGameObject
     {
@@ -47,11 +47,22 @@ namespace MudDesigner.Engine.Objects
                 if (!property.CanWrite)
                     continue;
 
-                if (property.PropertyType == typeof(string))
-                    property.SetValue(this, string.Empty, null);
+                if (property.GetType().IsInterface)
+                    continue;
 
-                else if (property.GetValue(this, null) == null)
-                    property.SetValue(this, Activator.CreateInstance(property.PropertyType), null);
+                //Wrap in a Try{} in the event that SetValue fails with special Types
+                try
+                {
+                    if (property.PropertyType == typeof(string))
+                        property.SetValue(this, string.Empty, null);
+
+                    else if (property.GetValue(this, null) == null)
+                        property.SetValue(this, Activator.CreateInstance(property.PropertyType), null);
+                }
+                catch
+                {
+                    //Swallow it.
+                }
             }
         }
     }

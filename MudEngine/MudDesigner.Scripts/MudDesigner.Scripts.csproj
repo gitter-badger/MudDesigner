@@ -21,7 +21,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\WinPC.Engine\bin\Debug\Scripts\</OutputPath>
+    <OutputPath>..\WinPC.Server\bin\Debug\Scripts\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -51,6 +51,12 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Environment\World.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Objects\Player.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="States\MainMenuState.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -58,8 +64,6 @@
   <ItemGroup>
     <Folder Include="Commands\" />
     <Folder Include="Directors\" />
-    <Folder Include="Environment\" />
-    <Folder Include="Objects\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game\Game.cs">

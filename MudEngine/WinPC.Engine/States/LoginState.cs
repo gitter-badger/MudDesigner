@@ -21,6 +21,7 @@ namespace MudDesigner.Engine.States
             encoding = new ASCIIEncoding();
             IsLoggingIn = 0; // 0 = just landed on the page, 1 = entered username & password, 2 = wants to register a new username & password, 3 = Currently Registering.
         }
+
         public void Render(IPlayer connectedPlayer)
         {
             connection = connectedPlayer.Connection;

@@ -21,9 +21,8 @@ namespace MudDesigner.Engine.States
         {
             Director = director;
             encoding = new ASCIIEncoding();
-
-
         }
+
         public void Render(IPlayer connectedPlayer)
         {
             connection = connectedPlayer.Connection;
