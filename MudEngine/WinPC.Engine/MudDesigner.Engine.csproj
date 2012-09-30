@@ -46,10 +46,10 @@
   <ItemGroup>
     <Compile Include="Abstract.Actions\ILoadable.cs" />
     <Compile Include="Abstract.Actions\ISaveable.cs" />
+    <Compile Include="Abstract.Environment\Room.cs" />
     <Compile Include="Abstract.Objects\BaseGameObject.cs" />
     <Compile Include="Abstract.Core\EngineGame.cs" />
     <Compile Include="Abstract.Core\EnginePlayer.cs" />
-    <Compile Include="Abstract.Environment\EngineRoom.cs" />
     <Compile Include="Abstract.Environment\EngineWorld.cs" />
     <Compile Include="Abstract.Core\ICommand.cs" />
     <Compile Include="Abstract.Environment\IDoor.cs" />
