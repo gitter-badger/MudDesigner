@@ -16,6 +16,6 @@ namespace MudDesigner.Engine.Abstract.Objects
     public interface IGameObject : ISaveable, ILoadable
     {
         Guid Id { get;}
-        string Type { get;  }
+        GameObjectType Type { get; }
     }
 }

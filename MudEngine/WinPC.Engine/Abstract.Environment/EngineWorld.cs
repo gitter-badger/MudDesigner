@@ -52,5 +52,11 @@ namespace MudDesigner.Engine.Abstract.Environment
         {
             throw new NotImplementedException();
         }
+
+
+        public new GameObjectType Type
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

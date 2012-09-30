@@ -100,6 +100,17 @@ namespace MudDesigner.Engine.Networking
             while (Status == ServerStatus.Running)
             {
                 ServerDirector.AddConnection(Socket.Accept());
+
+                // Let's add the Auto-Save feature while the server is running. - MC
+                var eGame = Game as EngineGame;
+                if(eGame != null)
+                {
+                    if(eGame.LastSave.CompareTo((DateTime.Now.Subtract(TimeSpan.FromMinutes(30.0)))) < 0)
+                    {
+                    //    eGame.Save();
+                        
+                    }
+                }
             }
         }
     }

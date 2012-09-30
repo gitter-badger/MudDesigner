@@ -97,7 +97,7 @@ namespace MudDesigner.Engine.Abstract.Core
         public static object GetCustomType(string className)
         {
             
-            Type t = System.Reflection.Assembly.GetExecutingAssembly().GetType(className);
+            var t = System.Reflection.Assembly.GetExecutingAssembly().GetType(className);
             if (t == null)
                 return null;
 

@@ -29,17 +29,27 @@ namespace MudDesigner.Engine.Commands
                 Directory.CreateDirectory(string.Format(path));
             }
 
-            SaveGame(Path.Combine(Directory.GetCurrentDirectory(), "saves", MudDesigner.Engine.Properties.Engine.Default.WorldFile), _game);
+            SaveGame(fileAndPathToSave, _game);
 
         }
 
         public void SaveGame(string filename, IGame game)
         {
             var eGame = game as EngineGame;
-            using (var bw = new BinaryWriter(File.Open(filename,FileMode.OpenOrCreate)))
+            if (eGame == null) 
+                return;
+
+            using (var bw = new BinaryWriter(File.Open(filename, FileMode.OpenOrCreate)))
             {
                 bw.Write(eGame.GameObjects.Count);
 
+                foreach (var gameobject in eGame.GameObjects.Values)
+                {
+                    bw.Write((int)gameobject.Type);
+                    bw.Write(gameobject.Id.ToByteArray());
+            
+                }
+                
                 foreach (var gameobject in eGame.GameObjects.Values)
                 {
                     gameobject.Save(bw);
