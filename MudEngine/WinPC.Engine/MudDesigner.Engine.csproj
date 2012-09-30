@@ -50,7 +50,7 @@
     <Compile Include="Environment\Room.cs" />
     <Compile Include="Core\BaseGameObject.cs" />
     <Compile Include="Environment\EngineWorld.cs" />
-    <Compile Include="Core\ICommand.cs" />
+    <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Environment\IDoor.cs" />
     <Compile Include="Core\IEngine.cs" />
     <Compile Include="Core\IGame.cs" />
@@ -63,7 +63,7 @@
     <Compile Include="Environment\IRealm.cs" />
     <Compile Include="Environment\IRoom.cs" />
     <Compile Include="Core\IRule.cs" />
-    <Compile Include="Core\IState.cs" />
+    <Compile Include="States\IState.cs" />
     <Compile Include="Actions\IUseable.cs" />
     <Compile Include="Directors\IConnectionsDirector.cs" />
     <Compile Include="Directors\IRuleDirector.cs" />

@@ -1,4 +1,6 @@
-﻿namespace MudDesigner.Engine.Core
+﻿using MudDesigner.Engine.Commands;
+using MudDesigner.Engine.Core;
+namespace MudDesigner.Engine.States
 {
     public interface IState
     {

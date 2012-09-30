@@ -1,6 +1,6 @@
 ﻿using System.Net.Sockets;
 
-namespace MudDesigner.Engine.Core
+namespace MudDesigner.Engine.Commands
 {
     public interface ICommand
     {
