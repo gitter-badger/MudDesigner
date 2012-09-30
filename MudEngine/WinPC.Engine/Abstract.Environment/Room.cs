@@ -39,21 +39,21 @@ namespace MudDesigner.Engine.Abstract.Environment
             Safe = safe;
         }
 
-        public void AddDoorway(IDoor door, TravelDirections direction, bool forceOverwrite = true)
+        public void AddDoorway(TravelDirections direction, IRoom arrivalRoom, bool forceOverwrite = true)
         {
-            //Check if door is null.
-            if (door == null)
+            //Check if room is null.
+            if (arrivalRoom == null)
                 return; //No null references within our collections!
 
             //If this direction already exists, overwrite it
             //but only if 'forceOverwrite' is true
             if (Doorways.ContainsKey(direction))
             {
-                Doorways[direction] = door;
+                Doorways[direction].Arrival = arrivalRoom;
             }
             else
             {
-                Doorways.Add(direction, door);
+                Doorways.Add(direction, new Door);
             }
         }
 

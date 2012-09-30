@@ -10,5 +10,9 @@ namespace MudDesigner.Engine.Abstract.Environment
         bool Locked { get; set; }
 
         TravelDirections MountedDirection { get; }
+
+        IRoom Arrival { get; set; }
+
+        IRoom Departure { get; set; }
     }
 }
