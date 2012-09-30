@@ -50,7 +50,7 @@ namespace MudDesigner.Engine.Core
                 _Messages.Clear();
         }
 
-        public static void WriteLine(String message, Importance importance)
+        public static void WriteLine(String message, Importance importance = Importance.Information)
         {
             //Only write to log if enabled.
             if (!Enabled)
@@ -86,16 +86,6 @@ namespace MudDesigner.Engine.Core
             {
                 throw new Exception("Unable to write message (" + message + ") to log file (" + LogFilename + ").");
             }
-        }
-
-        /// <summary>
-        /// Writes a single line to the engine log file.
-        /// </summary>
-        /// <param name="message"></param>
-        public static void WriteLine(String message)
-        {
-            //Just output as typical informational stuff.
-            Logger.WriteLine(message, Importance.Information);
         }
 
         /// <summary>

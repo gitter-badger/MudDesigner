@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Text;
-using MudDesigner.Engine.Abstract.Core;
+using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Commands;
 using MudDesigner.Engine.Directors;
-using MudDesigner.Engine.Core;
+using MudDesigner.Engine.Scripting;
 
 namespace MudDesigner.Engine.States
 {
@@ -42,7 +42,8 @@ namespace MudDesigner.Engine.States
             if(player != null)
             {
                 player.CharacterName = input;
-                return new SwitchStateCommand(Director, new MainMenuState(Director), _player);
+                IState state = (IState)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.LoginSuccessState, Director);
+                return new SwitchStateCommand(Director, state, _player);
             }
 
             // Otherwise lets return invalid.

@@ -1,32 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinPC_Server", "WinPC_Server\WinPC_Server.csproj", "{9F118DC3-CB8E-45FB-ABA5-10D50A6CD3F1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinPC_Engine", "WinPC_Engine\WinPC_Engine.csproj", "{27C84625-1D4A-4DBF-9770-46D535506485}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudDesigner.Engine", "WinPC.Engine\MudDesigner.Engine.csproj", "{9D9E8CAC-8876-4725-9A65-2077DE4322DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudDesigner.Server", "WinPC.Server\MudDesigner.Server.csproj", "{161E78DB-10C5-43A6-BC15-0945BC6F941F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudDesigner.Scripts", "MudDesigner.Scripts\MudDesigner.Scripts.csproj", "{DB190BE6-A73B-4C59-B939-4A8B1825A658}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
+		SccNumberOfProjects = 4
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs03
 		SccLocalPath0 = .
-		SccProjectUniqueName1 = WinPC_Engine\\WinPC_Engine.csproj
-		SccProjectName1 = WinPC_Engine
-		SccLocalPath1 = WinPC_Engine
-		SccProjectUniqueName2 = WinPC_Server\\WinPC_Server.csproj
-		SccProjectName2 = WinPC_Server
-		SccLocalPath2 = WinPC_Server
-		SccProjectUniqueName3 = WinPC.Engine\\MudDesigner.Engine.csproj
-		SccProjectName3 = WinPC.Engine
-		SccLocalPath3 = WinPC.Engine
-		SccProjectUniqueName4 = WinPC.Server\\MudDesigner.Server.csproj
-		SccProjectName4 = WinPC.Server
-		SccLocalPath4 = WinPC.Server
+		SccProjectUniqueName1 = WinPC.Engine\\MudDesigner.Engine.csproj
+		SccProjectName1 = WinPC.Engine
+		SccLocalPath1 = WinPC.Engine
+		SccProjectUniqueName2 = WinPC.Server\\MudDesigner.Server.csproj
+		SccProjectName2 = WinPC.Server
+		SccLocalPath2 = WinPC.Server
+		SccProjectUniqueName3 = MudDesigner.Scripts\\MudDesigner.Scripts.csproj
+		SccProjectName3 = MudDesigner.Scripts
+		SccLocalPath3 = MudDesigner.Scripts
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,26 +32,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9F118DC3-CB8E-45FB-ABA5-10D50A6CD3F1}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{9F118DC3-CB8E-45FB-ABA5-10D50A6CD3F1}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{9F118DC3-CB8E-45FB-ABA5-10D50A6CD3F1}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{9F118DC3-CB8E-45FB-ABA5-10D50A6CD3F1}.Debug|x86.ActiveCfg = Debug|x86
-		{9F118DC3-CB8E-45FB-ABA5-10D50A6CD3F1}.Debug|x86.Build.0 = Debug|x86
-		{9F118DC3-CB8E-45FB-ABA5-10D50A6CD3F1}.Release|Any CPU.ActiveCfg = Release|x86
-		{9F118DC3-CB8E-45FB-ABA5-10D50A6CD3F1}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{9F118DC3-CB8E-45FB-ABA5-10D50A6CD3F1}.Release|Mixed Platforms.Build.0 = Release|x86
-		{9F118DC3-CB8E-45FB-ABA5-10D50A6CD3F1}.Release|x86.ActiveCfg = Release|x86
-		{9F118DC3-CB8E-45FB-ABA5-10D50A6CD3F1}.Release|x86.Build.0 = Release|x86
-		{27C84625-1D4A-4DBF-9770-46D535506485}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{27C84625-1D4A-4DBF-9770-46D535506485}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{27C84625-1D4A-4DBF-9770-46D535506485}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{27C84625-1D4A-4DBF-9770-46D535506485}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{27C84625-1D4A-4DBF-9770-46D535506485}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{27C84625-1D4A-4DBF-9770-46D535506485}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{27C84625-1D4A-4DBF-9770-46D535506485}.Release|Any CPU.Build.0 = Release|Any CPU
-		{27C84625-1D4A-4DBF-9770-46D535506485}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{27C84625-1D4A-4DBF-9770-46D535506485}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{27C84625-1D4A-4DBF-9770-46D535506485}.Release|x86.ActiveCfg = Release|Any CPU
 		{9D9E8CAC-8876-4725-9A65-2077DE4322DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9D9E8CAC-8876-4725-9A65-2077DE4322DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D9E8CAC-8876-4725-9A65-2077DE4322DD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -77,6 +52,16 @@ Global
 		{161E78DB-10C5-43A6-BC15-0945BC6F941F}.Release|Mixed Platforms.Build.0 = Release|x86
 		{161E78DB-10C5-43A6-BC15-0945BC6F941F}.Release|x86.ActiveCfg = Release|x86
 		{161E78DB-10C5-43A6-BC15-0945BC6F941F}.Release|x86.Build.0 = Release|x86
+		{DB190BE6-A73B-4C59-B939-4A8B1825A658}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB190BE6-A73B-4C59-B939-4A8B1825A658}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB190BE6-A73B-4C59-B939-4A8B1825A658}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{DB190BE6-A73B-4C59-B939-4A8B1825A658}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{DB190BE6-A73B-4C59-B939-4A8B1825A658}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DB190BE6-A73B-4C59-B939-4A8B1825A658}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB190BE6-A73B-4C59-B939-4A8B1825A658}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB190BE6-A73B-4C59-B939-4A8B1825A658}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DB190BE6-A73B-4C59-B939-4A8B1825A658}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{DB190BE6-A73B-4C59-B939-4A8B1825A658}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

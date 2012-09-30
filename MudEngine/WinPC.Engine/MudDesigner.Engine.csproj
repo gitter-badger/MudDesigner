@@ -44,35 +44,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract.Actions\ILoadable.cs" />
-    <Compile Include="Abstract.Actions\ISaveable.cs" />
-    <Compile Include="Abstract.Environment\Room.cs" />
-    <Compile Include="Abstract.Objects\BaseGameObject.cs" />
-    <Compile Include="Abstract.Core\EngineGame.cs" />
-    <Compile Include="Abstract.Core\EnginePlayer.cs" />
-    <Compile Include="Abstract.Environment\EngineWorld.cs" />
-    <Compile Include="Abstract.Core\ICommand.cs" />
-    <Compile Include="Abstract.Environment\IDoor.cs" />
-    <Compile Include="Abstract.Core\IEngine.cs" />
-    <Compile Include="Abstract.Core\IGame.cs" />
-    <Compile Include="Abstract.Environment\IWorld.cs" />
-    <Compile Include="Abstract.Environment\IZone.cs" />
-    <Compile Include="Abstract.Objects\IGameObject.cs" />
-    <Compile Include="Abstract.Objects\IInventory.cs" />
-    <Compile Include="Abstract.Core\ILogger.cs" />
-    <Compile Include="Abstract.Core\IPlayer.cs" />
-    <Compile Include="Abstract.Environment\IRealm.cs" />
-    <Compile Include="Abstract.Environment\IRoom.cs" />
-    <Compile Include="Abstract.Core\IRule.cs" />
-    <Compile Include="Abstract.Core\IState.cs" />
-    <Compile Include="Abstract.Actions\IUseable.cs" />
-    <Compile Include="Abstract.Directors\IConnectionsDirector.cs" />
-    <Compile Include="Abstract.Directors\IRuleDirector.cs" />
-    <Compile Include="Abstract.Directors\IServerDirector.cs" />
-    <Compile Include="Abstract.Networking\IConnection.cs" />
-    <Compile Include="Abstract.Networking\IServer.cs" />
-    <Compile Include="Abstract.Objects\IEquipmentSlot.cs" />
-    <Compile Include="Abstract.Objects\IItem.cs" />
+    <Compile Include="Actions\ILoadable.cs" />
+    <Compile Include="Actions\ISaveable.cs" />
+    <Compile Include="Core\Engine.cs" />
+    <Compile Include="Environment\Room.cs" />
+    <Compile Include="Objects\BaseGameObject.cs" />
+    <Compile Include="Objects\EnginePlayer.cs" />
+    <Compile Include="Environment\EngineWorld.cs" />
+    <Compile Include="Core\ICommand.cs" />
+    <Compile Include="Environment\IDoor.cs" />
+    <Compile Include="Core\IEngine.cs" />
+    <Compile Include="Core\IGame.cs" />
+    <Compile Include="Environment\IWorld.cs" />
+    <Compile Include="Environment\IZone.cs" />
+    <Compile Include="Objects\IGameObject.cs" />
+    <Compile Include="Objects\IInventory.cs" />
+    <Compile Include="Core\ILogger.cs" />
+    <Compile Include="Objects\IPlayer.cs" />
+    <Compile Include="Environment\IRealm.cs" />
+    <Compile Include="Environment\IRoom.cs" />
+    <Compile Include="Core\IRule.cs" />
+    <Compile Include="Core\IState.cs" />
+    <Compile Include="Actions\IUseable.cs" />
+    <Compile Include="Directors\IConnectionsDirector.cs" />
+    <Compile Include="Directors\IRuleDirector.cs" />
+    <Compile Include="Directors\IServerDirector.cs" />
+    <Compile Include="Networking\IConnection.cs" />
+    <Compile Include="Networking\IServer.cs" />
+    <Compile Include="Objects\IEquipmentSlot.cs" />
+    <Compile Include="Objects\IItem.cs" />
     <Compile Include="Commands\InvalidCommand.cs" />
     <Compile Include="Commands\LoadFileCommand.cs" />
     <Compile Include="Commands\LoginFailureCommand.cs" />
@@ -81,22 +81,27 @@
     <Compile Include="Commands\SwitchStateCommand.cs" />
     <Compile Include="Core\Game.cs" />
     <Compile Include="Core\Logger.cs" />
-    <Compile Include="Core\Player.cs" />
+    <Compile Include="Objects\Player.cs" />
     <Compile Include="Environment\World.cs" />
     <Compile Include="Directors\ServerDirector.cs" />
-    <Compile Include="Core\Engine.cs" />
     <Compile Include="Networking\Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Engine.cs" />
     <Compile Include="Properties\Engine.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Engine.settings</DependentUpon>
     </Compile>
+    <Compile Include="Scripting\CompileEngine.cs" />
+    <Compile Include="Scripting\CSharp.cs" />
+    <Compile Include="Scripting\ICompiler.cs" />
+    <Compile Include="Scripting\ScriptEnumerator.cs" />
+    <Compile Include="Scripting\ScriptFactory.cs" />
+    <Compile Include="Scripting\ScriptObject.cs" />
     <Compile Include="States\ConnectState.cs" />
     <Compile Include="States\LoginExistingUserState.cs" />
     <Compile Include="States\CreatePlayerState.cs" />
     <Compile Include="States\LoginState.cs" />
-    <Compile Include="States\MainMenuState.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -104,6 +109,12 @@
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Engine.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Abstract.Core\" />
+    <Folder Include="Abstract.Directors\" />
+    <Folder Include="Abstract.Environment\" />
+    <Folder Include="Abstract.Networking\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

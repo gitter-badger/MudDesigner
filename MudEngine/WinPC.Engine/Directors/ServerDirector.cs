@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading;
 using System.Linq;
-using MudDesigner.Engine.Abstract.Directors;
-using MudDesigner.Engine.Abstract.Networking;
+using MudDesigner.Engine.Directors;
+using MudDesigner.Engine.Networking;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.States;
-using MudDesigner.Engine.Abstract.Core;
+using MudDesigner.Engine.Core;
 
 namespace MudDesigner.Engine.Directors
 {

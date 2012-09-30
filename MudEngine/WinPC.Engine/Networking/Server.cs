@@ -4,10 +4,10 @@ using System.ComponentModel;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using MudDesigner.Engine.Abstract.Networking;
+using MudDesigner.Engine.Networking;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Directors;
-using MudDesigner.Engine.Abstract.Core;
+using MudDesigner.Engine.Scripting;
 
 namespace MudDesigner.Engine.Networking
 {
@@ -102,7 +102,10 @@ namespace MudDesigner.Engine.Networking
                 ServerDirector.AddConnection(Socket.Accept());
 
                 // Let's add the Auto-Save feature while the server is running. - MC
-                var eGame = Game as EngineGame;
+                //TODO I removed this due to being hard-coded to a internal engine Type.
+                //If a developer creates a custom copy (as we will for our game as well) then the game won't ever have this called. - JS
+                //var eGame = Game as EngineGame;
+                IGame eGame = (IGame)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.DefaultGameType, null);
                 if(eGame != null)
                 {
                     if(eGame.LastSave.CompareTo((DateTime.Now.Subtract(TimeSpan.FromMinutes(30.0)))) < 0)

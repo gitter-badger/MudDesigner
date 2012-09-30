@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace MudDesigner.Engine.Environment
+{
+    public interface IDoor
+    {
+        bool Locked { get; set; }
+
+        TravelDirections MountedDirection { get; }
+
+        IRoom Arrival { get; set; }
+
+        IRoom Departure { get; set; }
+    }
+}

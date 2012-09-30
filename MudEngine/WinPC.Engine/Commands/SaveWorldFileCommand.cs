@@ -1,6 +1,7 @@
 ﻿
 using System.IO;
-using MudDesigner.Engine.Abstract.Core;
+
+using MudDesigner.Engine.Core;
 
 namespace MudDesigner.Engine.Commands
 {
@@ -35,7 +36,10 @@ namespace MudDesigner.Engine.Commands
 
         public void SaveGame(string filename, IGame game)
         {
-            var eGame = game as EngineGame;
+            //TODO - Shouldn't the engine pass an already instanced copy of IGame?
+            //Otherwise we are relying on a hard-coded Game class.  Should be able to use IGame down below without any issues. - JS
+            //var eGame = game as EngineGame;
+            var eGame = game;
             if (eGame == null) 
                 return;
 

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using MudDesigner.Engine.Abstract.Core;
-using MudDesigner.Engine.Abstract.Objects;
+
+using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Core;
+using MudDesigner.Engine.Scripting;
 
 namespace MudDesigner.Engine.Commands
 {
@@ -36,7 +37,7 @@ namespace MudDesigner.Engine.Commands
         //@ToDO: I would also like to Encrypt the file. Possibly doing HMAC-SHA1 or something.... to prevent hacking and cleartext passwords.
         public IGame LoadGame(string filename)
         {
-            var game = new Game();
+            var game = (IGame)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.DefaultGameType, null);
 
             using(var br = new BinaryReader(File.Open(filename,FileMode.Open)))
             {

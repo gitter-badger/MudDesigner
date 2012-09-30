@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Text;
-using MudDesigner.Engine.Abstract.Core;
+using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Commands;
 using MudDesigner.Engine.Directors;
-using MudDesigner.Engine.Core;
 
 namespace MudDesigner.Engine.States
 {
@@ -103,7 +102,6 @@ namespace MudDesigner.Engine.States
                             var  parts = input.Substring(0).Split(':');
                             return parts.Length == 2 ? new LoginFailureCommand(_player.Connection) : new LoginFailureCommand(_player.Connection);
                         }
-                        break;
                         }
                 case 1:
                     {
