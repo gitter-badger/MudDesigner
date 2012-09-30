@@ -1,21 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
-using System.Reflection;
 namespace MudDesigner.Engine.Abstract.Objects
 {
-    public class BaseGameObject
+    public abstract class BaseGameObject
     {
-        Guid ID;
 
-        public BaseGameObject(Guid id)
+        /// <summary>
+        /// Gets a reference to the ID of this room.
+        /// </summary>
+        public Guid Id { get; private set; }
+
+        /// <summary>
+        /// Returns a string value of the Type that the object belongs for this room.
+        /// </summary>
+        public string Type
         {
-            ID = id;
+            get
+            {
+                return this.GetType().Name;
+            }
         }
 
-        public BaseGameObject() : this(Guid.NewGuid())
+        /// <summary>
+        /// Gets or Sets the name associated with this object.
+        /// </summary>
+        public string Name { get; set; }
+
+        public BaseGameObject(string name, Guid id)
+        {
+            Id = id;
+            Name = name;
+        }
+
+        public BaseGameObject() : this(string.Empty, Guid.NewGuid())
         {
 
             //Realms = new Dictionary<string, IRealm>();

@@ -42,15 +42,6 @@ namespace MudDesigner.Engine.Abstract.Environment
                 throw new NotImplementedException();
             }
 
-        public Guid Id
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public GameObjectType Type
-        {
-            get { throw new NotImplementedException(); }
-        }
 
         public void Save(System.IO.BinaryWriter writer)
         {

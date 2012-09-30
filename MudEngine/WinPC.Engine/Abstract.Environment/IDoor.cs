@@ -8,7 +8,7 @@ namespace MudDesigner.Engine.Abstract.Environment
     public interface IDoor
     {
         bool Locked { get; set; }
-        
-        
+
+        TravelDirections MountedDirection { get; }
     }
 }
