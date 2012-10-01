@@ -12,6 +12,11 @@ namespace MudDesigner.Engine.Environment
     public abstract class Room : BaseGameObject, IGameObject, IRoom
     {
         /// <summary>
+        /// Gets or Sets the Description of the Room that is printed to the users screen.
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
         /// Zone that this Room resides within
         /// </summary>
         public IZone Zone { get; set; }
@@ -20,6 +25,11 @@ namespace MudDesigner.Engine.Environment
         /// Determins if this Room is a safe room where no attacks can be made.
         /// </summary>
         public bool Safe { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Senses Sense { get; set; }
 
         //Room Collections
         public Dictionary<string, IPlayer> Occupants { get; set; }

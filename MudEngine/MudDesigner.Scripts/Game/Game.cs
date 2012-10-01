@@ -18,6 +18,7 @@ namespace MudDesigner.Scripts.Game
             Zone zone = new Zone("Village", null);
 
             Room bedroom = new Room("Bedroom", zone);
+            
             Room hallway = new Room("Hallway", zone);
 
             //This will link both of the rooms together with a door.

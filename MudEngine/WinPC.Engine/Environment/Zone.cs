@@ -14,10 +14,10 @@ namespace MudDesigner.Engine.Environment
         /// <summary>
         /// Realm that this Room resides within
         /// </summary>
-        public IRealm Realm { get; set; }
+        public IRealm Realm { get; protected set; }
 
         //Room Collection
-        public Dictionary<string, Room> Rooms{ get; set; }
+        public Dictionary<string, Room> Rooms{ get; protected set; }
         
         public Zone(string name, IRealm realm) : base(name)
         {
@@ -43,7 +43,7 @@ namespace MudDesigner.Engine.Environment
             }
         }
 
-        public virtual void RemoveDoorway(Room room)
+        public virtual void RemoveRoom(Room room)
         {
             if (Rooms.ContainsKey(room.Name))
                 Rooms.Remove(room.Name);
