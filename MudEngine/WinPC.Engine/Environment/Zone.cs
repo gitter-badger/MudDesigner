@@ -43,6 +43,14 @@ namespace MudDesigner.Engine.Environment
             }
         }
 
+        public virtual void AddRooms(Room[] rooms, bool forceOverwrite = true)
+        {
+            foreach (Room room in rooms)
+            {
+                AddRoom(room, forceOverwrite);
+            }
+        }
+
         public virtual void RemoveRoom(Room room)
         {
             if (Rooms.ContainsKey(room.Name))
