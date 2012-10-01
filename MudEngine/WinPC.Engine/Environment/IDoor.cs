@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using MudDesigner.Engine.Core;
+
 namespace MudDesigner.Engine.Environment
 {
     public interface IDoor
     {
-        bool Locked { get; set; }
+        bool Locked { get; }
 
-        TravelDirections MountedDirection { get; }
+        BaseGameObject Key { get; }
 
-        IRoom Arrival { get; set; }
+        AvailableTravelDirections FacingDirection { get; }
 
-        IRoom Departure { get; set; }
+        IRoom Arrival { get; }
+
+        IRoom Departure { get; }
     }
 }

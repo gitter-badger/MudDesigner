@@ -26,5 +26,11 @@
     <Setting Name="ScriptsPath" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Scripts</Value>
     </Setting>
+    <Setting Name="LoginRoom" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Bedroom</Value>
+    </Setting>
+    <Setting Name="DoorType" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MudDesigner.Scripts.Environment.Door</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

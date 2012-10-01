@@ -87,5 +87,26 @@ namespace MudDesigner.Engine.Properties {
                 return ((string)(this["ScriptsPath"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Bedroom")]
+        public string LoginRoom {
+            get {
+                return ((string)(this["LoginRoom"]));
+            }
+            set {
+                this["LoginRoom"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Environment.Door")]
+        public string DoorType {
+            get {
+                return ((string)(this["DoorType"]));
+            }
+        }
     }
 }

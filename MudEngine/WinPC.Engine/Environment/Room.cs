@@ -5,20 +5,11 @@ using System.Text;
 
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
+using MudDesigner.Engine.Scripting;
 
 namespace MudDesigner.Engine.Environment
 {
-    public enum TravelDirections
-    {
-        North,
-        South,
-        East,
-        West,
-        Up,
-        Down,
-    }
-
-    public abstract class EngineRoom : BaseGameObject, IGameObject, IRoom
+    public abstract class Room : BaseGameObject, IGameObject, IRoom
     {
         /// <summary>
         /// Zone that this Room resides within
@@ -32,14 +23,19 @@ namespace MudDesigner.Engine.Environment
 
         //Room Collections
         public Dictionary<string, IPlayer> Occupants { get; set; }
-        public Dictionary<TravelDirections, IDoor> Doorways { get; protected set; }
+        public Dictionary<AvailableTravelDirections, IDoor> Doorways { get; protected set; }
 
-        public EngineRoom(string name, Guid id, bool safe = true) : base(name, id)
+        //public GameObjectType Type { get; private set; } //Inherited from baseGameObject
+
+        public Room(string name, IZone zone, bool safe = true) : base(name)
         {
             Safe = safe;
+            Zone = zone;
+            Doorways = new Dictionary<AvailableTravelDirections, IDoor>();
+            Occupants = new Dictionary<string, IPlayer>();
         }
 
-        public void AddDoorway(TravelDirections direction, IRoom arrivalRoom, bool forceOverwrite = true)
+        public virtual void AddDoorway(AvailableTravelDirections direction, IRoom arrivalRoom, bool autoAddReverseDirection = true, bool forceOverwrite = true)
         {
             //Check if room is null.
             if (arrivalRoom == null)
@@ -49,15 +45,43 @@ namespace MudDesigner.Engine.Environment
             //but only if 'forceOverwrite' is true
             if (Doorways.ContainsKey(direction))
             {
-                Doorways[direction].Arrival = arrivalRoom;
+                //Remove the old door
+                RemoveDoorway(direction);
+                //Get a scripted Door instance to add back to the collection
+                Door door = (Door)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.DoorType, direction, this, arrivalRoom);
+                Doorways.Add(direction, door);
             }
+                //Direction does not exist, so lets add a new doorway
             else
             {
-                //Doorways.Add(direction, new Door);
+                //Get a scripted instance of a Door.
+                IDoor door = (Door)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.DoorType, direction, this, arrivalRoom);
+                //Add the new doorway to this rooms collection.
+                Doorways.Add(direction, door);
+
+                //If autoreverse is enabled, add the doorway to the arrival room too.
+                if (autoAddReverseDirection)
+                {
+                    arrivalRoom.AddDoorway(TravelDirections.GetReverseDirection(direction), this, false, forceOverwrite);
+                }
             }
         }
 
-        public void BroadcastMessage(string message, List<IPlayer> playersToOmmit = null)
+        public virtual void RemoveDoorway(AvailableTravelDirections direction, bool autoRemoveReverseDirection = true)
+        {
+            if (Doorways.ContainsKey(direction))
+            {
+                if (autoRemoveReverseDirection)
+                {
+                    //When removig the reverse direction, always set "autoRemoveReverseDirection" within the Arrival room
+                    //to false, otherwise a circular loop will start.
+                    Doorways[direction].Arrival.RemoveDoorway(direction, false);
+                }
+                Doorways.Remove(direction);
+            }
+        }
+
+        public virtual void BroadcastMessage(string message, List<IPlayer> playersToOmmit = null)
         {
                 foreach (IPlayer player in Occupants.Values)
                 {
@@ -82,18 +106,12 @@ namespace MudDesigner.Engine.Environment
         }
 
         #region == Events ==
-        public delegate void OnEnterHandler(IPlayer player, TravelDirections enteredDirection);
+        public delegate void OnEnterHandler(IPlayer player, AvailableTravelDirections enteredDirection);
         public event OnEnterHandler OnEnterEvent;
-        public virtual void OnEnter(IPlayer player, TravelDirections enteredDirection)
+        public virtual void OnEnter(IPlayer player, AvailableTravelDirections enteredDirection)
         {
             BroadcastMessage(player.Name + " has entered from the " + enteredDirection.ToString());
         }
         #endregion
-
-
-        public new GameObjectType Type
-        {
-            get { throw new NotImplementedException(); }
-        }
     }
 }

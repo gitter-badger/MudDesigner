@@ -12,7 +12,9 @@ namespace MudDesigner.Engine.Environment
         bool Safe { get; set; }
 
         Dictionary<string, IPlayer> Occupants { get; set; }
-        Dictionary<TravelDirections, IDoor> Doorways { get;  }
-         
+        Dictionary<AvailableTravelDirections, IDoor> Doorways { get; }
+
+        void AddDoorway(AvailableTravelDirections direction, IRoom arrival, bool autoAddReverseDireciton, bool forceOverwrite);
+        void RemoveDoorway(AvailableTravelDirections direction, bool autoRemoveReverseDirection);
     }
 }

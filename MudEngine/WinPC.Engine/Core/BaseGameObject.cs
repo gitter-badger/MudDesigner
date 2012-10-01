@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
+using MudDesigner.Engine.Objects;
+
 namespace MudDesigner.Engine.Core
 {
     public abstract class BaseGameObject
@@ -17,27 +19,22 @@ namespace MudDesigner.Engine.Core
         /// <summary>
         /// Returns a string value of the Type that the object belongs for this room.
         /// </summary>
-        public string Type
-        {
-            get
-            {
-                return this.GetType().Name;
-            }
-        }
+        public GameObjectType Type { get; set; }
 
         /// <summary>
         /// Gets or Sets the name associated with this object.
         /// </summary>
         public string Name { get; set; }
 
+        public BaseGameObject(string name) : this(name, Guid.NewGuid())
+        {
+            //Stub
+        }
+
         public BaseGameObject(string name, Guid id)
         {
             Id = id;
             Name = name;
-        }
-
-        public BaseGameObject() : this(string.Empty, Guid.NewGuid())
-        {
 
             //Realms = new Dictionary<string, IRealm>();
             foreach (PropertyInfo property in this.GetType().GetProperties())
@@ -64,6 +61,11 @@ namespace MudDesigner.Engine.Core
                     //Swallow it.
                 }
             }
+        }
+
+        public BaseGameObject() : this(string.Empty, Guid.NewGuid())
+        {
+            //Stub
         }
     }
 }
