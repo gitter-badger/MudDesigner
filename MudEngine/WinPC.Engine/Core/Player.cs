@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
-
-using MudDesigner.Engine.Core;
-using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.States;
 
 namespace MudDesigner.Engine.Core

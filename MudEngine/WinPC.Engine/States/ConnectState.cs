@@ -4,7 +4,7 @@ using System.Text;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Commands;
 using MudDesigner.Engine.Directors;
-using MudDesigner.Engine.Core;
+
 
 namespace MudDesigner.Engine.States
 {
@@ -28,7 +28,7 @@ namespace MudDesigner.Engine.States
             connection = connectedPlayer.Connection;
             player = connectedPlayer;
 
-            player.SendMessage("Welcome to Scionwest's Mud Engine!" + "\n\r");
+            player.SendMessage("Welcome to AllocateThis's Mud Engine!" + "\n\r");
             player.SendMessage(Director.Server.MOTD + "\n\r");
 
             //Now that the player is connected, start the login process.
@@ -44,7 +44,7 @@ namespace MudDesigner.Engine.States
                 return new SwitchStateCommand(Director, new MainMenuState(Director), player);
             }
             */
-            return new InvalidCommand(connection);
+            return new NoOpCommand(connection);
         }
     }
 }
