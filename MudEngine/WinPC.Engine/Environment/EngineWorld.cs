@@ -20,6 +20,14 @@ namespace MudDesigner.Engine.Environment
             return realm;
         }
 
+        public void AddRealm(IRealm realm)
+        {
+            Realm r = (Realm)realm;
+
+            if (!Realms.Values.Contains<IRealm>(realm))
+                Realms.Add(r.Name, r);
+        }
+
         public bool Load(string filename)
         {
             throw new NotImplementedException();

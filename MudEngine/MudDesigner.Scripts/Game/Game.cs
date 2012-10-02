@@ -12,9 +12,10 @@ namespace MudDesigner.Scripts.Game
 {
     public class Game : MudDesigner.Engine.Core.Game
     {
-        public override bool Initialize(IServer startedServer, Env.IWorld world)
+        public override bool Initialize(IServer startedServer)
         {
-            World w = new World();
+            World newWorld = new World();
+            Realm realm = new Realm("Fido");
             Zone zone = new Zone("Village", null);
             List<Room> rooms = new List<Room>();
 
@@ -37,16 +38,13 @@ namespace MudDesigner.Scripts.Game
             //This will link both of the rooms together with a door.
             bedroom.AddDoorway(Env.AvailableTravelDirections.North, hallway, true);
 
-            /* Rather than add individually, you can just add a collection.
-            zone.AddRoom(bedroom);
-            zone.AddRoom(hallway);
-            */
             zone.AddRooms(rooms.ToArray());
+            realm.AddZone(zone);
+            newWorld.AddRealm(realm);
 
-            //Create the world.
-            w.Create("Azeroth");
+            World = newWorld;
 
-            return base.Initialize(startedServer, w);
+            return base.Initialize(startedServer);
         }
     }
 }

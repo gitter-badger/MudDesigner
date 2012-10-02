@@ -19,7 +19,7 @@ namespace MudDesigner.Engine.Core
 
         IWorld World { get; }
 
-        bool Initialize(IServer startedServer, IWorld world);
+        bool Initialize(IServer startedServer);
         void Start();
         void Stop();
     }

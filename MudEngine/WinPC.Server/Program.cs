@@ -55,7 +55,7 @@ namespace MudDesigner.Server
 
             //Pull the custom game info that will be used by this MUD
             IGame game = (IGame)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.DefaultGameType, null);
-            IWorld world = (IWorld)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.DefaultWorldType, null);
+            game.Initialize(server);
             
             //It does not matter in what order this is performed, however it is best to start the server
             //after the game.initialize() method is called.  This ensures the game is loaded and ready to go

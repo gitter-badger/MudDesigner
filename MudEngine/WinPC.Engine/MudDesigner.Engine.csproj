@@ -47,6 +47,7 @@
     <Compile Include="Actions\ILoadable.cs" />
     <Compile Include="Actions\ISaveable.cs" />
     <Compile Include="Core\Engine.cs" />
+    <Compile Include="Environment\Realm.cs" />
     <Compile Include="Environment\Zone.cs" />
     <Compile Include="Environment\Door.cs" />
     <Compile Include="Environment\Room.cs" />
@@ -62,7 +63,7 @@
     <Compile Include="Objects\IGameObject.cs" />
     <Compile Include="Objects\IInventory.cs" />
     <Compile Include="Core\ILogger.cs" />
-    <Compile Include="Core\IPlayer.cs" />
+    <Compile Include="Mobs\IPlayer.cs" />
     <Compile Include="Environment\IRealm.cs" />
     <Compile Include="Environment\IRoom.cs" />
     <Compile Include="Core\IRule.cs" />
@@ -83,8 +84,7 @@
     <Compile Include="Commands\SwitchStateCommand.cs" />
     <Compile Include="Core\Game.cs" />
     <Compile Include="Core\Logger.cs" />
-    <Compile Include="Core\Player.cs" />
-    <Compile Include="Environment\World.cs" />
+    <Compile Include="Mobs\Player.cs" />
     <Compile Include="Directors\ServerDirector.cs" />
     <Compile Include="Networking\Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

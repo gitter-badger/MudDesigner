@@ -20,11 +20,18 @@ namespace MudDesigner.Engine.Scripting
         /// <param name="assembly">provides the name of the assembly, or file name that needs to be loaded.</param>
         public static void AddAssembly(String assembly)
         {
-            Assembly a;
+            Assembly a =null;
 
             //See if a file exists first with this assembly name.
-            a = File.Exists(assembly) ? Assembly.Load(new AssemblyName(assembly)) : Assembly.Load(assembly);
-
+            //TODO - why does the following line cause an exception when a file doesn't exist?
+            try
+            {
+                a = File.Exists(assembly) ? Assembly.Load(new AssemblyName(assembly)) : Assembly.Load(assembly);
+            }
+            catch(Exception ex)
+            {
+                Logger.WriteLine(ex.Message, Logger.Importance.Error);
+            }
             if (a == null)
                 return;
 

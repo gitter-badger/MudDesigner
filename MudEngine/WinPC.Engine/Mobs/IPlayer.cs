@@ -1,6 +1,8 @@
 ﻿using System.Net.Sockets;
 using System.Collections.Generic;
 using MudDesigner.Engine.States;
+using MudDesigner.Engine.Environment;
+
 namespace MudDesigner.Engine.Core
 {
     public interface IPlayer
@@ -15,5 +17,6 @@ namespace MudDesigner.Engine.Core
         void Disconnect();
         void SwitchState(IState state);
         void SendMessage(string message, bool newLine = true);
+        void Move(Room room);
     }
 }

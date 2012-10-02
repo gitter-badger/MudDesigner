@@ -4,6 +4,8 @@ using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Commands;
 using MudDesigner.Engine.Directors;
 using MudDesigner.Engine.States;
+using MudDesigner.Engine.Environment;
+using MudDesigner.Engine.Scripting;
 
 namespace MudDesigner.Scripts.States
 {
@@ -57,6 +59,13 @@ namespace MudDesigner.Scripts.States
         public ICommand GetCommand()
         {
             var input = Director.RecieveInput(Player);
+            switch (input.ToLower())
+            {
+                case "enter":
+                    Room startRoom = (Room)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.LoginRoom, null);
+                    Player.Move(startRoom);
+                    break;
+            }
 
             // We Don't have any commands here yet... but we will! (EnterCommand, JoinCommand, SaveCommand, OptionsCommand, QuitCommand etc)
             return new InvalidCommand(connection);

@@ -80,7 +80,7 @@ namespace MudDesigner.Engine.Core
         /// <param name="startedServer">A reference to a IServer Type that has had its Start() method called.</param>
         /// <param name="world">A instance of a IWorld Type.  This should be a non-restored World as the game will invoke the IWorld.Load method itself.</param>
         /// <returns></returns>
-        public virtual bool Initialize(IServer startedServer, IWorld world)
+        public virtual bool Initialize(IServer startedServer)
         {
             Name = "AllocateThis! Mud Game";
 
@@ -88,8 +88,6 @@ namespace MudDesigner.Engine.Core
                 return false;
 
             Server = startedServer;
-
-            World = world;
 
             ScriptFactory.AddAssembly(Assembly.GetExecutingAssembly());
 

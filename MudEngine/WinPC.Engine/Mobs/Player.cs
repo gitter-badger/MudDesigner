@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 using MudDesigner.Engine.States;
+using MudDesigner.Engine.Environment;
 
 namespace MudDesigner.Engine.Core
 {
@@ -23,6 +24,8 @@ namespace MudDesigner.Engine.Core
 
         public string CharacterName { get; set; }
         public string Class { get; set; } // ... really need to code up a design spec - MC
+
+        public Room CurrentRoom { get; protected set; }
 
         public Player()
         {
@@ -51,6 +54,15 @@ namespace MudDesigner.Engine.Core
             if (newLine)
                 message += System.Environment.NewLine;
             Connection.Send(new ASCIIEncoding().GetBytes(message));
+        }
+
+        public void Move(Room room)
+        {
+            if (CurrentRoom == room)
+                return;
+
+            CurrentRoom = room;
+            SendMessage(CurrentRoom.Description);
         }
 
         public override string ToString()

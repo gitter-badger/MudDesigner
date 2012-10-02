@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MudDesigner.Scripts.Environment
 {
-    public class World : MudDesigner.Engine.Environment.World
+    public class World : MudDesigner.Engine.Environment.EngineWorld
     {
     }
 }
