@@ -26,7 +26,8 @@ namespace MudDesigner.Engine.Scripting
             //TODO - why does the following line cause an exception when a file doesn't exist?
             try
             {
-                a = File.Exists(assembly) ? Assembly.Load(new AssemblyName(assembly)) : Assembly.Load(assembly);
+                bool f = File.Exists(assembly);
+                a = !File.Exists(assembly) ? Assembly.Load(new AssemblyName(assembly)) : Assembly.Load(assembly);
             }
             catch(Exception ex)
             {
@@ -59,9 +60,14 @@ namespace MudDesigner.Engine.Scripting
             {
                 Type[] types = assembly.GetTypes();
 
-                type = assembly.GetType(className);
-                if (type != null)
-                    break;
+                foreach (Type t in types)
+                {
+                    if (t.Name == className)
+                    {
+                        type = t;
+                        break;
+                    }
+                }
             }
 
             if (type == null)
@@ -113,8 +119,50 @@ namespace MudDesigner.Engine.Scripting
             {
                 return null;
             }
+        }
 
+        public static Type[] FindInheritedTypes(string baseScript)
+        {
+            List<Type> collection = new List<Type>();
 
+            if (assemblyCollection.Count == 0)
+                return null;
+
+            try
+            {
+                foreach (var a in assemblyCollection.Where(a => a != null))
+                {
+                    Type[] types = a.GetTypes();
+                    foreach (Type t in types)
+                    {
+                        Type type = GetParentType(baseScript, t);
+                        if (type != null) //If the returned object is not null, then 't' inherits.
+                            collection.Add(t); //This type inherits from baseScript, so add the object
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return collection.ToArray();
+        }
+
+        private static Type GetParentType(string baseScript, Type t)
+        {
+            if (t.BaseType != null)
+            {
+                if (t.BaseType.FullName == baseScript)
+                    return t.BaseType;
+                else
+                {
+                    if (t.BaseType.BaseType != null)
+                        return GetParentType(baseScript, t.BaseType.BaseType);
+                }
+            }
+
+            return null;
         }
     }
 }

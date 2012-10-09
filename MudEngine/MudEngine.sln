@@ -7,9 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudDesigner.Server", "WinPC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudDesigner.Scripts", "MudDesigner.Scripts\MudDesigner.Scripts.csproj", "{DB190BE6-A73B-4C59-B939-4A8B1825A658}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudDesigner.Editor", "MudDesigner.Editor\MudDesigner.Editor.csproj", "{84D17981-44C6-40C6-BC05-15819154E7F0}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
+		SccNumberOfProjects = 5
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs03
 		SccLocalPath0 = .
@@ -22,6 +24,9 @@ Global
 		SccProjectUniqueName3 = MudDesigner.Scripts\\MudDesigner.Scripts.csproj
 		SccProjectName3 = MudDesigner.Scripts
 		SccLocalPath3 = MudDesigner.Scripts
+		SccProjectUniqueName4 = MudDesigner.Editor\\MudDesigner.Editor.csproj
+		SccProjectName4 = MudDesigner.Editor
+		SccLocalPath4 = MudDesigner.Editor
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +67,16 @@ Global
 		{DB190BE6-A73B-4C59-B939-4A8B1825A658}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{DB190BE6-A73B-4C59-B939-4A8B1825A658}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{DB190BE6-A73B-4C59-B939-4A8B1825A658}.Release|x86.ActiveCfg = Release|Any CPU
+		{84D17981-44C6-40C6-BC05-15819154E7F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84D17981-44C6-40C6-BC05-15819154E7F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84D17981-44C6-40C6-BC05-15819154E7F0}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{84D17981-44C6-40C6-BC05-15819154E7F0}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{84D17981-44C6-40C6-BC05-15819154E7F0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{84D17981-44C6-40C6-BC05-15819154E7F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84D17981-44C6-40C6-BC05-15819154E7F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84D17981-44C6-40C6-BC05-15819154E7F0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{84D17981-44C6-40C6-BC05-15819154E7F0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{84D17981-44C6-40C6-BC05-15819154E7F0}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
