@@ -68,8 +68,12 @@ namespace MudDesigner.Editor
 
         private void objectBrowser_SelectedIndexChanged(object sender, EventArgs e)
         {
-            object obj = ScriptFactory.GetScript(objectBrowser.SelectedItem.ToString());
-            objectProperties.SelectedObject = obj;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            editorContainer.Panel1Collapsed = true;
+
         }
     }
 }
