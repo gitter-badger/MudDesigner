@@ -9,13 +9,14 @@ using MudDesigner.Engine.Scripting;
 
 namespace MudDesigner.Engine.Environment
 {
-    public abstract class Realm : BaseGameObject, IGameObject, IRealm
+    public abstract class Realm : IGameObject, IRealm
     {
         //Room Collection
         public Dictionary<string, Zone> Zones{ get; protected set; }
 
+        public String Name { get; set; }
+
         public Realm(string name)
-            : base(name)
         {
             Zones = new Dictionary<string, Zone>();
         }
@@ -91,5 +92,15 @@ namespace MudDesigner.Engine.Environment
             BroadcastMessage(player.Name + " has entered from the " + enteredDirection.ToString());
         }
         #endregion
+
+        public Guid Id
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public GameObjectType Type
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

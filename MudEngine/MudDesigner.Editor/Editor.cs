@@ -39,6 +39,9 @@ namespace MudDesigner.Editor
             //Load the Engine assembly
             Assembly assem = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, "MudDesigner.Engine.dll"));
             ScriptFactory.AddAssembly(assem);
+            assem = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, "MudDesigner.Scripts.dll"));
+            ScriptFactory.AddAssembly(assem);
+
             //Add any additional assemblies that might have been compiled elsewhere (downloadable assemblies)
             if (MudDesigner.Engine.Properties.Engine.Default.ScriptLibrary.Count != 0)
             {

@@ -8,9 +8,11 @@ using MudDesigner.Engine.Core;
 namespace MudDesigner.Engine.Environment
 {
     
-    public class EngineWorld :BaseGameObject, IWorld, IGameObject
+    public class EngineWorld : IWorld, IGameObject
     {
         public Dictionary<string, IRealm> Realms { get; protected set; }
+
+        public string Name { get; set; }
 
         public IRealm GetRealm(string realmName)
         {
@@ -63,6 +65,11 @@ namespace MudDesigner.Engine.Environment
         public new GameObjectType Type
         {
             get { return new GameObjectType(); }
+        }
+
+        public Guid Id
+        {
+            get { throw new NotImplementedException(); }
         }
     }
 }

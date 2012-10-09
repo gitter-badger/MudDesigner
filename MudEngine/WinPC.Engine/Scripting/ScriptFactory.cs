@@ -158,7 +158,7 @@ namespace MudDesigner.Engine.Scripting
                 else
                 {
                     if (t.BaseType.BaseType != null)
-                        return GetParentType(baseScript, t.BaseType.BaseType);
+                        return GetParentType(baseScript, t.BaseType);
                 }
             }
 

@@ -7,8 +7,10 @@ using MudDesigner.Engine.Scripting;
 
 namespace MudDesigner.Engine.Environment
 {
-    public abstract class Room : BaseGameObject, IGameObject, IRoom
+    public abstract class Room : IGameObject, IRoom
     {
+        public string Name { get; set; }
+
         /// <summary>
         /// Gets or Sets the Description of the Room that is printed to the users screen.
         /// </summary>
@@ -35,7 +37,7 @@ namespace MudDesigner.Engine.Environment
 
         //public GameObjectType Type { get; private set; } //Inherited from baseGameObject
 
-        public Room(string name, IZone zone, bool safe = true) : base(name)
+        public Room(string name, IZone zone, bool safe = true)
         {
             Safe = safe;
             Zone = zone;
@@ -121,5 +123,15 @@ namespace MudDesigner.Engine.Environment
             BroadcastMessage(player.Name + " has entered from the " + enteredDirection.ToString());
         }
         #endregion
+
+        public Guid Id
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public GameObjectType Type
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }
