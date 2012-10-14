@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudDesigner.Engine", "WinPC.Engine\MudDesigner.Engine.csproj", "{9D9E8CAC-8876-4725-9A65-2077DE4322DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "EngineMudDesigner.Engine.csproj", "{9D9E8CAC-8876-4725-9A65-2077DE4322DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudDesigner.Server", "WinPC.Server\MudDesigner.Server.csproj", "{161E78DB-10C5-43A6-BC15-0945BC6F941F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\MudDesigner.Server.csproj", "{161E78DB-10C5-43A6-BC15-0945BC6F941F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudDesigner.Scripts", "MudDesigner.Scripts\MudDesigner.Scripts.csproj", "{DB190BE6-A73B-4C59-B939-4A8B1825A658}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scripts", "Scripts\MudDesigner.Scripts.csproj", "{DB190BE6-A73B-4C59-B939-4A8B1825A658}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudDesigner.Editor", "MudDesigner.Editor\MudDesigner.Editor.csproj", "{84D17981-44C6-40C6-BC05-15819154E7F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor", "Editor\MudDesigner.Editor.csproj", "{84D17981-44C6-40C6-BC05-15819154E7F0}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -15,18 +15,18 @@ Global
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs03
 		SccLocalPath0 = .
-		SccProjectUniqueName1 = WinPC.Engine\\MudDesigner.Engine.csproj
-		SccProjectName1 = WinPC.Engine
-		SccLocalPath1 = WinPC.Engine
-		SccProjectUniqueName2 = WinPC.Server\\MudDesigner.Server.csproj
-		SccProjectName2 = WinPC.Server
-		SccLocalPath2 = WinPC.Server
-		SccProjectUniqueName3 = MudDesigner.Scripts\\MudDesigner.Scripts.csproj
-		SccProjectName3 = MudDesigner.Scripts
-		SccLocalPath3 = MudDesigner.Scripts
-		SccProjectUniqueName4 = MudDesigner.Editor\\MudDesigner.Editor.csproj
-		SccProjectName4 = MudDesigner.Editor
-		SccLocalPath4 = MudDesigner.Editor
+		SccProjectUniqueName1 = Engine\\MudDesigner.Engine.csproj
+		SccProjectName1 = Engine
+		SccLocalPath1 = Engine
+		SccProjectUniqueName2 = Server\\MudDesigner.Server.csproj
+		SccProjectName2 = Server
+		SccLocalPath2 = Server
+		SccProjectUniqueName3 = Scripts\\MudDesigner.Scripts.csproj
+		SccProjectName3 = Scripts
+		SccLocalPath3 = Scripts
+		SccProjectUniqueName4 = Editor\\MudDesigner.Editor.csproj
+		SccProjectName4 = Editor
+		SccLocalPath4 = Editor
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

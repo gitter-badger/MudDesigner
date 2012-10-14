@@ -82,7 +82,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MudDesigner.Scripts\MudDesigner.Scripts.csproj">
+    <ProjectReference Include="..\Scripts\MudDesigner.Scripts.csproj">
       <Project>{db190be6-a73b-4c59-b939-4a8b1825a658}</Project>
       <Name>MudDesigner.Scripts</Name>
     </ProjectReference>
