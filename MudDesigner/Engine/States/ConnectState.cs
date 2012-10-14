@@ -5,6 +5,7 @@ using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Commands;
 using MudDesigner.Engine.Directors;
 
+using MudDesigner.Engine.Mobs;
 
 namespace MudDesigner.Engine.States
 {

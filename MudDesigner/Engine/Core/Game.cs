@@ -85,10 +85,16 @@ namespace MudDesigner.Engine.Core
         {
             Name = "AllocateThis! Mud Game";
 
-            if (startedServer == null)
-                return false;
+            if (startedServer != null)
+            {
 
-            Server = startedServer;
+                Server = startedServer;
+            }
+            else
+            {
+                Server = new Server();
+                
+            }
 
             //Add the engine assembly to the Script Factory
             ScriptFactory.AddAssembly(Assembly.GetExecutingAssembly());

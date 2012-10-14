@@ -32,5 +32,14 @@
     <Setting Name="DoorType" Type="System.String" Scope="Application">
       <Value Profile="(Default)">MudDesigner.Scripts.Environment.Door</Value>
     </Setting>
+    <Setting Name="RealmType" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MudDesigner.Scripts.Environment.Realm</Value>
+    </Setting>
+    <Setting Name="ZoneType" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MudDesigner.Scripts.Environment.Zone</Value>
+    </Setting>
+    <Setting Name="RoomType" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MudDesigner.Scripts.Environment.Room</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

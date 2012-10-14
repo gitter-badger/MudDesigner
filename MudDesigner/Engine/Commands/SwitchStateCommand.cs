@@ -1,6 +1,7 @@
 ﻿using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Directors;
 using MudDesigner.Engine.States;
+using MudDesigner.Engine.Mobs;
 
 namespace MudDesigner.Engine.Commands
 {

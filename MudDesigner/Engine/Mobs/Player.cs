@@ -4,8 +4,9 @@ using System.Net.Sockets;
 using System.Text;
 using MudDesigner.Engine.States;
 using MudDesigner.Engine.Environment;
+using MudDesigner.Engine.Core;
 
-namespace MudDesigner.Engine.Core
+namespace MudDesigner.Engine.Mobs
 {
     public abstract class Player : BaseGameObject, IPlayer
     {
@@ -30,6 +31,7 @@ namespace MudDesigner.Engine.Core
         public string Password { get; set; } // i dont like this but its just here temporarily - MC
 
         public string CharacterName { get; set; }
+
         public string Class { get; set; } // ... really need to code up a design spec - MC
 
         public Room CurrentRoom { get; protected set; }

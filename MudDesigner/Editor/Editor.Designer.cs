@@ -31,47 +31,58 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.worldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newRealmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newZoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newRoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editorContainer = new System.Windows.Forms.SplitContainer();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.objectBrowser = new System.Windows.Forms.ListBox();
-            this.objectProperties = new System.Windows.Forms.PropertyGrid();
             this.panel1 = new System.Windows.Forms.Panel();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.RoomEditor_Properties = new System.Windows.Forms.SplitContainer();
-            this.North = new System.Windows.Forms.Button();
-            this.East = new System.Windows.Forms.Button();
-            this.West = new System.Windows.Forms.Button();
-            this.South = new System.Windows.Forms.Button();
-            this.RoomObjects = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.GameExplorer = new System.Windows.Forms.TabControl();
+            this.EnvironmentPage = new System.Windows.Forms.TabPage();
+            this.EnvironmentOptions = new System.Windows.Forms.TabControl();
+            this.RealmTab = new System.Windows.Forms.TabPage();
+            this.AvailableRealms = new System.Windows.Forms.ListBox();
+            this.ZoneTab = new System.Windows.Forms.TabPage();
+            this.AvailableZones = new System.Windows.Forms.ListBox();
+            this.RoomTab = new System.Windows.Forms.TabPage();
+            this.AvailableRooms = new System.Windows.Forms.ListBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.SelectedObjectLabel = new System.Windows.Forms.Label();
+            this.objectProperties = new System.Windows.Forms.PropertyGrid();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.editorContainer)).BeginInit();
             this.editorContainer.Panel1.SuspendLayout();
             this.editorContainer.Panel2.SuspendLayout();
             this.editorContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RoomEditor_Properties)).BeginInit();
-            this.RoomEditor_Properties.Panel1.SuspendLayout();
+            this.RoomEditor_Properties.Panel2.SuspendLayout();
             this.RoomEditor_Properties.SuspendLayout();
-            this.RoomObjects.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
+            this.GameExplorer.SuspendLayout();
+            this.EnvironmentPage.SuspendLayout();
+            this.EnvironmentOptions.SuspendLayout();
+            this.RealmTab.SuspendLayout();
+            this.ZoneTab.SuspendLayout();
+            this.RoomTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
             // 
             this.statusStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.statusStrip1.Location = new System.Drawing.Point(0, 540);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 708);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(784, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1008, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -79,27 +90,78 @@
             // 
             this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.worldToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(784, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1008, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.saveToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
             // exitToolStripMenuItem
             // 
+            this.exitToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.exitToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.exitToolStripMenuItem.Text = "Exit";
+            // 
+            // worldToolStripMenuItem
+            // 
+            this.worldToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newRealmToolStripMenuItem,
+            this.newZoneToolStripMenuItem,
+            this.newRoomToolStripMenuItem});
+            this.worldToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.worldToolStripMenuItem.Name = "worldToolStripMenuItem";
+            this.worldToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
+            this.worldToolStripMenuItem.Text = "Environment";
+            // 
+            // newRealmToolStripMenuItem
+            // 
+            this.newRealmToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.newRealmToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.newRealmToolStripMenuItem.Name = "newRealmToolStripMenuItem";
+            this.newRealmToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.newRealmToolStripMenuItem.Text = "New Realm";
+            this.newRealmToolStripMenuItem.Click += new System.EventHandler(this.newRealmToolStripMenuItem_Click);
+            // 
+            // newZoneToolStripMenuItem
+            // 
+            this.newZoneToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.newZoneToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.newZoneToolStripMenuItem.Name = "newZoneToolStripMenuItem";
+            this.newZoneToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.newZoneToolStripMenuItem.Text = "New Zone";
+            this.newZoneToolStripMenuItem.Click += new System.EventHandler(this.newZoneToolStripMenuItem_Click);
+            // 
+            // newRoomToolStripMenuItem
+            // 
+            this.newRoomToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.newRoomToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.newRoomToolStripMenuItem.Name = "newRoomToolStripMenuItem";
+            this.newRoomToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.newRoomToolStripMenuItem.Text = "New Room";
+            this.newRoomToolStripMenuItem.Click += new System.EventHandler(this.newRoomToolStripMenuItem_Click);
             // 
             // editorContainer
             // 
@@ -112,38 +174,19 @@
             // 
             // editorContainer.Panel1
             // 
-            this.editorContainer.Panel1.Controls.Add(this.splitContainer1);
+            this.editorContainer.Panel1.Controls.Add(this.objectBrowser);
             this.editorContainer.Panel1.Controls.Add(this.panel1);
             // 
             // editorContainer.Panel2
             // 
             this.editorContainer.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.editorContainer.Panel2.Controls.Add(this.RoomEditor_Properties);
-            this.editorContainer.Size = new System.Drawing.Size(784, 516);
-            this.editorContainer.SplitterDistance = 185;
+            this.editorContainer.Size = new System.Drawing.Size(1008, 684);
+            this.editorContainer.SplitterDistance = 195;
             this.editorContainer.SplitterIncrement = 5;
             this.editorContainer.SplitterWidth = 5;
             this.editorContainer.TabIndex = 2;
             this.editorContainer.TabStop = false;
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 15);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.objectBrowser);
-            this.splitContainer1.Panel1MinSize = 50;
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.objectProperties);
-            this.splitContainer1.Size = new System.Drawing.Size(181, 497);
-            this.splitContainer1.SplitterDistance = 248;
-            this.splitContainer1.TabIndex = 2;
             // 
             // objectBrowser
             // 
@@ -152,31 +195,10 @@
             this.objectBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
             this.objectBrowser.ForeColor = System.Drawing.Color.White;
             this.objectBrowser.FormattingEnabled = true;
-            this.objectBrowser.Location = new System.Drawing.Point(0, 0);
+            this.objectBrowser.Location = new System.Drawing.Point(0, 15);
             this.objectBrowser.Name = "objectBrowser";
-            this.objectBrowser.Size = new System.Drawing.Size(181, 248);
-            this.objectBrowser.TabIndex = 1;
-            this.objectBrowser.SelectedIndexChanged += new System.EventHandler(this.objectBrowser_SelectedIndexChanged);
-            // 
-            // objectProperties
-            // 
-            this.objectProperties.CategorySplitterColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.objectProperties.CommandsBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.objectProperties.CommandsForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.objectProperties.Cursor = System.Windows.Forms.Cursors.Default;
-            this.objectProperties.DisabledItemForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.objectProperties.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.objectProperties.HelpBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.objectProperties.HelpForeColor = System.Drawing.Color.White;
-            this.objectProperties.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.objectProperties.Location = new System.Drawing.Point(0, 0);
-            this.objectProperties.Name = "objectProperties";
-            this.objectProperties.SelectedItemWithFocusForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.objectProperties.Size = new System.Drawing.Size(181, 245);
-            this.objectProperties.TabIndex = 0;
-            this.objectProperties.ViewBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.objectProperties.ViewBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.objectProperties.ViewForeColor = System.Drawing.Color.White;
+            this.objectBrowser.Size = new System.Drawing.Size(191, 665);
+            this.objectBrowser.TabIndex = 4;
             // 
             // panel1
             // 
@@ -186,8 +208,8 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(181, 15);
-            this.panel1.TabIndex = 1;
+            this.panel1.Size = new System.Drawing.Size(191, 15);
+            this.panel1.TabIndex = 3;
             // 
             // textBox1
             // 
@@ -197,9 +219,9 @@
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.Dock = System.Windows.Forms.DockStyle.Right;
             this.textBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(92)))), ((int)(((byte)(92)))));
-            this.textBox1.Location = new System.Drawing.Point(81, 0);
+            this.textBox1.Location = new System.Drawing.Point(72, 0);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 13);
+            this.textBox1.Size = new System.Drawing.Size(119, 13);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "Search Toolbox";
             this.textBox1.WordWrap = false;
@@ -214,7 +236,6 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "Toolbox";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // RoomEditor_Properties
             // 
@@ -224,138 +245,190 @@
             this.RoomEditor_Properties.Location = new System.Drawing.Point(0, 0);
             this.RoomEditor_Properties.Name = "RoomEditor_Properties";
             // 
-            // RoomEditor_Properties.Panel1
+            // RoomEditor_Properties.Panel2
             // 
-            this.RoomEditor_Properties.Panel1.Controls.Add(this.RoomObjects);
-            this.RoomEditor_Properties.Panel1.Controls.Add(this.South);
-            this.RoomEditor_Properties.Panel1.Controls.Add(this.West);
-            this.RoomEditor_Properties.Panel1.Controls.Add(this.East);
-            this.RoomEditor_Properties.Panel1.Controls.Add(this.North);
-            this.RoomEditor_Properties.Size = new System.Drawing.Size(594, 516);
-            this.RoomEditor_Properties.SplitterDistance = 409;
+            this.RoomEditor_Properties.Panel2.Controls.Add(this.splitContainer2);
+            this.RoomEditor_Properties.Size = new System.Drawing.Size(808, 684);
+            this.RoomEditor_Properties.SplitterDistance = 499;
             this.RoomEditor_Properties.SplitterIncrement = 2;
             this.RoomEditor_Properties.SplitterWidth = 5;
             this.RoomEditor_Properties.TabIndex = 0;
             // 
-            // North
+            // splitContainer2
             // 
-            this.North.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.North.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.North.FlatAppearance.BorderSize = 2;
-            this.North.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.North.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.North.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.North.Location = new System.Drawing.Point(141, 15);
-            this.North.Name = "North";
-            this.North.Size = new System.Drawing.Size(125, 95);
-            this.North.TabIndex = 0;
-            this.North.Text = "North";
-            this.North.UseVisualStyleBackColor = false;
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // East
+            // splitContainer2.Panel1
             // 
-            this.East.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.East.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.East.FlatAppearance.BorderSize = 2;
-            this.East.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.East.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.East.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.East.Location = new System.Drawing.Point(276, 124);
-            this.East.Name = "East";
-            this.East.Size = new System.Drawing.Size(125, 95);
-            this.East.TabIndex = 1;
-            this.East.Text = "East";
-            this.East.UseVisualStyleBackColor = false;
+            this.splitContainer2.Panel1.Controls.Add(this.GameExplorer);
             // 
-            // West
+            // splitContainer2.Panel2
             // 
-            this.West.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.West.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.West.FlatAppearance.BorderSize = 2;
-            this.West.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.West.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.West.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.West.Location = new System.Drawing.Point(4, 124);
-            this.West.Name = "West";
-            this.West.Size = new System.Drawing.Size(125, 95);
-            this.West.TabIndex = 2;
-            this.West.Text = "West";
-            this.West.UseVisualStyleBackColor = false;
+            this.splitContainer2.Panel2.Controls.Add(this.SelectedObjectLabel);
+            this.splitContainer2.Panel2.Controls.Add(this.objectProperties);
+            this.splitContainer2.Size = new System.Drawing.Size(300, 680);
+            this.splitContainer2.SplitterDistance = 347;
+            this.splitContainer2.TabIndex = 0;
             // 
-            // South
+            // GameExplorer
             // 
-            this.South.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.South.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.South.FlatAppearance.BorderSize = 2;
-            this.South.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.South.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.South.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.South.Location = new System.Drawing.Point(141, 231);
-            this.South.Name = "South";
-            this.South.Size = new System.Drawing.Size(125, 95);
-            this.South.TabIndex = 3;
-            this.South.Text = "South";
-            this.South.UseVisualStyleBackColor = false;
+            this.GameExplorer.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
+            this.GameExplorer.Controls.Add(this.EnvironmentPage);
+            this.GameExplorer.Controls.Add(this.tabPage2);
+            this.GameExplorer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.GameExplorer.Location = new System.Drawing.Point(0, 0);
+            this.GameExplorer.Name = "GameExplorer";
+            this.GameExplorer.SelectedIndex = 0;
+            this.GameExplorer.Size = new System.Drawing.Size(300, 347);
+            this.GameExplorer.TabIndex = 0;
             // 
-            // RoomObjects
+            // EnvironmentPage
             // 
-            this.RoomObjects.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
-            this.RoomObjects.Controls.Add(this.tabPage1);
-            this.RoomObjects.Controls.Add(this.tabPage2);
-            this.RoomObjects.Controls.Add(this.tabPage3);
-            this.RoomObjects.Controls.Add(this.tabPage4);
-            this.RoomObjects.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.RoomObjects.Location = new System.Drawing.Point(0, 332);
-            this.RoomObjects.Name = "RoomObjects";
-            this.RoomObjects.SelectedIndex = 0;
-            this.RoomObjects.Size = new System.Drawing.Size(405, 180);
-            this.RoomObjects.TabIndex = 4;
+            this.EnvironmentPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.EnvironmentPage.Controls.Add(this.EnvironmentOptions);
+            this.EnvironmentPage.ForeColor = System.Drawing.Color.White;
+            this.EnvironmentPage.Location = new System.Drawing.Point(4, 25);
+            this.EnvironmentPage.Name = "EnvironmentPage";
+            this.EnvironmentPage.Padding = new System.Windows.Forms.Padding(3);
+            this.EnvironmentPage.Size = new System.Drawing.Size(292, 318);
+            this.EnvironmentPage.TabIndex = 0;
+            this.EnvironmentPage.Text = "Environment";
             // 
-            // tabPage1
+            // EnvironmentOptions
             // 
-            this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.tabPage1.ForeColor = System.Drawing.Color.White;
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(397, 151);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Details";
+            this.EnvironmentOptions.Controls.Add(this.RealmTab);
+            this.EnvironmentOptions.Controls.Add(this.ZoneTab);
+            this.EnvironmentOptions.Controls.Add(this.RoomTab);
+            this.EnvironmentOptions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.EnvironmentOptions.Location = new System.Drawing.Point(3, 3);
+            this.EnvironmentOptions.Name = "EnvironmentOptions";
+            this.EnvironmentOptions.SelectedIndex = 0;
+            this.EnvironmentOptions.Size = new System.Drawing.Size(286, 312);
+            this.EnvironmentOptions.TabIndex = 0;
+            // 
+            // RealmTab
+            // 
+            this.RealmTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.RealmTab.Controls.Add(this.AvailableRealms);
+            this.RealmTab.Location = new System.Drawing.Point(4, 22);
+            this.RealmTab.Name = "RealmTab";
+            this.RealmTab.Padding = new System.Windows.Forms.Padding(3);
+            this.RealmTab.Size = new System.Drawing.Size(278, 286);
+            this.RealmTab.TabIndex = 1;
+            this.RealmTab.Text = "Realms";
+            // 
+            // AvailableRealms
+            // 
+            this.AvailableRealms.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.AvailableRealms.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.AvailableRealms.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AvailableRealms.ForeColor = System.Drawing.Color.White;
+            this.AvailableRealms.FormattingEnabled = true;
+            this.AvailableRealms.Location = new System.Drawing.Point(3, 3);
+            this.AvailableRealms.Name = "AvailableRealms";
+            this.AvailableRealms.Size = new System.Drawing.Size(272, 280);
+            this.AvailableRealms.Sorted = true;
+            this.AvailableRealms.TabIndex = 1;
+            this.AvailableRealms.SelectedIndexChanged += new System.EventHandler(this.AvailableRealms_SelectedIndexChanged);
+            // 
+            // ZoneTab
+            // 
+            this.ZoneTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.ZoneTab.Controls.Add(this.AvailableZones);
+            this.ZoneTab.Location = new System.Drawing.Point(4, 22);
+            this.ZoneTab.Name = "ZoneTab";
+            this.ZoneTab.Size = new System.Drawing.Size(278, 286);
+            this.ZoneTab.TabIndex = 2;
+            this.ZoneTab.Text = "Zones";
+            // 
+            // AvailableZones
+            // 
+            this.AvailableZones.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.AvailableZones.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.AvailableZones.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AvailableZones.ForeColor = System.Drawing.Color.White;
+            this.AvailableZones.FormattingEnabled = true;
+            this.AvailableZones.Location = new System.Drawing.Point(0, 0);
+            this.AvailableZones.Name = "AvailableZones";
+            this.AvailableZones.Size = new System.Drawing.Size(278, 286);
+            this.AvailableZones.Sorted = true;
+            this.AvailableZones.TabIndex = 2;
+            this.AvailableZones.SelectedIndexChanged += new System.EventHandler(this.AvailableZones_SelectedIndexChanged);
+            // 
+            // RoomTab
+            // 
+            this.RoomTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.RoomTab.Controls.Add(this.AvailableRooms);
+            this.RoomTab.Location = new System.Drawing.Point(4, 22);
+            this.RoomTab.Name = "RoomTab";
+            this.RoomTab.Size = new System.Drawing.Size(278, 283);
+            this.RoomTab.TabIndex = 3;
+            this.RoomTab.Text = "Rooms";
+            // 
+            // AvailableRooms
+            // 
+            this.AvailableRooms.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.AvailableRooms.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.AvailableRooms.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AvailableRooms.ForeColor = System.Drawing.Color.White;
+            this.AvailableRooms.FormattingEnabled = true;
+            this.AvailableRooms.Location = new System.Drawing.Point(0, 0);
+            this.AvailableRooms.Name = "AvailableRooms";
+            this.AvailableRooms.Size = new System.Drawing.Size(278, 283);
+            this.AvailableRooms.Sorted = true;
+            this.AvailableRooms.TabIndex = 3;
             // 
             // tabPage2
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.tabPage2.ForeColor = System.Drawing.Color.White;
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(401, 151);
+            this.tabPage2.Size = new System.Drawing.Size(292, 315);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Game Objects";
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // tabPage3
+            // SelectedObjectLabel
             // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 25);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(401, 151);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Mobs";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.SelectedObjectLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.SelectedObjectLabel.ForeColor = System.Drawing.Color.White;
+            this.SelectedObjectLabel.Location = new System.Drawing.Point(0, 0);
+            this.SelectedObjectLabel.Name = "SelectedObjectLabel";
+            this.SelectedObjectLabel.Size = new System.Drawing.Size(300, 16);
+            this.SelectedObjectLabel.TabIndex = 2;
+            this.SelectedObjectLabel.Text = "Nothing Selected";
             // 
-            // tabPage4
+            // objectProperties
             // 
-            this.tabPage4.Location = new System.Drawing.Point(4, 25);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(401, 151);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Scripts";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.objectProperties.CategoryForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
+            this.objectProperties.CategorySplitterColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.objectProperties.CommandsBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.objectProperties.CommandsForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.objectProperties.Cursor = System.Windows.Forms.Cursors.Default;
+            this.objectProperties.DisabledItemForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.objectProperties.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.objectProperties.HelpBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.objectProperties.HelpForeColor = System.Drawing.Color.White;
+            this.objectProperties.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.objectProperties.Location = new System.Drawing.Point(0, 19);
+            this.objectProperties.Name = "objectProperties";
+            this.objectProperties.SelectedItemWithFocusForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.objectProperties.Size = new System.Drawing.Size(300, 310);
+            this.objectProperties.TabIndex = 1;
+            this.objectProperties.ViewBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.objectProperties.ViewBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.objectProperties.ViewForeColor = System.Drawing.Color.White;
+            this.objectProperties.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.objectProperties_PropertyValueChanged);
+            this.objectProperties.SelectedObjectsChanged += new System.EventHandler(this.objectProperties_SelectedObjectsChanged);
             // 
             // Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 562);
+            this.ClientSize = new System.Drawing.Size(1008, 730);
             this.Controls.Add(this.editorContainer);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -370,16 +443,21 @@
             this.editorContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.editorContainer)).EndInit();
             this.editorContainer.ResumeLayout(false);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.RoomEditor_Properties.Panel1.ResumeLayout(false);
+            this.RoomEditor_Properties.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.RoomEditor_Properties)).EndInit();
             this.RoomEditor_Properties.ResumeLayout(false);
-            this.RoomObjects.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
+            this.GameExplorer.ResumeLayout(false);
+            this.EnvironmentPage.ResumeLayout(false);
+            this.EnvironmentOptions.ResumeLayout(false);
+            this.RealmTab.ResumeLayout(false);
+            this.ZoneTab.ResumeLayout(false);
+            this.RoomTab.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -392,23 +470,29 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.SplitContainer editorContainer;
-        private System.Windows.Forms.Panel panel1;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.ListBox objectBrowser;
-        private System.Windows.Forms.PropertyGrid objectProperties;
         private System.Windows.Forms.SplitContainer RoomEditor_Properties;
-        private System.Windows.Forms.Button North;
-        private System.Windows.Forms.Button South;
-        private System.Windows.Forms.Button West;
-        private System.Windows.Forms.Button East;
-        private System.Windows.Forms.TabControl RoomObjects;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.ListBox objectBrowser;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.ToolStripMenuItem worldToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newRealmToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newZoneToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newRoomToolStripMenuItem;
+        private System.Windows.Forms.TabControl GameExplorer;
+        private System.Windows.Forms.TabPage EnvironmentPage;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Label SelectedObjectLabel;
+        private System.Windows.Forms.TabControl EnvironmentOptions;
+        private System.Windows.Forms.TabPage RealmTab;
+        private System.Windows.Forms.TabPage ZoneTab;
+        private System.Windows.Forms.TabPage RoomTab;
+        private System.Windows.Forms.ListBox AvailableRealms;
+        private System.Windows.Forms.ListBox AvailableZones;
+        private System.Windows.Forms.ListBox AvailableRooms;
+        private System.Windows.Forms.PropertyGrid objectProperties;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
     }
 }
 

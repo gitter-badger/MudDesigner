@@ -55,6 +55,7 @@ namespace MudDesigner.Engine.Scripting
         public static object GetScript(string className, params object[] args)
         {
             Type type = null;
+            bool foundScript = false;
 
             foreach (Assembly assembly in assemblyCollection)
             {
@@ -65,9 +66,13 @@ namespace MudDesigner.Engine.Scripting
                     if (t.FullName == className)
                     {
                         type = t;
+                        foundScript = true;
                         break;
                     }
                 }
+
+                if (foundScript)
+                    break;
             }
 
             if (type == null)
@@ -94,11 +99,15 @@ namespace MudDesigner.Engine.Scripting
                 foreach (var a in assemblyCollection.Where(a => a != null))
                 {
                     Type[] types = a.GetTypes();
-                    foreach (var t in a.GetTypes().Where(t => t.BaseType.FullName == baseScript))
+                    foreach (Type t in types)
                     {
-                        script = t;
-                        foundScript = true;
-                        break;
+                        Type type = GetParentType(baseScript, t);
+                        if (type != null) //If the returned object is not null, then 't' inherits.
+                        {
+                            foundScript = true;
+                            script = t;
+                            break;
+                        }
                     }
 
                     if (foundScript)
@@ -115,7 +124,7 @@ namespace MudDesigner.Engine.Scripting
                 Object obj = Activator.CreateInstance(script, arguments);
                 return obj;
             }
-            catch
+            catch (Exception ex)
             {
                 return null;
             }

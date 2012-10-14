@@ -40,6 +40,7 @@ namespace MudDesigner.Engine.Networking
         public Server(int port)
         {
             Port = port;
+            Enabled = false;
             Status = ServerStatus.Stopped;
             MaxConnections = 100;
             MaxQueuedConnections = 10;

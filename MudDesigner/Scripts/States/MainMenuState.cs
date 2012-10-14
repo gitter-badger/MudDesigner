@@ -6,6 +6,7 @@ using MudDesigner.Engine.Directors;
 using MudDesigner.Engine.States;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Scripting;
+using MudDesigner.Engine.Mobs;
 
 namespace MudDesigner.Scripts.States
 {

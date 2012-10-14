@@ -6,6 +6,7 @@ using System.Text;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Scripting;
+using MudDesigner.Engine.Mobs;
 
 namespace MudDesigner.Engine.Environment
 {
@@ -88,6 +89,11 @@ namespace MudDesigner.Engine.Environment
             throw new NotImplementedException();
         }
 
+        public override string ToString()
+        {
+            return Name;
+        }
+
         #region == Events ==
         public delegate void OnEnterHandler(IPlayer player, AvailableTravelDirections enteredDirection);
         public event OnEnterHandler OnEnterEvent;
@@ -99,12 +105,12 @@ namespace MudDesigner.Engine.Environment
 
         public Guid Id
         {
-            get { throw new NotImplementedException(); }
+            get { return Guid.NewGuid(); }
         }
 
         public GameObjectType Type
         {
-            get { throw new NotImplementedException(); }
+            get { return GameObjectType.Realm; }
         }
     }
 }

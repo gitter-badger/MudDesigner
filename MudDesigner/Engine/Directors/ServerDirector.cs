@@ -8,6 +8,7 @@ using MudDesigner.Engine.Networking;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.States;
 using MudDesigner.Engine.Scripting;
+using MudDesigner.Engine.Mobs;
 
 namespace MudDesigner.Engine.Directors
 {

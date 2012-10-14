@@ -5,6 +5,7 @@ using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Scripting;
 
+using MudDesigner.Engine.Mobs;
 namespace MudDesigner.Engine.Environment
 {
     public abstract class Room : IGameObject, IRoom

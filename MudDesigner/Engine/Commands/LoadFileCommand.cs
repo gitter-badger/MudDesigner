@@ -5,6 +5,7 @@ using System.IO;
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Scripting;
+using MudDesigner.Engine.Mobs;
 
 namespace MudDesigner.Engine.Commands
 {

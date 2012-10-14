@@ -1,31 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Scripting;
+using MudDesigner.Engine.Mobs;
 
 namespace MudDesigner.Engine.Environment
 {
     public abstract class Realm : IGameObject, IRealm
     {
         //Room Collection
-        public Dictionary<string, Zone> Zones{ get; protected set; }
+        [Browsable(false)]
+        public Dictionary<string, IZone> Zones{ get; protected set; }
 
         public String Name { get; set; }
 
         public Realm(string name)
         {
-            Zones = new Dictionary<string, Zone>();
+            Zones = new Dictionary<string, IZone>();
             Name = name;
         }
 
-        public virtual void AddZone(Zone zone, bool forceOverwrite = true)
+        public virtual void AddZone(IZone zone, bool forceOverwrite = true)
         {
             //Check if room is null.
-            if (zone== null)
+            if (zone == null)
                 return; //No null references within our collections!
 
             //If this Room already exists, overwrite it
@@ -41,7 +44,7 @@ namespace MudDesigner.Engine.Environment
             }
         }
 
-        public virtual void AddZones(Zone[] zones, bool forceOverwrite = true)
+        public virtual void AddZones(IZone[] zones, bool forceOverwrite = true)
         {
             foreach (Zone zone in zones)
             {
@@ -49,9 +52,11 @@ namespace MudDesigner.Engine.Environment
             }
         }
 
-        public virtual void RemoveZone(Zone zone)
+        public virtual void RemoveZone(IZone zone)
         {
             if (Zones.ContainsKey(zone.Name))
+                Zones.Remove(zone.Name);
+            else if (Zones.ContainsValue(zone))
                 Zones.Remove(zone.Name);
         }
 
@@ -85,6 +90,11 @@ namespace MudDesigner.Engine.Environment
             throw new NotImplementedException();
         }
 
+        public override string ToString()
+        {
+            return Name;
+        }
+
         #region == Events ==
         public delegate void OnEnterHandler(IPlayer player, AvailableTravelDirections enteredDirection);
         public event OnEnterHandler OnEnterEvent;
@@ -94,14 +104,16 @@ namespace MudDesigner.Engine.Environment
         }
         #endregion
 
+        [Browsable(false)]
         public Guid Id
         {
-            get { throw new NotImplementedException(); }
+            get { return Guid.NewGuid(); }
         }
 
+        [Browsable(false)]
         public GameObjectType Type
         {
-            get { throw new NotImplementedException(); }
+            get { return GameObjectType.Realm; }
         }
     }
 }

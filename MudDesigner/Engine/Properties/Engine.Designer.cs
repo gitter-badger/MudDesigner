@@ -108,5 +108,32 @@ namespace MudDesigner.Engine.Properties {
                 return ((string)(this["DoorType"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Environment.Realm")]
+        public string RealmType {
+            get {
+                return ((string)(this["RealmType"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Environment.Zone")]
+        public string ZoneType {
+            get {
+                return ((string)(this["ZoneType"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Environment.Room")]
+        public string RoomType {
+            get {
+                return ((string)(this["RoomType"]));
+            }
+        }
     }
 }

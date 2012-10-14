@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading;
 using MudDesigner.Engine.Core;
+using MudDesigner.Engine.Mobs;
 
 namespace MudDesigner.Engine.Directors
 {

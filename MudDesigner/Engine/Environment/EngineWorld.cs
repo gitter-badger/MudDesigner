@@ -17,7 +17,7 @@ namespace MudDesigner.Engine.Environment
         public EngineWorld()
         {
             Realms = new Dictionary<string, IRealm>();
-            Name = String.Empty;
+            Name = "World";
         }
 
         public IRealm GetRealm(string realmName)
@@ -34,16 +34,6 @@ namespace MudDesigner.Engine.Environment
 
             if (!Realms.Values.Contains<IRealm>(realm))
                 Realms.Add(r.Name, r);
-        }
-
-        public bool Load(string filename)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Save()
-        {
-            throw new NotImplementedException();
         }
 
         public void Create(string name)
@@ -66,7 +56,6 @@ namespace MudDesigner.Engine.Environment
         {
             throw new NotImplementedException();
         }
-
 
         public new GameObjectType Type
         {

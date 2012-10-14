@@ -6,6 +6,7 @@ using MudDesigner.Engine.Commands;
 using MudDesigner.Engine.Directors;
 using MudDesigner.Engine.Scripting;
 
+using MudDesigner.Engine.Mobs;
 namespace MudDesigner.Engine.States
 {
     public class CreatePlayerState : IState

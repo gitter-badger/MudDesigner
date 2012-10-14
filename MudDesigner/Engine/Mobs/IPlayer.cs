@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using MudDesigner.Engine.States;
 using MudDesigner.Engine.Environment;
 
-namespace MudDesigner.Engine.Core
+namespace MudDesigner.Engine.Mobs
 {
     public interface IPlayer
     {

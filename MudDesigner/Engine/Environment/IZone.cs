@@ -14,6 +14,8 @@ namespace MudDesigner.Engine.Environment
 
         Dictionary<string, Room> Rooms { get; }
 
+        string Name { get; set; }
+
         //TODO - Add a general collection of monsters that populate the entire Zone.
         //Helps you not having to insert Monsters into every room you make
         //List<IMonster> Monsters {get;}

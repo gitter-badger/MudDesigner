@@ -4,6 +4,7 @@ using MudDesigner.Engine.Core;
 using System;
 using System.Collections;
 using MudDesigner;
+using MudDesigner.Engine.Mobs;
 namespace MudDesigner.Engine.Environment
 {
     public struct Senses
