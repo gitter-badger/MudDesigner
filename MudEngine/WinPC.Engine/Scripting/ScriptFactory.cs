@@ -62,7 +62,7 @@ namespace MudDesigner.Engine.Scripting
 
                 foreach (Type t in types)
                 {
-                    if (t.Name == className)
+                    if (t.FullName == className)
                     {
                         type = t;
                         break;

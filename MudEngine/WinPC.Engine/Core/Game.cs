@@ -1,5 +1,6 @@
 ﻿//Microsoft .NET Using statements.
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -89,11 +90,19 @@ namespace MudDesigner.Engine.Core
 
             Server = startedServer;
 
+            //Add the engine assembly to the Script Factory
             ScriptFactory.AddAssembly(Assembly.GetExecutingAssembly());
+            
 
-            foreach (string assembly in MudDesigner.Engine.Properties.Engine.Default.ScriptLibrary)
+            //Add any additional assemblies that might have been compiled elsewhere (downloadable assemblies)
+            if (MudDesigner.Engine.Properties.Engine.Default.ScriptLibrary.Count != 0)
             {
-                ScriptFactory.AddAssembly(assembly);
+                foreach (string assembly in MudDesigner.Engine.Properties.Engine.Default.ScriptLibrary)
+                {
+                    //Make sure the assembly actually exists first.
+                    if (File.Exists(assembly))
+                        ScriptFactory.AddAssembly(System.Environment.CurrentDirectory + "\\" + assembly);
+                }
             }
 
             return true;

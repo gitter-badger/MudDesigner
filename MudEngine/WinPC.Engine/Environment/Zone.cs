@@ -24,6 +24,8 @@ namespace MudDesigner.Engine.Environment
         public Zone(string name, IRealm realm)
         {
             Rooms = new Dictionary<string, Room>();
+            Realm = realm;
+            Name = name;
         }
 
         public virtual void AddRoom(Room room, bool forceOverwrite = true)

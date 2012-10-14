@@ -43,6 +43,7 @@ namespace MudDesigner.Engine.Environment
             Zone = zone;
             Doorways = new Dictionary<AvailableTravelDirections, IDoor>();
             Occupants = new Dictionary<string, IPlayer>();
+            Name = name;
         }
 
         public virtual void AddDoorway(AvailableTravelDirections direction, IRoom arrivalRoom, bool autoAddReverseDirection = true, bool forceOverwrite = true)

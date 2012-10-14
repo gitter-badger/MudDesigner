@@ -14,6 +14,12 @@ namespace MudDesigner.Engine.Environment
 
         public string Name { get; set; }
 
+        public EngineWorld()
+        {
+            Realms = new Dictionary<string, IRealm>();
+            Name = String.Empty;
+        }
+
         public IRealm GetRealm(string realmName)
         {
             IRealm realm;

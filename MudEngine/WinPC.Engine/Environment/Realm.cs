@@ -19,6 +19,7 @@ namespace MudDesigner.Engine.Environment
         public Realm(string name)
         {
             Zones = new Dictionary<string, Zone>();
+            Name = name;
         }
 
         public virtual void AddZone(Zone zone, bool forceOverwrite = true)

@@ -31,23 +31,11 @@ namespace MudDesigner.Server
             Logger.WriteLine("Server app starting...");
 
             //Compile the game scripts
-            CompileEngine.AddAssemblyReference("MudDesigner.Engine.dll");
+            CompileEngine.AddAssemblyReference(Environment.CurrentDirectory + "\\MudDesigner.Engine.dll");
             CompileEngine.Compile(MudDesigner.Engine.Properties.Engine.Default.ScriptsPath);
             
-            //Add the engine assembly to the Script Factory
-            ScriptFactory.AddAssembly(Assembly.GetExecutingAssembly());
             //Add the compiled scripts assembly to the Script Factory
             ScriptFactory.AddAssembly(CompileEngine.CompiledAssembly);
-            //Add any additional assemblies that might have been compiled elsewhere (downloadable assemblies)
-            if (MudDesigner.Engine.Properties.Engine.Default.ScriptLibrary.Count != 0)
-            {
-                foreach (string assembly in MudDesigner.Engine.Properties.Engine.Default.ScriptLibrary)
-                {
-                    //Make sure the assembly actually exists first.
-                    if (File.Exists(assembly))
-                        ScriptFactory.AddAssembly(assembly);
-                }
-            }
 
             IServer server = new MudDesigner.Engine.Networking.Server(port: 4000);
 
