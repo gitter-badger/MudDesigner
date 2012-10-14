@@ -31,7 +31,6 @@ namespace MudDesigner.Engine.Directors
             Thread userThread = new Thread(ReceiveDataThread);
 
             ConnectedPlayers.Add(player, userThread);
-            player.IsConnected = true;
 
             userThread.Start(player);
         }
@@ -59,7 +58,8 @@ namespace MudDesigner.Engine.Directors
                 }
                 catch(Exception ex)
                 {
-                    Logger.WriteLine(ex.Message);
+                    Logger.WriteLine(connectedUser.Name + " disconnected.");
+                    DisconnectPlayer(connectedUser);
                 }
             }
         }

@@ -12,7 +12,14 @@ namespace MudDesigner.Engine.Core
         public IState CurrentState { get; protected set; }
         public Socket Connection { get; private set; }
         public List<byte> Buffer { get; set; }
-        public bool IsConnected { get; set; }
+
+        public bool IsConnected
+        {
+            get
+            {
+                return Connection.Connected;
+            }
+        }
 
         private Guid Id { get; set; }
         //TODO: I will probably normalize this into a PlayerDetails class... - MC

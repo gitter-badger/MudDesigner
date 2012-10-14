@@ -9,7 +9,7 @@ namespace MudDesigner.Engine.Core
     {
         IState CurrentState { get; }
         Socket Connection { get; }
-        bool IsConnected { get; set; }
+        bool IsConnected { get; }
         List<byte> Buffer { get; set; }
         string Name { get; set; }
 
