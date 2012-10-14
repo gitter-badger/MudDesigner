@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "EngineMudDesigner.Engine.csproj", "{9D9E8CAC-8876-4725-9A65-2077DE4322DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{9D9E8CAC-8876-4725-9A65-2077DE4322DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\MudDesigner.Server.csproj", "{161E78DB-10C5-43A6-BC15-0945BC6F941F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{161E78DB-10C5-43A6-BC15-0945BC6F941F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scripts", "Scripts\MudDesigner.Scripts.csproj", "{DB190BE6-A73B-4C59-B939-4A8B1825A658}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scripts", "Scripts\Scripts.csproj", "{DB190BE6-A73B-4C59-B939-4A8B1825A658}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor", "Editor\MudDesigner.Editor.csproj", "{84D17981-44C6-40C6-BC05-15819154E7F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor", "Editor\Editor.csproj", "{84D17981-44C6-40C6-BC05-15819154E7F0}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -15,16 +15,16 @@ Global
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs03
 		SccLocalPath0 = .
-		SccProjectUniqueName1 = Engine\\MudDesigner.Engine.csproj
+		SccProjectUniqueName1 = Engine\\Engine.csproj
 		SccProjectName1 = Engine
 		SccLocalPath1 = Engine
-		SccProjectUniqueName2 = Server\\MudDesigner.Server.csproj
+		SccProjectUniqueName2 = Server\\Server.csproj
 		SccProjectName2 = Server
 		SccLocalPath2 = Server
-		SccProjectUniqueName3 = Scripts\\MudDesigner.Scripts.csproj
+		SccProjectUniqueName3 = Scripts\\Scripts.csproj
 		SccProjectName3 = Scripts
 		SccLocalPath3 = Scripts
-		SccProjectUniqueName4 = Editor\\MudDesigner.Editor.csproj
+		SccProjectUniqueName4 = Editor\\Editor.csproj
 		SccProjectName4 = Editor
 		SccLocalPath4 = Editor
 	EndGlobalSection
