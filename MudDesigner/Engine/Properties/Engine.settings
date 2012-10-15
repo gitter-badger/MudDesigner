@@ -2,8 +2,8 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MudDesigner.Engine.Properties" GeneratedClassName="Engine">
   <Profiles />
   <Settings>
-    <Setting Name="WorldFile" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">World.sav</Value>
+    <Setting Name="GameSaveFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Game.sav</Value>
     </Setting>
     <Setting Name="DefaultGameType" Type="System.String" Scope="Application">
       <Value Profile="(Default)">MudDesigner.Scripts.Game.Game</Value>
