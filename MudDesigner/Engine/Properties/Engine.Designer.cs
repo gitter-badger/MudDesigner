@@ -26,9 +26,9 @@ namespace MudDesigner.Engine.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Game.sav")]
-        public string GameSaveFile {
+        public string WorldFile {
             get {
-                return ((string)(this["GameSaveFile"]));
+                return ((string)(this["WorldFile"]));
             }
         }
         

@@ -128,6 +128,11 @@ namespace MudDesigner.Editor
                 MessageBox.Show("You must select a Zone to create the Room within first.", "Mud Designer", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
+
+            EditorLib.RoomControl control = new EditorLib.RoomControl();
+            control.SelectedRoom = (IRoom)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.RoomType, null);
+            
+            RoomEditor_Properties.Panel1.Controls.Add(control);
         }
 
         /// <summary>
@@ -234,6 +239,11 @@ namespace MudDesigner.Editor
         {
             dynamic value = objectProperties.SelectedObject;
             SelectedObjectLabel.Text = objectProperties.SelectedObject.GetType().FullName + "  (" + value.Name + ")";
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
