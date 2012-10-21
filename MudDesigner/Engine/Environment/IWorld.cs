@@ -15,6 +15,6 @@ namespace MudDesigner.Engine.Environment
         void Create(string name, List<IRealm> realms);
 
         IRealm GetRealm(string realmName);
-        void AddRealm(IRealm realm);
+        void AddRealm(IRealm realm, bool overwrite = false);
     }
 }

@@ -11,6 +11,8 @@ namespace MudDesigner.Engine.Environment
 
         void AddZone(IZone zone, bool forceOverwrite);
         void AddZones(IZone[] zones, bool forceOverwrite);
+        IZone GetZone(string zoneName);
+
         void RemoveZone(IZone zone);
         void BroadcastMessage(string message, List<IPlayer> playersToOmit);
     }

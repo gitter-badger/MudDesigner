@@ -21,7 +21,17 @@ namespace MudDesigner.Editor
     public partial class Editor : Form
     {
         Game game;
-        object selectedObject;
+
+        Realm currentRealm;
+        Zone currentZone;
+        Room currentRoom;
+
+        //Drag & drop related fields.
+        private int indexOfItemUnderMouseToDrag;
+        private int indexOfItemUnderMouseToDrop;
+
+        private Rectangle dragBoxFromMouseDown;
+        private Point screenOffset;
 
         public Editor()
         {
@@ -38,7 +48,7 @@ namespace MudDesigner.Editor
             ScriptFactory.AddAssembly(Assembly.GetExecutingAssembly());
             //Add the compiled scripts assembly to the Script Factory
             ScriptFactory.AddAssembly(CompileEngine.CompiledAssembly);
-            
+
             //Load the Engine assembly
             Assembly assem = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, "MudDesigner.Engine.dll"));
             ScriptFactory.AddAssembly(assem);
@@ -81,27 +91,29 @@ namespace MudDesigner.Editor
                         case "Realms":
                             //Remove the old name from the listbox and add the new one
                             AvailableRealms.Items.Remove(e.OldValue);
-                            AvailableRealms.Items.Add(e.ChangedItem.Value.ToString());
-                            game.World.Realms.Remove(e.OldValue.ToString());
-                            game.World.Realms.Add(e.ChangedItem.Value.ToString(), (IRealm)selectedObject);
-                            AvailableRealms.SelectedItem = e.ChangedItem.Value.ToString();
+                            AvailableRealms.Items.Add(currentRealm.Name);
+                            game.World.AddRealm(currentRealm, true); //Overwrite the previous Realm entry in order to update it's Key.
+                            AvailableRealms.SelectedItem = currentRealm.Name;
                             break;
                         case "Zones":
                             AvailableZones.Items.Remove(e.OldValue);
                             AvailableZones.Items.Add(e.ChangedItem.Value.ToString());
-                            IZone zone = (IZone)objectProperties.SelectedObject;
-                            IRealm realm = (IRealm)game.World.GetRealm(zone.Realm.Name);
-                            realm.RemoveZone(realm.Zones[e.OldValue.ToString()]);
-                            realm.AddZone(zone, true);
+                            currentRealm.AddZone(currentZone, true);
+                            AvailableZones.SelectedItem = currentZone.Name;
                             break;
                         case "Rooms":
                             AvailableRooms.Items.Remove(e.OldValue);
                             AvailableRooms.Items.Add(e.ChangedItem.Value.ToString());
+                            currentZone.AddRoom(currentRoom, true);
+                            AvailableRooms.SelectedItem = currentRoom.Name;
                             break;
                     }
                     objectProperties_SelectedObjectsChanged(null, null);
                 }
             }
+
+            //Save the game.
+            //game.Save();
         }
 
         #region MenuStrip items
@@ -129,10 +141,40 @@ namespace MudDesigner.Editor
                 return;
             }
 
-            EditorLib.RoomControl control = new EditorLib.RoomControl();
-            control.SelectedRoom = (IRoom)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.RoomType, null);
-            
-            RoomEditor_Properties.Panel1.Controls.Add(control);
+            bool validName = false;
+            int value = 1;
+            string newName = "New Room" + value.ToString();
+
+            while (!validName)
+            {
+                if (currentZone.GetRoom(newName) != null)
+                {
+                    value++;
+                    newName = "New Room" + value.ToString();
+                }
+                else
+                    validName = true;
+            }
+
+            Room newRoom = (Room)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.RoomType, newName, currentZone, false);
+
+            if (newRoom == null || currentZone == null)
+            {
+                MessageBox.Show("Failed to instance the specified user script '" + MudDesigner.Engine.Properties.Engine.Default.RoomType + "'", "Mud Designer");
+                return;
+            }
+
+            currentZone.AddRoom(newRoom, false);
+
+            objectProperties.SelectedObject = newRoom;
+            statusSelectedObject.Text = "Selected: " + newRoom.ToString();
+            AvailableRooms.Items.Add(newRoom.Name);
+            AvailableRooms.SelectedItem = newRoom.Name;
+
+            if (GameExplorer.SelectedTab.Text != "Environment")
+                GameExplorer.SelectedIndex = 0; //"Environment"
+            if (EnvironmentOptions.SelectedTab.Text != "Rooms")
+                EnvironmentOptions.SelectedIndex = 2; //"Rooms"
         }
 
         /// <summary>
@@ -173,6 +215,8 @@ namespace MudDesigner.Editor
 
             AvailableZones.Items.Add(zone.Name);
             AvailableZones.SelectedItem = zone.Name;
+
+            //Open the Realms collection for display.
             if (GameExplorer.SelectedTab.Text != "Environment")
                 GameExplorer.SelectedIndex = 0; //"Environment"
             if (EnvironmentOptions.SelectedTab.Text != "Zones")
@@ -207,6 +251,11 @@ namespace MudDesigner.Editor
 
             AvailableRealms.Items.Add(realm.Name);
             AvailableRealms.SelectedItem = realm.Name;
+
+            if (GameExplorer.SelectedTab.Text != "Environment")
+                GameExplorer.SelectedIndex = 0; //"Environment"
+            if (EnvironmentOptions.SelectedTab.Text != "Realms")
+                EnvironmentOptions.SelectedIndex = 0; //"Realms"
         }
         #endregion
 
@@ -220,8 +269,16 @@ namespace MudDesigner.Editor
             if (AvailableRealms.SelectedIndex == -1)
                 return;
 
-            selectedObject = game.World.GetRealm(AvailableRealms.SelectedItem.ToString());
-            objectProperties.SelectedObject = selectedObject;
+            currentRealm = (Realm)game.World.GetRealm(AvailableRealms.SelectedItem.ToString());
+
+            if (currentRealm == null)
+            {
+                MessageBox.Show("Failed to retrieve the selected Realm.", "Mud Designer", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return; //For some reason, this Realm does not exist...
+            }
+
+            objectProperties.SelectedObject = currentRealm;
+            statusSelectedObject.Text = "Selected: " + currentRealm.ToString();
         }
 
         private void AvailableZones_SelectedIndexChanged(object sender, EventArgs e)
@@ -229,10 +286,22 @@ namespace MudDesigner.Editor
             if (AvailableZones.SelectedIndex == -1)
                 return;
 
-            IRealm r = game.World.GetRealm(AvailableRealms.SelectedItem.ToString());
+            if (currentRealm == null)
+            {
+                MessageBox.Show("Please select the Realm that this Zone belongs to.", "Mud Designer", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
 
-            selectedObject = r.Zones[AvailableZones.SelectedItem.ToString()];
-            objectProperties.SelectedObject = selectedObject;
+            currentZone = (Zone)currentRealm.GetZone(AvailableZones.SelectedItem.ToString());
+
+            if (currentZone == null)
+            {
+                MessageBox.Show("Failed to retrieve the selected Zone.", "Mud Designer", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            objectProperties.SelectedObject = currentZone;
+            statusSelectedObject.Text = "Selected: " + currentZone.ToString();
         }
 
         private void objectProperties_SelectedObjectsChanged(object sender, EventArgs e)
@@ -241,9 +310,178 @@ namespace MudDesigner.Editor
             SelectedObjectLabel.Text = objectProperties.SelectedObject.GetType().FullName + "  (" + value.Name + ")";
         }
 
+        private void AvailableRooms_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (AvailableRooms.SelectedIndex == -1)
+                return;
+
+            if (currentRealm == null || currentZone == null)
+            {
+                MessageBox.Show("You must select both the owning Realm and Zone to this Room first.", "Mud Designer", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            currentRoom = (Room)currentZone.GetRoom(AvailableRooms.SelectedItem.ToString());
+            objectProperties.SelectedObject = currentRoom;
+            statusSelectedObject.Text = "Selected: " + currentRoom.ToString();
+
+            RefreshDoorwayList();
+        }
+
+        private void RefreshDoorwayList()
+        {
+            North.Text = "North\n\r(Empty)";
+            South.Text = "South\n\r(Empty)";
+            East.Text = "East\n\r(Empty)";
+            West.Text = "West\n\r(Empty)";
+
+            if (currentRoom.Doorways.Count > 0)
+            {
+                foreach (AvailableTravelDirections door in currentRoom.Doorways.Keys)
+                {
+                    switch (door)
+                    {
+                        case AvailableTravelDirections.North:
+                            North.Text = "North\n\r" + currentRoom.Doorways[door].Arrival.Name;
+                            break;
+                        case AvailableTravelDirections.South:
+                            South.Text = "South\n\r" + currentRoom.Doorways[door].Arrival.Name;
+                            break;
+                        case AvailableTravelDirections.East:
+                            East.Text = "East\n\r" + currentRoom.Doorways[door].Arrival.Name;
+                            break;
+                        case AvailableTravelDirections.West:
+                            West.Text = "West\n\r" + currentRoom.Doorways[door].Arrival.Name;
+                            break;
+                    }
+                }
+            }
+
+            lblRoomName.Text = currentRoom.Name;
+        }
+
+        private void AvailableRooms_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (AvailableRooms.SelectedIndex == -1)
+                return;
+
+            // Get the index of the item the mouse is below.
+            indexOfItemUnderMouseToDrag = AvailableRooms.IndexFromPoint(e.X, e.Y);
+
+            if (indexOfItemUnderMouseToDrag != ListBox.NoMatches)
+            {
+
+                // Remember the point where the mouse down occurred. The DragSize indicates
+                // the size that the mouse can move before a drag event should be started.                
+                Size dragSize = SystemInformation.DragSize;
+
+                // Create a rectangle using the DragSize, with the mouse position being
+                // at the center of the rectangle.
+                dragBoxFromMouseDown = new Rectangle(new Point(e.X - (dragSize.Width / 2),
+                                                               e.Y - (dragSize.Height / 2)), dragSize);
+            }
+            else
+                // Reset the rectangle if the mouse is not over an item in the ListBox.
+                dragBoxFromMouseDown = Rectangle.Empty;
+        }
+
+        private void Room_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Link;
+        }
+
+        private void Room_DragDrop(object sender, DragEventArgs e)
+        {
+            var data = e.Data.GetData(DataFormats.Text);
+            Room room = (Room)currentZone.GetRoom(data.ToString());
+
+            Button btnDirection = (Button)sender;
+            string[] values = btnDirection.Text.Split('\n');
+            //Trims out the trailing \r the editor button has.
+            string direction = values[0];
+
+            AvailableTravelDirections travelDirection = TravelDirections.GetTravelDirectionValue(direction);
+            currentRoom.AddDoorway(travelDirection, room, true, true);
+            btnDirection.Text = travelDirection.ToString() + "\n\r" + room.Name;
+            AvailableRooms.SelectedItem = currentRoom.Name;
+        }
+
+        private void AvailableRooms_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            // Reset the drag rectangle when the mouse button is raised.
+            dragBoxFromMouseDown = Rectangle.Empty;
+        }
+
+        private void AvailableRooms_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+
+            if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+            {
+
+                // If the mouse moves outside the rectangle, start the drag.
+                if (dragBoxFromMouseDown != Rectangle.Empty &&
+                    !dragBoxFromMouseDown.Contains(e.X, e.Y))
+                {
+
+                    // The screenOffset is used to account for any desktop bands 
+                    // that may be at the top or left side of the screen when 
+                    // determining when to cancel the drag drop operation.
+                    screenOffset = SystemInformation.WorkingArea.Location;
+
+                    // Proceed with the drag and drop, passing in the list item.
+                    string linkedRoom = AvailableRooms.Items[indexOfItemUnderMouseToDrag].ToString();
+      
+                    if (linkedRoom == null)
+                        return;
+
+                    DragDropEffects dropEffect = AvailableRooms.DoDragDrop(linkedRoom, DragDropEffects.All | DragDropEffects.Link);
+                }
+            }
+        }
+
+        private void AvailableRooms_QueryContinueDrag(object sender, QueryContinueDragEventArgs e)
+        {
+            // Cancel the drag if the mouse moves off the form.
+            ListBox lb = sender as ListBox;
+
+            if (lb != null)
+            {
+
+                Form f = lb.FindForm();
+
+                // Cancel the drag if the mouse moves off the form. The screenOffset
+                // takes into account any desktop bands that may be at the top or left
+                // side of the screen.
+                if (((Control.MousePosition.X - screenOffset.X) < f.DesktopBounds.Left) ||
+                    ((Control.MousePosition.X - screenOffset.X) > f.DesktopBounds.Right) ||
+                    ((Control.MousePosition.Y - screenOffset.Y) < f.DesktopBounds.Top) ||
+                    ((Control.MousePosition.Y - screenOffset.Y) > f.DesktopBounds.Bottom))
+                {
+
+                    e.Action = DragAction.Cancel;
+                }
+            }
+        }
+
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            ToolStripDropDownItem menuItem = (ToolStripDropDownItem)sender;
+            ContextMenuStrip menu = (ContextMenuStrip)menuItem.Owner;
+            Button selectedButton = (Button)menu.SourceControl;
+
+            string[] values = selectedButton.Text.Split('\n');
+            //index 0 should be the direction
+            string direction = values[0];
+
+            foreach (AvailableTravelDirections doorway in currentRoom.Doorways.Keys)
+            {
+                if (doorway.ToString() == direction)
+                {
+                    currentRoom.RemoveDoorway(doorway, true);
+                    RefreshDoorwayList();
+                    break;
+                }
+            }
         }
     }
 }

@@ -21,6 +21,7 @@ namespace MudDesigner.Engine.Environment
         //List<IMonster> Monsters {get;}
 
         void AddRoom(Room room, bool forceOverwrite);
+        IRoom GetRoom(string roomName);
         void RemoveRoom(Room room);
     }
 }

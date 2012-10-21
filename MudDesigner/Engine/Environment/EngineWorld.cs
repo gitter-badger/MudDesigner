@@ -28,12 +28,25 @@ namespace MudDesigner.Engine.Environment
             return realm;
         }
 
-        public void AddRealm(IRealm realm)
+        public void AddRealm(IRealm realm, bool forceOverwrite = false)
         {
-            Realm r = (Realm)realm;
+            if (realm == null)
+                return;
+
+            if (forceOverwrite)
+            {
+                if (Realms.ContainsValue(realm))
+                {
+                    foreach (var r in Realms.Where(newRealm => newRealm.Value == realm))
+                    {
+                        Realms.Remove(r.Key);
+                        break; //We removed our Realm, so escape.
+                    }
+                }
+            }
 
             if (!Realms.Values.Contains<IRealm>(realm))
-                Realms.Add(r.Name, r);
+                Realms.Add(realm.Name, realm);
         }
 
         public void Create(string name)

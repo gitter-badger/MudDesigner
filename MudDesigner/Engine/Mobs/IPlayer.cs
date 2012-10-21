@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MudDesigner.Engine.States;
 using MudDesigner.Engine.Environment;
+using MudDesigner.Engine.Core;
 
 namespace MudDesigner.Engine.Mobs
 {
@@ -18,5 +19,8 @@ namespace MudDesigner.Engine.Mobs
         void SwitchState(IState state);
         void SendMessage(string message, bool newLine = true);
         void Move(Room room);
+
+        void OnLevel(IPlayer player);
+        void OnLogin();
     }
 }

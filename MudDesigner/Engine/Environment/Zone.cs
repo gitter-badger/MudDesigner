@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -15,13 +16,26 @@ namespace MudDesigner.Engine.Environment
         /// <summary>
         /// Realm that this Room resides within
         /// </summary>
+        [Browsable(false)]
         public IRealm Realm { get; protected set; }
 
         //Room Collection
+        [Browsable(false)]
         public Dictionary<string, Room> Rooms{ get; protected set; }
 
         public string Name { get; set; }
 
+        [Browsable(false)]
+        public Guid Id
+        {
+            get { return Guid.NewGuid(); }
+        }
+
+        [Browsable(false)]
+        public GameObjectType Type
+        {
+            get { return GameObjectType.Realm; }
+        }
         public Zone(string name, IRealm realm)
         {
             Rooms = new Dictionary<string, Room>();
@@ -31,21 +45,23 @@ namespace MudDesigner.Engine.Environment
 
         public virtual void AddRoom(Room room, bool forceOverwrite = true)
         {
-            //Check if room is null.
-            if (room== null)
-                return; //No null references within our collections!
+            if (room == null)
+                return;
 
-            //If this Room already exists, overwrite it
-            //but only if 'forceOverwrite' is true
-            if (Rooms.ContainsKey(room.Name))
+            if (forceOverwrite)
             {
-                Rooms[room.Name] = room;
+                if (Rooms.ContainsValue(room))
+                {
+                    foreach (var r in Rooms.Where(newRoom => newRoom.Value == room))
+                    {
+                        Rooms.Remove(r.Key);
+                        break;
+                    }
+                }
             }
-                //Room does not exist, so lets add it.
-            else
-            {
+
+            if (!Rooms.Values.Contains<IRoom>(room))
                 Rooms.Add(room.Name, room);
-            }
         }
 
         public virtual void AddRooms(Room[] rooms, bool forceOverwrite = true)
@@ -54,6 +70,17 @@ namespace MudDesigner.Engine.Environment
             {
                 AddRoom(room, forceOverwrite);
             }
+        }
+
+        public virtual IRoom GetRoom(string roomName)
+        {
+            foreach (IRoom room in Rooms.Values)
+            {
+                if (room.Name == roomName)
+                    return room;
+            }
+
+            return null;
         }
 
         public virtual void RemoveRoom(Room room)
@@ -91,7 +118,7 @@ namespace MudDesigner.Engine.Environment
 
         public override string ToString()
         {
-            return Name;
+            return Realm.Name + "->" + Name;
         }
 
         #region == Events ==
@@ -102,15 +129,5 @@ namespace MudDesigner.Engine.Environment
             BroadcastMessage(player.Name + " has entered from the " + enteredDirection.ToString());
         }
         #endregion
-
-        public Guid Id
-        {
-            get { return Guid.NewGuid(); }
-        }
-
-        public GameObjectType Type
-        {
-            get { return GameObjectType.Realm; }
-        }
     }
 }

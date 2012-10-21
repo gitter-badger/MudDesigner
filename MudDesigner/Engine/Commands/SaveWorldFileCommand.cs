@@ -36,9 +36,6 @@ namespace MudDesigner.Engine.Commands
 
         public void SaveGame(string filename, IGame game)
         {
-            //TODO - Shouldn't the engine pass an already instanced copy of IGame?
-            //Otherwise we are relying on a hard-coded Game class.  Should be able to use IGame down below without any issues. - JS
-            //var eGame = game as EngineGame;
             var eGame = game;
             if (eGame == null) 
                 return;

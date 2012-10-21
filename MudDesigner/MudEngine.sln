@@ -9,11 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scripts", "Scripts\Scripts.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor", "Editor\Editor.csproj", "{84D17981-44C6-40C6-BC05-15819154E7F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditorLib", "EditorLib\EditorLib.csproj", "{9552F1F3-EACB-4D3C-96AD-EC153BD8893C}"
-EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 6
+		SccNumberOfProjects = 5
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs03
 		SccLocalPath0 = .
@@ -29,9 +27,6 @@ Global
 		SccProjectUniqueName4 = Editor\\Editor.csproj
 		SccProjectName4 = Editor
 		SccLocalPath4 = Editor
-		SccProjectUniqueName5 = EditorLib\\EditorLib.csproj
-		SccProjectName5 = EditorLib
-		SccLocalPath5 = EditorLib
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -128,26 +123,6 @@ Global
 		{84D17981-44C6-40C6-BC05-15819154E7F0}.Server (Debug)|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{84D17981-44C6-40C6-BC05-15819154E7F0}.Server (Debug)|Mixed Platforms.Build.0 = Debug|Any CPU
 		{84D17981-44C6-40C6-BC05-15819154E7F0}.Server (Debug)|x86.ActiveCfg = Debug|Any CPU
-		{9552F1F3-EACB-4D3C-96AD-EC153BD8893C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9552F1F3-EACB-4D3C-96AD-EC153BD8893C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9552F1F3-EACB-4D3C-96AD-EC153BD8893C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{9552F1F3-EACB-4D3C-96AD-EC153BD8893C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{9552F1F3-EACB-4D3C-96AD-EC153BD8893C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{9552F1F3-EACB-4D3C-96AD-EC153BD8893C}.Editor (Debug)|Any CPU.ActiveCfg = Debug|Any CPU
-		{9552F1F3-EACB-4D3C-96AD-EC153BD8893C}.Editor (Debug)|Any CPU.Build.0 = Debug|Any CPU
-		{9552F1F3-EACB-4D3C-96AD-EC153BD8893C}.Editor (Debug)|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{9552F1F3-EACB-4D3C-96AD-EC153BD8893C}.Editor (Debug)|Mixed Platforms.Build.0 = Debug|Any CPU
-		{9552F1F3-EACB-4D3C-96AD-EC153BD8893C}.Editor (Debug)|x86.ActiveCfg = Debug|Any CPU
-		{9552F1F3-EACB-4D3C-96AD-EC153BD8893C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9552F1F3-EACB-4D3C-96AD-EC153BD8893C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9552F1F3-EACB-4D3C-96AD-EC153BD8893C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{9552F1F3-EACB-4D3C-96AD-EC153BD8893C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{9552F1F3-EACB-4D3C-96AD-EC153BD8893C}.Release|x86.ActiveCfg = Release|Any CPU
-		{9552F1F3-EACB-4D3C-96AD-EC153BD8893C}.Server (Debug)|Any CPU.ActiveCfg = Debug|Any CPU
-		{9552F1F3-EACB-4D3C-96AD-EC153BD8893C}.Server (Debug)|Any CPU.Build.0 = Debug|Any CPU
-		{9552F1F3-EACB-4D3C-96AD-EC153BD8893C}.Server (Debug)|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{9552F1F3-EACB-4D3C-96AD-EC153BD8893C}.Server (Debug)|Mixed Platforms.Build.0 = Debug|Any CPU
-		{9552F1F3-EACB-4D3C-96AD-EC153BD8893C}.Server (Debug)|x86.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

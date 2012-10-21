@@ -27,21 +27,34 @@ namespace MudDesigner.Engine.Environment
 
         public virtual void AddZone(IZone zone, bool forceOverwrite = true)
         {
-            //Check if room is null.
             if (zone == null)
-                return; //No null references within our collections!
+                return;
 
-            //If this Room already exists, overwrite it
-            //but only if 'forceOverwrite' is true
-            if (Zones.ContainsKey(zone.Name))
+            if (forceOverwrite)
             {
-                Zones[zone.Name] = zone;
+                if (Zones.ContainsValue(zone))
+                {
+                    foreach (var r in Zones.Where(newZone => newZone.Value == zone))
+                    {
+                        Zones.Remove(r.Key);
+                        break;
+                    }
+                }
             }
-                //Room does not exist, so lets add it.
-            else
-            {
+
+            if (!Zones.Values.Contains<IZone>(zone))
                 Zones.Add(zone.Name, zone);
+        }
+
+        public virtual IZone GetZone(string zoneName)
+        {
+            foreach (IZone zone in Zones.Values)
+            {
+                if (zone.Name == zoneName)
+                    return zone;
             }
+
+            return null;
         }
 
         public virtual void AddZones(IZone[] zones, bool forceOverwrite = true)

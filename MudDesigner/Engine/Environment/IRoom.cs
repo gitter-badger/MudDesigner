@@ -22,6 +22,8 @@ namespace MudDesigner.Engine.Environment
         bool Safe { get; set; }
         string Description { get; set; }
         Senses Sense { get; set; }
+        bool Enabled { get; }
+        string Name { get; set; }
 
         Dictionary<string, IPlayer> Occupants { get; set; }
         Dictionary<AvailableTravelDirections, IDoor> Doorways { get; }

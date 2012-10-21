@@ -3,16 +3,15 @@
 namespace MudDesigner.Engine.Environment
 {
     //Available directions that the character can travel in the world.
-    [System.Flags]
-    public enum AvailableTravelDirections : uint
+    public enum AvailableTravelDirections
     {
-        None,
-        North,
-        South,
-        East,
-        West,
-        Up,
-        Down,
+        None = 0,
+        North = 1,
+        South = 2,
+        East = 3,
+        West = 4,
+        Up = 5,
+        Down = 6,
     }
 
     public static class TravelDirections
@@ -54,7 +53,7 @@ namespace MudDesigner.Engine.Environment
             Array values = Enum.GetValues(typeof(AvailableTravelDirections));
 
             //Loop through each available value, converting it into a string.
-            foreach (Int32 value in values)
+            foreach (int value in values)
             {
                 //Get the string representation of the current value
                 String displayName = Enum.GetName(typeof(AvailableTravelDirections), value);

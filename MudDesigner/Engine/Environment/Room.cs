@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
@@ -20,6 +21,7 @@ namespace MudDesigner.Engine.Environment
         /// <summary>
         /// Zone that this Room resides within
         /// </summary>
+        [Browsable(false)]
         public IZone Zone { get; set; }
 
         /// <summary>
@@ -27,17 +29,31 @@ namespace MudDesigner.Engine.Environment
         /// </summary>
         public bool Safe { get; set; }
 
+        public bool Enabled { get; protected set; }
+
         /// <summary>
         /// 
         /// </summary>
+        [Browsable(false)]
         public Senses Sense { get; set; }
 
         //Room Collections
+        [Browsable(false)]
         public Dictionary<string, IPlayer> Occupants { get; set; }
+        [Browsable(false)]
         public Dictionary<AvailableTravelDirections, IDoor> Doorways { get; protected set; }
 
-        //public GameObjectType Type { get; private set; } //Inherited from baseGameObject
+        [Browsable(false)]
+        public Guid Id
+        {
+            get { return Guid.NewGuid(); }
+        }
 
+        [Browsable(false)]
+        public GameObjectType Type
+        {
+            get { return GameObjectType.Room; }
+        }
         public Room(string name, IZone zone, bool safe = true)
         {
             Safe = safe;
@@ -87,7 +103,7 @@ namespace MudDesigner.Engine.Environment
                 {
                     //When removig the reverse direction, always set "autoRemoveReverseDirection" within the Arrival room
                     //to false, otherwise a circular loop will start.
-                    Doorways[direction].Arrival.RemoveDoorway(direction, false);
+                    Doorways[direction].Arrival.RemoveDoorway(TravelDirections.GetReverseDirection(direction), false);
                 }
                 Doorways.Remove(direction);
             }
@@ -117,6 +133,11 @@ namespace MudDesigner.Engine.Environment
             throw new NotImplementedException();
         }
 
+        public override string ToString()
+        {
+            return Zone.Realm.Name + "->" + Zone.Name + "->" + Name;
+        }
+
         #region == Events ==
         public delegate void OnEnterHandler(IPlayer player, AvailableTravelDirections enteredDirection);
         public event OnEnterHandler OnEnterEvent;
@@ -125,15 +146,5 @@ namespace MudDesigner.Engine.Environment
             BroadcastMessage(player.Name + " has entered from the " + enteredDirection.ToString());
         }
         #endregion
-
-        public Guid Id
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public GameObjectType Type
-        {
-            get { throw new NotImplementedException(); }
-        }
     }
 }

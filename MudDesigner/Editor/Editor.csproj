@@ -82,10 +82,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EditorLib\EditorLib.csproj">
-      <Project>{9552f1f3-eacb-4d3c-96ad-ec153bd8893c}</Project>
-      <Name>EditorLib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Scripts\Scripts.csproj">
       <Project>{db190be6-a73b-4c59-b939-4a8b1825a658}</Project>
       <Name>MudDesigner.Scripts</Name>

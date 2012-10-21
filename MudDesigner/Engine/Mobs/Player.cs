@@ -39,12 +39,24 @@ namespace MudDesigner.Engine.Mobs
         public Player()
         {
             Buffer = new List<byte>();
+
+            OnLevelEvent += new OnLevelHandler(OnLevel);
+            OnLoginEvent += new OnLoginHandler(OnLogin);
         }
 
         public virtual void Initialize(IState initialState, Socket connection)
         {
             this.Connection = connection;
-            initialState.Render(this);
+            
+            //Store reference to the initial state.
+            CurrentState = initialState;
+
+            //Call the login event.
+            OnLoginEvent();
+
+            //Render the state after the login event.  This allows scripts to replace the initialState
+            //if they want with something custom and have the engine render it.
+            CurrentState.Render(this);
         }
 
         public void Disconnect()
@@ -77,6 +89,18 @@ namespace MudDesigner.Engine.Mobs
         public override string ToString()
         {
             return Name;
+        }
+
+        public delegate void OnLevelHandler(IPlayer player);
+        public event OnLevelHandler OnLevelEvent;
+        public virtual void OnLevel(IPlayer player)
+        {
+        }
+
+        public delegate void OnLoginHandler();
+        public event OnLoginHandler OnLoginEvent;
+        public virtual void OnLogin()
+        {
         }
     }
 }

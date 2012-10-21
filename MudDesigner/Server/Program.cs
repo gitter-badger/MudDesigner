@@ -32,17 +32,20 @@ namespace MudDesigner.Server
 
             //Compile the game scripts
             CompileEngine.AddAssemblyReference(Environment.CurrentDirectory + "\\MudDesigner.Engine.dll");
+
+            //Compile the scripts within the engine properties 'ScriptsPath'
             CompileEngine.Compile(MudDesigner.Engine.Properties.Engine.Default.ScriptsPath);
             
             //Add the compiled scripts assembly to the Script Factory
             ScriptFactory.AddAssembly(CompileEngine.CompiledAssembly);
 
+            //Instance the server.
             IServer server = new MudDesigner.Engine.Networking.Server(port: 4000);
 
-            //game.Initialize(server, world);
-
-            //Pull the custom game info that will be used by this MUD
+            //Pull the custom game info that will be used by this MUD from the engine properties file
             IGame game = (IGame)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.DefaultGameType, null);
+
+            //Initialize the custom game class, passing along the server.
             game.Initialize(server);
             
             //It does not matter in what order this is performed, however it is best to start the server
