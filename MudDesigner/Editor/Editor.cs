@@ -510,6 +510,37 @@ namespace MudDesigner.Editor
             {
                 AvailableRooms.SelectedItem = room.Name;
             }
+            else
+            {
+                if (AvailableRealms.Items.Count == 0)
+                {
+                    foreach (string realm in AvailableRealms.Items)
+                    {
+                        AvailableRealms.SelectedItem = realm;
+                        if (AvailableZones.Items.Count == 0)
+                            continue;
+                        else
+                        {
+                            foreach (string zone in AvailableZones.Items)
+                            {
+                                AvailableZones.SelectedItem = zone;
+                                if (AvailableRooms.Items.Count == 0)
+                                    continue;
+                                else
+                                {
+                                    if (AvailableRooms.Items.Contains(room.Name))
+                                    {
+                                        AvailableRooms.SelectedItem = room.Name;
+                                        return;
+                                    }
+                                    else
+                                        continue;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
