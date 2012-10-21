@@ -279,6 +279,12 @@ namespace MudDesigner.Editor
 
             objectProperties.SelectedObject = currentRealm;
             statusSelectedObject.Text = "Selected: " + currentRealm.ToString();
+
+            AvailableZones.Items.Clear();
+            foreach (string zone in currentRealm.Zones.Keys)
+            {
+                AvailableZones.Items.Add(zone);
+            }
         }
 
         private void AvailableZones_SelectedIndexChanged(object sender, EventArgs e)
@@ -302,6 +308,12 @@ namespace MudDesigner.Editor
 
             objectProperties.SelectedObject = currentZone;
             statusSelectedObject.Text = "Selected: " + currentZone.ToString();
+
+            AvailableRooms.Items.Clear();
+            foreach (string room in currentZone.Rooms.Keys)
+            {
+                AvailableRooms.Items.Add(room);
+            }
         }
 
         private void objectProperties_SelectedObjectsChanged(object sender, EventArgs e)
@@ -481,6 +493,22 @@ namespace MudDesigner.Editor
                     RefreshDoorwayList();
                     break;
                 }
+            }
+        }
+
+        private void loadRoomToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripDropDownItem menuItem = (ToolStripDropDownItem)sender;
+            ContextMenuStrip menu = (ContextMenuStrip)menuItem.Owner;
+            Button selectedButton = (Button)menu.SourceControl;
+
+            string[] values = selectedButton.Text.Split('\n');
+            AvailableTravelDirections direction = TravelDirections.GetTravelDirectionValue(values[0]);
+
+            IRoom room = currentRoom.Doorways[direction].Arrival;
+            if (AvailableRooms.Items.Contains(room.Name))
+            {
+                AvailableRooms.SelectedItem = room.Name;
             }
         }
     }

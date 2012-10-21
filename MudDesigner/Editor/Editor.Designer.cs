@@ -29,10 +29,29 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            System.Windows.Forms.TreeNode treeNode34 = new System.Windows.Forms.TreeNode("Barrel");
+            System.Windows.Forms.TreeNode treeNode35 = new System.Windows.Forms.TreeNode("Plant");
+            System.Windows.Forms.TreeNode treeNode36 = new System.Windows.Forms.TreeNode("Decoration", new System.Windows.Forms.TreeNode[] {
+            treeNode34,
+            treeNode35});
+            System.Windows.Forms.TreeNode treeNode37 = new System.Windows.Forms.TreeNode("Counter");
+            System.Windows.Forms.TreeNode treeNode38 = new System.Windows.Forms.TreeNode("Couch");
+            System.Windows.Forms.TreeNode treeNode39 = new System.Windows.Forms.TreeNode("Bookshelf");
+            System.Windows.Forms.TreeNode treeNode40 = new System.Windows.Forms.TreeNode("Bed");
+            System.Windows.Forms.TreeNode treeNode41 = new System.Windows.Forms.TreeNode("Furniture", new System.Windows.Forms.TreeNode[] {
+            treeNode37,
+            treeNode38,
+            treeNode39,
+            treeNode40});
+            System.Windows.Forms.TreeNode treeNode42 = new System.Windows.Forms.TreeNode("NPC");
+            System.Windows.Forms.TreeNode treeNode43 = new System.Windows.Forms.TreeNode("Animal");
+            System.Windows.Forms.TreeNode treeNode44 = new System.Windows.Forms.TreeNode("Mobs", new System.Windows.Forms.TreeNode[] {
+            treeNode42,
+            treeNode43});
+            this.EditorStatus = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusSelectedObject = new System.Windows.Forms.ToolStripStatusLabel();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,12 +86,15 @@
             this.AvailableZones = new System.Windows.Forms.ListBox();
             this.RoomTab = new System.Windows.Forms.TabPage();
             this.AvailableRooms = new System.Windows.Forms.ListBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabStaticObjects = new System.Windows.Forms.TabPage();
             this.SelectedObjectLabel = new System.Windows.Forms.Label();
             this.objectProperties = new System.Windows.Forms.PropertyGrid();
             this.lblRoomName = new System.Windows.Forms.Label();
-            this.statusStrip1.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
+            this.treeStaticObjects = new System.Windows.Forms.TreeView();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.loadRoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EditorStatus.SuspendLayout();
+            this.MainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.editorContainer)).BeginInit();
             this.editorContainer.Panel1.SuspendLayout();
             this.editorContainer.Panel2.SuspendLayout();
@@ -94,19 +116,20 @@
             this.contextRooms.SuspendLayout();
             this.ZoneTab.SuspendLayout();
             this.RoomTab.SuspendLayout();
+            this.tabStaticObjects.SuspendLayout();
             this.SuspendLayout();
             // 
-            // statusStrip1
+            // EditorStatus
             // 
-            this.statusStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.EditorStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.EditorStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.statusSelectedObject});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 716);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1008, 24);
-            this.statusStrip1.TabIndex = 0;
-            this.statusStrip1.Text = "statusStrip1";
+            this.EditorStatus.Location = new System.Drawing.Point(0, 716);
+            this.EditorStatus.Name = "EditorStatus";
+            this.EditorStatus.Size = new System.Drawing.Size(1008, 24);
+            this.EditorStatus.TabIndex = 0;
+            this.EditorStatus.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
@@ -123,17 +146,17 @@
             this.statusSelectedObject.Size = new System.Drawing.Size(104, 19);
             this.statusSelectedObject.Text = "Nothing selected.";
             // 
-            // menuStrip1
+            // MainMenu
             // 
-            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MainMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.worldToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1008, 24);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
+            this.MainMenu.Location = new System.Drawing.Point(0, 0);
+            this.MainMenu.Name = "MainMenu";
+            this.MainMenu.Size = new System.Drawing.Size(1008, 24);
+            this.MainMenu.TabIndex = 1;
+            this.MainMenu.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
@@ -464,7 +487,7 @@
             // 
             this.GameExplorer.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.GameExplorer.Controls.Add(this.EnvironmentPage);
-            this.GameExplorer.Controls.Add(this.tabPage2);
+            this.GameExplorer.Controls.Add(this.tabStaticObjects);
             this.GameExplorer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GameExplorer.Location = new System.Drawing.Point(0, 0);
             this.GameExplorer.Name = "GameExplorer";
@@ -525,9 +548,11 @@
             // contextRooms
             // 
             this.contextRooms.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadToolStripMenuItem});
+            this.loadToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.loadRoomToolStripMenuItem});
             this.contextRooms.Name = "contextMenuLoad";
-            this.contextRooms.Size = new System.Drawing.Size(152, 26);
+            this.contextRooms.Size = new System.Drawing.Size(152, 54);
             // 
             // loadToolStripMenuItem
             // 
@@ -542,7 +567,7 @@
             this.ZoneTab.Controls.Add(this.AvailableZones);
             this.ZoneTab.Location = new System.Drawing.Point(4, 22);
             this.ZoneTab.Name = "ZoneTab";
-            this.ZoneTab.Size = new System.Drawing.Size(283, 287);
+            this.ZoneTab.Size = new System.Drawing.Size(287, 290);
             this.ZoneTab.TabIndex = 2;
             this.ZoneTab.Text = "Zones";
             // 
@@ -555,7 +580,7 @@
             this.AvailableZones.FormattingEnabled = true;
             this.AvailableZones.Location = new System.Drawing.Point(0, 0);
             this.AvailableZones.Name = "AvailableZones";
-            this.AvailableZones.Size = new System.Drawing.Size(283, 287);
+            this.AvailableZones.Size = new System.Drawing.Size(287, 290);
             this.AvailableZones.Sorted = true;
             this.AvailableZones.TabIndex = 2;
             this.AvailableZones.SelectedIndexChanged += new System.EventHandler(this.AvailableZones_SelectedIndexChanged);
@@ -588,15 +613,17 @@
             this.AvailableRooms.MouseMove += new System.Windows.Forms.MouseEventHandler(this.AvailableRooms_MouseMove);
             this.AvailableRooms.MouseUp += new System.Windows.Forms.MouseEventHandler(this.AvailableRooms_MouseUp);
             // 
-            // tabPage2
+            // tabStaticObjects
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(297, 319);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabStaticObjects.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.tabStaticObjects.Controls.Add(this.treeStaticObjects);
+            this.tabStaticObjects.ForeColor = System.Drawing.Color.White;
+            this.tabStaticObjects.Location = new System.Drawing.Point(4, 25);
+            this.tabStaticObjects.Name = "tabStaticObjects";
+            this.tabStaticObjects.Padding = new System.Windows.Forms.Padding(3);
+            this.tabStaticObjects.Size = new System.Drawing.Size(301, 322);
+            this.tabStaticObjects.TabIndex = 1;
+            this.tabStaticObjects.Text = "Static Object";
             // 
             // SelectedObjectLabel
             // 
@@ -643,16 +670,65 @@
             this.lblRoomName.Text = "No Room Loaded";
             this.lblRoomName.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
+            // treeStaticObjects
+            // 
+            this.treeStaticObjects.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.treeStaticObjects.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.treeStaticObjects.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeStaticObjects.ForeColor = System.Drawing.Color.White;
+            this.treeStaticObjects.Location = new System.Drawing.Point(3, 3);
+            this.treeStaticObjects.Name = "treeStaticObjects";
+            treeNode34.Name = "Node4";
+            treeNode34.Text = "Barrel";
+            treeNode35.Name = "Node5";
+            treeNode35.Text = "Plant";
+            treeNode36.Name = "Node0";
+            treeNode36.Text = "Decoration";
+            treeNode37.Name = "Node6";
+            treeNode37.Text = "Counter";
+            treeNode38.Name = "Node7";
+            treeNode38.Text = "Couch";
+            treeNode39.Name = "Node8";
+            treeNode39.Text = "Bookshelf";
+            treeNode40.Name = "Node9";
+            treeNode40.Text = "Bed";
+            treeNode41.Name = "Node1";
+            treeNode41.Text = "Furniture";
+            treeNode42.Name = "Node10";
+            treeNode42.Text = "NPC";
+            treeNode43.Name = "Node11";
+            treeNode43.Text = "Animal";
+            treeNode44.Name = "Node2";
+            treeNode44.Text = "Mobs";
+            this.treeStaticObjects.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode36,
+            treeNode41,
+            treeNode44});
+            this.treeStaticObjects.Size = new System.Drawing.Size(295, 316);
+            this.treeStaticObjects.TabIndex = 0;
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
+            // 
+            // loadRoomToolStripMenuItem
+            // 
+            this.loadRoomToolStripMenuItem.Name = "loadRoomToolStripMenuItem";
+            this.loadRoomToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadRoomToolStripMenuItem.Text = "Load Room";
+            this.loadRoomToolStripMenuItem.Click += new System.EventHandler(this.loadRoomToolStripMenuItem_Click);
+            // 
             // Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 740);
             this.Controls.Add(this.editorContainer);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.EditorStatus);
+            this.Controls.Add(this.MainMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.MainMenu;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(16, 768);
@@ -660,10 +736,10 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mud Designer Editor";
             this.Load += new System.EventHandler(this.Editor_Load);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.EditorStatus.ResumeLayout(false);
+            this.EditorStatus.PerformLayout();
+            this.MainMenu.ResumeLayout(false);
+            this.MainMenu.PerformLayout();
             this.editorContainer.Panel1.ResumeLayout(false);
             this.editorContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.editorContainer)).EndInit();
@@ -686,6 +762,7 @@
             this.contextRooms.ResumeLayout(false);
             this.ZoneTab.ResumeLayout(false);
             this.RoomTab.ResumeLayout(false);
+            this.tabStaticObjects.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -693,8 +770,8 @@
 
         #endregion
 
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.StatusStrip EditorStatus;
+        private System.Windows.Forms.MenuStrip MainMenu;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.SplitContainer editorContainer;
@@ -710,7 +787,7 @@
         private System.Windows.Forms.ToolStripMenuItem newRoomToolStripMenuItem;
         private System.Windows.Forms.TabControl GameExplorer;
         private System.Windows.Forms.TabPage EnvironmentPage;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabStaticObjects;
         private System.Windows.Forms.Label SelectedObjectLabel;
         private System.Windows.Forms.TabControl EnvironmentOptions;
         private System.Windows.Forms.TabPage RealmTab;
@@ -735,6 +812,9 @@
         private System.Windows.Forms.TabPage tabScripts;
         private System.Windows.Forms.ToolStripStatusLabel statusSelectedObject;
         private System.Windows.Forms.Label lblRoomName;
+        private System.Windows.Forms.TreeView treeStaticObjects;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem loadRoomToolStripMenuItem;
     }
 }
 
