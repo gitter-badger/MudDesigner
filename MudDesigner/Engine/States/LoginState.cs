@@ -142,11 +142,7 @@ namespace MudDesigner.Engine.States
             
             
             // just re tell the user what to do.. and tell them what they entered was invalid
-            
-
-
-
-            
+      
             /*
             //If no user name is supplied, re-try.
             if (String.IsNullOrEmpty(input))

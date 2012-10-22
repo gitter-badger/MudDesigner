@@ -49,6 +49,7 @@ namespace MudDesigner.Scripts.States
             player.SendMessage("| [Enter] a town                        |");
             player.SendMessage("| [Join] a chat channel                 |");
             player.SendMessage("| [Save] my current player              |");
+            player.SendMessage("| Save [World] (Debug)                  |");
             player.SendMessage("| Change some game [Options]            |");
             player.SendMessage("| [Quit] the game                       |");
             player.SendMessage("-----------------------------------------"); 
@@ -62,9 +63,19 @@ namespace MudDesigner.Scripts.States
             var input = Director.RecieveInput(Player);
             switch (input.ToLower())
             {
+                    //TODO This needs to use the command SwitchState to switch to room state.
                 case "enter":
                     Room startRoom = (Room)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.LoginRoom, null);
                     Player.Move(startRoom);
+                    break;
+                case "world":
+                    var game = Director.Server.Game as Game.Game;
+                    if (game != null)
+                    {
+                        Player.SendMessage("Save Success!");
+                        return new SaveWorldFileCommand(game);
+                    }
+
                     break;
             }
 

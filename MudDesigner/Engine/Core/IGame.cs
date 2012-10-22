@@ -8,7 +8,7 @@ using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Scripting;
 namespace MudDesigner.Engine.Core
 {
-    public interface IGame : ILoadable, ISaveable
+    public interface IGame
     {
         string Name { get; set; }
         string Description { get; set; }

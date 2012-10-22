@@ -17,5 +17,6 @@ namespace MudDesigner.Engine.Objects
     {
         Guid Id { get;}
         GameObjectType Type { get; }
+
     }
 }

@@ -13,7 +13,8 @@ namespace MudDesigner.Engine.Actions
     public interface ILoadable
     {
         /// <summary>
-        /// TODO - Michael can you fill this out for me? - JS.
+        /// This Load function is similar to the save method. It is a recursive load that follows the path of save and reloads objects that were saved. 
+        /// If for any reason you change a class post-Save than reloading it will be almost impossible as certain properties will not be likely to be reloaded.
         /// </summary>
         /// <param name="game"></param>
         /// <param name="reader"></param>

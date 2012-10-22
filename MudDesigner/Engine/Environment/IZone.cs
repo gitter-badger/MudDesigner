@@ -5,10 +5,11 @@ using System.Text;
 
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Actions;
+using MudDesigner.Engine.Objects;
 
 namespace MudDesigner.Engine.Environment
 {
-    public interface IZone : ILoadable, ISaveable
+    public interface IZone : IGameObject
     {
         IRealm Realm { get; }
 

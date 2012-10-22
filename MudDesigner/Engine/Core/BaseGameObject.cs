@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -8,7 +9,7 @@ using MudDesigner.Engine.Objects;
 
 namespace MudDesigner.Engine.Core
 {
-    public abstract class BaseGameObject
+    public abstract class BaseGameObject : IGameObject
     {
 
         /// <summary>
@@ -66,6 +67,16 @@ namespace MudDesigner.Engine.Core
         public BaseGameObject() : this(string.Empty, Guid.NewGuid())
         {
             //Stub
+        }
+
+        public void Save(BinaryWriter writer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Load(IGame game, BinaryReader reader)
+        {
+            throw new NotImplementedException();
         }
     }
 }

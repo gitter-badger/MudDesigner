@@ -4,29 +4,55 @@ using System.Linq;
 using System.Text;
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Core;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+
 
 namespace MudDesigner.Engine.Environment
 {
     
-    public class EngineWorld : IWorld, IGameObject
+    public class EngineWorld : IWorld
     {
-        public Dictionary<string, IRealm> Realms { get; protected set; }
+        public Dictionary<Guid, IRealm> Realms { get; protected set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
         public EngineWorld()
         {
-            Realms = new Dictionary<string, IRealm>();
+            Id = Guid.NewGuid();
+            Realms = new Dictionary<Guid, IRealm>();
             Name = "World";
         }
 
-        public IRealm GetRealm(string realmName)
+        //overloaded member for loading
+        public EngineWorld(Guid id)
+        {
+            Id = id; // we want to use the loaded guid id from binary file.
+            Realms = new Dictionary<Guid, IRealm>();
+            Name = "World";
+
+        }
+
+        public IRealm GetRealm(Guid realmid)
         {
             IRealm realm;
-            Realms.TryGetValue(realmName, out realm);
+            Realms.TryGetValue(realmid, out realm);
 
             return realm;
         }
+
+        /// <summary>
+        /// Retrieves a realm based on the realm name.
+        /// Returns null if the realm doesn't exist. 
+        /// </summary>
+        /// <param name="realm"></param>
+        /// <returns></returns>
+        public IRealm GetRealm(string realm)
+        {
+            return Realms.Where(r => r.Value.Name == realm).Select(r => r.Value).FirstOrDefault();
+        }
+
 
         public void AddRealm(IRealm realm, bool forceOverwrite = false)
         {
@@ -46,7 +72,7 @@ namespace MudDesigner.Engine.Environment
             }
 
             if (!Realms.Values.Contains<IRealm>(realm))
-                Realms.Add(realm.Name, realm);
+                Realms.Add(realm.Id, realm);
         }
 
         public void Create(string name)
@@ -70,14 +96,16 @@ namespace MudDesigner.Engine.Environment
             throw new NotImplementedException();
         }
 
-        public new GameObjectType Type
+        public GameObjectType Type
         {
             get { return new GameObjectType(); }
         }
 
-        public Guid Id
+
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            get { throw new NotImplementedException(); }
+          
         }
     }
 }

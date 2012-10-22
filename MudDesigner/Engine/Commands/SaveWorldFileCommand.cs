@@ -9,7 +9,7 @@ namespace MudDesigner.Engine.Commands
     {
         private readonly IGame _game;
         
-        public SaveWorldFileCommand(string fileToSave, IGame game)
+        public SaveWorldFileCommand(IGame game)
         {
             
             _game = game;

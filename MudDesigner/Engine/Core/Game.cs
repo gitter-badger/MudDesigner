@@ -21,6 +21,7 @@ namespace MudDesigner.Engine.Core
     {
         /// <summary>
         /// TODO - Michael, please expand on this more - JS.
+        /// TODO - I dont know if we need this, GameObjects shouldlive in the World not outside of it.... - MC 
         /// </summary>
         public Dictionary<Guid, IGameObject> GameObjects { get; private set; }
 
@@ -129,12 +130,42 @@ namespace MudDesigner.Engine.Core
             throw new NotImplementedException();
         }
 
-        public void Save(System.IO.BinaryWriter writer)
+        // This 
+        public void Save()
         {
+             
             LastSave = DateTime.Now;
 
-            //TODO Go through each property and save 
-            throw new NotImplementedException();
+            var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(), "saves", MudDesigner.Engine.Properties.Engine.Default.WorldFile);
+            var path = Path.GetDirectoryName(fileAndPathToSave);
+
+            if (path == null)
+            {
+                return;
+            }
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(string.Format(path));
+            }
+
+
+            using (var bw = new BinaryWriter(File.Open(fileAndPathToSave, FileMode.OpenOrCreate)))
+            {
+                bw.Write(GameObjects.Count);
+
+                foreach (var gameObject in GameObjects.Values)
+                {
+                    bw.Write((int)gameObject.Type);
+                    bw.Write(gameObject.Id.ToByteArray());
+
+                }
+
+                foreach (var gameObject in GameObjects.Values)
+                {
+                    gameObject.Save(bw);
+                }
+            }
         }
     }
 }

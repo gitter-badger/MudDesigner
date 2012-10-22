@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using MudDesigner.Engine.Mobs;
+using MudDesigner.Engine.Objects;
 
 namespace MudDesigner.Engine.Environment
 {
-    public interface IRealm
+    public interface IRealm: IGameObject
     {
         Dictionary<string, IZone> Zones { get; }
         string Name { get; set; }

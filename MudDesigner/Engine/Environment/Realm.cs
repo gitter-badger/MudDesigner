@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 using MudDesigner.Engine.Core;
@@ -11,18 +13,30 @@ using MudDesigner.Engine.Mobs;
 
 namespace MudDesigner.Engine.Environment
 {
-    public abstract class Realm : IGameObject, IRealm
+    public abstract class Realm : IRealm
     {
         //Room Collection
         [Browsable(false)]
         public Dictionary<string, IZone> Zones{ get; protected set; }
 
+        [Browsable(false)]
+        public Guid Id { get; set; }
+
         public String Name { get; set; }
 
         public Realm(string name)
         {
+            Id = new Guid();
             Zones = new Dictionary<string, IZone>();
             Name = name;
+        }
+
+        public Realm(string name, Guid id)
+        {
+            Id = id;
+            Zones = new Dictionary<string, IZone>();
+            Name = name;
+
         }
 
         public virtual void AddZone(IZone zone, bool forceOverwrite = true)
@@ -93,12 +107,39 @@ namespace MudDesigner.Engine.Environment
                 }
         }
 
-        public void Save(System.IO.BinaryWriter writer)
+        public void Save(BinaryWriter writer)
         {
-            throw new NotImplementedException();
+            var properties = this.GetType().GetProperties();
+
+            foreach (var p in properties)
+            {
+                var value = p.GetValue(this, null);
+
+                if (p.GetType() is Int32)
+                {
+                    writer.Write((int)value);
+                }
+                else if(p.GetType() is Double)
+                {
+                    writer.Write((double)value);
+                }
+                else if(p.GetType() is String)
+                {
+                    writer.Write((string)value);
+
+                }
+                else if(p.GetType() is GameObjectType) // write the GameObjectType
+                {
+                    writer.Write((int)value);
+                }
+                // we are purposefully not including the dictionary
+            }
+
+
         }
 
-        public void Load(IGame game, System.IO.BinaryReader reader)
+     
+        public void Load(IGame game, BinaryReader reader)
         {
             throw new NotImplementedException();
         }
@@ -117,11 +158,7 @@ namespace MudDesigner.Engine.Environment
         }
         #endregion
 
-        [Browsable(false)]
-        public Guid Id
-        {
-            get { return Guid.NewGuid(); }
-        }
+
 
         [Browsable(false)]
         public GameObjectType Type

@@ -14,7 +14,7 @@ namespace MudDesigner.Scripts.Game
     {
         public override bool Initialize(IServer startedServer)
         {
-            World newWorld = new World();
+            World= new World();
             Realm realm = new Realm("Fido");
             Zone zone = new Zone("Village", null);
             List<Room> rooms = new List<Room>();
@@ -40,9 +40,9 @@ namespace MudDesigner.Scripts.Game
 
             zone.AddRooms(rooms.ToArray());
             realm.AddZone(zone);
-            newWorld.AddRealm(realm);
+            World.AddRealm(realm);
 
-            World = newWorld;
+            
 
             return base.Initialize(startedServer);
         }
