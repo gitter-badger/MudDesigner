@@ -233,12 +233,22 @@ namespace MudDesigner.Editor
             //We need to make sure we never have a duplicate name.
             int value = 1;
             string newName = "New Realm" + value;
-            
-            foreach (var r in game.World.Realms.Where(r => r.Value.Name == newName))
-            {
-                value++;
-                newName = "New Realm" + value;
+            bool validName = false;
 
+            while (!validName)
+            {
+                foreach (var r in game.World.Realms)
+                {
+                    if(r.Value.Name == newName )
+                    {
+                        value++;
+                        newName = "New Realm" + value;
+                    }
+                    else
+                    {
+                        validName = true;
+                    }
+                }
             }
 
             Realm realm = (Realm)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.RealmType, newName);
