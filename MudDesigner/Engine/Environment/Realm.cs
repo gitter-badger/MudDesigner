@@ -36,7 +36,6 @@ namespace MudDesigner.Engine.Environment
             Id = id;
             Zones = new Dictionary<string, IZone>();
             Name = name;
-
         }
 
         public virtual void AddZone(IZone zone, bool forceOverwrite = true)
