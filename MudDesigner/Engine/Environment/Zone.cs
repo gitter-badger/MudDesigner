@@ -89,6 +89,14 @@ namespace MudDesigner.Engine.Environment
                 Rooms.Remove(room.Name);
         }
 
+        public virtual void DeleteRooms()
+        {
+            foreach (IRoom room in Rooms.Values)
+            {
+                room.Destroy();
+            }
+        }
+
         public virtual void BroadcastMessage(string message, List<IPlayer> playersToOmmit = null)
         {
                 foreach (Room room in Rooms.Values)

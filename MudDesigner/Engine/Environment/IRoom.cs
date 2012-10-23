@@ -30,5 +30,8 @@ namespace MudDesigner.Engine.Environment
 
         void AddDoorway(AvailableTravelDirections direction, IRoom arrival, bool autoAddReverseDireciton, bool forceOverwrite);
         void RemoveDoorway(AvailableTravelDirections direction, bool autoRemoveReverseDirection);
+        IDoor GetDoorway(AvailableTravelDirections direction);
+        IDoor[] GetDoorways();
+        void Destroy();
     }
 }

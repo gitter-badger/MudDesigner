@@ -29,25 +29,25 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode34 = new System.Windows.Forms.TreeNode("Barrel");
-            System.Windows.Forms.TreeNode treeNode35 = new System.Windows.Forms.TreeNode("Plant");
-            System.Windows.Forms.TreeNode treeNode36 = new System.Windows.Forms.TreeNode("Decoration", new System.Windows.Forms.TreeNode[] {
-            treeNode34,
-            treeNode35});
-            System.Windows.Forms.TreeNode treeNode37 = new System.Windows.Forms.TreeNode("Counter");
-            System.Windows.Forms.TreeNode treeNode38 = new System.Windows.Forms.TreeNode("Couch");
-            System.Windows.Forms.TreeNode treeNode39 = new System.Windows.Forms.TreeNode("Bookshelf");
-            System.Windows.Forms.TreeNode treeNode40 = new System.Windows.Forms.TreeNode("Bed");
-            System.Windows.Forms.TreeNode treeNode41 = new System.Windows.Forms.TreeNode("Furniture", new System.Windows.Forms.TreeNode[] {
-            treeNode37,
-            treeNode38,
-            treeNode39,
-            treeNode40});
-            System.Windows.Forms.TreeNode treeNode42 = new System.Windows.Forms.TreeNode("NPC");
-            System.Windows.Forms.TreeNode treeNode43 = new System.Windows.Forms.TreeNode("Animal");
-            System.Windows.Forms.TreeNode treeNode44 = new System.Windows.Forms.TreeNode("Mobs", new System.Windows.Forms.TreeNode[] {
-            treeNode42,
-            treeNode43});
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Barrel");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Plant");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Decoration", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2});
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Counter");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Couch");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Bookshelf");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Bed");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Furniture", new System.Windows.Forms.TreeNode[] {
+            treeNode4,
+            treeNode5,
+            treeNode6,
+            treeNode7});
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("NPC");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Animal");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Mobs", new System.Windows.Forms.TreeNode[] {
+            treeNode9,
+            treeNode10});
             this.EditorStatus = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusSelectedObject = new System.Windows.Forms.ToolStripStatusLabel();
@@ -65,12 +65,17 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.RoomEditor_Properties = new System.Windows.Forms.SplitContainer();
+            this.lblRoomName = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabStaticGameObjects = new System.Windows.Forms.TabPage();
             this.tabUsableGameObjects = new System.Windows.Forms.TabPage();
             this.tabMobs = new System.Windows.Forms.TabPage();
             this.tabScripts = new System.Windows.Forms.TabPage();
             this.West = new System.Windows.Forms.Button();
+            this.contextRooms = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mnuClearRoom = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuLoadRoom = new System.Windows.Forms.ToolStripMenuItem();
             this.East = new System.Windows.Forms.Button();
             this.South = new System.Windows.Forms.Button();
             this.North = new System.Windows.Forms.Button();
@@ -80,19 +85,16 @@
             this.EnvironmentOptions = new System.Windows.Forms.TabControl();
             this.RealmTab = new System.Windows.Forms.TabPage();
             this.AvailableRealms = new System.Windows.Forms.ListBox();
-            this.contextRooms = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextEnvironmentMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mnuDeleteEnvironmentItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ZoneTab = new System.Windows.Forms.TabPage();
             this.AvailableZones = new System.Windows.Forms.ListBox();
             this.RoomTab = new System.Windows.Forms.TabPage();
             this.AvailableRooms = new System.Windows.Forms.ListBox();
             this.tabStaticObjects = new System.Windows.Forms.TabPage();
+            this.treeStaticObjects = new System.Windows.Forms.TreeView();
             this.SelectedObjectLabel = new System.Windows.Forms.Label();
             this.objectProperties = new System.Windows.Forms.PropertyGrid();
-            this.lblRoomName = new System.Windows.Forms.Label();
-            this.treeStaticObjects = new System.Windows.Forms.TreeView();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.loadRoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EditorStatus.SuspendLayout();
             this.MainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.editorContainer)).BeginInit();
@@ -105,6 +107,7 @@
             this.RoomEditor_Properties.Panel2.SuspendLayout();
             this.RoomEditor_Properties.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.contextRooms.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -113,7 +116,7 @@
             this.EnvironmentPage.SuspendLayout();
             this.EnvironmentOptions.SuspendLayout();
             this.RealmTab.SuspendLayout();
-            this.contextRooms.SuspendLayout();
+            this.contextEnvironmentMenu.SuspendLayout();
             this.ZoneTab.SuspendLayout();
             this.RoomTab.SuspendLayout();
             this.tabStaticObjects.SuspendLayout();
@@ -328,6 +331,18 @@
             this.RoomEditor_Properties.SplitterWidth = 5;
             this.RoomEditor_Properties.TabIndex = 0;
             // 
+            // lblRoomName
+            // 
+            this.lblRoomName.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblRoomName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRoomName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.lblRoomName.Location = new System.Drawing.Point(0, 0);
+            this.lblRoomName.Name = "lblRoomName";
+            this.lblRoomName.Size = new System.Drawing.Size(481, 23);
+            this.lblRoomName.TabIndex = 5;
+            this.lblRoomName.Text = "No Room Loaded";
+            this.lblRoomName.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // tabControl1
             // 
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -403,6 +418,38 @@
             this.West.UseVisualStyleBackColor = false;
             this.West.DragDrop += new System.Windows.Forms.DragEventHandler(this.Room_DragDrop);
             this.West.DragOver += new System.Windows.Forms.DragEventHandler(this.Room_DragOver);
+            // 
+            // contextRooms
+            // 
+            this.contextRooms.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.contextRooms.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuClearRoom,
+            this.toolStripMenuItem1,
+            this.mnuLoadRoom});
+            this.contextRooms.Name = "contextMenuLoad";
+            this.contextRooms.ShowImageMargin = false;
+            this.contextRooms.Size = new System.Drawing.Size(127, 54);
+            // 
+            // mnuClearRoom
+            // 
+            this.mnuClearRoom.ForeColor = System.Drawing.Color.White;
+            this.mnuClearRoom.Name = "mnuClearRoom";
+            this.mnuClearRoom.Size = new System.Drawing.Size(126, 22);
+            this.mnuClearRoom.Text = "Clear Doorway";
+            this.mnuClearRoom.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(123, 6);
+            // 
+            // mnuLoadRoom
+            // 
+            this.mnuLoadRoom.ForeColor = System.Drawing.Color.White;
+            this.mnuLoadRoom.Name = "mnuLoadRoom";
+            this.mnuLoadRoom.Size = new System.Drawing.Size(126, 22);
+            this.mnuLoadRoom.Text = "Load Room";
+            this.mnuLoadRoom.Click += new System.EventHandler(this.loadRoomToolStripMenuItem_Click);
             // 
             // East
             // 
@@ -535,6 +582,7 @@
             this.AvailableRealms.AllowDrop = true;
             this.AvailableRealms.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.AvailableRealms.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.AvailableRealms.ContextMenuStrip = this.contextEnvironmentMenu;
             this.AvailableRealms.Dock = System.Windows.Forms.DockStyle.Fill;
             this.AvailableRealms.ForeColor = System.Drawing.Color.White;
             this.AvailableRealms.FormattingEnabled = true;
@@ -545,21 +593,23 @@
             this.AvailableRealms.TabIndex = 1;
             this.AvailableRealms.SelectedIndexChanged += new System.EventHandler(this.AvailableRealms_SelectedIndexChanged);
             // 
-            // contextRooms
+            // contextEnvironmentMenu
             // 
-            this.contextRooms.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadToolStripMenuItem,
-            this.toolStripMenuItem1,
-            this.loadRoomToolStripMenuItem});
-            this.contextRooms.Name = "contextMenuLoad";
-            this.contextRooms.Size = new System.Drawing.Size(152, 54);
+            this.contextEnvironmentMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.contextEnvironmentMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuDeleteEnvironmentItem});
+            this.contextEnvironmentMenu.Name = "contextEnvironmentMenu";
+            this.contextEnvironmentMenu.ShowImageMargin = false;
+            this.contextEnvironmentMenu.Size = new System.Drawing.Size(157, 26);
             // 
-            // loadToolStripMenuItem
+            // mnuDeleteEnvironmentItem
             // 
-            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
-            this.loadToolStripMenuItem.Text = "Clear Doorway";
-            this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
+            this.mnuDeleteEnvironmentItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.mnuDeleteEnvironmentItem.ForeColor = System.Drawing.Color.White;
+            this.mnuDeleteEnvironmentItem.Name = "mnuDeleteEnvironmentItem";
+            this.mnuDeleteEnvironmentItem.Size = new System.Drawing.Size(156, 22);
+            this.mnuDeleteEnvironmentItem.Text = "Delete Selected Item";
+            this.mnuDeleteEnvironmentItem.Click += new System.EventHandler(this.mnuDeleteEnvironmentItem_Click);
             // 
             // ZoneTab
             // 
@@ -567,7 +617,7 @@
             this.ZoneTab.Controls.Add(this.AvailableZones);
             this.ZoneTab.Location = new System.Drawing.Point(4, 22);
             this.ZoneTab.Name = "ZoneTab";
-            this.ZoneTab.Size = new System.Drawing.Size(287, 290);
+            this.ZoneTab.Size = new System.Drawing.Size(283, 287);
             this.ZoneTab.TabIndex = 2;
             this.ZoneTab.Text = "Zones";
             // 
@@ -575,12 +625,13 @@
             // 
             this.AvailableZones.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.AvailableZones.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.AvailableZones.ContextMenuStrip = this.contextEnvironmentMenu;
             this.AvailableZones.Dock = System.Windows.Forms.DockStyle.Fill;
             this.AvailableZones.ForeColor = System.Drawing.Color.White;
             this.AvailableZones.FormattingEnabled = true;
             this.AvailableZones.Location = new System.Drawing.Point(0, 0);
             this.AvailableZones.Name = "AvailableZones";
-            this.AvailableZones.Size = new System.Drawing.Size(287, 290);
+            this.AvailableZones.Size = new System.Drawing.Size(283, 287);
             this.AvailableZones.Sorted = true;
             this.AvailableZones.TabIndex = 2;
             this.AvailableZones.SelectedIndexChanged += new System.EventHandler(this.AvailableZones_SelectedIndexChanged);
@@ -599,6 +650,7 @@
             // 
             this.AvailableRooms.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.AvailableRooms.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.AvailableRooms.ContextMenuStrip = this.contextEnvironmentMenu;
             this.AvailableRooms.Dock = System.Windows.Forms.DockStyle.Fill;
             this.AvailableRooms.ForeColor = System.Drawing.Color.White;
             this.AvailableRooms.FormattingEnabled = true;
@@ -621,9 +673,46 @@
             this.tabStaticObjects.Location = new System.Drawing.Point(4, 25);
             this.tabStaticObjects.Name = "tabStaticObjects";
             this.tabStaticObjects.Padding = new System.Windows.Forms.Padding(3);
-            this.tabStaticObjects.Size = new System.Drawing.Size(301, 322);
+            this.tabStaticObjects.Size = new System.Drawing.Size(297, 319);
             this.tabStaticObjects.TabIndex = 1;
             this.tabStaticObjects.Text = "Static Object";
+            // 
+            // treeStaticObjects
+            // 
+            this.treeStaticObjects.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.treeStaticObjects.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.treeStaticObjects.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeStaticObjects.ForeColor = System.Drawing.Color.White;
+            this.treeStaticObjects.Location = new System.Drawing.Point(3, 3);
+            this.treeStaticObjects.Name = "treeStaticObjects";
+            treeNode1.Name = "Node4";
+            treeNode1.Text = "Barrel";
+            treeNode2.Name = "Node5";
+            treeNode2.Text = "Plant";
+            treeNode3.Name = "Node0";
+            treeNode3.Text = "Decoration";
+            treeNode4.Name = "Node6";
+            treeNode4.Text = "Counter";
+            treeNode5.Name = "Node7";
+            treeNode5.Text = "Couch";
+            treeNode6.Name = "Node8";
+            treeNode6.Text = "Bookshelf";
+            treeNode7.Name = "Node9";
+            treeNode7.Text = "Bed";
+            treeNode8.Name = "Node1";
+            treeNode8.Text = "Furniture";
+            treeNode9.Name = "Node10";
+            treeNode9.Text = "NPC";
+            treeNode10.Name = "Node11";
+            treeNode10.Text = "Animal";
+            treeNode11.Name = "Node2";
+            treeNode11.Text = "Mobs";
+            this.treeStaticObjects.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode3,
+            treeNode8,
+            treeNode11});
+            this.treeStaticObjects.Size = new System.Drawing.Size(291, 313);
+            this.treeStaticObjects.TabIndex = 0;
             // 
             // SelectedObjectLabel
             // 
@@ -658,67 +747,6 @@
             this.objectProperties.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.objectProperties_PropertyValueChanged);
             this.objectProperties.SelectedObjectsChanged += new System.EventHandler(this.objectProperties_SelectedObjectsChanged);
             // 
-            // lblRoomName
-            // 
-            this.lblRoomName.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblRoomName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRoomName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.lblRoomName.Location = new System.Drawing.Point(0, 0);
-            this.lblRoomName.Name = "lblRoomName";
-            this.lblRoomName.Size = new System.Drawing.Size(481, 23);
-            this.lblRoomName.TabIndex = 5;
-            this.lblRoomName.Text = "No Room Loaded";
-            this.lblRoomName.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // treeStaticObjects
-            // 
-            this.treeStaticObjects.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.treeStaticObjects.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeStaticObjects.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeStaticObjects.ForeColor = System.Drawing.Color.White;
-            this.treeStaticObjects.Location = new System.Drawing.Point(3, 3);
-            this.treeStaticObjects.Name = "treeStaticObjects";
-            treeNode34.Name = "Node4";
-            treeNode34.Text = "Barrel";
-            treeNode35.Name = "Node5";
-            treeNode35.Text = "Plant";
-            treeNode36.Name = "Node0";
-            treeNode36.Text = "Decoration";
-            treeNode37.Name = "Node6";
-            treeNode37.Text = "Counter";
-            treeNode38.Name = "Node7";
-            treeNode38.Text = "Couch";
-            treeNode39.Name = "Node8";
-            treeNode39.Text = "Bookshelf";
-            treeNode40.Name = "Node9";
-            treeNode40.Text = "Bed";
-            treeNode41.Name = "Node1";
-            treeNode41.Text = "Furniture";
-            treeNode42.Name = "Node10";
-            treeNode42.Text = "NPC";
-            treeNode43.Name = "Node11";
-            treeNode43.Text = "Animal";
-            treeNode44.Name = "Node2";
-            treeNode44.Text = "Mobs";
-            this.treeStaticObjects.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode36,
-            treeNode41,
-            treeNode44});
-            this.treeStaticObjects.Size = new System.Drawing.Size(295, 316);
-            this.treeStaticObjects.TabIndex = 0;
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
-            // 
-            // loadRoomToolStripMenuItem
-            // 
-            this.loadRoomToolStripMenuItem.Name = "loadRoomToolStripMenuItem";
-            this.loadRoomToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.loadRoomToolStripMenuItem.Text = "Load Room";
-            this.loadRoomToolStripMenuItem.Click += new System.EventHandler(this.loadRoomToolStripMenuItem_Click);
-            // 
             // Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -751,6 +779,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.RoomEditor_Properties)).EndInit();
             this.RoomEditor_Properties.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
+            this.contextRooms.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -759,7 +788,7 @@
             this.EnvironmentPage.ResumeLayout(false);
             this.EnvironmentOptions.ResumeLayout(false);
             this.RealmTab.ResumeLayout(false);
-            this.contextRooms.ResumeLayout(false);
+            this.contextEnvironmentMenu.ResumeLayout(false);
             this.ZoneTab.ResumeLayout(false);
             this.RoomTab.ResumeLayout(false);
             this.tabStaticObjects.ResumeLayout(false);
@@ -800,7 +829,7 @@
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ContextMenuStrip contextRooms;
-        private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuClearRoom;
         private System.Windows.Forms.Button North;
         private System.Windows.Forms.Button West;
         private System.Windows.Forms.Button East;
@@ -814,7 +843,9 @@
         private System.Windows.Forms.Label lblRoomName;
         private System.Windows.Forms.TreeView treeStaticObjects;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem loadRoomToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuLoadRoom;
+        private System.Windows.Forms.ContextMenuStrip contextEnvironmentMenu;
+        private System.Windows.Forms.ToolStripMenuItem mnuDeleteEnvironmentItem;
     }
 }
 

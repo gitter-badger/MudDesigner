@@ -55,7 +55,7 @@ namespace MudDesigner.Engine.Core
         /// </summary>
         public DateTime LastSave { get; private set; }
 
-        protected Game()
+        public Game()
         {
             GameObjects = new Dictionary<Guid, IGameObject>();
         }

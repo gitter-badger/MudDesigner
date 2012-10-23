@@ -28,8 +28,6 @@ namespace MudDesigner.Editor
 
         //Drag & drop related fields.
         private int indexOfItemUnderMouseToDrag;
-        private int indexOfItemUnderMouseToDrop;
-
         private Rectangle dragBoxFromMouseDown;
         private Point screenOffset;
 
@@ -482,6 +480,9 @@ namespace MudDesigner.Editor
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (currentRoom == null)
+                return;
+
             ToolStripDropDownItem menuItem = (ToolStripDropDownItem)sender;
             ContextMenuStrip menu = (ContextMenuStrip)menuItem.Owner;
             Button selectedButton = (Button)menu.SourceControl;
@@ -503,6 +504,9 @@ namespace MudDesigner.Editor
 
         private void loadRoomToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (currentRoom == null)
+                return;
+
             ToolStripDropDownItem menuItem = (ToolStripDropDownItem)sender;
             ContextMenuStrip menu = (ContextMenuStrip)menuItem.Owner;
             Button selectedButton = (Button)menu.SourceControl;
@@ -545,6 +549,30 @@ namespace MudDesigner.Editor
                         }
                     }
                 }
+            }
+        }
+
+        private void mnuDeleteEnvironmentItem_Click(object sender, EventArgs e)
+        {
+            ToolStripDropDownItem menuItem = (ToolStripDropDownItem)sender;
+            ContextMenuStrip menu = (ContextMenuStrip)menuItem.Owner;
+            ListBox collection = (ListBox)menu.SourceControl;
+
+            switch (collection.Name)
+            {
+                case "AvailableRealms":
+                    game.World.RemoveRealm(collection.SelectedItem.ToString());
+                    collection.Items.Remove(collection.SelectedItem);
+
+                    if (currentRealm.Name == collection.SelectedItem.ToString())
+                        currentRealm = null;
+
+                    if (collection.Items.Count > 0)
+                        collection.SelectedIndex = 0;
+                    else
+                        collection.SelectedIndex = -1;
+
+                    break;
             }
         }
     }

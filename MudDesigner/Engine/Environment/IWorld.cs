@@ -18,5 +18,7 @@ namespace MudDesigner.Engine.Environment
         IRealm GetRealm(Guid realmid);
         IRealm GetRealm(string realmname);
         void AddRealm(IRealm realm, bool overwrite = false);
+        void RemoveRealm(IRealm realm);
+        void RemoveRealm(string realmName);
     }
 }

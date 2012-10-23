@@ -47,6 +47,7 @@
     <Compile Include="Actions\ILoadable.cs" />
     <Compile Include="Actions\ISaveable.cs" />
     <Compile Include="Core\Engine.cs" />
+    <Compile Include="Environment\IEnvironment.cs" />
     <Compile Include="Environment\Realm.cs" />
     <Compile Include="Environment\Zone.cs" />
     <Compile Include="Environment\Door.cs" />

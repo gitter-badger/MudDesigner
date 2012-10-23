@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
@@ -63,6 +64,25 @@ namespace MudDesigner.Engine.Environment
             Name = name;
         }
 
+        ~Room()
+        {
+            System.Diagnostics.Trace.WriteLine("Room destroyed!");
+        }
+
+        public void Destroy()
+        {
+            Doorways.Clear();
+
+            this.BroadcastMessage("Room is being destroyed!  If you become trapped, please inform an admin.",
+                Occupants.Values.ToList<IPlayer>());
+
+            foreach (IPlayer player in Occupants.Values)
+            {
+                //TODO: Move players into a default room when this is destroyed.
+                //player.Move(MudDesigner.Engine.Properties.Engine.Default.LoginRoom);
+            }
+        }
+
         public virtual void AddDoorway(AvailableTravelDirections direction, IRoom arrivalRoom, bool autoAddReverseDirection = true, bool forceOverwrite = true)
         {
             //Check if room is null.
@@ -93,6 +113,25 @@ namespace MudDesigner.Engine.Environment
                     arrivalRoom.AddDoorway(TravelDirections.GetReverseDirection(direction), this, false, forceOverwrite);
                 }
             }
+        }
+
+        public IDoor GetDoorway(AvailableTravelDirections direction)
+        {
+            if (Doorways.ContainsKey(direction))
+                return Doorways[direction];
+            else
+                return null;
+        }
+
+        public IDoor[] GetDoorways()
+        {
+            List<IDoor> doorways = new List<IDoor>();
+            foreach (IDoor door in Doorways.Values)
+            {
+                doorways.Add(door);
+            }
+
+            return doorways.ToArray();
         }
 
         public virtual void RemoveDoorway(AvailableTravelDirections direction, bool autoRemoveReverseDirection = true)

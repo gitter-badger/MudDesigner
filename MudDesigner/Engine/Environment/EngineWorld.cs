@@ -63,9 +63,10 @@ namespace MudDesigner.Engine.Environment
             {
                 if (Realms.ContainsValue(realm))
                 {
-                    foreach (var r in Realms.Where(newRealm => newRealm.Value == realm))
+                    foreach (var r in Realms.Values.Where(newRealm => newRealm == realm))
                     {
-                        Realms.Remove(r.Key);
+                        //TODO - Remove Realm from dictionary.
+                        //Realms.Remove();
                         break; //We removed our Realm, so escape.
                     }
                 }
@@ -73,6 +74,20 @@ namespace MudDesigner.Engine.Environment
 
             if (!Realms.Values.Contains<IRealm>(realm))
                 Realms.Add(realm.Id, realm);
+        }
+
+        public void RemoveRealm(IRealm realm)
+        {
+            //TODO - Implement RemoveRealm
+        }
+
+        public void RemoveRealm(string realmName)
+        {
+            foreach(var realm in Realms.Values.Where(newRealm => newRealm.Name == realmName))
+            {
+                RemoveRealm(realm);
+                break;
+            }
         }
 
         public void Create(string name)
