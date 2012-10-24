@@ -5,7 +5,7 @@ using MudDesigner.Engine.Environment;
 
 namespace MudDesigner.Scripts.Environment
 {
-    public class World : EngineWorld
+    public class World : MudDesigner.Engine.Environment.World
     {
     }
 }
