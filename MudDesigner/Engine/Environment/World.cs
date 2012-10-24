@@ -11,7 +11,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace MudDesigner.Engine.Environment
 {
     
-    public class World : IWorld
+    public class World :GameObject,  IWorld
     {
         public Dictionary<Guid, IRealm> Realms { get; protected set; }
         public Guid Id { get; set; }

@@ -52,7 +52,6 @@
     <Compile Include="Environment\Zone.cs" />
     <Compile Include="Environment\Door.cs" />
     <Compile Include="Environment\Room.cs" />
-    <Compile Include="Core\BaseGameObject.cs" />
     <Compile Include="Environment\World.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Environment\IDoor.cs" />

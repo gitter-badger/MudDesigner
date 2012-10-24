@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using MudDesigner.Engine.States;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Core;
+using MudDesigner.Engine.Objects;
 
 namespace MudDesigner.Engine.Mobs
 {
-    public interface IPlayer
+    public interface IPlayer : IGameObject
     {
         IState CurrentState { get; }
         Socket Connection { get; }
         bool IsConnected { get; }
         List<byte> Buffer { get; set; }
-        string Name { get; set; }
 
         void Initialize(IState initialState, Socket connection);
         void Disconnect();

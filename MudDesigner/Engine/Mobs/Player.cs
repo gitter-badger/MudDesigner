@@ -5,10 +5,11 @@ using System.Text;
 using MudDesigner.Engine.States;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Core;
+using MudDesigner.Engine.Objects;
 
 namespace MudDesigner.Engine.Mobs
 {
-    public abstract class Player : BaseGameObject, IPlayer
+    public abstract class Player : GameObject
     {
         public IState CurrentState { get; protected set; }
         public Socket Connection { get; private set; }
@@ -56,7 +57,7 @@ namespace MudDesigner.Engine.Mobs
 
             //Render the state after the login event.  This allows scripts to replace the initialState
             //if they want with something custom and have the engine render it.
-            CurrentState.Render(this);
+            CurrentState.Render((IPlayer)this);
         }
 
         public void Disconnect()

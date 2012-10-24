@@ -13,7 +13,7 @@ using MudDesigner.Engine.Mobs;
 
 namespace MudDesigner.Engine.Environment
 {
-    public abstract class Realm : IRealm
+    public abstract class Realm : GameObject, IRealm
     {
         //Room Collection
         [Browsable(false)]
@@ -96,7 +96,7 @@ namespace MudDesigner.Engine.Environment
                         {
                             if (playersToOmmit != null)
                             {
-                                if (playersToOmmit.Contains(player))
+                                if (playersToOmmit.Contains((IPlayer)player))
                                     continue; //Skip this player if it's in the list.
                             }
                             //Send the message

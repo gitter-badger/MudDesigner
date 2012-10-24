@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using MudDesigner.Engine.Core;
+using MudDesigner.Engine.Objects;
 
 namespace MudDesigner.Engine.Environment
 {
@@ -11,7 +12,7 @@ namespace MudDesigner.Engine.Environment
     {
         bool Locked { get; }
 
-        BaseGameObject Key { get; }
+        IInventory Key { get; }
 
         AvailableTravelDirections FacingDirection { get; }
 

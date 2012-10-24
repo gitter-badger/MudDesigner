@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using MudDesigner.Engine.Core;
+using MudDesigner.Engine.Objects;
 
 namespace MudDesigner.Engine.Environment
 {
@@ -11,7 +12,7 @@ namespace MudDesigner.Engine.Environment
     {
         public bool Locked { get; protected set; }
 
-        public BaseGameObject Key { get; protected set; }
+        public IInventory Key { get; protected set; }
 
         public AvailableTravelDirections FacingDirection { get; protected set; }
 
@@ -26,13 +27,13 @@ namespace MudDesigner.Engine.Environment
             Departure = departingRoom;
         }
 
-        public virtual void Lock(BaseGameObject key)
+        public virtual void Lock(IInventory key)
         {
             Key = key;
             Locked = true;
         }
 
-        public virtual bool Unlock(BaseGameObject key)
+        public virtual bool Unlock(IInventory key)
         {
             if (key == Key)
                 Locked = false;

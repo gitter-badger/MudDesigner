@@ -11,7 +11,7 @@ using MudDesigner.Engine.Mobs;
 
 namespace MudDesigner.Engine.Environment
 {
-    public abstract class Zone : IGameObject, IZone
+    public abstract class Zone : IZone
     {
         /// <summary>
         /// Realm that this Room resides within
@@ -100,7 +100,7 @@ namespace MudDesigner.Engine.Environment
                     {
                         if (playersToOmmit != null)
                         {
-                            if (playersToOmmit.Contains(player))
+                            if (playersToOmmit.Contains((IPlayer)player))
                                 continue; //Skip this player if it's in the list.
                         }
                         //Send the message
@@ -132,5 +132,42 @@ namespace MudDesigner.Engine.Environment
             BroadcastMessage(player.Name + " has entered from the " + enteredDirection.ToString());
         }
         #endregion
+
+
+        public bool Safe
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool Enabled
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

@@ -9,13 +9,11 @@ using MudDesigner.Engine.Objects;
 
 namespace MudDesigner.Engine.Environment
 {
-    public interface IZone : IGameObject
+    public interface IZone : IEnvironment
     {
         IRealm Realm { get; }
 
         Dictionary<string, Room> Rooms { get; }
-
-        string Name { get; set; }
 
         //TODO - Add a general collection of monsters that populate the entire Zone.
         //Helps you not having to insert Monsters into every room you make
