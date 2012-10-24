@@ -10,15 +10,8 @@ using MudDesigner.Engine.Scripting;
 using MudDesigner.Engine.Mobs;
 namespace MudDesigner.Engine.Environment
 {
-    public abstract class Room : IGameObject, IRoom
+    public abstract class BaseRoom : GameObject, IRoom
     {
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or Sets the Description of the Room that is printed to the users screen.
-        /// </summary>
-        public string Description { get; set; }
-
         /// <summary>
         /// Zone that this Room resides within
         /// </summary>
@@ -44,13 +37,7 @@ namespace MudDesigner.Engine.Environment
         [Browsable(false)]
         public Dictionary<AvailableTravelDirections, IDoor> Doorways { get; protected set; }
 
-        [Browsable(false)]
-        public Guid Id
-        {
-            get { return Guid.NewGuid(); }
-        }
-
-        public Room(string name, IZone zone, bool safe = true)
+        public BaseRoom(string name, IZone zone, bool safe = true)
         {
             Safe = safe;
             Zone = zone;
@@ -59,7 +46,7 @@ namespace MudDesigner.Engine.Environment
             Name = name;
         }
 
-        ~Room()
+        ~BaseRoom()
         {
             System.Diagnostics.Trace.WriteLine("Room destroyed!");
         }
@@ -155,16 +142,6 @@ namespace MudDesigner.Engine.Environment
                     //Send the message
                     player.SendMessage(message);
                 }
-        }
-
-        public void Save(System.IO.BinaryWriter writer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Load(IGame game, System.IO.BinaryReader reader)
-        {
-            throw new NotImplementedException();
         }
 
         public override string ToString()

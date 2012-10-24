@@ -13,7 +13,7 @@ namespace MudDesigner.Engine.Commands
     {
         private IEngine _engine;
         private readonly string _fileToLoad;
-        private Player _player;
+        private BasePlayer _player;
 
         public LoadFileCommand(string fileToLoad, IEngine engine)
         {

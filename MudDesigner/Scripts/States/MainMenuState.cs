@@ -30,7 +30,7 @@ namespace MudDesigner.Scripts.States
             connection = connectedPlayer.Connection;
             Player = connectedPlayer;
 
-            var player = Player as Player;
+            var player = Player as BasePlayer;
             if(player != null)
             {
                 connection.Send(encoding.GetBytes(string.Format("Welcome {0}, What do you want to do? {1}",player.CharacterName,"\n\r")));    
@@ -65,7 +65,7 @@ namespace MudDesigner.Scripts.States
             {
                     //TODO This needs to use the command SwitchState to switch to room state.
                 case "enter":
-                    Room startRoom = (Room)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.LoginRoom, null);
+                    BaseRoom startRoom = (BaseRoom)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.LoginRoom, null);
                     Player.Move(startRoom);
                     break;
                 case "world":

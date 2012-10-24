@@ -11,7 +11,7 @@ using MudDesigner.Engine.Mobs;
 
 namespace MudDesigner.Engine.Environment
 {
-    public abstract class Zone : IZone
+    public abstract class BaseZone : GameObject, IZone
     {
         /// <summary>
         /// Realm that this Room resides within
@@ -21,24 +21,16 @@ namespace MudDesigner.Engine.Environment
 
         //Room Collection
         [Browsable(false)]
-        public Dictionary<string, Room> Rooms{ get; protected set; }
+        public Dictionary<string, BaseRoom> Rooms{ get; protected set; }
 
-        public string Name { get; set; }
-
-        [Browsable(false)]
-        public Guid Id
+        public BaseZone(string name, IRealm realm)
         {
-            get { return Guid.NewGuid(); }
-        }
-
-        public Zone(string name, IRealm realm)
-        {
-            Rooms = new Dictionary<string, Room>();
+            Rooms = new Dictionary<string, BaseRoom>();
             Realm = realm;
             Name = name;
         }
 
-        public virtual void AddRoom(Room room, bool forceOverwrite = true)
+        public virtual void AddRoom(BaseRoom room, bool forceOverwrite = true)
         {
             if (room == null)
                 return;
@@ -59,9 +51,9 @@ namespace MudDesigner.Engine.Environment
                 Rooms.Add(room.Name, room);
         }
 
-        public virtual void AddRooms(Room[] rooms, bool forceOverwrite = true)
+        public virtual void AddRooms(BaseRoom[] rooms, bool forceOverwrite = true)
         {
-            foreach (Room room in rooms)
+            foreach (BaseRoom room in rooms)
             {
                 AddRoom(room, forceOverwrite);
             }
@@ -78,7 +70,7 @@ namespace MudDesigner.Engine.Environment
             return null;
         }
 
-        public virtual void RemoveRoom(Room room)
+        public virtual void RemoveRoom(BaseRoom room)
         {
             if (Rooms.ContainsKey(room.Name))
                 Rooms.Remove(room.Name);
@@ -94,9 +86,9 @@ namespace MudDesigner.Engine.Environment
 
         public virtual void BroadcastMessage(string message, List<IPlayer> playersToOmmit = null)
         {
-                foreach (Room room in Rooms.Values)
+                foreach (BaseRoom room in Rooms.Values)
                 {
-                    foreach (Player player in room.Occupants.Values)
+                    foreach (BasePlayer player in room.Occupants.Values)
                     {
                         if (playersToOmmit != null)
                         {
@@ -107,16 +99,6 @@ namespace MudDesigner.Engine.Environment
                         player.SendMessage(message);
                     }
                 }
-        }
-
-        public void Save(System.IO.BinaryWriter writer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Load(IGame game, System.IO.BinaryReader reader)
-        {
-            throw new NotImplementedException();
         }
 
         public override string ToString()
@@ -135,18 +117,6 @@ namespace MudDesigner.Engine.Environment
 
 
         public bool Safe
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public string Description
         {
             get
             {

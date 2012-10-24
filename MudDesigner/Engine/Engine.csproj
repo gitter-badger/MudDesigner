@@ -48,10 +48,10 @@
     <Compile Include="Actions\ISaveable.cs" />
     <Compile Include="Core\Engine.cs" />
     <Compile Include="Environment\IEnvironment.cs" />
-    <Compile Include="Environment\Realm.cs" />
-    <Compile Include="Environment\Zone.cs" />
+    <Compile Include="Environment\BaseRealm.cs" />
+    <Compile Include="Environment\BaseZone.cs" />
     <Compile Include="Environment\Door.cs" />
-    <Compile Include="Environment\Room.cs" />
+    <Compile Include="Environment\BaseRoom.cs" />
     <Compile Include="Environment\World.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Environment\IDoor.cs" />
@@ -86,7 +86,7 @@
     <Compile Include="Commands\SwitchStateCommand.cs" />
     <Compile Include="Core\Game.cs" />
     <Compile Include="Core\Logger.cs" />
-    <Compile Include="Mobs\Player.cs" />
+    <Compile Include="Mobs\BasePlayer.cs" />
     <Compile Include="Directors\ServerDirector.cs" />
     <Compile Include="Networking\Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

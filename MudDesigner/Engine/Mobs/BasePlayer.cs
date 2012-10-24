@@ -9,7 +9,7 @@ using MudDesigner.Engine.Objects;
 
 namespace MudDesigner.Engine.Mobs
 {
-    public abstract class Player : GameObject
+    public abstract class BasePlayer : GameObject, IPlayer
     {
         public IState CurrentState { get; protected set; }
         public Socket Connection { get; private set; }
@@ -23,7 +23,6 @@ namespace MudDesigner.Engine.Mobs
             }
         }
 
-        private Guid Id { get; set; }
         //TODO: I will probably normalize this into a PlayerDetails class... - MC
         public string Username { get; set; }
         //TODO: I don't even think we need a Password property at all.  It can be stored in the saved file
@@ -31,13 +30,23 @@ namespace MudDesigner.Engine.Mobs
         //No need to store it at all inside of any Types - JS.
         public string Password { get; set; } // i dont like this but its just here temporarily - MC
 
-        public string CharacterName { get; set; }
+        public string CharacterName
+        {
+            get
+            {
+                return this.Name;
+            }
+            set
+            {
+                this.Name = value;
+            }
+        }
 
         public string Class { get; set; } // ... really need to code up a design spec - MC
 
-        public Room CurrentRoom { get; protected set; }
+        public BaseRoom CurrentRoom { get; protected set; }
 
-        public Player()
+        public BasePlayer()
         {
             Buffer = new List<byte>();
 
@@ -78,7 +87,7 @@ namespace MudDesigner.Engine.Mobs
             Connection.Send(new ASCIIEncoding().GetBytes(message));
         }
 
-        public void Move(Room room)
+        public void Move(BaseRoom room)
         {
             if (CurrentRoom == room)
                 return;
@@ -102,6 +111,16 @@ namespace MudDesigner.Engine.Mobs
         public event OnLoginHandler OnLoginEvent;
         public virtual void OnLogin()
         {
+        }
+
+        public void Save(System.IO.BinaryWriter writer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Load(IGame game, System.IO.BinaryReader reader)
+        {
+            throw new NotImplementedException();
         }
     }
 }

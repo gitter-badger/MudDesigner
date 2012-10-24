@@ -11,27 +11,22 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace MudDesigner.Engine.Environment
 {
     
-    public class World :GameObject,  IWorld
+    public class World : GameObject, IWorld
     {
         public Dictionary<Guid, IRealm> Realms { get; protected set; }
-        public Guid Id { get; set; }
 
-        public string Name { get; set; }
-
-        public World()
+        public World() : base()
         {
-            Id = Guid.NewGuid();
             Realms = new Dictionary<Guid, IRealm>();
             Name = "World";
         }
 
         //overloaded member for loading
-        public World(Guid id)
+        public World(Guid id) : base()
         {
-            Id = id; // we want to use the loaded guid id from binary file.
+            Id = id;
             Realms = new Dictionary<Guid, IRealm>();
             Name = "World";
-
         }
 
         public IRealm GetRealm(Guid realmid)

@@ -39,7 +39,7 @@ namespace MudDesigner.Engine.States
             if (string.IsNullOrWhiteSpace(input))
                 return new InvalidCommand(_player.Connection);  // FYI we can turn this into InvalidCharacterNameCommand or something.
 
-            var player = _player as Player;
+            var player = _player as BasePlayer;
             if(player != null)
             {
                 player.CharacterName = input;

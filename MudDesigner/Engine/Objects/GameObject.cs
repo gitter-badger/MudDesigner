@@ -7,44 +7,21 @@ namespace MudDesigner.Engine.Objects
 {
     public class GameObject : IGameObject
     {
-        public Guid Id
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public Guid Id { get; protected set; }
 
-        public void Save(System.IO.BinaryWriter writer)
+        public virtual void Save(System.IO.BinaryWriter writer)
         {
             throw new NotImplementedException();
         }
 
-        public void Load(Core.IGame game, System.IO.BinaryReader reader)
+        public virtual void Load(Core.IGame game, System.IO.BinaryReader reader)
         {
             throw new NotImplementedException();
         }
 
 
-        public string Name
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public string Name { get; set; }
 
-        public string Description
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public string Description { get; set; }
     }
 }

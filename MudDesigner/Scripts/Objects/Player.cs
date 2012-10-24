@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MudDesigner.Scripts.Game
 {
-    public class Player : MudDesigner.Engine.Mobs.Player
+    public class Player : MudDesigner.Engine.Mobs.BasePlayer
     {
     }
 }

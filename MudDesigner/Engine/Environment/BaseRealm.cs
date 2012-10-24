@@ -13,25 +13,20 @@ using MudDesigner.Engine.Mobs;
 
 namespace MudDesigner.Engine.Environment
 {
-    public abstract class Realm : GameObject, IRealm
+    public abstract class BaseRealm : GameObject, IRealm
     {
         //Room Collection
         [Browsable(false)]
         public Dictionary<string, IZone> Zones{ get; protected set; }
 
-        [Browsable(false)]
-        public Guid Id { get; set; }
-
-        public String Name { get; set; }
-
-        public Realm(string name)
+        public BaseRealm(string name)
         {
             Id = new Guid();
             Zones = new Dictionary<string, IZone>();
             Name = name;
         }
 
-        public Realm(string name, Guid id)
+        public BaseRealm(string name, Guid id)
         {
             Id = id;
             Zones = new Dictionary<string, IZone>();
@@ -72,7 +67,7 @@ namespace MudDesigner.Engine.Environment
 
         public virtual void AddZones(IZone[] zones, bool forceOverwrite = true)
         {
-            foreach (Zone zone in zones)
+            foreach (BaseZone zone in zones)
             {
                 AddZone(zone, forceOverwrite);
             }
@@ -88,11 +83,11 @@ namespace MudDesigner.Engine.Environment
 
         public virtual void BroadcastMessage(string message, List<IPlayer> playersToOmmit = null)
         {
-                foreach (Zone zone in Zones.Values)
+                foreach (BaseZone zone in Zones.Values)
                 {
-                    foreach (Room room in zone.Rooms.Values)
+                    foreach (BaseRoom room in zone.Rooms.Values)
                     {
-                        foreach (Player player in room.Occupants.Values)
+                        foreach (BasePlayer player in room.Occupants.Values)
                         {
                             if (playersToOmmit != null)
                             {
@@ -106,7 +101,7 @@ namespace MudDesigner.Engine.Environment
                 }
         }
 
-        public void Save(BinaryWriter writer)
+        public override void Save(BinaryWriter writer)
         {
             var properties = this.GetType().GetProperties();
 

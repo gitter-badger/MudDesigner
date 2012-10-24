@@ -22,9 +22,9 @@ namespace MudDesigner.Editor
     {
         Game game;
 
-        Realm currentRealm;
-        Zone currentZone;
-        Room currentRoom;
+        BaseRealm currentRealm;
+        BaseZone currentZone;
+        BaseRoom currentRoom;
 
         //Drag & drop related fields.
         private int indexOfItemUnderMouseToDrag;
@@ -154,7 +154,7 @@ namespace MudDesigner.Editor
                     validName = true;
             }
 
-            Room newRoom = (Room)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.RoomType, newName, currentZone, false);
+            BaseRoom newRoom = (BaseRoom)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.RoomType, newName, currentZone, false);
 
             if (newRoom == null || currentZone == null)
             {
@@ -208,7 +208,7 @@ namespace MudDesigner.Editor
                     validName = true;
             }
 
-            Zone zone = (Zone)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.ZoneType, newName, r);
+            BaseZone zone = (BaseZone)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.ZoneType, newName, r);
             r.AddZone(zone, true);
 
             AvailableZones.Items.Add(zone.Name);
@@ -249,7 +249,7 @@ namespace MudDesigner.Editor
                 }
             }
 
-            Realm realm = (Realm)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.RealmType, newName);
+            BaseRealm realm = (BaseRealm)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.RealmType, newName);
             game.World.AddRealm(realm);
 
             AvailableRealms.Items.Add(realm.Name);
@@ -272,7 +272,7 @@ namespace MudDesigner.Editor
             if (AvailableRealms.SelectedIndex == -1)
                 return;
 
-            currentRealm = (Realm)game.World.GetRealm(AvailableRealms.SelectedItem.ToString());
+            currentRealm = (BaseRealm)game.World.GetRealm(AvailableRealms.SelectedItem.ToString());
 
             if (currentRealm == null)
             {
@@ -301,7 +301,7 @@ namespace MudDesigner.Editor
                 return;
             }
 
-            currentZone = (Zone)currentRealm.GetZone(AvailableZones.SelectedItem.ToString());
+            currentZone = (BaseZone)currentRealm.GetZone(AvailableZones.SelectedItem.ToString());
 
             if (currentZone == null)
             {
@@ -336,7 +336,7 @@ namespace MudDesigner.Editor
                 return;
             }
 
-            currentRoom = (Room)currentZone.GetRoom(AvailableRooms.SelectedItem.ToString());
+            currentRoom = (BaseRoom)currentZone.GetRoom(AvailableRooms.SelectedItem.ToString());
             objectProperties.SelectedObject = currentRoom;
             statusSelectedObject.Text = "Selected: " + currentRoom.ToString();
 
@@ -408,7 +408,7 @@ namespace MudDesigner.Editor
         private void Room_DragDrop(object sender, DragEventArgs e)
         {
             var data = e.Data.GetData(DataFormats.Text);
-            Room room = (Room)currentZone.GetRoom(data.ToString());
+            BaseRoom room = (BaseRoom)currentZone.GetRoom(data.ToString());
 
             Button btnDirection = (Button)sender;
             string[] values = btnDirection.Text.Split('\n');

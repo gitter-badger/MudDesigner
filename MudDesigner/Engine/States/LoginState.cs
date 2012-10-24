@@ -114,7 +114,7 @@ namespace MudDesigner.Engine.States
                         var parts = input.Substring(0).Split(':');
                         if(parts.Length == 2)
                         {
-                            var player = _player as Player;
+                            var player = _player as BasePlayer;
                             if (player != null)
                             {
                                 player.Username = parts[0];

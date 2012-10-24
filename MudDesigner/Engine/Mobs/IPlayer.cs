@@ -18,7 +18,7 @@ namespace MudDesigner.Engine.Mobs
         void Disconnect();
         void SwitchState(IState state);
         void SendMessage(string message, bool newLine = true);
-        void Move(Room room);
+        void Move(BaseRoom room);
 
         void OnLevel(IPlayer player);
         void OnLogin();
