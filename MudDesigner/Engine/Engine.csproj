@@ -61,6 +61,8 @@
     <Compile Include="Environment\IWorld.cs" />
     <Compile Include="Environment\IZone.cs" />
     <Compile Include="Environment\TravelDirections.cs" />
+    <Compile Include="Objects\GameObject.cs" />
+    <Compile Include="Objects\IEquipment.cs" />
     <Compile Include="Objects\IGameObject.cs" />
     <Compile Include="Objects\IInventory.cs" />
     <Compile Include="Core\ILogger.cs" />

@@ -127,10 +127,6 @@ namespace MudDesigner.Engine.Environment
                     writer.Write((string)value);
 
                 }
-                else if(p.GetType() is GameObjectType) // write the GameObjectType
-                {
-                    writer.Write((int)value);
-                }
                 // we are purposefully not including the dictionary
             }
 
@@ -156,13 +152,5 @@ namespace MudDesigner.Engine.Environment
             BroadcastMessage(player.Name + " has entered from the " + enteredDirection.ToString());
         }
         #endregion
-
-
-
-        [Browsable(false)]
-        public GameObjectType Type
-        {
-            get { return GameObjectType.Realm; }
-        }
     }
 }

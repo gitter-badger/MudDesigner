@@ -50,11 +50,6 @@ namespace MudDesigner.Engine.Environment
             get { return Guid.NewGuid(); }
         }
 
-        [Browsable(false)]
-        public GameObjectType Type
-        {
-            get { return GameObjectType.Room; }
-        }
         public Room(string name, IZone zone, bool safe = true)
         {
             Safe = safe;

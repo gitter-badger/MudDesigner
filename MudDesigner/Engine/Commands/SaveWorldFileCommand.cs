@@ -46,7 +46,6 @@ namespace MudDesigner.Engine.Commands
 
                 foreach (var gameobject in eGame.GameObjects.Values)
                 {
-                    bw.Write((int)gameobject.Type);
                     bw.Write(gameobject.Id.ToByteArray());
             
                 }

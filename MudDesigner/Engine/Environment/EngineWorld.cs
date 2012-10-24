@@ -111,13 +111,6 @@ namespace MudDesigner.Engine.Environment
             throw new NotImplementedException();
         }
 
-        public GameObjectType Type
-        {
-            get { return new GameObjectType(); }
-        }
-
-
-
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
           

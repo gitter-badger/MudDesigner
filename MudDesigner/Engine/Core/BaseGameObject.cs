@@ -18,11 +18,6 @@ namespace MudDesigner.Engine.Core
         public Guid Id { get; private set; }
 
         /// <summary>
-        /// Returns a string value of the Type that the object belongs for this room.
-        /// </summary>
-        public GameObjectType Type { get; set; }
-
-        /// <summary>
         /// Gets or Sets the name associated with this object.
         /// </summary>
         public string Name { get; set; }

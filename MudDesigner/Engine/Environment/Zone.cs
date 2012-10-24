@@ -31,11 +31,6 @@ namespace MudDesigner.Engine.Environment
             get { return Guid.NewGuid(); }
         }
 
-        [Browsable(false)]
-        public GameObjectType Type
-        {
-            get { return GameObjectType.Realm; }
-        }
         public Zone(string name, IRealm realm)
         {
             Rooms = new Dictionary<string, Room>();
