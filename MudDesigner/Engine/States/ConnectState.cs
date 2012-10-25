@@ -29,7 +29,9 @@ namespace MudDesigner.Engine.States
             connection = connectedPlayer.Connection;
             player = connectedPlayer;
 
-            player.SendMessage("Welcome to AllocateThis's Mud Engine!" + "\n\r");
+            player.SendMessage(Director.Server.Game.Name);
+            player.SendMessage(Director.Server.Game.Description + "\n\r");
+            
             player.SendMessage(Director.Server.MOTD + "\n\r");
 
             //Now that the player is connected, start the login process.

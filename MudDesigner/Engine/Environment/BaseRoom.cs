@@ -36,6 +36,11 @@ namespace MudDesigner.Engine.Environment
         [Browsable(false)]
         public Dictionary<AvailableTravelDirections, IDoor> Doorways { get; protected set; }
 
+        /// <summary>
+        /// Gets a reference to the Items collection within the Room.
+        /// </summary>
+        public Dictionary<Guid, IItem> Items { get; protected set; }
+
         public BaseRoom(string name, IZone zone) : base()
         {
             Zone = zone;
@@ -129,6 +134,38 @@ namespace MudDesigner.Engine.Environment
                 }
                 Doorways.Remove(direction);
             }
+        }
+
+        public virtual void AddItem(IItem item)
+        {
+            //Don't allow duplicate entries.
+            if (Items.ContainsValue(item))
+                Items.Remove(item.ID);
+
+            //Insert new item.
+            Items.Add(item.ID, item);
+        }
+
+        public virtual void RemoveItem(IItem item)
+        {
+            if (Items.ContainsValue(item))
+                Items.Remove(item.ID);
+        }
+
+        public virtual void RemoveItem(Guid item)
+        {
+            if (Items.ContainsKey(item))
+                Items.Remove(item);
+        }
+
+        public virtual void ClearItems()
+        {
+            foreach (IItem item in Items.Values)
+            {
+                item.Destroy();
+            }
+
+            Items.Clear();
         }
 
         public virtual void BroadcastMessage(string message, List<IPlayer> playersToOmmit = null)
