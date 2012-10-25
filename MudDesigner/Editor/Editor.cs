@@ -48,10 +48,23 @@ namespace MudDesigner.Editor
             ScriptFactory.AddAssembly(CompileEngine.CompiledAssembly);
 
             //Load the Engine assembly
-            Assembly assem = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, "MudDesigner.Engine.dll"));
-            ScriptFactory.AddAssembly(assem);
-            assem = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, "MudDesigner.Scripts.dll"));
-            ScriptFactory.AddAssembly(assem);
+            Assembly assem = null;
+            if (File.Exists("MudDesigner.Engine.dll"))
+            {
+                assem = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, "MudDesigner.Engine.dll"));
+                ScriptFactory.AddAssembly(assem);
+            }
+            else
+            {
+                MessageBox.Show("The MudDesigner.Engine.dll is missing!  This is a core component of the editor.  The editor will shut down.", "Mud Designer", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
+
+            if (File.Exists("MudDesigner.Scripts.dll"))
+            {
+                assem = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, "MudDesigner.Scripts.dll"));
+                ScriptFactory.AddAssembly(assem);
+            }
 
             Type[] gameObjects = ScriptFactory.FindInheritedTypes("MudDesigner.Engine.Objects.BaseItem");
 

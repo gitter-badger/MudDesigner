@@ -72,14 +72,14 @@
             this.AvailableZones = new System.Windows.Forms.ListBox();
             this.RoomTab = new System.Windows.Forms.TabPage();
             this.AvailableRooms = new System.Windows.Forms.ListBox();
-            this.SelectedObjectLabel = new System.Windows.Forms.Label();
-            this.objectProperties = new System.Windows.Forms.PropertyGrid();
             this.tabObjects = new System.Windows.Forms.TabPage();
             this.tabObjectEditor = new System.Windows.Forms.TabControl();
             this.tabIItem = new System.Windows.Forms.TabPage();
+            this.treeStaticObjects = new System.Windows.Forms.TreeView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.treeStaticObjects = new System.Windows.Forms.TreeView();
+            this.SelectedObjectLabel = new System.Windows.Forms.Label();
+            this.objectProperties = new System.Windows.Forms.PropertyGrid();
             this.EditorStatus.SuspendLayout();
             this.MainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.editorContainer)).BeginInit();
@@ -652,6 +652,71 @@
             this.AvailableRooms.MouseMove += new System.Windows.Forms.MouseEventHandler(this.AvailableRooms_MouseMove);
             this.AvailableRooms.MouseUp += new System.Windows.Forms.MouseEventHandler(this.AvailableRooms_MouseUp);
             // 
+            // tabObjects
+            // 
+            this.tabObjects.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.tabObjects.Controls.Add(this.tabObjectEditor);
+            this.tabObjects.ForeColor = System.Drawing.Color.White;
+            this.tabObjects.Location = new System.Drawing.Point(4, 25);
+            this.tabObjects.Name = "tabObjects";
+            this.tabObjects.Padding = new System.Windows.Forms.Padding(3);
+            this.tabObjects.Size = new System.Drawing.Size(297, 319);
+            this.tabObjects.TabIndex = 1;
+            this.tabObjects.Text = "Objects";
+            // 
+            // tabObjectEditor
+            // 
+            this.tabObjectEditor.Controls.Add(this.tabIItem);
+            this.tabObjectEditor.Controls.Add(this.tabPage2);
+            this.tabObjectEditor.Controls.Add(this.tabPage1);
+            this.tabObjectEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabObjectEditor.Location = new System.Drawing.Point(3, 3);
+            this.tabObjectEditor.Name = "tabObjectEditor";
+            this.tabObjectEditor.SelectedIndex = 0;
+            this.tabObjectEditor.Size = new System.Drawing.Size(291, 313);
+            this.tabObjectEditor.TabIndex = 0;
+            // 
+            // tabIItem
+            // 
+            this.tabIItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.tabIItem.Controls.Add(this.treeStaticObjects);
+            this.tabIItem.Location = new System.Drawing.Point(4, 22);
+            this.tabIItem.Name = "tabIItem";
+            this.tabIItem.Padding = new System.Windows.Forms.Padding(3);
+            this.tabIItem.Size = new System.Drawing.Size(283, 287);
+            this.tabIItem.TabIndex = 0;
+            this.tabIItem.Text = "Items";
+            // 
+            // treeStaticObjects
+            // 
+            this.treeStaticObjects.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.treeStaticObjects.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.treeStaticObjects.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeStaticObjects.ForeColor = System.Drawing.Color.White;
+            this.treeStaticObjects.Location = new System.Drawing.Point(3, 3);
+            this.treeStaticObjects.Name = "treeStaticObjects";
+            this.treeStaticObjects.Size = new System.Drawing.Size(277, 281);
+            this.treeStaticObjects.TabIndex = 2;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(287, 290);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Equipable";
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Size = new System.Drawing.Size(287, 290);
+            this.tabPage1.TabIndex = 2;
+            this.tabPage1.Text = "Usable";
+            // 
             // SelectedObjectLabel
             // 
             this.SelectedObjectLabel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -684,71 +749,6 @@
             this.objectProperties.ViewForeColor = System.Drawing.Color.White;
             this.objectProperties.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.objectProperties_PropertyValueChanged);
             this.objectProperties.SelectedObjectsChanged += new System.EventHandler(this.objectProperties_SelectedObjectsChanged);
-            // 
-            // tabObjects
-            // 
-            this.tabObjects.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.tabObjects.Controls.Add(this.tabObjectEditor);
-            this.tabObjects.ForeColor = System.Drawing.Color.White;
-            this.tabObjects.Location = new System.Drawing.Point(4, 25);
-            this.tabObjects.Name = "tabObjects";
-            this.tabObjects.Padding = new System.Windows.Forms.Padding(3);
-            this.tabObjects.Size = new System.Drawing.Size(301, 322);
-            this.tabObjects.TabIndex = 1;
-            this.tabObjects.Text = "Objects";
-            // 
-            // tabObjectEditor
-            // 
-            this.tabObjectEditor.Controls.Add(this.tabIItem);
-            this.tabObjectEditor.Controls.Add(this.tabPage2);
-            this.tabObjectEditor.Controls.Add(this.tabPage1);
-            this.tabObjectEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabObjectEditor.Location = new System.Drawing.Point(3, 3);
-            this.tabObjectEditor.Name = "tabObjectEditor";
-            this.tabObjectEditor.SelectedIndex = 0;
-            this.tabObjectEditor.Size = new System.Drawing.Size(295, 316);
-            this.tabObjectEditor.TabIndex = 0;
-            // 
-            // tabIItem
-            // 
-            this.tabIItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.tabIItem.Controls.Add(this.treeStaticObjects);
-            this.tabIItem.Location = new System.Drawing.Point(4, 22);
-            this.tabIItem.Name = "tabIItem";
-            this.tabIItem.Padding = new System.Windows.Forms.Padding(3);
-            this.tabIItem.Size = new System.Drawing.Size(287, 290);
-            this.tabIItem.TabIndex = 0;
-            this.tabIItem.Text = "Items";
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(287, 290);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Equipable";
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(287, 290);
-            this.tabPage1.TabIndex = 2;
-            this.tabPage1.Text = "Usable";
-            // 
-            // treeStaticObjects
-            // 
-            this.treeStaticObjects.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.treeStaticObjects.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeStaticObjects.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeStaticObjects.ForeColor = System.Drawing.Color.White;
-            this.treeStaticObjects.Location = new System.Drawing.Point(3, 3);
-            this.treeStaticObjects.Name = "treeStaticObjects";
-            this.treeStaticObjects.Size = new System.Drawing.Size(281, 284);
-            this.treeStaticObjects.TabIndex = 2;
             // 
             // Editor
             // 
