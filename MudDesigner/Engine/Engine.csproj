@@ -112,7 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="EngineDiagram.cd" />
+    <None Include="MudEngineDiagram.cd" />
     <None Include="Properties\EngineSettings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>EngineSettings.Designer.cs</LastGenOutput>
