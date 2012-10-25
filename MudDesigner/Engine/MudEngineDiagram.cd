@@ -232,7 +232,7 @@
     </TypeIdentifier>
   </Struct>
   <Interface Name="MudDesigner.Engine.Actions.IEquipable" Collapsed="true">
-    <Position X="1.25" Y="3.5" Width="1.5" />
+    <Position X="5.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Actions\IEquipable.cs</FileName>
@@ -393,7 +393,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Objects.IEquipment" Collapsed="true">
-    <Position X="5.75" Y="4.75" Width="1.5" />
+    <Position X="3.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Objects\IEquipment.cs</FileName>
@@ -414,14 +414,14 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Objects.IInventory" Collapsed="true">
-    <Position X="4.5" Y="3.5" Width="1.5" />
+    <Position X="2.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Objects\IInventory.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Objects.IItem" Collapsed="true">
-    <Position X="3.5" Y="4.75" Width="1.5" />
+    <Position X="1.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Objects\IItem.cs</FileName>
