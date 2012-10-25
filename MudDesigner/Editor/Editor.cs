@@ -193,13 +193,13 @@ namespace MudDesigner.Editor
             string newName = "New Zone" + value.ToString();
             bool validName = false;
 
-            IRealm r = game.World.GetRealm(AvailableRealms.SelectedItem.ToString());
-            if (r == null)
+            
+            if (currentRealm == null)
                 return;
 
             while (!validName)
             {
-                if (r.Zones.ContainsKey(newName))
+                if (currentRealm.GetZone(newName) != null)
                 {
                     value++;
                     newName = "New Zone" + value.ToString();
@@ -208,8 +208,8 @@ namespace MudDesigner.Editor
                     validName = true;
             }
 
-            BaseZone zone = (BaseZone)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.ZoneType, newName, r);
-            r.AddZone(zone, true);
+            BaseZone zone = (BaseZone)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.ZoneType, newName, currentRealm);
+            currentRealm.AddZone(zone, true);
 
             AvailableZones.Items.Add(zone.Name);
             AvailableZones.SelectedItem = zone.Name;
@@ -284,9 +284,10 @@ namespace MudDesigner.Editor
             statusSelectedObject.Text = "Selected: " + currentRealm.ToString();
 
             AvailableZones.Items.Clear();
-            foreach (string zone in currentRealm.Zones.Keys)
+
+            foreach (IZone zone in currentRealm.Zones.Values)
             {
-                AvailableZones.Items.Add(zone);
+                AvailableZones.Items.Add(zone.Name);
             }
         }
 
@@ -313,9 +314,9 @@ namespace MudDesigner.Editor
             statusSelectedObject.Text = "Selected: " + currentZone.ToString();
 
             AvailableRooms.Items.Clear();
-            foreach (string room in currentZone.Rooms.Keys)
+            foreach (IRoom room in currentZone.Rooms.Values)
             {
-                AvailableRooms.Items.Add(room);
+                AvailableRooms.Items.Add(room.Name);
             }
         }
 

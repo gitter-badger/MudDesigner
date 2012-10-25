@@ -12,9 +12,6 @@ namespace MudDesigner.Engine.Environment
         Dictionary<Guid, IRealm> Realms { get; }
         bool IsSafe { get; set; }
 
-        void Create(string name);
-        void Create(string name, List<IRealm> realms);
-
         void AddRealm(IRealm realm, bool overwrite = false);
         IRealm GetRealm(Guid realmid);
         IRealm GetRealm(string realmname);

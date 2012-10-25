@@ -13,7 +13,7 @@ namespace MudDesigner.Engine.Environment
     {
         IRealm Realm { get; }
 
-        Dictionary<string, IRoom> Rooms { get; }
+        Dictionary<Guid, IRoom> Rooms { get; }
 
         //TODO - Add a general collection of monsters that populate the entire Zone.
         //Helps you not having to insert Monsters into every room you make

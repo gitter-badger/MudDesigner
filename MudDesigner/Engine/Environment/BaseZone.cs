@@ -21,16 +21,20 @@ namespace MudDesigner.Engine.Environment
 
         //Room Collection
         [Browsable(false)]
-        public Dictionary<string, BaseRoom> Rooms{ get; protected set; }
+        public Dictionary<Guid, IRoom> Rooms{ get; protected set; }
 
-        public BaseZone(string name, IRealm realm)
+        public bool Safe { get; set; }
+
+        public BaseZone(string name, Guid id, IRealm realm) : base(id)
         {
-            Rooms = new Dictionary<string, BaseRoom>();
+            Rooms = new Dictionary<Guid, IRoom>();
             Realm = realm;
             Name = name;
+
+            Enabled = true;
         }
 
-        public virtual void AddRoom(BaseRoom room, bool forceOverwrite = true)
+        public virtual void AddRoom(IRoom room, bool forceOverwrite = true)
         {
             if (room == null)
                 return;
@@ -47,13 +51,12 @@ namespace MudDesigner.Engine.Environment
                 }
             }
 
-            if (!Rooms.Values.Contains<IRoom>(room))
-                Rooms.Add(room.Name, room);
+            Rooms.Add(room.ID, room);
         }
 
-        public virtual void AddRooms(BaseRoom[] rooms, bool forceOverwrite = true)
+        public virtual void AddRooms(IRoom[] rooms, bool forceOverwrite = true)
         {
-            foreach (BaseRoom room in rooms)
+            foreach (IRoom room in rooms)
             {
                 AddRoom(room, forceOverwrite);
             }
@@ -70,10 +73,16 @@ namespace MudDesigner.Engine.Environment
             return null;
         }
 
-        public virtual void RemoveRoom(BaseRoom room)
+        public virtual void RemoveRoom(IRoom room)
         {
-            if (Rooms.ContainsKey(room.Name))
-                Rooms.Remove(room.Name);
+            if (Rooms.ContainsValue(room))
+                Rooms.Remove(room.ID);
+        }
+
+        public virtual void RemoveRoom(Guid id)
+        {
+            if (Rooms.ContainsKey(id))
+                Rooms.Remove(id);
         }
 
         public virtual void DeleteRooms()
@@ -86,19 +95,13 @@ namespace MudDesigner.Engine.Environment
 
         public virtual void BroadcastMessage(string message, List<IPlayer> playersToOmmit = null)
         {
-                foreach (BaseRoom room in Rooms.Values)
-                {
-                    foreach (BasePlayer player in room.Occupants.Values)
-                    {
-                        if (playersToOmmit != null)
-                        {
-                            if (playersToOmmit.Contains((IPlayer)player))
-                                continue; //Skip this player if it's in the list.
-                        }
-                        //Send the message
-                        player.SendMessage(message);
-                    }
-                }
+            foreach (IRoom room in Rooms.Values)
+            {
+                if (playersToOmmit == null)
+                    room.BroadcastMessage(message);
+                else
+                    room.BroadcastMessage(message, playersToOmmit);
+            }
         }
 
         public override string ToString()
@@ -106,69 +109,16 @@ namespace MudDesigner.Engine.Environment
             return Realm.Name + "->" + Name;
         }
 
-        #region == Events ==
-        public delegate void OnEnterHandler(IPlayer player, AvailableTravelDirections enteredDirection);
+        public delegate void OnEnterHandler(IMob occupant, IEnvironment departureEnvironment, AvailableTravelDirections direction);
         public event OnEnterHandler OnEnterEvent;
-        public virtual void OnEnter(IPlayer player, AvailableTravelDirections enteredDirection)
+        public void OnEnter(IMob occupant, IEnvironment departureEnvironment, AvailableTravelDirections direction)
         {
-            BroadcastMessage(player.Name + " has entered from the " + enteredDirection.ToString());
-        }
-        #endregion
-
-
-        public bool Safe
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
         }
 
-        public bool Enabled
+        public delegate void OnLeavehandler(IMob occupant, IEnvironment arrivalEnvironment, AvailableTravelDirections direction);
+        public event OnLeavehandler OnLeaveEvent;
+        public void OnLeave(IMob occupant, IEnvironment arrivalEnvironment, AvailableTravelDirections direction)
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-
-        Dictionary<string, IRoom> IZone.Rooms
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public void AddRoom(IRoom room, bool forceOverwrite)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddRooms(IRoom[] rooms, bool forceOverwrite)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveRoom(IRoom room)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveRoom(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void BroadcastMessage(string message)
-        {
-            throw new NotImplementedException();
         }
     }
 }

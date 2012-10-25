@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
@@ -10,6 +11,7 @@ namespace MudDesigner.Engine.Objects
 {
     public class GameObject : IGameObject
     {
+        [Browsable(false)]
         public Guid ID { get; protected set; }
 
         public string Name { get; set; }
@@ -20,6 +22,7 @@ namespace MudDesigner.Engine.Objects
 
         public bool Permanent { get; set; }
 
+        [Browsable(false)]
         public bool Destroyed { get; protected set; }
 
         public GameObject() : this(Guid.NewGuid()) { }
@@ -41,7 +44,7 @@ namespace MudDesigner.Engine.Objects
             throw new NotImplementedException();
         }
 
-        public void Destroy()
+        public virtual void Destroy()
         {
             Destroyed = true;
             Enabled = false;

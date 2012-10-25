@@ -17,17 +17,15 @@ namespace MudDesigner.Engine.Environment
     {
         //Room Collection
         [Browsable(false)]
-        public Dictionary<string, IZone> Zones{ get; protected set; }
+        public Dictionary<Guid, IZone> Zones{ get; protected set; }
 
-        public BaseRealm(string name)
+        public BaseRealm(string name) : this(name, Guid.NewGuid())
         {
-            Zones = new Dictionary<string, IZone>();
-            Name = name;
         }
 
-        public BaseRealm(string name, Guid id)
+        public BaseRealm(string name, Guid id) : base(id)
         {
-            Zones = new Dictionary<string, IZone>();
+            Zones = new Dictionary<Guid, IZone>();
             Name = name;
         }
 
@@ -48,19 +46,12 @@ namespace MudDesigner.Engine.Environment
                 }
             }
 
-            if (!Zones.Values.Contains<IZone>(zone))
-                Zones.Add(zone.Name, zone);
+            Zones.Add(zone.ID, zone);
         }
 
         public virtual IZone GetZone(string zoneName)
         {
-            foreach (IZone zone in Zones.Values)
-            {
-                if (zone.Name == zoneName)
-                    return zone;
-            }
-
-            return null;
+            return Zones.Values.Where(z => z.Name == zoneName).Select(z => z).First();
         }
 
         public virtual void AddZones(IZone[] zones, bool forceOverwrite = true)
@@ -73,30 +64,33 @@ namespace MudDesigner.Engine.Environment
 
         public virtual void RemoveZone(IZone zone)
         {
-            if (Zones.ContainsKey(zone.Name))
-                Zones.Remove(zone.Name);
+            if (Zones.ContainsKey(zone.ID))
+                Zones.Remove(zone.ID);
             else if (Zones.ContainsValue(zone))
-                Zones.Remove(zone.Name);
+                Zones.Remove(zone.ID);
         }
 
         public virtual void BroadcastMessage(string message, List<IPlayer> playersToOmmit = null)
         {
-                foreach (BaseZone zone in Zones.Values)
-                {
-                    foreach (BaseRoom room in zone.Rooms.Values)
-                    {
-                        foreach (BasePlayer player in room.Occupants.Values)
-                        {
-                            if (playersToOmmit != null)
-                            {
-                                if (playersToOmmit.Contains((IPlayer)player))
-                                    continue; //Skip this player if it's in the list.
-                            }
-                            //Send the message
-                            player.SendMessage(message);
-                        }
-                    }
-                }
+            foreach (IZone zone in Zones.Values)
+            {
+                if (playersToOmmit == null)
+                    zone.BroadcastMessage(message);
+                else
+                    zone.BroadcastMessage(message, playersToOmmit);
+            }
+        }
+
+        public delegate void OnEnterHandler(IMob occupant, IEnvironment departureEnvironment, AvailableTravelDirections directions);
+        public event OnEnterHandler OnEnterEvent;
+        public virtual void OnEnter(IMob occupant, IEnvironment departureEnvironment, AvailableTravelDirections direction)
+        {
+        }
+
+        public delegate void OnLeaveHandler(IMob occupant, IEnvironment arrivalEnvironment, AvailableTravelDirections directions);
+        public event OnLeaveHandler OnLeaveEvent;
+        public void OnLeave(IMob occupant, IEnvironment arrivalEnvironment, AvailableTravelDirections direction)
+        {
         }
 
         public override void Save(BinaryWriter writer)
@@ -126,7 +120,6 @@ namespace MudDesigner.Engine.Environment
 
         }
 
-     
         public void Load(IGame game, BinaryReader reader)
         {
             throw new NotImplementedException();
@@ -135,20 +128,6 @@ namespace MudDesigner.Engine.Environment
         public override string ToString()
         {
             return Name;
-        }
-
-        #region == Events ==
-        public delegate void OnEnterHandler(IPlayer player, AvailableTravelDirections enteredDirection);
-        public event OnEnterHandler OnEnterEvent;
-        public virtual void OnEnter(IPlayer player, AvailableTravelDirections enteredDirection)
-        {
-            BroadcastMessage(player.Name + " has entered from the " + enteredDirection.ToString());
-        }
-        #endregion
-
-        public void BroadcastMessage(string message)
-        {
-            throw new NotImplementedException();
         }
     }
 }

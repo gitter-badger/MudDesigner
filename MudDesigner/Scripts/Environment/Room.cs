@@ -10,7 +10,7 @@ namespace MudDesigner.Scripts.Environment
 {
     class Room : MudDesigner.Engine.Environment.BaseRoom
     {
-        public Room(string name, IZone zone, bool safe = true) : base(name, zone, safe)
+        public Room(string name, IZone zone, Guid id, bool safe = true) : base(name, zone, id, safe)
         {
         }
     }

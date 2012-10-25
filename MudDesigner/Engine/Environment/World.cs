@@ -1,37 +1,38 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MudDesigner.Engine.Objects;
-using MudDesigner.Engine.Core;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
-
+using MudDesigner.Engine.Objects;
+using MudDesigner.Engine.Core;
 namespace MudDesigner.Engine.Environment
 {
     
     public class World : GameObject, IWorld
     {
+        [Browsable(false)]
         public Dictionary<Guid, IRealm> Realms { get; protected set; }
 
-        public World() : base()
+        public bool IsSafe { get; set; }
+
+        public World() : this(Guid.NewGuid())
         {
-            Realms = new Dictionary<Guid, IRealm>();
-            Name = "World";
         }
 
         //overloaded member for loading
-        public World(Guid id) : base()
+        public World(Guid id) : base(id)
         {
             Realms = new Dictionary<Guid, IRealm>();
             Name = "World";
         }
 
-        public IRealm GetRealm(Guid realmid)
+        public IRealm GetRealm(Guid id)
         {
             IRealm realm;
-            Realms.TryGetValue(realmid, out realm);
+            Realms.TryGetValue(id, out realm);
 
             return realm;
         }
@@ -65,42 +66,42 @@ namespace MudDesigner.Engine.Environment
                 }
             }
 
-            if (!Realms.Values.Contains<IRealm>(realm))
-                Realms.Add(realm.ID, realm);
+            Realms.Add(realm.ID, realm);
         }
 
         public void RemoveRealm(IRealm realm)
         {
-            if (Realms.Keys.Contains(realm.ID))
+            if (Realms.ContainsKey(realm.ID))
                 Realms.Remove(realm.ID);
         }
 
         public void RemoveRealm(string realmName)
         {
-            foreach(var realm in Realms.Values.Where(newRealm => newRealm.Name == realmName))
+            IRealm realm = Realms.Where(r => r.Value.Name == realmName).Select(r => r.Value).First();
+
+            if (realm == null)
+                return;
+            else
+                Realms.Remove(realm.ID);
+        }
+
+        public void BroadcastMessage(string message, List<Mobs.IPlayer> playersToOmit = null)
+        {
+            foreach (IRealm realm in Realms.Values)
             {
-                RemoveRealm(realm);
-                break;
+                if (playersToOmit == null)
+                    realm.BroadcastMessage(message);
+                else
+                    realm.BroadcastMessage(message, playersToOmit);
             }
         }
 
-        public void Create(string name)
+        public override void Save(System.IO.BinaryWriter writer)
         {
             throw new NotImplementedException();
         }
 
-        public void Create(string name, List<IRealm> realms)
-            {
-                throw new NotImplementedException();
-            }
-
-
-        public void Save(System.IO.BinaryWriter writer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Load(IGame game, System.IO.BinaryReader reader)
+        public override void Load(IGame game, System.IO.BinaryReader reader)
         {
             throw new NotImplementedException();
         }
@@ -110,27 +111,12 @@ namespace MudDesigner.Engine.Environment
           
         }
 
-
-        public bool IsSafe
+        public virtual void OnEnter(Mobs.IMob occupant, IEnvironment departureEnvironment, AvailableTravelDirections direction)
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
         }
 
-        public void BroadcastMessage(string message)
+        public virtual void OnLeave(Mobs.IMob occupant, IEnvironment arrivalEnvironment, AvailableTravelDirections direction)
         {
-            throw new NotImplementedException();
-        }
-
-        public void BroadcastMessage(string message, List<Mobs.IPlayer> playersToOmit)
-        {
-            throw new NotImplementedException();
         }
     }
 }

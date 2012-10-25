@@ -23,8 +23,6 @@ namespace MudDesigner.Engine.Environment
         /// </summary>
         public bool Safe { get; set; }
 
-        public bool Enabled { get; set; }
-
         /// <summary>
         /// 
         /// </summary>
@@ -34,10 +32,11 @@ namespace MudDesigner.Engine.Environment
         //Room Collections
         [Browsable(false)]
         public Dictionary<string, IPlayer> Occupants { get; set; }
+
         [Browsable(false)]
         public Dictionary<AvailableTravelDirections, IDoor> Doorways { get; protected set; }
 
-        public BaseRoom(string name, IZone zone, bool safe = true)
+        public BaseRoom(string name, IZone zone, Guid id, bool safe = false) : base(id)
         {
             Safe = safe;
             Zone = zone;
@@ -46,12 +45,7 @@ namespace MudDesigner.Engine.Environment
             Name = name;
         }
 
-        ~BaseRoom()
-        {
-            System.Diagnostics.Trace.WriteLine("Room destroyed!");
-        }
-
-        public void Destroy()
+        public override void Destroy()
         {
             Doorways.Clear();
 
@@ -159,6 +153,17 @@ namespace MudDesigner.Engine.Environment
         #endregion
 
         public void BroadcastMessage(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public void OnEnter(IMob occupant, IEnvironment departureEnvironment, AvailableTravelDirections direction)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnLeave(IMob occupant, IEnvironment arrivalEnvironment, AvailableTravelDirections direction)
         {
             throw new NotImplementedException();
         }

@@ -14,36 +14,6 @@ namespace MudDesigner.Scripts.Game
     {
         public override bool Initialize(IServer startedServer)
         {
-            World= new World();
-            Realm realm = new Realm("Fido");
-            Zone zone = new Zone("Village", null);
-            List<Room> rooms = new List<Room>();
-
-            Room bedroom = new Room("Bedroom", zone);
-            bedroom.Description = "This is your bedroom.  It's a real mess.";
-            rooms.Add(bedroom);
-
-            Room closet = new Room("Closet", zone);
-            closet.Description = "Your closet is empty.";
-            rooms.Add(closet);
-
-            Room hallway = new Room("Hallway", zone);
-            hallway.Description = "Your hallway is dark and cold.";
-            rooms.Add(hallway);
-
-            Room kitchen = new Room("Kitchen", zone);
-            kitchen.Description = "Your kitchen is very clean and organized.";
-            rooms.Add(kitchen);
-
-            //This will link both of the rooms together with a door.
-            bedroom.AddDoorway(Env.AvailableTravelDirections.North, hallway, true);
-
-            zone.AddRooms(rooms.ToArray());
-            realm.AddZone(zone);
-            World.AddRealm(realm);
-
-            
-
             return base.Initialize(startedServer);
         }
     }

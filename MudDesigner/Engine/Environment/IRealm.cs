@@ -7,7 +7,7 @@ namespace MudDesigner.Engine.Environment
 {
     public interface IRealm: IEnvironment
     {
-        Dictionary<string, IZone> Zones { get; }
+        Dictionary<Guid, IZone> Zones { get; }
 
         void AddZone(IZone zone, bool forceOverwrite);
         void AddZones(IZone[] zones, bool forceOverwrite);

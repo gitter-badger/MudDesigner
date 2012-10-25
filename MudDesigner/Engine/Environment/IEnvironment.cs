@@ -10,7 +10,9 @@ namespace MudDesigner.Engine.Environment
 {
     public interface IEnvironment : IGameObject
     {
-        void BroadcastMessage(string message);
-        void BroadcastMessage(string message, List<IPlayer> playersToOmit);
+        void BroadcastMessage(string message, List<IPlayer> playersToOmit = null);
+
+        void OnEnter(IMob occupant, IEnvironment departureEnvironment, AvailableTravelDirections direction);
+        void OnLeave(IMob occupant, IEnvironment arrivalEnvironment, AvailableTravelDirections direction);
     }
 }

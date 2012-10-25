@@ -10,8 +10,7 @@ namespace MudDesigner.Scripts.Environment
 {
     public class Zone : MudDesigner.Engine.Environment.BaseZone
     {
-        public Zone(string name, IRealm realm)
-            : base(name, realm)
+        public Zone(string name, Guid id, IRealm realm) : base(name, id, realm)
         {
         }
     }
