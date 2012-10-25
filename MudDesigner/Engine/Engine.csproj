@@ -72,6 +72,7 @@
     <Compile Include="Environment\IRealm.cs" />
     <Compile Include="Environment\IRoom.cs" />
     <Compile Include="Core\IRule.cs" />
+    <Compile Include="Objects\InventoryBounds.cs" />
     <Compile Include="States\IState.cs" />
     <Compile Include="Actions\IUseable.cs" />
     <Compile Include="Directors\IConnectionsDirector.cs" />

@@ -2,6 +2,6 @@
 {
     public interface IInventory : IGameObject
     {
-         
+        InventoryBounds Bounds { get; }
     }
 }
