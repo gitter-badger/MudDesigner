@@ -7,17 +7,17 @@ using MudDesigner.Engine.Objects;
 
 namespace MudDesigner.Engine.Environment
 {
-    public interface IWorld : IGameObject 
+    public interface IWorld : IEnvironment 
     {
         Dictionary<Guid, IRealm> Realms { get; }
-        string Name { get; set; }
+        bool IsSafe { get; set; }
 
         void Create(string name);
         void Create(string name, List<IRealm> realms);
 
+        void AddRealm(IRealm realm, bool overwrite = false);
         IRealm GetRealm(Guid realmid);
         IRealm GetRealm(string realmname);
-        void AddRealm(IRealm realm, bool overwrite = false);
         void RemoveRealm(IRealm realm);
         void RemoveRealm(string realmName);
     }

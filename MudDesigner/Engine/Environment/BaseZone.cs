@@ -139,5 +139,36 @@ namespace MudDesigner.Engine.Environment
                 throw new NotImplementedException();
             }
         }
+
+
+        Dictionary<string, IRoom> IZone.Rooms
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public void AddRoom(IRoom room, bool forceOverwrite)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddRooms(IRoom[] rooms, bool forceOverwrite)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveRoom(IRoom room)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveRoom(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void BroadcastMessage(string message)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

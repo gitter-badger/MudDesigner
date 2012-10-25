@@ -23,7 +23,7 @@ namespace MudDesigner.Engine.Environment
         /// </summary>
         public bool Safe { get; set; }
 
-        public bool Enabled { get; protected set; }
+        public bool Enabled { get; set; }
 
         /// <summary>
         /// 
@@ -157,5 +157,10 @@ namespace MudDesigner.Engine.Environment
             BroadcastMessage(player.Name + " has entered from the " + enteredDirection.ToString());
         }
         #endregion
+
+        public void BroadcastMessage(string message)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

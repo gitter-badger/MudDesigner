@@ -16,15 +16,12 @@ namespace MudDesigner.Engine.Environment
         public string Taste { get; set; }
     }
 
-    public interface IRoom
+    public interface IRoom : IEnvironment
     {
         IZone Zone { get; set; }
-        bool Safe { get; set; }
-        string Description { get; set; }
-        Senses Sense { get; set; }
-        bool Enabled { get; }
-        string Name { get; set; }
 
+        Senses Sense { get; set; }
+        
         Dictionary<string, IPlayer> Occupants { get; set; }
         Dictionary<AvailableTravelDirections, IDoor> Doorways { get; }
 

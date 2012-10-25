@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using MudDesigner.Engine.Objects;
+using MudDesigner.Engine.Mobs;
+
 namespace MudDesigner.Engine.Environment
 {
-    public interface IEnvironment
+    public interface IEnvironment : IGameObject
     {
-        string Name { get; set; }
-        bool Safe { get; set; }
-        string Description { get; set; }
-        bool Enabled { get; set; }
+        void BroadcastMessage(string message);
+        void BroadcastMessage(string message, List<IPlayer> playersToOmit);
     }
 }

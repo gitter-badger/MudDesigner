@@ -109,5 +109,28 @@ namespace MudDesigner.Engine.Environment
         {
           
         }
+
+
+        public bool IsSafe
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public void BroadcastMessage(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void BroadcastMessage(string message, List<Mobs.IPlayer> playersToOmit)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

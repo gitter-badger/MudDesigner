@@ -145,5 +145,10 @@ namespace MudDesigner.Engine.Environment
             BroadcastMessage(player.Name + " has entered from the " + enteredDirection.ToString());
         }
         #endregion
+
+        public void BroadcastMessage(string message)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
