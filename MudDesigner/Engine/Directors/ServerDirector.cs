@@ -26,7 +26,7 @@ namespace MudDesigner.Engine.Directors
 
         public void AddConnection(Socket connection)
         {
-            var player = (IPlayer)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.DefaultPlayerType, null);
+            var player = (IPlayer)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.DefaultPlayerType, null);
             player.Initialize(new ConnectState(this), connection);
             
             Thread userThread = new Thread(ReceiveDataThread);

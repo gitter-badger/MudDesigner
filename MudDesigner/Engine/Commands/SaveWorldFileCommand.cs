@@ -17,7 +17,7 @@ namespace MudDesigner.Engine.Commands
 
         public void Execute()
         {
-            var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(),"saves", MudDesigner.Engine.Properties.Engine.Default.WorldFile);
+            var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(),"saves", MudDesigner.Engine.Properties.EngineSettings.Default.WorldFile);
             var path = Path.GetDirectoryName(fileAndPathToSave);
 
             if(path == null)

@@ -90,21 +90,24 @@ namespace MudDesigner.Engine.Core
             {
 
                 Server = startedServer;
+                //A server was provided, ensure it's started.
+                if (!Server.Enabled)
+                {
+                    Server.Start(Server.MaxConnections, Server.MaxQueuedConnections, this);
+                }
             }
             else
             {
                 Server = new Server();
-                
             }
 
             //Add the engine assembly to the Script Factory
             ScriptFactory.AddAssembly(Assembly.GetExecutingAssembly());
             
-
             //Add any additional assemblies that might have been compiled elsewhere (downloadable assemblies)
-            if (MudDesigner.Engine.Properties.Engine.Default.ScriptLibrary.Count != 0)
+            if (MudDesigner.Engine.Properties.EngineSettings.Default.ScriptLibrary.Count != 0)
             {
-                foreach (string assembly in MudDesigner.Engine.Properties.Engine.Default.ScriptLibrary)
+                foreach (string assembly in MudDesigner.Engine.Properties.EngineSettings.Default.ScriptLibrary)
                 {
                     //Make sure the assembly actually exists first.
                     if (File.Exists(assembly))
@@ -112,6 +115,9 @@ namespace MudDesigner.Engine.Core
                 }
             }
 
+            IWorld world = (IWorld)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.DefaultWorldType, null);
+            if (world != null)
+                World = world;
             return true;
         }
 
@@ -136,7 +142,7 @@ namespace MudDesigner.Engine.Core
              
             LastSave = DateTime.Now;
 
-            var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(), "saves", MudDesigner.Engine.Properties.Engine.Default.WorldFile);
+            var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(), "saves", MudDesigner.Engine.Properties.EngineSettings.Default.WorldFile);
             var path = Path.GetDirectoryName(fileAndPathToSave);
 
             if (path == null)

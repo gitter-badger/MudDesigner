@@ -42,7 +42,7 @@ namespace MudDesigner.Engine.States
             }
             else
             {
-                IState state = (IState)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.LoginSuccessState, Director);
+                IState state = (IState)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.LoginSuccessState, Director);
                 return new SwitchStateCommand(Director, state, player);
             }
 

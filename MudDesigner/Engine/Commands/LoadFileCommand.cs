@@ -38,7 +38,7 @@ namespace MudDesigner.Engine.Commands
         //@ToDO: I would also like to Encrypt the file. Possibly doing HMAC-SHA1 or something.... to prevent hacking and cleartext passwords.
         public IGame LoadGame(string filename)
         {
-            var game = (IGame)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.DefaultGameType, null);
+            var game = (IGame)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.DefaultGameType, null);
 
             using(var br = new BinaryReader(File.Open(filename,FileMode.Open)))
             {

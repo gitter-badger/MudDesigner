@@ -40,7 +40,7 @@ namespace MudDesigner.Editor
         {
             //Compile the game scripts
             CompileEngine.AddAssemblyReference("MudDesigner.Engine.dll");
-            CompileEngine.Compile(MudDesigner.Engine.Properties.Engine.Default.ScriptsPath);
+            CompileEngine.Compile(MudDesigner.Engine.Properties.EngineSettings.Default.ScriptsPath);
 
             //Add the engine assembly to the Script Factory
             ScriptFactory.AddAssembly(Assembly.GetExecutingAssembly());
@@ -154,11 +154,11 @@ namespace MudDesigner.Editor
                     validName = true;
             }
 
-            BaseRoom newRoom = (BaseRoom)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.RoomType, newName, currentZone, false);
+            BaseRoom newRoom = (BaseRoom)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.RoomType, newName, currentZone, false);
 
             if (newRoom == null || currentZone == null)
             {
-                MessageBox.Show("Failed to instance the specified user script '" + MudDesigner.Engine.Properties.Engine.Default.RoomType + "'", "Mud Designer");
+                MessageBox.Show("Failed to instance the specified user script '" + MudDesigner.Engine.Properties.EngineSettings.Default.RoomType + "'", "Mud Designer");
                 return;
             }
 
@@ -208,7 +208,7 @@ namespace MudDesigner.Editor
                     validName = true;
             }
 
-            BaseZone zone = (BaseZone)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.ZoneType, newName, currentRealm);
+            BaseZone zone = (BaseZone)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.ZoneType, newName, currentRealm);
             currentRealm.AddZone(zone, true);
 
             AvailableZones.Items.Add(zone.Name);
@@ -249,7 +249,7 @@ namespace MudDesigner.Editor
                 }
             }
 
-            BaseRealm realm = (BaseRealm)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.RealmType, newName);
+            BaseRealm realm = (BaseRealm)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.RealmType, newName);
             game.World.AddRealm(realm);
 
             AvailableRealms.Items.Add(realm.Name);

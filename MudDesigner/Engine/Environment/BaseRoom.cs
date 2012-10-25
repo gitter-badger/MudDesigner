@@ -55,7 +55,7 @@ namespace MudDesigner.Engine.Environment
             foreach (IPlayer player in Occupants.Values)
             {
                 //TODO: Move players into a default room when this is destroyed.
-                //player.Move(MudDesigner.Engine.Properties.Engine.Default.LoginRoom);
+                //player.Move(MudDesigner.Engine.Properties.EngineSettings.Default.LoginRoom);
             }
         }
 
@@ -72,14 +72,14 @@ namespace MudDesigner.Engine.Environment
                 //Remove the old door
                 RemoveDoorway(direction);
                 //Get a scripted Door instance to add back to the collection
-                Door door = (Door)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.DoorType, direction, this, arrivalRoom);
+                Door door = (Door)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.DoorType, direction, this, arrivalRoom);
                 Doorways.Add(direction, door);
             }
                 //Direction does not exist, so lets add a new doorway
             else
             {
                 //Get a scripted instance of a Door.
-                IDoor door = (Door)ScriptFactory.GetScript(MudDesigner.Engine.Properties.Engine.Default.DoorType, direction, this, arrivalRoom);
+                IDoor door = (Door)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.DoorType, direction, this, arrivalRoom);
                 //Add the new doorway to this rooms collection.
                 Doorways.Add(direction, door);
 
