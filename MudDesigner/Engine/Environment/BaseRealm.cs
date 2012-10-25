@@ -19,8 +19,10 @@ namespace MudDesigner.Engine.Environment
         [Browsable(false)]
         public Dictionary<Guid, IZone> Zones{ get; protected set; }
 
-        public BaseRealm(string name) : this(name, Guid.NewGuid())
+        public BaseRealm(string name) : base()
         {
+            Zones = new Dictionary<Guid, IZone>();
+            Name = name;
         }
 
         public BaseRealm(string name, Guid id) : base(id)
@@ -51,7 +53,12 @@ namespace MudDesigner.Engine.Environment
 
         public virtual IZone GetZone(string zoneName)
         {
-            return Zones.Values.Where(z => z.Name == zoneName).Select(z => z).First();
+            foreach (IZone zone in Zones.Values)
+            {
+                if (zone.Name == zoneName)
+                    return zone;
+            }
+            return null;
         }
 
         public virtual void AddZones(IZone[] zones, bool forceOverwrite = true)

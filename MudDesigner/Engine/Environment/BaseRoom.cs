@@ -36,6 +36,13 @@ namespace MudDesigner.Engine.Environment
         [Browsable(false)]
         public Dictionary<AvailableTravelDirections, IDoor> Doorways { get; protected set; }
 
+        public BaseRoom(string name, IZone zone) : base()
+        {
+            Zone = zone;
+            Doorways = new Dictionary<AvailableTravelDirections, IDoor>();
+            Occupants = new Dictionary<string, IPlayer>();
+            Name = name;
+        }
         public BaseRoom(string name, IZone zone, Guid id, bool safe = false) : base(id)
         {
             Safe = safe;

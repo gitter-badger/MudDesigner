@@ -18,8 +18,10 @@ namespace MudDesigner.Engine.Environment
 
         public bool IsSafe { get; set; }
 
-        public World() : this(Guid.NewGuid())
+        public World() : base()
         {
+            Realms = new Dictionary<Guid, IRealm>();
+            Name = "World";
         }
 
         //overloaded member for loading

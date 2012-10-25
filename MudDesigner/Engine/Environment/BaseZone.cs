@@ -25,6 +25,15 @@ namespace MudDesigner.Engine.Environment
 
         public bool Safe { get; set; }
 
+        public BaseZone(string name, IRealm realm) : base()
+        {
+            Rooms = new Dictionary<Guid, IRoom>();
+            Realm = realm;
+            Name = name;
+
+            Enabled = true;
+        }
+
         public BaseZone(string name, Guid id, IRealm realm) : base(id)
         {
             Rooms = new Dictionary<Guid, IRoom>();

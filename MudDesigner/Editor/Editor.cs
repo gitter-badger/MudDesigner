@@ -154,7 +154,7 @@ namespace MudDesigner.Editor
                     validName = true;
             }
 
-            BaseRoom newRoom = (BaseRoom)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.RoomType, newName, currentZone, false);
+            BaseRoom newRoom = (BaseRoom)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.RoomType, newName, currentZone);
 
             if (newRoom == null || currentZone == null)
             {
@@ -217,7 +217,7 @@ namespace MudDesigner.Editor
             //Open the Realms collection for display.
             if (GameExplorer.SelectedTab.Text != "Environment")
                 GameExplorer.SelectedIndex = 0; //"Environment"
-            if (EnvironmentOptions.SelectedTab.Text != "Zones")
+            else if (EnvironmentOptions.SelectedTab.Text != "Zones")
                 EnvironmentOptions.SelectedIndex = 1; //"Zones"
         }
 
@@ -235,6 +235,11 @@ namespace MudDesigner.Editor
 
             while (!validName)
             {
+                //In the event this is the first Realm.
+                //Prevents infinit loop
+                if (game.World.Realms.Count == 0)
+                    validName = true;
+
                 foreach (var r in game.World.Realms)
                 {
                     if(r.Value.Name == newName )
