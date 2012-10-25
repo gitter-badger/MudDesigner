@@ -162,23 +162,14 @@ namespace MudDesigner.Editor
                     switch (EnvironmentOptions.SelectedTab.Text)
                     {
                         case "Realms":
-                            //Remove the old name from the listbox and add the new one
-                            AvailableRealms.Items.Remove(e.OldValue);
-                            AvailableRealms.Items.Add(currentRealm.Name);
-                            game.World.AddRealm(currentRealm, true); //Overwrite the previous Realm entry in order to update it's Key.
-                            AvailableRealms.SelectedItem = currentRealm.Name;
+                            //Replace the old name with the new one in the list box.
+                            AvailableRealms.Items[AvailableRealms.Items.IndexOf(e.OldValue)] = currentRealm.Name;
                             break;
                         case "Zones":
-                            AvailableZones.Items.Remove(e.OldValue);
-                            AvailableZones.Items.Add(e.ChangedItem.Value.ToString());
-                            currentRealm.AddZone(currentZone, true);
-                            AvailableZones.SelectedItem = currentZone.Name;
+                            AvailableZones.Items[AvailableZones.Items.IndexOf(e.OldValue)] = currentZone.Name;
                             break;
                         case "Rooms":
-                            AvailableRooms.Items.Remove(e.OldValue);
-                            AvailableRooms.Items.Add(e.ChangedItem.Value.ToString());
-                            currentZone.AddRoom(currentRoom, true);
-                            AvailableRooms.SelectedItem = currentRoom.Name;
+                            AvailableRooms.Items[AvailableRooms.Items.IndexOf(e.OldValue)] = currentRoom.Name;
                             break;
                     }
                     objectProperties_SelectedObjectsChanged(null, null);

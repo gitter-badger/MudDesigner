@@ -660,7 +660,7 @@
             this.tabObjects.Location = new System.Drawing.Point(4, 25);
             this.tabObjects.Name = "tabObjects";
             this.tabObjects.Padding = new System.Windows.Forms.Padding(3);
-            this.tabObjects.Size = new System.Drawing.Size(297, 319);
+            this.tabObjects.Size = new System.Drawing.Size(301, 322);
             this.tabObjects.TabIndex = 1;
             this.tabObjects.Text = "Objects";
             // 
@@ -673,7 +673,7 @@
             this.tabObjectEditor.Location = new System.Drawing.Point(3, 3);
             this.tabObjectEditor.Name = "tabObjectEditor";
             this.tabObjectEditor.SelectedIndex = 0;
-            this.tabObjectEditor.Size = new System.Drawing.Size(291, 313);
+            this.tabObjectEditor.Size = new System.Drawing.Size(295, 316);
             this.tabObjectEditor.TabIndex = 0;
             // 
             // tabIItem
@@ -683,7 +683,7 @@
             this.tabIItem.Location = new System.Drawing.Point(4, 22);
             this.tabIItem.Name = "tabIItem";
             this.tabIItem.Padding = new System.Windows.Forms.Padding(3);
-            this.tabIItem.Size = new System.Drawing.Size(283, 287);
+            this.tabIItem.Size = new System.Drawing.Size(287, 290);
             this.tabIItem.TabIndex = 0;
             this.tabIItem.Text = "Items";
             // 
@@ -695,7 +695,7 @@
             this.treeStaticObjects.ForeColor = System.Drawing.Color.White;
             this.treeStaticObjects.Location = new System.Drawing.Point(3, 3);
             this.treeStaticObjects.Name = "treeStaticObjects";
-            this.treeStaticObjects.Size = new System.Drawing.Size(277, 281);
+            this.treeStaticObjects.Size = new System.Drawing.Size(281, 284);
             this.treeStaticObjects.TabIndex = 2;
             // 
             // tabPage2
