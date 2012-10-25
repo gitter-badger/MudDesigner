@@ -24,7 +24,6 @@ namespace MudDesigner.Engine.Environment
         //overloaded member for loading
         public World(Guid id) : base()
         {
-            Id = id;
             Realms = new Dictionary<Guid, IRealm>();
             Name = "World";
         }
@@ -60,20 +59,20 @@ namespace MudDesigner.Engine.Environment
                 {
                     foreach (var r in Realms.Values.Where(newRealm => newRealm == realm))
                     {
-                        Realms.Remove(r.Id);
+                        Realms.Remove(r.ID);
                         break; //We removed our Realm, so escape.
                     }
                 }
             }
 
             if (!Realms.Values.Contains<IRealm>(realm))
-                Realms.Add(realm.Id, realm);
+                Realms.Add(realm.ID, realm);
         }
 
         public void RemoveRealm(IRealm realm)
         {
-            if (Realms.Keys.Contains(realm.Id))
-                Realms.Remove(realm.Id);
+            if (Realms.Keys.Contains(realm.ID))
+                Realms.Remove(realm.ID);
         }
 
         public void RemoveRealm(string realmName)

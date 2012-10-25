@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\IEquipable.cs" />
     <Compile Include="Actions\ILoadable.cs" />
     <Compile Include="Actions\ISaveable.cs" />
     <Compile Include="Core\Engine.cs" />
@@ -60,6 +61,8 @@
     <Compile Include="Environment\IWorld.cs" />
     <Compile Include="Environment\IZone.cs" />
     <Compile Include="Environment\TravelDirections.cs" />
+    <Compile Include="Mobs\IMob.cs" />
+    <Compile Include="Mobs\IPawn.cs" />
     <Compile Include="Objects\GameObject.cs" />
     <Compile Include="Objects\IEquipment.cs" />
     <Compile Include="Objects\IGameObject.cs" />
@@ -109,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="EngineDiagram.cd" />
     <None Include="Properties\Engine.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Engine.Designer.cs</LastGenOutput>

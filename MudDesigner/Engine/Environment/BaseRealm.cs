@@ -21,14 +21,12 @@ namespace MudDesigner.Engine.Environment
 
         public BaseRealm(string name)
         {
-            Id = new Guid();
             Zones = new Dictionary<string, IZone>();
             Name = name;
         }
 
         public BaseRealm(string name, Guid id)
         {
-            Id = id;
             Zones = new Dictionary<string, IZone>();
             Name = name;
         }

@@ -10,26 +10,7 @@ using MudDesigner.Engine.Objects;
 namespace MudDesigner.Engine.Mobs
 {
     public abstract class BasePlayer : GameObject, IPlayer
-    {
-        public IState CurrentState { get; protected set; }
-        public Socket Connection { get; private set; }
-        public List<byte> Buffer { get; set; }
-
-        public bool IsConnected
-        {
-            get
-            {
-                return Connection.Connected;
-            }
-        }
-
-        //TODO: I will probably normalize this into a PlayerDetails class... - MC
-        public string Username { get; set; }
-        //TODO: I don't even think we need a Password property at all.  It can be stored in the saved file
-        //and when the user enters the password via telnet, it checks against the saved file.
-        //No need to store it at all inside of any Types - JS.
-        public string Password { get; set; } // i dont like this but its just here temporarily - MC
-
+    {   
         public string CharacterName
         {
             get
@@ -42,13 +23,37 @@ namespace MudDesigner.Engine.Mobs
             }
         }
 
-        public string Class { get; set; } // ... really need to code up a design spec - MC
+        public IRoom Location { get; protected set; }
 
-        public BaseRoom CurrentRoom { get; protected set; }
+        public bool CanTalk { get; set; }
+
+        public Dictionary<Guid, IInventory> Inventory { get; protected set; }
+
+        //TODO - IPlayer.Username and Password need to be protected with a IPlayer.Validate(username, password) method. - JS
+        public string Username { get; set; }
+        public string Password { get; set; }
+
+        public IState CurrentState { get; protected set; }
+        public Socket Connection { get; private set; }
+
+        public bool IsConnected
+        {
+            get
+            {
+                return Connection.Connected;
+            }
+        }
+
+        public List<byte> Buffer { get; set; }
+
+        //TODO - Create IClass and IRace interfaces
+        public string Class { get; set; }
 
         public BasePlayer()
         {
             Buffer = new List<byte>();
+            CanTalk = true;
+            Inventory = new Dictionary<Guid, IInventory>();
 
             OnLevelEvent += new OnLevelHandler(OnLevel);
             OnLoginEvent += new OnLoginHandler(OnLogin);
@@ -66,11 +71,13 @@ namespace MudDesigner.Engine.Mobs
 
             //Render the state after the login event.  This allows scripts to replace the initialState
             //if they want with something custom and have the engine render it.
-            CurrentState.Render((IPlayer)this);
+            CurrentState.Render(this);
         }
 
         public void Disconnect()
         {
+            if (IsConnected)
+            { } //TODO - Move to OnDisconnect event.
             Connection.Close();
             Connection = null;
         }
@@ -87,13 +94,43 @@ namespace MudDesigner.Engine.Mobs
             Connection.Send(new ASCIIEncoding().GetBytes(message));
         }
 
-        public void Move(BaseRoom room)
+        public void Move(IRoom room)
         {
-            if (CurrentRoom == room)
+            if (Location == room)
                 return;
 
-            CurrentRoom = room;
-            SendMessage(CurrentRoom.Description);
+            Location = room;
+            SendMessage(Location.Description);
+        }
+
+        public void Connect(IState initialState)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Create(string charName, IRoom location)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddInventoryItem(IInventory inventoryItem)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UseInventoryItem(IInventory inventoryItem)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Save(System.IO.BinaryWriter writer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Load(IGame game, System.IO.BinaryReader reader)
+        {
+            throw new NotImplementedException();
         }
 
         public override string ToString()
@@ -113,12 +150,65 @@ namespace MudDesigner.Engine.Mobs
         {
         }
 
-        public void Save(System.IO.BinaryWriter writer)
+        public delegate void OnConnectHandler(IState initialState);
+        public event OnConnectHandler OnConnectEvent;
+        public void OnConnect(IState initialState)
         {
             throw new NotImplementedException();
         }
 
-        public void Load(IGame game, System.IO.BinaryReader reader)
+        public delegate void OnDisconnectHandler();
+        public event OnDisconnectHandler OnDisconnectEvent;
+        public void OnDisconnect()
+        {
+            throw new NotImplementedException();
+        }
+
+        public delegate void OnCreateHandler(string charName, IRoom location);
+        public event OnCreateHandler OnCreateEvent;
+        public void OnCreate(string charName, IRoom location)
+        {
+            throw new NotImplementedException();
+        }
+
+        public delegate void OnLeaveHandler(IRoom arrivalRoom, bool cancel = false);
+        public event OnLeaveHandler OnLeaveEvent;
+        public void OnLeave(IRoom arrivalRoom, bool cancel = false)
+        {
+            throw new NotImplementedException();
+        }
+
+        public delegate void OnEnterHandler(IRoom departingRoom);
+        public event OnEnterHandler OnEnterEvent;
+        public void OnEnter(IRoom departingRoom)
+        {
+            throw new NotImplementedException();
+        }
+
+        public delegate void OnAttackHandler(IMob[] target);
+        public event OnAttackHandler OnAttackEvent;
+        public void OnAttack(IMob[] target)
+        {
+            throw new NotImplementedException();
+        }
+
+        public delegate void OnDealDamageHandler(IMob[] target);
+        public event OnDealDamageHandler OnDealDamageEvent;
+        public void OnDealDamage(IMob[] target)
+        {
+            throw new NotImplementedException();
+        }
+
+        public delegate void OnRecieveDamageHandler(IGameObject target);
+        public event OnRecieveDamageHandler OnRecieveDamageEvent;
+        public void OnRecieveDamage(IGameObject target)
+        {
+            throw new NotImplementedException();
+        }
+
+        public delegate void OnDeathHandler(IGameObject target);
+        public event OnDeathHandler OnDeathEvent;
+        public void OnDeath(IGameObject target)
         {
             throw new NotImplementedException();
         }

@@ -73,7 +73,7 @@ namespace MudDesigner.Engine.Core
 
         public void AddGameObject(IGameObject go)
         {
-            GameObjects.Add(go.Id, go);
+            GameObjects.Add(go.ID, go);
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace MudDesigner.Engine.Core
 
                 foreach (var gameObject in GameObjects.Values)
                 {
-                    bw.Write(gameObject.Id.ToByteArray());
+                    bw.Write(gameObject.ID.ToByteArray());
 
                 }
 

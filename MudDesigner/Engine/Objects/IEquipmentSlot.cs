@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using MudDesigner.Engine.Actions;
 
 namespace MudDesigner.Engine.Objects
 {
-    public interface IEquipmentSlot
+    public interface IEquipmentSlot : IGameObject
     {
-        string Name { get; set; }
-        IUseable Equipment { get; } // TODO Should this be IUseable ? or IEquipable ? 
+        IEquipable Equipment { get; }
 
-        void Equip(IUseable equipment);
+        void Equip(IEquipable equipment);
+        void Unequip(IEquipable equipment);
     }
 }
