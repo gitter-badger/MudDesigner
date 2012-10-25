@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using MudDesigner.Engine.Objects;
+using MudDesigner.Engine.Core;
 
-namespace MudDesigner.Engine.Objects
+namespace MudDesigner.Engine.Mobs
 {
-    public interface IEquipable : IItem
+    public interface IFaction : IGameObject
     {
-
     }
 }

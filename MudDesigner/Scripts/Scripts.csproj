@@ -66,9 +66,13 @@
     <Compile Include="Environment\Zone.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Objects\Player.cs">
+    <Compile Include="Mobs\Player.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Objects\Barrel.cs" />
+    <Compile Include="Objects\Furniture.cs" />
+    <Compile Include="Objects\GreenBarrel.cs" />
+    <Compile Include="Objects\Table.cs" />
     <Compile Include="States\MainMenuState.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>

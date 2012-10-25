@@ -5,6 +5,7 @@ using MudDesigner.Engine.Core;
 
 namespace MudDesigner.Engine.Commands
 {
+    [HelpAttribute("Invalid Command is a result of entering a command that the game does not recognize.")]
     public class InvalidCommand : ICommand
     {
         private Socket Connection { get; set; }

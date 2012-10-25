@@ -7,7 +7,7 @@ using System.Text;
 
 using MudDesigner.Engine.Core;
 
-namespace MudDesigner.Engine.Objects
+namespace MudDesigner.Engine.Core
 {
     public class GameObject : IGameObject
     {

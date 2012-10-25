@@ -1,11 +1,8 @@
 ﻿//Microsoft .NET Using statements
 using System.IO;
 
-//AllocateThis! Mud Designer using statements
-using MudDesigner.Engine.Core;
-
 //Abstract.Actions namespace is used for Types that will perform action based code. Such as saving, loading or being used.
-namespace MudDesigner.Engine.Actions
+namespace MudDesigner.Engine.Core
 {
     /// <summary>
     /// Defines a method that allows loading content from a saved state.

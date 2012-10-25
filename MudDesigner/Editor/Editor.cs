@@ -53,7 +53,7 @@ namespace MudDesigner.Editor
             assem = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, "MudDesigner.Scripts.dll"));
             ScriptFactory.AddAssembly(assem);
 
-            Type[] gameObjects = ScriptFactory.FindInheritedTypes("MudDesigner.Engine.Core.BaseGameObject");
+            Type[] gameObjects = ScriptFactory.FindInheritedTypes("MudDesigner.Engine.Objects.BaseItem");
 
             if (gameObjects.Length > 0)
             {
@@ -61,7 +61,51 @@ namespace MudDesigner.Editor
                 {
                     if (t.IsAbstract || t.IsEnum || t.IsInterface || t.IsValueType)
                         continue;
-                    objectBrowser.Items.Add(t.Name);
+                    if (t.BaseType.Name == "BaseItem")
+                    {
+                        treeStaticObjects.Nodes.Add(t.Name);
+                    }
+                    else
+                    {
+                        if (treeStaticObjects.Nodes.Count == 0)
+                        {
+                            string baseType = t.BaseType.Name;
+                            List<string> items = new List<string>();
+
+                            while (baseType != "BaseItem")
+                            {
+                                items.Add(baseType);
+                                Type parentType = t.BaseType;
+                                baseType = parentType.BaseType.Name;
+                            }
+
+                            foreach (string parent in items)
+                            {
+                                treeStaticObjects.Nodes.Add(new TreeNode(parent));
+                            }
+                        }
+                        else
+                        {
+                            try
+                            {
+                                foreach (TreeNode collection in treeStaticObjects.Nodes)
+                                {
+                                    TreeNode n = SearchNode(collection, t.BaseType.Name);
+                                    if (n == null)
+                                        continue;
+                                    else
+                                    {
+                                        n.Nodes.Add(new TreeNode(t.Name));
+                                        break;
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Diagnostics.Debug.WriteLine(ex.Message);
+                            }
+                        }
+                    }
                 }
             }
 
@@ -69,6 +113,24 @@ namespace MudDesigner.Editor
             game.Initialize(null); //Don't need a server.
 
             //TODO - Make sure the game is loaded properly.
+        }
+
+        private TreeNode SearchNode(TreeNode node, string search)
+        {
+            if (node.Text == search)
+                return node;
+
+            foreach (TreeNode n in node.Nodes)
+            {
+                if (n.Text == search)
+                    return n;
+                else
+                {
+                    return SearchNode(n, search);
+                }
+            }
+
+            return null;
         }
 
         /// <summary>

@@ -7,7 +7,7 @@ using MudDesigner.Engine.Environment;
 
 namespace MudDesigner.Engine.Mobs
 {
-    public interface IPawn : IMob
+    public interface INPC : IMob
     {
         /// <summary>
         /// Gets or Sets if this Pawn can move around the world or is restricted to its current Room.
@@ -41,9 +41,20 @@ namespace MudDesigner.Engine.Mobs
         /// </summary>
         IRoom Origin { get; set; }
 
+        /// <summary>
+        /// The faction that this NPC belongs to.
+        /// </summary>
+        IFaction Faction { get; set; }
+
+        /// <summary>
+        /// Gets or Sets the alignment for this NPC.
+        /// </summary>
+        Alignments Alignment { get; set; }
+
         void Update();
 
         void OnTalk(IPlayer initiator);
         void OnControl(IPlayer owner); //Called when the IPlayer takes control of this object. Such as marraige or a pet that can recieve commands.
+        void OnMobEnter(IMob initiator);
     }
 }

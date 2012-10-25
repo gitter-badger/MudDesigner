@@ -44,10 +44,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\HelpAttribute.cs" />
+    <Compile Include="Commands\HelpCommand.cs" />
     <Compile Include="Events\IQuest.cs" />
+    <Compile Include="Mobs\Alignments.cs" />
+    <Compile Include="Mobs\IFactions.cs" />
+    <Compile Include="Objects\BaseItem.cs" />
     <Compile Include="Objects\IEquipable.cs" />
-    <Compile Include="Actions\ILoadable.cs" />
-    <Compile Include="Actions\ISaveable.cs" />
+    <Compile Include="Core\ILoadable.cs" />
+    <Compile Include="Core\ISaveable.cs" />
     <Compile Include="Core\Engine.cs" />
     <Compile Include="Environment\IEnvironment.cs" />
     <Compile Include="Environment\BaseRealm.cs" />
@@ -63,8 +68,8 @@
     <Compile Include="Environment\IZone.cs" />
     <Compile Include="Environment\TravelDirections.cs" />
     <Compile Include="Mobs\IMob.cs" />
-    <Compile Include="Mobs\IPawn.cs" />
-    <Compile Include="Objects\GameObject.cs" />
+    <Compile Include="Mobs\INPC.cs" />
+    <Compile Include="Core\GameObject.cs" />
     <Compile Include="Core\IGameObject.cs" />
     <Compile Include="Objects\IInventory.cs" />
     <Compile Include="Core\ILogger.cs" />
@@ -118,7 +123,9 @@
       <LastGenOutput>EngineSettings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Actions\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

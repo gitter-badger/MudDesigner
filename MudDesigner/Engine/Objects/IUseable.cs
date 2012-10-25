@@ -10,7 +10,7 @@ namespace MudDesigner.Engine.Objects
     /// <summary>
     /// Defines a series of methods that allow a object to be used within the game.
     /// </summary>
-    public interface IUseable : IInventory
+    public interface IUseable : IItem
     {
          
     }

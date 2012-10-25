@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MudDesigner.Scripts.Game
+using MudDesigner.Engine.Objects;
+namespace MudDesigner.Scripts.Objects
 {
-    public class Player : MudDesigner.Engine.Mobs.BasePlayer
+    public class Furniture : BaseItem
     {
     }
 }
