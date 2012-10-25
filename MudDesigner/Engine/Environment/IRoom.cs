@@ -30,5 +30,7 @@ namespace MudDesigner.Engine.Environment
         IDoor GetDoorway(AvailableTravelDirections direction);
         IDoor[] GetDoorways();
         void Destroy();
+
+        //void QueryQuest(IQuest quest);
     }
 }

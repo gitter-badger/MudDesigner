@@ -5,12 +5,12 @@ using System.IO;
 using MudDesigner.Engine.Core;
 
 //Abstract.Actions namespace is used for Types that will perform action based code. Such as saving, loading or being used.
-namespace MudDesigner.Engine.Actions
+namespace MudDesigner.Engine.Objects
 {
     /// <summary>
     /// Defines a series of methods that allow a object to be used within the game.
     /// </summary>
-    public interface IUseable
+    public interface IUseable : IInventory
     {
          
     }

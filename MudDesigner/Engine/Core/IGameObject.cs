@@ -1,7 +1,7 @@
 ﻿using System;
 using MudDesigner.Engine.Actions;
 
-namespace MudDesigner.Engine.Objects
+namespace MudDesigner.Engine.Core
 {
     public interface IGameObject : ISaveable, ILoadable
     {

@@ -1,7 +1,6 @@
 ﻿namespace MudDesigner.Engine.Objects
 {
-    public interface IInventory : IGameObject
+    public interface IInventory : IItem
     {
-        InventoryBounds Bounds { get; }
     }
 }

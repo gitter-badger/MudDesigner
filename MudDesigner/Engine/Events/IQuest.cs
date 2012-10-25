@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 
 using MudDesigner.Engine.Objects;
+using MudDesigner.Engine.Core;
 
-namespace MudDesigner.Engine.Actions
+namespace MudDesigner.Engine.Events
 {
-    public interface IEquipable : IGameObject
+    public interface IQuest : IGameObject
     {
-
     }
 }

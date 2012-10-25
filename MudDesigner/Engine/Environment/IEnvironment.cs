@@ -5,6 +5,7 @@ using System.Text;
 
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Mobs;
+using MudDesigner.Engine.Core;
 
 namespace MudDesigner.Engine.Environment
 {

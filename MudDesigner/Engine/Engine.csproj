@@ -44,7 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions\IEquipable.cs" />
+    <Compile Include="Events\IQuest.cs" />
+    <Compile Include="Objects\IEquipable.cs" />
     <Compile Include="Actions\ILoadable.cs" />
     <Compile Include="Actions\ISaveable.cs" />
     <Compile Include="Core\Engine.cs" />
@@ -64,8 +65,7 @@
     <Compile Include="Mobs\IMob.cs" />
     <Compile Include="Mobs\IPawn.cs" />
     <Compile Include="Objects\GameObject.cs" />
-    <Compile Include="Objects\IEquipment.cs" />
-    <Compile Include="Objects\IGameObject.cs" />
+    <Compile Include="Core\IGameObject.cs" />
     <Compile Include="Objects\IInventory.cs" />
     <Compile Include="Core\ILogger.cs" />
     <Compile Include="Mobs\IPlayer.cs" />
@@ -74,13 +74,12 @@
     <Compile Include="Core\IRule.cs" />
     <Compile Include="Objects\InventoryBounds.cs" />
     <Compile Include="States\IState.cs" />
-    <Compile Include="Actions\IUseable.cs" />
+    <Compile Include="Objects\IUseable.cs" />
     <Compile Include="Directors\IConnectionsDirector.cs" />
     <Compile Include="Directors\IRuleDirector.cs" />
     <Compile Include="Directors\IServerDirector.cs" />
     <Compile Include="Networking\IConnection.cs" />
     <Compile Include="Networking\IServer.cs" />
-    <Compile Include="Objects\IEquipmentSlot.cs" />
     <Compile Include="Objects\IItem.cs" />
     <Compile Include="Commands\InvalidCommand.cs" />
     <Compile Include="Commands\LoadFileCommand.cs" />
