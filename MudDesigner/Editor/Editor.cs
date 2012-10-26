@@ -40,6 +40,10 @@ namespace MudDesigner.Editor
         {
             //Compile the game scripts
             CompileEngine.AddAssemblyReference("MudDesigner.Engine.dll");
+
+            foreach (string reference in MudDesigner.Engine.Properties.EngineSettings.Default.ScriptLibrary)
+                CompileEngine.AddAssemblyReference(Environment.CurrentDirectory + "\\" + reference);
+
             CompileEngine.Compile(MudDesigner.Engine.Properties.EngineSettings.Default.ScriptsPath);
 
             //Add the engine assembly to the Script Factory
