@@ -8,12 +8,14 @@ using MudDesigner.Engine.Networking;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Directors;
 using MudDesigner.Engine.Scripting;
+ 
 
 namespace MudDesigner.Engine.Networking
 {
     public class Server : IServer
     {
         public Socket Socket { get; private set; }
+
         public ServerStatus Status { get; private set; }
 
         public int Port { get; private set; }
@@ -39,6 +41,7 @@ namespace MudDesigner.Engine.Networking
         [Category("Networking")]
         public Server(int port)
         {
+            
             Port = port;
             Enabled = false;
             Status = ServerStatus.Stopped;
@@ -52,6 +55,7 @@ namespace MudDesigner.Engine.Networking
 
         public void Start(Int32 maxConnections, Int32 maxQueueSize, IGame game)
         {
+            
             Logger.WriteLine("Game Server System Starting...");
             if (Status != ServerStatus.Stopped)
                 return;
@@ -74,12 +78,16 @@ namespace MudDesigner.Engine.Networking
                 ServerThread = new Thread(Running);
                 ServerThread.Start();
 
+                
                 Logger.WriteLine("Server status: Running");
+
             }
             catch
             {
+                 
                 Logger.WriteLine("Failed to star the Engines Networking Server!");
                 this.Status = ServerStatus.Stopped;
+                 
                 Logger.WriteLine("Server status: Stopped");
             }
         }

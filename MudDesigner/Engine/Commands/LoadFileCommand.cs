@@ -11,20 +11,19 @@ namespace MudDesigner.Engine.Commands
 {
     public class LoadFileCommand : ICommand
     {
-        private IEngine _engine;
+        private IGame _game;
         private readonly string _fileToLoad;
         private BasePlayer _player;
 
-        public LoadFileCommand(string fileToLoad, IEngine engine)
+        public LoadFileCommand(IGame game)
         {
-            _engine = engine;
-            _fileToLoad = fileToLoad;
+            _game = game;
         }
 
         public void Execute()
         {
 
-            var game = LoadGame(String.Format("{0}\\saves\\{1}.sav", Directory.GetCurrentDirectory(), _fileToLoad));
+            LoadGame();
 
             _player.SendMessage(String.Format("Successfully loaded {0} ", _fileToLoad));
 
@@ -36,24 +35,12 @@ namespace MudDesigner.Engine.Commands
 
         //@ToDO: I have this planned out, for loading and saving, I just need to double check how I am saving game objects and creating definitions for loading the class types back. (I have sample for how i plan on doing this in general) and a test project for doing it.
         //@ToDO: I would also like to Encrypt the file. Possibly doing HMAC-SHA1 or something.... to prevent hacking and cleartext passwords.
-        public IGame LoadGame(string filename)
+        public void LoadGame()
         {
-            var game = (IGame)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.DefaultGameType, null);
+            var game = _game as Game;
 
-            using(var br = new BinaryReader(File.Open(filename,FileMode.Open)))
-            {
-                var gameObjects = new List<IGameObject>();
-
-                var gameObjectCount = br.ReadInt32();
-
-                for(var i =0; i<gameObjectCount; i++)
-                {
-                    var type = br.ReadInt32();
-                    var id = new Guid(br.ReadBytes(16));
-                }
-            }
-
-            return game;
+            if (game != null) 
+                game.Load();
         }
     }
 }

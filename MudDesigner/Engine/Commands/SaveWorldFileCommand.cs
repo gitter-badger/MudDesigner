@@ -17,44 +17,16 @@ namespace MudDesigner.Engine.Commands
 
         public void Execute()
         {
-            var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(),"saves", MudDesigner.Engine.Properties.EngineSettings.Default.WorldFile);
-            var path = Path.GetDirectoryName(fileAndPathToSave);
-
-            if(path == null)
-            {
-                return;
-            }
-
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(string.Format(path));
-            }
-
-            SaveGame(fileAndPathToSave, _game);
-
+            SaveGame();
         }
 
-        public void SaveGame(string filename, IGame game)
+        public void SaveGame()
         {
-            var eGame = game;
-            if (eGame == null) 
-                return;
-
-            using (var bw = new BinaryWriter(File.Open(filename, FileMode.OpenOrCreate)))
-            {
-                bw.Write(eGame.GameObjects.Count);
-
-                foreach (var gameobject in eGame.GameObjects.Values)
-                {
-                    bw.Write(gameobject.ID.ToByteArray());
+            var game = _game as Game;
             
-                }
-                
-                foreach (var gameobject in eGame.GameObjects.Values)
-                {
-                    gameobject.Save(bw);
-                }
-            }
+            if (game != null) 
+                game.Save();
+                 
         }
     }
 }

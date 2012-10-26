@@ -8,6 +8,8 @@ using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Scripting;
 
 using MudDesigner.Engine.Mobs;
+using Newtonsoft.Json;
+
 namespace MudDesigner.Engine.Environment
 {
     public abstract class BaseRoom : GameObject, IRoom
@@ -15,7 +17,7 @@ namespace MudDesigner.Engine.Environment
         /// <summary>
         /// Zone that this Room resides within
         /// </summary>
-        [Browsable(false)]
+        [Browsable(false), JsonIgnore]
         public IZone Zone { get; set; }
 
         /// <summary>

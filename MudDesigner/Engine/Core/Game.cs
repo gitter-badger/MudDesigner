@@ -9,6 +9,7 @@ using MudDesigner.Engine.Networking;
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Scripting;
+using Newtonsoft.Json;
 
 //Abstract.Core namespace is used for Types that are the core component of the game engine such as the Game, Player and command Types
 namespace MudDesigner.Engine.Core
@@ -131,18 +132,10 @@ namespace MudDesigner.Engine.Core
             throw new NotImplementedException();
         }
 
-        public void Load(IGame game, System.IO.BinaryReader reader)
+        public void Load()
         {
-            throw new NotImplementedException();
-        }
-
-        // This 
-        public void Save()
-        {
-             
-            LastSave = DateTime.Now;
-
-            var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(), "saves", MudDesigner.Engine.Properties.EngineSettings.Default.WorldFile);
+            var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(), "saves",
+                                                MudDesigner.Engine.Properties.EngineSettings.Default.WorldFile);
             var path = Path.GetDirectoryName(fileAndPathToSave);
 
             if (path == null)
@@ -155,22 +148,45 @@ namespace MudDesigner.Engine.Core
                 Directory.CreateDirectory(string.Format(path));
             }
 
+            using (var br = new BinaryReader(File.Open(fileAndPathToSave, FileMode.Open)))
+            {
+                var gameLoad = br.ReadString();
 
+                World = JsonConvert.DeserializeObject<World>(gameLoad, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
+
+            }
+            
+        }
+
+        // This 
+        public void Save()
+        {
+             
+            LastSave = DateTime.Now;
+
+            var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(), "saves",
+                                                 MudDesigner.Engine.Properties.EngineSettings.Default.WorldFile);
+            var path = Path.GetDirectoryName(fileAndPathToSave);
+
+            if (path == null)
+            {
+                return;
+            }
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(string.Format(path));
+            }
+
+           
             using (var bw = new BinaryWriter(File.Open(fileAndPathToSave, FileMode.OpenOrCreate)))
             {
-                bw.Write(GameObjects.Count);
-
-                foreach (var gameObject in GameObjects.Values)
-                {
-                    bw.Write(gameObject.ID.ToByteArray());
-
-                }
-
-                foreach (var gameObject in GameObjects.Values)
-                {
-                    gameObject.Save(bw);
-                }
+                var gameSave = JsonConvert.SerializeObject(World, Formatting.Indented, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
+                bw.Write(gameSave);
             }
+            
+
+          
         }
     }
 }

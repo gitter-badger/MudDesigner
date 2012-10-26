@@ -9,11 +9,14 @@ using MudDesigner.Engine.Core;
 using MudDesigner.Engine.States;
 using MudDesigner.Engine.Scripting;
 using MudDesigner.Engine.Mobs;
+ 
 
 namespace MudDesigner.Engine.Directors
 {
     public class ServerDirector : IServerDirector
     {
+     
+
         public Dictionary<IPlayer, Thread> ConnectedPlayers { get; private set; }
 
         public IServer Server { get; set; }

@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using MudDesigner.Engine.Mobs;
 using MudDesigner.Engine.Objects;
+using Newtonsoft.Json;
 
 namespace MudDesigner.Engine.Environment
 {
     public interface IRealm: IEnvironment
     {
+        [JsonProperty(TypeNameHandling = TypeNameHandling.All)]
         Dictionary<Guid, IZone> Zones { get; }
 
         void AddZone(IZone zone, bool forceOverwrite);

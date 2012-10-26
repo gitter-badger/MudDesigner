@@ -8,6 +8,7 @@ using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Scripting;
 using MudDesigner.Engine.Mobs;
+using Newtonsoft.Json;
 
 namespace MudDesigner.Engine.Environment
 {
@@ -16,11 +17,11 @@ namespace MudDesigner.Engine.Environment
         /// <summary>
         /// Realm that this Room resides within
         /// </summary>
-        [Browsable(false)]
+        [Browsable(false),JsonIgnore]
         public IRealm Realm { get; protected set; }
 
         //Room Collection
-        [Browsable(false)]
+        [Browsable(false), JsonProperty(TypeNameHandling = TypeNameHandling.All)]
         public Dictionary<Guid, IRoom> Rooms{ get; protected set; }
 
         public bool Safe { get; set; }

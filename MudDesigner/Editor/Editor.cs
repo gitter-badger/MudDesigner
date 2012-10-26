@@ -124,7 +124,11 @@ namespace MudDesigner.Editor
 
             game = (Game)ScriptFactory.FindInheritedScripted("MudDesigner.Engine.Core.Game", null);
             game.Initialize(null); //Don't need a server.
-
+            game.Load();
+            foreach (var r in game.World.Realms.Values)
+            {
+                AvailableRealms.Items.Add(r.Name);
+            }
             //TODO - Make sure the game is loaded properly.
         }
 
@@ -188,7 +192,7 @@ namespace MudDesigner.Editor
         /// <param name="e"></param>
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //game.Save();
+            game.Save();
         }
 
         /// <summary>
@@ -645,6 +649,16 @@ namespace MudDesigner.Editor
                         collection.SelectedIndex = -1;
 
                     break;
+            }
+        }
+
+        private void loadToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            game.Load();
+
+            foreach (var r in game.World.Realms.Values)
+            {
+                AvailableRealms.Items.Add(r.Name);
             }
         }
     }

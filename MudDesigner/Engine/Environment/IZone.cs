@@ -5,13 +5,14 @@ using System.Text;
 
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
+using Newtonsoft.Json;
 
 namespace MudDesigner.Engine.Environment
 {
     public interface IZone : IEnvironment
     {
         IRealm Realm { get; }
-
+        [JsonProperty(TypeNameHandling = TypeNameHandling.All)]
         Dictionary<Guid, IRoom> Rooms { get; }
 
         //TODO - Add a general collection of monsters that populate the entire Zone.

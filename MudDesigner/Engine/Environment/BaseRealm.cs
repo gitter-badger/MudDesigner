@@ -10,13 +10,14 @@ using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Scripting;
 using MudDesigner.Engine.Mobs;
+using Newtonsoft.Json;
 
 namespace MudDesigner.Engine.Environment
 {
     public abstract class BaseRealm : GameObject, IRealm
     {
         //Room Collection
-        [Browsable(false)]
+        [Browsable(false),JsonProperty(TypeNameHandling = TypeNameHandling.All)]
         public Dictionary<Guid, IZone> Zones{ get; protected set; }
 
         public BaseRealm(string name) : base()
