@@ -8,8 +8,12 @@ using MudDesigner.Engine.Environment;
 
 namespace MudDesigner.Scripts.Environment
 {
-    public class Door : MudDesigner.Engine.Environment.Door
+    public class Door : Engine.Environment.Door
     {
+        public Door() :base()
+        {
+            
+        }
         public Door(AvailableTravelDirections direction, IRoom departing, IRoom arrival)
             : base(direction, departing, arrival)
         {

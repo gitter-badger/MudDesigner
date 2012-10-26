@@ -10,6 +10,10 @@ namespace MudDesigner.Scripts.Environment
 {
     class Room : MudDesigner.Engine.Environment.BaseRoom
     {
+        public Room() : base()
+        {
+            
+        }
         public Room(string name, IZone zone) : base(name, zone)
         {
         }

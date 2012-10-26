@@ -14,11 +14,16 @@ namespace MudDesigner.Engine.Environment
 
         public IInventory Key { get; protected set; }
 
-        public AvailableTravelDirections FacingDirection { get; protected set; }
+        public AvailableTravelDirections FacingDirection { get;  protected set; }
 
         public IRoom Arrival { get; protected set; }
 
-        public IRoom Departure { get; protected set; }
+        public IRoom Departure { get; protected  set; }
+
+        public Door()
+        {
+
+        }
 
         public Door(AvailableTravelDirections direction, IRoom departingRoom, IRoom arrivingRoom)
         {
@@ -40,5 +45,22 @@ namespace MudDesigner.Engine.Environment
 
             return Locked;
         }
+
+
+        public void SetFacingDirection(AvailableTravelDirections directions)
+        {
+            FacingDirection = directions;
+        }
+
+        public void SetArrivalRoom(IRoom room)
+        {
+            Arrival = room;
+        }
+
+        public void SetDepartingRoom(IRoom room)
+        {
+            Departure = room;
+        }
     }
+
 }

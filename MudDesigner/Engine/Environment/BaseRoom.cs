@@ -43,6 +43,13 @@ namespace MudDesigner.Engine.Environment
         /// </summary>
         public Dictionary<Guid, IItem> Items { get; protected set; }
 
+        public BaseRoom()
+        {
+            Doorways = new Dictionary<AvailableTravelDirections, IDoor>();
+            Occupants = new Dictionary<string, IPlayer>();
+            
+        }
+
         public BaseRoom(string name, IZone zone) : base()
         {
             Zone = zone;
@@ -86,14 +93,23 @@ namespace MudDesigner.Engine.Environment
                 //Remove the old door
                 RemoveDoorway(direction);
                 //Get a scripted Door instance to add back to the collection
-                Door door = (Door)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.DoorType, direction, this, arrivalRoom);
+                var door = (Door)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.DoorType);
+                door.SetArrivalRoom(arrivalRoom);
+                door.SetDepartingRoom(this);
+                door.SetFacingDirection(direction);
+
                 Doorways.Add(direction, door);
             }
                 //Direction does not exist, so lets add a new doorway
             else
             {
                 //Get a scripted instance of a Door.
-                IDoor door = (Door)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.DoorType, direction, this, arrivalRoom);
+                var door = (Door)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.DoorType);
+                door.SetFacingDirection(direction);
+                door.SetArrivalRoom(arrivalRoom);
+                door.SetDepartingRoom(this);
+
+
                 //Add the new doorway to this rooms collection.
                 Doorways.Add(direction, door);
 

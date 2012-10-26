@@ -228,7 +228,10 @@ namespace MudDesigner.Editor
                     validName = true;
             }
 
-            BaseRoom newRoom = (BaseRoom)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.RoomType, newName, currentZone);
+            BaseRoom newRoom = (BaseRoom)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.RoomType);
+            newRoom.Name = newName;
+            newRoom.Zone= currentZone;
+            
 
             if (newRoom == null || currentZone == null)
             {

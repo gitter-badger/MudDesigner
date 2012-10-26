@@ -21,10 +21,8 @@ namespace MudDesigner.Engine.Environment
         [Browsable(false),JsonProperty(ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
         public IRealm Realm { get; set; }
 
-        //public Guid RealmId { get; set; }
-
         //Room Collection
-        [Browsable(false), JsonProperty(TypeNameHandling = TypeNameHandling.All)]
+        [Browsable(false), JsonProperty(TypeNameHandling = TypeNameHandling.All, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
         public Dictionary<Guid, IRoom> Rooms{ get; protected set; }
 
         public bool Safe { get; set; }
