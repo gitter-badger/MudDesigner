@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
+using Newtonsoft.Json;
 
 namespace MudDesigner.Engine.Environment
 {
     public interface IWorld : IEnvironment 
     {
+        [JsonProperty(TypeNameHandling = TypeNameHandling.All)]
         Dictionary<Guid, IRealm> Realms { get; }
         bool IsSafe { get; set; }
 

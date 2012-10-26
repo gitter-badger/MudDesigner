@@ -17,7 +17,7 @@ namespace MudDesigner.Engine.Environment
         /// <summary>
         /// Realm that this Room resides within
         /// </summary>
-        [Browsable(false),JsonIgnore]
+        [Browsable(false),JsonProperty(IsReference = true)]
         public IRealm Realm { get; protected set; }
 
         //Room Collection

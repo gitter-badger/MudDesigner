@@ -17,7 +17,7 @@ namespace MudDesigner.Engine.Environment
         /// <summary>
         /// Zone that this Room resides within
         /// </summary>
-        [Browsable(false), JsonIgnore]
+        [Browsable(false)]
         public IZone Zone { get; set; }
 
         /// <summary>

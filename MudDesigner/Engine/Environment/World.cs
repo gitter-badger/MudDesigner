@@ -8,12 +8,14 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Core;
+using Newtonsoft.Json;
+
 namespace MudDesigner.Engine.Environment
 {
     
     public class World : GameObject, IWorld
     {
-        [Browsable(false)]
+        [Browsable(false),JsonProperty(TypeNameHandling = TypeNameHandling.All)]
         public Dictionary<Guid, IRealm> Realms { get; protected set; }
 
         public bool IsSafe { get; set; }

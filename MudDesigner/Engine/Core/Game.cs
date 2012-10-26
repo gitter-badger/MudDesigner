@@ -148,14 +148,15 @@ namespace MudDesigner.Engine.Core
                 Directory.CreateDirectory(string.Format(path));
             }
 
+            if (!File.Exists(fileAndPathToSave)) return;
+
             using (var br = new BinaryReader(File.Open(fileAndPathToSave, FileMode.Open)))
             {
                 var gameLoad = br.ReadString();
 
-                World = JsonConvert.DeserializeObject<World>(gameLoad, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
+                World = JsonConvert.DeserializeObject<World>(gameLoad,new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All});
 
             }
-            
         }
 
         // This 
@@ -181,7 +182,7 @@ namespace MudDesigner.Engine.Core
            
             using (var bw = new BinaryWriter(File.Open(fileAndPathToSave, FileMode.OpenOrCreate)))
             {
-                var gameSave = JsonConvert.SerializeObject(World, Formatting.Indented, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
+                var gameSave = JsonConvert.SerializeObject(World, Formatting.Indented, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All});
                 bw.Write(gameSave);
             }
             
