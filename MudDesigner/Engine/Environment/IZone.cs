@@ -11,7 +11,7 @@ namespace MudDesigner.Engine.Environment
 {
     public interface IZone : IEnvironment
     {
-        [JsonProperty(IsReference = true)]
+        [JsonProperty(ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
         IRealm Realm { get; }
 
         [JsonProperty(TypeNameHandling = TypeNameHandling.All)]

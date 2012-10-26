@@ -282,7 +282,10 @@ namespace MudDesigner.Editor
                     validName = true;
             }
 
-            BaseZone zone = (BaseZone)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.ZoneType, newName, currentRealm);
+            BaseZone zone = (BaseZone)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.ZoneType);
+
+            zone.Name = newName;
+            zone.Realm = currentRealm;
             currentRealm.AddZone(zone, true);
 
             AvailableZones.Items.Add(zone.Name);

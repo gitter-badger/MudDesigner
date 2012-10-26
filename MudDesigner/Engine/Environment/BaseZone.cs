@@ -11,14 +11,17 @@ using MudDesigner.Engine.Mobs;
 using Newtonsoft.Json;
 
 namespace MudDesigner.Engine.Environment
-{
+{ 
     public abstract class BaseZone : GameObject, IZone
     {
+        
         /// <summary>
         /// Realm that this Room resides within
         /// </summary>
-        [Browsable(false),JsonProperty(IsReference = true)]
-        public IRealm Realm { get; protected set; }
+        [Browsable(false),JsonProperty(ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
+        public IRealm Realm { get; set; }
+
+        //public Guid RealmId { get; set; }
 
         //Room Collection
         [Browsable(false), JsonProperty(TypeNameHandling = TypeNameHandling.All)]
@@ -26,16 +29,38 @@ namespace MudDesigner.Engine.Environment
 
         public bool Safe { get; set; }
 
-        public BaseZone(string name, IRealm realm) : base()
+        public BaseZone()
         {
             Rooms = new Dictionary<Guid, IRoom>();
-            Realm = realm;
+
+            Enabled = true;
+            
+        }
+
+        public BaseZone(string name)
+        {
+            Rooms = new Dictionary<Guid, IRoom>();
             Name = name;
 
             Enabled = true;
         }
 
-        public BaseZone(string name, Guid id, IRealm realm) : base(id)
+        public BaseZone(string name, IRealm realm) : base()
+        {
+            Rooms = new Dictionary<Guid, IRoom>();
+
+            if (realm != null)
+            {
+                Realm = realm;
+            }
+           
+            Name = name;
+
+            Enabled = true;
+        }
+
+        public BaseZone(string name, Guid id, IRealm realm)
+            : base(id)
         {
             Rooms = new Dictionary<Guid, IRoom>();
             Realm = realm;

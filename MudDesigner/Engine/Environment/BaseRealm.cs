@@ -20,6 +20,11 @@ namespace MudDesigner.Engine.Environment
         [Browsable(false),JsonProperty(TypeNameHandling = TypeNameHandling.All)]
         public Dictionary<Guid, IZone> Zones{ get; protected set; }
 
+        public BaseRealm()
+        {
+            
+        }
+
         public BaseRealm(string name) : base()
         {
             Zones = new Dictionary<Guid, IZone>();

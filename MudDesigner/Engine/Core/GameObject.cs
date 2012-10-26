@@ -9,7 +9,7 @@ using MudDesigner.Engine.Core;
 using Newtonsoft.Json;
 namespace MudDesigner.Engine.Core
 {
-    [JsonObject(IsReference = true)]
+//    [JsonObject(IsReference = true)]
     public class GameObject : IGameObject
     {
         [Browsable(false)]
