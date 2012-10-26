@@ -333,6 +333,7 @@ namespace MudDesigner.Engine.Scripting
             CompilerParameters param = new CompilerParameters(AssemblyReferences.ToArray());
             param.GenerateExecutable = false;
             param.GenerateInMemory = true;
+            param.OutputAssembly = "MudDesigner.Compiled.dll";
 
             //Left out, Add as CompileEngine properties in the future.
             //param.TreatWarningsAsErrors = true;

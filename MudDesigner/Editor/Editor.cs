@@ -40,7 +40,7 @@ namespace MudDesigner.Editor
         {
             //Compile the game scripts
             CompileEngine.AddAssemblyReference("MudDesigner.Engine.dll");
-            CompileEngine.AddAssemblyReference("Newtonsoft.Json.dll");
+
             foreach (string reference in MudDesigner.Engine.Properties.EngineSettings.Default.ScriptLibrary)
                 CompileEngine.AddAssemblyReference(Environment.CurrentDirectory + "\\" + reference);
 
