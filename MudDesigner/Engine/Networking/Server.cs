@@ -4,36 +4,46 @@ using System.ComponentModel;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+
 using MudDesigner.Engine.Networking;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Directors;
 using MudDesigner.Engine.Scripting;
  
-
 namespace MudDesigner.Engine.Networking
 {
     public class Server : IServer
     {
+        [Browsable(false)]
         public Socket Socket { get; private set; }
 
+        [Browsable(false)]
         public ServerStatus Status { get; private set; }
 
         public int Port { get; private set; }
 
+        [Browsable(false)]
         public ServerDirector ServerDirector { get; private set; }
 
+        [DisplayName("Maximum Connections")]
         public int MaxConnections {get; private set; }
 
+        [DisplayName("Maximum Queued Connections")]
         public int MaxQueuedConnections { get; private set; }
 
+        [Browsable(false)]
         public bool Enabled { get; private set; }
 
+        [DisplayName("Message of the Day")]
         public string MOTD { get; private set; }
 
+        [DisplayName("Server Owner")]
         public string ServerOwner { get; private set; }
 
+        [Browsable(false)]
         public IGame Game { get; protected set; }
 
+        [Browsable(false)]
         private Thread ServerThread { get; set; }
 
         public Server() : this(4000) { }
@@ -94,22 +104,28 @@ namespace MudDesigner.Engine.Networking
 
         public void Stop()
         {
-            ServerDirector.DisconnectAll();
-            ServerThread.Abort();
-            Socket.Close();
-            Socket = null;
-
-            Enabled = false;
             Status = ServerStatus.Stopped;
+            Enabled = false;
 
+            ServerDirector.DisconnectAll();
+            Socket.Close();
+            //Socket = null;
+
+            ServerThread.Abort();
         }
 
         public void Running()
         {
             while (Status == ServerStatus.Running)
             {
-                ServerDirector.AddConnection(Socket.Accept());
-
+                try
+                {
+                    ServerDirector.AddConnection(Socket.Accept());
+                }
+                catch
+                {
+                    //Swallow for now.
+                }
                 // Let's add the Auto-Save feature while the server is running. - MC
                 //TODO I removed this due to being hard-coded to a internal engine Type.
                 //If a developer creates a custom copy (as we will for our game as well) then the game won't ever have this called. - JS

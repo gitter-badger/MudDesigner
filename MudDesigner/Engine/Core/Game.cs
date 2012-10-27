@@ -1,5 +1,6 @@
 ﻿//Microsoft .NET Using statements.
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Collections.Generic;
 using System.Reflection;
@@ -24,6 +25,7 @@ namespace MudDesigner.Engine.Core
         /// TODO - Michael, please expand on this more - JS.
         /// TODO - I dont know if we need this, GameObjects shouldlive in the World not outside of it.... - MC 
         /// </summary>
+        [Browsable(false)]
         public Dictionary<Guid, IGameObject> GameObjects { get; private set; }
 
         /// <summary>
@@ -42,18 +44,44 @@ namespace MudDesigner.Engine.Core
         public string Version { get; set; }
 
         /// <summary>
+        /// Gets ors Sets the website for this game.
+        /// </summary>
+        public string Website { get; set; }
+
+        /// <summary>
+        /// Gets or Sets if the Rooms name will be displayed upon entering a room
+        /// </summary>
+        [DisplayName("Hide Room Names")]
+        public bool HideRoomNames { get; set; }
+
+        /// <summary>
+        /// Gets or Sets if the game should automatically save.
+        /// </summary>
+        [DisplayName("Auto-Save")]
+        public bool Autosave {get;set;}
+
+        /// <summary>
+        /// Gets or Sets the frequency that the game saves when Autosave=true
+        /// </summary>
+        [DisplayName("Save Frequency")]
+        public int SaveFrequency {get;set;}
+
+        /// <summary>
         /// Gets a reference to the game server
         /// </summary>
+        [Browsable(false)]
         public IServer Server { get; set; }
 
         /// <summary>
         /// Gets a reference to the game world
         /// </summary>
+        [Browsable(false)]
         public IWorld World { get; protected set; }
 
         /// <summary>
         /// Gets a the last time that the game was saved.
         /// </summary>
+        [Browsable(false)]
         public DateTime LastSave { get; private set; }
 
         public Game()
@@ -89,13 +117,7 @@ namespace MudDesigner.Engine.Core
 
             if (startedServer != null)
             {
-
                 Server = startedServer;
-                //A server was provided, ensure it's started.
-                if (!Server.Enabled)
-                {
-                    Server.Start(Server.MaxConnections, Server.MaxQueuedConnections, this);
-                }
             }
             else
             {
@@ -155,14 +177,12 @@ namespace MudDesigner.Engine.Core
                 var gameLoad = br.ReadString();
 
                 World = JsonConvert.DeserializeObject<World>(gameLoad, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All, PreserveReferencesHandling = PreserveReferencesHandling.Objects });
-
             }
         }
 
         // This 
         public void Save()
         {
-             
             LastSave = DateTime.Now;
 
             var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(), "saves",

@@ -12,14 +12,22 @@ namespace MudDesigner.Engine.Core
         string Name { get; set; }
         string Description { get; set; }
         string Version { get; set; }
+        string Website { get; set; }
+
+        bool HideRoomNames { get; set; }
+        bool Autosave { get; set; }
+        int SaveFrequency { get; set; }
 
         Dictionary<Guid, IGameObject> GameObjects { get; }
         DateTime LastSave { get; }
 
         IWorld World { get; }
-
+        IServer Server { get; set; }
         bool Initialize(IServer startedServer);
         void Start();
         void Stop();
+
+        void Load();
+        void Save();
     }
 }

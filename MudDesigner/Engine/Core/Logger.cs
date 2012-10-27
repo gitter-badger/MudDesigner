@@ -33,6 +33,28 @@ namespace MudDesigner.Engine.Core
         /// </summary>
         public static Boolean ConsoleOutPut { get; set; }
 
+        public static bool CacheContent { get; set; }
+
+        public static List<string> Cache
+        {
+            get
+            {
+                if (_Cache == null)
+                    _Cache = new List<string>();
+
+                return _Cache;
+            }
+            set
+            {
+                if (_Cache == null)
+                    _Cache = new List<string>();
+
+                _Cache = value;
+            }
+        }
+
+        public static List<string> _Cache;
+
         /// <summary>
         /// Clears the queued log messages from cache
         /// </summary>
@@ -46,8 +68,8 @@ namespace MudDesigner.Engine.Core
                 System.IO.File.Delete(LogFilename);
 
             //Clear the cache.
-            if (_Messages != null)
-                _Messages.Clear();
+            if (Cache != null)
+                Cache.Clear();
         }
 
         public static void WriteLine(String message, Importance importance = Importance.Information)
@@ -61,8 +83,8 @@ namespace MudDesigner.Engine.Core
                 LogFilename = "Engine.Log";
 
             //Ensure that the log messages cache is not null
-            if (_Messages == null)
-                _Messages = new List<string>();
+            if (Cache == null)
+                Cache = new List<string>();
 
             //Get the current time and format it
             String Time = DateTime.Now.ToString("h:mm:ss:ff tt");
@@ -71,6 +93,9 @@ namespace MudDesigner.Engine.Core
             if (ConsoleOutPut)
                 Console.WriteLine(Time + ": " + message);
 
+            if (CacheContent)
+                Cache.Add(Time + ": " + message);
+
             //Try to write the message to the log file.
             try
             {
@@ -78,8 +103,6 @@ namespace MudDesigner.Engine.Core
                 {
                     //Write the message to file
                     file.WriteLine(Time + ": " + message);
-                    //Add it to the messages cache.
-                    _Messages.Add(Time + ": " + message);
                 }
             }
             catch
@@ -94,12 +117,7 @@ namespace MudDesigner.Engine.Core
         /// <returns></returns>
         public static String[] GetMessages()
         {
-            if (_Messages == null)
-                return new string[0];
-            else
-                return _Messages.ToArray();
+            return Cache.ToArray();
         }
-
-        private static List<String> _Messages;
     }
 }

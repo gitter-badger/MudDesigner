@@ -42,7 +42,7 @@ namespace MudDesigner.Editor
             CompileEngine.AddAssemblyReference("MudDesigner.Engine.dll");
 
             foreach (string reference in MudDesigner.Engine.Properties.EngineSettings.Default.ScriptLibrary)
-                CompileEngine.AddAssemblyReference(Environment.CurrentDirectory + "\\" + reference);
+                CompileEngine.AddAssemblyReference(System.Environment.CurrentDirectory + "\\" + reference);
 
             CompileEngine.Compile(MudDesigner.Engine.Properties.EngineSettings.Default.ScriptsPath);
 
@@ -55,7 +55,7 @@ namespace MudDesigner.Editor
             Assembly assem = null;
             if (File.Exists("MudDesigner.Engine.dll"))
             {
-                assem = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, "MudDesigner.Engine.dll"));
+                assem = Assembly.LoadFile(Path.Combine(System.Environment.CurrentDirectory, "MudDesigner.Engine.dll"));
                 ScriptFactory.AddAssembly(assem);
             }
             else
@@ -66,7 +66,7 @@ namespace MudDesigner.Editor
 
             if (File.Exists("MudDesigner.Scripts.dll"))
             {
-                assem = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, "MudDesigner.Scripts.dll"));
+                assem = Assembly.LoadFile(Path.Combine(System.Environment.CurrentDirectory, "MudDesigner.Scripts.dll"));
                 ScriptFactory.AddAssembly(assem);
             }
 
@@ -182,6 +182,8 @@ namespace MudDesigner.Editor
                     }
                     objectProperties_SelectedObjectsChanged(null, null);
                 }
+
+                lblSaveStatus.Text = "Not Saved.";
             }
 
             //Save the game.
@@ -197,6 +199,7 @@ namespace MudDesigner.Editor
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             game.Save();
+            lblSaveStatus.Text = "Saved";
         }
 
         /// <summary>
@@ -308,37 +311,6 @@ namespace MudDesigner.Editor
         /// <param name="e"></param>
         private void newRealmToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //We need to make sure we never have a duplicate name.
-            int value = 1;
-            string newName = "New Realm" + value;
-            bool validName = false;
-
-            while (!validName)
-            {
-                //In the event this is the first Realm.
-                //Prevents infinit loop
-                if (game.World.Realms.Count == 0)
-                    validName = true;
-
-                foreach (var r in game.World.Realms)
-                {
-                    if(r.Value.Name == newName )
-                    {
-                        value++;
-                        newName = "New Realm" + value;
-                    }
-                    else
-                    {
-                        validName = true;
-                    }
-                }
-            }
-
-            BaseRealm realm = (BaseRealm)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.RealmType, newName);
-            game.World.AddRealm(realm);
-
-            AvailableRealms.Items.Add(realm.Name);
-            AvailableRealms.SelectedItem = realm.Name;
 
             if (GameExplorer.SelectedTab.Text != "Environment")
                 GameExplorer.SelectedIndex = 0; //"Environment"
@@ -670,6 +642,11 @@ namespace MudDesigner.Editor
             {
                 AvailableRealms.Items.Add(r.Name);
             }
+        }
+
+        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
