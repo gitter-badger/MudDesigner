@@ -12,7 +12,7 @@ using MudDesigner.Editor;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Scripting;
 
-namespace MudDesigner.Editor.Environment
+namespace MudDesigner.Editor
 {
     public partial class frmRealms : Form
     {
@@ -64,6 +64,12 @@ namespace MudDesigner.Editor.Environment
             }
 
             IRealm realm = (IRealm)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.RealmType, null);
+
+            if (realm == null)
+            {
+                MessageBox.Show("There are currently no Realm scripts that exist.  Please create a script that inherits from MudDesigner.Engine.Environments.BaseRealm", "Mud Designer Editor : Realms", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             realm.Name = newName;
             EngineEditor.Game.World.AddRealm(realm);
 
@@ -90,6 +96,12 @@ namespace MudDesigner.Editor.Environment
             foreach (IRealm realm in EngineEditor.Game.World.Realms.Values)
             {
                 realmsLstExistingRealms.Items.Add(realm.Name);
+            }
+
+            if (EngineEditor.CurrentRealm != null)
+            {
+                if (realmsLstExistingRealms.Items.Contains(EngineEditor.CurrentRealm.Name))
+                    realmsLstExistingRealms.SelectedItem = EngineEditor.CurrentRealm.Name;
             }
         }
     }

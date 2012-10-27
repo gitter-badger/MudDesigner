@@ -106,8 +106,10 @@ namespace MudDesigner.Editor
                     mainTxtServerInfo.Text += "\n======== Server Stopped ========\n\n";
                     EngineEditor.Game.Server.Stop();
                     menuStartStopServer.Text = "Start Server";
+                    timerLogger.Enabled = false;
                     break;
                 case false:
+                    timerLogger.Enabled = true;
                     mainTxtServerInfo.Text += "======== Server Starting ========\n\n";
                     var server = EngineEditor.Game.Server;
                     server.Start(server.MaxConnections, server.MaxQueuedConnections, server.Game);
@@ -118,7 +120,7 @@ namespace MudDesigner.Editor
 
         private void menuRealms_Click(object sender, EventArgs e)
         {
-            Environment.frmRealms realms = new Environment.frmRealms();
+            frmRealms realms = new frmRealms();
 
             realms.ShowDialog();
             while (realms.Visible)
@@ -126,6 +128,23 @@ namespace MudDesigner.Editor
                 Application.DoEvents();
             }
             realms = null;
+        }
+
+        private void menuZones_Click(object sender, EventArgs e)
+        {
+            frmZones zones = new frmZones();
+            zones.ShowDialog();
+
+            while (zones.Visible)
+            {
+                Application.DoEvents();
+            }
+            zones = null;
+        }
+
+        private void menuSave_Click(object sender, EventArgs e)
+        {
+            EngineEditor.Game.Save();
         }
     }
 }

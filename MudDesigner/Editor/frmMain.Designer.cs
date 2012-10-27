@@ -31,17 +31,9 @@
             this.components = new System.ComponentModel.Container();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.menuFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblProjectName = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.mainPropertyGame = new System.Windows.Forms.PropertyGrid();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.mainPropertyServer = new System.Windows.Forms.PropertyGrid();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.mainTxtServerInfo = new System.Windows.Forms.RichTextBox();
-            this.timerLogger = new System.Windows.Forms.Timer(this.components);
             this.menuSave = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripFileSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuGame = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStartStopServer = new System.Windows.Forms.ToolStripMenuItem();
             this.menuWorld = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,6 +43,14 @@
             this.menuRooms = new System.Windows.Forms.ToolStripMenuItem();
             this.menuGameObjects = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItems = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblProjectName = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.mainPropertyGame = new System.Windows.Forms.PropertyGrid();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.mainPropertyServer = new System.Windows.Forms.PropertyGrid();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.mainTxtServerInfo = new System.Windows.Forms.RichTextBox();
+            this.timerLogger = new System.Windows.Forms.Timer(this.components);
             this.mainMenuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -82,6 +82,22 @@
             this.menuFile.Size = new System.Drawing.Size(37, 20);
             this.menuFile.Text = "File";
             // 
+            // menuSave
+            // 
+            this.menuSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.menuSave.ForeColor = System.Drawing.Color.White;
+            this.menuSave.Name = "menuSave";
+            this.menuSave.Size = new System.Drawing.Size(152, 22);
+            this.menuSave.Text = "Save";
+            this.menuSave.Click += new System.EventHandler(this.menuSave_Click);
+            // 
+            // toolStripFileSeparator
+            // 
+            this.toolStripFileSeparator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.toolStripFileSeparator.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
+            this.toolStripFileSeparator.Name = "toolStripFileSeparator";
+            this.toolStripFileSeparator.Size = new System.Drawing.Size(149, 6);
+            // 
             // menuExit
             // 
             this.menuExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
@@ -90,6 +106,91 @@
             this.menuExit.Size = new System.Drawing.Size(152, 22);
             this.menuExit.Text = "Exit";
             this.menuExit.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // menuGame
+            // 
+            this.menuGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.menuGame.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuStartStopServer});
+            this.menuGame.ForeColor = System.Drawing.Color.White;
+            this.menuGame.Name = "menuGame";
+            this.menuGame.Size = new System.Drawing.Size(50, 20);
+            this.menuGame.Text = "Game";
+            // 
+            // menuStartStopServer
+            // 
+            this.menuStartStopServer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.menuStartStopServer.ForeColor = System.Drawing.Color.White;
+            this.menuStartStopServer.Name = "menuStartStopServer";
+            this.menuStartStopServer.Size = new System.Drawing.Size(133, 22);
+            this.menuStartStopServer.Text = "Start Server";
+            this.menuStartStopServer.Click += new System.EventHandler(this.menuStartStopServer_Click);
+            // 
+            // menuWorld
+            // 
+            this.menuWorld.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuEnvironment,
+            this.menuGameObjects});
+            this.menuWorld.ForeColor = System.Drawing.Color.White;
+            this.menuWorld.Name = "menuWorld";
+            this.menuWorld.Size = new System.Drawing.Size(51, 20);
+            this.menuWorld.Text = "World";
+            // 
+            // menuEnvironment
+            // 
+            this.menuEnvironment.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.menuEnvironment.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuRealms,
+            this.menuZones,
+            this.menuRooms});
+            this.menuEnvironment.ForeColor = System.Drawing.Color.White;
+            this.menuEnvironment.Name = "menuEnvironment";
+            this.menuEnvironment.Size = new System.Drawing.Size(148, 22);
+            this.menuEnvironment.Text = "Environments";
+            // 
+            // menuRealms
+            // 
+            this.menuRealms.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.menuRealms.ForeColor = System.Drawing.Color.White;
+            this.menuRealms.Name = "menuRealms";
+            this.menuRealms.Size = new System.Drawing.Size(112, 22);
+            this.menuRealms.Text = "Realms";
+            this.menuRealms.Click += new System.EventHandler(this.menuRealms_Click);
+            // 
+            // menuZones
+            // 
+            this.menuZones.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.menuZones.ForeColor = System.Drawing.Color.White;
+            this.menuZones.Name = "menuZones";
+            this.menuZones.Size = new System.Drawing.Size(112, 22);
+            this.menuZones.Text = "Zones";
+            this.menuZones.Click += new System.EventHandler(this.menuZones_Click);
+            // 
+            // menuRooms
+            // 
+            this.menuRooms.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.menuRooms.ForeColor = System.Drawing.Color.White;
+            this.menuRooms.Name = "menuRooms";
+            this.menuRooms.Size = new System.Drawing.Size(112, 22);
+            this.menuRooms.Text = "Rooms";
+            // 
+            // menuGameObjects
+            // 
+            this.menuGameObjects.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.menuGameObjects.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItems});
+            this.menuGameObjects.ForeColor = System.Drawing.Color.White;
+            this.menuGameObjects.Name = "menuGameObjects";
+            this.menuGameObjects.Size = new System.Drawing.Size(148, 22);
+            this.menuGameObjects.Text = "Game Objects";
+            // 
+            // menuItems
+            // 
+            this.menuItems.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.menuItems.ForeColor = System.Drawing.Color.White;
+            this.menuItems.Name = "menuItems";
+            this.menuItems.Size = new System.Drawing.Size(103, 22);
+            this.menuItems.Text = "Items";
             // 
             // lblProjectName
             // 
@@ -191,107 +292,7 @@
             // 
             // timerLogger
             // 
-            this.timerLogger.Enabled = true;
             this.timerLogger.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // menuSave
-            // 
-            this.menuSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.menuSave.ForeColor = System.Drawing.Color.White;
-            this.menuSave.Name = "menuSave";
-            this.menuSave.Size = new System.Drawing.Size(152, 22);
-            this.menuSave.Text = "Save";
-            // 
-            // toolStripFileSeparator
-            // 
-            this.toolStripFileSeparator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.toolStripFileSeparator.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
-            this.toolStripFileSeparator.Name = "toolStripFileSeparator";
-            this.toolStripFileSeparator.Size = new System.Drawing.Size(149, 6);
-            // 
-            // menuGame
-            // 
-            this.menuGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.menuGame.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuStartStopServer});
-            this.menuGame.ForeColor = System.Drawing.Color.White;
-            this.menuGame.Name = "menuGame";
-            this.menuGame.Size = new System.Drawing.Size(50, 20);
-            this.menuGame.Text = "Game";
-            // 
-            // menuStartStopServer
-            // 
-            this.menuStartStopServer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.menuStartStopServer.ForeColor = System.Drawing.Color.White;
-            this.menuStartStopServer.Name = "menuStartStopServer";
-            this.menuStartStopServer.Size = new System.Drawing.Size(152, 22);
-            this.menuStartStopServer.Text = "Start Server";
-            this.menuStartStopServer.Click += new System.EventHandler(this.menuStartStopServer_Click);
-            // 
-            // menuWorld
-            // 
-            this.menuWorld.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuEnvironment,
-            this.menuGameObjects});
-            this.menuWorld.ForeColor = System.Drawing.Color.White;
-            this.menuWorld.Name = "menuWorld";
-            this.menuWorld.Size = new System.Drawing.Size(51, 20);
-            this.menuWorld.Text = "World";
-            // 
-            // menuEnvironment
-            // 
-            this.menuEnvironment.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.menuEnvironment.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuRealms,
-            this.menuZones,
-            this.menuRooms});
-            this.menuEnvironment.ForeColor = System.Drawing.Color.White;
-            this.menuEnvironment.Name = "menuEnvironment";
-            this.menuEnvironment.Size = new System.Drawing.Size(152, 22);
-            this.menuEnvironment.Text = "Environments";
-            // 
-            // menuRealms
-            // 
-            this.menuRealms.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.menuRealms.ForeColor = System.Drawing.Color.White;
-            this.menuRealms.Name = "menuRealms";
-            this.menuRealms.Size = new System.Drawing.Size(152, 22);
-            this.menuRealms.Text = "Realms";
-            this.menuRealms.Click += new System.EventHandler(this.menuRealms_Click);
-            // 
-            // menuZones
-            // 
-            this.menuZones.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.menuZones.ForeColor = System.Drawing.Color.White;
-            this.menuZones.Name = "menuZones";
-            this.menuZones.Size = new System.Drawing.Size(152, 22);
-            this.menuZones.Text = "Zones";
-            // 
-            // menuRooms
-            // 
-            this.menuRooms.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.menuRooms.ForeColor = System.Drawing.Color.White;
-            this.menuRooms.Name = "menuRooms";
-            this.menuRooms.Size = new System.Drawing.Size(152, 22);
-            this.menuRooms.Text = "Rooms";
-            // 
-            // menuGameObjects
-            // 
-            this.menuGameObjects.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.menuGameObjects.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItems});
-            this.menuGameObjects.ForeColor = System.Drawing.Color.White;
-            this.menuGameObjects.Name = "menuGameObjects";
-            this.menuGameObjects.Size = new System.Drawing.Size(152, 22);
-            this.menuGameObjects.Text = "Game Objects";
-            // 
-            // menuItems
-            // 
-            this.menuItems.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.menuItems.ForeColor = System.Drawing.Color.White;
-            this.menuItems.Name = "menuItems";
-            this.menuItems.Size = new System.Drawing.Size(152, 22);
-            this.menuItems.Text = "Items";
             // 
             // frmMain
             // 

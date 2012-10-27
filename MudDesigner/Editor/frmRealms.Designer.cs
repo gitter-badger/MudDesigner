@@ -1,4 +1,4 @@
-﻿namespace MudDesigner.Editor.Environment
+﻿namespace MudDesigner.Editor
 {
     partial class frmRealms
     {

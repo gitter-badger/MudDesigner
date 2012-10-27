@@ -22,7 +22,7 @@ namespace MudDesigner.Engine.Environment
 
         public BaseRealm()
         {
-            
+            Zones = new Dictionary<Guid, IZone>();
         }
 
         public BaseRealm(string name) : base()

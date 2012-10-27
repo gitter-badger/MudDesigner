@@ -55,10 +55,10 @@
       <DependentUpon>Editor.cs</DependentUpon>
     </Compile>
     <Compile Include="EngineEditor.cs" />
-    <Compile Include="Environment\frmRealms.cs">
+    <Compile Include="frmRealms.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Environment\frmRealms.Designer.cs">
+    <Compile Include="frmRealms.Designer.cs">
       <DependentUpon>frmRealms.cs</DependentUpon>
     </Compile>
     <Compile Include="frmMain.cs">
@@ -67,16 +67,25 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmZones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmZones.Designer.cs">
+      <DependentUpon>frmZones.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Editor.resx">
       <DependentUpon>Editor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Environment\frmRealms.resx">
+    <EmbeddedResource Include="frmRealms.resx">
       <DependentUpon>frmRealms.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmZones.resx">
+      <DependentUpon>frmZones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -105,6 +114,9 @@
       <Project>{9d9e8cac-8876-4725-9a65-2077de4322dd}</Project>
       <Name>MudDesigner.Engine</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Environment\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
