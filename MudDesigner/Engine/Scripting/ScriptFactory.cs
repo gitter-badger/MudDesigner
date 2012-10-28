@@ -86,7 +86,7 @@ namespace MudDesigner.Engine.Scripting
             return script;
         }
 
-        public static Object FindInheritedScripted(String baseScript, params Object[] arguments)
+        public static Object FindInheritedScript(string baseScript, params Object[] arguments)
         {
             Type script = null;
             Boolean foundScript = false;

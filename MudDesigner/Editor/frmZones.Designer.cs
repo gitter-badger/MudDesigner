@@ -32,19 +32,21 @@
             this.zonesBtnChangeRealm = new System.Windows.Forms.Button();
             this.zonessBtnDeleteZone = new System.Windows.Forms.Button();
             this.zonesBtnAddZone = new System.Windows.Forms.Button();
-            this.zonesLstExistingZones = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.zoneProperties = new System.Windows.Forms.PropertyGrid();
+            this.zonesGrpZones = new System.Windows.Forms.GroupBox();
+            this.zonesLstExistingZones = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.zonesGrpZones.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.zonesGrpZones);
             this.groupBox1.Controls.Add(this.zonesBtnChangeRealm);
             this.groupBox1.Controls.Add(this.zonessBtnDeleteZone);
             this.groupBox1.Controls.Add(this.zonesBtnAddZone);
-            this.groupBox1.Controls.Add(this.zonesLstExistingZones);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBox1.ForeColor = System.Drawing.Color.White;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
@@ -87,19 +89,6 @@
             this.zonesBtnAddZone.UseVisualStyleBackColor = true;
             this.zonesBtnAddZone.Click += new System.EventHandler(this.zonesBtnAddZone_Click);
             // 
-            // zonesLstExistingZones
-            // 
-            this.zonesLstExistingZones.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.zonesLstExistingZones.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.zonesLstExistingZones.ForeColor = System.Drawing.Color.White;
-            this.zonesLstExistingZones.FormattingEnabled = true;
-            this.zonesLstExistingZones.Location = new System.Drawing.Point(3, 103);
-            this.zonesLstExistingZones.Name = "zonesLstExistingZones";
-            this.zonesLstExistingZones.Size = new System.Drawing.Size(248, 407);
-            this.zonesLstExistingZones.Sorted = true;
-            this.zonesLstExistingZones.TabIndex = 0;
-            this.zonesLstExistingZones.SelectedIndexChanged += new System.EventHandler(this.zonesLstExistingZones_SelectedIndexChanged);
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.zoneProperties);
@@ -132,6 +121,32 @@
             this.zoneProperties.TabIndex = 1;
             this.zoneProperties.ViewBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.zoneProperties.ViewForeColor = System.Drawing.Color.White;
+            this.zoneProperties.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.zoneProperties_PropertyValueChanged);
+            // 
+            // zonesGrpZones
+            // 
+            this.zonesGrpZones.Controls.Add(this.zonesLstExistingZones);
+            this.zonesGrpZones.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.zonesGrpZones.ForeColor = System.Drawing.Color.White;
+            this.zonesGrpZones.Location = new System.Drawing.Point(3, 95);
+            this.zonesGrpZones.Name = "zonesGrpZones";
+            this.zonesGrpZones.Size = new System.Drawing.Size(248, 415);
+            this.zonesGrpZones.TabIndex = 4;
+            this.zonesGrpZones.TabStop = false;
+            this.zonesGrpZones.Text = "No Realm loaded.";
+            // 
+            // zonesLstExistingZones
+            // 
+            this.zonesLstExistingZones.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.zonesLstExistingZones.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.zonesLstExistingZones.ForeColor = System.Drawing.Color.White;
+            this.zonesLstExistingZones.FormattingEnabled = true;
+            this.zonesLstExistingZones.Location = new System.Drawing.Point(3, 18);
+            this.zonesLstExistingZones.Name = "zonesLstExistingZones";
+            this.zonesLstExistingZones.Size = new System.Drawing.Size(242, 394);
+            this.zonesLstExistingZones.Sorted = true;
+            this.zonesLstExistingZones.TabIndex = 1;
+            this.zonesLstExistingZones.SelectedIndexChanged += new System.EventHandler(this.zonesLstExistingZones_SelectedIndexChanged);
             // 
             // frmZones
             // 
@@ -151,6 +166,7 @@
             this.Load += new System.EventHandler(this.frmZones_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
+            this.zonesGrpZones.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -161,8 +177,9 @@
         private System.Windows.Forms.Button zonesBtnChangeRealm;
         private System.Windows.Forms.Button zonessBtnDeleteZone;
         private System.Windows.Forms.Button zonesBtnAddZone;
-        private System.Windows.Forms.ListBox zonesLstExistingZones;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.PropertyGrid zoneProperties;
+        private System.Windows.Forms.GroupBox zonesGrpZones;
+        private System.Windows.Forms.ListBox zonesLstExistingZones;
     }
 }

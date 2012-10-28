@@ -16,6 +16,8 @@ namespace MudDesigner.Editor
 {
     public partial class frmRealms : Form
     {
+        internal bool ChangingRealm { get; set; }
+
         public frmRealms()
         {
             InitializeComponent();
@@ -102,6 +104,23 @@ namespace MudDesigner.Editor
             {
                 if (realmsLstExistingRealms.Items.Contains(EngineEditor.CurrentRealm.Name))
                     realmsLstExistingRealms.SelectedItem = EngineEditor.CurrentRealm.Name;
+            }
+        }
+
+        private void realmsLstExistingRealms_DoubleClick(object sender, EventArgs e)
+        {
+            if (ChangingRealm)
+            {
+                realmsLstExistingRealms_SelectedIndexChanged(sender, e);
+                this.Close();
+            }
+        }
+
+        private void realmsProperties_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            if (e.ChangedItem.Label == "Name")
+            {
+                realmsLstExistingRealms.Items[realmsLstExistingRealms.Items.IndexOf(e.OldValue)] = EngineEditor.CurrentRealm.Name;
             }
         }
     }

@@ -62,7 +62,7 @@ namespace MudDesigner.Editor
             }
 
             //Get a reference to a scripted instance of IGame.
-            var game = (IGame)ScriptFactory.FindInheritedScripted("MudDesigner.Engine.Core.Game", null);
+            var game = (IGame)ScriptFactory.FindInheritedScript("MudDesigner.Engine.Core.Game", null);
             
             IServer server = new Server(4000);
             
@@ -76,6 +76,8 @@ namespace MudDesigner.Editor
 
             mainPropertyGame.SelectedObject = EngineEditor.Game;
             mainPropertyServer.SelectedObject = EngineEditor.Game.Server;
+
+            lblProjectName.Text = EngineEditor.Game.Name;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -145,6 +147,24 @@ namespace MudDesigner.Editor
         private void menuSave_Click(object sender, EventArgs e)
         {
             EngineEditor.Game.Save();
+        }
+
+        private void menuRooms_Click(object sender, EventArgs e)
+        {
+            Rooms.frmRooms rooms = new Rooms.frmRooms();
+            rooms.ShowDialog();
+
+            while (rooms.Visible)
+                Application.DoEvents();
+            rooms = null;
+        }
+
+        private void mainPropertyGame_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            if (e.ChangedItem.Label == "Name")
+            {
+                lblProjectName.Text = EngineEditor.Game.Name;
+            }
         }
     }
 }

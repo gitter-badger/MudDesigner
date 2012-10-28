@@ -84,6 +84,7 @@ namespace MudDesigner.Engine.Environment
                 }
             }
 
+            room.Zone = this;
             Rooms.Add(room.ID, room);
         }
 

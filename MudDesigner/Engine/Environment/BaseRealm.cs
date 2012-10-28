@@ -54,6 +54,7 @@ namespace MudDesigner.Engine.Environment
                 }
             }
 
+            zone.Realm = this;
             Zones.Add(zone.ID, zone);
         }
 

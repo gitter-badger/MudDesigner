@@ -16,6 +16,8 @@ namespace MudDesigner.Editor
 {
     public partial class frmZones : Form
     {
+        internal bool ChangingZone { get; set; }
+
         public frmZones()
         {
             InitializeComponent();
@@ -36,6 +38,7 @@ namespace MudDesigner.Editor
                     else
                     {
                         frmRealms realms = new frmRealms();
+                        realms.ChangingRealm = true;
                         realms.ShowDialog();
                         while (realms.Visible)
                         {
@@ -107,6 +110,7 @@ namespace MudDesigner.Editor
         private void zonesBtnChangeRealm_Click(object sender, EventArgs e)
         {
             frmRealms realms = new frmRealms();
+            realms.ChangingRealm = true;
             realms.ShowDialog();
             while (realms.Visible)
             {
@@ -116,6 +120,9 @@ namespace MudDesigner.Editor
 
             if (EngineEditor.CurrentRealm == null)
                 return;
+            else
+                zonesGrpZones.Text = "Zones within the " + EngineEditor.CurrentRealm.Name + " realm.";
+
 
             zonesLstExistingZones.Items.Clear();
 
@@ -146,10 +153,29 @@ namespace MudDesigner.Editor
                 MessageBox.Show("You will not be able to create or edit any Zones until you load a Realm.  You may Load a Realm from within the Zone editor or use the Realm editor.", "Mud Designer Editor : Zones", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            else
+                zonesGrpZones.Text = "Zones within the " + EngineEditor.CurrentRealm.Name + " realm.";
 
             foreach (IZone zone in EngineEditor.CurrentRealm.Zones.Values)
             {
                 zonesLstExistingZones.Items.Add(zone.Name);
+            }
+        }
+
+        private void zonesLstExistingZones_DoubleClick(object sender, EventArgs e)
+        {
+            if (ChangingZone)
+            {
+                zonesLstExistingZones_SelectedIndexChanged(sender, e);
+                this.Close();
+            }
+        }
+
+        private void zoneProperties_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            if (e.ChangedItem.Label == "Name")
+            {
+                zonesLstExistingZones.Items[zonesLstExistingZones.Items.IndexOf(e.OldValue)] = EngineEditor.CurrentZone.Name;
             }
         }
     }

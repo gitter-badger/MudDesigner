@@ -87,7 +87,7 @@
             this.menuSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.menuSave.ForeColor = System.Drawing.Color.White;
             this.menuSave.Name = "menuSave";
-            this.menuSave.Size = new System.Drawing.Size(152, 22);
+            this.menuSave.Size = new System.Drawing.Size(98, 22);
             this.menuSave.Text = "Save";
             this.menuSave.Click += new System.EventHandler(this.menuSave_Click);
             // 
@@ -96,14 +96,14 @@
             this.toolStripFileSeparator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.toolStripFileSeparator.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
             this.toolStripFileSeparator.Name = "toolStripFileSeparator";
-            this.toolStripFileSeparator.Size = new System.Drawing.Size(149, 6);
+            this.toolStripFileSeparator.Size = new System.Drawing.Size(95, 6);
             // 
             // menuExit
             // 
             this.menuExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.menuExit.ForeColor = System.Drawing.Color.White;
             this.menuExit.Name = "menuExit";
-            this.menuExit.Size = new System.Drawing.Size(152, 22);
+            this.menuExit.Size = new System.Drawing.Size(98, 22);
             this.menuExit.Text = "Exit";
             this.menuExit.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -173,6 +173,7 @@
             this.menuRooms.Name = "menuRooms";
             this.menuRooms.Size = new System.Drawing.Size(112, 22);
             this.menuRooms.Text = "Rooms";
+            this.menuRooms.Click += new System.EventHandler(this.menuRooms_Click);
             // 
             // menuGameObjects
             // 
@@ -236,6 +237,7 @@
             this.mainPropertyGame.ToolbarVisible = false;
             this.mainPropertyGame.ViewBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.mainPropertyGame.ViewForeColor = System.Drawing.Color.White;
+            this.mainPropertyGame.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.mainPropertyGame_PropertyValueChanged);
             // 
             // groupBox2
             // 

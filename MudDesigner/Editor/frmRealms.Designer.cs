@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.realmsLstExistingRealms = new System.Windows.Forms.ListBox();
-            this.realmsBtnAddRealm = new System.Windows.Forms.Button();
             this.realmsBtnDeleteRealm = new System.Windows.Forms.Button();
+            this.realmsBtnAddRealm = new System.Windows.Forms.Button();
+            this.realmsLstExistingRealms = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.realmsProperties = new System.Windows.Forms.PropertyGrid();
             this.groupBox1.SuspendLayout();
@@ -52,18 +52,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Existing Realms";
             // 
-            // realmsLstExistingRealms
+            // realmsBtnDeleteRealm
             // 
-            this.realmsLstExistingRealms.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.realmsLstExistingRealms.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.realmsLstExistingRealms.ForeColor = System.Drawing.Color.White;
-            this.realmsLstExistingRealms.FormattingEnabled = true;
-            this.realmsLstExistingRealms.Location = new System.Drawing.Point(3, 65);
-            this.realmsLstExistingRealms.Name = "realmsLstExistingRealms";
-            this.realmsLstExistingRealms.Size = new System.Drawing.Size(248, 342);
-            this.realmsLstExistingRealms.Sorted = true;
-            this.realmsLstExistingRealms.TabIndex = 0;
-            this.realmsLstExistingRealms.SelectedIndexChanged += new System.EventHandler(this.realmsLstExistingRealms_SelectedIndexChanged);
+            this.realmsBtnDeleteRealm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.realmsBtnDeleteRealm.Location = new System.Drawing.Point(133, 19);
+            this.realmsBtnDeleteRealm.Name = "realmsBtnDeleteRealm";
+            this.realmsBtnDeleteRealm.Size = new System.Drawing.Size(115, 32);
+            this.realmsBtnDeleteRealm.TabIndex = 2;
+            this.realmsBtnDeleteRealm.Text = "Delete Realm";
+            this.realmsBtnDeleteRealm.UseVisualStyleBackColor = true;
+            this.realmsBtnDeleteRealm.Click += new System.EventHandler(this.realmsBtnDeleteRealm_Click);
             // 
             // realmsBtnAddRealm
             // 
@@ -76,16 +74,19 @@
             this.realmsBtnAddRealm.UseVisualStyleBackColor = true;
             this.realmsBtnAddRealm.Click += new System.EventHandler(this.realmsBtnAddRealm_Click);
             // 
-            // realmsBtnDeleteRealm
+            // realmsLstExistingRealms
             // 
-            this.realmsBtnDeleteRealm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.realmsBtnDeleteRealm.Location = new System.Drawing.Point(133, 19);
-            this.realmsBtnDeleteRealm.Name = "realmsBtnDeleteRealm";
-            this.realmsBtnDeleteRealm.Size = new System.Drawing.Size(115, 32);
-            this.realmsBtnDeleteRealm.TabIndex = 2;
-            this.realmsBtnDeleteRealm.Text = "Delete Realm";
-            this.realmsBtnDeleteRealm.UseVisualStyleBackColor = true;
-            this.realmsBtnDeleteRealm.Click += new System.EventHandler(this.realmsBtnDeleteRealm_Click);
+            this.realmsLstExistingRealms.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.realmsLstExistingRealms.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.realmsLstExistingRealms.ForeColor = System.Drawing.Color.White;
+            this.realmsLstExistingRealms.FormattingEnabled = true;
+            this.realmsLstExistingRealms.Location = new System.Drawing.Point(3, 65);
+            this.realmsLstExistingRealms.Name = "realmsLstExistingRealms";
+            this.realmsLstExistingRealms.Size = new System.Drawing.Size(248, 342);
+            this.realmsLstExistingRealms.Sorted = true;
+            this.realmsLstExistingRealms.TabIndex = 0;
+            this.realmsLstExistingRealms.SelectedIndexChanged += new System.EventHandler(this.realmsLstExistingRealms_SelectedIndexChanged);
+            this.realmsLstExistingRealms.DoubleClick += new System.EventHandler(this.realmsLstExistingRealms_DoubleClick);
             // 
             // groupBox2
             // 
@@ -119,6 +120,7 @@
             this.realmsProperties.TabIndex = 1;
             this.realmsProperties.ViewBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.realmsProperties.ViewForeColor = System.Drawing.Color.White;
+            this.realmsProperties.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.realmsProperties_PropertyValueChanged);
             // 
             // frmRealms
             // 

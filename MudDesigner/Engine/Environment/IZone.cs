@@ -12,7 +12,7 @@ namespace MudDesigner.Engine.Environment
     public interface IZone : IEnvironment
     {
         [JsonProperty(ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
-        IRealm Realm { get; }
+        IRealm Realm { get; set; }
 
         [JsonProperty(TypeNameHandling = TypeNameHandling.All)]
         Dictionary<Guid, IRoom> Rooms { get; }
@@ -21,8 +21,8 @@ namespace MudDesigner.Engine.Environment
         //Helps you not having to insert Monsters into every room you make
         //List<IMonster> Monsters {get;}
 
-        void AddRoom(IRoom room, bool forceOverwrite);
-        void AddRooms(IRoom[] rooms, bool forceOverwrite);
+        void AddRoom(IRoom room, bool forceOverwrite = false);
+        void AddRooms(IRoom[] rooms, bool forceOverwrite = false);
         IRoom GetRoom(string roomName);
         void RemoveRoom(IRoom room);
         void RemoveRoom(Guid id);

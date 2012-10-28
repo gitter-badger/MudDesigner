@@ -48,6 +48,20 @@
             this.contextEnvironmentMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuDeleteEnvironmentItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RoomEditor_Properties = new System.Windows.Forms.SplitContainer();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabRoomEditor = new System.Windows.Forms.TabPage();
+            this.lblRoomName = new System.Windows.Forms.Label();
+            this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.tabStaticGameObjects = new System.Windows.Forms.TabPage();
+            this.tabUsableGameObjects = new System.Windows.Forms.TabPage();
+            this.tabMobs = new System.Windows.Forms.TabPage();
+            this.tabScripts = new System.Windows.Forms.TabPage();
+            this.West = new System.Windows.Forms.Button();
+            this.East = new System.Windows.Forms.Button();
+            this.South = new System.Windows.Forms.Button();
+            this.North = new System.Windows.Forms.Button();
+            this.tabRoomObjects = new System.Windows.Forms.TabPage();
+            this.tabRoomMobs = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.GameExplorer = new System.Windows.Forms.TabControl();
             this.EnvironmentPage = new System.Windows.Forms.TabPage();
@@ -67,20 +81,6 @@
             this.MobsPage = new System.Windows.Forms.TabPage();
             this.objectProperties = new System.Windows.Forms.PropertyGrid();
             this.SelectedObjectLabel = new System.Windows.Forms.Label();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabRoomEditor = new System.Windows.Forms.TabPage();
-            this.tabRoomObjects = new System.Windows.Forms.TabPage();
-            this.lblRoomName = new System.Windows.Forms.Label();
-            this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.tabStaticGameObjects = new System.Windows.Forms.TabPage();
-            this.tabUsableGameObjects = new System.Windows.Forms.TabPage();
-            this.tabMobs = new System.Windows.Forms.TabPage();
-            this.tabScripts = new System.Windows.Forms.TabPage();
-            this.West = new System.Windows.Forms.Button();
-            this.East = new System.Windows.Forms.Button();
-            this.South = new System.Windows.Forms.Button();
-            this.North = new System.Windows.Forms.Button();
-            this.tabRoomMobs = new System.Windows.Forms.TabPage();
             this.EditorStatus.SuspendLayout();
             this.MainMenu.SuspendLayout();
             this.contextRooms.SuspendLayout();
@@ -89,6 +89,9 @@
             this.RoomEditor_Properties.Panel1.SuspendLayout();
             this.RoomEditor_Properties.Panel2.SuspendLayout();
             this.RoomEditor_Properties.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabRoomEditor.SuspendLayout();
+            this.tabControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -102,9 +105,6 @@
             this.ObjectsPage.SuspendLayout();
             this.tabObjectEditor.SuspendLayout();
             this.tabIItem.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabRoomEditor.SuspendLayout();
-            this.tabControl2.SuspendLayout();
             this.SuspendLayout();
             // 
             // EditorStatus
@@ -294,6 +294,195 @@
             this.RoomEditor_Properties.SplitterWidth = 5;
             this.RoomEditor_Properties.TabIndex = 2;
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Alignment = System.Windows.Forms.TabAlignment.Left;
+            this.tabControl1.Controls.Add(this.tabRoomEditor);
+            this.tabControl1.Controls.Add(this.tabRoomObjects);
+            this.tabControl1.Controls.Add(this.tabRoomMobs);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Multiline = true;
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(671, 688);
+            this.tabControl1.TabIndex = 0;
+            // 
+            // tabRoomEditor
+            // 
+            this.tabRoomEditor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.tabRoomEditor.Controls.Add(this.lblRoomName);
+            this.tabRoomEditor.Controls.Add(this.tabControl2);
+            this.tabRoomEditor.Controls.Add(this.West);
+            this.tabRoomEditor.Controls.Add(this.East);
+            this.tabRoomEditor.Controls.Add(this.South);
+            this.tabRoomEditor.Controls.Add(this.North);
+            this.tabRoomEditor.Location = new System.Drawing.Point(23, 4);
+            this.tabRoomEditor.Name = "tabRoomEditor";
+            this.tabRoomEditor.Padding = new System.Windows.Forms.Padding(3);
+            this.tabRoomEditor.Size = new System.Drawing.Size(644, 680);
+            this.tabRoomEditor.TabIndex = 0;
+            this.tabRoomEditor.Text = "Room";
+            // 
+            // lblRoomName
+            // 
+            this.lblRoomName.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblRoomName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRoomName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.lblRoomName.Location = new System.Drawing.Point(3, 3);
+            this.lblRoomName.Name = "lblRoomName";
+            this.lblRoomName.Size = new System.Drawing.Size(638, 23);
+            this.lblRoomName.TabIndex = 11;
+            this.lblRoomName.Text = "No Room Loaded";
+            this.lblRoomName.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // tabControl2
+            // 
+            this.tabControl2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl2.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
+            this.tabControl2.Controls.Add(this.tabStaticGameObjects);
+            this.tabControl2.Controls.Add(this.tabUsableGameObjects);
+            this.tabControl2.Controls.Add(this.tabMobs);
+            this.tabControl2.Controls.Add(this.tabScripts);
+            this.tabControl2.Location = new System.Drawing.Point(-1, 373);
+            this.tabControl2.Name = "tabControl2";
+            this.tabControl2.SelectedIndex = 0;
+            this.tabControl2.Size = new System.Drawing.Size(646, 319);
+            this.tabControl2.TabIndex = 10;
+            // 
+            // tabStaticGameObjects
+            // 
+            this.tabStaticGameObjects.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.tabStaticGameObjects.ForeColor = System.Drawing.Color.White;
+            this.tabStaticGameObjects.Location = new System.Drawing.Point(4, 25);
+            this.tabStaticGameObjects.Name = "tabStaticGameObjects";
+            this.tabStaticGameObjects.Size = new System.Drawing.Size(638, 290);
+            this.tabStaticGameObjects.TabIndex = 0;
+            this.tabStaticGameObjects.Text = "Static Game Objects";
+            // 
+            // tabUsableGameObjects
+            // 
+            this.tabUsableGameObjects.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.tabUsableGameObjects.ForeColor = System.Drawing.Color.White;
+            this.tabUsableGameObjects.Location = new System.Drawing.Point(4, 25);
+            this.tabUsableGameObjects.Name = "tabUsableGameObjects";
+            this.tabUsableGameObjects.Size = new System.Drawing.Size(638, 290);
+            this.tabUsableGameObjects.TabIndex = 2;
+            this.tabUsableGameObjects.Text = "Usable Game Objects";
+            // 
+            // tabMobs
+            // 
+            this.tabMobs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.tabMobs.ForeColor = System.Drawing.Color.White;
+            this.tabMobs.Location = new System.Drawing.Point(4, 25);
+            this.tabMobs.Name = "tabMobs";
+            this.tabMobs.Size = new System.Drawing.Size(638, 290);
+            this.tabMobs.TabIndex = 1;
+            this.tabMobs.Text = "Mobs";
+            // 
+            // tabScripts
+            // 
+            this.tabScripts.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.tabScripts.ForeColor = System.Drawing.Color.White;
+            this.tabScripts.Location = new System.Drawing.Point(4, 25);
+            this.tabScripts.Name = "tabScripts";
+            this.tabScripts.Size = new System.Drawing.Size(638, 290);
+            this.tabScripts.TabIndex = 3;
+            this.tabScripts.Text = "Scripts";
+            // 
+            // West
+            // 
+            this.West.AllowDrop = true;
+            this.West.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
+            this.West.ContextMenuStrip = this.contextRooms;
+            this.West.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.West.FlatAppearance.BorderSize = 2;
+            this.West.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.West.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.West.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.West.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.West.Location = new System.Drawing.Point(-2, 141);
+            this.West.Name = "West";
+            this.West.Size = new System.Drawing.Size(160, 90);
+            this.West.TabIndex = 9;
+            this.West.Text = "West\r\n(Empty)";
+            this.West.UseVisualStyleBackColor = false;
+            // 
+            // East
+            // 
+            this.East.AllowDrop = true;
+            this.East.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
+            this.East.ContextMenuStrip = this.contextRooms;
+            this.East.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.East.FlatAppearance.BorderSize = 2;
+            this.East.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.East.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.East.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.East.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.East.Location = new System.Drawing.Point(313, 141);
+            this.East.Name = "East";
+            this.East.Size = new System.Drawing.Size(160, 90);
+            this.East.TabIndex = 8;
+            this.East.Text = "East\r\n(Empty)";
+            this.East.UseVisualStyleBackColor = false;
+            // 
+            // South
+            // 
+            this.South.AllowDrop = true;
+            this.South.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
+            this.South.ContextMenuStrip = this.contextRooms;
+            this.South.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.South.FlatAppearance.BorderSize = 2;
+            this.South.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.South.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.South.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.South.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.South.Location = new System.Drawing.Point(155, 273);
+            this.South.Name = "South";
+            this.South.Size = new System.Drawing.Size(160, 90);
+            this.South.TabIndex = 7;
+            this.South.Text = "South\r\n(Empty)";
+            this.South.UseVisualStyleBackColor = false;
+            // 
+            // North
+            // 
+            this.North.AllowDrop = true;
+            this.North.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
+            this.North.ContextMenuStrip = this.contextRooms;
+            this.North.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.North.FlatAppearance.BorderSize = 2;
+            this.North.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.North.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.North.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.North.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.North.Location = new System.Drawing.Point(155, 11);
+            this.North.Name = "North";
+            this.North.Size = new System.Drawing.Size(160, 90);
+            this.North.TabIndex = 6;
+            this.North.Text = "North\r\n(Empty)";
+            this.North.UseVisualStyleBackColor = false;
+            // 
+            // tabRoomObjects
+            // 
+            this.tabRoomObjects.Location = new System.Drawing.Point(23, 4);
+            this.tabRoomObjects.Name = "tabRoomObjects";
+            this.tabRoomObjects.Padding = new System.Windows.Forms.Padding(3);
+            this.tabRoomObjects.Size = new System.Drawing.Size(644, 680);
+            this.tabRoomObjects.TabIndex = 1;
+            this.tabRoomObjects.Text = "tabPage4";
+            this.tabRoomObjects.UseVisualStyleBackColor = true;
+            // 
+            // tabRoomMobs
+            // 
+            this.tabRoomMobs.Location = new System.Drawing.Point(23, 4);
+            this.tabRoomMobs.Name = "tabRoomMobs";
+            this.tabRoomMobs.Size = new System.Drawing.Size(644, 680);
+            this.tabRoomMobs.TabIndex = 2;
+            this.tabRoomMobs.Text = "Room Mobs";
+            this.tabRoomMobs.UseVisualStyleBackColor = true;
+            // 
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -382,7 +571,7 @@
             this.ZoneTab.Controls.Add(this.AvailableZones);
             this.ZoneTab.Location = new System.Drawing.Point(4, 22);
             this.ZoneTab.Name = "ZoneTab";
-            this.ZoneTab.Size = new System.Drawing.Size(287, 290);
+            this.ZoneTab.Size = new System.Drawing.Size(302, 290);
             this.ZoneTab.TabIndex = 2;
             this.ZoneTab.Text = "Zones";
             // 
@@ -396,7 +585,7 @@
             this.AvailableZones.FormattingEnabled = true;
             this.AvailableZones.Location = new System.Drawing.Point(0, 0);
             this.AvailableZones.Name = "AvailableZones";
-            this.AvailableZones.Size = new System.Drawing.Size(287, 290);
+            this.AvailableZones.Size = new System.Drawing.Size(302, 290);
             this.AvailableZones.Sorted = true;
             this.AvailableZones.TabIndex = 2;
             // 
@@ -406,7 +595,7 @@
             this.RoomTab.Controls.Add(this.AvailableRooms);
             this.RoomTab.Location = new System.Drawing.Point(4, 22);
             this.RoomTab.Name = "RoomTab";
-            this.RoomTab.Size = new System.Drawing.Size(287, 290);
+            this.RoomTab.Size = new System.Drawing.Size(302, 290);
             this.RoomTab.TabIndex = 3;
             this.RoomTab.Text = "Rooms";
             // 
@@ -420,7 +609,7 @@
             this.AvailableRooms.FormattingEnabled = true;
             this.AvailableRooms.Location = new System.Drawing.Point(0, 0);
             this.AvailableRooms.Name = "AvailableRooms";
-            this.AvailableRooms.Size = new System.Drawing.Size(287, 290);
+            this.AvailableRooms.Size = new System.Drawing.Size(302, 290);
             this.AvailableRooms.Sorted = true;
             this.AvailableRooms.TabIndex = 3;
             // 
@@ -432,7 +621,7 @@
             this.ObjectsPage.Location = new System.Drawing.Point(4, 25);
             this.ObjectsPage.Name = "ObjectsPage";
             this.ObjectsPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ObjectsPage.Size = new System.Drawing.Size(301, 322);
+            this.ObjectsPage.Size = new System.Drawing.Size(316, 322);
             this.ObjectsPage.TabIndex = 1;
             this.ObjectsPage.Text = "Objects";
             // 
@@ -445,7 +634,7 @@
             this.tabObjectEditor.Location = new System.Drawing.Point(3, 3);
             this.tabObjectEditor.Name = "tabObjectEditor";
             this.tabObjectEditor.SelectedIndex = 0;
-            this.tabObjectEditor.Size = new System.Drawing.Size(295, 316);
+            this.tabObjectEditor.Size = new System.Drawing.Size(310, 316);
             this.tabObjectEditor.TabIndex = 0;
             // 
             // tabIItem
@@ -455,7 +644,7 @@
             this.tabIItem.Location = new System.Drawing.Point(4, 22);
             this.tabIItem.Name = "tabIItem";
             this.tabIItem.Padding = new System.Windows.Forms.Padding(3);
-            this.tabIItem.Size = new System.Drawing.Size(287, 290);
+            this.tabIItem.Size = new System.Drawing.Size(302, 290);
             this.tabIItem.TabIndex = 0;
             this.tabIItem.Text = "Items";
             // 
@@ -467,7 +656,7 @@
             this.treeStaticObjects.ForeColor = System.Drawing.Color.White;
             this.treeStaticObjects.Location = new System.Drawing.Point(3, 3);
             this.treeStaticObjects.Name = "treeStaticObjects";
-            this.treeStaticObjects.Size = new System.Drawing.Size(281, 284);
+            this.treeStaticObjects.Size = new System.Drawing.Size(296, 284);
             this.treeStaticObjects.TabIndex = 2;
             // 
             // tabPage2
@@ -476,7 +665,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(283, 287);
+            this.tabPage2.Size = new System.Drawing.Size(302, 290);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Equipable";
             // 
@@ -485,7 +674,7 @@
             this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(283, 287);
+            this.tabPage1.Size = new System.Drawing.Size(302, 290);
             this.tabPage1.TabIndex = 2;
             this.tabPage1.Text = "Usable";
             // 
@@ -495,7 +684,7 @@
             this.MobsPage.ForeColor = System.Drawing.Color.White;
             this.MobsPage.Location = new System.Drawing.Point(4, 25);
             this.MobsPage.Name = "MobsPage";
-            this.MobsPage.Size = new System.Drawing.Size(301, 322);
+            this.MobsPage.Size = new System.Drawing.Size(316, 322);
             this.MobsPage.TabIndex = 2;
             this.MobsPage.Text = "Mobs";
             // 
@@ -518,6 +707,7 @@
             this.objectProperties.ViewBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.objectProperties.ViewBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.objectProperties.ViewForeColor = System.Drawing.Color.White;
+            this.objectProperties.Click += new System.EventHandler(this.objectProperties_Click);
             // 
             // SelectedObjectLabel
             // 
@@ -528,195 +718,6 @@
             this.SelectedObjectLabel.Size = new System.Drawing.Size(324, 16);
             this.SelectedObjectLabel.TabIndex = 2;
             this.SelectedObjectLabel.Text = "Nothing Selected";
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.tabControl1.Controls.Add(this.tabRoomEditor);
-            this.tabControl1.Controls.Add(this.tabRoomObjects);
-            this.tabControl1.Controls.Add(this.tabRoomMobs);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Multiline = true;
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(671, 688);
-            this.tabControl1.TabIndex = 0;
-            // 
-            // tabRoomEditor
-            // 
-            this.tabRoomEditor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.tabRoomEditor.Controls.Add(this.lblRoomName);
-            this.tabRoomEditor.Controls.Add(this.tabControl2);
-            this.tabRoomEditor.Controls.Add(this.West);
-            this.tabRoomEditor.Controls.Add(this.East);
-            this.tabRoomEditor.Controls.Add(this.South);
-            this.tabRoomEditor.Controls.Add(this.North);
-            this.tabRoomEditor.Location = new System.Drawing.Point(23, 4);
-            this.tabRoomEditor.Name = "tabRoomEditor";
-            this.tabRoomEditor.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRoomEditor.Size = new System.Drawing.Size(644, 680);
-            this.tabRoomEditor.TabIndex = 0;
-            this.tabRoomEditor.Text = "Room";
-            // 
-            // tabRoomObjects
-            // 
-            this.tabRoomObjects.Location = new System.Drawing.Point(23, 4);
-            this.tabRoomObjects.Name = "tabRoomObjects";
-            this.tabRoomObjects.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRoomObjects.Size = new System.Drawing.Size(644, 680);
-            this.tabRoomObjects.TabIndex = 1;
-            this.tabRoomObjects.Text = "tabPage4";
-            this.tabRoomObjects.UseVisualStyleBackColor = true;
-            // 
-            // lblRoomName
-            // 
-            this.lblRoomName.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblRoomName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRoomName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.lblRoomName.Location = new System.Drawing.Point(3, 3);
-            this.lblRoomName.Name = "lblRoomName";
-            this.lblRoomName.Size = new System.Drawing.Size(638, 23);
-            this.lblRoomName.TabIndex = 11;
-            this.lblRoomName.Text = "No Room Loaded";
-            this.lblRoomName.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // tabControl2
-            // 
-            this.tabControl2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl2.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
-            this.tabControl2.Controls.Add(this.tabStaticGameObjects);
-            this.tabControl2.Controls.Add(this.tabUsableGameObjects);
-            this.tabControl2.Controls.Add(this.tabMobs);
-            this.tabControl2.Controls.Add(this.tabScripts);
-            this.tabControl2.Location = new System.Drawing.Point(-1, 373);
-            this.tabControl2.Name = "tabControl2";
-            this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(646, 319);
-            this.tabControl2.TabIndex = 10;
-            // 
-            // tabStaticGameObjects
-            // 
-            this.tabStaticGameObjects.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.tabStaticGameObjects.ForeColor = System.Drawing.Color.White;
-            this.tabStaticGameObjects.Location = new System.Drawing.Point(4, 25);
-            this.tabStaticGameObjects.Name = "tabStaticGameObjects";
-            this.tabStaticGameObjects.Size = new System.Drawing.Size(638, 290);
-            this.tabStaticGameObjects.TabIndex = 0;
-            this.tabStaticGameObjects.Text = "Static Game Objects";
-            // 
-            // tabUsableGameObjects
-            // 
-            this.tabUsableGameObjects.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.tabUsableGameObjects.ForeColor = System.Drawing.Color.White;
-            this.tabUsableGameObjects.Location = new System.Drawing.Point(4, 25);
-            this.tabUsableGameObjects.Name = "tabUsableGameObjects";
-            this.tabUsableGameObjects.Size = new System.Drawing.Size(480, 290);
-            this.tabUsableGameObjects.TabIndex = 2;
-            this.tabUsableGameObjects.Text = "Usable Game Objects";
-            // 
-            // tabMobs
-            // 
-            this.tabMobs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.tabMobs.ForeColor = System.Drawing.Color.White;
-            this.tabMobs.Location = new System.Drawing.Point(4, 25);
-            this.tabMobs.Name = "tabMobs";
-            this.tabMobs.Size = new System.Drawing.Size(480, 290);
-            this.tabMobs.TabIndex = 1;
-            this.tabMobs.Text = "Mobs";
-            // 
-            // tabScripts
-            // 
-            this.tabScripts.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.tabScripts.ForeColor = System.Drawing.Color.White;
-            this.tabScripts.Location = new System.Drawing.Point(4, 25);
-            this.tabScripts.Name = "tabScripts";
-            this.tabScripts.Size = new System.Drawing.Size(480, 290);
-            this.tabScripts.TabIndex = 3;
-            this.tabScripts.Text = "Scripts";
-            // 
-            // West
-            // 
-            this.West.AllowDrop = true;
-            this.West.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
-            this.West.ContextMenuStrip = this.contextRooms;
-            this.West.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.West.FlatAppearance.BorderSize = 2;
-            this.West.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.West.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.West.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.West.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.West.Location = new System.Drawing.Point(-2, 141);
-            this.West.Name = "West";
-            this.West.Size = new System.Drawing.Size(160, 90);
-            this.West.TabIndex = 9;
-            this.West.Text = "West\r\n(Empty)";
-            this.West.UseVisualStyleBackColor = false;
-            // 
-            // East
-            // 
-            this.East.AllowDrop = true;
-            this.East.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
-            this.East.ContextMenuStrip = this.contextRooms;
-            this.East.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.East.FlatAppearance.BorderSize = 2;
-            this.East.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.East.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.East.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.East.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.East.Location = new System.Drawing.Point(313, 141);
-            this.East.Name = "East";
-            this.East.Size = new System.Drawing.Size(160, 90);
-            this.East.TabIndex = 8;
-            this.East.Text = "East\r\n(Empty)";
-            this.East.UseVisualStyleBackColor = false;
-            // 
-            // South
-            // 
-            this.South.AllowDrop = true;
-            this.South.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
-            this.South.ContextMenuStrip = this.contextRooms;
-            this.South.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.South.FlatAppearance.BorderSize = 2;
-            this.South.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.South.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.South.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.South.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.South.Location = new System.Drawing.Point(155, 273);
-            this.South.Name = "South";
-            this.South.Size = new System.Drawing.Size(160, 90);
-            this.South.TabIndex = 7;
-            this.South.Text = "South\r\n(Empty)";
-            this.South.UseVisualStyleBackColor = false;
-            // 
-            // North
-            // 
-            this.North.AllowDrop = true;
-            this.North.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
-            this.North.ContextMenuStrip = this.contextRooms;
-            this.North.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.North.FlatAppearance.BorderSize = 2;
-            this.North.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.North.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.North.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.North.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.North.Location = new System.Drawing.Point(155, 11);
-            this.North.Name = "North";
-            this.North.Size = new System.Drawing.Size(160, 90);
-            this.North.TabIndex = 6;
-            this.North.Text = "North\r\n(Empty)";
-            this.North.UseVisualStyleBackColor = false;
-            // 
-            // tabRoomMobs
-            // 
-            this.tabRoomMobs.Location = new System.Drawing.Point(23, 4);
-            this.tabRoomMobs.Name = "tabRoomMobs";
-            this.tabRoomMobs.Size = new System.Drawing.Size(644, 680);
-            this.tabRoomMobs.TabIndex = 2;
-            this.tabRoomMobs.Text = "Room Mobs";
-            this.tabRoomMobs.UseVisualStyleBackColor = true;
             // 
             // Editor
             // 
@@ -747,6 +748,9 @@
             this.RoomEditor_Properties.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.RoomEditor_Properties)).EndInit();
             this.RoomEditor_Properties.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tabRoomEditor.ResumeLayout(false);
+            this.tabControl2.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -760,9 +764,6 @@
             this.ObjectsPage.ResumeLayout(false);
             this.tabObjectEditor.ResumeLayout(false);
             this.tabIItem.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
-            this.tabRoomEditor.ResumeLayout(false);
-            this.tabControl2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

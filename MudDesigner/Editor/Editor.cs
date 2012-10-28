@@ -126,7 +126,7 @@ namespace MudDesigner.Editor
                 }
             }
 
-            game = (Game)ScriptFactory.FindInheritedScripted("MudDesigner.Engine.Core.Game", null);
+            game = (Game)ScriptFactory.FindInheritedScript("MudDesigner.Engine.Core.Game", null);
             game.Initialize(null); //Don't need a server.
             game.Load();
             foreach (var r in game.World.Realms.Values)
@@ -645,6 +645,11 @@ namespace MudDesigner.Editor
         }
 
         private void toolStripStatusLabel1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void objectProperties_Click(object sender, EventArgs e)
         {
 
         }
