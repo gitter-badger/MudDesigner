@@ -93,16 +93,16 @@ namespace MudDesigner.Editor.Rooms
                     switch (door)
                     {
                         case AvailableTravelDirections.North:
-                            North.Text = "North\n\r" + EngineEditor.CurrentRoom.Doorways[door].Arrival.Name;
+                            roomsBtnNorth.Text = "North\n\r" + EngineEditor.CurrentRoom.Doorways[door].Arrival.Name;
                             break;
                         case AvailableTravelDirections.South:
-                            South.Text = "South\n\r" + EngineEditor.CurrentRoom.Doorways[door].Arrival.Name;
+                            roomsBtnSouth.Text = "South\n\r" + EngineEditor.CurrentRoom.Doorways[door].Arrival.Name;
                             break;
                         case AvailableTravelDirections.East:
-                            East.Text = "East\n\r" + EngineEditor.CurrentRoom.Doorways[door].Arrival.Name;
+                            roomsBtnEast.Text = "East\n\r" + EngineEditor.CurrentRoom.Doorways[door].Arrival.Name;
                             break;
                         case AvailableTravelDirections.West:
-                            West.Text = "West\n\r" + EngineEditor.CurrentRoom.Doorways[door].Arrival.Name;
+                            roomsBtnWest.Text = "West\n\r" + EngineEditor.CurrentRoom.Doorways[door].Arrival.Name;
                             break;
                     }
                 }
