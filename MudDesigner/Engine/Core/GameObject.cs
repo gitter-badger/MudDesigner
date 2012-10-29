@@ -26,7 +26,11 @@ namespace MudDesigner.Engine.Core
         [Browsable(false)]
         public bool Destroyed { get; protected set; }
 
-        public GameObject() : this(Guid.NewGuid()) { }
+        public GameObject() 
+        { 
+            Enabled = true; 
+            ID = Guid.NewGuid(); 
+        }
 
         public GameObject(Guid id)
         {

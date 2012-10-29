@@ -20,7 +20,7 @@ namespace MudDesigner.Engine.Environment
 
         public bool IsSafe { get; set; }
 
-        public World() : base()
+        public World()
         {
             Realms = new Dictionary<Guid, IRealm>();
             Name = "World";

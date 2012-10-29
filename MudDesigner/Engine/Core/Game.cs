@@ -175,8 +175,13 @@ namespace MudDesigner.Engine.Core
             using (var br = new BinaryReader(File.Open(fileAndPathToSave, FileMode.Open)))
             {
                 var gameLoad = br.ReadString();
+                var settings = new JsonSerializerSettings();
+                var contract = new SerializationContracts();
+                settings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+                settings.TypeNameHandling = TypeNameHandling.All;
+                settings.ContractResolver = contract;
 
-                World = JsonConvert.DeserializeObject<World>(gameLoad, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All, PreserveReferencesHandling = PreserveReferencesHandling.Objects });
+                World = JsonConvert.DeserializeObject<World>(gameLoad, settings);
             }
         }
 
@@ -202,7 +207,13 @@ namespace MudDesigner.Engine.Core
            
             using (var bw = new BinaryWriter(File.Open(fileAndPathToSave, FileMode.OpenOrCreate)))
             {
-                var gameSave = JsonConvert.SerializeObject(World, Formatting.Indented, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All, PreserveReferencesHandling = PreserveReferencesHandling.Objects });
+                var settings = new JsonSerializerSettings();
+                var contract = new SerializationContracts();
+
+                settings.TypeNameHandling = TypeNameHandling.All;
+                settings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+
+                var gameSave = JsonConvert.SerializeObject(World, Formatting.Indented, settings);
                 bw.Write(gameSave);
             }
             

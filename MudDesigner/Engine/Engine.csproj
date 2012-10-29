@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Commands\HelpAttribute.cs" />
     <Compile Include="Commands\HelpCommand.cs" />
+    <Compile Include="Core\SerializationContracts.cs" />
     <Compile Include="Events\IQuest.cs" />
     <Compile Include="Mobs\Alignments.cs" />
     <Compile Include="Mobs\IFactions.cs" />
