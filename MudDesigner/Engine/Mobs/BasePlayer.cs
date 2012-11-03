@@ -25,6 +25,8 @@ namespace MudDesigner.Engine.Mobs
 
         public IGender Gender { get; set; }
 
+        public IRace Race { get; set; }
+
         public IRoom Location { get; protected set; }
 
         public bool CanTalk { get; set; }
