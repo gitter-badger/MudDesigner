@@ -40,7 +40,10 @@
       <Value Profile="(Default)">World.sav</Value>
     </Setting>
     <Setting Name="InitialState" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MudDesigner.Engine.States.ConnectState</Value>
+      <Value Profile="(Default)">MudDesigner.Scripts.States.Login.ClientConnectState</Value>
+    </Setting>
+    <Setting Name="PlayerSavePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Players</Value>
     </Setting>
   </Settings>
 </SettingsFile>

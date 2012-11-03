@@ -14,8 +14,9 @@ namespace MudDesigner.Engine.Networking
     public interface IServer
     {
         int Port { get; }
-        int MaxConnections { get; }
+        int MaxConnections { get; set; }
         int MaxQueuedConnections { get; }
+        int MinimumPasswordSize { get; set; }
         bool Enabled { get; }
         ServerStatus Status { get; }
 

@@ -90,6 +90,8 @@ namespace MudDesigner.Editor
             if (Logger.Cache.Count == 0)
                 return;
 
+            int cacheSize = Logger.Cache.Count;
+
             foreach (string message in Logger.Cache)
             {
                 mainTxtServerInfo.Text += message + "\n";
@@ -98,10 +100,17 @@ namespace MudDesigner.Editor
                 mainTxtServerInfo.SelectionStart = mainTxtServerInfo.Text.Length;
                 mainTxtServerInfo.ScrollToCaret();
                 mainTxtServerInfo.Refresh();
+
+                //Fail safe in the event that the collection was changed in the middle of our loop.
+                if (cacheSize != Logger.Cache.Count)
+                    break;
             }
 
             //Reset for the next time we queury
-            Logger.Cache.Clear();
+            if (cacheSize != Logger.Cache.Count)
+                return; //We want to pick back up where we left off last loop.
+            else //If we printed all the contents already, then clear them
+                Logger.Cache.Clear();
         }
 
         private void menuStartStopServer_Click(object sender, EventArgs e)

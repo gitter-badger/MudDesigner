@@ -12,6 +12,8 @@ namespace MudDesigner.Engine.Mobs
     public interface IMob : IGameObject
     {
         string CharacterName { get; set; }
+        IGender Gender { get; set; }
+
         IRoom Location { get; }
         bool CanTalk { get; set; }
 

@@ -23,6 +23,8 @@ namespace MudDesigner.Engine.Mobs
             }
         }
 
+        public IGender Gender { get; set; }
+
         public IRoom Location { get; protected set; }
 
         public bool CanTalk { get; set; }
@@ -71,7 +73,13 @@ namespace MudDesigner.Engine.Mobs
 
             //Render the state after the login event.  This allows scripts to replace the initialState
             //if they want with something custom and have the engine render it.
-            CurrentState.Render(this);
+
+            if (CurrentState == null)
+            {
+                Logger.WriteLine("Failed to locate the current state for character '" + Name + "'", Logger.Importance.Critical);
+            }
+            else
+                CurrentState.Render(this);
         }
 
         public void Disconnect()

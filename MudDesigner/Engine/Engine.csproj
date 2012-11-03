@@ -53,6 +53,7 @@
     <Compile Include="Events\IQuest.cs" />
     <Compile Include="Mobs\Alignments.cs" />
     <Compile Include="Mobs\IFactions.cs" />
+    <Compile Include="Mobs\IGender.cs" />
     <Compile Include="Objects\BaseItem.cs" />
     <Compile Include="Objects\IEquipable.cs" />
     <Compile Include="Core\ILoadable.cs" />

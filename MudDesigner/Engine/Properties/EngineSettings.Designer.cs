@@ -170,13 +170,25 @@ namespace MudDesigner.Engine.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Engine.States.ConnectState")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.States.Login.ClientConnectState")]
         public string InitialState {
             get {
                 return ((string)(this["InitialState"]));
             }
             set {
                 this["InitialState"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Players")]
+        public string PlayerSavePath {
+            get {
+                return ((string)(this["PlayerSavePath"]));
+            }
+            set {
+                this["PlayerSavePath"] = value;
             }
         }
     }

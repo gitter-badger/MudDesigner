@@ -26,10 +26,13 @@ namespace MudDesigner.Engine.Networking
         public ServerDirector ServerDirector { get; private set; }
 
         [DisplayName("Maximum Connections")]
-        public int MaxConnections {get; private set; }
+        public int MaxConnections {get; set; }
 
         [DisplayName("Maximum Queued Connections")]
         public int MaxQueuedConnections { get; private set; }
+
+        [DisplayName("Minimum New Character Password Size")]
+        public int MinimumPasswordSize { get; set; }
 
         [Browsable(false)]
         public bool Enabled { get; private set; }
@@ -120,7 +123,9 @@ namespace MudDesigner.Engine.Networking
             {
                 try
                 {
-                    ServerDirector.AddConnection(Socket.Accept());
+                    //Don't allow anymore connections if we have hit our limit.
+                    if (ServerDirector.ConnectedPlayers.Count < MaxConnections)
+                        ServerDirector.AddConnection(Socket.Accept());
                 }
                 catch
                 {

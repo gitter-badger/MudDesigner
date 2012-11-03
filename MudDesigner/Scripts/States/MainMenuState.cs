@@ -17,7 +17,7 @@ namespace MudDesigner.Scripts.States
         
         private Socket connection { get; set; }
         private ASCIIEncoding encoding { get; set; }
-        private IPlayer Player { get; set; }
+        private IPlayer connectedPlayer { get; set; }
 
         public MainMenuState(ServerDirector director)
         {
@@ -25,19 +25,12 @@ namespace MudDesigner.Scripts.States
             encoding = new ASCIIEncoding();
 
         }
-        public void Render(IPlayer connectedPlayer)
+        public void Render(IPlayer player)
         {
-            connection = connectedPlayer.Connection;
-            Player = connectedPlayer;
-
-            var player = Player as BasePlayer;
+            connectedPlayer = player;
             if(player != null)
             {
-                connection.Send(encoding.GetBytes(string.Format("Welcome {0}, What do you want to do? {1}",player.CharacterName,"\n\r")));    
-            }
-            else
-            {
-                connection.Send(encoding.GetBytes(string.Format("Something seriously wrong happened... What did you do!!!")));    
+                player.SendMessage(string.Format("Welcome {0}, what do you want to do?", player.CharacterName));
             }
 
 
@@ -60,19 +53,19 @@ namespace MudDesigner.Scripts.States
 
         public ICommand GetCommand()
         {
-            var input = Director.RecieveInput(Player);
+            var input = Director.RecieveInput(connectedPlayer);
             switch (input.ToLower())
             {
                     //TODO This needs to use the command SwitchState to switch to room state.
                 case "enter":
-                    BaseRoom startRoom = (BaseRoom)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.LoginRoom, null);
-                    Player.Move(startRoom);
+                    IRoom startRoom = (IRoom)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.LoginRoom, null);
+                    connectedPlayer.Move(startRoom);
                     break;
                 case "world":
                     var game = Director.Server.Game as Game.Game;
                     if (game != null)
                     {
-                        Player.SendMessage("Save Success!");
+                        connectedPlayer.SendMessage("Save Success!");
                         return new SaveWorldFileCommand(game);
                     }
 

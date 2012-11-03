@@ -173,5 +173,35 @@ namespace MudDesigner.Engine.Scripting
 
             return null;
         }
+
+        public static Type[] GetTypesWithInterface(string interfaceName)
+        {
+            List<Type> collection = new List<Type>();
+
+            if (assemblyCollection.Count == 0)
+                return null;
+
+            try
+            {
+                foreach (var a in assemblyCollection.Where(a => a != null))
+                {
+                    Type[] types = a.GetTypes();
+                    foreach (Type t in types)
+                    {
+                        foreach (Type inter in t.GetInterfaces())
+                        {
+                            if (inter.Name == interfaceName)
+                                collection.Add(t);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return collection.ToArray();
+        }
     }
 }
