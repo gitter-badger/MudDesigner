@@ -6,12 +6,6 @@ namespace MudDesigner.Engine.Commands
 {
     public class NoOpCommand : ICommand
     {
-        private Socket Connection { get; set; }
-
-        public NoOpCommand(Socket connection)
-        {
-            Connection = connection;
-        }
         public void Execute()
         {
             // We are doing nothing on purpose.

@@ -80,7 +80,7 @@ namespace MudDesigner.Scripts.States.CreateCharacter
                     }
             }
 
-            return new NoOpCommand(connectedPlayer.Connection);
+            return new NoOpCommand();
         }
 
         //Used by the GetPassword method

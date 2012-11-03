@@ -70,7 +70,7 @@ namespace MudDesigner.Engine.States
             //TODO - I use PuttyTel and it sends the junk.  The header junk is client specific - JS.
 
             if (string.IsNullOrWhiteSpace(input))
-                return new InvalidCommand(_player.Connection);  // FYI we can turn this into InvalidLogin or something.
+                return new InvalidCommand(_player);  // FYI we can turn this into InvalidLogin or something.
 
 
             switch (IsLoggingIn)
@@ -85,25 +85,25 @@ namespace MudDesigner.Engine.States
                                 if (parts[0] == "register") 
                                 {
                                     IsLoggingIn = 2; // Set that we want to register.    
-                                    return  new NoOpCommand(_player.Connection);
+                                    return  new NoOpCommand();
                                 }
                                 else
                                 {
                                     //  We don't allow any other commands currently, we can introduce admin bypass if we want but i don't recommend it.
-                                    return new InvalidCommand(_player.Connection);
+                                    return new InvalidCommand(_player);
                                 }
 
                             }
                             else
                             {
                                 //  We don't allow any other commands currently
-                                return new InvalidCommand(_player.Connection);
+                                return new InvalidCommand(_player);
                             }
                         }
                         else
                         {
                             var  parts = input.Substring(0).Split(':');
-                            return parts.Length == 2 ? new LoginFailureCommand(_player.Connection) : new LoginFailureCommand(_player.Connection);
+                            return parts.Length == 2 ? new LoginFailureCommand(_player) : new LoginFailureCommand(_player);
                         }
                         }
                 case 1:
@@ -127,7 +127,7 @@ namespace MudDesigner.Engine.States
                         }
                         else
                         {
-                            return new InvalidCommand(_player.Connection); // they either did usernamepassword or username:password: or something like that...
+                            return new InvalidCommand(_player); // they either did usernamepassword or username:password: or something like that...
                         }
                         
                         break;
@@ -135,7 +135,7 @@ namespace MudDesigner.Engine.States
           
                 default:
                     {
-                        return new LoginFailureCommand(_player.Connection);  // by default we error out 
+                        return new LoginFailureCommand(_player);  // by default we error out 
                     }
 
                         
@@ -165,7 +165,7 @@ namespace MudDesigner.Engine.States
                 }
             } */
 
-            return new InvalidCommand(connection);
+            return new InvalidCommand(_player);
         }
     }
 }

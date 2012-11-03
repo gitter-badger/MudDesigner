@@ -46,7 +46,7 @@ namespace MudDesigner.Engine.States
                 return new SwitchStateCommand(Director, state, player);
             }
 
-            return new InvalidCommand(connection);
+            return new InvalidCommand(player);
         }
     }
 }

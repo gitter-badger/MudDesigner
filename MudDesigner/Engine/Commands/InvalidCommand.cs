@@ -3,22 +3,26 @@ using System.Net.Sockets;
 using System.Text;
 using MudDesigner.Engine.Core;
 
+using MudDesigner.Engine.Mobs;
+
 namespace MudDesigner.Engine.Commands
 {
     [HelpAttribute("Invalid Command is a result of entering a command that the game does not recognize.")]
     public class InvalidCommand : ICommand
     {
-        private Socket Connection { get; set; }
+        private IPlayer player;
 
-        public InvalidCommand(Socket connnection)
+        public InvalidCommand(IPlayer connectedPlayer)
         {
-            Connection = connnection;
+            player = connectedPlayer;
         }
 
         public void Execute()
         {
-            ASCIIEncoding encoding = new ASCIIEncoding();
-            Connection.Send(encoding.GetBytes("Invalid Command!" + "\n\r"));
+            if (player == null)
+                return; //Can happen when the user connection is closed in the middle of a command or state executing
+            else
+                player.SendMessage("Invalid command used!");
         }
          
     }

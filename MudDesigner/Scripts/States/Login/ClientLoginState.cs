@@ -72,7 +72,7 @@ namespace MudDesigner.Scripts.States.Login
                     }
             }
 
-            return new NoOpCommand(connectedPlayer.Connection);
+            return new NoOpCommand();
         }
 
         private void GetUsername()

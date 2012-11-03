@@ -14,19 +14,15 @@ namespace MudDesigner.Engine.States
         public ServerDirector Director { get; private set; }
         private int IsLoggingin { get; set; }
 
-        private Socket connection;
-        private ASCIIEncoding encoding;
         private IPlayer player;
 
         public ConnectState(ServerDirector director)
         {
             Director = director;
-            encoding = new ASCIIEncoding();
         }
 
         public void Render(IPlayer connectedPlayer)
         {
-            connection = connectedPlayer.Connection;
             player = connectedPlayer;
 
             player.SendMessage(Director.Server.Game.Name);
@@ -47,7 +43,7 @@ namespace MudDesigner.Engine.States
                 return new SwitchStateCommand(Director, new MainMenuState(Director), player);
             }
             */
-            return new NoOpCommand(connection);
+            return new NoOpCommand();
         }
     }
 }

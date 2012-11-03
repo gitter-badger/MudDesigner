@@ -14,8 +14,6 @@ namespace MudDesigner.Scripts.States
     {
 
         public ServerDirector Director { get; private set; }
-        
-        private Socket connection { get; set; }
         private IPlayer connectedPlayer { get; set; }
 
         public MainMenuState(ServerDirector director)
@@ -66,12 +64,14 @@ namespace MudDesigner.Scripts.States
                         connectedPlayer.SendMessage("Save Success!");
                         return new SaveWorldFileCommand(game);
                     }
-
+                    break;
+                case "quit":
+                    connectedPlayer.Disconnect();
                     break;
             }
 
             // We Don't have any commands here yet... but we will! (EnterCommand, JoinCommand, SaveCommand, OptionsCommand, QuitCommand etc)
-            return new InvalidCommand(connection);
+            return new InvalidCommand(connectedPlayer);
         }
     }
 }

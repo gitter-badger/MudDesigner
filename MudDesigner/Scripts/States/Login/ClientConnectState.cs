@@ -42,7 +42,7 @@ namespace MudDesigner.Scripts.States.Login
         public Engine.Commands.ICommand GetCommand()
         {
             //No commands are accepted at this point.
-            return new NoOpCommand(connectedPlayer.Connection);
+            return new NoOpCommand();
         }
     }
 }

@@ -1,23 +1,22 @@
 ﻿using System.Net.Sockets;
 using System.Text;
 
-using MudDesigner.Engine.Core;
+using MudDesigner.Engine.Mobs;
 
 namespace MudDesigner.Engine.Commands
 {
     public class LoginFailureCommand : ICommand
     {
-        private Socket Connection { get; set; }
+        private IPlayer player;
 
-
-        public LoginFailureCommand(Socket connnection)
+        public LoginFailureCommand(IPlayer connectedPlayer)
         {
-            Connection = connnection;
+            player = connectedPlayer;
         }
+
         public void Execute()
         {
-            var encoding = new ASCIIEncoding();
-            Connection.Send(encoding.GetBytes("Login Failure! <@This is a todo item>" + "\n\r"));
+            player.SendMessage("Login Failure! <@This is a todo item>");
         }
     }
 }

@@ -54,7 +54,7 @@ namespace MudDesigner.Scripts.States.CreateCharacter
                     break;
             }
 
-            return new NoOpCommand(connectedPlayer.Connection);
+            return new NoOpCommand();
         }
     }
 }

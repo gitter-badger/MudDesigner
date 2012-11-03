@@ -37,7 +37,7 @@ namespace MudDesigner.Engine.States
             var input = Director.RecieveInput(_player);
 
             if (string.IsNullOrWhiteSpace(input))
-                return new InvalidCommand(_player.Connection);  // FYI we can turn this into InvalidCharacterNameCommand or something.
+                return new InvalidCommand(_player);  // FYI we can turn this into InvalidCharacterNameCommand or something.
 
             var player = _player as BasePlayer;
             if(player != null)
@@ -48,7 +48,7 @@ namespace MudDesigner.Engine.States
             }
 
             // Otherwise lets return invalid.
-            return new InvalidCommand(connection);
+            return new InvalidCommand(player);
         }
     }
 }

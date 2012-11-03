@@ -39,7 +39,7 @@ namespace MudDesigner.Scripts.States.CreateCharacter
             if (string.IsNullOrEmpty(input))
             {
                 connectedPlayer.SendMessage("Invalid selection, you must choose either a Male or a Female");
-                return new NoOpCommand(connectedPlayer.Connection);
+                return new NoOpCommand();
             }
 
             Type[] genders = ScriptFactory.GetTypesWithInterface("IGender");
@@ -66,7 +66,7 @@ namespace MudDesigner.Scripts.States.CreateCharacter
                 }
             }
 
-            return new NoOpCommand(connectedPlayer.Connection);
+            return new NoOpCommand();
         }
     }
 }

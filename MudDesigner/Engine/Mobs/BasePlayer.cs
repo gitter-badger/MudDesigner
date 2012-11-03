@@ -42,7 +42,10 @@ namespace MudDesigner.Engine.Mobs
         {
             get
             {
-                return Connection.Connected;
+                if (Connection == null)
+                    return false;
+                else
+                    return Connection.Connected;
             }
         }
 
