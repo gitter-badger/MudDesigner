@@ -12,6 +12,8 @@ namespace MudDesigner.Scripts.Game
 {
     public class Game : MudDesigner.Engine.Core.Game
     {
+        public int MinimumPlayerAge { get; set; }
+
         public override bool Initialize(IServer startedServer)
         {
             return base.Initialize(startedServer);

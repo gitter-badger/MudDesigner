@@ -93,7 +93,11 @@ namespace MudDesigner.Editor
             foreach (string message in Logger.Cache)
             {
                 mainTxtServerInfo.Text += message + "\n";
-                mainTxtServerInfo.Select(mainTxtServerInfo.Text.Length, 0);
+
+                //Auto-scroll to the last line.
+                mainTxtServerInfo.SelectionStart = mainTxtServerInfo.Text.Length;
+                mainTxtServerInfo.ScrollToCaret();
+                mainTxtServerInfo.Refresh();
             }
 
             //Reset for the next time we queury

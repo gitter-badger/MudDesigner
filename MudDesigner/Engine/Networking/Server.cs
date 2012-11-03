@@ -59,8 +59,6 @@ namespace MudDesigner.Engine.Networking
             MaxQueuedConnections = 10;
             MOTD = "MUD Designer based game.";
             ServerOwner = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-
-            Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         }
 
         public void Start(Int32 maxConnections, Int32 maxQueueSize, IGame game)
@@ -79,6 +77,8 @@ namespace MudDesigner.Engine.Networking
             try
             {
                 IPEndPoint ip = new IPEndPoint(IPAddress.Any, this.Port);
+
+                Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 Socket.Bind(ip);
                 Socket.Listen(this.MaxQueuedConnections);
 
