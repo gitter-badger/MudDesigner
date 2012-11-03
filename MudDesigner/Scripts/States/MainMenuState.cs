@@ -16,13 +16,11 @@ namespace MudDesigner.Scripts.States
         public ServerDirector Director { get; private set; }
         
         private Socket connection { get; set; }
-        private ASCIIEncoding encoding { get; set; }
         private IPlayer connectedPlayer { get; set; }
 
         public MainMenuState(ServerDirector director)
         {
             Director = director;
-            encoding = new ASCIIEncoding();
 
         }
         public void Render(IPlayer player)
@@ -39,11 +37,11 @@ namespace MudDesigner.Scripts.States
             player.SendMessage("-----------------------------------------");
             player.SendMessage(string.Format("|{0}|", Director.Server.Game.Name)); // @ToDo: I'll look into Text Centering stuff.
             player.SendMessage("-----------------------------------------");
-            player.SendMessage("| [Enter] a town                        |");
-            player.SendMessage("| [Join] a chat channel                 |");
-            player.SendMessage("| [Save] my current player              |");
-            player.SendMessage("| Save [World] (Debug)                  |");
-            player.SendMessage("| Change some game [Options]            |");
+            //player.SendMessage("| [Enter] a town                        |");
+            //player.SendMessage("| [Join] a chat channel                 |");
+            //player.SendMessage("| [Save] my current player              |");
+            //player.SendMessage("| Save [World] (Debug)                  |");
+            //player.SendMessage("| Change some game [Options]            |");
             player.SendMessage("| [Quit] the game                       |");
             player.SendMessage("-----------------------------------------"); 
 
