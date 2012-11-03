@@ -118,7 +118,7 @@ namespace MudDesigner.Editor
                     timerLogger.Enabled = true;
                     mainTxtServerInfo.Text += "======== Server Starting ========\n\n";
                     var server = EngineEditor.Game.Server;
-                    server.Start(server.MaxConnections, server.MaxQueuedConnections, server.Game);
+                    server.Start(server.MaxConnections, server.MaxQueuedConnections, EngineEditor.Game);
                     menuStartStopServer.Text = "Stop Server";
                     break;
             }
@@ -168,6 +168,37 @@ namespace MudDesigner.Editor
             if (e.ChangedItem.Label == "Name")
             {
                 lblProjectName.Text = EngineEditor.Game.Name;
+            }
+        }
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (EngineEditor.Game.Server.Enabled)
+            {
+                DialogResult serverResults = MessageBox.Show("You are currently running the game server, are you sure you want to quit?", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                switch (serverResults)
+                {
+                    case System.Windows.Forms.DialogResult.Yes:
+                        menuStartStopServer_Click(null, null);
+                        break;
+                    case System.Windows.Forms.DialogResult.No:
+                        e.Cancel = true; //cancel killing the app.
+                        return;
+                }
+            }
+
+            DialogResult saveResults = MessageBox.Show("Would you like to save prior to closing?", this.Text, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            switch (saveResults)
+            {
+                case System.Windows.Forms.DialogResult.Yes:
+                    EngineEditor.Game.Save();
+                    break;
+                case System.Windows.Forms.DialogResult.No:
+                    break;
+                case System.Windows.Forms.DialogResult.Cancel:
+                    e.Cancel = true;
+                    break;
             }
         }
     }

@@ -82,6 +82,8 @@
     <Compile Include="Objects\Table.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="States\ClientLogin\ClientConnectState.cs" />
+    <Compile Include="States\ClientLogin\ClientLoginState.cs" />
     <Compile Include="States\MainMenuState.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>

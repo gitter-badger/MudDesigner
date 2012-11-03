@@ -64,7 +64,7 @@ namespace MudDesigner.Engine.Networking
         public void Start(Int32 maxConnections, Int32 maxQueueSize, IGame game)
         {
             
-            Logger.WriteLine("Game Server System Starting...");
+            Logger.WriteLine("Game Server System Starting on port " + Port.ToString());
             if (Status != ServerStatus.Stopped)
                 return;
 
@@ -76,9 +76,9 @@ namespace MudDesigner.Engine.Networking
 
             try
             {
+                Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 IPEndPoint ip = new IPEndPoint(IPAddress.Any, this.Port);
 
-                Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 Socket.Bind(ip);
                 Socket.Listen(this.MaxQueuedConnections);
 
