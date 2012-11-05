@@ -15,5 +15,5 @@ namespace MudDesigner.Engine.Mobs
 
         //Value that overrides the default description. Used for custom values that the player sets.
         string Value { get; set; }
-    }
+    }   
 }

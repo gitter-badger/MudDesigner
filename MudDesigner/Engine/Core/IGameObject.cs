@@ -2,7 +2,7 @@
 
 namespace MudDesigner.Engine.Core
 {
-    public interface IGameObject : ISaveable, ILoadable
+    public interface IGameObject
     {
         /// <summary>
         /// The GUID for this object

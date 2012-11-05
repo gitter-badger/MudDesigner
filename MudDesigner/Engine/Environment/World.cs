@@ -100,16 +100,6 @@ namespace MudDesigner.Engine.Environment
             }
         }
 
-        public override void Save(System.IO.BinaryWriter writer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Load(IGame game, System.IO.BinaryReader reader)
-        {
-            throw new NotImplementedException();
-        }
-
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
           

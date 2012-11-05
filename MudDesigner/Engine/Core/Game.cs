@@ -216,9 +216,6 @@ namespace MudDesigner.Engine.Core
                 var gameSave = JsonConvert.SerializeObject(World, Formatting.Indented, settings);
                 bw.Write(gameSave);
             }
-            
-
-          
         }
     }
 }

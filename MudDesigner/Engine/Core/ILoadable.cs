@@ -15,6 +15,6 @@ namespace MudDesigner.Engine.Core
         /// </summary>
         /// <param name="game"></param>
         /// <param name="reader"></param>
-        void Load(IGame game, BinaryReader reader);
+        object Load(string fullFilePath, System.Type t);
     }
 }

@@ -1,4 +1,5 @@
 ﻿//Microsoft .NET Using statements
+using System;
 using System.IO;
 
 //Abstract.Actions namespace is used for Types that will perform action based code. Such as saving, loading or being used.
@@ -16,6 +17,6 @@ namespace MudDesigner.Engine.Core
         /// container in a room, then this command should call Save on its game objects before ending. Until the save command is no longer called through n+ISaveable Objects 
         /// </summary>
         /// <param name="writer"></param>
-        void Save(BinaryWriter writer);
+        void Save(object objectToSave, string fullFilePath);
     }
 }

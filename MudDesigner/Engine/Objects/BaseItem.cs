@@ -45,12 +45,12 @@ namespace MudDesigner.Engine.Objects
             throw new NotImplementedException();
         }
 
-        public override void Save(System.IO.BinaryWriter writer)
+        public virtual void Save()
         {
             throw new NotImplementedException();
         }
 
-        public override void Load(Core.IGame game, System.IO.BinaryReader reader)
+        public virtual void Load(Core.IGame game)
         {
             throw new NotImplementedException();
         }

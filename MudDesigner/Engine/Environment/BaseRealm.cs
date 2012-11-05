@@ -107,38 +107,6 @@ namespace MudDesigner.Engine.Environment
         {
         }
 
-        public override void Save(BinaryWriter writer)
-        {
-            var properties = this.GetType().GetProperties();
-
-            foreach (var p in properties)
-            {
-                var value = p.GetValue(this, null);
-
-                if (p.GetType() is Int32)
-                {
-                    writer.Write((int)value);
-                }
-                else if(p.GetType() is Double)
-                {
-                    writer.Write((double)value);
-                }
-                else if(p.GetType() is String)
-                {
-                    writer.Write((string)value);
-
-                }
-                // we are purposefully not including the dictionary
-            }
-
-
-        }
-
-        public void Load(IGame game, BinaryReader reader)
-        {
-            throw new NotImplementedException();
-        }
-
         public override string ToString()
         {
             return Name;

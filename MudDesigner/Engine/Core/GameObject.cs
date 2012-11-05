@@ -38,17 +38,6 @@ namespace MudDesigner.Engine.Core
             Enabled = true;
         }
 
-        public virtual void Save(BinaryWriter writer)
-        {
-            if (Destroyed)
-                return;
-        }
-
-        public virtual void Load(IGame game, BinaryReader reader)
-        {
-            throw new NotImplementedException();
-        }
-
         public virtual void Destroy()
         {
             Destroyed = true;

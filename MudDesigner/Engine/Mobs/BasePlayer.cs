@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Sockets;
 using System.Text;
+
 using MudDesigner.Engine.States;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
+
+using Newtonsoft.Json;
 
 namespace MudDesigner.Engine.Mobs
 {
@@ -37,9 +41,13 @@ namespace MudDesigner.Engine.Mobs
         public string Username { get; set; }
         public string Password { get; set; }
 
+        [JsonIgnore()]
         public IState CurrentState { get; protected set; }
+
+        [JsonIgnore()]
         public Socket Connection { get; private set; }
 
+        [JsonIgnore()]
         public bool IsConnected
         {
             get
@@ -51,6 +59,7 @@ namespace MudDesigner.Engine.Mobs
             }
         }
 
+        [JsonIgnore()]
         public List<byte> Buffer { get; set; }
 
         //TODO - Create IClass and IRace interfaces
@@ -85,6 +94,11 @@ namespace MudDesigner.Engine.Mobs
             }
             else
                 CurrentState.Render(this);
+        }
+
+        public void SetPlayerCredentials(string password)
+        {
+            Password = password;
         }
 
         public void Disconnect()
@@ -132,16 +146,6 @@ namespace MudDesigner.Engine.Mobs
         }
 
         public void UseInventoryItem(IInventory inventoryItem)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Save(System.IO.BinaryWriter writer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Load(IGame game, System.IO.BinaryReader reader)
         {
             throw new NotImplementedException();
         }
