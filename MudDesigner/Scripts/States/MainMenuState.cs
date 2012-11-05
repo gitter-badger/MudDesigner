@@ -49,7 +49,7 @@ namespace MudDesigner.Scripts.States
 
         public ICommand GetCommand()
         {
-            var input = Director.RecieveInput(connectedPlayer);
+            var input = connectedPlayer.RecieveInput();
             switch (input.ToLower())
             {
                     //TODO This needs to use the command SwitchState to switch to room state.

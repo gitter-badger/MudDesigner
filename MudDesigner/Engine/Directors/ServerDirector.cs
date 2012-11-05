@@ -98,55 +98,6 @@ namespace MudDesigner.Engine.Directors
             ConnectedPlayers.Clear();
         }
 
-
-        public String RecieveInput(IPlayer player)
-        {
-            string input = String.Empty;
-
-            while (true)
-            {
-                try
-                {
-                    byte[] buf = new byte[1];
-
-                    if (!player.Connection.Connected)
-                        return "Disconnected.";
-
-                    Int32 recved = player.Connection.Receive(buf);
-
-                    if (recved > 0)
-                    {
-                        if (buf[0] == '\n' && player.Buffer.Count > 0)
-                        {
-                            if (player.Buffer[player.Buffer.Count - 1] == '\r')
-                                player.Buffer.RemoveAt(player.Buffer.Count - 1);
-
-                            System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
-                            input = enc.GetString(player.Buffer.ToArray());
-                            player.Buffer.Clear();
-                            //Return a trimmed string.
-                            return input;
-                        }
-                        else
-                            player.Buffer.Add(buf[0]);
-                    }
-                    else if (recved == 0) //Disconnected
-                    {
-                        //   ConnectedPlayers[index]. Connected = false;
-                        //  this.LoggedIn = false;
-                        return "Disconnected.";
-                    }
-                }
-                catch (Exception e)
-                {
-                    //Flag as disabled 
-                    //  this.Connected = false;
-                    //  this.LoggedIn = false;
-                    return e.Message;
-                }
-            }
-        }
-
         /// <summary>
         /// Returns a reference to the specified player if s/he is connected to the server.
         /// </summary>

@@ -34,7 +34,7 @@ namespace MudDesigner.Engine.States
 
         public ICommand GetCommand()
         {
-            var input = Director.RecieveInput(_player);
+            var input = _player.RecieveInput();
 
             if (string.IsNullOrWhiteSpace(input))
                 return new InvalidCommand(_player);  // FYI we can turn this into InvalidCharacterNameCommand or something.

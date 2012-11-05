@@ -34,7 +34,7 @@ namespace MudDesigner.Scripts.States.CreateCharacter
 
         public ICommand GetCommand()
         {
-            var input = director.RecieveInput(connectedPlayer).ToLower().Trim();
+            var input = connectedPlayer.RecieveInput().ToLower().Trim();
 
             if (string.IsNullOrEmpty(input))
             {

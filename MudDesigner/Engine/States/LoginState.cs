@@ -58,7 +58,7 @@ namespace MudDesigner.Engine.States
 
         public ICommand GetCommand()
         {
-            var input = Director.RecieveInput(_player);
+            var input = _player.RecieveInput();
 
             //Since player login state is the first location were we receive input from the player, we need to strip
             //out the telnet clients header information.  Unfortunately this method scans and pulls the first full word

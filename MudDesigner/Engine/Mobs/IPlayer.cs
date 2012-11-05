@@ -19,6 +19,7 @@ namespace MudDesigner.Engine.Mobs
         List<byte> Buffer { get; set; }
 
         void Initialize(IState initialState, Socket connection);
+        string RecieveInput();
         void Connect(IState initialState);
         void Disconnect();
 

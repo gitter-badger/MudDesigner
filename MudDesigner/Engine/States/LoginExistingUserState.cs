@@ -33,7 +33,7 @@ namespace MudDesigner.Engine.States
 
         public ICommand GetCommand()
         {
-            var input = Director.RecieveInput(player);
+            var input = player.RecieveInput();
 
             if (String.IsNullOrEmpty(input))
             {

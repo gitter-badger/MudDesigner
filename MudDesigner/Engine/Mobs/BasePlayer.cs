@@ -96,6 +96,54 @@ namespace MudDesigner.Engine.Mobs
                 CurrentState.Render(this);
         }
 
+        public String RecieveInput()
+        {
+            string input = String.Empty;
+
+            while (true)
+            {
+                try
+                {
+                    byte[] buf = new byte[1];
+
+                    if (!Connection.Connected)
+                        return "Disconnected.";
+
+                    Int32 recved = Connection.Receive(buf);
+
+                    if (recved > 0)
+                    {
+                        if (buf[0] == '\n' && Buffer.Count > 0)
+                        {
+                            if (Buffer[Buffer.Count - 1] == '\r')
+                                Buffer.RemoveAt(Buffer.Count - 1);
+
+                            System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
+                            input = enc.GetString(Buffer.ToArray());
+                            Buffer.Clear();
+                            //Return a trimmed string.
+                            return input;
+                        }
+                        else
+                            Buffer.Add(buf[0]);
+                    }
+                    else if (recved == 0) //Disconnected
+                    {
+                        //   ConnectedPlayers[index]. Connected = false;
+                        //  this.LoggedIn = false;
+                        return "Disconnected.";
+                    }
+                }
+                catch (Exception e)
+                {
+                    //Flag as disabled 
+                    //  this.Connected = false;
+                    //  this.LoggedIn = false;
+                    return e.Message;
+                }
+            }
+        }
+
         public void SetPlayerCredentials(string password)
         {
             Password = password;
