@@ -25,7 +25,7 @@ namespace MudDesigner.Engine.Commands
             var game = _game as Game;
             
             if (game != null) 
-                game.Save();
+                game.SaveWorld();
                  
         }
     }

@@ -154,68 +154,28 @@ namespace MudDesigner.Engine.Core
             throw new NotImplementedException();
         }
 
-        public void Load()
+        public void RestoreWorld()
         {
             var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(), "saves",
                                                 MudDesigner.Engine.Properties.EngineSettings.Default.WorldFile);
-            var path = Path.GetDirectoryName(fileAndPathToSave);
 
-            if (path == null)
-            {
-                return;
-            }
+            if (!File.Exists(fileAndPathToSave)) 
+                File.Delete(fileAndPathToSave);
 
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(string.Format(path));
-            }
-
-            if (!File.Exists(fileAndPathToSave)) return;
-
-            using (var br = new BinaryReader(File.Open(fileAndPathToSave, FileMode.Open)))
-            {
-                var gameLoad = br.ReadString();
-                var settings = new JsonSerializerSettings();
-                var contract = new SerializationContracts();
-                settings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
-                settings.TypeNameHandling = TypeNameHandling.All;
-                settings.ContractResolver = contract;
-
-                World = JsonConvert.DeserializeObject<World>(gameLoad, settings);
-            }
+            FileIO fileLoad = new FileIO();
+            World = (IWorld)fileLoad.Load(fileAndPathToSave, typeof(IWorld));
         }
 
         // This 
-        public void Save()
+        public void SaveWorld()
         {
             LastSave = DateTime.Now;
 
             var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(), "saves",
                                                  MudDesigner.Engine.Properties.EngineSettings.Default.WorldFile);
-            var path = Path.GetDirectoryName(fileAndPathToSave);
 
-            if (path == null)
-            {
-                return;
-            }
-
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(string.Format(path));
-            }
-
-           
-            using (var bw = new BinaryWriter(File.Open(fileAndPathToSave, FileMode.OpenOrCreate)))
-            {
-                var settings = new JsonSerializerSettings();
-                var contract = new SerializationContracts();
-
-                settings.TypeNameHandling = TypeNameHandling.All;
-                settings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
-
-                var gameSave = JsonConvert.SerializeObject(World, Formatting.Indented, settings);
-                bw.Write(gameSave);
-            }
+            FileIO fileSave = new FileIO();
+            fileSave.Save(World, fileAndPathToSave);
         }
     }
 }

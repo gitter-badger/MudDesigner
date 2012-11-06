@@ -70,7 +70,7 @@ namespace MudDesigner.Editor
             game.Initialize(server);
             
             //Load the save game file.
-            game.Load();
+            game.RestoreWorld();
 
             EngineEditor.Game = game;
 
@@ -159,7 +159,7 @@ namespace MudDesigner.Editor
 
         private void menuSave_Click(object sender, EventArgs e)
         {
-            EngineEditor.Game.Save();
+            EngineEditor.Game.SaveWorld();
         }
 
         private void menuRooms_Click(object sender, EventArgs e)
@@ -201,7 +201,7 @@ namespace MudDesigner.Editor
             switch (saveResults)
             {
                 case System.Windows.Forms.DialogResult.Yes:
-                    EngineEditor.Game.Save();
+                    EngineEditor.Game.SaveWorld();
                     break;
                 case System.Windows.Forms.DialogResult.No:
                     break;

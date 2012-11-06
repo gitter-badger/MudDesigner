@@ -128,7 +128,7 @@ namespace MudDesigner.Editor
 
             game = (Game)ScriptFactory.FindInheritedScript("MudDesigner.Engine.Core.Game", null);
             game.Initialize(null); //Don't need a server.
-            game.Load();
+            game.RestoreWorld();
             foreach (var r in game.World.Realms.Values)
             {
                 AvailableRealms.Items.Add(r.Name);
@@ -198,7 +198,7 @@ namespace MudDesigner.Editor
         /// <param name="e"></param>
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            game.Save();
+            game.SaveWorld();
             lblSaveStatus.Text = "Saved";
         }
 
@@ -636,7 +636,7 @@ namespace MudDesigner.Editor
 
         private void loadToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            game.Load();
+            game.RestoreWorld();
 
             foreach (var r in game.World.Realms.Values)
             {

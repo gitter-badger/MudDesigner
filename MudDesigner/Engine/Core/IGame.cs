@@ -27,7 +27,7 @@ namespace MudDesigner.Engine.Core
         void Start();
         void Stop();
 
-        void Load();
-        void Save();
+        void RestoreWorld();
+        void SaveWorld();
     }
 }
