@@ -12,7 +12,7 @@ namespace MudDesigner.Engine.Environment
     {
         bool Locked { get; }
 
-        IInventory Key { get; }
+        IItem Key { get; }
 
         AvailableTravelDirections FacingDirection { get; }
 

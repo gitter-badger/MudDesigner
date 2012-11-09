@@ -16,6 +16,13 @@ namespace MudDesigner.Scripts.Game
 
         public override bool Initialize(IServer startedServer)
         {
+            Name = "Mud Designer Default Game";
+            Description = "This is the default game setup that comes shipped with the Mud Designer Game Engine!";
+            HideRoomNames = true;
+            MinimumPlayerAge = 0;
+            Version = "Alpha 2.0";
+            Website = "http://MudDesigner.Codeplex.com \n http://AllocateThis.com";
+
             return base.Initialize(startedServer);
         }
     }

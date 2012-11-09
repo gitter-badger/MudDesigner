@@ -13,18 +13,8 @@ using Newtonsoft.Json;
 
 namespace MudDesigner.Engine.Mobs
 {
-    public abstract class BasePlayer : GameObject, IPlayer
+    public abstract class BasePlayer : BaseMob, IPlayer
     {  
-        public IGender Gender { get; set; }
-
-        public IRace Race { get; set; }
-
-        public IRoom Location { get; protected set; }
-
-        public bool CanTalk { get; set; }
-
-        public Dictionary<Guid, IInventory> Inventory { get; protected set; }
-
         //TODO - IPlayer.Username and Password need to be protected with a IPlayer.Validate(username, password) method. - JS
         public string Username { get; set; }
         public string Password { get; set; }
@@ -57,7 +47,6 @@ namespace MudDesigner.Engine.Mobs
         {
             Buffer = new List<byte>();
             CanTalk = true;
-            Inventory = new Dictionary<Guid, IInventory>();
 
             OnLevelEvent += new OnLevelHandler(OnLevel);
             OnLoginEvent += new OnLoginHandler(OnLogin);
@@ -150,38 +139,14 @@ namespace MudDesigner.Engine.Mobs
             CurrentState = state;
         }
 
-        public void SendMessage(string message, bool newLine = true)
+        public override void SendMessage(string message, bool newLine = true)
         {
             if (newLine)
                 message += System.Environment.NewLine;
             Connection.Send(new ASCIIEncoding().GetBytes(message));
         }
 
-        public void Move(IRoom room)
-        {
-            if (Location == room)
-                return;
-
-            Location = room;
-            SendMessage(Location.Description);
-        }
-
         public void Connect(IState initialState)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Create(string charName, IRoom location)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddInventoryItem(IInventory inventoryItem)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UseInventoryItem(IInventory inventoryItem)
         {
             throw new NotImplementedException();
         }

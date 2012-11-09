@@ -12,7 +12,7 @@ namespace MudDesigner.Engine.Environment
     {
         public bool Locked { get; protected set; }
 
-        public IInventory Key { get; protected set; }
+        public IItem Key { get; protected set; }
 
         public AvailableTravelDirections FacingDirection { get;  protected set; }
 
@@ -32,13 +32,13 @@ namespace MudDesigner.Engine.Environment
             Departure = departingRoom;
         }
 
-        public virtual void Lock(IInventory key)
+        public virtual void Lock(IItem key)
         {
             Key = key;
             Locked = true;
         }
 
-        public virtual bool Unlock(IInventory key)
+        public virtual bool Unlock(IItem key)
         {
             if (key == Key)
                 Locked = false;

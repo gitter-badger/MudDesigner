@@ -52,53 +52,42 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Environment\Realm.cs">
+    <Compile Include="Default\Environment\Realm.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Environment\Door.cs">
+    <Compile Include="Default\Environment\Door.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Environment\Room.cs">
+    <Compile Include="Default\Environment\Room.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Environment\World.cs">
+    <Compile Include="Default\Environment\World.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Environment\Zone.cs">
+    <Compile Include="Default\Environment\Zone.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Mobs\GenderFemale.cs" />
-    <Compile Include="Mobs\GenderMale.cs" />
-    <Compile Include="Mobs\Player.cs">
+    <Compile Include="Default\Mobs\GenderFemale.cs" />
+    <Compile Include="Default\Mobs\GenderMale.cs" />
+    <Compile Include="Default\Mobs\Player.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Objects\Barrel.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Objects\Furniture.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Objects\GreenBarrel.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Objects\Table.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="States\CreateCharacter\CreationManager.cs" />
-    <Compile Include="States\CreateCharacter\GenderSelect.cs" />
-    <Compile Include="States\Login\ClientConnectState.cs" />
-    <Compile Include="States\Login\ClientLoginState.cs" />
-    <Compile Include="States\CreateCharacter\CreateNewCharacter.cs" />
-    <Compile Include="States\MainMenuState.cs">
+    <Compile Include="Default\States\CreateCharacter\CreationManager.cs" />
+    <Compile Include="Default\States\CreateCharacter\GenderSelect.cs" />
+    <Compile Include="Default\States\Login\ClientConnectState.cs" />
+    <Compile Include="Default\States\Login\ClientLoginState.cs" />
+    <Compile Include="Default\States\CreateCharacter\CreateNewCharacter.cs" />
+    <Compile Include="Default\States\MainMenuState.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commands\" />
-    <Folder Include="Directors\" />
+    <Folder Include="Default\Commands\" />
+    <Folder Include="Default\Objects\" />
+    <Folder Include="MyGame\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\Game.cs">
+    <Compile Include="Default\Game\Game.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>

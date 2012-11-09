@@ -53,7 +53,9 @@
     <Compile Include="Core\SerializationContracts.cs" />
     <Compile Include="Events\IQuest.cs" />
     <Compile Include="Mobs\Alignments.cs" />
+    <Compile Include="Mobs\BaseMob.cs" />
     <Compile Include="Mobs\IAppearanceAttribute.cs" />
+    <Compile Include="Mobs\IClass.cs" />
     <Compile Include="Mobs\IFactions.cs" />
     <Compile Include="Mobs\IGender.cs" />
     <Compile Include="Mobs\IStat.cs" />
@@ -80,7 +82,6 @@
     <Compile Include="Mobs\INPC.cs" />
     <Compile Include="Core\GameObject.cs" />
     <Compile Include="Core\IGameObject.cs" />
-    <Compile Include="Objects\IInventory.cs" />
     <Compile Include="Core\ILogger.cs" />
     <Compile Include="Mobs\IPlayer.cs" />
     <Compile Include="Environment\IRealm.cs" />
