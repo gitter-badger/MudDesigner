@@ -3,16 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="DefaultGameType" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MudDesigner.Scripts.Game.Game</Value>
+      <Value Profile="(Default)">MudDesigner.Scripts.Default.Game.Game</Value>
     </Setting>
     <Setting Name="DefaultWorldType" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MudDesigner.Scripts.Environment.World</Value>
+      <Value Profile="(Default)">MudDesigner.Scripts.Default.Environment.World</Value>
     </Setting>
     <Setting Name="DefaultPlayerType" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MudDesigner.Scripts.Mobs.Player</Value>
+      <Value Profile="(Default)">MudDesigner.Scripts.Default.Mobs.Player</Value>
     </Setting>
     <Setting Name="LoginSuccessState" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MudDesigner.Scripts.States.MainMenuState</Value>
+      <Value Profile="(Default)">MudDesigner.Scripts.Default.States.MainMenuState</Value>
     </Setting>
     <Setting Name="ScriptLibrary" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
@@ -25,22 +25,22 @@
       <Value Profile="(Default)">Bedroom</Value>
     </Setting>
     <Setting Name="DoorType" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MudDesigner.Scripts.Environment.Door</Value>
+      <Value Profile="(Default)">MudDesigner.Scripts.Default.Environment.Door</Value>
     </Setting>
     <Setting Name="RealmType" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MudDesigner.Scripts.Environment.Realm</Value>
+      <Value Profile="(Default)">MudDesigner.Scripts.Default.Environment.Realm</Value>
     </Setting>
     <Setting Name="ZoneType" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MudDesigner.Scripts.Environment.Zone</Value>
+      <Value Profile="(Default)">MudDesigner.Scripts.Default.Environment.Zone</Value>
     </Setting>
     <Setting Name="RoomType" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MudDesigner.Scripts.Environment.Room</Value>
+      <Value Profile="(Default)">MudDesigner.Scripts.Default.Environment.Room</Value>
     </Setting>
     <Setting Name="WorldFile" Type="System.String" Scope="User">
       <Value Profile="(Default)">World.sav</Value>
     </Setting>
     <Setting Name="InitialState" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MudDesigner.Scripts.States.Login.ClientConnectState</Value>
+      <Value Profile="(Default)">MudDesigner.Scripts.Default.States.Login.ClientConnectState</Value>
     </Setting>
     <Setting Name="PlayerSavePath" Type="System.String" Scope="User">
       <Value Profile="(Default)">Players</Value>

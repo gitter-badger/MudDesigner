@@ -32,6 +32,7 @@ namespace MudDesigner.Scripts.Default.Environment
 
             //Setup a Realm.
             Realm california = new Realm();
+            california.Name = "California";
             california.AddZone(home);
 
             //We are done setting up, so add Realm to our world.

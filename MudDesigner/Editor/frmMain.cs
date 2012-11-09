@@ -62,7 +62,12 @@ namespace MudDesigner.Editor
             }
 
             //Get a reference to a scripted instance of IGame.
-            var game = (IGame)ScriptFactory.FindInheritedScript("MudDesigner.Engine.Core.Game", null);
+            var game = (IGame)ScriptFactory.GetScript(EngineSettings.Default.DefaultGameType, null);
+            
+            //In the event that the scripted Game class specified as the default is missing,
+            //just search the engine for another one.
+            if (game == null)
+                game = (IGame)ScriptFactory.FindInheritedScript("MudDesigner.Engine.Core.Game", null);
             
             IServer server = new Server(4000);
             

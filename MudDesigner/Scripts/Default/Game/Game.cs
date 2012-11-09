@@ -23,7 +23,19 @@ namespace MudDesigner.Scripts.Default.Game
             Version = "Alpha 2.0";
             Website = "http://MudDesigner.Codeplex.com \n http://AllocateThis.com";
 
-            return base.Initialize(startedServer);
+            World = new MudDesigner.Scripts.Default.Environment.World();
+
+            bool result = base.Initialize(startedServer);
+
+            if (!result)
+                return result;
+
+            //Let the parent Game setup the last of things.
+
+            //Finally, since base.Initialize() initializes the World, we set ours up afterwards.
+            World = new MudDesigner.Scripts.Default.Environment.World();
+
+            return true;
         }
     }
 }
