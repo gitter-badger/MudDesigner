@@ -26,7 +26,7 @@ namespace MudDesigner.Scripts.States
             connectedPlayer = player;
             if(player != null)
             {
-                player.SendMessage(string.Format("Welcome {0}, what do you want to do?", player.CharacterName));
+                player.SendMessage(string.Format("Welcome {0}, what do you want to do?", player.Name));
             }
 
 

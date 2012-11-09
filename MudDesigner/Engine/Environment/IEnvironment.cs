@@ -11,6 +11,8 @@ namespace MudDesigner.Engine.Environment
 {
     public interface IEnvironment : IGameObject
     {
+        bool IsAdminOnly { get; set; }
+
         void BroadcastMessage(string message, List<IPlayer> playersToOmit = null);
 
         void OnEnter(IMob occupant, IEnvironment departureEnvironment, AvailableTravelDirections direction);

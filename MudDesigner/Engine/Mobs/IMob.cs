@@ -12,7 +12,6 @@ namespace MudDesigner.Engine.Mobs
     public interface IMob : IGameObject
     {
         //Character Creation content
-        string CharacterName { get; set; }
         IGender Gender { get; set; }
         IRace Race { get; set; }
 

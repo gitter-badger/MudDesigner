@@ -6,9 +6,10 @@ using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
 using Newtonsoft.Json;
 
+using MudDesigner.Engine.Mobs;
 namespace MudDesigner.Engine.Environment
 {
-    public interface IWorld : IEnvironment 
+    public interface IWorld 
     {
         [JsonProperty(TypeNameHandling = TypeNameHandling.All)]
         Dictionary<Guid, IRealm> Realms { get; }
@@ -19,5 +20,7 @@ namespace MudDesigner.Engine.Environment
         IRealm GetRealm(string realmname);
         void RemoveRealm(IRealm realm);
         void RemoveRealm(string realmName);
+
+        void BroadcastMessage(string message, List<IPlayer> playersToOmit = null);
     }
 }

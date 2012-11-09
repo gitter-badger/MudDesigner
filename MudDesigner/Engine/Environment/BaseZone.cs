@@ -25,6 +25,8 @@ namespace MudDesigner.Engine.Environment
         [Browsable(false), JsonProperty(TypeNameHandling = TypeNameHandling.All, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
         public Dictionary<Guid, IRoom> Rooms{ get; protected set; }
 
+        public bool IsAdminOnly { get; set; }
+
         public bool Safe { get; set; }
 
         public BaseZone()

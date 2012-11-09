@@ -25,6 +25,8 @@ namespace MudDesigner.Engine.Environment
         /// </summary>
         public bool Safe { get; set; }
 
+        public bool IsAdminOnly { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -226,6 +228,37 @@ namespace MudDesigner.Engine.Environment
         }
 
         public void OnLeave(IMob occupant, IEnvironment arrivalEnvironment, AvailableTravelDirections direction)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public void AddDecoration(string decoration)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IItem[] GetItems()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IItem GetItem(string itemName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] GetDecorations()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveDecoration(string decoration)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ClearDecorations()
         {
             throw new NotImplementedException();
         }

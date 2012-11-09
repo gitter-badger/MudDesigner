@@ -24,8 +24,6 @@ namespace MudDesigner.Engine.Core
         IWorld World { get; }
         IServer Server { get; set; }
         bool Initialize(IServer startedServer);
-        void Start();
-        void Stop();
 
         void RestoreWorld();
         void SaveWorld();

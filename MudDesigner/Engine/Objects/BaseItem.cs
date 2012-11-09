@@ -17,40 +17,23 @@ namespace MudDesigner.Engine.Objects
 
         public bool Indestructible { get; set; }
 
+        public bool IsAdminOnly { get; set; }
+
         public BaseItem()
             : base()
         {
-            InspectEvent += new InspectHandler(Inspect);
         }
 
         public virtual void Inspect(IPlayer player)
         {
-            InspectEvent(player);
-        }
-
-        public delegate void InspectHandler(IPlayer player);
-        public event InspectHandler InspectEvent;
-        public virtual void OnInspect(IPlayer player)
-        {
             throw new NotImplementedException();
         }
 
-        public void OnDamage(int amount)
+        public void Repair(IMob healder, int amount)
         {
-            throw new NotImplementedException();
         }
 
-        public void OnRepair(int amount)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void Save()
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void Load(Core.IGame game)
+        public void Damage(IMob dealer, int amount)
         {
             throw new NotImplementedException();
         }

@@ -104,13 +104,5 @@ namespace MudDesigner.Engine.Environment
         {
           
         }
-
-        public virtual void OnEnter(Mobs.IMob occupant, IEnvironment departureEnvironment, AvailableTravelDirections direction)
-        {
-        }
-
-        public virtual void OnLeave(Mobs.IMob occupant, IEnvironment arrivalEnvironment, AvailableTravelDirections direction)
-        {
-        }
     }
 }

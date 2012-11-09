@@ -10,14 +10,14 @@ namespace MudDesigner.Engine.Objects
          //TODO - Add restriction lists.
         Guid ObjectBound { get; set; }
 
+        bool IsAdminOnly { get; set; }
+
         int Weight { get; set; }
         int Health { get; set; }
         bool Indestructible { get; set; }
 
         void Inspect(IPlayer player);
-
-        void OnInspect(IPlayer player);
-        void OnDamage(int amount);
-        void OnRepair(int amount);
+        void Repair(IMob healder, int amount);
+        void Damage(IMob dealer, int amount);
     }
 }

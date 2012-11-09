@@ -20,6 +20,8 @@ namespace MudDesigner.Engine.Environment
         [Browsable(false),JsonProperty(TypeNameHandling = TypeNameHandling.All)]
         public Dictionary<Guid, IZone> Zones{ get; protected set; }
 
+        public bool IsAdminOnly { get; set; }
+
         public BaseRealm()
         {
             Zones = new Dictionary<Guid, IZone>();

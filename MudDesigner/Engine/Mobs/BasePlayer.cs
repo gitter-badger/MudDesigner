@@ -14,19 +14,7 @@ using Newtonsoft.Json;
 namespace MudDesigner.Engine.Mobs
 {
     public abstract class BasePlayer : GameObject, IPlayer
-    {   
-        public string CharacterName
-        {
-            get
-            {
-                return this.Name;
-            }
-            set
-            {
-                this.Name = value;
-            }
-        }
-
+    {  
         public IGender Gender { get; set; }
 
         public IRace Race { get; set; }

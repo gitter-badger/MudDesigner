@@ -35,11 +35,18 @@ namespace MudDesigner.Engine.Environment
         IDoor[] GetDoorways();
 
         void AddItem(IItem item);
+        void AddDecoration(string decoration);
+
+        IItem[] GetItems();
+        IItem GetItem(string itemName);
+        string[] GetDecorations();
+
         void RemoveItem(IItem item);
         void RemoveItem(Guid item); //Don't allow removal of Items via name.  There could be multiple with the same name but diff. Guid
-        void ClearItems();
+        void RemoveDecoration(string decoration);
 
-        void Destroy();
+        void ClearItems();
+        void ClearDecorations();
 
         //void QueryQuest(IQuest quest);
     }

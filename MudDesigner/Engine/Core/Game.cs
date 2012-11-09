@@ -144,16 +144,6 @@ namespace MudDesigner.Engine.Core
             return true;
         }
 
-        public virtual void Start()
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void Stop()
-        {
-            throw new NotImplementedException();
-        }
-
         public void RestoreWorld()
         {
             var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(), "saves",

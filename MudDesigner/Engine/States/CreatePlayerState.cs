@@ -42,7 +42,7 @@ namespace MudDesigner.Engine.States
             var player = _player as BasePlayer;
             if(player != null)
             {
-                player.CharacterName = input;
+                player.Name = input;
                 IState state = (IState)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.LoginSuccessState, Director);
                 return new SwitchStateCommand(Director, state, _player);
             }

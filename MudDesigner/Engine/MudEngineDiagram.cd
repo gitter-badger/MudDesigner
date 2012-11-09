@@ -1,39 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="MudDesigner.Engine.Commands.InvalidCommand" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="28.5" Y="1.5" Width="1.5" />
+    <Position X="26.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>Commands\InvalidCommand.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MudDesigner.Engine.Commands.LoadFileCommand" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="21.5" Y="2.5" Width="1.5" />
+    <Position X="28.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAQAAAAACAAAAAAAAAAIAAAAQAAAAAE=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAQAAAAACAAAAAAAAAAAAAAAQAAAAAU=</HashCode>
       <FileName>Commands\LoadFileCommand.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MudDesigner.Engine.Commands.LoginFailureCommand" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="26.75" Y="2.5" Width="1.5" />
+    <Position X="25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>Commands\LoginFailureCommand.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MudDesigner.Engine.Commands.NoOpCommand" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="21.5" Y="3.5" Width="1.5" />
+    <Position X="28.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Commands\NoOpCommand.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MudDesigner.Engine.Commands.SaveWorldFileCommand" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="23.25" Y="3.5" Width="1.5" />
+    <Position X="21.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAQAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
       <FileName>Commands\SaveWorldFileCommand.cs</FileName>
@@ -41,7 +41,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MudDesigner.Engine.Commands.SwitchStateCommand" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="23.25" Y="4.5" Width="1.5" />
+    <Position X="21.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAABAAAAAAAAQAAAAAAAAAAIAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>Commands\SwitchStateCommand.cs</FileName>
@@ -57,46 +57,46 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MudDesigner.Engine.Core.Game" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="26.75" Y="1.5" Width="1.5" />
+    <Position X="25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IABAgIAEADAgAQAAAAAAAAQAAAAAAAAAIAgAAgAAAAg=</HashCode>
+      <HashCode>IABAAAAEABAggQAAAAAACBQAIAAgAQAAAAgAAgAAAAg=</HashCode>
       <FileName>Core\Game.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MudDesigner.Engine.Core.Logger" Collapsed="true">
-    <Position X="23.25" Y="2.5" Width="1.5" />
+    <Position X="21.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAJAIAEAAAAAAABAAkAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAgAAAAAJAIAEAAAAAAAIAAkAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Logger.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MudDesigner.Engine.Directors.ServerDirector" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="21.5" Y="4.5" Width="1.5" />
+    <Position X="28.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAABAAAAAkAAAACAAAAABABAAAAAgAAAAA=</HashCode>
+      <HashCode>AAAAIAAAIAAABAAAAAkAAAACAAAAABAAAAAAAgAAAAA=</HashCode>
       <FileName>Directors\ServerDirector.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MudDesigner.Engine.Environment.BaseRealm" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="2.75" Y="1.75" Width="1.5" />
+    <Position X="2.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAQgIABAAAAAhCEAAAAABACAQAAAAAAAIAAEAAAAAA=</HashCode>
+      <HashCode>AAAQAAABAAAAAhCEAAAAABACAQAAAAAAAIAAEAAAAAA=</HashCode>
       <FileName>Environment\BaseRealm.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MudDesigner.Engine.Environment.BaseRoom" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="5" Y="1.75" Width="1.5" />
+    <Position X="5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAIAAAAAAAgAEABAAKBAAAQFAAAAAAIAASAAAAQA=</HashCode>
+      <HashCode>AAAAAIAAAAAACgAEABAAKBAAwQFAAAAEAIAASAAAAQA=</HashCode>
       <FileName>Environment\BaseRoom.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MudDesigner.Engine.Environment.BaseZone" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="7.25" Y="1.75" Width="1.5" />
+    <Position X="7.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAAQAIABAAAAAhCEAAAAABACAQAAAAAAAIAAEAAAABA=</HashCode>
       <FileName>Environment\BaseZone.cs</FileName>
@@ -106,38 +106,38 @@
   <Class Name="MudDesigner.Engine.Environment.Door" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="28.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gAAQBAAgAAAAIAQAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>gAAQBAAgCAAAIAQAAAgAAAgAAAAAAAAAEAAAAAAAAAA=</HashCode>
       <FileName>Environment\Door.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MudDesigner.Engine.Environment.TravelDirections" Collapsed="true">
-    <Position X="25" Y="4.5" Width="1.5" />
+    <Position X="23.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
       <FileName>Environment\TravelDirections.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MudDesigner.Engine.Environment.World" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="9.5" Y="1.75" Width="1.5" />
+    <Position X="9.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAkIAAAAAIAAAAAAAAABAgAQAAAAAAAIAAABAAABI=</HashCode>
+      <HashCode>AAAAEAAAAAAIAAAAAAAAABAgAQAAAAAAAIAAABAAABI=</HashCode>
       <FileName>Environment\World.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MudDesigner.Engine.Mobs.BasePlayer" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="0.5" Y="1.75" Width="1.5" />
+    <Position X="0.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QBQSgIIAAIDACwnEoTIAArAAACIEAEACAJAABgAQRAA=</HashCode>
+      <HashCode>QBQSAAIAAIDACwnEoTIAArAQACIEAEADAJAABgAQRAA=</HashCode>
       <FileName>Mobs\BasePlayer.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MudDesigner.Engine.Networking.Server" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="28.5" Y="3.5" Width="1.5" />
+    <Position X="26.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACgAAEACAAIIAAAAAAAAAACAgIAQAIIAAAAAAAQEA=</HashCode>
+      <HashCode>AAACgAAEACAAIIAAAAAAAAAACAgIAQAoIAAAAAAAQEA=</HashCode>
       <FileName>Networking\Server.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -150,9 +150,10 @@
     </TypeIdentifier>
   </Class>
   <Class Name="MudDesigner.Engine.Properties.EngineSettings" Collapsed="true">
-    <Position X="25" Y="1.5" Width="1.5" />
+    <Position X="23.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAEBAAAAAAAAAAIIAYAAAABAAABAAAAAEAEASA=</HashCode>
+      <HashCode>AAACAAAEBAAAAAAEAAAIIAYAgAABAAABAAAAAEAEDSA=</HashCode>
+      <FileName>Properties\EngineSettings.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MudDesigner.Engine.Scripting.CompileEngine" Collapsed="true">
@@ -171,14 +172,14 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MudDesigner.Engine.Scripting.ScriptFactory" Collapsed="true">
-    <Position X="25" Y="3.5" Width="1.5" />
+    <Position X="23.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAEAAAACAAAAAAAAAFAAgAAgAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AABAAAAAEAAAACAAAAAAAAAFAAAAAgAQAAAAAAAAAAA=</HashCode>
       <FileName>Scripting\ScriptFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MudDesigner.Engine.Scripting.ScriptObject" Collapsed="true">
-    <Position X="26.75" Y="3.5" Width="1.5" />
+    <Position X="25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAAAAAAAgAAAAAAAAAEAAAAAAAEAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>Scripting\ScriptObject.cs</FileName>
@@ -187,7 +188,7 @@
   <Class Name="MudDesigner.Engine.States.ConnectState" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="23.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAABAAAAAAAAAAAAABAQAAAAAAAIABABAAAABAAAA=</HashCode>
+      <HashCode>AAAAABAAAAAAAAAAAAAAAQAAAAAAAAABABAAAABAAAA=</HashCode>
       <FileName>States\ConnectState.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -201,7 +202,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MudDesigner.Engine.States.LoginExistingUserState" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="25" Y="2.5" Width="1.5" />
+    <Position X="23.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAABAAAAAAAAAAAAABAAAAAAAAAIABABAAAABAAAA=</HashCode>
       <FileName>States\LoginExistingUserState.cs</FileName>
@@ -209,7 +210,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MudDesigner.Engine.States.LoginState" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="28.5" Y="2.5" Width="1.5" />
+    <Position X="26.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAABAAAAAAAAABAAABCAAAAAAAAIAAABAAAABAAAA=</HashCode>
       <FileName>States\LoginState.cs</FileName>
@@ -217,9 +218,9 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MudDesigner.Engine.Core.GameObject" Collapsed="true">
-    <Position X="5" Y="0.5" Width="1.5" />
+    <Position X="5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAgIAAAAAggIAAAAAAAAQAAABAAQAAAAAAAAAAAIA=</HashCode>
+      <HashCode>AAAAAAAAAAAggIAAAAAAAAQAAABAAQAAAAAAAAAAAIA=</HashCode>
       <FileName>Core\GameObject.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -232,28 +233,28 @@
     </TypeIdentifier>
   </Struct>
   <Interface Name="MudDesigner.Engine.Objects.IEquipable" Collapsed="true">
-    <Position X="1" Y="7.75" Width="1.5" />
+    <Position X="1" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Objects\IEquipable.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Core.ILoadable" Collapsed="true">
-    <Position X="13" Y="3.5" Width="1.5" />
+    <Position X="25" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\ILoadable.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Core.ISaveable" Collapsed="true">
-    <Position X="10" Y="3.5" Width="1.5" />
+    <Position X="23.25" Y="8.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\ISaveable.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Objects.IUseable" Collapsed="true">
-    <Position X="5.5" Y="7.75" Width="1.5" />
+    <Position X="5.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Objects\IUseable.cs</FileName>
@@ -276,19 +277,19 @@
   <Interface Name="MudDesigner.Engine.Core.IGame" Collapsed="true">
     <Position X="23.25" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAEADAgAQAAAAAAAAQAAAAAAAAAIAAAAAAAAAg=</HashCode>
+      <HashCode>IAAAAAAEABAggQAAAAAACBQAIAAgAQAAAAAAAgAAAAg=</HashCode>
       <FileName>Core\IGame.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Core.ILogger" Collapsed="true">
-    <Position X="25" Y="7.75" Width="1.5" />
+    <Position X="26.75" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\ILogger.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Core.IRule" Collapsed="true">
-    <Position X="26.75" Y="7.75" Width="1.5" />
+    <Position X="28.5" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\IRule.cs</FileName>
@@ -302,16 +303,16 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Directors.IRuleDirector" Collapsed="true">
-    <Position X="28.5" Y="7.75" Width="1.5" />
+    <Position X="21.5" Y="8.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Directors\IRuleDirector.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Directors.IServerDirector" Collapsed="true">
-    <Position X="23.25" Y="8.5" Width="1.5" />
+    <Position X="26.75" Y="8.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAAAAAAAAgAAAACAAAAABAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAIAAAIAAAAAAAAAgAAAACAAAAABAAAAAAAAAAAAA=</HashCode>
       <FileName>Directors\IServerDirector.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -323,58 +324,58 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Environment.IEnvironment" Collapsed="true">
-    <Position X="11.25" Y="6.5" Width="1.5" />
+    <Position X="11.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAQAAAAAAAIAAAAAAAAA=</HashCode>
       <FileName>Environment\IEnvironment.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Environment.IRealm" Collapsed="true">
-    <Position X="10" Y="7.75" Width="1.5" />
+    <Position X="10" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAABAAAAABCAAAAAAAACAAAAAAAAAAAAEAAAAAA=</HashCode>
       <FileName>Environment\IRealm.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Environment.IRoom" Collapsed="true">
-    <Position X="12.25" Y="7.75" Width="1.5" />
+    <Position X="12.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAABAAKBAAAAFAAAAAAAAASAAAAQA=</HashCode>
+      <HashCode>AAAAAAAAAAAACAAAABAAKBAAwAFAAAAEAAAASAAAAQA=</HashCode>
       <FileName>Environment\IRoom.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Environment.IWorld" Collapsed="true">
-    <Position X="14.5" Y="7.75" Width="1.5" />
+    <Position X="14.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAEAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAABAAABI=</HashCode>
       <FileName>Environment\IWorld.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Environment.IZone" Collapsed="true">
-    <Position X="7.75" Y="7.75" Width="1.5" />
+    <Position X="7.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAAAAAABAAAAABCAAAAAAAACAAAAAAAAAAAAEAAAABA=</HashCode>
       <FileName>Environment\IZone.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Mobs.IMob" Collapsed="true">
-    <Position X="18" Y="6.5" Width="1.5" />
+    <Position X="18" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAAAAAAIBAAAiAgCIAAJAAACIAAEAAAIAAAgAABAA=</HashCode>
       <FileName>Mobs\IMob.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Mobs.INPC" Collapsed="true">
-    <Position X="16.75" Y="7.75" Width="1.5" />
+    <Position X="16.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIYAAAAAAABAAAAAACAAAAAAAAAAAAQAQAAEAAgCQAA=</HashCode>
       <FileName>Mobs\INPC.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Mobs.IPlayer" Collapsed="true">
-    <Position X="19" Y="7.75" Width="1.5" />
+    <Position X="19" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABQAAAAAAAAAAQFAIQAAAKAAAAAEAAACAAAAAAAARAA=</HashCode>
+      <HashCode>ABQAAAAAAAAAAQFAIQAAAKAAAAAEAAADAAAAAAAARAA=</HashCode>
       <FileName>Mobs\IPlayer.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -386,28 +387,28 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Networking.IServer" Collapsed="true">
-    <Position X="21.5" Y="8.5" Width="1.5" />
+    <Position X="25" Y="8.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAEACAAAIAAAAAAAAAACAgIAAAIIAAAAAAAQEA=</HashCode>
+      <HashCode>AAACAAAEACAAAIAAAAAAAAAACAgIAAAoIAAAAAAAQEA=</HashCode>
       <FileName>Networking\IServer.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Core.IGameObject" Collapsed="true">
-    <Position X="10" Y="4.75" Width="1.5" />
+    <Position X="10" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAggIAAAAAAAAQAAABAAQAAAAAAAAAAAIA=</HashCode>
       <FileName>Core\IGameObject.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Objects.IInventory" Collapsed="true">
-    <Position X="3.25" Y="7.75" Width="1.5" />
+    <Position X="3.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Objects\IInventory.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.Objects.IItem" Collapsed="true">
-    <Position X="3.25" Y="6.5" Width="1.5" />
+    <Position X="3.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACQAAAAAAAAQAAAAAAAAACCEAQAAAAAAACAAAAAA=</HashCode>
       <FileName>Objects\IItem.cs</FileName>
@@ -421,7 +422,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="MudDesigner.Engine.States.IState" Collapsed="true">
-    <Position X="25" Y="8.5" Width="1.5" />
+    <Position X="28.5" Y="8.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAABAAAA=</HashCode>
       <FileName>States\IState.cs</FileName>
