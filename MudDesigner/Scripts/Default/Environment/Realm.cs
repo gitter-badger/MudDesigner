@@ -8,12 +8,6 @@ namespace MudDesigner.Scripts.Environment
 {
     public class Realm : MudDesigner.Engine.Environment.BaseRealm
     {
-        public Realm() : base()
-        {
-            
-        }
-        public Realm(string name) : base(name)
-        {
-        }
+
     }
 }

@@ -67,11 +67,22 @@
     <Compile Include="Default\Environment\Zone.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Default\Mobs\GenderFemale.cs" />
-    <Compile Include="Default\Mobs\GenderMale.cs" />
+    <Compile Include="Default\Mobs\Appearances\Hair.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Default\Mobs\Appearances\Head.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Default\Mobs\GenderFemale.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Default\Mobs\GenderMale.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Default\Mobs\Player.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Default\Mobs\Stats\Health.cs" />
     <Compile Include="Default\States\CreateCharacter\CreationManager.cs" />
     <Compile Include="Default\States\CreateCharacter\GenderSelect.cs" />
     <Compile Include="Default\States\Login\ClientConnectState.cs" />

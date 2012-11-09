@@ -7,5 +7,9 @@ namespace MudDesigner.Scripts.Environment
 {
     public class World : MudDesigner.Engine.Environment.World
     {
+        public World()
+        {
+            Description = "The Default World is very dull and boring!";
+        }
     }
 }
