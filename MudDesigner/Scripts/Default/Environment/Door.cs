@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using MudDesigner.Engine.Environment;
 
-namespace MudDesigner.Scripts.Environment
+namespace MudDesigner.Scripts.Default.Environment
 {
     public class Door : Engine.Environment.Door
     {

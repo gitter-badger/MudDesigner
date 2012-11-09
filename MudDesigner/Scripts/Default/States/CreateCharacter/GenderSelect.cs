@@ -11,9 +11,8 @@ using MudDesigner.Engine.Mobs;
 using MudDesigner.Engine.Properties;
 using MudDesigner.Engine.Scripting;
 using MudDesigner.Engine.States;
-using MudDesigner.Scripts.States.CreateCharacter;
 
-namespace MudDesigner.Scripts.States.CreateCharacter
+namespace MudDesigner.Scripts.Default.States.CreateCharacter
 {
     public class GenderSelect : IState
     {

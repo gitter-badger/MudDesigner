@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Networking;
 using Env = MudDesigner.Engine.Environment;
-using MudDesigner.Scripts.Environment;
-namespace MudDesigner.Scripts.Game
+
+namespace MudDesigner.Scripts.Default.Game
 {
     public class Game : MudDesigner.Engine.Core.Game
     {

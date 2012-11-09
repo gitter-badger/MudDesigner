@@ -10,7 +10,7 @@ using MudDesigner.Engine.Mobs;
 using MudDesigner.Engine.Properties;
 using MudDesigner.Engine.States;
 
-namespace MudDesigner.Scripts.States.CreateCharacter
+namespace MudDesigner.Scripts.Default.States.CreateCharacter
 {
     public class CreateNewCharacter : IState
     {

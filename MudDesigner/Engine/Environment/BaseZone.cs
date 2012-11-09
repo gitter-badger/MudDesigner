@@ -122,7 +122,7 @@ namespace MudDesigner.Engine.Environment
 
         public override string ToString()
         {
-            return Realm.Name + "->" + Name;
+            return Realm.Name + ">" + Name;
         }
 
         public delegate void OnEnterHandler(IMob occupant, IEnvironment departureEnvironment, AvailableTravelDirections direction);

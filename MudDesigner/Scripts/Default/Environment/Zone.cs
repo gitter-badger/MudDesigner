@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 using MudDesigner.Engine.Environment;
 
-namespace MudDesigner.Scripts.Environment
+namespace MudDesigner.Scripts.Default.Environment
 {
-    public class Zone : MudDesigner.Engine.Environment.BaseZone
+    public class Zone : BaseZone
     {
         public Zone(): base()
         {

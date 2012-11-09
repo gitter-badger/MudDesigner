@@ -8,7 +8,7 @@ using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Scripting;
 using MudDesigner.Engine.Mobs;
 
-namespace MudDesigner.Scripts.States
+namespace MudDesigner.Scripts.Default.States
 {
     public class MainMenuState : IState
     {

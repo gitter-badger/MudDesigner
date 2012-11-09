@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using MudDesigner.Engine.Mobs;
 
-namespace MudDesigner.Scripts.Mobs
+namespace MudDesigner.Scripts.Default.Mobs
 {
     public class GenderMale : IGender
     {

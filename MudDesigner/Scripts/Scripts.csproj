@@ -52,6 +52,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Default\Commands\LookCommand.cs" />
     <Compile Include="Default\Environment\Realm.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -88,12 +89,12 @@
     <Compile Include="Default\States\Login\ClientConnectState.cs" />
     <Compile Include="Default\States\Login\ClientLoginState.cs" />
     <Compile Include="Default\States\CreateCharacter\CreateNewCharacter.cs" />
+    <Compile Include="Default\States\Login\LoginCompleted.cs" />
     <Compile Include="Default\States\MainMenuState.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Default\Commands\" />
     <Folder Include="Default\Objects\" />
     <Folder Include="MyGame\" />
   </ItemGroup>

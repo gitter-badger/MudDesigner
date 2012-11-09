@@ -10,9 +10,10 @@ using MudDesigner.Engine.Directors;
 using MudDesigner.Engine.Mobs;
 using MudDesigner.Engine.Properties;
 using MudDesigner.Engine.States;
-using MudDesigner.Scripts.States.CreateCharacter;
 
-namespace MudDesigner.Scripts.States.Login
+using MudDesigner.Scripts.Default.States.CreateCharacter;
+
+namespace MudDesigner.Scripts.Default.States.Login
 {
     public class ClientLoginState : IState
     {

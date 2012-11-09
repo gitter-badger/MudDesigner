@@ -12,7 +12,7 @@ using MudDesigner.Engine.Directors;
 using MudDesigner.Engine.Commands;
 using MudDesigner.Engine.Properties;
 
-namespace MudDesigner.Scripts.States.CreateCharacter
+namespace MudDesigner.Scripts.Default.States.CreateCharacter
 {
     public class CreationManager : IState
     {

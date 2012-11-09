@@ -200,7 +200,7 @@ namespace MudDesigner.Engine.Environment
 
         public override string ToString()
         {
-            return Zone.Realm.Name + "->" + Zone.Name + "->" + Name;
+            return Zone.Realm.Name + ">" + Zone.Name + ">" + Name;
         }
 
         #region == Events ==

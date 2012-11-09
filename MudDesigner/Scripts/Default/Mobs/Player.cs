@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 using MudDesigner.Engine.Mobs;
 using MudDesigner.Engine.Core;
+using MudDesigner.Engine.Environment;
 
 using MudDesigner.Scripts.Default.Mobs.Appearances;
 using MudDesigner.Scripts.Default.Mobs.Stats;
 
-namespace MudDesigner.Scripts.Mobs
+namespace MudDesigner.Scripts.Default.Mobs
 {
     public class Player : BasePlayer
     {
@@ -25,8 +26,15 @@ namespace MudDesigner.Scripts.Mobs
 
             CanTalk = true;
             MaxInventorySize = 12;
+
+            OnEnterEvent += new OnEnterHandler(OnEnterRoom);
         }
 
+        public void OnEnterRoom(IRoom departingRoom)
+        {
+            SendMessage(Location.Description);
+        }
+        
         public override void Attack(IMob target)
         {
             //Stub
