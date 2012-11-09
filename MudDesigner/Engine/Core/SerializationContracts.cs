@@ -13,20 +13,31 @@ namespace MudDesigner.Engine.Core
     {
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
-            var property = base.CreateProperty(member, memberSerialization);
-
-            if (!property.Writable)
+            try
             {
-                var prop = member as PropertyInfo;
+                var property = base.CreateProperty(member, memberSerialization);
 
-                if (prop != null)
+                if (!property.Writable)
                 {
-                    var hasPrivateSetter = prop.GetSetMethod(true) != null;
-                    property.Writable = hasPrivateSetter;
+                    var prop = member as PropertyInfo;
+
+                    if (prop != null)
+                    {
+                        var hasPrivateSetter = prop.GetSetMethod(true) != null;
+                        property.Writable = hasPrivateSetter;
+                    }
                 }
+
+                return property;
+            }
+            catch(Exception ex)
+            {
+                Logger.WriteLine("SerializationContracts failed to create a required property for '" + member.Name + "'!", Logger.Importance.Critical);
+                Logger.WriteLine("SerializationContracts failed with the following message: " + ex.Message, Logger.Importance.Critical);
+                Logger.WriteLine("SerializationContract failures could be caused by corrupt save files.", Logger.Importance.Critical);
             }
 
-            return property;
+            return null;
         }
     }
 }

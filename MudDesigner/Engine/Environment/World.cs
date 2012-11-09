@@ -12,33 +12,34 @@ using Newtonsoft.Json;
 
 namespace MudDesigner.Engine.Environment
 {
-    
+
     public class World : GameObject, IWorld
     {
-        [Browsable(false),JsonProperty(TypeNameHandling = TypeNameHandling.All)]
-        public Dictionary<Guid, IRealm> Realms { get; protected set; }
+        [Browsable(false), JsonProperty(TypeNameHandling = TypeNameHandling.All)]
+        protected List<IRealm> Realms { get; set; }
 
         public bool IsSafe { get; set; }
 
         public World()
         {
-            Realms = new Dictionary<Guid, IRealm>();
+            Realms = new List<IRealm>();
             Name = "World";
         }
 
-        //overloaded member for loading
-        public World(Guid id) : base(id)
+        public void AddRealm(IRealm realm, bool forceOverwrite = false)
         {
-            Realms = new Dictionary<Guid, IRealm>();
-            Name = "World";
-        }
+            if (realm == null)
+                return;
 
-        public IRealm GetRealm(Guid id)
-        {
-            IRealm realm;
-            Realms.TryGetValue(id, out realm);
+            if (forceOverwrite)
+            {
+                if (Realms.Contains(realm))
+                {
+                    Realms.Remove(realm);
+                }
+            }
 
-            return realm;
+            Realms.Add(realm);
         }
 
         /// <summary>
@@ -49,49 +50,41 @@ namespace MudDesigner.Engine.Environment
         /// <returns></returns>
         public IRealm GetRealm(string realm)
         {
-            return Realms.Where(r => r.Value.Name == realm).Select(r => r.Value).FirstOrDefault();
-        }
-
-
-        public void AddRealm(IRealm realm, bool forceOverwrite = false)
-        {
-            if (realm == null)
-                return;
-
-            if (forceOverwrite)
+            foreach (IRealm r in Realms)
             {
-                if (Realms.ContainsValue(realm))
-                {
-                    foreach (var r in Realms.Values.Where(newRealm => newRealm == realm))
-                    {
-                        Realms.Remove(r.ID);
-                        break; //We removed our Realm, so escape.
-                    }
-                }
+                if (r.Name.ToLower() == realm.ToLower())
+                    return r;
             }
 
-            Realms.Add(realm.ID, realm);
+            return null;
+        }
+
+        public IRealm[] GetRealms()
+        {
+            return Realms.ToArray();
         }
 
         public void RemoveRealm(IRealm realm)
         {
-            if (Realms.ContainsKey(realm.ID))
-                Realms.Remove(realm.ID);
+            if (Realms.Contains(realm))
+                Realms.Remove(realm);
         }
 
         public void RemoveRealm(string realmName)
         {
-            IRealm realm = Realms.Where(r => r.Value.Name == realmName).Select(r => r.Value).First();
-
-            if (realm == null)
-                return;
-            else
-                Realms.Remove(realm.ID);
+            foreach (IRealm realm in Realms)
+            {
+                if (realm.Name.ToLower() == realmName.ToLower())
+                {
+                    Realms.Remove(realm);
+                    break;
+                }
+            }
         }
 
         public void BroadcastMessage(string message, List<Mobs.IPlayer> playersToOmit = null)
         {
-            foreach (IRealm realm in Realms.Values)
+            foreach (IRealm realm in Realms)
             {
                 if (playersToOmit == null)
                     realm.BroadcastMessage(message);
@@ -102,7 +95,7 @@ namespace MudDesigner.Engine.Environment
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-          
+
         }
     }
 }

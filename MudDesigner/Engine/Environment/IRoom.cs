@@ -24,10 +24,10 @@ namespace MudDesigner.Engine.Environment
 
         Senses Sense { get; set; }
         
-        Dictionary<string, IPlayer> Occupants { get; set; }
+        List<IPlayer> Occupants { get; set; }
         Dictionary<AvailableTravelDirections, IDoor> Doorways { get; }
 
-        Dictionary<Guid, IItem> Items { get; }
+        List<IItem> Items { get; }
 
         void AddDoorway(AvailableTravelDirections direction, IRoom arrival, bool autoAddReverseDireciton, bool forceOverwrite);
         void RemoveDoorway(AvailableTravelDirections direction, bool autoRemoveReverseDirection);
@@ -42,7 +42,6 @@ namespace MudDesigner.Engine.Environment
         string[] GetDecorations();
 
         void RemoveItem(IItem item);
-        void RemoveItem(Guid item); //Don't allow removal of Items via name.  There could be multiple with the same name but diff. Guid
         void RemoveDecoration(string decoration);
 
         void ClearItems();

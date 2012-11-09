@@ -15,7 +15,7 @@ namespace MudDesigner.Engine.Environment
         IRealm Realm { get; set; }
 
         [JsonProperty(TypeNameHandling = TypeNameHandling.All)]
-        Dictionary<Guid, IRoom> Rooms { get; }
+        List<IRoom> Rooms { get; }
 
         //TODO - Add a general collection of monsters that populate the entire Zone.
         //Helps you not having to insert Monsters into every room you make
@@ -25,7 +25,6 @@ namespace MudDesigner.Engine.Environment
         void AddRooms(IRoom[] rooms, bool forceOverwrite = false);
         IRoom GetRoom(string roomName);
         void RemoveRoom(IRoom room);
-        void RemoveRoom(Guid id);
         void DeleteRooms();
     }
 }

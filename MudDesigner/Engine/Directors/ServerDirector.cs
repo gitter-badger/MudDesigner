@@ -15,8 +15,6 @@ namespace MudDesigner.Engine.Directors
 {
     public class ServerDirector : IServerDirector
     {
-     
-
         public Dictionary<IPlayer, Thread> ConnectedPlayers { get; private set; }
 
         public IServer Server { get; set; }

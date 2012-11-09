@@ -18,7 +18,6 @@ namespace MudDesigner.Engine.Core
         bool Autosave { get; set; }
         int SaveFrequency { get; set; }
 
-        Dictionary<Guid, IGameObject> GameObjects { get; }
         DateTime LastSave { get; }
 
         IWorld World { get; }

@@ -5,11 +5,6 @@ namespace MudDesigner.Engine.Core
     public interface IGameObject
     {
         /// <summary>
-        /// The GUID for this object
-        /// </summary>
-        Guid ID { get;}
-
-        /// <summary>
         /// Name of the object.
         /// </summary>
         string Name { get; set; }

@@ -48,12 +48,12 @@ namespace MudDesigner.Editor
             {
                 //In the event this is the first Realm.
                 //Prevents infinit loop
-                if (EngineEditor.Game.World.Realms.Count == 0)
+                if (EngineEditor.Game.World.GetRealms().Length == 0)
                     validName = true;
 
-                foreach (var r in EngineEditor.Game.World.Realms)
+                foreach (var r in EngineEditor.Game.World.GetRealms())
                 {
-                    if (r.Value.Name == newName)
+                    if (r.Name == newName)
                     {
                         value++;
                         newName = "New Realm" + value;
@@ -95,7 +95,7 @@ namespace MudDesigner.Editor
 
         private void frmRealms_Load(object sender, EventArgs e)
         {
-            foreach (IRealm realm in EngineEditor.Game.World.Realms.Values)
+            foreach (IRealm realm in EngineEditor.Game.World.GetRealms())
             {
                 realmsLstExistingRealms.Items.Add(realm.Name);
             }

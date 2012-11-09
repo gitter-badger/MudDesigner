@@ -18,6 +18,9 @@ namespace MudDesigner.Engine.Core
                 Directory.CreateDirectory(path);
             }
 
+            if (File.Exists(fullFilePath))
+                File.Delete(fullFilePath);
+
             using (var writer = new BinaryWriter(File.Open(fullFilePath, FileMode.OpenOrCreate)))
             {
                 var settings = new JsonSerializerSettings();
@@ -33,7 +36,7 @@ namespace MudDesigner.Engine.Core
 
         public object Load(string fullFilePath, Type t)
         {
-            var path = fullFilePath;
+            var path = Path.GetDirectoryName(fullFilePath);
 
             if (path == null)
             {
@@ -42,12 +45,12 @@ namespace MudDesigner.Engine.Core
 
             if (!Directory.Exists(path))
             {
-                Directory.CreateDirectory(string.Format(path));
+                Directory.CreateDirectory(path);
             }
 
-            if (!File.Exists(path)) return null;
+            if (!File.Exists(fullFilePath)) return null;
 
-            using (var br = new BinaryReader(File.Open(path, FileMode.Open)))
+            using (var br = new BinaryReader(File.Open(fullFilePath, FileMode.Open)))
             {
                 var objectToLoad = br.ReadString();
                 var settings = new JsonSerializerSettings();

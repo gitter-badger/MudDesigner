@@ -11,13 +11,11 @@ namespace MudDesigner.Engine.Environment
 {
     public interface IWorld 
     {
-        [JsonProperty(TypeNameHandling = TypeNameHandling.All)]
-        Dictionary<Guid, IRealm> Realms { get; }
         bool IsSafe { get; set; }
 
         void AddRealm(IRealm realm, bool overwrite = false);
-        IRealm GetRealm(Guid realmid);
         IRealm GetRealm(string realmname);
+        IRealm[] GetRealms();
         void RemoveRealm(IRealm realm);
         void RemoveRealm(string realmName);
 

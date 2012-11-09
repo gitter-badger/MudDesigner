@@ -22,13 +22,6 @@ namespace MudDesigner.Engine.Core
     public abstract class Game : IGame
     {
         /// <summary>
-        /// TODO - Michael, please expand on this more - JS.
-        /// TODO - I dont know if we need this, GameObjects shouldlive in the World not outside of it.... - MC 
-        /// </summary>
-        [Browsable(false)]
-        public Dictionary<Guid, IGameObject> GameObjects { get; private set; }
-
-        /// <summary>
         /// The name of this game.
         /// </summary>
         public string Name { get; set; }
@@ -84,27 +77,6 @@ namespace MudDesigner.Engine.Core
         [Browsable(false)]
         public DateTime LastSave { get; private set; }
 
-        public Game()
-        {
-            GameObjects = new Dictionary<Guid, IGameObject>();
-        }
-
-        /// <summary>
-        /// Returns a Game object that is currently loaded into the game.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public IGameObject GetGameObject(Guid id)
-        {
-            //QUESTION - How do you know what Guid belongs to which object during runtime? - JS
-            return GameObjects[id];
-        }
-
-        public void AddGameObject(IGameObject go)
-        {
-            GameObjects.Add(go.ID, go);
-        }
-
         /// <summary>
         /// Sets up all of the game objects for use, loads any saved states, restores the world and links itself to the server.
         /// </summary>
@@ -149,11 +121,18 @@ namespace MudDesigner.Engine.Core
             var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(), "saves",
                                                 MudDesigner.Engine.Properties.EngineSettings.Default.WorldFile);
 
-            if (!File.Exists(fileAndPathToSave)) 
-                File.Delete(fileAndPathToSave);
+            if (!File.Exists(fileAndPathToSave))
+                return;
 
             FileIO fileLoad = new FileIO();
-            World = (IWorld)fileLoad.Load(fileAndPathToSave, typeof(IWorld));
+            try
+            {
+                World = (IWorld)fileLoad.Load(fileAndPathToSave, typeof(IWorld));
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         // This 

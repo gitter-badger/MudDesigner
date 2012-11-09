@@ -17,25 +17,20 @@ namespace MudDesigner.Engine.Environment
     public abstract class BaseRealm : GameObject, IRealm
     {
         //Room Collection
-        [Browsable(false),JsonProperty(TypeNameHandling = TypeNameHandling.All)]
-        public Dictionary<Guid, IZone> Zones{ get; protected set; }
+        [Browsable(false), JsonProperty(TypeNameHandling = TypeNameHandling.All)]
+        public List<IZone> Zones { get; protected set; }
 
         public bool IsAdminOnly { get; set; }
 
         public BaseRealm()
         {
-            Zones = new Dictionary<Guid, IZone>();
+            Zones = new List<IZone>();
         }
 
-        public BaseRealm(string name) : base()
+        public BaseRealm(string name)
+            : base()
         {
-            Zones = new Dictionary<Guid, IZone>();
-            Name = name;
-        }
-
-        public BaseRealm(string name, Guid id) : base(id)
-        {
-            Zones = new Dictionary<Guid, IZone>();
+            Zones = new List<IZone>();
             Name = name;
         }
 
@@ -46,23 +41,19 @@ namespace MudDesigner.Engine.Environment
 
             if (forceOverwrite)
             {
-                if (Zones.ContainsValue(zone))
+                if (Zones.Contains(zone))
                 {
-                    foreach (var r in Zones.Where(newZone => newZone.Value == zone))
-                    {
-                        Zones.Remove(r.Key);
-                        break;
-                    }
+                    Zones.Remove(zone);
                 }
             }
 
             zone.Realm = this;
-            Zones.Add(zone.ID, zone);
+            Zones.Add(zone);
         }
 
         public virtual IZone GetZone(string zoneName)
         {
-            foreach (IZone zone in Zones.Values)
+            foreach (IZone zone in Zones)
             {
                 if (zone.Name == zoneName)
                     return zone;
@@ -80,15 +71,13 @@ namespace MudDesigner.Engine.Environment
 
         public virtual void RemoveZone(IZone zone)
         {
-            if (Zones.ContainsKey(zone.ID))
-                Zones.Remove(zone.ID);
-            else if (Zones.ContainsValue(zone))
-                Zones.Remove(zone.ID);
+            if (Zones.Contains(zone))
+                Zones.Remove(zone);
         }
 
         public virtual void BroadcastMessage(string message, List<IPlayer> playersToOmmit = null)
         {
-            foreach (IZone zone in Zones.Values)
+            foreach (IZone zone in Zones)
             {
                 if (playersToOmmit == null)
                     zone.BroadcastMessage(message);

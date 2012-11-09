@@ -11,19 +11,19 @@ using MudDesigner.Engine.Mobs;
 using Newtonsoft.Json;
 
 namespace MudDesigner.Engine.Environment
-{ 
+{
     public abstract class BaseZone : GameObject, IZone
     {
-        
+
         /// <summary>
         /// Realm that this Room resides within
         /// </summary>
-        [Browsable(false),JsonProperty(ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
+        [Browsable(false), JsonProperty(ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
         public IRealm Realm { get; set; }
 
         //Room Collection
         [Browsable(false), JsonProperty(TypeNameHandling = TypeNameHandling.All, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
-        public Dictionary<Guid, IRoom> Rooms{ get; protected set; }
+        public List<IRoom> Rooms { get; protected set; }
 
         public bool IsAdminOnly { get; set; }
 
@@ -31,39 +31,29 @@ namespace MudDesigner.Engine.Environment
 
         public BaseZone()
         {
-            Rooms = new Dictionary<Guid, IRoom>();
+            Rooms = new List<IRoom>();
 
             Enabled = true;
-            
+
         }
 
         public BaseZone(string name)
         {
-            Rooms = new Dictionary<Guid, IRoom>();
+            Rooms = new List<IRoom>();
             Name = name;
 
             Enabled = true;
         }
 
-        public BaseZone(string name, IRealm realm) : base()
+        public BaseZone(string name, IRealm realm)
         {
-            Rooms = new Dictionary<Guid, IRoom>();
+            Rooms = new List<IRoom>();
 
             if (realm != null)
             {
                 Realm = realm;
             }
-           
-            Name = name;
 
-            Enabled = true;
-        }
-
-        public BaseZone(string name, Guid id, IRealm realm)
-            : base(id)
-        {
-            Rooms = new Dictionary<Guid, IRoom>();
-            Realm = realm;
             Name = name;
 
             Enabled = true;
@@ -76,18 +66,14 @@ namespace MudDesigner.Engine.Environment
 
             if (forceOverwrite)
             {
-                if (Rooms.ContainsValue(room))
+                if (Rooms.Contains(room))
                 {
-                    foreach (var r in Rooms.Where(newRoom => newRoom.Value == room))
-                    {
-                        Rooms.Remove(r.Key);
-                        break;
-                    }
+                    Rooms.Remove(room);
                 }
             }
 
             room.Zone = this;
-            Rooms.Add(room.ID, room);
+            Rooms.Add(room);
         }
 
         public virtual void AddRooms(IRoom[] rooms, bool forceOverwrite = true)
@@ -100,7 +86,7 @@ namespace MudDesigner.Engine.Environment
 
         public virtual IRoom GetRoom(string roomName)
         {
-            foreach (IRoom room in Rooms.Values)
+            foreach (IRoom room in Rooms)
             {
                 if (room.Name == roomName)
                     return room;
@@ -111,19 +97,13 @@ namespace MudDesigner.Engine.Environment
 
         public virtual void RemoveRoom(IRoom room)
         {
-            if (Rooms.ContainsValue(room))
-                Rooms.Remove(room.ID);
-        }
-
-        public virtual void RemoveRoom(Guid id)
-        {
-            if (Rooms.ContainsKey(id))
-                Rooms.Remove(id);
+            if (Rooms.Contains(room))
+                Rooms.Remove(room);
         }
 
         public virtual void DeleteRooms()
         {
-            foreach (IRoom room in Rooms.Values)
+            foreach (IRoom room in Rooms)
             {
                 room.Destroy();
             }
@@ -131,7 +111,7 @@ namespace MudDesigner.Engine.Environment
 
         public virtual void BroadcastMessage(string message, List<IPlayer> playersToOmmit = null)
         {
-            foreach (IRoom room in Rooms.Values)
+            foreach (IRoom room in Rooms)
             {
                 if (playersToOmmit == null)
                     room.BroadcastMessage(message);

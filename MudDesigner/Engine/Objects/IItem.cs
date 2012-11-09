@@ -8,8 +8,6 @@ namespace MudDesigner.Engine.Objects
     public interface IItem : IGameObject
     {
          //TODO - Add restriction lists.
-        Guid ObjectBound { get; set; }
-
         bool IsAdminOnly { get; set; }
 
         int Weight { get; set; }

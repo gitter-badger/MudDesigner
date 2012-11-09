@@ -246,7 +246,7 @@ namespace MudDesigner.Engine.Mobs
             {
                 case MessageBroadcastLevels.Room:
                     {
-                        foreach (IPlayer player in Location.Occupants.Values)
+                        foreach (IPlayer player in Location.Occupants)
                         {
                             player.SendMessage(message);
                         }
@@ -254,9 +254,9 @@ namespace MudDesigner.Engine.Mobs
                     }
                 case MessageBroadcastLevels.Zone:
                     {
-                        foreach (IRoom room in Location.Zone.Rooms.Values)
+                        foreach (IRoom room in Location.Zone.Rooms)
                         {
-                            foreach (IPlayer player in room.Occupants.Values)
+                            foreach (IPlayer player in room.Occupants)
                                 player.SendMessage(message);
                         }
                         break;

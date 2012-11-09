@@ -129,7 +129,7 @@ namespace MudDesigner.Editor
             game = (Game)ScriptFactory.FindInheritedScript("MudDesigner.Engine.Core.Game", null);
             game.Initialize(null); //Don't need a server.
             game.RestoreWorld();
-            foreach (var r in game.World.Realms.Values)
+            foreach (var r in game.World.GetRealms())
             {
                 AvailableRealms.Items.Add(r.Name);
             }
@@ -342,7 +342,7 @@ namespace MudDesigner.Editor
 
             AvailableZones.Items.Clear();
 
-            foreach (IZone zone in currentRealm.Zones.Values)
+            foreach (IZone zone in currentRealm.Zones)
             {
                 AvailableZones.Items.Add(zone.Name);
             }
@@ -371,7 +371,7 @@ namespace MudDesigner.Editor
             statusSelectedObject.Text = "Selected: " + currentZone.ToString();
 
             AvailableRooms.Items.Clear();
-            foreach (IRoom room in currentZone.Rooms.Values)
+            foreach (IRoom room in currentZone.Rooms)
             {
                 AvailableRooms.Items.Add(room.Name);
             }
@@ -638,7 +638,7 @@ namespace MudDesigner.Editor
         {
             game.RestoreWorld();
 
-            foreach (var r in game.World.Realms.Values)
+            foreach (var r in game.World.GetRealms())
             {
                 AvailableRealms.Items.Add(r.Name);
             }

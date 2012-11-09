@@ -12,9 +12,6 @@ namespace MudDesigner.Engine.Core
 //    [JsonObject(IsReference = true)]
     public class GameObject : IGameObject
     {
-        [Browsable(false)]
-        public Guid ID { get; protected set; }
-
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -29,13 +26,6 @@ namespace MudDesigner.Engine.Core
         public GameObject() 
         { 
             Enabled = true; 
-            ID = Guid.NewGuid(); 
-        }
-
-        public GameObject(Guid id)
-        {
-            ID = id;
-            Enabled = true;
         }
 
         public virtual void Destroy()

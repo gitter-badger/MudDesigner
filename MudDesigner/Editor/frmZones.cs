@@ -65,7 +65,7 @@ namespace MudDesigner.Editor
 
                 foreach (var z in EngineEditor.CurrentRealm.Zones)
                 {
-                    if (z.Value.Name == newName)
+                    if (z.Name == newName)
                     {
                         value++;
                         newName = "New Zone" + value;
@@ -126,7 +126,7 @@ namespace MudDesigner.Editor
 
             zonesLstExistingZones.Items.Clear();
 
-            foreach (IZone zone in EngineEditor.CurrentRealm.Zones.Values)
+            foreach (IZone zone in EngineEditor.CurrentRealm.Zones)
             {
                 zonesLstExistingZones.Items.Add(zone.Name);
             }
@@ -156,7 +156,7 @@ namespace MudDesigner.Editor
             else
                 zonesGrpZones.Text = "Zones within the " + EngineEditor.CurrentRealm.Name + " realm.";
 
-            foreach (IZone zone in EngineEditor.CurrentRealm.Zones.Values)
+            foreach (IZone zone in EngineEditor.CurrentRealm.Zones)
             {
                 zonesLstExistingZones.Items.Add(zone.Name);
             }

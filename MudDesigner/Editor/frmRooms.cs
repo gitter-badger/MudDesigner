@@ -41,7 +41,7 @@ namespace MudDesigner.Editor.Rooms
             roomsLstExistingRooms.Items.Clear();
 
             //Build the collection of Realms and Zones first.
-            foreach (IRealm realm in EngineEditor.Game.World.Realms.Values)
+            foreach (IRealm realm in EngineEditor.Game.World.GetRealms())
             {
                 roomsComRealms.Items.Add(realm.Name);
             }
@@ -240,7 +240,7 @@ namespace MudDesigner.Editor.Rooms
                 return;
 
             //Loop through each Zone in the selected Realm and build the combo box collection.
-            foreach (IZone zone in realm.Zones.Values)
+            foreach (IZone zone in realm.Zones)
                 roomsComZones.Items.Add(zone.Name);
 
             //If the CurrentRealm matches the currently selected realm, then check if the CurrentZone is null.
@@ -346,7 +346,7 @@ namespace MudDesigner.Editor.Rooms
             if (zone == null)
                 return;
 
-            foreach (IRoom room in zone.Rooms.Values)
+            foreach (IRoom room in zone.Rooms)
                 roomsLstExistingRooms.Items.Add(room.Name);
 
             //Check if EngineEditor.CurrentRoom is one of the Rooms within our List. If so, select it.

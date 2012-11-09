@@ -35,7 +35,7 @@ namespace MudDesigner.Engine.Environment
 
         //Room Collections
         [Browsable(false)]
-        public Dictionary<string, IPlayer> Occupants { get; set; }
+        public List<IPlayer> Occupants { get; set; }
 
         [Browsable(false)]
         public Dictionary<AvailableTravelDirections, IDoor> Doorways { get; protected set; }
@@ -43,28 +43,30 @@ namespace MudDesigner.Engine.Environment
         /// <summary>
         /// Gets a reference to the Items collection within the Room.
         /// </summary>
-        public Dictionary<Guid, IItem> Items { get; protected set; }
+        public List<IItem> Items { get; protected set; }
 
         public BaseRoom()
         {
             Doorways = new Dictionary<AvailableTravelDirections, IDoor>();
-            Occupants = new Dictionary<string, IPlayer>();
-            
+            Occupants = new List<IPlayer>();
+            Items = new List<IItem>();
         }
 
-        public BaseRoom(string name, IZone zone) : base()
+        public BaseRoom(string name, IZone zone)
         {
             Zone = zone;
             Doorways = new Dictionary<AvailableTravelDirections, IDoor>();
-            Occupants = new Dictionary<string, IPlayer>();
+            Occupants = new List<IPlayer>();
+            Items = new List<IItem>();
             Name = name;
         }
-        public BaseRoom(string name, IZone zone, Guid id, bool safe = false) : base(id)
+        public BaseRoom(string name, IZone zone, bool safe = false)
         {
             Safe = safe;
             Zone = zone;
             Doorways = new Dictionary<AvailableTravelDirections, IDoor>();
-            Occupants = new Dictionary<string, IPlayer>();
+            Occupants = new List<IPlayer>();
+            Items = new List<IItem>();
             Name = name;
         }
 
@@ -73,9 +75,9 @@ namespace MudDesigner.Engine.Environment
             Doorways.Clear();
 
             this.BroadcastMessage("Room is being destroyed!  If you become trapped, please inform an admin.",
-                Occupants.Values.ToList<IPlayer>());
+                Occupants.ToList<IPlayer>());
 
-            foreach (IPlayer player in Occupants.Values)
+            foreach (IPlayer player in Occupants)
             {
                 //TODO: Move players into a default room when this is destroyed.
                 //player.Move(MudDesigner.Engine.Properties.EngineSettings.Default.LoginRoom);
@@ -159,28 +161,22 @@ namespace MudDesigner.Engine.Environment
         public virtual void AddItem(IItem item)
         {
             //Don't allow duplicate entries.
-            if (Items.ContainsValue(item))
-                Items.Remove(item.ID);
+            if (Items.Contains(item))
+                Items.Remove(item);
 
             //Insert new item.
-            Items.Add(item.ID, item);
+            Items.Add(item);
         }
 
         public virtual void RemoveItem(IItem item)
         {
-            if (Items.ContainsValue(item))
-                Items.Remove(item.ID);
-        }
-
-        public virtual void RemoveItem(Guid item)
-        {
-            if (Items.ContainsKey(item))
+            if (Items.Contains(item))
                 Items.Remove(item);
         }
 
         public virtual void ClearItems()
         {
-            foreach (IItem item in Items.Values)
+            foreach (IItem item in Items)
             {
                 item.Destroy();
             }
@@ -190,7 +186,7 @@ namespace MudDesigner.Engine.Environment
 
         public virtual void BroadcastMessage(string message, List<IPlayer> playersToOmmit = null)
         {
-                foreach (IPlayer player in Occupants.Values)
+                foreach (IPlayer player in Occupants)
                 {
                     if (playersToOmmit != null)
                     {

@@ -9,8 +9,6 @@ namespace MudDesigner.Engine.Objects
 {
     public abstract class BaseItem : GameObject,  IItem
     {
-        public Guid ObjectBound { get; set; }
-
         public int Weight { get; set; }
 
         public int Health { get; set; }
