@@ -190,7 +190,7 @@ namespace MudDesigner.Engine.Scripting
                     {
                         foreach (Type inter in t.GetInterfaces())
                         {
-                            if (inter.Name == interfaceName)
+                            if (inter.Name == interfaceName && !t.IsAbstract)
                                 collection.Add(t);
                         }
                     }

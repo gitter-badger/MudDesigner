@@ -215,5 +215,20 @@ namespace MudDesigner.Editor
                     break;
             }
         }
+
+        private void engineSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmEngineSettings engineSettings = new frmEngineSettings();
+            engineSettings.ShowDialog();
+
+            while (engineSettings.Visible)
+            {
+                Application.DoEvents();
+            }
+
+            EngineSettings.Default.Save();
+
+            engineSettings = null;
+        }
     }
 }

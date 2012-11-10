@@ -10,7 +10,7 @@ using Env = MudDesigner.Engine.Environment;
 
 namespace MudDesigner.Scripts.Default.Game
 {
-    public class Game : MudDesigner.Engine.Core.Game
+    public class DefaultGame : MudDesigner.Engine.Core.Game
     {
         public int MinimumPlayerAge { get; set; }
 
@@ -23,7 +23,7 @@ namespace MudDesigner.Scripts.Default.Game
             Version = "Alpha 2.0";
             Website = "http://MudDesigner.Codeplex.com \n http://AllocateThis.com";
 
-            World = new MudDesigner.Scripts.Default.Environment.World();
+            World = new MudDesigner.Scripts.Default.Environment.DefaultWorld();
 
             bool result = base.Initialize(startedServer);
 
@@ -33,7 +33,7 @@ namespace MudDesigner.Scripts.Default.Game
             //Let the parent Game setup the last of things.
 
             //Finally, since base.Initialize() initializes the World, we set ours up afterwards.
-            World = new MudDesigner.Scripts.Default.Environment.World();
+            World = new MudDesigner.Scripts.Default.Environment.DefaultWorld();
 
             return true;
         }

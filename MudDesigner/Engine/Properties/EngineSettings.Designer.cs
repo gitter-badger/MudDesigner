@@ -25,7 +25,7 @@ namespace MudDesigner.Engine.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.Game.Game")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.Game.DefaultGame")]
         public string DefaultGameType {
             get {
                 return ((string)(this["DefaultGameType"]));
@@ -37,7 +37,7 @@ namespace MudDesigner.Engine.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.Environment.World")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.Environment.DefaultWorld")]
         public string DefaultWorldType {
             get {
                 return ((string)(this["DefaultWorldType"]));
@@ -49,7 +49,7 @@ namespace MudDesigner.Engine.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.Mobs.Player")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.Mobs.DefaultPlayer")]
         public string DefaultPlayerType {
             get {
                 return ((string)(this["DefaultPlayerType"]));
@@ -110,7 +110,7 @@ namespace MudDesigner.Engine.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.Environment.Door")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.Environment.DefaultDoor")]
         public string DoorType {
             get {
                 return ((string)(this["DoorType"]));
@@ -122,7 +122,7 @@ namespace MudDesigner.Engine.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.Environment.Realm")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.Environment.DefaultRealm")]
         public string RealmType {
             get {
                 return ((string)(this["RealmType"]));
@@ -134,7 +134,7 @@ namespace MudDesigner.Engine.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.Environment.Zone")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.Environment.DefaultZone")]
         public string ZoneType {
             get {
                 return ((string)(this["ZoneType"]));
@@ -146,7 +146,7 @@ namespace MudDesigner.Engine.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.Environment.Room")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.Environment.DefaultRoom")]
         public string RoomType {
             get {
                 return ((string)(this["RoomType"]));

@@ -8,19 +8,14 @@ using MudDesigner.Engine.Environment;
 
 namespace MudDesigner.Scripts.Default.Environment
 {
-    public class Zone : BaseZone
+    public class DefaultDoor : Engine.Environment.Door
     {
-        public Zone(): base()
+        public DefaultDoor() :base()
         {
+            
         }
-
-        public Zone(string name)
-            : base(name)
-        {
-        }
-
-
-        public Zone(string name, IRealm realm) : base(name, realm)
+        public DefaultDoor(AvailableTravelDirections direction, IRoom departing, IRoom arrival)
+            : base(direction, departing, arrival)
         {
         }
     }

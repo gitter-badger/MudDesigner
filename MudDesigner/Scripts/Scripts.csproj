@@ -53,19 +53,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Default\Commands\LookCommand.cs" />
-    <Compile Include="Default\Environment\Realm.cs">
+    <Compile Include="Default\Environment\DefaultRealm.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Default\Environment\Door.cs">
+    <Compile Include="Default\Environment\DefaultDoor.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Default\Environment\Room.cs">
+    <Compile Include="Default\Environment\DefaultRoom.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Default\Environment\World.cs">
+    <Compile Include="Default\Environment\DefaultWorld.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Default\Environment\Zone.cs">
+    <Compile Include="Default\Environment\DefaultZone.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Default\Mobs\Appearances\Hair.cs">
@@ -80,7 +80,7 @@
     <Compile Include="Default\Mobs\GenderMale.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Default\Mobs\Player.cs">
+    <Compile Include="Default\Mobs\DefaultPlayer.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Default\Mobs\Stats\Health.cs" />
@@ -99,7 +99,7 @@
     <Folder Include="MyGame\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Default\Game\Game.cs">
+    <Compile Include="Default\Game\DefaultGame.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>

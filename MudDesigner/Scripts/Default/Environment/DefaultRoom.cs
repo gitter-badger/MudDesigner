@@ -8,13 +8,13 @@ using MudDesigner.Engine.Environment;
 
 namespace MudDesigner.Scripts.Default.Environment
 {
-    class Room : BaseRoom
+    class DefaultRoom : BaseRoom
     {
-        public Room() : base()
+        public DefaultRoom() : base()
         {
             
         }
-        public Room(string name, IZone zone) : base(name, zone)
+        public DefaultRoom(string name, IZone zone) : base(name, zone)
         {
         }
     }

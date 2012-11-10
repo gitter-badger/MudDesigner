@@ -8,7 +8,7 @@ using MudDesigner.Engine.Environment;
 
 namespace MudDesigner.Scripts.Default.Environment
 {
-    public class Realm : BaseRealm
+    public class DefaultRealm : BaseRealm
     {
 
     }

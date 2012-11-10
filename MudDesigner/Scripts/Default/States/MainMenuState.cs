@@ -58,7 +58,7 @@ namespace MudDesigner.Scripts.Default.States
                     connectedPlayer.Move(startRoom);
                     break;
                 case "world":
-                    var game = Director.Server.Game as Game.Game;
+                    var game = Director.Server.Game as Game.DefaultGame;
                     if (game != null)
                     {
                         connectedPlayer.SendMessage("Save Success!");

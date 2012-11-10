@@ -51,6 +51,8 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.mainTxtServerInfo = new System.Windows.Forms.RichTextBox();
             this.timerLogger = new System.Windows.Forms.Timer(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.engineSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -111,7 +113,9 @@
             // 
             this.menuGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.menuGame.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuStartStopServer});
+            this.menuStartStopServer,
+            this.toolStripMenuItem1,
+            this.engineSettingsToolStripMenuItem});
             this.menuGame.ForeColor = System.Drawing.Color.White;
             this.menuGame.Name = "menuGame";
             this.menuGame.Size = new System.Drawing.Size(50, 20);
@@ -145,7 +149,7 @@
             this.menuRooms});
             this.menuEnvironment.ForeColor = System.Drawing.Color.White;
             this.menuEnvironment.Name = "menuEnvironment";
-            this.menuEnvironment.Size = new System.Drawing.Size(148, 22);
+            this.menuEnvironment.Size = new System.Drawing.Size(152, 22);
             this.menuEnvironment.Text = "Environments";
             // 
             // menuRealms
@@ -180,9 +184,10 @@
             this.menuGameObjects.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.menuGameObjects.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItems});
+            this.menuGameObjects.Enabled = false;
             this.menuGameObjects.ForeColor = System.Drawing.Color.White;
             this.menuGameObjects.Name = "menuGameObjects";
-            this.menuGameObjects.Size = new System.Drawing.Size(148, 22);
+            this.menuGameObjects.Size = new System.Drawing.Size(152, 22);
             this.menuGameObjects.Text = "Game Objects";
             // 
             // menuItems
@@ -190,7 +195,7 @@
             this.menuItems.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.menuItems.ForeColor = System.Drawing.Color.White;
             this.menuItems.Name = "menuItems";
-            this.menuItems.Size = new System.Drawing.Size(103, 22);
+            this.menuItems.Size = new System.Drawing.Size(152, 22);
             this.menuItems.Text = "Items";
             // 
             // lblProjectName
@@ -296,6 +301,20 @@
             // 
             this.timerLogger.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 6);
+            // 
+            // engineSettingsToolStripMenuItem
+            // 
+            this.engineSettingsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.engineSettingsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.engineSettingsToolStripMenuItem.Name = "engineSettingsToolStripMenuItem";
+            this.engineSettingsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.engineSettingsToolStripMenuItem.Text = "Engine Settings";
+            this.engineSettingsToolStripMenuItem.Click += new System.EventHandler(this.engineSettingsToolStripMenuItem_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -351,5 +370,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuRooms;
         private System.Windows.Forms.ToolStripMenuItem menuGameObjects;
         private System.Windows.Forms.ToolStripMenuItem menuItems;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem engineSettingsToolStripMenuItem;
     }
 }

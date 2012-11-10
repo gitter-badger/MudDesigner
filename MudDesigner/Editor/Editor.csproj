@@ -48,13 +48,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Editor.cs">
+    <Compile Include="EngineEditor.cs" />
+    <Compile Include="frmEngineSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Editor.Designer.cs">
-      <DependentUpon>Editor.cs</DependentUpon>
+    <Compile Include="frmEngineSettings.Designer.cs">
+      <DependentUpon>frmEngineSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="EngineEditor.cs" />
     <Compile Include="frmRealms.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,8 +81,8 @@
     <Compile Include="frmRooms.Designer.cs">
       <DependentUpon>frmRooms.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Editor.resx">
-      <DependentUpon>Editor.cs</DependentUpon>
+    <EmbeddedResource Include="frmEngineSettings.resx">
+      <DependentUpon>frmEngineSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmRealms.resx">
       <DependentUpon>frmRealms.cs</DependentUpon>

@@ -7,9 +7,9 @@ using MudDesigner.Engine.Properties;
 
 namespace MudDesigner.Scripts.Default.Environment
 {
-    public class World : MudDesigner.Engine.Environment.World
+    public class DefaultWorld : MudDesigner.Engine.Environment.World
     {
-        public World()
+        public DefaultWorld()
         {
         }
     }

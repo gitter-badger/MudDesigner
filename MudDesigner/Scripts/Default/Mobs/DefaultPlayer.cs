@@ -13,9 +13,9 @@ using MudDesigner.Scripts.Default.Mobs.Stats;
 
 namespace MudDesigner.Scripts.Default.Mobs
 {
-    public class Player : BasePlayer
+    public class DefaultPlayer : BasePlayer
     {
-        public Player()
+        public DefaultPlayer()
         {
             AddAppearanceDescription(new Head());
             AddAppearanceDescription(new Hair());
