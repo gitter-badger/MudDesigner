@@ -317,7 +317,16 @@ namespace MudDesigner.Editor.Rooms
 
         private void roomsBtnChangeZone_Click(object sender, EventArgs e)
         {
+            if (EngineEditor.CurrentRoom == null)
+            {
+                MessageBox.Show("You must have a Room loaded prior to trying to change the Zone it belongs to.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             frmZones zones = new frmZones();
+            if (EngineEditor.CurrentZone != null)
+                EngineEditor.CurrentZone.RemoveRoom(EngineEditor.CurrentRoom);
+
             zones.ChangingZone = true;
             zones.ShowDialog();
 
@@ -326,6 +335,13 @@ namespace MudDesigner.Editor.Rooms
                 Application.DoEvents();
             }
             zones = null;
+
+            if (EngineEditor.CurrentZone == null && EngineEditor.CurrentRoom != null)
+            {
+                MessageBox.Show("You have not selected a Zone to place this Room within. It will not be saved if a Zone is not choosen from the Zone editor!", this.Text);
+                return;
+            }
+            EngineEditor.CurrentZone.AddRoom(EngineEditor.CurrentRoom);
 
             SetupEnvironment();
         }
@@ -440,8 +456,46 @@ namespace MudDesigner.Editor.Rooms
         {
             if (roomsLstExistingRooms.SelectedIndex == -1)
             {
-
+                MessageBox.Show("You must select a Room first.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
+
+            if (roomsComRealms.SelectedIndex == -1 || roomsComZones.SelectedIndex == -1)
+            {
+                MessageBox.Show("You must select both a Realm and a Zone first.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            IRealm realm = EngineEditor.Game.World.GetRealm(roomsComRealms.SelectedItem.ToString());
+
+            if (realm == null)
+            {
+                MessageBox.Show("Failed to locate the selected Realm within the system for an unknown reason!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            IZone zone = realm.GetZone(roomsComZones.SelectedItem.ToString());
+            if (zone == null)
+            {
+                MessageBox.Show("Failed to locate the selected Zone within the system for an unknown reason!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            IRoom room = zone.GetRoom(roomsLstExistingRooms.SelectedItem.ToString());
+            if (room == null)
+            {
+                MessageBox.Show("Failed to locate the selected Room within the system for an unknown reason!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            roomsLstExistingRooms.Items.Remove(room.Name);
+            zone.RemoveRoom(room);
+            room = null;
+        }
+
+        private void roomsBtnCloseEditor_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

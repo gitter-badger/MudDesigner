@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.splitEditorContainer = new System.Windows.Forms.SplitContainer();
             this.roomsBtnCloseEditor = new System.Windows.Forms.Button();
-            this.roomsBtnResetRoom = new System.Windows.Forms.Button();
             this.roomsBtnLoadRoom = new System.Windows.Forms.Button();
             this.roomsBtnDeleteRoom = new System.Windows.Forms.Button();
             this.roomsBtnCreateRoom = new System.Windows.Forms.Button();
@@ -62,6 +62,9 @@
             this.roomsMnuMobs = new System.Windows.Forms.ToolStripMenuItem();
             this.roomsMnuQuests = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.clearRoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadRoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitEditorContainer)).BeginInit();
             this.splitEditorContainer.Panel1.SuspendLayout();
             this.splitEditorContainer.Panel2.SuspendLayout();
@@ -74,6 +77,7 @@
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitEditorContainer
@@ -86,7 +90,6 @@
             // splitEditorContainer.Panel1
             // 
             this.splitEditorContainer.Panel1.Controls.Add(this.roomsBtnCloseEditor);
-            this.splitEditorContainer.Panel1.Controls.Add(this.roomsBtnResetRoom);
             this.splitEditorContainer.Panel1.Controls.Add(this.roomsBtnLoadRoom);
             this.splitEditorContainer.Panel1.Controls.Add(this.roomsBtnDeleteRoom);
             this.splitEditorContainer.Panel1.Controls.Add(this.roomsBtnCreateRoom);
@@ -116,16 +119,7 @@
             this.roomsBtnCloseEditor.TabIndex = 20;
             this.roomsBtnCloseEditor.Text = "Close Editor";
             this.roomsBtnCloseEditor.UseVisualStyleBackColor = true;
-            // 
-            // roomsBtnResetRoom
-            // 
-            this.roomsBtnResetRoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.roomsBtnResetRoom.Location = new System.Drawing.Point(112, 78);
-            this.roomsBtnResetRoom.Name = "roomsBtnResetRoom";
-            this.roomsBtnResetRoom.Size = new System.Drawing.Size(100, 24);
-            this.roomsBtnResetRoom.TabIndex = 19;
-            this.roomsBtnResetRoom.Text = "Reset Room";
-            this.roomsBtnResetRoom.UseVisualStyleBackColor = true;
+            this.roomsBtnCloseEditor.Click += new System.EventHandler(this.roomsBtnCloseEditor_Click);
             // 
             // roomsBtnLoadRoom
             // 
@@ -524,6 +518,26 @@
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clearRoomToolStripMenuItem,
+            this.loadRoomToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(137, 48);
+            // 
+            // clearRoomToolStripMenuItem
+            // 
+            this.clearRoomToolStripMenuItem.Name = "clearRoomToolStripMenuItem";
+            this.clearRoomToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.clearRoomToolStripMenuItem.Text = "Clear Room";
+            // 
+            // loadRoomToolStripMenuItem
+            // 
+            this.loadRoomToolStripMenuItem.Name = "loadRoomToolStripMenuItem";
+            this.loadRoomToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.loadRoomToolStripMenuItem.Text = "Load Room";
+            // 
             // frmRooms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -553,6 +567,7 @@
             this.groupBox3.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -593,6 +608,8 @@
         private System.Windows.Forms.Button roomsBtnDeleteRoom;
         private System.Windows.Forms.Button roomsBtnCreateRoom;
         private System.Windows.Forms.Button roomsBtnCloseEditor;
-        private System.Windows.Forms.Button roomsBtnResetRoom;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem clearRoomToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadRoomToolStripMenuItem;
     }
 }

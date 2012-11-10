@@ -1,6 +1,7 @@
 ﻿//Microsoft .NET Using statements.
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Collections.Generic;
 using System.Reflection;
@@ -10,6 +11,7 @@ using MudDesigner.Engine.Networking;
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Scripting;
+using MudDesigner.Engine.Properties;
 using Newtonsoft.Json;
 
 //Abstract.Core namespace is used for Types that are the core component of the game engine such as the Game, Player and command Types
@@ -85,6 +87,16 @@ namespace MudDesigner.Engine.Core
         /// <returns></returns>
         public virtual bool Initialize(IServer startedServer)
         {
+            //See if we need to update the settings.
+            string version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
+            
+            //If the versions do not equal each other, update the stored settings to match this version of the engine.
+            if (version != EngineSettings.Default.Version)
+            {
+                EngineSettings.Default.Upgrade();
+                EngineSettings.Default.Save();
+            }
+
             Name = "AllocateThis! Mud Game";
 
             if (startedServer != null)
