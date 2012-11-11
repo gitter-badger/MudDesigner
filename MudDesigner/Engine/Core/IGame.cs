@@ -20,7 +20,7 @@ namespace MudDesigner.Engine.Core
 
         DateTime LastSave { get; }
 
-        IWorld World { get; }
+        IWorld World { get; set; }
         IServer Server { get; set; }
         bool Initialize(IServer startedServer);
 

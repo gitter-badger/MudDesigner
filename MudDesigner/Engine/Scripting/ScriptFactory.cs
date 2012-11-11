@@ -121,6 +121,9 @@ namespace MudDesigner.Engine.Scripting
 
             try
             {
+                if (script == null)
+                    return null;
+
                 Object obj = Activator.CreateInstance(script, arguments);
                 return obj;
             }

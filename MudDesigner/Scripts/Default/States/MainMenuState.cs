@@ -54,7 +54,7 @@ namespace MudDesigner.Scripts.Default.States
             {
                     //TODO This needs to use the command SwitchState to switch to room state.
                 case "enter":
-                    IRoom startRoom = (IRoom)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.LoginRoom, null);
+                    IRoom startRoom = (IRoom)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.InitialRoom, null);
                     connectedPlayer.Move(startRoom);
                     break;
                 case "world":

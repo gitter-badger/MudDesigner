@@ -103,9 +103,9 @@ namespace MudDesigner.Engine.Scripting
                 else
                 {
                     StringBuilder builder = new StringBuilder();
-                    foreach (String error in _CompileMessages)
+                    for (int x = 2; x != _CompileMessages.Length; x++)
                     {
-                        builder.AppendLine(error);
+                        builder.Append(_CompileMessages[x]);
                     }
 
                     return builder.ToString();

@@ -9,9 +9,10 @@ using Newtonsoft.Json;
 using MudDesigner.Engine.Mobs;
 namespace MudDesigner.Engine.Environment
 {
-    public interface IWorld 
+    public interface IWorld : IGameObject
     {
         bool IsSafe { get; set; }
+        List<IRealm> Realms { get; set; }
 
         void AddRealm(IRealm realm, bool overwrite = false);
         IRealm GetRealm(string realmname);
@@ -20,5 +21,8 @@ namespace MudDesigner.Engine.Environment
         void RemoveRealm(string realmName);
 
         void BroadcastMessage(string message, List<IPlayer> playersToOmit = null);
+
+        IWorld ShallowCopy();
+        IWorld DeepCopy();
     }
 }

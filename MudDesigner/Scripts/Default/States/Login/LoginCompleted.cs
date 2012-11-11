@@ -46,7 +46,7 @@ namespace MudDesigner.Scripts.Default.States.Login
 
         public ICommand GetCommand()
         {
-            string startRoom = EngineSettings.Default.LoginRoom;
+            string startRoom = EngineSettings.Default.InitialRoom;
             string[] locations = startRoom.Split('>');
 
             if (locations.Length < 3)

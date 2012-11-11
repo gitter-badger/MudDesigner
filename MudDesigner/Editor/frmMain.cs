@@ -25,7 +25,7 @@ namespace MudDesigner.Editor
         {
             InitializeComponent();
         }
-
+        //
         private void frmMain_Load(object sender, EventArgs e)
         {
             //Setup our logger so we can access it within the editor.
@@ -44,7 +44,11 @@ namespace MudDesigner.Editor
             }
 
             //Compile the scripts.
-            CompileEngine.Compile(EngineSettings.Default.ScriptsPath);
+            bool result = CompileEngine.Compile(EngineSettings.Default.ScriptsPath);
+            if (!result)
+            {
+                this.mainTxtServerInfo.Text = CompileEngine.Errors;
+            }
 
             //Add the compiled script assembly to the script factory.
             ScriptFactory.AddAssembly(CompileEngine.CompiledAssembly);
@@ -62,13 +66,23 @@ namespace MudDesigner.Editor
             }
 
             //Get a reference to a scripted instance of IGame.
-            var game = (IGame)ScriptFactory.GetScript(EngineSettings.Default.DefaultGameType, null);
+            var game = (IGame)ScriptFactory.GetScript(EngineSettings.Default.GameScript, null);
             
             //In the event that the scripted Game class specified as the default is missing,
             //just search the engine for another one.
             if (game == null)
+            {
                 game = (IGame)ScriptFactory.FindInheritedScript("MudDesigner.Engine.Core.Game", null);
-            
+
+                if (game == null) //still could not find anything
+                {
+                    MessageBox.Show("Critical error: Could not locate a Game script to use. This can cause instability in the editor.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Logger.WriteLine(CompileEngine.Errors, Logger.Importance.Critical);
+
+                    MessageBox.Show("The editor can not run without a script present that inherits from MudDesigner.Engine.Core.Game.  The editor will now shut down.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Application.Exit();
+                }
+            }
             IServer server = new Server(4000);
             
             //Initialize the Game. Null reference to a server is passed because we don't need a server.

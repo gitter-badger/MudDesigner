@@ -70,7 +70,7 @@
     <Compile Include="Environment\BaseZone.cs" />
     <Compile Include="Environment\Door.cs" />
     <Compile Include="Environment\BaseRoom.cs" />
-    <Compile Include="Environment\World.cs" />
+    <Compile Include="Environment\EngineWorld.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Environment\IDoor.cs" />
     <Compile Include="Core\IEngine.cs" />
@@ -134,9 +134,7 @@
       <LastGenOutput>EngineSettings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Actions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

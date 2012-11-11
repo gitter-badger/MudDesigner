@@ -26,48 +26,48 @@ namespace MudDesigner.Engine.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.Game.DefaultGame")]
-        public string DefaultGameType {
+        public string GameScript {
             get {
-                return ((string)(this["DefaultGameType"]));
+                return ((string)(this["GameScript"]));
             }
             set {
-                this["DefaultGameType"] = value;
+                this["GameScript"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.Environment.DefaultWorld")]
-        public string DefaultWorldType {
+        public string WorldScript {
             get {
-                return ((string)(this["DefaultWorldType"]));
+                return ((string)(this["WorldScript"]));
             }
             set {
-                this["DefaultWorldType"] = value;
+                this["WorldScript"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.Mobs.DefaultPlayer")]
-        public string DefaultPlayerType {
+        public string PlayerScript {
             get {
-                return ((string)(this["DefaultPlayerType"]));
+                return ((string)(this["PlayerScript"]));
             }
             set {
-                this["DefaultPlayerType"] = value;
+                this["PlayerScript"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.States.MainMenuState")]
-        public string LoginSuccessState {
+        public string ClientConnectState {
             get {
-                return ((string)(this["LoginSuccessState"]));
+                return ((string)(this["ClientConnectState"]));
             }
             set {
-                this["LoginSuccessState"] = value;
+                this["ClientConnectState"] = value;
             }
         }
         
@@ -98,85 +98,85 @@ namespace MudDesigner.Engine.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Bedroom")]
-        public string LoginRoom {
+        [global::System.Configuration.DefaultSettingValueAttribute("My Realm>My Zone>Bedroom")]
+        public string InitialRoom {
             get {
-                return ((string)(this["LoginRoom"]));
+                return ((string)(this["InitialRoom"]));
             }
             set {
-                this["LoginRoom"] = value;
+                this["InitialRoom"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.Environment.DefaultDoor")]
-        public string DoorType {
+        public string DoorScript {
             get {
-                return ((string)(this["DoorType"]));
+                return ((string)(this["DoorScript"]));
             }
             set {
-                this["DoorType"] = value;
+                this["DoorScript"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.Environment.DefaultRealm")]
-        public string RealmType {
+        public string RealmScript {
             get {
-                return ((string)(this["RealmType"]));
+                return ((string)(this["RealmScript"]));
             }
             set {
-                this["RealmType"] = value;
+                this["RealmScript"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.Environment.DefaultZone")]
-        public string ZoneType {
+        public string ZoneScript {
             get {
-                return ((string)(this["ZoneType"]));
+                return ((string)(this["ZoneScript"]));
             }
             set {
-                this["ZoneType"] = value;
+                this["ZoneScript"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.Environment.DefaultRoom")]
-        public string RoomType {
+        public string RoomScript {
             get {
-                return ((string)(this["RoomType"]));
+                return ((string)(this["RoomScript"]));
             }
             set {
-                this["RoomType"] = value;
+                this["RoomScript"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("World.sav")]
-        public string WorldFile {
+        public string WorldSaveFile {
             get {
-                return ((string)(this["WorldFile"]));
+                return ((string)(this["WorldSaveFile"]));
             }
             set {
-                this["WorldFile"] = value;
+                this["WorldSaveFile"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.States.Login.ClientConnectState")]
-        public string InitialState {
+        public string LoginState {
             get {
-                return ((string)(this["InitialState"]));
+                return ((string)(this["LoginState"]));
             }
             set {
-                this["InitialState"] = value;
+                this["LoginState"] = value;
             }
         }
         

@@ -71,7 +71,7 @@ namespace MudDesigner.Engine.Core
         /// Gets a reference to the game world
         /// </summary>
         [Browsable(false)]
-        public IWorld World { get; protected set; }
+        public IWorld World { get; set; }
 
         /// <summary>
         /// Gets a the last time that the game was saved.
@@ -122,7 +122,7 @@ namespace MudDesigner.Engine.Core
                 }
             }
 
-            IWorld world = (IWorld)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.DefaultWorldType, null);
+            IWorld world = (IWorld)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.WorldScript, null);
             if (world != null)
                 World = world;
             return true;
@@ -131,7 +131,7 @@ namespace MudDesigner.Engine.Core
         public void RestoreWorld()
         {
             var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(), "saves",
-                                                MudDesigner.Engine.Properties.EngineSettings.Default.WorldFile);
+                                                MudDesigner.Engine.Properties.EngineSettings.Default.WorldSaveFile);
 
             if (!File.Exists(fileAndPathToSave))
                 return;
@@ -153,7 +153,7 @@ namespace MudDesigner.Engine.Core
             LastSave = DateTime.Now;
 
             var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(), "saves",
-                                                 MudDesigner.Engine.Properties.EngineSettings.Default.WorldFile);
+                                                 MudDesigner.Engine.Properties.EngineSettings.Default.WorldSaveFile);
 
             FileIO fileSave = new FileIO();
             fileSave.Save(World, fileAndPathToSave);

@@ -65,7 +65,7 @@ namespace MudDesigner.Editor
                 }
             }
 
-            IRealm realm = (IRealm)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.RealmType, null);
+            IRealm realm = (IRealm)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.RealmScript, null);
 
             if (realm == null)
             {

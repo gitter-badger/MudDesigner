@@ -13,17 +13,27 @@ using Newtonsoft.Json;
 namespace MudDesigner.Engine.Environment
 {
 
-    public class World : GameObject, IWorld
+    public class EngineWorld : GameObject, IWorld
     {
         [Browsable(false), JsonProperty(TypeNameHandling = TypeNameHandling.All)]
-        protected List<IRealm> Realms { get; set; }
+        public List<IRealm> Realms { get; set; }
 
         public bool IsSafe { get; set; }
 
-        public World()
+        public EngineWorld()
         {
             Realms = new List<IRealm>();
             Name = "World";
+        }
+
+        public IWorld ShallowCopy()
+        {
+            return (IWorld)this.MemberwiseClone();
+        }
+
+        public IWorld DeepCopy()
+        {
+            return null;
         }
 
         public void AddRealm(IRealm realm, bool forceOverwrite = false)
@@ -91,11 +101,6 @@ namespace MudDesigner.Engine.Environment
                 else
                     realm.BroadcastMessage(message, playersToOmit);
             }
-        }
-
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-
         }
     }
 }

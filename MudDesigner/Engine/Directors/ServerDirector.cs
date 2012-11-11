@@ -23,7 +23,7 @@ namespace MudDesigner.Engine.Directors
         {
             get
             {
-                IState state = (IState)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.InitialState, this);
+                IState state = (IState)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.LoginState, this);
                 return state;
             }
         }
@@ -36,7 +36,7 @@ namespace MudDesigner.Engine.Directors
 
         public void AddConnection(Socket connection)
         {
-            var player = (IPlayer)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.DefaultPlayerType, null);
+            var player = (IPlayer)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.PlayerScript, null);
             player.Initialize(InitialConnectionState, connection);
             
             Thread userThread = new Thread(ReceiveDataThread);

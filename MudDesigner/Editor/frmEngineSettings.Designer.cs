@@ -29,9 +29,15 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.btnRemoveScriptLibrary = new System.Windows.Forms.Button();
+            this.btnAddScriptLibrary = new System.Windows.Forms.Button();
+            this.scriptsPath = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.scriptLibrary = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.loginRoom = new System.Windows.Forms.ComboBox();
+            this.initialState = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.loginSuccessState = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -40,32 +46,26 @@
             this.label3 = new System.Windows.Forms.Label();
             this.defaultGameType = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.initialState = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.scriptsPath = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.btnAddScriptLibrary = new System.Windows.Forms.Button();
-            this.btnRemoveScriptLibrary = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.doorType = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.roomType = new System.Windows.Forms.ComboBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.zoneType = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.realmType = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.defaultWorldType = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.doorType = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.roomType = new System.Windows.Forms.ComboBox();
-            this.label12 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.worldFile = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.playerSavePath = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
+            this.worldFile = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.btnSaveSettings = new System.Windows.Forms.Button();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
             this.btnCancelSettings = new System.Windows.Forms.Button();
+            this.loginRoom = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -89,6 +89,53 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Script Settings";
             // 
+            // label16
+            // 
+            this.label16.Location = new System.Drawing.Point(8, 40);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(229, 31);
+            this.label16.TabIndex = 20;
+            this.label16.Text = "Note: Leaving blank will result in the compiler starting its script scan from the" +
+    " server root directory.";
+            // 
+            // btnRemoveScriptLibrary
+            // 
+            this.btnRemoveScriptLibrary.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRemoveScriptLibrary.Location = new System.Drawing.Point(132, 80);
+            this.btnRemoveScriptLibrary.Name = "btnRemoveScriptLibrary";
+            this.btnRemoveScriptLibrary.Size = new System.Drawing.Size(105, 23);
+            this.btnRemoveScriptLibrary.TabIndex = 13;
+            this.btnRemoveScriptLibrary.Text = "Remove Library";
+            this.btnRemoveScriptLibrary.UseVisualStyleBackColor = true;
+            // 
+            // btnAddScriptLibrary
+            // 
+            this.btnAddScriptLibrary.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddScriptLibrary.Location = new System.Drawing.Point(6, 80);
+            this.btnAddScriptLibrary.Name = "btnAddScriptLibrary";
+            this.btnAddScriptLibrary.Size = new System.Drawing.Size(105, 23);
+            this.btnAddScriptLibrary.TabIndex = 12;
+            this.btnAddScriptLibrary.Text = "Add Script Library";
+            this.btnAddScriptLibrary.UseVisualStyleBackColor = true;
+            // 
+            // scriptsPath
+            // 
+            this.scriptsPath.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.scriptsPath.ForeColor = System.Drawing.Color.White;
+            this.scriptsPath.Location = new System.Drawing.Point(110, 14);
+            this.scriptsPath.Name = "scriptsPath";
+            this.scriptsPath.Size = new System.Drawing.Size(127, 20);
+            this.scriptsPath.TabIndex = 11;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(7, 16);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(97, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Script Folder Name";
+            // 
             // scriptLibrary
             // 
             this.scriptLibrary.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -96,13 +143,14 @@
             this.scriptLibrary.Location = new System.Drawing.Point(3, 109);
             this.scriptLibrary.Name = "scriptLibrary";
             this.scriptLibrary.Size = new System.Drawing.Size(238, 95);
+            this.scriptLibrary.Sorted = true;
             this.scriptLibrary.TabIndex = 0;
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.loginRoom);
             this.groupBox2.Controls.Add(this.initialState);
             this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.loginRoom);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.loginSuccessState);
             this.groupBox2.Controls.Add(this.label4);
@@ -114,17 +162,27 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Client Login Items";
             // 
-            // loginRoom
+            // initialState
             // 
-            this.loginRoom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.loginRoom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.loginRoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.loginRoom.ForeColor = System.Drawing.Color.White;
-            this.loginRoom.FormattingEnabled = true;
-            this.loginRoom.Location = new System.Drawing.Point(114, 40);
-            this.loginRoom.Name = "loginRoom";
-            this.loginRoom.Size = new System.Drawing.Size(121, 21);
-            this.loginRoom.TabIndex = 17;
+            this.initialState.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.initialState.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.initialState.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.initialState.ForeColor = System.Drawing.Color.White;
+            this.initialState.FormattingEnabled = true;
+            this.initialState.Location = new System.Drawing.Point(81, 67);
+            this.initialState.Name = "initialState";
+            this.initialState.Size = new System.Drawing.Size(154, 21);
+            this.initialState.Sorted = true;
+            this.initialState.TabIndex = 19;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 70);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(59, 13);
+            this.label7.TabIndex = 18;
+            this.label7.Text = "Initial State";
             // 
             // label6
             // 
@@ -142,9 +200,10 @@
             this.loginSuccessState.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.loginSuccessState.ForeColor = System.Drawing.Color.White;
             this.loginSuccessState.FormattingEnabled = true;
-            this.loginSuccessState.Location = new System.Drawing.Point(114, 13);
+            this.loginSuccessState.Location = new System.Drawing.Point(81, 13);
             this.loginSuccessState.Name = "loginSuccessState";
-            this.loginSuccessState.Size = new System.Drawing.Size(121, 21);
+            this.loginSuccessState.Size = new System.Drawing.Size(154, 21);
+            this.loginSuccessState.Sorted = true;
             this.loginSuccessState.TabIndex = 15;
             // 
             // label4
@@ -152,9 +211,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(6, 21);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(92, 13);
+            this.label4.Size = new System.Drawing.Size(63, 13);
             this.label4.TabIndex = 14;
-            this.label4.Text = "Client Login Script";
+            this.label4.Text = "Login Script";
             // 
             // groupBox3
             // 
@@ -180,6 +239,7 @@
             this.defaultPlayerType.Location = new System.Drawing.Point(116, 40);
             this.defaultPlayerType.Name = "defaultPlayerType";
             this.defaultPlayerType.Size = new System.Drawing.Size(121, 21);
+            this.defaultPlayerType.Sorted = true;
             this.defaultPlayerType.TabIndex = 11;
             // 
             // label3
@@ -201,6 +261,7 @@
             this.defaultGameType.Location = new System.Drawing.Point(116, 13);
             this.defaultGameType.Name = "defaultGameType";
             this.defaultGameType.Size = new System.Drawing.Size(121, 21);
+            this.defaultGameType.Sorted = true;
             this.defaultGameType.TabIndex = 7;
             // 
             // label1
@@ -211,66 +272,6 @@
             this.label1.Size = new System.Drawing.Size(102, 13);
             this.label1.TabIndex = 6;
             this.label1.Text = "Default Game Script";
-            // 
-            // initialState
-            // 
-            this.initialState.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.initialState.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.initialState.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.initialState.ForeColor = System.Drawing.Color.White;
-            this.initialState.FormattingEnabled = true;
-            this.initialState.Location = new System.Drawing.Point(114, 67);
-            this.initialState.Name = "initialState";
-            this.initialState.Size = new System.Drawing.Size(121, 21);
-            this.initialState.TabIndex = 19;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 70);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(59, 13);
-            this.label7.TabIndex = 18;
-            this.label7.Text = "Initial State";
-            // 
-            // scriptsPath
-            // 
-            this.scriptsPath.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.scriptsPath.ForeColor = System.Drawing.Color.White;
-            this.scriptsPath.Location = new System.Drawing.Point(110, 14);
-            this.scriptsPath.Name = "scriptsPath";
-            this.scriptsPath.ReadOnly = true;
-            this.scriptsPath.Size = new System.Drawing.Size(127, 20);
-            this.scriptsPath.TabIndex = 11;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(7, 16);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(97, 13);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Script Folder Name";
-            // 
-            // btnAddScriptLibrary
-            // 
-            this.btnAddScriptLibrary.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddScriptLibrary.Location = new System.Drawing.Point(6, 80);
-            this.btnAddScriptLibrary.Name = "btnAddScriptLibrary";
-            this.btnAddScriptLibrary.Size = new System.Drawing.Size(105, 23);
-            this.btnAddScriptLibrary.TabIndex = 12;
-            this.btnAddScriptLibrary.Text = "Add Script Library";
-            this.btnAddScriptLibrary.UseVisualStyleBackColor = true;
-            // 
-            // btnRemoveScriptLibrary
-            // 
-            this.btnRemoveScriptLibrary.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRemoveScriptLibrary.Location = new System.Drawing.Point(132, 80);
-            this.btnRemoveScriptLibrary.Name = "btnRemoveScriptLibrary";
-            this.btnRemoveScriptLibrary.Size = new System.Drawing.Size(105, 23);
-            this.btnRemoveScriptLibrary.TabIndex = 13;
-            this.btnRemoveScriptLibrary.Text = "Remove Library";
-            this.btnRemoveScriptLibrary.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
@@ -292,69 +293,6 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Environment Defaults";
             // 
-            // zoneType
-            // 
-            this.zoneType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.zoneType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.zoneType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.zoneType.ForeColor = System.Drawing.Color.White;
-            this.zoneType.FormattingEnabled = true;
-            this.zoneType.Location = new System.Drawing.Point(116, 67);
-            this.zoneType.Name = "zoneType";
-            this.zoneType.Size = new System.Drawing.Size(121, 21);
-            this.zoneType.TabIndex = 11;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(8, 70);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(62, 13);
-            this.label8.TabIndex = 10;
-            this.label8.Text = "Zone Script";
-            // 
-            // realmType
-            // 
-            this.realmType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.realmType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.realmType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.realmType.ForeColor = System.Drawing.Color.White;
-            this.realmType.FormattingEnabled = true;
-            this.realmType.Location = new System.Drawing.Point(116, 40);
-            this.realmType.Name = "realmType";
-            this.realmType.Size = new System.Drawing.Size(121, 21);
-            this.realmType.TabIndex = 9;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(8, 43);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(67, 13);
-            this.label9.TabIndex = 8;
-            this.label9.Text = "Realm Script";
-            // 
-            // defaultWorldType
-            // 
-            this.defaultWorldType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.defaultWorldType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.defaultWorldType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.defaultWorldType.ForeColor = System.Drawing.Color.White;
-            this.defaultWorldType.FormattingEnabled = true;
-            this.defaultWorldType.Location = new System.Drawing.Point(116, 13);
-            this.defaultWorldType.Name = "defaultWorldType";
-            this.defaultWorldType.Size = new System.Drawing.Size(121, 21);
-            this.defaultWorldType.TabIndex = 7;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(8, 16);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(35, 13);
-            this.label10.TabIndex = 6;
-            this.label10.Text = "World";
-            // 
             // doorType
             // 
             this.doorType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -362,9 +300,10 @@
             this.doorType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.doorType.ForeColor = System.Drawing.Color.White;
             this.doorType.FormattingEnabled = true;
-            this.doorType.Location = new System.Drawing.Point(116, 123);
+            this.doorType.Location = new System.Drawing.Point(81, 123);
             this.doorType.Name = "doorType";
-            this.doorType.Size = new System.Drawing.Size(121, 21);
+            this.doorType.Size = new System.Drawing.Size(156, 21);
+            this.doorType.Sorted = true;
             this.doorType.TabIndex = 15;
             // 
             // label11
@@ -383,9 +322,10 @@
             this.roomType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.roomType.ForeColor = System.Drawing.Color.White;
             this.roomType.FormattingEnabled = true;
-            this.roomType.Location = new System.Drawing.Point(116, 96);
+            this.roomType.Location = new System.Drawing.Point(81, 96);
             this.roomType.Name = "roomType";
-            this.roomType.Size = new System.Drawing.Size(121, 21);
+            this.roomType.Size = new System.Drawing.Size(156, 21);
+            this.roomType.Sorted = true;
             this.roomType.TabIndex = 13;
             // 
             // label12
@@ -396,6 +336,72 @@
             this.label12.Size = new System.Drawing.Size(65, 13);
             this.label12.TabIndex = 12;
             this.label12.Text = "Room Script";
+            // 
+            // zoneType
+            // 
+            this.zoneType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.zoneType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.zoneType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.zoneType.ForeColor = System.Drawing.Color.White;
+            this.zoneType.FormattingEnabled = true;
+            this.zoneType.Location = new System.Drawing.Point(81, 67);
+            this.zoneType.Name = "zoneType";
+            this.zoneType.Size = new System.Drawing.Size(156, 21);
+            this.zoneType.Sorted = true;
+            this.zoneType.TabIndex = 11;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(8, 70);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(62, 13);
+            this.label8.TabIndex = 10;
+            this.label8.Text = "Zone Script";
+            // 
+            // realmType
+            // 
+            this.realmType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.realmType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.realmType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.realmType.ForeColor = System.Drawing.Color.White;
+            this.realmType.FormattingEnabled = true;
+            this.realmType.Location = new System.Drawing.Point(81, 40);
+            this.realmType.Name = "realmType";
+            this.realmType.Size = new System.Drawing.Size(156, 21);
+            this.realmType.Sorted = true;
+            this.realmType.TabIndex = 9;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(8, 43);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(67, 13);
+            this.label9.TabIndex = 8;
+            this.label9.Text = "Realm Script";
+            // 
+            // defaultWorldType
+            // 
+            this.defaultWorldType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.defaultWorldType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.defaultWorldType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.defaultWorldType.ForeColor = System.Drawing.Color.White;
+            this.defaultWorldType.FormattingEnabled = true;
+            this.defaultWorldType.Location = new System.Drawing.Point(81, 13);
+            this.defaultWorldType.Name = "defaultWorldType";
+            this.defaultWorldType.Size = new System.Drawing.Size(156, 21);
+            this.defaultWorldType.Sorted = true;
+            this.defaultWorldType.TabIndex = 7;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(8, 16);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(35, 13);
+            this.label10.TabIndex = 6;
+            this.label10.Text = "World";
             // 
             // groupBox5
             // 
@@ -412,24 +418,13 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Save Information";
             // 
-            // worldFile
+            // label15
             // 
-            this.worldFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.worldFile.ForeColor = System.Drawing.Color.White;
-            this.worldFile.Location = new System.Drawing.Point(111, 19);
-            this.worldFile.Name = "worldFile";
-            this.worldFile.ReadOnly = true;
-            this.worldFile.Size = new System.Drawing.Size(127, 20);
-            this.worldFile.TabIndex = 13;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(8, 21);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(95, 13);
-            this.label13.TabIndex = 12;
-            this.label13.Text = "World Save Folder";
+            this.label15.Location = new System.Drawing.Point(8, 70);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(229, 31);
+            this.label15.TabIndex = 19;
+            this.label15.Text = "Note: Leaving blank will save the files into the root server path.";
             // 
             // playerSavePath
             // 
@@ -437,7 +432,6 @@
             this.playerSavePath.ForeColor = System.Drawing.Color.White;
             this.playerSavePath.Location = new System.Drawing.Point(111, 46);
             this.playerSavePath.Name = "playerSavePath";
-            this.playerSavePath.ReadOnly = true;
             this.playerSavePath.Size = new System.Drawing.Size(127, 20);
             this.playerSavePath.TabIndex = 15;
             // 
@@ -450,6 +444,24 @@
             this.label14.TabIndex = 14;
             this.label14.Text = "Player Save Folder";
             // 
+            // worldFile
+            // 
+            this.worldFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.worldFile.ForeColor = System.Drawing.Color.White;
+            this.worldFile.Location = new System.Drawing.Point(111, 19);
+            this.worldFile.Name = "worldFile";
+            this.worldFile.Size = new System.Drawing.Size(127, 20);
+            this.worldFile.TabIndex = 13;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(8, 21);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(95, 13);
+            this.label13.TabIndex = 12;
+            this.label13.Text = "World Save Folder";
+            // 
             // btnSaveSettings
             // 
             this.btnSaveSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -459,23 +471,7 @@
             this.btnSaveSettings.TabIndex = 20;
             this.btnSaveSettings.Text = "Save Settings";
             this.btnSaveSettings.UseVisualStyleBackColor = true;
-            // 
-            // label15
-            // 
-            this.label15.Location = new System.Drawing.Point(8, 70);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(229, 31);
-            this.label15.TabIndex = 19;
-            this.label15.Text = "Note: Leaving blank will save the files into the root server path.";
-            // 
-            // label16
-            // 
-            this.label16.Location = new System.Drawing.Point(8, 40);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(229, 31);
-            this.label16.TabIndex = 20;
-            this.label16.Text = "Note: Leaving blank will result in the compiler starting its script scan from the" +
-    " server root directory.";
+            this.btnSaveSettings.Click += new System.EventHandler(this.btnSaveSettings_Click);
             // 
             // btnCancelSettings
             // 
@@ -486,6 +482,16 @@
             this.btnCancelSettings.TabIndex = 21;
             this.btnCancelSettings.Text = "Cancel";
             this.btnCancelSettings.UseVisualStyleBackColor = true;
+            this.btnCancelSettings.Click += new System.EventHandler(this.btnCancelSettings_Click);
+            // 
+            // loginRoom
+            // 
+            this.loginRoom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.loginRoom.ForeColor = System.Drawing.Color.White;
+            this.loginRoom.Location = new System.Drawing.Point(81, 41);
+            this.loginRoom.Name = "loginRoom";
+            this.loginRoom.Size = new System.Drawing.Size(154, 20);
+            this.loginRoom.TabIndex = 20;
             // 
             // frmEngineSettings
             // 
@@ -527,7 +533,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ListBox scriptLibrary;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ComboBox loginRoom;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox loginSuccessState;
         private System.Windows.Forms.Label label4;
@@ -562,5 +567,6 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button btnSaveSettings;
         private System.Windows.Forms.Button btnCancelSettings;
+        private System.Windows.Forms.TextBox loginRoom;
     }
 }

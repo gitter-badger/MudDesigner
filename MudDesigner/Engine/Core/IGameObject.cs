@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Globalization;
 
 namespace MudDesigner.Engine.Core
 {
@@ -33,5 +35,7 @@ namespace MudDesigner.Engine.Core
         /// Called when the object is no longer needed.
         /// </summary>
         void Destroy();
+
+        void CopyState(ref dynamic copyTo);
     }
 }

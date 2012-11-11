@@ -283,15 +283,15 @@ namespace MudDesigner.Editor.Rooms
                     validName = true;
             }
 
-            IRoom room = (IRoom)ScriptFactory.GetScript(EngineSettings.Default.RoomType, null);
+            IRoom room = (IRoom)ScriptFactory.GetScript(EngineSettings.Default.RoomScript, null);
 
             if (room == null)
             {
-                if (String.IsNullOrEmpty(EngineSettings.Default.RoomType))
-                    MessageBox.Show("The engine setting '" + EngineSettings.Default.RoomType + "' does not have a script name specified. Instancing a new Room failed.",
+                if (String.IsNullOrEmpty(EngineSettings.Default.RoomScript))
+                    MessageBox.Show("The engine setting '" + EngineSettings.Default.RoomScript + "' does not have a script name specified. Instancing a new Room failed.",
                         this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 else
-                    MessageBox.Show("Mud Designer Engine failed to instance the specified Room Type '" + EngineSettings.Default.RoomType + "'.  Please make sure that the script exists.",
+                    MessageBox.Show("Mud Designer Engine failed to instance the specified Room Type '" + EngineSettings.Default.RoomScript + "'.  Please make sure that the script exists.",
                         this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 return;

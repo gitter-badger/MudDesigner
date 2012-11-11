@@ -7,11 +7,11 @@ using MudDesigner.Engine.Properties;
 
 namespace MudDesigner.Scripts.Default.Environment
 {
-    public class DefaultWorld : MudDesigner.Engine.Environment.EngineWorld
+    public class MyGameWorld : MudDesigner.Engine.Environment.EngineWorld
     {
-        public DefaultWorld()
+        public MyGameWorld()
         {
-            Name = "The Default World";
+            Name = "An Example Game World";
         }
     }
 }

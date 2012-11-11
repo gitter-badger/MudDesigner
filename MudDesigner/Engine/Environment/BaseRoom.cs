@@ -97,7 +97,7 @@ namespace MudDesigner.Engine.Environment
                 //Remove the old door
                 RemoveDoorway(direction);
                 //Get a scripted Door instance to add back to the collection
-                var door = (Door)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.DoorType);
+                var door = (Door)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.DoorScript);
                 door.SetArrivalRoom(arrivalRoom);
                 door.SetDepartingRoom(this);
                 door.SetFacingDirection(direction);
@@ -108,7 +108,7 @@ namespace MudDesigner.Engine.Environment
             else
             {
                 //Get a scripted instance of a Door.
-                var door = (Door)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.DoorType);
+                var door = (Door)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.DoorScript);
                 door.SetFacingDirection(direction);
                 door.SetArrivalRoom(arrivalRoom);
                 door.SetDepartingRoom(this);

@@ -43,7 +43,7 @@ namespace MudDesigner.Server
             IServer server = new MudDesigner.Engine.Networking.Server(port: 4000);
 
             //Pull the custom game info that will be used by this MUD from the engine properties file
-            IGame game = (IGame)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.DefaultGameType, null);
+            IGame game = (IGame)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.GameScript, null);
 
             //Initialize the custom game class, passing along the server.
             game.Initialize(server);

@@ -77,7 +77,7 @@ namespace MudDesigner.Editor
                 }
             }
 
-            IZone zone = (IZone)ScriptFactory.GetScript(EngineSettings.Default.ZoneType, null);
+            IZone zone = (IZone)ScriptFactory.GetScript(EngineSettings.Default.ZoneScript, null);
 
             if (zone == null)
             {
