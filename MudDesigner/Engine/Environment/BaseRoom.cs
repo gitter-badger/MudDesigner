@@ -307,15 +307,6 @@ namespace MudDesigner.Engine.Environment
             }
         }
 
-        /// <summary>
-        /// Broadcasts a message to all of the players within the Room.
-        /// </summary>
-        /// <param name="message">The message you want to send.</param>
-        public virtual void BroadcastMessage(string message)
-        {
-            BroadcastMessage(message, null);
-        }
-
         public override string ToString()
         {
             return Zone.Realm.Name + ">" + Zone.Name + ">" + Name;

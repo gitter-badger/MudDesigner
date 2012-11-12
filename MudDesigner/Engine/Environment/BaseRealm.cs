@@ -36,7 +36,9 @@ namespace MudDesigner.Engine.Environment
         [Browsable(false), JsonProperty(TypeNameHandling = TypeNameHandling.All, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
         public List<IZone> Zones { get; set; }
 
-
+        /// <summary>
+        /// Gets or Sets a reference to the game World
+        /// </summary>
         public IWorld World { get; set; }
 
         /// <summary>

@@ -1,19 +1,37 @@
-﻿using System;
+﻿/* IZone
+ * Product: Mud Designer Engine
+ * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
+ * http://MudDesigner.Codeplex.com
+ *  
+ * File Description: The interface contract for Zone classes. Provides all of the property and method implementation requirements.
+ */
+//Microsoft .NET using statements
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
+using MudDesigner.Engine.Mobs;
+
+//Newtonsoft JSon using statements
 using Newtonsoft.Json;
 
 namespace MudDesigner.Engine.Environment
 {
     public interface IZone : IEnvironment
     {
+        /// <summary>
+        /// Gets or Sets the Realm that this Zone belongs to
+        /// </summary>
         [JsonProperty(ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
         IRealm Realm { get; set; }
 
+        /// <summary>
+        /// Gets or Sets the Room collection that belongs to this Zone.
+        /// </summary>
         [JsonProperty(TypeNameHandling = TypeNameHandling.All)]
         List<IRoom> Rooms { get; set; }
 
@@ -21,10 +39,37 @@ namespace MudDesigner.Engine.Environment
         //Helps you not having to insert Monsters into every room you make
         //List<IMonster> Monsters {get;}
 
+        /// <summary>
+        /// Adds a Room to the Zone. This is the preferred method for adding Rooms. It ensures that a null Room is never added to the collection
+        /// as well as provides the ability to overwrite a Room if it already exists.
+        /// </summary>
+        /// <param name="room">The Room that you want to add to the Realm</param>
+        /// <param name="forceOverwrite">If true, it will overwrite the Room if it already exists within the collection</param>
         void AddRoom(IRoom room, bool forceOverwrite = false);
+
+        /// <summary>
+        /// Adds a collection of Rooms to the Zone, with the option to overwrite any Rooms that already exists.
+        /// </summary>
+        /// <param name="rooms">The array of Rooms you want to add.</param>
+        /// <param name="forceOverwrite">If true it will overwrite the Room if it already exists within the Zone collection.</param>
         void AddRooms(IRoom[] rooms, bool forceOverwrite = false);
+
+        /// <summary>
+        /// Gets the specified Room and returns a reference to it for use.
+        /// </summary>
+        /// <param name="roomName">The name of the Room you want to get a reference for.</param>
+        /// <returns></returns>
         IRoom GetRoom(string roomName);
+
+        /// <summary>
+        /// Removes the specified Room from the Zone collection of Rooms.
+        /// </summary>
+        /// <param name="room">The Room you want to remove.</param>
         void RemoveRoom(IRoom room);
+
+        /// <summary>
+        /// Deletes all of the Rooms from the Zone.
+        /// </summary>
         void DeleteRooms();
     }
 }

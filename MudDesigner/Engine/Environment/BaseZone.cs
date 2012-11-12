@@ -1,33 +1,54 @@
-﻿using System;
+﻿/* BaseZone
+ * Product: Mud Designer Engine
+ * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
+ * http://MudDesigner.Codeplex.com
+ *  
+ * File Description: The Base class for all Zone classes.
+ */
+//Microsoft .NET using statements
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
+//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Scripting;
 using MudDesigner.Engine.Mobs;
+
+//Newtonsoft JSon using statement
 using Newtonsoft.Json;
 
 namespace MudDesigner.Engine.Environment
 {
+    /// <summary>
+    /// The base class for all Zone classes.
+    /// </summary>
     public abstract class BaseZone : GameObject, IZone
     {
-
         /// <summary>
-        /// Realm that this Room resides within
+        /// Gets or Sets the Realm that this Zone belongs to
         /// </summary>
         [Browsable(false), JsonProperty(ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
         public IRealm Realm { get; set; }
 
-        //Room Collection
+        /// <summary>
+        /// Gets or Sets the Room collection that belongs to this Zone.
+        /// </summary>
         [Browsable(false), JsonProperty(TypeNameHandling = TypeNameHandling.All, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
         public List<IRoom> Rooms { get; set; }
 
+        /// <summary>
+        /// Gets or Sets if this Zone is accessible by admins only
+        /// </summary>
         public bool IsAdminOnly { get; set; }
 
+        /// <summary>
+        /// Gets or Sets if combat can take place in this Zone
+        /// </summary>
         public bool IsSafe { get; set; }
 
         public BaseZone()
@@ -59,6 +80,10 @@ namespace MudDesigner.Engine.Environment
             Enabled = true;
         }
 
+        /// <summary>
+        /// Takes all of this Game Objects properties and copies them over to the argument object.
+        /// </summary>
+        /// <param name="copyTo">The object that will have it's properties replaced with the calling Object</param>
         public override void CopyState(ref dynamic copyTo)
         {
             //Make sure we are dealing with an object that implements IZone
@@ -77,6 +102,12 @@ namespace MudDesigner.Engine.Environment
             base.CopyState(ref copyTo);
         }
 
+        /// <summary>
+        /// Adds a Room to the Zone. This is the preferred method for adding Rooms. It ensures that a null Room is never added to the collection
+        /// as well as provides the ability to overwrite a Room if it already exists.
+        /// </summary>
+        /// <param name="room">The Room that you want to add to the Realm</param>
+        /// <param name="forceOverwrite">If true, it will overwrite the Room if it already exists within the collection</param>
         public virtual void AddRoom(IRoom room, bool forceOverwrite = true)
         {
             if (room == null)
@@ -94,18 +125,31 @@ namespace MudDesigner.Engine.Environment
             Rooms.Add(room);
         }
 
+        /// <summary>
+        /// Adds a collection of Rooms to the Zone, with the option to overwrite any Rooms that already exists.
+        /// </summary>
+        /// <param name="rooms">The array of Rooms you want to add.</param>
+        /// <param name="forceOverwrite">If true it will overwrite the Room if it already exists within the Zone collection.</param>
         public virtual void AddRooms(IRoom[] rooms, bool forceOverwrite = true)
         {
+            //Loop through each Room provided and add it via our AddRoom() method.
             foreach (IRoom room in rooms)
             {
                 AddRoom(room, forceOverwrite);
             }
         }
 
+        /// <summary>
+        /// Gets the specified Room and returns a reference to it for use.
+        /// </summary>
+        /// <param name="roomName">The name of the Room you want to get a reference for.</param>
+        /// <returns></returns>
         public virtual IRoom GetRoom(string roomName)
         {
+            //Loop through each Room until we find one that matches.
             foreach (IRoom room in Rooms)
             {
+                //If it matches, return it
                 if (room.Name == roomName)
                     return room;
             }
@@ -113,24 +157,40 @@ namespace MudDesigner.Engine.Environment
             return null;
         }
 
+        /// <summary>
+        /// Removes the specified Room from the Zone collection of Rooms.
+        /// </summary>
+        /// <param name="room">The Room you want to remove.</param>
         public virtual void RemoveRoom(IRoom room)
         {
             if (Rooms.Contains(room))
                 Rooms.Remove(room);
         }
 
+        /// <summary>
+        /// Deletes all of the Rooms from the Zone.
+        /// </summary>
         public virtual void DeleteRooms()
         {
+            //Loop through each Room in the collection.
             foreach (IRoom room in Rooms)
             {
+                //Destroy it.
                 room.Destroy();
             }
         }
 
+        /// <summary>
+        /// Broadcasts a message to all of the players within the Zone, including all Rooms.
+        /// </summary>
+        /// <param name="message">The message you want to broadcast</param>
+        /// <param name="playersToOmmit">A list of players that you want to hide the message from.</param>
         public virtual void BroadcastMessage(string message, List<IPlayer> playersToOmmit = null)
         {
+            //Loop through each Room in the Zone
             foreach (IRoom room in Rooms)
             {
+                //Broadcast to the Room
                 if (playersToOmmit == null)
                     room.BroadcastMessage(message);
                 else
