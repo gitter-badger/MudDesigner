@@ -8,7 +8,7 @@ using MudDesigner.Engine.Objects;
 
 namespace MudDesigner.Engine.Environment
 {
-    public interface IDoor
+    public interface IDoor : IGameObject
     {
         bool Locked { get; }
 

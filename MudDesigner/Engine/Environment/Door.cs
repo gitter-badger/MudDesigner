@@ -8,7 +8,7 @@ using MudDesigner.Engine.Objects;
 
 namespace MudDesigner.Engine.Environment
 {
-    public abstract class Door : IDoor
+    public abstract class Door : GameObject,  IDoor
     {
         public bool Locked { get; protected set; }
 
@@ -30,6 +30,22 @@ namespace MudDesigner.Engine.Environment
             FacingDirection = direction;
             Arrival = arrivingRoom;
             Departure = departingRoom;
+        }
+
+        public override void CopyState(ref dynamic copyTo)
+        {
+            if (copyTo is Door)
+            {
+                Scripting.ScriptObject newObject = new Scripting.ScriptObject(copyTo);
+
+                newObject.SetProperty("Locked", Locked, null);
+                newObject.SetProperty("Key", Key, null);
+                newObject.SetProperty("FacingDirection", FacingDirection, null);
+                newObject.SetProperty("Arrival", Arrival, null);
+                newObject.SetProperty("Departure", Departure, null);
+            }
+
+            base.CopyState(ref copyTo);
         }
 
         public virtual void Lock(IItem key)

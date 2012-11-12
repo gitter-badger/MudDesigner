@@ -93,10 +93,17 @@ namespace MudDesigner.Editor
 
             EngineEditor.Game = game;
 
+            //Update the GUI
             mainPropertyGame.SelectedObject = EngineEditor.Game;
             mainPropertyServer.SelectedObject = EngineEditor.Game.Server;
+            RefreshUI();
+        }
 
+        private void RefreshUI()
+        {
             lblProjectName.Text = EngineEditor.Game.Name;
+            grpGameSettings.Text = "Game Settings (" + EngineEditor.Game.GetType().Name + ")";
+            grpServerSettings.Text = "Server Settings (" + EngineEditor.Game.Server.GetType().Name + ")";
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -232,6 +239,12 @@ namespace MudDesigner.Editor
 
         private void engineSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (EngineEditor.Game.Server.Enabled)
+            {
+                MessageBox.Show("You can not change settings while the server is running!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             frmEngineSettings engineSettings = new frmEngineSettings();
             engineSettings.ShowDialog();
 
@@ -240,9 +253,8 @@ namespace MudDesigner.Editor
                 Application.DoEvents();
             }
 
-            EngineSettings.Default.Save();
-
             engineSettings = null;
+            RefreshUI();
         }
     }
 }

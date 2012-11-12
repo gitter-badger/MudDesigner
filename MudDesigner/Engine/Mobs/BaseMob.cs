@@ -118,6 +118,27 @@ namespace MudDesigner.Engine.Mobs
         public abstract void RestoreMana(IGameObject dealer, int amount);
         public abstract void ConsumeMana(int amount);
 
+        public override void CopyState(ref dynamic copyTo)
+        {
+            if (copyTo is IMob)
+            {
+                Scripting.ScriptObject newObject = new Scripting.ScriptObject(copyTo);
+
+                newObject.SetProperty("Gender", Gender, null);
+                newObject.SetProperty("Race", Race, null);
+                newObject.SetProperty("Class", Class, null);
+                newObject.SetProperty("Location", Location, null);
+
+                newObject.SetProperty("CanTalk", CanTalk, null);
+                newObject.SetProperty("MaxInventorySize", MaxInventorySize, null);
+                newObject.SetProperty("Items", Items, null);
+                newObject.SetProperty("Stats", Stats, null);
+                newObject.SetProperty("Appearance", Appearance, null);
+            }
+
+            base.CopyState(ref copyTo);
+        }
+
         /// <summary>
         /// Adds a specified item to the characters inventory
         /// </summary>

@@ -489,7 +489,7 @@
             this.roomsMnuItems.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.roomsMnuItems.ForeColor = System.Drawing.Color.White;
             this.roomsMnuItems.Name = "roomsMnuItems";
-            this.roomsMnuItems.Size = new System.Drawing.Size(152, 22);
+            this.roomsMnuItems.Size = new System.Drawing.Size(110, 22);
             this.roomsMnuItems.Text = "Items";
             // 
             // roomsMnuMobs
@@ -497,7 +497,7 @@
             this.roomsMnuMobs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.roomsMnuMobs.ForeColor = System.Drawing.Color.White;
             this.roomsMnuMobs.Name = "roomsMnuMobs";
-            this.roomsMnuMobs.Size = new System.Drawing.Size(152, 22);
+            this.roomsMnuMobs.Size = new System.Drawing.Size(110, 22);
             this.roomsMnuMobs.Text = "Mobs";
             // 
             // roomsMnuQuests
@@ -505,7 +505,7 @@
             this.roomsMnuQuests.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.roomsMnuQuests.ForeColor = System.Drawing.Color.White;
             this.roomsMnuQuests.Name = "roomsMnuQuests";
-            this.roomsMnuQuests.Size = new System.Drawing.Size(152, 22);
+            this.roomsMnuQuests.Size = new System.Drawing.Size(110, 22);
             this.roomsMnuQuests.Text = "Quests";
             // 
             // menuStrip1

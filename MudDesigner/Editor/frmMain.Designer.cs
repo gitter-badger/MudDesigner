@@ -36,6 +36,8 @@
             this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuGame = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStartStopServer = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.engineSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuWorld = new System.Windows.Forms.ToolStripMenuItem();
             this.menuEnvironment = new System.Windows.Forms.ToolStripMenuItem();
             this.menuRealms = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,18 +46,16 @@
             this.menuGameObjects = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItems = new System.Windows.Forms.ToolStripMenuItem();
             this.lblProjectName = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.grpGameSettings = new System.Windows.Forms.GroupBox();
             this.mainPropertyGame = new System.Windows.Forms.PropertyGrid();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.grpServerSettings = new System.Windows.Forms.GroupBox();
             this.mainPropertyServer = new System.Windows.Forms.PropertyGrid();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.mainTxtServerInfo = new System.Windows.Forms.RichTextBox();
             this.timerLogger = new System.Windows.Forms.Timer(this.components);
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.engineSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenuStrip.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.grpGameSettings.SuspendLayout();
+            this.grpServerSettings.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -126,9 +126,23 @@
             this.menuStartStopServer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.menuStartStopServer.ForeColor = System.Drawing.Color.White;
             this.menuStartStopServer.Name = "menuStartStopServer";
-            this.menuStartStopServer.Size = new System.Drawing.Size(133, 22);
+            this.menuStartStopServer.Size = new System.Drawing.Size(155, 22);
             this.menuStartStopServer.Text = "Start Server";
             this.menuStartStopServer.Click += new System.EventHandler(this.menuStartStopServer_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 6);
+            // 
+            // engineSettingsToolStripMenuItem
+            // 
+            this.engineSettingsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.engineSettingsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.engineSettingsToolStripMenuItem.Name = "engineSettingsToolStripMenuItem";
+            this.engineSettingsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.engineSettingsToolStripMenuItem.Text = "Engine Settings";
+            this.engineSettingsToolStripMenuItem.Click += new System.EventHandler(this.engineSettingsToolStripMenuItem_Click);
             // 
             // menuWorld
             // 
@@ -149,7 +163,7 @@
             this.menuRooms});
             this.menuEnvironment.ForeColor = System.Drawing.Color.White;
             this.menuEnvironment.Name = "menuEnvironment";
-            this.menuEnvironment.Size = new System.Drawing.Size(152, 22);
+            this.menuEnvironment.Size = new System.Drawing.Size(148, 22);
             this.menuEnvironment.Text = "Environments";
             // 
             // menuRealms
@@ -187,7 +201,7 @@
             this.menuGameObjects.Enabled = false;
             this.menuGameObjects.ForeColor = System.Drawing.Color.White;
             this.menuGameObjects.Name = "menuGameObjects";
-            this.menuGameObjects.Size = new System.Drawing.Size(152, 22);
+            this.menuGameObjects.Size = new System.Drawing.Size(148, 22);
             this.menuGameObjects.Text = "Game Objects";
             // 
             // menuItems
@@ -195,7 +209,7 @@
             this.menuItems.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.menuItems.ForeColor = System.Drawing.Color.White;
             this.menuItems.Name = "menuItems";
-            this.menuItems.Size = new System.Drawing.Size(152, 22);
+            this.menuItems.Size = new System.Drawing.Size(103, 22);
             this.menuItems.Text = "Items";
             // 
             // lblProjectName
@@ -210,16 +224,16 @@
             this.lblProjectName.Text = "New Game";
             this.lblProjectName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // groupBox1
+            // grpGameSettings
             // 
-            this.groupBox1.Controls.Add(this.mainPropertyGame);
-            this.groupBox1.ForeColor = System.Drawing.Color.White;
-            this.groupBox1.Location = new System.Drawing.Point(4, 50);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(346, 175);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Game Settings";
+            this.grpGameSettings.Controls.Add(this.mainPropertyGame);
+            this.grpGameSettings.ForeColor = System.Drawing.Color.White;
+            this.grpGameSettings.Location = new System.Drawing.Point(4, 50);
+            this.grpGameSettings.Name = "grpGameSettings";
+            this.grpGameSettings.Size = new System.Drawing.Size(346, 175);
+            this.grpGameSettings.TabIndex = 2;
+            this.grpGameSettings.TabStop = false;
+            this.grpGameSettings.Text = "Game Settings";
             // 
             // mainPropertyGame
             // 
@@ -244,16 +258,16 @@
             this.mainPropertyGame.ViewForeColor = System.Drawing.Color.White;
             this.mainPropertyGame.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.mainPropertyGame_PropertyValueChanged);
             // 
-            // groupBox2
+            // grpServerSettings
             // 
-            this.groupBox2.Controls.Add(this.mainPropertyServer);
-            this.groupBox2.ForeColor = System.Drawing.Color.White;
-            this.groupBox2.Location = new System.Drawing.Point(365, 50);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(346, 175);
-            this.groupBox2.TabIndex = 3;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Server Settings";
+            this.grpServerSettings.Controls.Add(this.mainPropertyServer);
+            this.grpServerSettings.ForeColor = System.Drawing.Color.White;
+            this.grpServerSettings.Location = new System.Drawing.Point(365, 50);
+            this.grpServerSettings.Name = "grpServerSettings";
+            this.grpServerSettings.Size = new System.Drawing.Size(346, 175);
+            this.grpServerSettings.TabIndex = 3;
+            this.grpServerSettings.TabStop = false;
+            this.grpServerSettings.Text = "Server Settings";
             // 
             // mainPropertyServer
             // 
@@ -301,20 +315,6 @@
             // 
             this.timerLogger.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 6);
-            // 
-            // engineSettingsToolStripMenuItem
-            // 
-            this.engineSettingsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.engineSettingsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.engineSettingsToolStripMenuItem.Name = "engineSettingsToolStripMenuItem";
-            this.engineSettingsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.engineSettingsToolStripMenuItem.Text = "Engine Settings";
-            this.engineSettingsToolStripMenuItem.Click += new System.EventHandler(this.engineSettingsToolStripMenuItem_Click);
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -322,10 +322,10 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(716, 513);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.grpServerSettings);
             this.Controls.Add(this.lblProjectName);
             this.Controls.Add(this.mainMenuStrip);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.grpGameSettings);
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.mainMenuStrip;
@@ -338,8 +338,8 @@
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
+            this.grpGameSettings.ResumeLayout(false);
+            this.grpServerSettings.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -352,9 +352,9 @@
         private System.Windows.Forms.ToolStripMenuItem menuFile;
         private System.Windows.Forms.ToolStripMenuItem menuExit;
         private System.Windows.Forms.Label lblProjectName;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox grpGameSettings;
         private System.Windows.Forms.PropertyGrid mainPropertyGame;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox grpServerSettings;
         private System.Windows.Forms.PropertyGrid mainPropertyServer;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.RichTextBox mainTxtServerInfo;

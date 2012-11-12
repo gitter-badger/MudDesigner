@@ -19,16 +19,13 @@ namespace MudDesigner.Engine.Scripting
             Instance = null;
         }
 
-        public void SetProperty(String propertyName, object propertyValue)
+        public void SetProperty(String propertyName, object propertyValue, object[] indexArgs)
         {
             PropertyInfo propertyInfo = Instance.GetType().GetProperty(propertyName);
 
-            if (propertyValue is String)
+            if (propertyValue != null && propertyInfo != null)
             {
-                if (propertyInfo.PropertyType.Name is String)
-                {
-                    propertyInfo.SetValue(Instance, propertyValue, null);
-                }
+                propertyInfo.SetValue(Instance, propertyValue, indexArgs);
             }
         }
 

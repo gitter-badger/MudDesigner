@@ -32,10 +32,10 @@
             this.realmsBtnDeleteRealm = new System.Windows.Forms.Button();
             this.realmsBtnAddRealm = new System.Windows.Forms.Button();
             this.realmsLstExistingRealms = new System.Windows.Forms.ListBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.grpRealmProperties = new System.Windows.Forms.GroupBox();
             this.realmsProperties = new System.Windows.Forms.PropertyGrid();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.grpRealmProperties.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -88,17 +88,17 @@
             this.realmsLstExistingRealms.SelectedIndexChanged += new System.EventHandler(this.realmsLstExistingRealms_SelectedIndexChanged);
             this.realmsLstExistingRealms.DoubleClick += new System.EventHandler(this.realmsLstExistingRealms_DoubleClick);
             // 
-            // groupBox2
+            // grpRealmProperties
             // 
-            this.groupBox2.Controls.Add(this.realmsProperties);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBox2.ForeColor = System.Drawing.Color.White;
-            this.groupBox2.Location = new System.Drawing.Point(260, 0);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(282, 410);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Realm Properties";
+            this.grpRealmProperties.Controls.Add(this.realmsProperties);
+            this.grpRealmProperties.Dock = System.Windows.Forms.DockStyle.Right;
+            this.grpRealmProperties.ForeColor = System.Drawing.Color.White;
+            this.grpRealmProperties.Location = new System.Drawing.Point(260, 0);
+            this.grpRealmProperties.Name = "grpRealmProperties";
+            this.grpRealmProperties.Size = new System.Drawing.Size(282, 410);
+            this.grpRealmProperties.TabIndex = 1;
+            this.grpRealmProperties.TabStop = false;
+            this.grpRealmProperties.Text = "Realm Properties";
             // 
             // realmsProperties
             // 
@@ -128,7 +128,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(542, 410);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.grpRealmProperties);
             this.Controls.Add(this.groupBox1);
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -139,7 +139,7 @@
             this.Text = "Mud Designer Editor : Realms";
             this.Load += new System.EventHandler(this.frmRealms_Load);
             this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
+            this.grpRealmProperties.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -150,7 +150,7 @@
         private System.Windows.Forms.ListBox realmsLstExistingRealms;
         private System.Windows.Forms.Button realmsBtnDeleteRealm;
         private System.Windows.Forms.Button realmsBtnAddRealm;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox grpRealmProperties;
         private System.Windows.Forms.PropertyGrid realmsProperties;
     }
 }

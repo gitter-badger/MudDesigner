@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -26,14 +27,27 @@ namespace MudDesigner.Engine.Environment
             Name = "World";
         }
 
-        public IWorld ShallowCopy()
+        public override void CopyState(ref dynamic copyTo)
         {
-            return (IWorld)this.MemberwiseClone();
-        }
+            //Make sure we are dealing with an object that implements IWorld
+            if (copyTo is IWorld)
+            {
+                //Wrap the object in a ScriptObject for easier managing
+                Scripting.ScriptObject newObject = new Scripting.ScriptObject(copyTo);
 
-        public IWorld DeepCopy()
-        {
-            return null;
+                //Make sure this object has a Realms property.
+                if (newObject.GetProperty("Realms") != null)
+                {
+                    //Set the Realms property to reference the Realms this object is currently referencing
+                    copyTo.Realms = Realms;
+                }
+
+                //Set the rest of the properties to match this object.
+                newObject.SetProperty("IsSafe", IsSafe, null);
+            }
+
+            //This can be called regardless if it's IWorld or not.
+            base.CopyState(ref copyTo);
         }
 
         public void AddRealm(IRealm realm, bool forceOverwrite = false)

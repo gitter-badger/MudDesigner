@@ -29,16 +29,16 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.zonesGrpZones = new System.Windows.Forms.GroupBox();
+            this.zonesLstExistingZones = new System.Windows.Forms.ListBox();
             this.zonesBtnChangeRealm = new System.Windows.Forms.Button();
             this.zonessBtnDeleteZone = new System.Windows.Forms.Button();
             this.zonesBtnAddZone = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.grpZoneProperties = new System.Windows.Forms.GroupBox();
             this.zoneProperties = new System.Windows.Forms.PropertyGrid();
-            this.zonesGrpZones = new System.Windows.Forms.GroupBox();
-            this.zonesLstExistingZones = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.zonesGrpZones.SuspendLayout();
+            this.grpZoneProperties.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -55,6 +55,31 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Existing Zones";
+            // 
+            // zonesGrpZones
+            // 
+            this.zonesGrpZones.Controls.Add(this.zonesLstExistingZones);
+            this.zonesGrpZones.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.zonesGrpZones.ForeColor = System.Drawing.Color.White;
+            this.zonesGrpZones.Location = new System.Drawing.Point(3, 95);
+            this.zonesGrpZones.Name = "zonesGrpZones";
+            this.zonesGrpZones.Size = new System.Drawing.Size(248, 415);
+            this.zonesGrpZones.TabIndex = 4;
+            this.zonesGrpZones.TabStop = false;
+            this.zonesGrpZones.Text = "No Realm loaded.";
+            // 
+            // zonesLstExistingZones
+            // 
+            this.zonesLstExistingZones.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.zonesLstExistingZones.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.zonesLstExistingZones.ForeColor = System.Drawing.Color.White;
+            this.zonesLstExistingZones.FormattingEnabled = true;
+            this.zonesLstExistingZones.Location = new System.Drawing.Point(3, 18);
+            this.zonesLstExistingZones.Name = "zonesLstExistingZones";
+            this.zonesLstExistingZones.Size = new System.Drawing.Size(242, 394);
+            this.zonesLstExistingZones.Sorted = true;
+            this.zonesLstExistingZones.TabIndex = 1;
+            this.zonesLstExistingZones.SelectedIndexChanged += new System.EventHandler(this.zonesLstExistingZones_SelectedIndexChanged);
             // 
             // zonesBtnChangeRealm
             // 
@@ -89,17 +114,17 @@
             this.zonesBtnAddZone.UseVisualStyleBackColor = true;
             this.zonesBtnAddZone.Click += new System.EventHandler(this.zonesBtnAddZone_Click);
             // 
-            // groupBox2
+            // grpZoneProperties
             // 
-            this.groupBox2.Controls.Add(this.zoneProperties);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBox2.ForeColor = System.Drawing.Color.White;
-            this.groupBox2.Location = new System.Drawing.Point(259, 0);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(282, 513);
-            this.groupBox2.TabIndex = 2;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Selected Zone Properties";
+            this.grpZoneProperties.Controls.Add(this.zoneProperties);
+            this.grpZoneProperties.Dock = System.Windows.Forms.DockStyle.Right;
+            this.grpZoneProperties.ForeColor = System.Drawing.Color.White;
+            this.grpZoneProperties.Location = new System.Drawing.Point(259, 0);
+            this.grpZoneProperties.Name = "grpZoneProperties";
+            this.grpZoneProperties.Size = new System.Drawing.Size(282, 513);
+            this.grpZoneProperties.TabIndex = 2;
+            this.grpZoneProperties.TabStop = false;
+            this.grpZoneProperties.Text = "Selected Zone Properties";
             // 
             // zoneProperties
             // 
@@ -123,38 +148,13 @@
             this.zoneProperties.ViewForeColor = System.Drawing.Color.White;
             this.zoneProperties.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.zoneProperties_PropertyValueChanged);
             // 
-            // zonesGrpZones
-            // 
-            this.zonesGrpZones.Controls.Add(this.zonesLstExistingZones);
-            this.zonesGrpZones.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.zonesGrpZones.ForeColor = System.Drawing.Color.White;
-            this.zonesGrpZones.Location = new System.Drawing.Point(3, 95);
-            this.zonesGrpZones.Name = "zonesGrpZones";
-            this.zonesGrpZones.Size = new System.Drawing.Size(248, 415);
-            this.zonesGrpZones.TabIndex = 4;
-            this.zonesGrpZones.TabStop = false;
-            this.zonesGrpZones.Text = "No Realm loaded.";
-            // 
-            // zonesLstExistingZones
-            // 
-            this.zonesLstExistingZones.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.zonesLstExistingZones.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.zonesLstExistingZones.ForeColor = System.Drawing.Color.White;
-            this.zonesLstExistingZones.FormattingEnabled = true;
-            this.zonesLstExistingZones.Location = new System.Drawing.Point(3, 18);
-            this.zonesLstExistingZones.Name = "zonesLstExistingZones";
-            this.zonesLstExistingZones.Size = new System.Drawing.Size(242, 394);
-            this.zonesLstExistingZones.Sorted = true;
-            this.zonesLstExistingZones.TabIndex = 1;
-            this.zonesLstExistingZones.SelectedIndexChanged += new System.EventHandler(this.zonesLstExistingZones_SelectedIndexChanged);
-            // 
             // frmZones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(541, 513);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.grpZoneProperties);
             this.Controls.Add(this.groupBox1);
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -165,8 +165,8 @@
             this.Text = "Mud Designer Editor : Zones";
             this.Load += new System.EventHandler(this.frmZones_Load);
             this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
             this.zonesGrpZones.ResumeLayout(false);
+            this.grpZoneProperties.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -177,7 +177,7 @@
         private System.Windows.Forms.Button zonesBtnChangeRealm;
         private System.Windows.Forms.Button zonessBtnDeleteZone;
         private System.Windows.Forms.Button zonesBtnAddZone;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox grpZoneProperties;
         private System.Windows.Forms.PropertyGrid zoneProperties;
         private System.Windows.Forms.GroupBox zonesGrpZones;
         private System.Windows.Forms.ListBox zonesLstExistingZones;

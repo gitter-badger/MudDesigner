@@ -91,6 +91,8 @@ namespace MudDesigner.Editor
 
             realmsProperties.SelectedObject = realm;
             EngineEditor.CurrentRealm = realm;
+
+            UpdateUI();
         }
 
         private void frmRealms_Load(object sender, EventArgs e)
@@ -105,6 +107,14 @@ namespace MudDesigner.Editor
                 if (realmsLstExistingRealms.Items.Contains(EngineEditor.CurrentRealm.Name))
                     realmsLstExistingRealms.SelectedItem = EngineEditor.CurrentRealm.Name;
             }
+
+            UpdateUI();
+        }
+
+        void UpdateUI()
+        {
+            if (EngineEditor.CurrentRealm != null)
+                grpRealmProperties.Text = "Realm Properties (" + EngineEditor.CurrentRealm.GetType().Name + ")";
         }
 
         private void realmsLstExistingRealms_DoubleClick(object sender, EventArgs e)

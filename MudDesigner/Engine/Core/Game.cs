@@ -21,18 +21,8 @@ namespace MudDesigner.Engine.Core
     /// Provides Methods and Properties for adding objects to the game world, managing the server and maintaining the state of the game,
     /// thereby serving as a base class for all Types that run and manage the MUD Game.
     /// </summary>
-    public abstract class Game : IGame
+    public abstract class Game : GameObject, IGame
     {
-        /// <summary>
-        /// The name of this game.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// The description of this game.
-        /// </summary>
-        public string Description { get; set; }
-
         /// <summary>
         /// Version of this game.
         /// </summary>
@@ -78,6 +68,24 @@ namespace MudDesigner.Engine.Core
         /// </summary>
         [Browsable(false)]
         public DateTime LastSave { get; private set; }
+
+        public override void CopyState(ref dynamic copyTo)
+        {
+            if (copyTo is IGame)
+            {
+                ScriptObject newObject = new ScriptObject(copyTo);
+
+                newObject.SetProperty("Version", Version, null);
+                newObject.SetProperty("Website", Website, null);
+                newObject.SetProperty("HideRoomNames", HideRoomNames, null);
+                newObject.SetProperty("Autosave", Autosave, null);
+                newObject.SetProperty("SaveFrequency", SaveFrequency, null);
+                newObject.SetProperty("Server", Server, null);
+                newObject.SetProperty("World", World, null);
+            }
+
+            base.CopyState(ref copyTo);
+        }
 
         /// <summary>
         /// Sets up all of the game objects for use, loads any saved states, restores the world and links itself to the server.

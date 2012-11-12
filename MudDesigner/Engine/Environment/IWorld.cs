@@ -21,8 +21,5 @@ namespace MudDesigner.Engine.Environment
         void RemoveRealm(string realmName);
 
         void BroadcastMessage(string message, List<IPlayer> playersToOmit = null);
-
-        IWorld ShallowCopy();
-        IWorld DeepCopy();
     }
 }

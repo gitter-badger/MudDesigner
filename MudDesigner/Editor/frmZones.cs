@@ -105,6 +105,16 @@ namespace MudDesigner.Editor
 
             zoneProperties.SelectedObject = zone;
             EngineEditor.CurrentZone = zone;
+
+            UpdateUI();
+        }
+
+        void UpdateUI()
+        {
+            if (EngineEditor.CurrentZone != null)
+            {
+                grpZoneProperties.Text = "Zone Properties (" + EngineEditor.CurrentZone.GetType().Name + ")";
+            }
         }
 
         private void zonesBtnChangeRealm_Click(object sender, EventArgs e)
@@ -160,6 +170,8 @@ namespace MudDesigner.Editor
             {
                 zonesLstExistingZones.Items.Add(zone.Name);
             }
+
+            UpdateUI();
         }
 
         private void zonesLstExistingZones_DoubleClick(object sender, EventArgs e)

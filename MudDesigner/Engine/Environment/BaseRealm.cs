@@ -17,14 +17,40 @@ namespace MudDesigner.Engine.Environment
     public abstract class BaseRealm : GameObject, IRealm
     {
         //Room Collection
-        [Browsable(false), JsonProperty(TypeNameHandling = TypeNameHandling.All)]
-        public List<IZone> Zones { get; protected set; }
+        [Browsable(false), JsonProperty(TypeNameHandling = TypeNameHandling.All, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
+        public List<IZone> Zones { get; set; }
 
         public bool IsAdminOnly { get; set; }
 
         public BaseRealm()
         {
             Zones = new List<IZone>();
+        }
+
+        public override void CopyState(ref dynamic copyTo)
+        {
+            //Make sure we are dealing with a IRealm object
+            if (copyTo is IRealm)
+            {
+                ScriptObject newObject = new ScriptObject(copyTo);
+
+                newObject.SetProperty("IsAdminOnly", IsAdminOnly, null);
+
+                //Make sure the object has a Zones properties
+                if (newObject.GetProperty("Zones") != null)
+                {
+                    //Set the newObjects Zones to reference our current Zone collection.
+                    copyTo.Zones = Zones;
+
+                    //Loop through each Zone and update it's Realm property to reference the newObject instead.
+                    foreach (IZone zone in copyTo.Zones)
+                    {
+                        zone.Realm = this;
+                    }
+                }
+                
+            }
+            base.CopyState(ref copyTo);
         }
 
         public BaseRealm(string name)

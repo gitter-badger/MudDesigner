@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
@@ -23,7 +24,7 @@ namespace MudDesigner.Engine.Environment
         /// <summary>
         /// Determins if this Room is a safe room where no attacks can be made.
         /// </summary>
-        public bool Safe { get; set; }
+        public bool IsSafe { get; set; }
 
         public bool IsAdminOnly { get; set; }
 
@@ -38,12 +39,12 @@ namespace MudDesigner.Engine.Environment
         public List<IPlayer> Occupants { get; set; }
 
         [Browsable(false)]
-        public Dictionary<AvailableTravelDirections, IDoor> Doorways { get; protected set; }
+        public Dictionary<AvailableTravelDirections, IDoor> Doorways { get; set; }
 
         /// <summary>
         /// Gets a reference to the Items collection within the Room.
         /// </summary>
-        public List<IItem> Items { get; protected set; }
+        public List<IItem> Items { get; set; }
 
         public BaseRoom()
         {
@@ -62,12 +63,30 @@ namespace MudDesigner.Engine.Environment
         }
         public BaseRoom(string name, IZone zone, bool safe = false)
         {
-            Safe = safe;
+            IsSafe = safe;
             Zone = zone;
             Doorways = new Dictionary<AvailableTravelDirections, IDoor>();
             Occupants = new List<IPlayer>();
             Items = new List<IItem>();
             Name = name;
+        }
+
+        public override void CopyState(ref dynamic copyTo)
+        {
+            if (copyTo is IRoom)
+            {
+                ScriptObject newObject = new ScriptObject(copyTo);
+
+                newObject.SetProperty("Zone", Zone, null);
+                newObject.SetProperty("IsSafe", IsSafe, null);
+                newObject.SetProperty("IsAdminOnly", IsAdminOnly, null);
+                newObject.SetProperty("Senses", Sense, null);
+                newObject.SetProperty("Occupants", Occupants, null);
+                newObject.SetProperty("Doorways", Doorways, null);
+                newObject.SetProperty("Items", Items, null);
+            }
+
+            base.CopyState(ref copyTo);
         }
 
         public override void Destroy()

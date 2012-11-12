@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 
 using MudDesigner.Engine.Core;
+using MudDesigner.Engine.Scripting;
 using Newtonsoft.Json;
 namespace MudDesigner.Engine.Core
 {
@@ -37,16 +38,18 @@ namespace MudDesigner.Engine.Core
 
         public virtual void CopyState(ref dynamic copyTo)
         {
-            if (copyTo is GameObject)
+            //Make sure we are dealing with an object that inherits from GameObject
+            if (copyTo is IGameObject)
             {
-                GameObject obj = (GameObject)copyTo;
-                obj.Name = Name;
-                obj.Description = Description;
+                //Wrap the object in a ScriptObject for easy managing
+                ScriptObject newObject = new ScriptObject(copyTo);
 
-                PropertyInfo info = obj.GetType().GetProperty("Destroyed");
-
-                if (info != null)
-                    info.SetValue(obj, bool.Parse(Destroyed.ToString()), null);
+                //Set each of the new objects properties to match this object.
+                newObject.SetProperty("Name", Name, null);
+                newObject.SetProperty("Description", Description, null);
+                newObject.SetProperty("Destroyed", Destroyed, null);
+                newObject.SetProperty("Enabled", Enabled, null);
+                newObject.SetProperty("Permanent", Permanent, null);
             }
         }
     }

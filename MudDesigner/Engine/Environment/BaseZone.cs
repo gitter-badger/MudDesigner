@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 using MudDesigner.Engine.Core;
@@ -23,18 +24,17 @@ namespace MudDesigner.Engine.Environment
 
         //Room Collection
         [Browsable(false), JsonProperty(TypeNameHandling = TypeNameHandling.All, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
-        public List<IRoom> Rooms { get; protected set; }
+        public List<IRoom> Rooms { get; set; }
 
         public bool IsAdminOnly { get; set; }
 
-        public bool Safe { get; set; }
+        public bool IsSafe { get; set; }
 
         public BaseZone()
         {
             Rooms = new List<IRoom>();
 
             Enabled = true;
-
         }
 
         public BaseZone(string name)
@@ -57,6 +57,24 @@ namespace MudDesigner.Engine.Environment
             Name = name;
 
             Enabled = true;
+        }
+
+        public override void CopyState(ref dynamic copyTo)
+        {
+            //Make sure we are dealing with an object that implements IZone
+            if (copyTo is IZone)
+            {
+                ScriptObject newObject = new ScriptObject(copyTo);
+
+                newObject.SetProperty("Realm", Realm, null);
+
+                if (newObject.GetProperty("Rooms") != null)
+                    copyTo.Rooms = Rooms;
+
+                newObject.SetProperty("IsAdminOnly", IsAdminOnly, null);
+                newObject.SetProperty("IsSafe", IsSafe, null);
+            }
+            base.CopyState(ref copyTo);
         }
 
         public virtual void AddRoom(IRoom room, bool forceOverwrite = true)

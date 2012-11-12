@@ -9,7 +9,7 @@ namespace MudDesigner.Engine.Environment
     public interface IRealm: IEnvironment
     {
         [JsonProperty(TypeNameHandling = TypeNameHandling.All)]
-        List<IZone> Zones { get; }
+        List<IZone> Zones { get; set; }
 
         void AddZone(IZone zone, bool forceOverwrite);
         void AddZones(IZone[] zones, bool forceOverwrite);

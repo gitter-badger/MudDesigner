@@ -435,7 +435,7 @@ namespace MudDesigner.Editor.Rooms
             if (room == null)
                 roomsLblCurrentRoom.Text = "Current Room: None Loaded";
             else
-                roomsLblCurrentRoom.Text = "Current Room: " + room.Name;
+                roomsLblCurrentRoom.Text = "Current Room: " + room.Name + " (" + room.GetType().Name + ")";
 
             if (realm == null || zone == null)
                 roomsLblRealmAndZone.Text = "No Location Loaded! New Rooms will be created within the Zone\nthat is selected under the Environments Tab.";

@@ -25,9 +25,9 @@ namespace MudDesigner.Engine.Environment
         Senses Sense { get; set; }
         
         List<IPlayer> Occupants { get; set; }
-        Dictionary<AvailableTravelDirections, IDoor> Doorways { get; }
+        Dictionary<AvailableTravelDirections, IDoor> Doorways { get; set; }
 
-        List<IItem> Items { get; }
+        List<IItem> Items { get; set; }
 
         void AddDoorway(AvailableTravelDirections direction, IRoom arrival, bool autoAddReverseDireciton, bool forceOverwrite);
         void RemoveDoorway(AvailableTravelDirections direction, bool autoRemoveReverseDirection);

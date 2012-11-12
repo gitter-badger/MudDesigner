@@ -17,11 +17,20 @@ namespace MudDesigner.Engine.Objects
 
         public bool IsAdminOnly { get; set; }
 
-        public BaseItem()
-            : base()
+        public override void CopyState(ref dynamic copyTo)
         {
-        }
+            if (copyTo is IItem)
+            {
+                Scripting.ScriptObject newObject = new Scripting.ScriptObject(copyTo);
 
+                newObject.SetProperty("Weight", Weight, null);
+                newObject.SetProperty("Health", Health, null);
+                newObject.SetProperty("Indestructible", Indestructible, null);
+                newObject.SetProperty("IsAdminOnly", IsAdminOnly, null);
+            }
+
+            base.CopyState(ref copyTo);
+        }
         public virtual void Inspect(IPlayer player)
         {
             throw new NotImplementedException();

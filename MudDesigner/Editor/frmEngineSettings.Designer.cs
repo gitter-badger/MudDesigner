@@ -36,6 +36,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.scriptLibrary = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.loginRoom = new System.Windows.Forms.TextBox();
             this.initialState = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -65,7 +66,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.btnSaveSettings = new System.Windows.Forms.Button();
             this.btnCancelSettings = new System.Windows.Forms.Button();
-            this.loginRoom = new System.Windows.Forms.TextBox();
+            this.scriptProgressBar = new System.Windows.Forms.ProgressBar();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -162,6 +163,15 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Client Login Items";
             // 
+            // loginRoom
+            // 
+            this.loginRoom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.loginRoom.ForeColor = System.Drawing.Color.White;
+            this.loginRoom.Location = new System.Drawing.Point(81, 41);
+            this.loginRoom.Name = "loginRoom";
+            this.loginRoom.Size = new System.Drawing.Size(154, 20);
+            this.loginRoom.TabIndex = 20;
+            // 
             // initialState
             // 
             this.initialState.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -236,9 +246,9 @@
             this.defaultPlayerType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.defaultPlayerType.ForeColor = System.Drawing.Color.White;
             this.defaultPlayerType.FormattingEnabled = true;
-            this.defaultPlayerType.Location = new System.Drawing.Point(116, 40);
+            this.defaultPlayerType.Location = new System.Drawing.Point(81, 40);
             this.defaultPlayerType.Name = "defaultPlayerType";
-            this.defaultPlayerType.Size = new System.Drawing.Size(121, 21);
+            this.defaultPlayerType.Size = new System.Drawing.Size(156, 21);
             this.defaultPlayerType.Sorted = true;
             this.defaultPlayerType.TabIndex = 11;
             // 
@@ -247,9 +257,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(8, 43);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(103, 13);
+            this.label3.Size = new System.Drawing.Size(66, 13);
             this.label3.TabIndex = 10;
-            this.label3.Text = "Default Player Script";
+            this.label3.Text = "Player Script";
             // 
             // defaultGameType
             // 
@@ -258,9 +268,9 @@
             this.defaultGameType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.defaultGameType.ForeColor = System.Drawing.Color.White;
             this.defaultGameType.FormattingEnabled = true;
-            this.defaultGameType.Location = new System.Drawing.Point(116, 13);
+            this.defaultGameType.Location = new System.Drawing.Point(81, 13);
             this.defaultGameType.Name = "defaultGameType";
-            this.defaultGameType.Size = new System.Drawing.Size(121, 21);
+            this.defaultGameType.Size = new System.Drawing.Size(156, 21);
             this.defaultGameType.Sorted = true;
             this.defaultGameType.TabIndex = 7;
             // 
@@ -269,9 +279,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(8, 16);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(102, 13);
+            this.label1.Size = new System.Drawing.Size(65, 13);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Default Game Script";
+            this.label1.Text = "Game Script";
             // 
             // groupBox4
             // 
@@ -484,21 +494,22 @@
             this.btnCancelSettings.UseVisualStyleBackColor = true;
             this.btnCancelSettings.Click += new System.EventHandler(this.btnCancelSettings_Click);
             // 
-            // loginRoom
+            // scriptProgressBar
             // 
-            this.loginRoom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.loginRoom.ForeColor = System.Drawing.Color.White;
-            this.loginRoom.Location = new System.Drawing.Point(81, 41);
-            this.loginRoom.Name = "loginRoom";
-            this.loginRoom.Size = new System.Drawing.Size(154, 20);
-            this.loginRoom.TabIndex = 20;
+            this.scriptProgressBar.Location = new System.Drawing.Point(23, 384);
+            this.scriptProgressBar.Maximum = 14;
+            this.scriptProgressBar.Name = "scriptProgressBar";
+            this.scriptProgressBar.Size = new System.Drawing.Size(482, 23);
+            this.scriptProgressBar.Step = 1;
+            this.scriptProgressBar.TabIndex = 22;
             // 
             // frmEngineSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.ClientSize = new System.Drawing.Size(520, 387);
+            this.ClientSize = new System.Drawing.Size(520, 413);
+            this.Controls.Add(this.scriptProgressBar);
             this.Controls.Add(this.btnCancelSettings);
             this.Controls.Add(this.btnSaveSettings);
             this.Controls.Add(this.groupBox5);
@@ -568,5 +579,6 @@
         private System.Windows.Forms.Button btnSaveSettings;
         private System.Windows.Forms.Button btnCancelSettings;
         private System.Windows.Forms.TextBox loginRoom;
+        private System.Windows.Forms.ProgressBar scriptProgressBar;
     }
 }

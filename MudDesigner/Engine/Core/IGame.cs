@@ -7,10 +7,8 @@ using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Scripting;
 namespace MudDesigner.Engine.Core
 {
-    public interface IGame
+    public interface IGame : IGameObject
     {
-        string Name { get; set; }
-        string Description { get; set; }
         string Version { get; set; }
         string Website { get; set; }
 

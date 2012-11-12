@@ -40,9 +40,6 @@ namespace MudDesigner.Engine.Mobs
         [JsonIgnore()]
         public List<byte> Buffer { get; set; }
 
-        //TODO - Create IClass and IRace interfaces
-        public string Class { get; set; }
-
         public BasePlayer()
         {
             Buffer = new List<byte>();
@@ -50,6 +47,23 @@ namespace MudDesigner.Engine.Mobs
 
             OnLevelEvent += new OnLevelHandler(OnLevel);
             OnLoginEvent += new OnLoginHandler(OnLogin);
+        }
+
+        public override void CopyState(ref dynamic copyTo)
+        {
+            if (copyTo is IPlayer)
+            {
+                Scripting.ScriptObject newObject = new Scripting.ScriptObject(copyTo);
+
+                newObject.SetProperty("Username", Username, null);
+                newObject.SetProperty("Password", Password, null);
+                newObject.SetProperty("CurrentState", CurrentState, null);
+                newObject.SetProperty("Connection", Connection, null);
+                newObject.SetProperty("IsConnected", IsConnected, null);
+                newObject.SetProperty("Buffer", Buffer, null);
+            }
+
+            base.CopyState(ref copyTo);
         }
 
         public virtual void Initialize(IState initialState, Socket connection)
