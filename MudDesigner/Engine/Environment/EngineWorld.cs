@@ -63,6 +63,7 @@ namespace MudDesigner.Engine.Environment
                 }
             }
 
+            realm.World = this;
             Realms.Add(realm);
         }
 

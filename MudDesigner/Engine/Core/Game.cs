@@ -1,4 +1,13 @@
-﻿//Microsoft .NET Using statements.
+﻿/* Game
+ * Product: Mud Designer Engine
+ * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
+ * http://MudDesigner.Codeplex.com
+ *  
+ * File Description: Provides Methods and Properties for adding objects to the game world, managing the server and maintaining the state of the game,
+ *                   thereby serving as a base class for all Types that run and manage the MUD Game.
+ */
+
+//Microsoft .NET using statements
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -14,7 +23,6 @@ using MudDesigner.Engine.Scripting;
 using MudDesigner.Engine.Properties;
 using Newtonsoft.Json;
 
-//Abstract.Core namespace is used for Types that are the core component of the game engine such as the Game, Player and command Types
 namespace MudDesigner.Engine.Core
 {
     /// <summary>
@@ -69,8 +77,13 @@ namespace MudDesigner.Engine.Core
         [Browsable(false)]
         public DateTime LastSave { get; private set; }
 
+        /// <summary>
+        /// Takes all of this Game Objects properties and copies them over to the argument object.
+        /// </summary>
+        /// <param name="copyTo">The object that will have it's properties replaced with the calling Object</param>
         public override void CopyState(ref dynamic copyTo)
         {
+            //If the new object is a Game, we can safely copy our properties
             if (copyTo is IGame)
             {
                 ScriptObject newObject = new ScriptObject(copyTo);
@@ -130,23 +143,34 @@ namespace MudDesigner.Engine.Core
                 }
             }
 
+            //Get a reference to a new instance of a IWorld Type.
             IWorld world = (IWorld)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.WorldScript, null);
+
+            //If it's not null, we apply it to the Game.World property.
             if (world != null)
                 World = world;
             return true;
         }
 
+        /// <summary>
+        /// Restores the world to it's previously saved state.
+        /// </summary>
         public void RestoreWorld()
         {
+            //Build a path using our current install directory + "Saves" + the engine setting for the world save file.
             var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(), "saves",
                                                 MudDesigner.Engine.Properties.EngineSettings.Default.WorldSaveFile);
 
+            //If the file doesn't exists, we abort.
             if (!File.Exists(fileAndPathToSave))
                 return;
 
+            //Our file IO manager
             FileIO fileLoad = new FileIO();
+
             try
             {
+                //Try to load and restore our world.
                 World = (IWorld)fileLoad.Load(fileAndPathToSave, typeof(IWorld));
             }
             catch(Exception ex)
@@ -155,7 +179,9 @@ namespace MudDesigner.Engine.Core
             }
         }
 
-        // This 
+       /// <summary>
+       /// Saves the current state of the world to file.
+       /// </summary>
         public void SaveWorld()
         {
             LastSave = DateTime.Now;

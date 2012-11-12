@@ -1,8 +1,19 @@
-﻿using System;
+﻿/* ServerDirector
+ * Product: Mud Designer Engine
+ * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
+ * http://MudDesigner.Codeplex.com
+ *  
+ * File Description: Server Director is responsible for managing the user connections.
+ */
+
+//Microsoft .NET using statements
+using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading;
 using System.Linq;
+
+//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Directors;
 using MudDesigner.Engine.Networking;
 using MudDesigner.Engine.Core;
@@ -10,15 +21,26 @@ using MudDesigner.Engine.States;
 using MudDesigner.Engine.Scripting;
 using MudDesigner.Engine.Mobs;
  
-
 namespace MudDesigner.Engine.Directors
 {
+    /// <summary>
+    /// Server Director is responsible for managing the user connections.
+    /// </summary>
     public class ServerDirector : IServerDirector
     {
+        /// <summary>
+        /// Gets a reference to the collection of players that are currently connected
+        /// </summary>
         public Dictionary<IPlayer, Thread> ConnectedPlayers { get; private set; }
 
+        /// <summary>
+        /// The server that is running, allowing players to connect
+        /// </summary>
         public IServer Server { get; set; }
 
+        /// <summary>
+        /// The initial state a player is in when he initially connects
+        /// </summary>
         public IState InitialConnectionState
         {
             get
@@ -34,6 +56,10 @@ namespace MudDesigner.Engine.Directors
             ConnectedPlayers = new Dictionary<IPlayer, Thread>(Server.MaxConnections);
         }
 
+        /// <summary>
+        /// Adds a connected player to the server
+        /// </summary>
+        /// <param name="connection">Connected player using a .NET Socket</param>
         public void AddConnection(Socket connection)
         {
             var player = (IPlayer)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.PlayerScript, null);
@@ -46,6 +72,10 @@ namespace MudDesigner.Engine.Directors
             userThread.Start(player);
         }
 
+        /// <summary>
+        /// Receives data from the connected player. Should be run on its own thread.
+        /// </summary>
+        /// <param name="index"></param>
         public void ReceiveDataThread(object player)
         {
             var connectedUser = (IPlayer)player;
@@ -75,6 +105,9 @@ namespace MudDesigner.Engine.Directors
             }
         }
 
+        /// <summary>
+        /// Disconnects all players from the server
+        /// </summary>
         private void DisconnectPlayer(IPlayer connectedUser)
         {
             Thread playerThread = ConnectedPlayers[connectedUser];

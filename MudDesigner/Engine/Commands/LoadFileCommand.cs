@@ -24,38 +24,27 @@ namespace MudDesigner.Engine.Commands
     /// </summary>
     public class LoadFileCommand : ICommand
     {
-        private IGame _game;
-        private readonly string _fileToLoad;
-        private IPlayer _player;
+        private IGame currentGame;
+        private IPlayer currentPlayer;
 
         public LoadFileCommand(IPlayer player, IGame game)
         {
-            _game = game;
-            _player = player;
+            currentGame = game;
+            currentPlayer = player;
         }
 
         public void Execute()
         {
-            if (_player.Role == CharacterRoles.Admin)
+            //if the player has the correct role..
+            if (currentPlayer != null && (currentPlayer.Role == CharacterRoles.Owner || currentPlayer.Role == CharacterRoles.Admin))
             {
-                LoadGame();
-
-                _player.SendMessage(String.Format("Successfully loaded {0} ", _fileToLoad));
-
-                // We need to set the RoomState for the player.
+                if (currentGame != null)
+                {
+                    //Restore the world to the state it was in prior to the last save.
+                    currentGame.RestoreWorld();
+                    currentPlayer.SendMessage("World restoration completed.");
+                }
             }
-
-
-        }
-
-        //@ToDO: I have this planned out, for loading and saving, I just need to double check how I am saving game objects and creating definitions for loading the class types back. (I have sample for how i plan on doing this in general) and a test project for doing it.
-        //@ToDO: I would also like to Encrypt the file. Possibly doing HMAC-SHA1 or something.... to prevent hacking and cleartext passwords.
-        public void LoadGame()
-        {
-            var game = _game as Game;
-
-            if (game != null) 
-                game.RestoreWorld();
         }
     }
 }

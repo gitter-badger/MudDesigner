@@ -1,4 +1,13 @@
-﻿using System;
+﻿/* IGameObject
+ * Product: Mud Designer Engine
+ * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
+ * http://MudDesigner.Codeplex.com
+ *  
+ * File Description: This is the base class for all Game Objects in the engine.
+ */
+
+//Microsoft .NET using statements
+using System;
 using System.ComponentModel;
 using System.Globalization;
 
@@ -36,6 +45,10 @@ namespace MudDesigner.Engine.Core
         /// </summary>
         void Destroy();
 
+        /// <summary>
+        /// Copies the current values of this object to a new object
+        /// </summary>
+        /// <param name="copyTo">The object that should have it's properties overwritten with the values of the calling Object</param>
         void CopyState(ref dynamic copyTo);
     }
 }

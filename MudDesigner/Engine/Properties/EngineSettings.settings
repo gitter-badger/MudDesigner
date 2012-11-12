@@ -22,7 +22,7 @@
       <Value Profile="(Default)">Scripts</Value>
     </Setting>
     <Setting Name="InitialRoom" Type="System.String" Scope="User">
-      <Value Profile="(Default)">My Realm&gt;My Zone&gt;Bedroom</Value>
+      <Value Profile="(Default)">New Realm1&gt;New Zone1&gt;New Room1</Value>
     </Setting>
     <Setting Name="DoorScript" Type="System.String" Scope="User">
       <Value Profile="(Default)">MudDesigner.Scripts.Default.Environment.DefaultDoor</Value>

@@ -1,8 +1,16 @@
-﻿using System;
+﻿/* Engine
+ * Product: Mud Designer Engine
+ * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
+ * http://MudDesigner.Codeplex.com
+ *  
+ * File Description: This file currently has no use.
+ */
+
+//Microsoft .NET using statements
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MudDesigner.Engine.Core;
 
 namespace MudDesigner.Engine.Core
 {

@@ -10,6 +10,7 @@ namespace MudDesigner.Engine.Environment
     {
         [JsonProperty(TypeNameHandling = TypeNameHandling.All)]
         List<IZone> Zones { get; set; }
+        IWorld World { get; set; }
 
         void AddZone(IZone zone, bool forceOverwrite);
         void AddZones(IZone[] zones, bool forceOverwrite);

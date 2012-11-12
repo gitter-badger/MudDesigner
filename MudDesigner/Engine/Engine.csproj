@@ -64,7 +64,7 @@
     <Compile Include="Objects\BaseItem.cs" />
     <Compile Include="Objects\IEquipable.cs" />
     <Compile Include="Core\ILoadable.cs" />
-    <Compile Include="Core\ISaveable.cs" />
+    <Compile Include="Core\ISavable.cs" />
     <Compile Include="Core\Engine.cs" />
     <Compile Include="Environment\IEnvironment.cs" />
     <Compile Include="Environment\BaseRealm.cs" />
@@ -99,7 +99,6 @@
     <Compile Include="Objects\IItem.cs" />
     <Compile Include="Commands\InvalidCommand.cs" />
     <Compile Include="Commands\LoadFileCommand.cs" />
-    <Compile Include="Commands\LoginFailureCommand.cs" />
     <Compile Include="Commands\NoOpCommand.cs" />
     <Compile Include="Commands\SaveWorldFileCommand.cs" />
     <Compile Include="Commands\SwitchStateCommand.cs" />
@@ -121,10 +120,6 @@
     <Compile Include="Scripting\ScriptEnumerator.cs" />
     <Compile Include="Scripting\ScriptFactory.cs" />
     <Compile Include="Scripting\ScriptObject.cs" />
-    <Compile Include="States\ConnectState.cs" />
-    <Compile Include="States\LoginExistingUserState.cs" />
-    <Compile Include="States\CreatePlayerState.cs" />
-    <Compile Include="States\LoginState.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -1,14 +1,27 @@
-﻿using System;
+﻿/* SerializationContracts
+ * Product: Mud Designer Engine
+ * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
+ * http://MudDesigner.Codeplex.com
+ *  
+ * File Description: Used by the FileIO.Save and Load() methods. Ensures that read-only properties will have their values restored during loading.
+ */
+
+//Microsoft .NET using statements
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
+//NewtonSoft JSon using statements
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace MudDesigner.Engine.Core
 {
+    /// <summary>
+    /// Used by the FileIO.Save and Load() methods. Ensures that read-only properties will have their values restored during loading.
+    /// </summary>
     public class SerializationContracts : DefaultContractResolver
     {
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)

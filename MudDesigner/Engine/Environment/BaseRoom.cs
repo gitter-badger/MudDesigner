@@ -1,18 +1,29 @@
-﻿using System;
+﻿/* BaseRoom
+ * Product: Mud Designer Engine
+ * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
+ * http://MudDesigner.Codeplex.com
+ *  
+ * File Description: The Base class for all Room classes.
+ */
+//Microsoft .NET using statements
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
+//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Scripting;
-
+using MudDesigner.Engine.Properties;
 using MudDesigner.Engine.Mobs;
-using Newtonsoft.Json;
 
 namespace MudDesigner.Engine.Environment
 {
+    /// <summary>
+    /// The Base class for all Room classes.
+    /// </summary>
     public abstract class BaseRoom : GameObject, IRoom
     {
         /// <summary>
@@ -26,18 +37,26 @@ namespace MudDesigner.Engine.Environment
         /// </summary>
         public bool IsSafe { get; set; }
 
+        /// <summary>
+        /// Gets or Sets if this Room is only accessible by an admin or not.
+        /// </summary>
         public bool IsAdminOnly { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or Sets information pertaining to a users 5-senses for the Room.
         /// </summary>
         [Browsable(false)]
         public Senses Sense { get; set; }
 
-        //Room Collections
+        /// <summary>
+        /// Gets or Sets the players that currently occupy this Room.
+        /// </summary>
         [Browsable(false)]
         public List<IPlayer> Occupants { get; set; }
 
+        /// <summary>
+        /// Gets or Sets the collection of Doorways that this Room has, leading to other Rooms.
+        /// </summary>
         [Browsable(false)]
         public Dictionary<AvailableTravelDirections, IDoor> Doorways { get; set; }
 
@@ -71,6 +90,10 @@ namespace MudDesigner.Engine.Environment
             Name = name;
         }
 
+        /// <summary>
+        /// Takes all of this Game Objects properties and copies them over to the argument object.
+        /// </summary>
+        /// <param name="copyTo">The object that will have it's properties replaced with the calling Object</param>
         public override void CopyState(ref dynamic copyTo)
         {
             if (copyTo is IRoom)
@@ -89,20 +112,56 @@ namespace MudDesigner.Engine.Environment
             base.CopyState(ref copyTo);
         }
 
+        /// <summary>
+        /// Destroys the Room and 
+        /// </summary>
         public override void Destroy()
         {
             Doorways.Clear();
+            Doorways = null;
 
-            this.BroadcastMessage("Room is being destroyed!  If you become trapped, please inform an admin.",
+            this.BroadcastMessage("Room is being destroyed!  You will be teleported to a new location.",
                 Occupants.ToList<IPlayer>());
 
+            //Trace back up through the environment path to get the World
+            IWorld world = Zone.Realm.World;
+            //Get the initial Room location, and split it up into an array so we can parse it
+            string[] roomPath = EngineSettings.Default.InitialRoom.Split('>');
+
+            //Make sure we have three entries, Realm, Zone and Room
+            if (roomPath.Length != 3)
+                return;
+
+            //Get the Realm
+            IRealm realm = world.GetRealm(roomPath[0]);
+            if (realm == null)
+                return;
+
+            //Get our Zone
+            IZone zone = realm.GetZone(roomPath[1]);
+            if (zone == null)
+                return;
+
+            //Get the initial Room
+            IRoom room = zone.GetRoom(roomPath[2]);
+            if (room == null)
+                return;
+
+            //Loop through each player in this Room and move them to the initial Room.
             foreach (IPlayer player in Occupants)
             {
-                //TODO: Move players into a default room when this is destroyed.
-                //player.Move(MudDesigner.Engine.Properties.EngineSettings.Default.LoginRoom);
+                player.Move(room);
+                player.SendMessage("You have been moved to " + room.Name);
             }
         }
 
+        /// <summary>
+        /// Adds a doorway to the Room, linking it to another Room in the world.
+        /// </summary>
+        /// <param name="direction">The direction that the player must travel in order to move through the doorway</param>
+        /// <param name="arrivalRoom">The room that the player will enter, once they walk through the doorway</param>
+        /// <param name="autoAddReverseDirection">If true, the arrival room will have the opposite doorway automatically linked back to this Room</param>
+        /// <param name="forceOverwrite">If true, if a doorway already exists for the specified direction, it will overwrite it.</param>
         public virtual void AddDoorway(AvailableTravelDirections direction, IRoom arrivalRoom, bool autoAddReverseDirection = true, bool forceOverwrite = true)
         {
             //Check if room is null.
@@ -123,7 +182,7 @@ namespace MudDesigner.Engine.Environment
 
                 Doorways.Add(direction, door);
             }
-                //Direction does not exist, so lets add a new doorway
+            //Direction does not exist, so lets add a new doorway
             else
             {
                 //Get a scripted instance of a Door.
@@ -144,14 +203,24 @@ namespace MudDesigner.Engine.Environment
             }
         }
 
+        /// <summary>
+        /// Gets a reference to the doorway that matches the specified direction, if it exists
+        /// </summary>
+        /// <param name="direction">The direction that you want the doorway for.</param>
+        /// <returns></returns>
         public IDoor GetDoorway(AvailableTravelDirections direction)
         {
+            //Check if the doorway collection has the specified direction
             if (Doorways.ContainsKey(direction))
-                return Doorways[direction];
+                return Doorways[direction]; //return it
             else
                 return null;
         }
 
+        /// <summary>
+        /// Returns an array of all doorways within the Room.
+        /// </summary>
+        /// <returns></returns>
         public IDoor[] GetDoorways()
         {
             List<IDoor> doorways = new List<IDoor>();
@@ -163,6 +232,11 @@ namespace MudDesigner.Engine.Environment
             return doorways.ToArray();
         }
 
+        /// <summary>
+        /// Allows for removal of a doorway.
+        /// </summary>
+        /// <param name="direction">The direction of travel that the doorway should be removed.</param>
+        /// <param name="autoRemoveReverseDirection">If true, the room on the otherside of the doorway will have it's door removed as well.</param>
         public virtual void RemoveDoorway(AvailableTravelDirections direction, bool autoRemoveReverseDirection = true)
         {
             if (Doorways.ContainsKey(direction))
@@ -177,6 +251,10 @@ namespace MudDesigner.Engine.Environment
             }
         }
 
+        /// <summary>
+        /// Adds a game item to the Room.
+        /// </summary>
+        /// <param name="item">The item you want to add.</param>
         public virtual void AddItem(IItem item)
         {
             //Don't allow duplicate entries.
@@ -187,12 +265,19 @@ namespace MudDesigner.Engine.Environment
             Items.Add(item);
         }
 
+        /// <summary>
+        /// Removes a game item from the Room.
+        /// </summary>
+        /// <param name="item">The item you want to remove</param>
         public virtual void RemoveItem(IItem item)
         {
             if (Items.Contains(item))
                 Items.Remove(item);
         }
 
+        /// <summary>
+        /// Clears the Room of all items.
+        /// </summary>
         public virtual void ClearItems()
         {
             foreach (IItem item in Items)
@@ -203,50 +288,38 @@ namespace MudDesigner.Engine.Environment
             Items.Clear();
         }
 
+        /// <summary>
+        /// Broadcasts a message to all of the players within the Room.
+        /// </summary>
+        /// <param name="message">The message you want to send.</param>
+        /// <param name="playersToOmmit">A list of players you want to hide the message from.</param>
         public virtual void BroadcastMessage(string message, List<IPlayer> playersToOmmit = null)
         {
-                foreach (IPlayer player in Occupants)
+            foreach (IPlayer player in Occupants)
+            {
+                if (playersToOmmit != null)
                 {
-                    if (playersToOmmit != null)
-                    {
-                        if (playersToOmmit.Contains(player))
-                            continue; //Skip this player if it's in the list.
-                    }
-                    //Send the message
-                    player.SendMessage(message);
+                    if (playersToOmmit.Contains(player))
+                        continue; //Skip this player if it's in the list.
                 }
+                //Send the message
+                player.SendMessage(message);
+            }
+        }
+
+        /// <summary>
+        /// Broadcasts a message to all of the players within the Room.
+        /// </summary>
+        /// <param name="message">The message you want to send.</param>
+        public virtual void BroadcastMessage(string message)
+        {
+            BroadcastMessage(message, null);
         }
 
         public override string ToString()
         {
             return Zone.Realm.Name + ">" + Zone.Name + ">" + Name;
         }
-
-        #region == Events ==
-        public delegate void OnEnterHandler(IPlayer player, AvailableTravelDirections enteredDirection);
-        public event OnEnterHandler OnEnterEvent;
-        public virtual void OnEnter(IPlayer player, AvailableTravelDirections enteredDirection)
-        {
-            BroadcastMessage(player.Name + " has entered from the " + enteredDirection.ToString());
-        }
-        #endregion
-
-        public void BroadcastMessage(string message)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public void OnEnter(IMob occupant, IEnvironment departureEnvironment, AvailableTravelDirections direction)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnLeave(IMob occupant, IEnvironment arrivalEnvironment, AvailableTravelDirections direction)
-        {
-            throw new NotImplementedException();
-        }
-
 
         public void AddDecoration(string decoration)
         {
@@ -277,5 +350,24 @@ namespace MudDesigner.Engine.Environment
         {
             throw new NotImplementedException();
         }
+
+        public void OnEnter(IMob occupant, IEnvironment departureEnvironment, AvailableTravelDirections direction)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnLeave(IMob occupant, IEnvironment arrivalEnvironment, AvailableTravelDirections direction)
+        {
+            throw new NotImplementedException();
+        }
+
+        #region == Events ==
+        public delegate void OnEnterHandler(IPlayer player, AvailableTravelDirections enteredDirection);
+        public event OnEnterHandler OnEnterEvent;
+        public virtual void OnEnter(IPlayer player, AvailableTravelDirections enteredDirection)
+        {
+            BroadcastMessage(player.Name + " has entered from the " + enteredDirection.ToString());
+        }
+        #endregion
     }
 }

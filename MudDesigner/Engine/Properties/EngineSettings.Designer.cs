@@ -98,7 +98,7 @@ namespace MudDesigner.Engine.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("My Realm>My Zone>Bedroom")]
+        [global::System.Configuration.DefaultSettingValueAttribute("New Realm1>New Zone1>New Room1")]
         public string InitialRoom {
             get {
                 return ((string)(this["InitialRoom"]));

@@ -1,13 +1,25 @@
-﻿using System;
+﻿/* Logger
+ * Product: Mud Designer Engine
+ * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
+ * http://MudDesigner.Codeplex.com
+ *  
+ * File Description: Provides a method for logging events to file. Can be helpful to log information for debugging.
+ */
+
+//Microsoft .NET using statements
+using System;
 using System.Collections.Generic;
 
 namespace MudDesigner.Engine.Core
 {
     /// <summary>
-    /// Public Engine Logging Class.
+    /// Provides a method for logging events to file. Can be helpful to log information for debugging.
     /// </summary>
     public static class Logger
     {
+        /// <summary>
+        /// The level of importance the messages have.
+        /// </summary>
         public enum Importance
         {
             Critical = 0,
@@ -33,27 +45,16 @@ namespace MudDesigner.Engine.Core
         /// </summary>
         public static Boolean ConsoleOutPut { get; set; }
 
+        /// <summary>
+        /// Gets or Sets if the logger should cache each message it receives into a collection pool for
+        /// access at a later time.
+        /// </summary>
         public static bool CacheContent { get; set; }
 
-        public static List<string> Cache
-        {
-            get
-            {
-                if (_Cache == null)
-                    _Cache = new List<string>();
-
-                return _Cache;
-            }
-            set
-            {
-                if (_Cache == null)
-                    _Cache = new List<string>();
-
-                _Cache = value;
-            }
-        }
-
-        public static List<string> _Cache;
+        /// <summary>
+        /// Gets or Sets the cached message pool for the logger
+        /// </summary>
+        public static List<string> Cache { get; set; }
 
         /// <summary>
         /// Clears the queued log messages from cache
@@ -70,6 +71,8 @@ namespace MudDesigner.Engine.Core
             //Clear the cache.
             if (Cache != null)
                 Cache.Clear();
+            else
+                Cache = new List<string>();
         }
 
         public static void WriteLine(String message, Importance importance = Importance.Information)
@@ -117,6 +120,9 @@ namespace MudDesigner.Engine.Core
         /// <returns></returns>
         public static String[] GetMessages()
         {
+            if (Cache == null)
+                Cache = new List<string>();
+
             return Cache.ToArray();
         }
     }
