@@ -90,11 +90,10 @@
     <Compile Include="Core\IRule.cs" />
     <Compile Include="Objects\InventoryBounds.cs" />
     <Compile Include="States\IState.cs" />
-    <Compile Include="Objects\IUseable.cs" />
+    <Compile Include="Objects\IUsable.cs" />
     <Compile Include="Directors\IConnectionsDirector.cs" />
     <Compile Include="Directors\IRuleDirector.cs" />
     <Compile Include="Directors\IServerDirector.cs" />
-    <Compile Include="Networking\IConnection.cs" />
     <Compile Include="Networking\IServer.cs" />
     <Compile Include="Objects\IItem.cs" />
     <Compile Include="Commands\InvalidCommand.cs" />
@@ -117,7 +116,6 @@
     <Compile Include="Scripting\CompileEngine.cs" />
     <Compile Include="Scripting\CSharp.cs" />
     <Compile Include="Scripting\ICompiler.cs" />
-    <Compile Include="Scripting\ScriptEnumerator.cs" />
     <Compile Include="Scripting\ScriptFactory.cs" />
     <Compile Include="Scripting\ScriptObject.cs" />
   </ItemGroup>

@@ -1,10 +1,21 @@
-﻿using System;
+﻿/* IAppearanceAttribute
+ * Product: Mud Designer Engine
+ * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
+ * http://MudDesigner.Codeplex.com
+ *  
+ * File Description: Appearance information related to the character that can be displayed to the players
+ */
+//Microsoft .NET using statements
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace MudDesigner.Engine.Mobs
 {
+    /// <summary>
+    /// Appearance information related to the character that can be displayed to the players
+    /// </summary>
     public interface IAppearanceAttribute
     {
         //Name of this appearance attribute. Example: Hair

@@ -1,14 +1,26 @@
-﻿using System;
+﻿/* ScriptFactory
+ * Product: Mud Designer Engine
+ * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
+ * http://MudDesigner.Codeplex.com
+ *  
+ * File Description: The ScriptFactory provides helper methods for instancing scripted game objects
+ */
+//Microsoft .NET using statements
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 
+//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
 
 namespace MudDesigner.Engine.Scripting
 {
+    /// <summary>
+    /// The ScriptFactory provides helper methods for instancing scripted game objects
+    /// </summary>
     public static class ScriptFactory
     {
         //The assembly loaded that will be used.
@@ -51,7 +63,12 @@ namespace MudDesigner.Engine.Scripting
                 assemblyCollection.Add(assembly);
         }
 
-
+        /// <summary>
+        /// Gets an instance of the script specified.
+        /// </summary>
+        /// <param name="className">The script name you want to have an instance returned of.</param>
+        /// <param name="args">Constructor arguments that the script requires.</param>
+        /// <returns></returns>
         public static object GetScript(string className, params object[] args)
         {
             Type type = null;
@@ -86,6 +103,12 @@ namespace MudDesigner.Engine.Scripting
             return script;
         }
 
+        /// <summary>
+        /// Finds a script that inherits from a base class. This does not search if the class implements any interfaces.
+        /// </summary>
+        /// <param name="baseScript">The base script that you want classes returned as a child of</param>
+        /// <param name="arguments">Arguments that your script might require for the constructors</param>
+        /// <returns></returns>
         public static Object FindInheritedScript(string baseScript, params Object[] arguments)
         {
             Type script = null;
@@ -133,6 +156,11 @@ namespace MudDesigner.Engine.Scripting
             }
         }
 
+        /// <summary>
+        /// Searches and returns an array of scripts that inherit from a specified base class. This does not include interfaces.
+        /// </summary>
+        /// <param name="baseScript">The base script that you want to have an array of classes returned from.</param>
+        /// <returns></returns>
         public static Type[] FindInheritedTypes(string baseScript)
         {
             List<Type> collection = new List<Type>();
@@ -161,6 +189,12 @@ namespace MudDesigner.Engine.Scripting
             return collection.ToArray();
         }
 
+        /// <summary>
+        /// Searches and returns a Type for the child class specified
+        /// </summary>
+        /// <param name="baseScript"></param>
+        /// <param name="t"></param>
+        /// <returns></returns>
         private static Type GetParentType(string baseScript, Type t)
         {
             if (t.BaseType != null)
@@ -177,6 +211,11 @@ namespace MudDesigner.Engine.Scripting
             return null;
         }
 
+        /// <summary>
+        /// Searches and returns an array of Types that implement a specified interface.
+        /// </summary>
+        /// <param name="interfaceName">The name of the interface</param>
+        /// <returns></returns>
         public static Type[] GetTypesWithInterface(string interfaceName)
         {
             List<Type> collection = new List<Type>();

@@ -1,14 +1,26 @@
-﻿using System;
+﻿/* BaseMob
+ * Product: Mud Designer Engine
+ * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
+ * http://MudDesigner.Codeplex.com
+ *  
+ * File Description: The Base class for all Mobs (Characters) in the game world.
+ */
+//Microsoft .NET using statements
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Core;
 
 namespace MudDesigner.Engine.Mobs
 {
+    /// <summary>
+    /// The Base class for all Mobs (Characters) in the game world.
+    /// </summary>
     public abstract class BaseMob : GameObject, IMob
     {
         #region Event Handlers
@@ -75,13 +87,20 @@ namespace MudDesigner.Engine.Mobs
         /// </summary>
         public int MaxInventorySize { get; set; }
         
-        //Character inventory
-        protected List<IItem> Items;
+        /// <summary>
+        /// Gets or Sets a collection of Items that the character has.
+        /// </summary>
+        public List<IItem> Items { get; set; }
 
-        //Character stats.
-        protected List<IStat> Stats;
+        /// <summary>
+        /// Gets or Sets a collection of stats that the character has
+        /// </summary>
+        public List<IStat> Stats { get; set; }
 
-        protected List<IAppearanceAttribute> Appearance;
+        /// <summary>
+        /// Gets or Sets a reference to a collection of appearance attributes the character has.
+        /// </summary>
+        public List<IAppearanceAttribute> Appearance { get; set; }
 
         public BaseMob()
         {
@@ -118,6 +137,10 @@ namespace MudDesigner.Engine.Mobs
         public abstract void RestoreMana(IGameObject dealer, int amount);
         public abstract void ConsumeMana(int amount);
 
+        /// <summary>
+        /// Takes all of this Game Objects properties and copies them over to the argument object.
+        /// </summary>
+        /// <param name="copyTo">The object that will have it's properties replaced with the calling Object</param>
         public override void CopyState(ref dynamic copyTo)
         {
             if (copyTo is IMob)
@@ -237,6 +260,10 @@ namespace MudDesigner.Engine.Mobs
                 Stats.Remove(stat);
         }
 
+        /// <summary>
+        /// Adds an appearance attribute to the character
+        /// </summary>
+        /// <param name="attribute"></param>
         public void AddAppearanceDescription(IAppearanceAttribute attribute)
         {
             if (Appearance.Contains(attribute))
@@ -245,11 +272,19 @@ namespace MudDesigner.Engine.Mobs
                 Appearance.Add(attribute);
         }
 
+        /// <summary>
+        /// Gets all of the appearance attributes that the character has.
+        /// </summary>
+        /// <returns></returns>
         public IAppearanceAttribute[] GetAppearanceDescriptions()
         {
             return Appearance.ToArray();
         }
 
+        /// <summary>
+        /// Removes a specified appearance attribute from the character
+        /// </summary>
+        /// <param name="attribute"></param>
         public void RemoveAppearanceAttribute(IAppearanceAttribute attribute)
         {
             if (Appearance.Contains(attribute))

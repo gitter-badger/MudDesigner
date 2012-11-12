@@ -1,11 +1,19 @@
-﻿using System;
+﻿/* ICompiler
+ * Product: Mud Designer Engine
+ * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
+ * http://MudDesigner.Codeplex.com
+ *  
+ * File Description: The compiler interface that can be used to implement additional compiler to the engine
+ */
+//Microsoft .NET using statements
+using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 
 namespace MudDesigner.Engine.Scripting
 {
     /// <summary>
-    /// Used to implement a wrapper for an existing compiler.
+    /// The compiler interface that can be used to implement additional compiler to the engine
     /// </summary>
     public interface ICompiler
     {

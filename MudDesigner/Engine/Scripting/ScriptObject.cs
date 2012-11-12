@@ -1,11 +1,25 @@
-﻿using System;
+﻿/* ScriptObject
+ * Product: Mud Designer Engine
+ * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
+ * http://MudDesigner.Codeplex.com
+ *  
+ * File Description: Wraps an instance of any class into a Object with helper methods for invoking methods and accessing properties.
+ */
+//Microsoft .NET using statements
+using System;
 using System.Reflection;
 using System.Text;
 
 namespace MudDesigner.Engine.Scripting
 {
+    /// <summary>
+    /// Wraps an instance of any class into a Object with helper methods for invoking methods and accessing properties.
+    /// </summary>
     public class ScriptObject
     {
+        /// <summary>
+        /// Gets or Sets the Object instance that this ScriptObject is wrapping.
+        /// </summary>
         public Object Instance { get; set; }
 
         public ScriptObject(Object instance)
@@ -19,6 +33,12 @@ namespace MudDesigner.Engine.Scripting
             Instance = null;
         }
 
+        /// <summary>
+        /// Sets the specified property for this objects Instance
+        /// </summary>
+        /// <param name="propertyName">The name of the property you want to change</param>
+        /// <param name="propertyValue">The value for the property you want to change</param>
+        /// <param name="indexArgs">Index arguments for collections.</param>
         public void SetProperty(String propertyName, object propertyValue, object[] indexArgs)
         {
             PropertyInfo propertyInfo = Instance.GetType().GetProperty(propertyName);
@@ -29,6 +49,11 @@ namespace MudDesigner.Engine.Scripting
             }
         }
 
+        /// <summary>
+        /// Gets a property for this objects Instance.
+        /// </summary>
+        /// <param name="propertyName">The property Name you want to get the value of.</param>
+        /// <returns></returns>
         public object GetProperty(String propertyName)
         {
             String[] tokens = propertyName.Split('.');
@@ -37,11 +62,20 @@ namespace MudDesigner.Engine.Scripting
             return previousProperty.GetValue(Instance, null);
         }
 
+        /// <summary>
+        /// Provides direct access to this objects Instance for propety modification
+        /// </summary>
+        /// <returns></returns>
         public dynamic GetProperty()
         {
             return Instance;
         }
 
+        /// <summary>
+        /// Gets the value of a field within this objects Instance
+        /// </summary>
+        /// <param name="propertyName">The field name</param>
+        /// <returns></returns>
         public object GetField(String propertyName)
         {
             String[] tokens = propertyName.Split('.');
@@ -50,16 +84,31 @@ namespace MudDesigner.Engine.Scripting
             return previousField.GetValue(Instance);
         }
 
+        /// <summary>
+        /// Provides direct access to this object Instance for field modification
+        /// </summary>
+        /// <returns></returns>
         public dynamic GetField()
         {
             return Instance;
         }
 
+        /// <summary>
+        /// Invokes the specified method for this objects Instance
+        /// </summary>
+        /// <param name="methodName">The name of the method you want to call</param>
+        /// <returns></returns>
         public Object InvokeMethod(String methodName)
         {
             return InvokeMethod(methodName, null);
         }
 
+        /// <summary>
+        /// Invokes the specified method for this objects Instance with optional parameters
+        /// </summary>
+        /// <param name="methodName">The name of the method you want to call</param>
+        /// <param name="parameters">Arguments for the method</param>
+        /// <returns></returns>
         public Object InvokeMethod(String methodName, params Object[] parameters)
         {
             MethodInfo method = Instance.GetType().GetMethod(methodName);

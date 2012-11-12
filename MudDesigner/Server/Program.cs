@@ -1,16 +1,29 @@
-﻿using System;
+﻿/* Program
+ * Product: Mud Designer Engine
+ * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
+ * http://MudDesigner.Codeplex.com
+ *  
+ * File Description: A stand-alone server that will run the Mud Game Engine when configured properly.
+ */
+//Microsoft .NET using statements
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Reflection;
 
+//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Networking;
 using MudDesigner.Engine.Scripting;
+
 namespace MudDesigner.Server
 {
+    /// <summary>
+    /// A stand-alone server that will run the Mud Game Engine when configured properly.
+    /// </summary>
     class Program
     {
         static void Main(string[] args)
@@ -52,6 +65,7 @@ namespace MudDesigner.Server
             //after the game.initialize() method is called.  This ensures the game is loaded and ready to go
             //prior to clients connecting to the server.
 
+            //Start the server.
             server.Start(maxConnections: 100, maxQueueSize: 20, game: game);
 
             while (server.Enabled)

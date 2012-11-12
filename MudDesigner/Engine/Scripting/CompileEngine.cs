@@ -1,4 +1,12 @@
-﻿using System;
+﻿/* CompileEngine
+ * Product: Mud Designer Engine
+ * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
+ * http://MudDesigner.Codeplex.com
+ *  
+ * File Description: The compiler engine is used to compile user scripts so that they may be used by the game. The compiler currently only supports C# syntax.
+ */
+//Microsoft .NET using statements
+using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
@@ -7,13 +15,10 @@ using System.Reflection;
 using System.Text;
 using Microsoft.CSharp;
 
-
-//using MudEngine.Core;
-
 namespace MudDesigner.Engine.Scripting
 {
     /// <summary>
-    /// Provides Properties & Methods needed to compile script source code into .NET assemblies.
+    /// The compiler engine is used to compile user scripts so that they may be used by the game. The compiler currently only supports C# syntax.
     /// </summary>
     public static class CompileEngine
     {

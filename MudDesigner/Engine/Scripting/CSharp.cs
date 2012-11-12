@@ -1,14 +1,21 @@
-﻿using System;
+﻿/* CSharp
+ * Product: Mud Designer Engine
+ * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
+ * http://MudDesigner.Codeplex.com
+ *  
+ * File Description: The C# Compiler used by the CompileEngine
+ */
+//Microsoft .NET using statements
+using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.CSharp;
 
-
 namespace MudDesigner.Engine.Scripting
 {
     /// <summary>
-    /// Standard C# source code compiler.
+    /// The C# Compiler used by the CompileEngine
     /// </summary>
     internal class CSharp : ICompiler
     {
