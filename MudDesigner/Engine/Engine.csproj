@@ -54,6 +54,7 @@
     <Compile Include="Events\IQuest.cs" />
     <Compile Include="Mobs\Alignments.cs" />
     <Compile Include="Mobs\BaseMob.cs" />
+    <Compile Include="Mobs\CharacterRoles.cs" />
     <Compile Include="Mobs\IAppearanceAttribute.cs" />
     <Compile Include="Mobs\IClass.cs" />
     <Compile Include="Mobs\IFactions.cs" />

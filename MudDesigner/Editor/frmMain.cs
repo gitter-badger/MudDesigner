@@ -1,4 +1,14 @@
-﻿using System;
+﻿/* frmMain
+ * Product: Mud Designer Editor
+ * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
+ * http://MudDesigner.Codeplex.com
+ *  
+ * File Description: Provides access to Game and Server settings as well as access to all of the 
+ *                   editors that make up the tool kit.
+ */
+
+//Microsoft .NET using statements
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,6 +20,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Objects;
@@ -25,7 +36,7 @@ namespace MudDesigner.Editor
         {
             InitializeComponent();
         }
-        //
+        
         private void frmMain_Load(object sender, EventArgs e)
         {
             //Setup our logger so we can access it within the editor.
@@ -91,33 +102,43 @@ namespace MudDesigner.Editor
             //Load the save game file.
             game.RestoreWorld();
 
-            EngineEditor.Game = game;
+            //Store a reference to the current game to the static Editor Type
+            Editor.Game = game;
 
             //Update the GUI
-            mainPropertyGame.SelectedObject = EngineEditor.Game;
-            mainPropertyServer.SelectedObject = EngineEditor.Game.Server;
+            mainPropertyGame.SelectedObject = Editor.Game;
+            mainPropertyServer.SelectedObject = Editor.Game.Server;
             RefreshUI();
         }
 
         private void RefreshUI()
         {
-            lblProjectName.Text = EngineEditor.Game.Name;
-            grpGameSettings.Text = "Game Settings (" + EngineEditor.Game.GetType().Name + ")";
-            grpServerSettings.Text = "Server Settings (" + EngineEditor.Game.Server.GetType().Name + ")";
+            lblProjectName.Text = Editor.Game.Name;
+            grpGameSettings.Text = "Game Settings (" + Editor.Game.GetType().Name + ")";
+            grpServerSettings.Text = "Server Settings (" + Editor.Game.Server.GetType().Name + ")";
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void mnuExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
+        private void menuSave_Click(object sender, EventArgs e)
+        {
+            //Save the game world.
+            Editor.Game.SaveWorld();
+        }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
+            //If we have no new log messages, abort.
             if (Logger.Cache.Count == 0)
                 return;
 
             int cacheSize = Logger.Cache.Count;
 
+            //Loop through each cached log message and send it to the 
+            //server console text box.
             foreach (string message in Logger.Cache)
             {
                 mainTxtServerInfo.Text += message + "\n";
@@ -141,19 +162,29 @@ namespace MudDesigner.Editor
 
         private void menuStartStopServer_Click(object sender, EventArgs e)
         {
-            switch (EngineEditor.Game.Server.Enabled)
+            //Check if the server is enabled or disabled.
+            switch (Editor.Game.Server.Enabled)
             {
+                    //Server is enabled, so we will stop it.
                 case true:
                     mainTxtServerInfo.Text += "\n======== Server Stopped ========\n\n";
-                    EngineEditor.Game.Server.Stop();
+                    Editor.Game.Server.Stop(); //Stops the server
+                    //Reset the UI so users know they can start it again.
                     menuStartStopServer.Text = "Start Server";
+                    //No need to grab engine log messages anymore.
+                    //TODO: - We might want to just keep this enabled
+                    //so we can catch errors when editing objects.
                     timerLogger.Enabled = false;
                     break;
+                    //Server is disabled, so we will start it.
                 case false:
                     timerLogger.Enabled = true;
                     mainTxtServerInfo.Text += "======== Server Starting ========\n\n";
-                    var server = EngineEditor.Game.Server;
-                    server.Start(server.MaxConnections, server.MaxQueuedConnections, EngineEditor.Game);
+                    //Get a reference to the server
+                    var server = Editor.Game.Server;
+                    //Start the server
+                    server.Start(server.MaxConnections, server.MaxQueuedConnections, Editor.Game);
+                    //Update the UI so users know they can stop it.
                     menuStartStopServer.Text = "Stop Server";
                     break;
             }
@@ -161,35 +192,45 @@ namespace MudDesigner.Editor
 
         private void menuRealms_Click(object sender, EventArgs e)
         {
+            //Create a new instance of the Realms editor.
             frmRealms realms = new frmRealms();
 
+            //Show it as a dialog. This prevents other editors from starting at the same time.
+            //Ensures that the static Editor Type will only be accessed by one editor at a time.
             realms.ShowDialog();
+
+            //While the editor is visible, just keep the App responsive.
             while (realms.Visible)
             {
                 Application.DoEvents();
             }
+
+            //Null the reference we have.
             realms = null;
         }
 
         private void menuZones_Click(object sender, EventArgs e)
         {
+            //Create a new instance of the Zones editor
             frmZones zones = new frmZones();
+
+            //Show it as a dialog. This prevents other editors from starting at the same time.
+            //Ensures that the static Editor Type will only be accessed by one editor at a time.
             zones.ShowDialog();
 
+            //While the editor is visible, just keep the App responsive.
             while (zones.Visible)
             {
                 Application.DoEvents();
             }
-            zones = null;
-        }
 
-        private void menuSave_Click(object sender, EventArgs e)
-        {
-            EngineEditor.Game.SaveWorld();
+            //Null the reference we have.
+            zones = null;
         }
 
         private void menuRooms_Click(object sender, EventArgs e)
         {
+            //Creates
             Rooms.frmRooms rooms = new Rooms.frmRooms();
             rooms.ShowDialog();
 
@@ -198,62 +239,83 @@ namespace MudDesigner.Editor
             rooms = null;
         }
 
+
         private void mainPropertyGame_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
+            //We need to update the Game Name label on the Editor if the user changes
+            //the name of the Game.
             if (e.ChangedItem.Label == "Name")
             {
-                lblProjectName.Text = EngineEditor.Game.Name;
+                lblProjectName.Text = Editor.Game.Name;
             }
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (EngineEditor.Game.Server.Enabled)
+            //If the server is currently running...
+            if (Editor.Game.Server.Enabled)
             {
+                //Tell the user the server is running and ask if they are sure they want to quit.
                 DialogResult serverResults = MessageBox.Show("You are currently running the game server, are you sure you want to quit?", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 switch (serverResults)
                 {
+                        //If yes, stop the server.
                     case System.Windows.Forms.DialogResult.Yes:
                         menuStartStopServer_Click(null, null);
                         break;
+                        //If no, cancel closing the editor and resume.
                     case System.Windows.Forms.DialogResult.No:
-                        e.Cancel = true; //cancel killing the app.
+                        e.Cancel = true;
                         return;
                 }
             }
 
+            //Ask if we should save prior to closing.
             DialogResult saveResults = MessageBox.Show("Would you like to save prior to closing?", this.Text, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             switch (saveResults)
             {
+                    //If yes, save the game world
                 case System.Windows.Forms.DialogResult.Yes:
-                    EngineEditor.Game.SaveWorld();
+                    Editor.Game.SaveWorld();
                     break;
+                    //If no, ignore
                 case System.Windows.Forms.DialogResult.No:
                     break;
+                    //If cancel, abort closing the editor
                 case System.Windows.Forms.DialogResult.Cancel:
                     e.Cancel = true;
                     break;
             }
         }
 
-        private void engineSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void mnuEngineSettings_Click(object sender, EventArgs e)
         {
-            if (EngineEditor.Game.Server.Enabled)
+            //If the server is running, don't allow editing of the Engine Settings.
+            //This can cause instability and corruption.
+            if (Editor.Game.Server.Enabled)
             {
                 MessageBox.Show("You can not change settings while the server is running!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
+            //Create a instance of the Engine Settings editor
             frmEngineSettings engineSettings = new frmEngineSettings();
+
+            //Show it as a dialog. This prevents other editors from starting at the same time.
+            //Ensures that the static Editor Type will only be accessed by one editor at a time.
             engineSettings.ShowDialog();
 
+            //While the editor is visible, just keep the App responsive.
             while (engineSettings.Visible)
             {
                 Application.DoEvents();
             }
 
+            //Null the reference we have.
             engineSettings = null;
+
+            //Refresh the UI in the event the Game or Server types were changed.
             RefreshUI();
         }
     }

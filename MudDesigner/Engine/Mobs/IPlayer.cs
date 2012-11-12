@@ -13,6 +13,7 @@ namespace MudDesigner.Engine.Mobs
         string Username { get; set; }
         string Password {get; set;}
         IState CurrentState { get; }
+        CharacterRoles Role { get; }
         
         Socket Connection { get; }
         bool IsConnected { get; }

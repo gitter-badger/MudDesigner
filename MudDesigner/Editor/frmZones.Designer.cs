@@ -80,6 +80,7 @@
             this.zonesLstExistingZones.Sorted = true;
             this.zonesLstExistingZones.TabIndex = 1;
             this.zonesLstExistingZones.SelectedIndexChanged += new System.EventHandler(this.zonesLstExistingZones_SelectedIndexChanged);
+            this.zonesLstExistingZones.DoubleClick += new System.EventHandler(this.zonesLstExistingZones_DoubleClick_1);
             // 
             // zonesBtnChangeRealm
             // 

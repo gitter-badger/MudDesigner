@@ -48,7 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EngineEditor.cs" />
+    <Compile Include="Editor.cs" />
     <Compile Include="frmEngineSettings.cs">
       <SubType>Form</SubType>
     </Compile>

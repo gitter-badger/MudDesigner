@@ -37,10 +37,10 @@
             this.scriptLibrary = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.loginRoom = new System.Windows.Forms.TextBox();
-            this.initialState = new System.Windows.Forms.ComboBox();
+            this.LoginCompleteState = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.loginSuccessState = new System.Windows.Forms.ComboBox();
+            this.loginState = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.defaultPlayerType = new System.Windows.Forms.ComboBox();
@@ -150,10 +150,10 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.loginRoom);
-            this.groupBox2.Controls.Add(this.initialState);
+            this.groupBox2.Controls.Add(this.LoginCompleteState);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.loginSuccessState);
+            this.groupBox2.Controls.Add(this.loginState);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.ForeColor = System.Drawing.Color.White;
             this.groupBox2.Location = new System.Drawing.Point(12, 86);
@@ -172,27 +172,26 @@
             this.loginRoom.Size = new System.Drawing.Size(154, 20);
             this.loginRoom.TabIndex = 20;
             // 
-            // initialState
+            // LoginCompleteState
             // 
-            this.initialState.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.initialState.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.initialState.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.initialState.ForeColor = System.Drawing.Color.White;
-            this.initialState.FormattingEnabled = true;
-            this.initialState.Location = new System.Drawing.Point(81, 67);
-            this.initialState.Name = "initialState";
-            this.initialState.Size = new System.Drawing.Size(154, 21);
-            this.initialState.Sorted = true;
-            this.initialState.TabIndex = 19;
+            this.LoginCompleteState.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.LoginCompleteState.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.LoginCompleteState.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LoginCompleteState.ForeColor = System.Drawing.Color.White;
+            this.LoginCompleteState.FormattingEnabled = true;
+            this.LoginCompleteState.Location = new System.Drawing.Point(81, 67);
+            this.LoginCompleteState.Name = "LoginCompleteState";
+            this.LoginCompleteState.Size = new System.Drawing.Size(154, 21);
+            this.LoginCompleteState.Sorted = true;
+            this.LoginCompleteState.TabIndex = 19;
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 70);
+            this.label7.Location = new System.Drawing.Point(6, 67);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(59, 13);
+            this.label7.Size = new System.Drawing.Size(69, 31);
             this.label7.TabIndex = 18;
-            this.label7.Text = "Initial State";
+            this.label7.Text = "Login Completed State";
             // 
             // label6
             // 
@@ -203,18 +202,18 @@
             this.label6.TabIndex = 16;
             this.label6.Text = "Login Room";
             // 
-            // loginSuccessState
+            // loginState
             // 
-            this.loginSuccessState.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.loginSuccessState.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.loginSuccessState.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.loginSuccessState.ForeColor = System.Drawing.Color.White;
-            this.loginSuccessState.FormattingEnabled = true;
-            this.loginSuccessState.Location = new System.Drawing.Point(81, 13);
-            this.loginSuccessState.Name = "loginSuccessState";
-            this.loginSuccessState.Size = new System.Drawing.Size(154, 21);
-            this.loginSuccessState.Sorted = true;
-            this.loginSuccessState.TabIndex = 15;
+            this.loginState.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.loginState.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.loginState.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.loginState.ForeColor = System.Drawing.Color.White;
+            this.loginState.FormattingEnabled = true;
+            this.loginState.Location = new System.Drawing.Point(81, 13);
+            this.loginState.Name = "loginState";
+            this.loginState.Size = new System.Drawing.Size(154, 21);
+            this.loginState.Sorted = true;
+            this.loginState.TabIndex = 15;
             // 
             // label4
             // 
@@ -545,9 +544,9 @@
         private System.Windows.Forms.ListBox scriptLibrary;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox loginSuccessState;
+        private System.Windows.Forms.ComboBox loginState;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox initialState;
+        private System.Windows.Forms.ComboBox LoginCompleteState;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.ComboBox defaultPlayerType;

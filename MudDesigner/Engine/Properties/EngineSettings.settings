@@ -11,7 +11,7 @@
     <Setting Name="PlayerScript" Type="System.String" Scope="User">
       <Value Profile="(Default)">MudDesigner.Scripts.Default.Mobs.DefaultPlayer</Value>
     </Setting>
-    <Setting Name="ClientConnectState" Type="System.String" Scope="User">
+    <Setting Name="LoginCompletedState" Type="System.String" Scope="User">
       <Value Profile="(Default)">MudDesigner.Scripts.Default.States.MainMenuState</Value>
     </Setting>
     <Setting Name="ScriptLibrary" Type="System.Collections.Specialized.StringCollection" Scope="User">

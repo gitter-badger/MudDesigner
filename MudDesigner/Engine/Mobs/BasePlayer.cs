@@ -19,6 +19,8 @@ namespace MudDesigner.Engine.Mobs
         public string Username { get; set; }
         public string Password { get; set; }
 
+        public CharacterRoles Role { get; private set; }
+
         [JsonIgnore()]
         public IState CurrentState { get; protected set; }
 

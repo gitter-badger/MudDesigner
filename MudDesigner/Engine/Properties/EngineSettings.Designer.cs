@@ -62,12 +62,12 @@ namespace MudDesigner.Engine.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.States.MainMenuState")]
-        public string ClientConnectState {
+        public string LoginCompletedState {
             get {
-                return ((string)(this["ClientConnectState"]));
+                return ((string)(this["LoginCompletedState"]));
             }
             set {
-                this["ClientConnectState"] = value;
+                this["LoginCompletedState"] = value;
             }
         }
         
