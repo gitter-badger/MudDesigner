@@ -19,20 +19,13 @@ namespace MudDesigner.Engine.Commands
     /// </summary>
     public class SwitchStateCommand : ICommand
     {
-        private IState newState;
-        private IPlayer currentPlayer;
-
-        public SwitchStateCommand(IState state, IPlayer player)
-        {
-            newState = state;
-            currentPlayer = player;
-        }
-
-        public void Execute()
+        public void Execute(IPlayer player)
         {
             //Switch the players state.
+            /*
             if (newState != null && currentPlayer != null)
                 currentPlayer.SwitchState(newState);
+             */
         }
     }
 }

@@ -15,6 +15,10 @@ using System.Text;
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Core;
+using MudDesigner.Engine.Directors;
+
+//Newtonsoft JSon using statements
+using Newtonsoft.Json;
 
 namespace MudDesigner.Engine.Mobs
 {
@@ -101,6 +105,9 @@ namespace MudDesigner.Engine.Mobs
         /// Gets or Sets a reference to a collection of appearance attributes the character has.
         /// </summary>
         public List<IAppearanceAttribute> Appearance { get; set; }
+
+        [JsonIgnore()] //Don't need to save this with the player.
+        public IServerDirector Director { get; set; }
 
         public BaseMob()
         {
@@ -362,7 +369,7 @@ namespace MudDesigner.Engine.Mobs
             IRoom departingRoom = Location;
 
             //If the room is null, call OnLeave with the Cancel arg true.
-            if (room == null)
+            if (room == null || Location == null)
                 OnLeaveEvent(room, true);
             else
             {
@@ -370,6 +377,9 @@ namespace MudDesigner.Engine.Mobs
                 //move the player from the current room to the new room.
                 OnLeaveEvent(room);
             }
+
+            if (room != null)
+                Location = room;
 
             //If we have successfully moved, call OnEnter and provide the
             //room we just left in the event we still need to access it.
@@ -383,13 +393,37 @@ namespace MudDesigner.Engine.Mobs
             if (cancel || arrivalRoom == null)
                 return; //Don't change our location if we are cancelled or null for some reason.
 
-            Location = arrivalRoom;
+            IDoor door = null;
+            //Find the doorway in this Location that we are going to
+            foreach(IDoor d in Location.GetDoorways())
+            {
+                if (d.Arrival == arrivalRoom)
+                    door = d;
+            }
+
+            if (door == null)
+                return;
+
+            //Remove this character from the departing room
+            Location.RemoveCharacter(this, door.FacingDirection);
         }
 
         public void OnEnter(IRoom departingRoom)
         {
             //Stub in the event this is called and the user hasn't attached its own
             //event method. This is called by BaseMob and thus, must always exist.
+
+            IDoor door = null;
+            foreach (IDoor d in Location.GetDoorways())
+            {
+                if (d.Arrival == departingRoom)
+                    door = d;
+            }
+
+            if (door == null)
+                Location.AddCharacter(this, AvailableTravelDirections.None);
+            else
+                Location.AddCharacter(this, door.FacingDirection);
         }
 
         private void OnDeath(IGameObject dealer) { }

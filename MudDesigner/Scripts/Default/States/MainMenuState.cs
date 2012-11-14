@@ -49,7 +49,7 @@ namespace MudDesigner.Scripts.Default.States
 
         public ICommand GetCommand()
         {
-            var input = connectedPlayer.RecieveInput();
+            var input = connectedPlayer.ReceiveInput();
             switch (input.ToLower())
             {
                     //TODO This needs to use the command SwitchState to switch to room state.
@@ -62,7 +62,7 @@ namespace MudDesigner.Scripts.Default.States
                     if (game != null)
                     {
                         connectedPlayer.SendMessage("Save Success!");
-                        return new SaveWorldFileCommand(game);
+                        return new SaveWorldFileCommand();
                     }
                     break;
                 case "quit":
@@ -71,7 +71,7 @@ namespace MudDesigner.Scripts.Default.States
             }
 
             // We Don't have any commands here yet... but we will! (EnterCommand, JoinCommand, SaveCommand, OptionsCommand, QuitCommand etc)
-            return new InvalidCommand(connectedPlayer);
+            return new InvalidCommand();
         }
     }
 }

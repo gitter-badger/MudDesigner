@@ -4,18 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Commands;
 using MudDesigner.Engine.Mobs;
+using MudDesigner.Engine.Environment;
 using MudDesigner.Scripts.Default.States;
 
 namespace MudDesigner.Scripts.Default.Commands
 {
-    public class LookCommand : ICommand
+    public class SayCommand : ICommand
     {
         public void Execute(IPlayer player)
         {
-            player.SwitchState(new LookingState());
+            if (String.IsNullOrEmpty(player.ReceivedInput))
+                return;
+
+           // player.SwitchState(new TalkingState());
         }
     }
 }

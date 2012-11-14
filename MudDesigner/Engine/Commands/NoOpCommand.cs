@@ -10,6 +10,7 @@
 using System.Net.Sockets;
 
 using MudDesigner.Engine.Core;
+using MudDesigner.Engine.Mobs;
 
 namespace MudDesigner.Engine.Commands
 {
@@ -18,7 +19,7 @@ namespace MudDesigner.Engine.Commands
     /// </summary>
     public class NoOpCommand : ICommand
     {
-        public void Execute()
+        public void Execute(IPlayer player)
         {
             // We are doing nothing on purpose.
             // This is a No operation command, aka do nothing.

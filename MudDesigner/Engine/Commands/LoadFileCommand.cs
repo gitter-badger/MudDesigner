@@ -24,25 +24,16 @@ namespace MudDesigner.Engine.Commands
     /// </summary>
     public class LoadFileCommand : ICommand
     {
-        private IGame currentGame;
-        private IPlayer currentPlayer;
-
-        public LoadFileCommand(IPlayer player, IGame game)
-        {
-            currentGame = game;
-            currentPlayer = player;
-        }
-
-        public void Execute()
+        public void Execute(IPlayer player)
         {
             //if the player has the correct role..
-            if (currentPlayer != null && (currentPlayer.Role == CharacterRoles.Owner || currentPlayer.Role == CharacterRoles.Admin))
+            if (player != null && (player.Role == CharacterRoles.Owner || player.Role == CharacterRoles.Admin))
             {
-                if (currentGame != null)
+                if (player.Director.Server.Game != null)
                 {
                     //Restore the world to the state it was in prior to the last save.
-                    currentGame.RestoreWorld();
-                    currentPlayer.SendMessage("World restoration completed.");
+                    player.Director.Server.Game.RestoreWorld();
+                    player.SendMessage("World restoration completed.");
                 }
             }
         }

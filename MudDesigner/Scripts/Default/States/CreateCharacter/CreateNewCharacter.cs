@@ -92,7 +92,7 @@ namespace MudDesigner.Scripts.Default.States.CreateCharacter
         private void GetPassword(PasswordPhase password)
         {
             //Get the users input.
-            var input = connectedPlayer.RecieveInput();
+            var input = connectedPlayer.ReceiveInput();
 
             //See if the password is empty
             if (string.IsNullOrEmpty(input))

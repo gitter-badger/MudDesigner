@@ -104,7 +104,7 @@ namespace MudDesigner.Engine.Scripting
             get
             {
                 if (_CompileMessages.Length == 0)
-                    return "No Errors.";
+                    return "No compiler Errors found.";
                 else
                 {
                     StringBuilder builder = new StringBuilder();

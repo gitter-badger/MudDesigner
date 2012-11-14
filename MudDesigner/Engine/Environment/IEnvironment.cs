@@ -34,8 +34,5 @@ namespace MudDesigner.Engine.Environment
         /// <param name="message">The message you want to broadcast.</param>
         /// <param name="playersToOmmit">A list of players that you want to hide the message from.</param>
         void BroadcastMessage(string message, List<IPlayer> playersToOmit = null);
-
-        void OnEnter(IMob occupant, IEnvironment departureEnvironment, AvailableTravelDirections direction);
-        void OnLeave(IMob occupant, IEnvironment arrivalEnvironment, AvailableTravelDirections direction);
     }
 }

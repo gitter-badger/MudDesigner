@@ -63,7 +63,7 @@ namespace MudDesigner.Engine.Directors
         public void AddConnection(Socket connection)
         {
             var player = (IPlayer)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.PlayerScript, null);
-            player.Initialize(InitialConnectionState, connection);
+            player.Initialize(InitialConnectionState, connection, this);
             
             Thread userThread = new Thread(ReceiveDataThread);
 
@@ -95,7 +95,7 @@ namespace MudDesigner.Engine.Directors
                 {
                     connectedUser.CurrentState.Render(connectedUser);
                     var command = connectedUser.CurrentState.GetCommand();
-                    command.Execute();
+                    command.Execute(connectedUser);
                 }
                 catch(Exception ex)
                 {
@@ -110,12 +110,19 @@ namespace MudDesigner.Engine.Directors
         /// </summary>
         private void DisconnectPlayer(IPlayer connectedUser)
         {
-            Thread playerThread = ConnectedPlayers[connectedUser];
-            ConnectedPlayers.Remove(connectedUser);
+            try
+            {
+                Thread playerThread = ConnectedPlayers[connectedUser];
+                ConnectedPlayers.Remove(connectedUser);
 
-            connectedUser.Disconnect();
-            connectedUser = null;
-            playerThread.Abort();
+                connectedUser.Disconnect();
+                connectedUser = null;
+                playerThread.Abort();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLine("Error when disconnecting players. " + ex.Message, Logger.Importance.Error);
+            }
         }
 
         public void DisconnectAll()

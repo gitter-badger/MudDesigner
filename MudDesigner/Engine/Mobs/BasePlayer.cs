@@ -16,6 +16,7 @@ using System.Text;
 using MudDesigner.Engine.States;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Core;
+using MudDesigner.Engine.Directors;
 using MudDesigner.Engine.Objects;
 
 //Newtonsoft JSon using statements
@@ -27,7 +28,7 @@ namespace MudDesigner.Engine.Mobs
     /// The Base class for all Players in the game world
     /// </summary>
     public abstract class BasePlayer : BaseMob, IPlayer
-    {  
+    {
         //TODO - IPlayer.Username and Password need to be protected with a IPlayer.Validate(username, password) method. - JS
         /// <summary>
         /// Gets or Sets the username for this player
@@ -52,6 +53,11 @@ namespace MudDesigner.Engine.Mobs
         public Socket Connection { get; private set; }
 
         /// <summary>
+        /// Gets the input that the player has entered via their client
+        /// </summary>
+        public string ReceivedInput { get; protected set; }
+
+        /// <summary>
         /// Gets if the player is connected to the server or not.
         /// </summary>
         [JsonIgnore()]
@@ -73,6 +79,8 @@ namespace MudDesigner.Engine.Mobs
         public List<byte> Buffer { get; set; }
 
         private string Password { get; set; }
+
+        private bool lastMessageHadNewLine = true;
 
         public BasePlayer()
         {
@@ -109,10 +117,11 @@ namespace MudDesigner.Engine.Mobs
         /// </summary>
         /// <param name="initialState"></param>
         /// <param name="connection"></param>
-        public virtual void Initialize(IState initialState, Socket connection)
+        public virtual void Initialize(IState initialState, Socket connection, IServerDirector director)
         {
             this.Connection = connection;
-            
+            Director = director;
+
             //Store reference to the initial state.
             CurrentState = initialState;
 
@@ -138,9 +147,10 @@ namespace MudDesigner.Engine.Mobs
         {
             //The input s tring
             string input = String.Empty;
+            ReceivedInput = String.Empty;
 
             //This loop will forever run until we have received \n from the player
-            while (true)
+            while (true && Connection != null)
             {
                 try
                 {
@@ -171,6 +181,7 @@ namespace MudDesigner.Engine.Mobs
                             Buffer.Clear();
 
                             //Return a trimmed string.
+                            ReceivedInput = input;
                             return input;
                         }
                         else
@@ -192,6 +203,8 @@ namespace MudDesigner.Engine.Mobs
                     return e.Message;
                 }
             }
+
+            return "Disconnected.";
         }
 
         /// <summary>
@@ -229,10 +242,20 @@ namespace MudDesigner.Engine.Mobs
         /// </summary>
         public void Disconnect()
         {
-            if (IsConnected)
-            { } //TODO - Move to OnDisconnect event.
-            Connection.Close();
-            Connection = null;
+            try
+            {
+                if (IsConnected)
+                { } //TODO - Move to OnDisconnect event.
+                if (Connection != null)
+                {
+                    Connection.Close();
+                    Connection = null;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         /// <summary>
@@ -251,9 +274,29 @@ namespace MudDesigner.Engine.Mobs
         /// <param name="newLine">If false, no no line will be printed and the next message will be printed on the same line.</param>
         public override void SendMessage(string message, bool newLine = true)
         {
+            if (newLine && !lastMessageHadNewLine)
+                message = message.Insert(0, System.Environment.NewLine);
+
             if (newLine)
+            {
                 message += System.Environment.NewLine;
-            Connection.Send(new ASCIIEncoding().GetBytes(message));
+                lastMessageHadNewLine = true;
+            }
+            else
+                this.lastMessageHadNewLine = false;
+
+            //Make sure we are still connected
+            try
+            {
+                if (IsConnected)
+                    Connection.Send(new ASCIIEncoding().GetBytes(message));
+            }
+            catch (Exception ex)
+            {
+                //No connection was made, so make sure we clean up
+                if (!IsConnected)
+                    Disconnect();
+            }
         }
 
         /// <summary>

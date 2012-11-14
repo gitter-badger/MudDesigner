@@ -52,7 +52,7 @@ namespace MudDesigner.Engine.Environment
         /// Gets or Sets the players that currently occupy this Room.
         /// </summary>
         [Browsable(false)]
-        public List<IPlayer> Occupants { get; set; }
+        public List<IMob> Occupants { get; set; }
 
         /// <summary>
         /// Gets or Sets the collection of Doorways that this Room has, leading to other Rooms.
@@ -68,25 +68,22 @@ namespace MudDesigner.Engine.Environment
         public BaseRoom()
         {
             Doorways = new Dictionary<AvailableTravelDirections, IDoor>();
-            Occupants = new List<IPlayer>();
+            Occupants = new List<IMob>();
             Items = new List<IItem>();
+
+            OnEnterEvent += new OnEnterHandler(OnEnter);
+            OnLeaveEvent += new OnLeaveHandler(OnLeave);
         }
 
-        public BaseRoom(string name, IZone zone)
+        public BaseRoom(string name, IZone zone) : this()
         {
             Zone = zone;
-            Doorways = new Dictionary<AvailableTravelDirections, IDoor>();
-            Occupants = new List<IPlayer>();
-            Items = new List<IItem>();
             Name = name;
         }
-        public BaseRoom(string name, IZone zone, bool safe = false)
+        public BaseRoom(string name, IZone zone, bool safe = false) : this()
         {
             IsSafe = safe;
             Zone = zone;
-            Doorways = new Dictionary<AvailableTravelDirections, IDoor>();
-            Occupants = new List<IPlayer>();
-            Items = new List<IItem>();
             Name = name;
         }
 
@@ -120,8 +117,15 @@ namespace MudDesigner.Engine.Environment
             Doorways.Clear();
             Doorways = null;
 
+            List<IPlayer> playerCollection = new List<IPlayer>();
+
+            foreach (IMob mob in Occupants)
+            {
+                if (mob is IPlayer)
+                    playerCollection.Add((IPlayer)mob);
+            }
             this.BroadcastMessage("Room is being destroyed!  You will be teleported to a new location.",
-                Occupants.ToList<IPlayer>());
+                playerCollection.ToList());
 
             //Trace back up through the environment path to get the World
             IWorld world = Zone.Realm.World;
@@ -152,6 +156,27 @@ namespace MudDesigner.Engine.Environment
             {
                 player.Move(room);
                 player.SendMessage("You have been moved to " + room.Name);
+            }
+        }
+
+        public virtual void AddCharacter(IMob character, AvailableTravelDirections entryDirection)
+        {
+            if (Occupants.Contains(character))
+                return;
+            else
+            {
+                Occupants.Add(character);
+                OnEnterEvent(character, entryDirection);
+            }
+        }
+
+        public virtual void RemoveCharacter(IMob character, AvailableTravelDirections leavingDirection)
+        {
+            if (Occupants.Contains(character))
+            {
+                Occupants.Remove(character);
+
+                OnLeaveEvent(character, leavingDirection);
             }
         }
 
@@ -233,6 +258,22 @@ namespace MudDesigner.Engine.Environment
         }
 
         /// <summary>
+        /// Checks if the Room has a door in the direction requested.
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <returns></returns>
+        public bool DoorwayExists(AvailableTravelDirections direction)
+        {
+            foreach (IDoor door in Doorways.Values)
+            {
+                if (door.FacingDirection == direction)
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Allows for removal of a doorway.
         /// </summary>
         /// <param name="direction">The direction of travel that the doorway should be removed.</param>
@@ -301,9 +342,15 @@ namespace MudDesigner.Engine.Environment
                 {
                     if (playersToOmmit.Contains(player))
                         continue; //Skip this player if it's in the list.
+                    else
+                        //Send the message
+                        player.SendMessage(message);
                 }
-                //Send the message
-                player.SendMessage(message);
+                else
+                {
+                    //Send the message
+                    player.SendMessage(message);
+                }
             }
         }
 
@@ -341,24 +388,29 @@ namespace MudDesigner.Engine.Environment
         {
             throw new NotImplementedException();
         }
-
-        public void OnEnter(IMob occupant, IEnvironment departureEnvironment, AvailableTravelDirections direction)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnLeave(IMob occupant, IEnvironment arrivalEnvironment, AvailableTravelDirections direction)
-        {
-            throw new NotImplementedException();
-        }
-
         #region == Events ==
-        public delegate void OnEnterHandler(IPlayer player, AvailableTravelDirections enteredDirection);
+        public delegate void OnEnterHandler(IMob character, AvailableTravelDirections enteredDirection);
         public event OnEnterHandler OnEnterEvent;
-        public virtual void OnEnter(IPlayer player, AvailableTravelDirections enteredDirection)
+        public virtual void OnEnter(IMob character, AvailableTravelDirections enteredDirection)
         {
-            BroadcastMessage(player.Name + " has entered from the " + enteredDirection.ToString());
+            List<IPlayer> ommitList = new List<IPlayer>();
+            ommitList.Add((IPlayer)character);
+
+            if (enteredDirection == AvailableTravelDirections.None)
+                BroadcastMessage(character.Name + " has arrived.", ommitList);
+            else
+                BroadcastMessage(character.Name + " has entered from the " + enteredDirection.ToString(), ommitList);
         }
+
+        public delegate void OnLeaveHandler(IMob character, AvailableTravelDirections leavingDirection);
+        public event OnLeaveHandler OnLeaveEvent;
+        public void OnLeave(IMob character, AvailableTravelDirections direction)
+        {
+            List<IPlayer> ommitList = new List<IPlayer>();
+            ommitList.Add((IPlayer)character);
+            BroadcastMessage(character.Name + " has left going " + direction.ToString(), ommitList);
+        }
+
         #endregion
     }
 }

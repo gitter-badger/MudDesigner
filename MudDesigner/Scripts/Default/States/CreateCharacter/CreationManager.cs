@@ -11,6 +11,9 @@ using MudDesigner.Engine.Mobs;
 using MudDesigner.Engine.Directors;
 using MudDesigner.Engine.Commands;
 using MudDesigner.Engine.Properties;
+using MudDesigner.Engine.Environment;
+using MudDesigner.Scripts.Default.Commands;
+using MudDesigner.Scripts.Default.States;
 
 namespace MudDesigner.Scripts.Default.States.CreateCharacter
 {
@@ -66,10 +69,35 @@ namespace MudDesigner.Scripts.Default.States.CreateCharacter
                     connectedPlayer.SendMessage("You have completed the character creation process! Enjoy your stay in our world!");
                     connectedPlayer.SendMessage(string.Empty);//blank line.
 
-                    //Display the main menu
-                    //TODO - This needs to be replaced with executing a 'look' command for the current room.
-                    connectedPlayer.SwitchState(new MainMenuState(director));
-                    break;
+                    //Trace back up through the environment path to get the World
+                    IWorld world = director.Server.Game.World;
+
+                    //Get the initial Room location, and split it up into an array so we can parse it
+                    string[] roomPath = EngineSettings.Default.InitialRoom.Split('>');
+
+                    //Make sure we have three entries, Realm, Zone and Room
+                    if (roomPath.Length != 3)
+                        return new NoOpCommand();
+
+                    //Get the Realm
+                    IRealm realm = world.GetRealm(roomPath[0]);
+                    if (realm == null)
+                        return new NoOpCommand();
+
+                    //Get our Zone
+                    IZone zone = realm.GetZone(roomPath[1]);
+                    if (zone == null)
+                        return new NoOpCommand();
+
+                    //Get the initial Room
+                    IRoom room = zone.GetRoom(roomPath[2]);
+                    if (room == null)
+                        return new NoOpCommand();
+
+                    connectedPlayer.Move(room);
+                    connectedPlayer.SwitchState(new EnteringCommandState());
+
+                    return new LookCommand();
             }
 
             return new NoOpCommand();

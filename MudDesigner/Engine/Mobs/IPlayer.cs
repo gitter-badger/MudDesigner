@@ -14,6 +14,7 @@ using MudDesigner.Engine.States;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
+using MudDesigner.Engine.Directors;
 
 namespace MudDesigner.Engine.Mobs
 {
@@ -53,11 +54,16 @@ namespace MudDesigner.Engine.Mobs
         List<byte> Buffer { get; set; }
 
         /// <summary>
+        /// Gets the input that the player has entered via their client
+        /// </summary>
+        string ReceivedInput { get; }
+
+        /// <summary>
         /// Initializes the player with a default state and provides its network connection for storage.
         /// </summary>
         /// <param name="initialState"></param>
         /// <param name="connection"></param>
-        void Initialize(IState initialState, Socket connection);
+        void Initialize(IState initialState, Socket connection, IServerDirector director);
 
         /// <summary>
         /// Receives player input through the network

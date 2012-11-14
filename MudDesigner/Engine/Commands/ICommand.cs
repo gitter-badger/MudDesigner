@@ -9,6 +9,9 @@
 //Microsoft .NET using statements
 using System.Net.Sockets;
 
+//AllocateThis! Mud Designer using statements
+using MudDesigner.Engine.Mobs;
+
 namespace MudDesigner.Engine.Commands
 {
     /// <summary>
@@ -16,6 +19,6 @@ namespace MudDesigner.Engine.Commands
     /// </summary>
     public interface ICommand
     {
-        void Execute();
+        void Execute(IPlayer player);
     }
 }

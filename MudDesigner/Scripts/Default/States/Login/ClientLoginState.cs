@@ -79,7 +79,7 @@ namespace MudDesigner.Scripts.Default.States.Login
         private void GetUsername()
         {
             //Recieve the user input
-            var input = connectedPlayer.RecieveInput();
+            var input = connectedPlayer.ReceiveInput();
 
             //First input received on connection, so clean it.
             //Some telnet clients send header information with it.
@@ -109,7 +109,7 @@ namespace MudDesigner.Scripts.Default.States.Login
         private void GetUserPassword()
         {
             //Recieve the user input
-            var input = connectedPlayer.RecieveInput();
+            var input = connectedPlayer.ReceiveInput();
 
             //Make sure the text entered is valid and not null, blank etc.
             if (!ValidateInput(input))

@@ -52,83 +52,44 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Default\Commands\LookCommand.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Default\Environment\DefaultRealm.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Default\Environment\DefaultDoor.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Default\Environment\DefaultRoom.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Default\Environment\DefaultWorld.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Default\Environment\DefaultZone.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Default\Mobs\Appearances\Hair.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Default\Mobs\Appearances\Head.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Default\Mobs\GenderFemale.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Default\Mobs\GenderMale.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Default\Mobs\DefaultPlayer.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Default\Mobs\Stats\Health.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Default\States\CreateCharacter\CreationManager.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Default\States\CreateCharacter\GenderSelect.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Default\States\Login\ClientConnectState.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Default\States\Login\ClientLoginState.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Default\States\CreateCharacter\CreateNewCharacter.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Default\States\Login\LoginCompleted.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Default\States\MainMenuState.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Compile Include="Default\Commands\LookCommand.cs" />
+    <Compile Include="Default\Commands\QuitCommand.cs" />
+    <Compile Include="Default\Commands\SayCommand.cs" />
+    <Compile Include="Default\Commands\WalkCommand.cs" />
+    <Compile Include="Default\Environment\DefaultRealm.cs" />
+    <Compile Include="Default\Environment\DefaultDoor.cs" />
+    <Compile Include="Default\Environment\DefaultRoom.cs" />
+    <Compile Include="Default\Environment\DefaultWorld.cs" />
+    <Compile Include="Default\Environment\DefaultZone.cs" />
+    <Compile Include="Default\Mobs\Appearances\Hair.cs" />
+    <Compile Include="Default\Mobs\Appearances\Head.cs" />
+    <Compile Include="Default\Mobs\GenderFemale.cs" />
+    <Compile Include="Default\Mobs\GenderMale.cs" />
+    <Compile Include="Default\Mobs\DefaultPlayer.cs" />
+    <Compile Include="Default\Mobs\Stats\Health.cs" />
+    <Compile Include="Default\States\CreateCharacter\CreationManager.cs" />
+    <Compile Include="Default\States\CreateCharacter\GenderSelect.cs" />
+    <Compile Include="Default\States\EnteringCommandState.cs" />
+    <Compile Include="Default\States\Login\ClientConnectState.cs" />
+    <Compile Include="Default\States\Login\ClientLoginState.cs" />
+    <Compile Include="Default\States\CreateCharacter\CreateNewCharacter.cs" />
+    <Compile Include="Default\States\Login\LoginCompleted.cs" />
+    <Compile Include="Default\States\LookingState.cs" />
+    <Compile Include="Default\States\MainMenuState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Default\Objects\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Default\Game\DefaultGame.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Compile Include="Default\Game\DefaultGame.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="MyGame\Environment\MyGameWorld.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Compile Include="MyGame\Environment\MyGameWorld.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MyGame\Environment\MyGameRealm.cs" />
     <Compile Include="MyGame\Environment\MyGameRoom.cs" />
-    <None Include="MyGame\Game\MyGame.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Compile Include="MyGame\Game\MyGame.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

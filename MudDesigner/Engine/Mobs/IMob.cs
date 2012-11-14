@@ -15,6 +15,7 @@ using System.Text;
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Core;
+using MudDesigner.Engine.Directors;
 
 namespace MudDesigner.Engine.Mobs
 {
@@ -76,6 +77,8 @@ namespace MudDesigner.Engine.Mobs
         /// Gets or Sets a reference to a collection of appearance attributes the character has.
         /// </summary>
         List<IAppearanceAttribute> Appearance { get; set; }
+
+        IServerDirector Director { get; set; }
 
         void SendMessage(string message, bool newLine = true);
 

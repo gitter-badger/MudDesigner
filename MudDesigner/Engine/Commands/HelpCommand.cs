@@ -25,22 +25,13 @@ namespace MudDesigner.Engine.Commands
     /// </summary>
     public class HelpCommand : ICommand
     {
-        public string Command { get; private set; }
-        public IPlayer Player { get; private set; }
-
-        public HelpCommand(string command, IPlayer player)
-        {
-            Command = command;
-            Player = player;
-        }
-
-        public void Execute()
+        public void Execute(IPlayer player)
         {
             Type[] com = null;
 
             foreach (Type t in com)
             {
-                if (t.Name == Command + "Command")
+                if (t.Name == player.ReceivedInput + "Command")
                 {
                     object[] a = t.GetCustomAttributes(typeof(HelpAttribute), true);
 
@@ -48,7 +39,7 @@ namespace MudDesigner.Engine.Commands
                         break;
 
                     HelpAttribute help = (HelpAttribute)a[0];
-                    Player.SendMessage(help.Description);
+                    player.SendMessage(help.Description);
                 }
             }
         }

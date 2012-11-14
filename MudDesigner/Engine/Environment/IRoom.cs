@@ -48,7 +48,7 @@ namespace MudDesigner.Engine.Environment
         /// <summary>
         /// Gets or Sets the players that currently occupy this Room.
         /// </summary>
-        List<IPlayer> Occupants { get; set; }
+        List<IMob> Occupants { get; set; }
 
         /// <summary>
         /// Gets or Sets the collection of Doorways that this Room has, leading to other Rooms.
@@ -59,6 +59,10 @@ namespace MudDesigner.Engine.Environment
         /// Gets a reference to the Items collection within the Room.
         /// </summary>
         List<IItem> Items { get; set; }
+
+        void AddCharacter(IMob character, AvailableTravelDirections entryDirection);
+
+        void RemoveCharacter(IMob character, AvailableTravelDirections leavingDireciton);
 
         /// <summary>
         /// Adds a doorway to the Room, linking it to another Room in the world.
@@ -75,6 +79,8 @@ namespace MudDesigner.Engine.Environment
         /// <param name="direction">The direction that you want the doorway for.</param>
         /// <returns></returns>
         IDoor GetDoorway(AvailableTravelDirections direction);
+
+        bool DoorwayExists(AvailableTravelDirections direction);
 
         /// <summary>
         /// Returns an array of all doorways within the Room.

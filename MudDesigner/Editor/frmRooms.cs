@@ -16,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 //AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Core;
@@ -98,10 +99,10 @@ namespace MudDesigner.Editor.Rooms
         private void RefreshDoorwayList()
         {
             //Reset the door buttons to their defualts
-            roomsBtnNorth.Text = "North\n\r(Empty)";
-            roomsBtnSouth.Text = "South\n\r(Empty)";
-            roomsBtnEast.Text = "East\n\r(Empty)";
-            roomsBtnWest.Text = "West\n\r(Empty)";
+            roomsBtnNorth.Text = "North\n(Empty)";
+            roomsBtnSouth.Text = "South\n(Empty)";
+            roomsBtnEast.Text = "East\n(Empty)";
+            roomsBtnWest.Text = "West\n(Empty)";
 
             //Loop through each doorway within our currently loaded room
             if (Editor.CurrentRoom.Doorways.Count > 0)
@@ -112,16 +113,16 @@ namespace MudDesigner.Editor.Rooms
                     switch (door)
                     {
                         case AvailableTravelDirections.North:
-                            roomsBtnNorth.Text = "North\n\r" + Editor.CurrentRoom.Doorways[door].Arrival.Name;
+                            roomsBtnNorth.Text = "North\n" + Editor.CurrentRoom.Doorways[door].Arrival.Name;
                             break;
                         case AvailableTravelDirections.South:
-                            roomsBtnSouth.Text = "South\n\r" + Editor.CurrentRoom.Doorways[door].Arrival.Name;
+                            roomsBtnSouth.Text = "South\n" + Editor.CurrentRoom.Doorways[door].Arrival.Name;
                             break;
                         case AvailableTravelDirections.East:
-                            roomsBtnEast.Text = "East\n\r" + Editor.CurrentRoom.Doorways[door].Arrival.Name;
+                            roomsBtnEast.Text = "East\n" + Editor.CurrentRoom.Doorways[door].Arrival.Name;
                             break;
                         case AvailableTravelDirections.West:
-                            roomsBtnWest.Text = "West\n\r" + Editor.CurrentRoom.Doorways[door].Arrival.Name;
+                            roomsBtnWest.Text = "West\n" + Editor.CurrentRoom.Doorways[door].Arrival.Name;
                             break;
                     }
                 }
@@ -581,6 +582,116 @@ namespace MudDesigner.Editor.Rooms
         {
             //Close the editor
             this.Close();
+        }
+
+        private void mnuClearDoorway_Click(object sender, EventArgs e)
+        {
+            if (Editor.CurrentRoom == null)
+            {
+                MessageBox.Show("You need to load a room first!", this.Text);
+                return;
+            }
+
+            ToolStripMenuItem menu = (ToolStripMenuItem)sender;
+            ContextMenuStrip strip = (ContextMenuStrip)menu.Owner;
+
+            Button doorButton = (Button)strip.SourceControl;
+
+            string[] content = Regex.Split(doorButton.Text, "\n");
+
+            if (content.Length != 2)
+            {
+                MessageBox.Show("You need to load a room! If a room is loaded, please make sure it has a Name set.", this.Text);
+                return;
+            }
+
+            if (content[1] == "Empty")
+            {
+                MessageBox.Show("There are no doorways for this direction.", this.Text);
+                return;
+            }
+            else
+            {
+                AvailableTravelDirections direction = TravelDirections.GetTravelDirectionValue(content[0]);
+
+                if (Editor.CurrentRoom.DoorwayExists(direction))
+                {
+                    Editor.CurrentRoom = Editor.CurrentRoom.GetDoorway(direction).Arrival;
+
+                    RefreshDoorwayList();
+                }
+            }
+        }
+
+        private void mnuLoadRoom_Click(object sender, EventArgs e)
+        {
+            if (Editor.CurrentRoom == null)
+            {
+                MessageBox.Show("You need to load a room first!", this.Text);
+                return;
+            }
+
+            //Get the button text that we are over
+            ToolStripMenuItem menu = (ToolStripMenuItem)sender;
+            ContextMenuStrip strip = (ContextMenuStrip)menu.Owner;
+
+            Button doorButton = (Button)strip.SourceControl;
+
+            //Split the "North\nRoomName" text up
+            string[] content = Regex.Split(doorButton.Text, "\n");
+
+            //Check if we have two entries. If not then the Button is just "North" meaning no room is loaded
+            if (content.Length != 2)
+            {
+                MessageBox.Show("You need to load a room! If a room is loaded, please make sure it has a Name set.", this.Text);
+                return;
+            }
+
+            //"North\nEmpty" meaning there is no doorway
+            if (content[1] == "Empty")
+            {
+                MessageBox.Show("There are no doorways for this direction.", this.Text);
+                return;
+            }
+                //Otherwise it will be "North\MyRoom"
+            else
+            {
+                //Get the travel direction for the doorway selected
+                AvailableTravelDirections direction = TravelDirections.GetTravelDirectionValue(content[0]);
+
+                //Check if the room has a door for the selected travel direction
+                if (Editor.CurrentRoom.DoorwayExists(direction))
+                {
+                    IRoom r = Editor.CurrentRoom.GetDoorway(direction).Arrival;
+                    Editor.CurrentRoom = r;
+
+                    //Select the Room for editing.
+                    roomsPropertiesRoom.SelectedObject = r;
+
+                    //Select the matching Realm, Zone and Room for the UI combobox and listbox
+                    if (roomsComRealms.SelectedItem.ToString() != r.Zone.Realm.Name)
+                    {
+                        if (roomsComRealms.Items.Contains(r.Zone.Realm.Name))
+                            roomsComRealms.SelectedItem = r.Zone.Realm.Name;
+                    }
+
+                    if (roomsComZones.SelectedItem.ToString() != r.Zone.Name)
+                    {
+                        if (roomsComZones.Items.Contains(r.Zone.Name))
+                            roomsComZones.SelectedItem = r.Zone.Name;
+                    }
+
+                    if (roomsLstExistingRooms.Items.Contains(r.Name))
+                        roomsLstExistingRooms.SelectedItem = r.Name;
+
+                    Editor.CurrentRealm = r.Zone.Realm;
+                    Editor.CurrentZone = r.Zone;
+
+                    //Refresh the UI labels.
+                    RefreshRoomLabels(Editor.CurrentRealm, Editor.CurrentZone, Editor.CurrentRoom);
+                    RefreshDoorwayList();
+                }
+            }
         }
     }
 }

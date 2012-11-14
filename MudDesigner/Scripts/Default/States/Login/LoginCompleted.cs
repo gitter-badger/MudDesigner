@@ -62,7 +62,7 @@ namespace MudDesigner.Scripts.Default.States.Login
 
             connectedPlayer.Move(room);
 
-            return new LookCommand(connectedPlayer);
+            return new LookCommand();
         }
     }
 }

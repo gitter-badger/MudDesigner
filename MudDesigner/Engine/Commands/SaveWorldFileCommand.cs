@@ -20,25 +20,16 @@ namespace MudDesigner.Engine.Commands
     /// </summary>
     public class SaveWorldFileCommand : ICommand
     {
-        private IGame currentGame;
-        private IPlayer currentPlayer;
-        
-        public SaveWorldFileCommand(IPlayer player, IGame game)
-        {
-            currentGame = game;
-            currentPlayer = player;
-        }
-
-        public void Execute()
+        public void Execute(IPlayer player)
         {
             //if the player exists and has the proper role...
-            if (currentPlayer != null && (currentPlayer.Role == CharacterRoles.Admin || currentPlayer.Role == CharacterRoles.Owner))
+            if (player != null && (player.Role == CharacterRoles.Admin || player.Role == CharacterRoles.Owner))
             {
-                if (currentGame != null)
+                if (player.Director.Server.Game != null)
                 {
                     //Save the world.
-                    currentGame.SaveWorld();
-                    currentPlayer.SendMessage("Save completed.");
+                    player.Director.Server.Game.SaveWorld();
+                    player.SendMessage("Save completed.");
                 }
             }
         }
