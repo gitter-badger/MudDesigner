@@ -17,6 +17,7 @@ using System.IO;
 
 //Newtonsoft JSon using statement
 using Newtonsoft.Json;
+using log4net;
 
 namespace MudDesigner.Engine.Core
 {
@@ -27,6 +28,8 @@ namespace MudDesigner.Engine.Core
     /// </summary>
     public class FileIO : ISavable, ILoadable
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(FileIO)); 
+
         /// <summary>
         /// Provides methods for saving game objects. Most game objects can be saved with no special requirements, however any
         /// object that contains a circular referencing property, must have a JSonProperty(ReferenceLoopHandling = Serialize) attribute applied
@@ -36,6 +39,7 @@ namespace MudDesigner.Engine.Core
         /// <param name="fullFilePath">The full path including filename that this file needs to be saved</param>
         public void Save(object objectToSave, string fullFilePath)
         {
+
             //Get the directory path without filename
             var path = Path.GetDirectoryName(fullFilePath);
 

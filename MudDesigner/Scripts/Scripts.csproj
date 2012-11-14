@@ -49,6 +49,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
@@ -109,9 +113,7 @@
     <Compile Include="Default\States\Login\ClientConnectState.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Default\States\Login\ClientLoginState.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="Default\States\Login\ClientLoginState.cs" />
     <Compile Include="Default\States\CreateCharacter\CreateNewCharacter.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>

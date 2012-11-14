@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.10\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -49,7 +52,9 @@
   <ItemGroup>
     <Compile Include="Commands\HelpAttribute.cs" />
     <Compile Include="Commands\HelpCommand.cs" />
+    <Compile Include="Core\Crypt.cs" />
     <Compile Include="Core\FileIO.cs" />
+    <Compile Include="Core\MenuAppender.cs" />
     <Compile Include="Core\SerializationContracts.cs" />
     <Compile Include="Events\IQuest.cs" />
     <Compile Include="Mobs\Alignments.cs" />
@@ -83,7 +88,6 @@
     <Compile Include="Mobs\INPC.cs" />
     <Compile Include="Core\GameObject.cs" />
     <Compile Include="Core\IGameObject.cs" />
-    <Compile Include="Core\ILogger.cs" />
     <Compile Include="Mobs\IPlayer.cs" />
     <Compile Include="Environment\IRealm.cs" />
     <Compile Include="Environment\IRoom.cs" />
@@ -102,7 +106,6 @@
     <Compile Include="Commands\SaveWorldFileCommand.cs" />
     <Compile Include="Commands\SwitchStateCommand.cs" />
     <Compile Include="Core\Game.cs" />
-    <Compile Include="Core\Logger.cs" />
     <Compile Include="Mobs\BasePlayer.cs" />
     <Compile Include="Directors\ServerDirector.cs" />
     <Compile Include="Networking\Server.cs" />
@@ -121,6 +124,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="MudEngineDiagram.cd" />
     <None Include="packages.config" />
     <None Include="Properties\EngineSettings.settings">

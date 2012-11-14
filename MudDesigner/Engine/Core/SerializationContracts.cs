@@ -14,8 +14,10 @@ using System.Reflection;
 using System.Text;
 
 //NewtonSoft JSon using statements
+using MudDesigner.Engine.Scripting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using log4net;
 
 namespace MudDesigner.Engine.Core
 {
@@ -24,6 +26,8 @@ namespace MudDesigner.Engine.Core
     /// </summary>
     public class SerializationContracts : DefaultContractResolver
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(SerializationContracts)); 
+
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
             try
@@ -45,9 +49,9 @@ namespace MudDesigner.Engine.Core
             }
             catch(Exception ex)
             {
-                Logger.WriteLine("SerializationContracts failed to create a required property for '" + member.Name + "'!", Logger.Importance.Critical);
-                Logger.WriteLine("SerializationContracts failed with the following message: " + ex.Message, Logger.Importance.Critical);
-                Logger.WriteLine("SerializationContract failures could be caused by corrupt save files.", Logger.Importance.Critical);
+                Log.Fatal(string.Format("SerializationContracts failed to create a required property for '{0}'!",member.Name));
+                Log.Fatal(string.Format("SerializationContracts failed with the following message: {0}", ex.Message));
+                Log.Fatal(string.Format("SerializationContract failures could be caused by corrupt save files."));
             }
 
             return null;

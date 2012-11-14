@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -18,7 +19,9 @@ using MudDesigner.Engine.Networking;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Directors;
 using MudDesigner.Engine.Scripting;
- 
+using log4net;
+using log4net.Config;
+
 namespace MudDesigner.Engine.Networking
 {
     /// <summary>
@@ -26,6 +29,7 @@ namespace MudDesigner.Engine.Networking
     /// </summary>
     public class Server : IServer
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Server)); 
         /// <summary>
         /// Gets a reference to the current status of the server.
         /// </summary>
@@ -107,6 +111,16 @@ namespace MudDesigner.Engine.Networking
             MaxQueuedConnections = 10;
             MOTD = "MUD Designer based game.";
             ServerOwner = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            var file = new FileInfo(Path.Combine(Directory.GetCurrentDirectory(),"log4net.config"));
+            if (file.Exists)
+            {
+                XmlConfigurator.ConfigureAndWatch(file);
+            }
+            else
+            {
+                BasicConfigurator.Configure();
+            }
+            
         }
 
 
@@ -118,8 +132,8 @@ namespace MudDesigner.Engine.Networking
         /// <param name="game">The game that the server will reference.</param>
         public void Start(Int32 maxConnections, Int32 maxQueueSize, IGame game)
         {
-            
-            Logger.WriteLine("Game Server System Starting on port " + Port.ToString());
+            Log.Info(string.Format("Game Server System Starting on port {0}",Port));
+//            Logger.WriteLine("Game Server System Starting on port " + Port.ToString());
 
             //If the server is already running, abort.
             if (Status != ServerStatus.Stopped)
@@ -151,15 +165,17 @@ namespace MudDesigner.Engine.Networking
                 //Pass the new client off onto a new thread and allow it to run.
                 ServerThread = new Thread(Running);
                 ServerThread.Start();
-
-                Logger.WriteLine("Server status: Running");
+                Log.Info("Server status: Running");
+                //Logger.WriteLine("Server status: Running");
             }
             catch
             {
-                Logger.WriteLine("Failed to star the Engines Networking Server!");
+             
+                Log.Fatal("Failed to start the Engines Networking Server!");
+                //Logger.WriteLine("Failed to star the Engines Networking Server!");
                 this.Status = ServerStatus.Stopped;
-                 
-                Logger.WriteLine("Server status: Stopped");
+                Log.Fatal("Server status: Stopped");
+                //Logger.WriteLine("Server status: Stopped");
             }
         }
 

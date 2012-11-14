@@ -12,11 +12,14 @@ using MudDesigner.Engine.Properties;
 using MudDesigner.Engine.States;
 
 using MudDesigner.Scripts.Default.States.CreateCharacter;
+using log4net;
 
 namespace MudDesigner.Scripts.Default.States.Login
 {
     public class ClientLoginState : IState
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ClientLoginState)); 
+
         private ServerDirector director;
         private IPlayer connectedPlayer;
 
@@ -117,7 +120,18 @@ namespace MudDesigner.Scripts.Default.States.Login
                 connectedPlayer.SendMessage("Your password is invalid!");
                 return;
             }
+            var player = connectedPlayer as BasePlayer;
+            if (player != null && player.CheckPassword(input))
+            {
+                connectedPlayer.SendMessage("Success!!");
+                Log.Info(string.Format("{0} has just logged in.", connectedPlayer.Name));
 
+            }
+            else
+            {
+                Log.Info(string.Format("{0} has failed logged in at IP Address: {1}.", connectedPlayer.Name,
+                                       connectedPlayer.Connection));
+            }
             //TODO: Authentication code needs to go here.
             //Under the EnteringName state, we assigned connectedPlayer.Name.
 

@@ -11,11 +11,14 @@ using MudDesigner.Engine.Mobs;
 using MudDesigner.Engine.Properties;
 using MudDesigner.Engine.Scripting;
 using MudDesigner.Engine.States;
+using log4net;
 
 namespace MudDesigner.Scripts.Default.States.CreateCharacter
 {
     public class GenderSelect : IState
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(GenderSelect)); 
+
         private ServerDirector director;
         private IPlayer connectedPlayer;
 
@@ -47,7 +50,8 @@ namespace MudDesigner.Scripts.Default.States.CreateCharacter
             if (genders.Length == 0)
             {
                 connectedPlayer.SendMessage("No genders are available for you to select from. Please contact the server admin!");
-                Logger.WriteLine("No genders are available for users to select from! You should not create the GenderSelect state until Gender scripts are created", Logger.Importance.Critical);
+                Log.Error("No genders are available for users to select from! You should not create the GenderSelect state until Gender scripts are created");
+                //Logger.WriteLine("No genders are available for users to select from! You should not create the GenderSelect state until Gender scripts are created", Logger.Importance.Critical);
                 connectedPlayer.SwitchState(new CreationManager(director, CreationManager.CreationState.Completed)); //Just skip to the next step;
             }
             

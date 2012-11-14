@@ -20,7 +20,10 @@ namespace MudDesigner.Engine.Commands
     /// <summary>
     /// Informs the player that an invalid command was used.
     /// </summary>
-    [HelpAttribute("Invalid Command is a result of entering a command that the game does not recognize.")]
+    [HelpAttribute("Invalid Command is a result of enter" +
+                   "" +
+                   "" +
+                   "ing a command that the game does not recognize.")]
     public class InvalidCommand : ICommand
     {
         public void Execute(IPlayer player)

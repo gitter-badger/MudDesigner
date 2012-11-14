@@ -16,6 +16,7 @@ using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Scripting;
 using MudDesigner.Engine.Mobs;
+using log4net;
 
 namespace MudDesigner.Engine.Commands
 {
@@ -24,6 +25,8 @@ namespace MudDesigner.Engine.Commands
     /// </summary>
     public class LoadFileCommand : ICommand
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(LoadFileCommand)); 
+
         public void Execute(IPlayer player)
         {
             //if the player has the correct role..
@@ -34,6 +37,8 @@ namespace MudDesigner.Engine.Commands
                     //Restore the world to the state it was in prior to the last save.
                     player.Director.Server.Game.RestoreWorld();
                     player.SendMessage("World restoration completed.");
+                    Log.Info("World restoration completed.");
+
                 }
             }
         }

@@ -124,7 +124,7 @@ namespace MudDesigner.Scripts.Default.States.CreateCharacter
                     currentState = CurrentState.EnteringPasswordFirst;
                     return;
                 }
-
+                connectedPlayer.SetPlayerCredentials(secondPassword);
                 //We have the passwords verified and the username stored so lets finish up creating the character
                 //and pass it on to the character customization states
                 FinishSetup();

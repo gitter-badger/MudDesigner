@@ -14,7 +14,9 @@ using System.Reflection;
 
 //AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Core;
+using MudDesigner.Engine.Networking;
 using MudDesigner.Engine.Objects;
+using log4net;
 
 namespace MudDesigner.Engine.Scripting
 {
@@ -23,6 +25,7 @@ namespace MudDesigner.Engine.Scripting
     /// </summary>
     public static class ScriptFactory
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ScriptFactory)); 
         //The assembly loaded that will be used.
         private static List<Assembly> assemblyCollection = new List<Assembly>();
 
@@ -43,7 +46,7 @@ namespace MudDesigner.Engine.Scripting
             }
             catch(Exception ex)
             {
-                Logger.WriteLine(ex.Message, Logger.Importance.Error);
+                Log.Fatal(string.Format("{0}", ex.Message));
             }
             if (a == null)
                 return;

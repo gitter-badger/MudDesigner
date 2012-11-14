@@ -21,6 +21,7 @@ using MudDesigner.Engine.Objects;
 
 //Newtonsoft JSon using statements
 using Newtonsoft.Json;
+using log4net;
 
 namespace MudDesigner.Engine.Mobs
 {
@@ -29,11 +30,24 @@ namespace MudDesigner.Engine.Mobs
     /// </summary>
     public abstract class BasePlayer : BaseMob, IPlayer
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(BasePlayer)); 
+
         //TODO - IPlayer.Username and Password need to be protected with a IPlayer.Validate(username, password) method. - JS
         /// <summary>
         /// Gets or Sets the username for this player
         /// </summary>
         public string Username { get; set; }
+
+        /// <summary>
+        /// The Password is a hash generated. 
+        /// </summary>
+        private byte[] Password { get; set; }
+
+        /// <summary>
+        /// The Salt is unique per password, per user. 
+        /// Used for validating the Hash
+        /// </summary>
+        private byte[] Salt { get; set; }
 
         /// <summary>
         /// Gets the character role for this player in the world
@@ -78,7 +92,7 @@ namespace MudDesigner.Engine.Mobs
         [JsonIgnore()]
         public List<byte> Buffer { get; set; }
 
-        private string Password { get; set; }
+        
 
         private bool lastMessageHadNewLine = true;
 
@@ -133,7 +147,8 @@ namespace MudDesigner.Engine.Mobs
 
             if (CurrentState == null)
             {
-                Logger.WriteLine("Failed to locate the current state for character '" + Name + "'", Logger.Importance.Critical);
+                Log.Error(string.Format("Failed to locate the current state for character '{0}'", Name));
+                
             }
             else
                 CurrentState.Render(this);
@@ -210,14 +225,23 @@ namespace MudDesigner.Engine.Mobs
         /// <summary>
         /// Sets the players credentials
         /// </summary>
-        /// <param name="password">The password the player has provided.</param>
+        /// <param name="userPassword">The password the player has provided.</param>
         public void SetPlayerCredentials(string userPassword)
         {
+            if (userPassword == null)
+            {
+                Log.Error(string.Format("User password was null for player {0}!",Name));
+                throw new ArgumentNullException("userPassword");
+            }
             //Only set them if the password is not empty.
             //To reset the password, we will require the user to enter the
             //original password using ChangePassword()
-            if (String.IsNullOrEmpty(userPassword))
-                Password = userPassword;
+            if (Password != null) 
+                return;
+            
+            Salt = Crypt.GenerateSalt(userPassword.Length);
+            Password = Crypt.GenerateSaltedHash(userPassword, Salt);
+            
         }
 
         /// <summary>
@@ -228,13 +252,40 @@ namespace MudDesigner.Engine.Mobs
         /// <returns></returns>
         public bool ChangePassword(string oldPassword, string newPassword)
         {
-            if (Password == oldPassword)
+            // If the current hash password equals the oldpassword passed in. 
+            if (Crypt.CrypCompare(Password, Crypt.GenerateSaltedHash(oldPassword, Salt)))
             {
-                Password = newPassword;
-                return true;
+                if (!String.IsNullOrEmpty(newPassword))
+                {
+                    Salt = Crypt.GenerateSalt(newPassword.Length);
+                    Password = Crypt.GenerateSaltedHash(newPassword, Salt);
+                    return true;
+                }
+                else
+                {
+                    SendMessage("The new password was blank, please re-enter.");
+                    return false;
+                }
+
             }
             else
+            {
+                SendMessage("Failed to update password, password entered doesn't match records.");
                 return false;
+            }
+
+            return false;
+
+        }
+
+        /// <summary>
+        /// Used for Validating password for logins
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public bool CheckPassword(string password)
+        {
+            return Crypt.CrypCompare(Password, Crypt.GenerateSaltedHash(password, Salt));
         }
 
         /// <summary>

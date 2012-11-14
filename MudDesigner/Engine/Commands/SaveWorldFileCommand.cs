@@ -12,6 +12,7 @@ using System.IO;
 //AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Mobs;
+using log4net;
 
 namespace MudDesigner.Engine.Commands
 {
@@ -20,6 +21,7 @@ namespace MudDesigner.Engine.Commands
     /// </summary>
     public class SaveWorldFileCommand : ICommand
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(SaveWorldFileCommand)); 
         public void Execute(IPlayer player)
         {
             //if the player exists and has the proper role...
@@ -30,6 +32,8 @@ namespace MudDesigner.Engine.Commands
                     //Save the world.
                     player.Director.Server.Game.SaveWorld();
                     player.SendMessage("Save completed.");
+                    Log.Info("Save completed.");
+
                 }
             }
         }

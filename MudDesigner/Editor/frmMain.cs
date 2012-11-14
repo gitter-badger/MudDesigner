@@ -27,11 +27,13 @@ using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Properties;
 using MudDesigner.Engine.Scripting;
 using MudDesigner.Engine.Networking;
+using log4net;
 
 namespace MudDesigner.Editor
 {
     public partial class frmMain : Form
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(frmMain)); 
         public frmMain()
         {
             InitializeComponent();
@@ -40,11 +42,12 @@ namespace MudDesigner.Editor
         private void frmMain_Load(object sender, EventArgs e)
         {
             //Setup our logger so we can access it within the editor.
-            Logger.CacheContent = true;
-            Logger.Enabled = true;
+            //Logger.CacheContent = true;
+            //Logger.Enabled = true;
 
             //Add the engine to the compiler for referencing.
             CompileEngine.AddAssemblyReference("MudDesigner.Engine.dll");
+            CompileEngine.AddAssemblyReference("log4net.dll");
             
             //Loop through each reference mentioned in the engines properties and add them.
             //This provides support for 3rd party pre-compiled *mods* scripts
@@ -88,7 +91,8 @@ namespace MudDesigner.Editor
                 if (game == null) //still could not find anything
                 {
                     MessageBox.Show("Critical error: Could not locate a Game script to use. This can cause instability in the editor.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Logger.WriteLine(CompileEngine.Errors, Logger.Importance.Critical);
+                    Log.Error(string.Format("{0}", CompileEngine.Errors));
+                    //Logger.WriteLine(CompileEngine.Errors, Logger.Importance.Critical);
 
                     MessageBox.Show("The editor can not run without a script present that inherits from MudDesigner.Engine.Core.Game.  The editor will now shut down.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Application.Exit();
@@ -132,14 +136,14 @@ namespace MudDesigner.Editor
         private void timer1_Tick(object sender, EventArgs e)
         {
             //If we have no new log messages, abort.
-            if (Logger.Cache.Count == 0)
-                return;
+            if(MenuAppender.MessageCache.Count ==0)
+               return;
 
-            int cacheSize = Logger.Cache.Count;
+            int cacheSize = MenuAppender.MessageCache.Count;
 
             //Loop through each cached log message and send it to the 
             //server console text box.
-            foreach (string message in Logger.Cache)
+            foreach (string message in MenuAppender.MessageCache)
             {
                 mainTxtServerInfo.Text += message + "\n";
 
@@ -149,15 +153,15 @@ namespace MudDesigner.Editor
                 mainTxtServerInfo.Refresh();
 
                 //Fail safe in the event that the collection was changed in the middle of our loop.
-                if (cacheSize != Logger.Cache.Count)
+                if (cacheSize != MenuAppender.MessageCache.Count)
                     break;
             }
 
             //Reset for the next time we queury
-            if (cacheSize != Logger.Cache.Count)
+            if (cacheSize != MenuAppender.MessageCache.Count)
                 return; //We want to pick back up where we left off last loop.
             else //If we printed all the contents already, then clear them
-                Logger.Cache.Clear();
+                MenuAppender.MessageCache.Clear();
         }
 
         private void menuStartStopServer_Click(object sender, EventArgs e)

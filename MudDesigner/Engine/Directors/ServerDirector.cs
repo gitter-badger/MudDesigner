@@ -20,7 +20,8 @@ using MudDesigner.Engine.Core;
 using MudDesigner.Engine.States;
 using MudDesigner.Engine.Scripting;
 using MudDesigner.Engine.Mobs;
- 
+using log4net;
+
 namespace MudDesigner.Engine.Directors
 {
     /// <summary>
@@ -28,6 +29,7 @@ namespace MudDesigner.Engine.Directors
     /// </summary>
     public class ServerDirector : IServerDirector
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ServerDirector)); 
         /// <summary>
         /// Gets a reference to the collection of players that are currently connected
         /// </summary>
@@ -99,7 +101,9 @@ namespace MudDesigner.Engine.Directors
                 }
                 catch(Exception ex)
                 {
-                    Logger.WriteLine(connectedUser.Name + " disconnected.");
+                    Log.Info(string.Format("{0} disconnected", connectedUser.Name));
+                    Log.Error(string.Format("Exception occured! {0}", ex.Message));
+                    //Logger.WriteLine(connectedUser.Name + " disconnected.");
                     DisconnectPlayer(connectedUser);
                 }
             }
@@ -121,18 +125,22 @@ namespace MudDesigner.Engine.Directors
             }
             catch (Exception ex)
             {
-                Logger.WriteLine("Error when disconnecting players. " + ex.Message, Logger.Importance.Error);
+                Log.Error(string.Format("Error when disconnecting players. {0}", ex.Message));
+                
+                
             }
         }
 
         public void DisconnectAll()
         {
+            Log.Info("Disconnecting all users");
             foreach (var player in ConnectedPlayers.Keys)
             {
                 player.Disconnect();
                 ConnectedPlayers[player].Abort(); //Kill the thread
+                
             }
-
+            
             ConnectedPlayers.Clear();
         }
 

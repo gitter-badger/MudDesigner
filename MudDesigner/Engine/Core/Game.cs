@@ -21,6 +21,7 @@ using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Scripting;
 using MudDesigner.Engine.Properties;
+using log4net;
 
 namespace MudDesigner.Engine.Core
 {
@@ -30,6 +31,8 @@ namespace MudDesigner.Engine.Core
     /// </summary>
     public abstract class Game : GameObject, IGame
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Game)); 
+
         /// <summary>
         /// Version of this game.
         /// </summary>
@@ -156,13 +159,18 @@ namespace MudDesigner.Engine.Core
         /// </summary>
         public void RestoreWorld()
         {
+            Log.Info("Attempting to Restore World...");
             //Build a path using our current install directory + "Saves" + the engine setting for the world save file.
             var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(), "saves",
                                                 MudDesigner.Engine.Properties.EngineSettings.Default.WorldSaveFile);
 
             //If the file doesn't exists, we abort.
             if (!File.Exists(fileAndPathToSave))
+            {
+                Log.Info("No world exists to restore...");
                 return;
+            }
+                
 
             //Our file IO manager
             FileIO fileLoad = new FileIO();
@@ -171,9 +179,11 @@ namespace MudDesigner.Engine.Core
             {
                 //Try to load and restore our world.
                 World = (IWorld)fileLoad.Load(fileAndPathToSave, typeof(IWorld));
+                Log.Info(string.Format("Restored World... "));
             }
             catch(Exception ex)
             {
+                Log.Error(string.Format("Failed while restoring world! {0}",ex.Message));
                 throw new Exception(ex.Message);
             }
         }
@@ -183,6 +193,7 @@ namespace MudDesigner.Engine.Core
        /// </summary>
         public void SaveWorld()
         {
+            Log.Info("Saving World....");
             LastSave = DateTime.Now;
 
             var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(), "saves",

@@ -18,6 +18,7 @@ using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Networking;
 using MudDesigner.Engine.Scripting;
+using log4net;
 
 namespace MudDesigner.Server
 {
@@ -26,6 +27,7 @@ namespace MudDesigner.Server
     /// </summary>
     class Program
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Program)); 
         static void Main(string[] args)
         {
             if (args.Length == 2)
@@ -37,14 +39,16 @@ namespace MudDesigner.Server
                 }
             }
             //Setup the engines log system
-            Logger.LogFilename = "StandardGame.Log";
-            Logger.Enabled = true;
-            Logger.ConsoleOutPut = true;
-            Logger.ClearLog(); //Delete previous file.
-            Logger.WriteLine("Server app starting...");
+            Log.Info("Server app starting...");
+            //Logger.LogFilename = "StandardGame.Log";
+            //Logger.Enabled = true;
+            //Logger.ConsoleOutPut = true;
+            //Logger.ClearLog(); //Delete previous file.
+            //Logger.WriteLine("Server app starting...");
 
             //Compile the game scripts
             CompileEngine.AddAssemblyReference(Environment.CurrentDirectory + "\\MudDesigner.Engine.dll");
+            CompileEngine.AddAssemblyReference(Environment.CurrentDirectory + "\\log4net.dll");
 
             //Compile the scripts within the engine properties 'ScriptsPath'
             CompileEngine.Compile(MudDesigner.Engine.Properties.EngineSettings.Default.ScriptsPath);
