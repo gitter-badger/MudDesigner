@@ -113,7 +113,9 @@
     <Compile Include="Default\States\Login\ClientConnectState.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Default\States\Login\ClientLoginState.cs" />
+    <Compile Include="Default\States\Login\ClientLoginState.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Default\States\CreateCharacter\CreateNewCharacter.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>

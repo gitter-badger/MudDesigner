@@ -48,6 +48,7 @@ namespace MudDesigner.Engine.Mobs
         /// The Salt is unique per password, per user. 
         /// Used for validating the Hash
         /// </summary>
+        [JsonProperty("Salt")]
         private byte[] Salt { get; set; }
 
         /// <summary>
