@@ -94,8 +94,11 @@ namespace MudDesigner.Editor
                     Log.Error(string.Format("{0}", CompileEngine.Errors));
                     //Logger.WriteLine(CompileEngine.Errors, Logger.Importance.Critical);
 
-                    MessageBox.Show("The editor can not run without a script present that inherits from MudDesigner.Engine.Core.Game.  The editor will now shut down.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Application.Exit();
+                    menuWorld.Enabled = false;
+                    menuGame.Enabled = false;
+                    menuSave.Enabled = false;
+
+                    return;
                 }
             }
             IServer server = new Server(4000);
@@ -130,7 +133,8 @@ namespace MudDesigner.Editor
         private void menuSave_Click(object sender, EventArgs e)
         {
             //Save the game world.
-            Editor.Game.SaveWorld();
+            if (Editor.Game != null)
+                Editor.Game.SaveWorld();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -256,6 +260,9 @@ namespace MudDesigner.Editor
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (Editor.Game == null)
+                return;
+
             //If the server is currently running...
             if (Editor.Game.Server.Enabled)
             {

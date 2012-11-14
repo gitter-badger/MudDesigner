@@ -41,6 +41,7 @@ namespace MudDesigner.Engine.Mobs
         /// <summary>
         /// The Password is a hash generated. 
         /// </summary>
+        [JsonProperty("Password")]
         private byte[] Password { get; set; }
 
         /// <summary>
