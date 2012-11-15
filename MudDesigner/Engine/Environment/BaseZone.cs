@@ -157,6 +157,14 @@ namespace MudDesigner.Engine.Environment
             return null;
         }
 
+        public virtual IRoom[] GetRooms()
+        {
+            if (Rooms.Count == 0)
+                return null;
+
+            return Rooms.ToArray();
+        }
+
         /// <summary>
         /// Removes the specified Room from the Zone collection of Rooms.
         /// </summary>

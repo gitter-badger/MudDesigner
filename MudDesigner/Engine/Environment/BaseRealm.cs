@@ -142,6 +142,14 @@ namespace MudDesigner.Engine.Environment
             return null;
         }
 
+        public virtual IZone[] GetZones()
+        {
+            if (Zones.Count == 0)
+                return null;
+
+            return Zones.ToArray();
+        }
+
         /// <summary>
         /// Removes the specified Zone from the Realms collection of Zones.
         /// </summary>

@@ -61,6 +61,8 @@ namespace MudDesigner.Engine.Environment
         /// <returns></returns>
         IRoom GetRoom(string roomName);
 
+        IRoom[] GetRooms();
+
         /// <summary>
         /// Removes the specified Room from the Zone collection of Rooms.
         /// </summary>

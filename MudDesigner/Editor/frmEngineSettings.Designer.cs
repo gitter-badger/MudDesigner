@@ -36,10 +36,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.scriptLibrary = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.loginRoom = new System.Windows.Forms.TextBox();
             this.LoginCompleteState = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.loginState = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -67,11 +65,15 @@
             this.btnSaveSettings = new System.Windows.Forms.Button();
             this.btnCancelSettings = new System.Windows.Forms.Button();
             this.scriptProgressBar = new System.Windows.Forms.ProgressBar();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.lblLoginRoom = new System.Windows.Forms.Label();
+            this.btnSetLoginRoom = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -83,9 +85,9 @@
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.scriptLibrary);
             this.groupBox1.ForeColor = System.Drawing.Color.White;
-            this.groupBox1.Location = new System.Drawing.Point(268, 9);
+            this.groupBox1.Location = new System.Drawing.Point(268, 76);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(244, 207);
+            this.groupBox1.Size = new System.Drawing.Size(244, 166);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Script Settings";
@@ -141,36 +143,25 @@
             // 
             this.scriptLibrary.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.scriptLibrary.FormattingEnabled = true;
-            this.scriptLibrary.Location = new System.Drawing.Point(3, 109);
+            this.scriptLibrary.Location = new System.Drawing.Point(3, 107);
             this.scriptLibrary.Name = "scriptLibrary";
-            this.scriptLibrary.Size = new System.Drawing.Size(238, 95);
+            this.scriptLibrary.Size = new System.Drawing.Size(238, 56);
             this.scriptLibrary.Sorted = true;
             this.scriptLibrary.TabIndex = 0;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.loginRoom);
             this.groupBox2.Controls.Add(this.LoginCompleteState);
             this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.loginState);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.ForeColor = System.Drawing.Color.White;
             this.groupBox2.Location = new System.Drawing.Point(12, 86);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(244, 101);
+            this.groupBox2.Size = new System.Drawing.Size(244, 93);
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Client Login Items";
-            // 
-            // loginRoom
-            // 
-            this.loginRoom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.loginRoom.ForeColor = System.Drawing.Color.White;
-            this.loginRoom.Location = new System.Drawing.Point(81, 41);
-            this.loginRoom.Name = "loginRoom";
-            this.loginRoom.Size = new System.Drawing.Size(154, 20);
-            this.loginRoom.TabIndex = 20;
             // 
             // LoginCompleteState
             // 
@@ -179,7 +170,7 @@
             this.LoginCompleteState.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LoginCompleteState.ForeColor = System.Drawing.Color.White;
             this.LoginCompleteState.FormattingEnabled = true;
-            this.LoginCompleteState.Location = new System.Drawing.Point(81, 67);
+            this.LoginCompleteState.Location = new System.Drawing.Point(81, 46);
             this.LoginCompleteState.Name = "LoginCompleteState";
             this.LoginCompleteState.Size = new System.Drawing.Size(154, 21);
             this.LoginCompleteState.Sorted = true;
@@ -187,20 +178,11 @@
             // 
             // label7
             // 
-            this.label7.Location = new System.Drawing.Point(6, 67);
+            this.label7.Location = new System.Drawing.Point(9, 46);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(69, 31);
             this.label7.TabIndex = 18;
             this.label7.Text = "Login Completed State";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 43);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(64, 13);
-            this.label6.TabIndex = 16;
-            this.label6.Text = "Login Room";
             // 
             // loginState
             // 
@@ -297,7 +279,7 @@
             this.groupBox4.ForeColor = System.Drawing.Color.White;
             this.groupBox4.Location = new System.Drawing.Point(12, 193);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(244, 156);
+            this.groupBox4.Size = new System.Drawing.Size(244, 169);
             this.groupBox4.TabIndex = 16;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Environment Defaults";
@@ -420,9 +402,9 @@
             this.groupBox5.Controls.Add(this.worldFile);
             this.groupBox5.Controls.Add(this.label13);
             this.groupBox5.ForeColor = System.Drawing.Color.White;
-            this.groupBox5.Location = new System.Drawing.Point(268, 222);
+            this.groupBox5.Location = new System.Drawing.Point(268, 248);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(244, 127);
+            this.groupBox5.Size = new System.Drawing.Size(244, 114);
             this.groupBox5.TabIndex = 17;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Save Information";
@@ -474,9 +456,9 @@
             // btnSaveSettings
             // 
             this.btnSaveSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSaveSettings.Location = new System.Drawing.Point(23, 355);
+            this.btnSaveSettings.Location = new System.Drawing.Point(12, 368);
             this.btnSaveSettings.Name = "btnSaveSettings";
-            this.btnSaveSettings.Size = new System.Drawing.Size(226, 23);
+            this.btnSaveSettings.Size = new System.Drawing.Size(244, 23);
             this.btnSaveSettings.TabIndex = 20;
             this.btnSaveSettings.Text = "Save Settings";
             this.btnSaveSettings.UseVisualStyleBackColor = true;
@@ -485,9 +467,9 @@
             // btnCancelSettings
             // 
             this.btnCancelSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancelSettings.Location = new System.Drawing.Point(279, 355);
+            this.btnCancelSettings.Location = new System.Drawing.Point(268, 368);
             this.btnCancelSettings.Name = "btnCancelSettings";
-            this.btnCancelSettings.Size = new System.Drawing.Size(226, 23);
+            this.btnCancelSettings.Size = new System.Drawing.Size(244, 23);
             this.btnCancelSettings.TabIndex = 21;
             this.btnCancelSettings.Text = "Cancel";
             this.btnCancelSettings.UseVisualStyleBackColor = true;
@@ -495,19 +477,51 @@
             // 
             // scriptProgressBar
             // 
-            this.scriptProgressBar.Location = new System.Drawing.Point(23, 384);
+            this.scriptProgressBar.Location = new System.Drawing.Point(12, 397);
             this.scriptProgressBar.Maximum = 14;
             this.scriptProgressBar.Name = "scriptProgressBar";
-            this.scriptProgressBar.Size = new System.Drawing.Size(482, 23);
+            this.scriptProgressBar.Size = new System.Drawing.Size(500, 23);
             this.scriptProgressBar.Step = 1;
             this.scriptProgressBar.TabIndex = 22;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.btnSetLoginRoom);
+            this.groupBox6.Controls.Add(this.lblLoginRoom);
+            this.groupBox6.ForeColor = System.Drawing.Color.White;
+            this.groupBox6.Location = new System.Drawing.Point(268, 9);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(244, 61);
+            this.groupBox6.TabIndex = 23;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Game Defaults";
+            // 
+            // lblLoginRoom
+            // 
+            this.lblLoginRoom.Location = new System.Drawing.Point(6, 16);
+            this.lblLoginRoom.Name = "lblLoginRoom";
+            this.lblLoginRoom.Size = new System.Drawing.Size(229, 13);
+            this.lblLoginRoom.TabIndex = 17;
+            this.lblLoginRoom.Text = "Login Room: None Set.";
+            // 
+            // btnSetLoginRoom
+            // 
+            this.btnSetLoginRoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSetLoginRoom.Location = new System.Drawing.Point(6, 33);
+            this.btnSetLoginRoom.Name = "btnSetLoginRoom";
+            this.btnSetLoginRoom.Size = new System.Drawing.Size(231, 23);
+            this.btnSetLoginRoom.TabIndex = 18;
+            this.btnSetLoginRoom.Text = "Set Starting Room";
+            this.btnSetLoginRoom.UseVisualStyleBackColor = true;
+            this.btnSetLoginRoom.Click += new System.EventHandler(this.btnSetLoginRoom_Click);
             // 
             // frmEngineSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.ClientSize = new System.Drawing.Size(520, 413);
+            this.ClientSize = new System.Drawing.Size(520, 426);
+            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.scriptProgressBar);
             this.Controls.Add(this.btnCancelSettings);
             this.Controls.Add(this.btnSaveSettings);
@@ -534,6 +548,7 @@
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -543,7 +558,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ListBox scriptLibrary;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox loginState;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox LoginCompleteState;
@@ -577,7 +591,9 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button btnSaveSettings;
         private System.Windows.Forms.Button btnCancelSettings;
-        private System.Windows.Forms.TextBox loginRoom;
         private System.Windows.Forms.ProgressBar scriptProgressBar;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button btnSetLoginRoom;
+        private System.Windows.Forms.Label lblLoginRoom;
     }
 }

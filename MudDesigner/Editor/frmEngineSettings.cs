@@ -71,16 +71,14 @@ namespace MudDesigner.Editor
             //The SetupComboBox method is also responsible for updating the progressbar.
             SetupComboBox(defaultGameType, typeof(IGame), EngineSettings.Default.GameScript);
             SetupComboBox(defaultPlayerType, typeof(IPlayer), EngineSettings.Default.PlayerScript);
-            SetupComboBox(loginState, typeof(IState), EngineSettings.Default.LoginCompletedState);
-            SetupComboBox(LoginCompleteState, typeof(IState), EngineSettings.Default.LoginState);
+            SetupComboBox(LoginCompleteState, typeof(IState), EngineSettings.Default.LoginCompletedState);
+            SetupComboBox(loginState, typeof(IState), EngineSettings.Default.LoginState);
             SetupComboBox(defaultWorldType, typeof(IWorld), EngineSettings.Default.WorldScript);
             SetupComboBox(realmType, typeof(IRealm), EngineSettings.Default.RealmScript);
             SetupComboBox(zoneType, typeof(IZone), EngineSettings.Default.ZoneScript);
             SetupComboBox(roomType, typeof(IRoom), EngineSettings.Default.RoomScript);
             SetupComboBox(doorType, typeof(IDoor), EngineSettings.Default.DoorScript);
 
-            //Set the text boxes to match the current engine settings.
-            loginRoom.Text = EngineSettings.Default.InitialRoom;
             scriptsPath.Text = EngineSettings.Default.ScriptsPath;
             worldFile.Text = EngineSettings.Default.WorldSaveFile;
             playerSavePath.Text = EngineSettings.Default.PlayerSavePath;
@@ -119,6 +117,10 @@ namespace MudDesigner.Editor
                 //The object Name is placed as the Key so that the Combo Boxes
                 //can use it to display. The Fullname is stored as a value so we can
                 //reference the full Type later for instancing.
+
+                if (objectCollection.ContainsKey(obj.Name))
+                    continue;
+
                 objectCollection.Add(obj.Name, obj.FullName);
 
                 //If this object is the current EngineSetting, store a reference to it.
@@ -223,17 +225,6 @@ namespace MudDesigner.Editor
                 if (EngineSettings.Default.LoginState != selectedValue.Value)
                 {
                     EngineSettings.Default.LoginState = selectedValue.Value;
-                }
-            }
-
-            //Login Room
-            //Check if we have changed the Room that will be used when players login with a newly created character
-            if (!string.IsNullOrEmpty(loginRoom.Text))
-            {
-                //Only do this if the setting was changed
-                if (EngineSettings.Default.InitialRoom != loginRoom.Text)
-                {
-                    EngineSettings.Default.InitialRoom = loginRoom.Text;
                 }
             }
 
@@ -492,6 +483,21 @@ namespace MudDesigner.Editor
 
             //Done.
             this.Close();
+        }
+
+        private void btnSetLoginRoom_Click(object sender, EventArgs e)
+        {
+            frmLoginRoom form = new frmLoginRoom();
+
+            form.ShowDialog();
+
+            while (form.Visible)
+            {
+                Application.DoEvents();
+            }
+
+            form = null;
+
         }
     }
 }

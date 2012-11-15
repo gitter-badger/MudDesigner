@@ -54,6 +54,8 @@ namespace MudDesigner.Engine.Environment
         /// <returns></returns>
         IZone GetZone(string zoneName);
 
+        IZone[] GetZones();
+
         /// <summary>
         /// Removes the specified Zone from the Realms collection of Zones.
         /// </summary>

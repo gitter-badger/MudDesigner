@@ -59,6 +59,12 @@
     <Compile Include="frmEngineSettings.Designer.cs">
       <DependentUpon>frmEngineSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmLoginRoom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLoginRoom.Designer.cs">
+      <DependentUpon>frmLoginRoom.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmRealms.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +93,9 @@
     </Compile>
     <EmbeddedResource Include="frmEngineSettings.resx">
       <DependentUpon>frmEngineSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLoginRoom.resx">
+      <DependentUpon>frmLoginRoom.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmRealms.resx">
       <DependentUpon>frmRealms.cs</DependentUpon>
@@ -127,6 +136,10 @@
     <ProjectReference Include="..\Engine\Engine.csproj">
       <Project>{9d9e8cac-8876-4725-9a65-2077de4322dd}</Project>
       <Name>MudDesigner.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Scripts\Scripts.csproj">
+      <Project>{db190be6-a73b-4c59-b939-4a8b1825a658}</Project>
+      <Name>Scripts</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
