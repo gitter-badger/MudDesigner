@@ -18,6 +18,7 @@ using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Scripting;
 using MudDesigner.Engine.Properties;
 using MudDesigner.Engine.Mobs;
+using Newtonsoft.Json;
 
 namespace MudDesigner.Engine.Environment
 {
@@ -52,6 +53,7 @@ namespace MudDesigner.Engine.Environment
         /// Gets or Sets the players that currently occupy this Room.
         /// </summary>
         [Browsable(false)]
+        [JsonIgnore()] 
         public List<IMob> Occupants { get; set; }
 
         /// <summary>

@@ -6,11 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 using MudDesigner.Engine.Commands;
+using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Directors;
 using MudDesigner.Engine.Mobs;
 using MudDesigner.Engine.Properties;
 using MudDesigner.Engine.States;
-
+using MudDesigner.Scripts.Default.Commands;
 using MudDesigner.Scripts.Default.States.CreateCharacter;
 using log4net;
 
@@ -71,7 +72,10 @@ namespace MudDesigner.Scripts.Default.States.Login
                     //User is entering his/her password
                 case CurrentState.EnteringPassword:
                     {
-                        GetUserPassword();
+                        if(GetUserPassword())
+                        {
+                            return new LookCommand();
+                        }
                         break;
                     }
             }
@@ -109,7 +113,7 @@ namespace MudDesigner.Scripts.Default.States.Login
             }
         }
 
-        private void GetUserPassword()
+        private bool GetUserPassword()
         {
             //Recieve the user input
             var input = connectedPlayer.ReceiveInput();
@@ -118,35 +122,33 @@ namespace MudDesigner.Scripts.Default.States.Login
             if (!ValidateInput(input))
             {
                 connectedPlayer.SendMessage("Your password is invalid!");
-                return;
+                return false;
             }
             var player = connectedPlayer as BasePlayer;
-            if (player != null && player.CheckPassword(input))
+            var file = new FileIO();
+            var loadedplayer = file.Load(Path.Combine("saves", EngineSettings.Default.PlayerSavePath,string.Format("{0}.char", player.Username)), connectedPlayer.GetType());            
+            var baseLP = loadedplayer as BasePlayer;
+            if (baseLP != null && baseLP.CheckPassword(input))
             {
                 connectedPlayer.SendMessage("Success!!");
+                connectedPlayer.LoadPlayer(baseLP);
                 Log.Info(string.Format("{0} has just logged in.", connectedPlayer.Name));
+                connectedPlayer.SwitchState(new LoginCompleted(director));
+
+                return true;
+                
 
             }
             else
             {
                 Log.Info(string.Format("{0} has failed logged in at IP Address: {1}.", connectedPlayer.Name,
-                                       connectedPlayer.Connection));
-            }
-            //TODO: Authentication code needs to go here.
-            //Under the EnteringName state, we assigned connectedPlayer.Name.
+                                       connectedPlayer.Connection.RemoteEndPoint));
 
-            /* 
-            connectedPlayer.Load(director.Server.Game, connectedPlayer.Name);
-            bool validPassword = connectedPlayer.Authenticate(input);
-                        
-            if (!validPassword)
-            {
-                connectedPlayer.SendMessage("Invalid password!");
-                currentState = CurrentState.EnteringName; //Reset the login state.
+                return false; 
             }
-            */
         }
 
+       
         private bool ValidateInput(string userName)
         {
             //This is in its own method so we can add additional checks
@@ -161,13 +163,18 @@ namespace MudDesigner.Scripts.Default.States.Login
                 Directory.CreateDirectory(EngineSettings.Default.PlayerSavePath);
 
             //Setup our path to save, including filename
-            string path = Path.Combine(EngineSettings.Default.PlayerSavePath, username + ".user");
+            string path = Path.Combine("saves",EngineSettings.Default.PlayerSavePath, string.Format("{0}.char", username));
 
+            connectedPlayer.Username = username;
             //Return true if the file exists.
             if (File.Exists(path))
+            {
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
     }
 }

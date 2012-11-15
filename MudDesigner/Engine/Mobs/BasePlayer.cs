@@ -42,14 +42,14 @@ namespace MudDesigner.Engine.Mobs
         /// The Password is a hash generated. 
         /// </summary>
         [JsonProperty("Password")]
-        private byte[] Password { get; set; }
+        protected byte[] Password { get; set; }
 
         /// <summary>
         /// The Salt is unique per password, per user. 
         /// Used for validating the Hash
         /// </summary>
         [JsonProperty("Salt")]
-        private byte[] Salt { get; set; }
+        protected byte[] Salt { get; set; }
 
         /// <summary>
         /// Gets the character role for this player in the world
@@ -244,6 +244,29 @@ namespace MudDesigner.Engine.Mobs
             Salt = Crypt.GenerateSalt(userPassword.Length);
             Password = Crypt.GenerateSaltedHash(userPassword, Salt);
             
+        }
+
+        public void LoadPlayer(BasePlayer loadedPlayer)
+        {
+            
+            Username = loadedPlayer.Username;
+            Name = loadedPlayer.Name;
+            Password = loadedPlayer.Password;
+            Salt = loadedPlayer.Salt;
+            Location = loadedPlayer.Location;
+            Race = loadedPlayer.Race;
+            Role = loadedPlayer.Role;
+            CanTalk = loadedPlayer.CanTalk;
+            Class = loadedPlayer.Class;
+            Appearance = loadedPlayer.Appearance;
+            Stats = loadedPlayer.Stats;
+            MaxInventorySize = loadedPlayer.MaxInventorySize;
+            Description = loadedPlayer.Description;
+            Gender = loadedPlayer.Gender;
+            Items = loadedPlayer.Items;
+            Permanent = loadedPlayer.Permanent;
+
+
         }
 
         /// <summary>

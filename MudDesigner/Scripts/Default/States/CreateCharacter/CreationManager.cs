@@ -13,12 +13,14 @@ using MudDesigner.Engine.Commands;
 using MudDesigner.Engine.Properties;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Scripts.Default.Commands;
-using MudDesigner.Scripts.Default.States;
+
+using log4net;
 
 namespace MudDesigner.Scripts.Default.States.CreateCharacter
 {
     public class CreationManager : IState
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(CreationManager)); 
         private IPlayer connectedPlayer;
         private ServerDirector director;
 
@@ -52,19 +54,6 @@ namespace MudDesigner.Scripts.Default.States.CreateCharacter
                     connectedPlayer.SwitchState(new GenderSelect(director));
                     break;
                 case CreationState.Completed:
-                    //Make sure we have a valid save path
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "saves", EngineSettings.Default.PlayerSavePath, connectedPlayer.Name + ".char");
-                    var path = Path.GetDirectoryName(filePath);
-
-                    if (!Directory.Exists(path))
-                    {
-                        Directory.CreateDirectory(path);
-                    }
-
-                    //Save the player using our serialization class
-                    FileIO fileSave = new FileIO();
-                    fileSave.Save(connectedPlayer, filePath);
-                                        
                     //Broacast we are now done creating the character
                     connectedPlayer.SendMessage("You have completed the character creation process! Enjoy your stay in our world!");
                     connectedPlayer.SendMessage(string.Empty);//blank line.
@@ -93,10 +82,25 @@ namespace MudDesigner.Scripts.Default.States.CreateCharacter
                     IRoom room = zone.GetRoom(roomPath[2]);
                     if (room == null)
                         return new NoOpCommand();
+                   
 
                     connectedPlayer.Move(room);
-                    connectedPlayer.SwitchState(new EnteringCommandState());
 
+                    //Make sure we have a valid save path
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "saves", EngineSettings.Default.PlayerSavePath, connectedPlayer.Username + ".char");
+                    var path = Path.GetDirectoryName(filePath);
+
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+
+                    //Save the player using our serialization class
+                    FileIO fileSave = new FileIO();
+                    fileSave.Save(connectedPlayer, filePath);
+
+                    connectedPlayer.SwitchState(new EnteringCommandState());
+                    Log.Info(string.Format("{0} has just logged in.", connectedPlayer.Name));
                     return new LookCommand();
             }
 

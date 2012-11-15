@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using MudDesigner.Engine.Core;
+using MudDesigner.Engine.Properties;
 using MudDesigner.Engine.States;
 using MudDesigner.Engine.Mobs;
 using MudDesigner.Engine.Environment;
@@ -44,6 +46,20 @@ namespace MudDesigner.Scripts.Default.Commands
             {
                 IDoor door = player.Location.GetDoorway(travelDirection);
                 player.Move(door.Arrival);
+
+
+                //Make sure we have a valid save path
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "saves", EngineSettings.Default.PlayerSavePath, player.Username + ".char");
+                var path = Path.GetDirectoryName(filePath);
+
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                //Save the player using our serialization class
+                FileIO fileSave = new FileIO();
+                fileSave.Save(player, filePath);
             }
 
             player.SwitchState(new LookingState());

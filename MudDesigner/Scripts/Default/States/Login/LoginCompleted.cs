@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using MudDesigner.Engine.Commands;
+using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Directors;
 using MudDesigner.Engine.Mobs;
@@ -17,11 +18,14 @@ using MudDesigner.Scripts.Default.Commands;
 using MudDesigner.Scripts.Default.Game;
 using MudDesigner.Scripts.Default.States.CreateCharacter;
 using MudDesigner.Scripts.Default.Environment;
+using log4net;
 
 namespace MudDesigner.Scripts.Default.States.Login
 {
     public class LoginCompleted : IState
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(BasePlayer)); 
+
         private ServerDirector director;
         private IPlayer connectedPlayer;
 
@@ -46,21 +50,41 @@ namespace MudDesigner.Scripts.Default.States.Login
 
         public ICommand GetCommand()
         {
-            string startRoom = EngineSettings.Default.InitialRoom;
-            string[] locations = startRoom.Split('>');
+            
 
-            if (locations.Length < 3)
+            var File = new FileIO();
+            if(connectedPlayer.Location == null)
             {
-                connectedPlayer.SendMessage("The server does not have a starting room set! Please contact the server administrator.");
-                return new NoOpCommand();
+                string startRoom = EngineSettings.Default.InitialRoom;
+                string[] locations = startRoom.Split('>');
+
+                if (locations.Length < 3)
+                {
+                    Log.Error("The Server does not have a starting room set!");
+                    connectedPlayer.SendMessage(
+                        "The server does not have a starting room set! Please contact the server administrator.");
+                    return new NoOpCommand();
+                }
+
+                IWorld world = director.Server.Game.World;
+                IRealm realm = world.GetRealm(locations[0]);
+                IZone zone = realm.GetZone(locations[1]);
+                IRoom room = zone.GetRoom(locations[2]);
+                
+                File.Save(connectedPlayer, Path.Combine("saves", EngineSettings.Default.PlayerSavePath, string.Format("{0}.char", connectedPlayer.Username)));
+                
+                connectedPlayer.Move(room);
             }
+            else
+            {
+                
+                File.Save(connectedPlayer, Path.Combine("saves", EngineSettings.Default.PlayerSavePath, string.Format("{0}.char", connectedPlayer.Username)));
+                connectedPlayer.Move(connectedPlayer.Location);
+                
+                
 
-            IWorld world = director.Server.Game.World;
-            IRealm realm = world.GetRealm(locations[0]);
-            IZone zone = realm.GetZone(locations[1]);
-            IRoom room = zone.GetRoom(locations[2]);
 
-            connectedPlayer.Move(room);
+            }
 
             return new LookCommand();
         }

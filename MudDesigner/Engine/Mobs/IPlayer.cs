@@ -88,6 +88,7 @@ namespace MudDesigner.Engine.Mobs
         void Connect(IState initialState);
         
         void Disconnect();
+        void LoadPlayer(BasePlayer player);
 
         /// <summary>
         /// Switches the players State from one, to another

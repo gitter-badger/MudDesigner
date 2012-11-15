@@ -403,8 +403,8 @@ namespace MudDesigner.Engine.Mobs
 
             if (door == null)
                 return;
-
-            //Remove this character from the departing room
+            
+          //Remove this character from the departing room
             Location.RemoveCharacter(this, door.FacingDirection);
         }
 
