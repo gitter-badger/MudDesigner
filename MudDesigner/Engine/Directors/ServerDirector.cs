@@ -154,7 +154,7 @@ namespace MudDesigner.Engine.Directors
             var connectedPlayer = from p in ConnectedPlayers
                                   where p.Key.Name == name
                                   select p.Key;
-
+            
             player = connectedPlayer.First();
 
             return player == null ? true : false;

@@ -146,7 +146,6 @@ namespace MudDesigner.Scripts.Default.States.Login
                 connectedPlayer.SwitchState(new LoginCompleted(director));
 
                 return true;
-                
 
             }
             else

@@ -66,6 +66,7 @@
     <Compile Include="Mobs\IGender.cs" />
     <Compile Include="Mobs\IStat.cs" />
     <Compile Include="Mobs\IRace.cs" />
+    <Compile Include="Mobs\MobMethodExtensions.cs" />
     <Compile Include="Objects\BaseItem.cs" />
     <Compile Include="Objects\IEquipable.cs" />
     <Compile Include="Core\ILoadable.cs" />
