@@ -93,9 +93,7 @@ namespace MudDesigner.Engine.Mobs
         /// </summary>
         [JsonIgnore()]
         public List<byte> Buffer { get; set; }
-
-        
-
+     
         private bool lastMessageHadNewLine = true;
 
         public BasePlayer()
@@ -121,7 +119,6 @@ namespace MudDesigner.Engine.Mobs
                 newObject.SetProperty("Password", Password, null);
                 newObject.SetProperty("CurrentState", CurrentState, null);
                 newObject.SetProperty("Connection", Connection, null);
-                newObject.SetProperty("IsConnected", IsConnected, null);
                 newObject.SetProperty("Buffer", Buffer, null);
             }
 
@@ -246,27 +243,26 @@ namespace MudDesigner.Engine.Mobs
             
         }
 
-        public void LoadPlayer(BasePlayer loadedPlayer)
+        public void LoadPlayer(IPlayer loadedPlayer)
         {
-            
-            Username = loadedPlayer.Username;
-            Name = loadedPlayer.Name;
-            Password = loadedPlayer.Password;
-            Salt = loadedPlayer.Salt;
-            Location = loadedPlayer.Location;
-            Race = loadedPlayer.Race;
-            Role = loadedPlayer.Role;
-            CanTalk = loadedPlayer.CanTalk;
-            Class = loadedPlayer.Class;
-            Appearance = loadedPlayer.Appearance;
-            Stats = loadedPlayer.Stats;
-            MaxInventorySize = loadedPlayer.MaxInventorySize;
-            Description = loadedPlayer.Description;
-            Gender = loadedPlayer.Gender;
-            Items = loadedPlayer.Items;
-            Permanent = loadedPlayer.Permanent;
+            var player = loadedPlayer as BasePlayer;
 
-
+            Username = player.Username;
+            Name = player.Name;
+            Password = player.Password;
+            Salt = player.Salt;
+            Location = player.Location;
+            Race = player.Race;
+            Role = player.Role;
+            CanTalk = player.CanTalk;
+            Class = player.Class;
+            Appearance = player.Appearance;
+            Stats = player.Stats;
+            MaxInventorySize = player.MaxInventorySize;
+            Description = player.Description;
+            Gender = player.Gender;
+            Items = player.Items;
+            Permanent = player.Permanent;
         }
 
         /// <summary>
@@ -298,9 +294,6 @@ namespace MudDesigner.Engine.Mobs
                 SendMessage("Failed to update password, password entered doesn't match records.");
                 return false;
             }
-
-            return false;
-
         }
 
         /// <summary>

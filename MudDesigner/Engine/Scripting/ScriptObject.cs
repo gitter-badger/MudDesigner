@@ -39,13 +39,21 @@ namespace MudDesigner.Engine.Scripting
         /// <param name="propertyName">The name of the property you want to change</param>
         /// <param name="propertyValue">The value for the property you want to change</param>
         /// <param name="indexArgs">Index arguments for collections.</param>
-        public void SetProperty(String propertyName, object propertyValue, object[] indexArgs)
+        public void SetProperty(String propertyName, object propertyValue, object[] indexArgs, bool overrideReadOnly = true)
         {
             PropertyInfo propertyInfo = Instance.GetType().GetProperty(propertyName);
 
             if (propertyValue != null && propertyInfo != null)
             {
-                propertyInfo.SetValue(Instance, propertyValue, indexArgs);
+                try
+                {
+                    if (propertyInfo.CanWrite || overrideReadOnly)
+                        propertyInfo.SetValue(Instance, propertyValue, indexArgs);
+                }
+                catch (Exception ex)
+                {
+                    
+                }
             }
         }
 

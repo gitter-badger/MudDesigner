@@ -85,10 +85,13 @@ namespace MudDesigner.Engine.Mobs
         /// <returns></returns>
         bool ChangePassword(string oldPassword, string newPassword);
 
+        bool CheckPassword(string password);
+
         void Connect(IState initialState);
         
         void Disconnect();
-        void LoadPlayer(BasePlayer player);
+
+        void LoadPlayer(IPlayer player);
 
         /// <summary>
         /// Switches the players State from one, to another

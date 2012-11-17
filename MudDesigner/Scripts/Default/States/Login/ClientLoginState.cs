@@ -124,14 +124,24 @@ namespace MudDesigner.Scripts.Default.States.Login
                 connectedPlayer.SendMessage("Your password is invalid!");
                 return false;
             }
-            var player = connectedPlayer as BasePlayer;
+
             var file = new FileIO();
-            var loadedplayer = file.Load(Path.Combine("saves", EngineSettings.Default.PlayerSavePath,string.Format("{0}.char", player.Username)), connectedPlayer.GetType());            
-            var baseLP = loadedplayer as BasePlayer;
-            if (baseLP != null && baseLP.CheckPassword(input))
+
+            IPlayer loadedplayer = (IPlayer)file.Load(Path.Combine("saves", EngineSettings.Default.PlayerSavePath,string.Format("{0}.char", connectedPlayer.Username)), connectedPlayer.GetType());
+            dynamic player = connectedPlayer;
+
+            if (loadedplayer != null && loadedplayer.CheckPassword(input))
             {
                 connectedPlayer.SendMessage("Success!!");
-                connectedPlayer.LoadPlayer(baseLP);
+
+                //Can use inherited built-in CopyState method instead
+                //connectedPlayer.LoadPlayer(loadedplayer);
+                
+                //Use IGameObject.CopyState to use a uniform method across the engine
+                //A little slower than the LoadPlayer method, but it can be revised to be quicker.
+                //Notes on revising the method are under GameObject.cs
+                loadedplayer.CopyState(ref player); //Copies loadedPlayer state to connectedPlayer.
+
                 Log.Info(string.Format("{0} has just logged in.", connectedPlayer.Name));
                 connectedPlayer.SwitchState(new LoginCompleted(director));
 

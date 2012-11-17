@@ -76,6 +76,33 @@ namespace MudDesigner.Engine.Core
             //Make sure we are dealing with an object that inherits from GameObject
             if (copyTo is IGameObject)
             {
+                /* Could do the following instead, it would be faster.
+                 * However SetProperty ensures that the property exists since a dynamic
+                 * type is used.
+
+                var gameObject = copyTo as IGameObject;
+                gameObject.Name = Name;
+
+                 * I had issues using IGameObject as a parameter with objects.
+                 * It resulted in a ton of casts which I was trying to avoid.
+                 * Might want to look at it anyway, performance between casting
+                 * and using the following SetProperty method are probably equally
+                 * as slow. SetProperty ensures the dynamic objects property exists
+                 * using reflection, but casting from IGameObject would be no different.
+                 * such as:
+                    
+                    calling method:
+                        IPlayer player = FileIO.Load("Player Name.char");
+                        player.CopyState(ref connectedPlayer);
+                 
+                   CopyState method
+                        if (copyTo is IPlayer)
+                        {
+                            var player = copyTo as IPlayer;
+                            player.Name = Name;
+                        }
+                */
+
                 //Wrap the object in a ScriptObject for easy managing
                 ScriptObject newObject = new ScriptObject(copyTo);
 
