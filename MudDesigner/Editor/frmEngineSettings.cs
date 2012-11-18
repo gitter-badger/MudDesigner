@@ -61,6 +61,33 @@ namespace MudDesigner.Editor
             //Load all of the scripts that have settings associated with them, store them and 
             //present them to the GUI.
             ProcessScripts();
+
+            bool good = false;
+            if (EngineSettings.Default.InitialRoom != null)
+            {
+                string[] env = EngineSettings.Default.InitialRoom.Split('>');
+
+                if (env.Length == 3)
+                {
+                    IRealm realm = Editor.Game.World.GetRealm(env[0]);
+                    if (realm != null)
+                    {
+                        IZone zone = realm.GetZone(env[1]);
+                        if (zone != null)
+                        {
+                            IRoom room = zone.GetRoom(env[2]);
+                            if (room != null)
+                            {
+                                lblLoginRoom.Text = string.Format("Login Room: {0}>{1}>{2}", realm.Name, zone.Name, room.Name);
+                                good = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!good)
+                lblLoginRoom.Text = "Login Room: None set.";
         }
 
         private void ProcessScripts()
@@ -498,6 +525,33 @@ namespace MudDesigner.Editor
 
             form = null;
 
+            //Reset the login room text
+            bool good = false;
+            if (EngineSettings.Default.InitialRoom != null)
+            {
+                string[] env = EngineSettings.Default.InitialRoom.Split('>');
+
+                if (env.Length == 3)
+                {
+                    IRealm realm = Editor.Game.World.GetRealm(env[0]);
+                    if (realm != null)
+                    {
+                        IZone zone = realm.GetZone(env[1]);
+                        if (zone != null)
+                        {
+                            IRoom room = zone.GetRoom(env[2]);
+                            if (room != null)
+                            {
+                                lblLoginRoom.Text = string.Format("Login Room: {0}>{1}>{2}", realm.Name, zone.Name, room.Name);
+                                good = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!good)
+                lblLoginRoom.Text = "Login Room: None set.";
         }
     }
 }

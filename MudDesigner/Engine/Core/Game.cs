@@ -161,7 +161,7 @@ namespace MudDesigner.Engine.Core
         {
             Log.Info("Attempting to Restore World...");
             //Build a path using our current install directory + "Saves" + the engine setting for the world save file.
-            var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(), "saves",
+            var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(),
                                                 MudDesigner.Engine.Properties.EngineSettings.Default.WorldSaveFile);
 
             //If the file doesn't exists, we abort.
@@ -196,7 +196,7 @@ namespace MudDesigner.Engine.Core
             Log.Info("Saving World....");
             LastSave = DateTime.Now;
 
-            var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(), "saves",
+            var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(),
                                                  MudDesigner.Engine.Properties.EngineSettings.Default.WorldSaveFile);
 
             FileIO fileSave = new FileIO();

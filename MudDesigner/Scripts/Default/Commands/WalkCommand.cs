@@ -26,7 +26,7 @@ namespace MudDesigner.Scripts.Default.Commands
             string[] args = player.ReceivedInput.Split(' ');
             string direction = String.Empty;
 
-            if (args.Length >= 1)
+            if (args.Length >= 2) //will always be at least 1, as the command itself is at index 0, making length 1
                 direction = args[1]; //Assume Walk North, so [1] = North (or any other direction)
             else
             {
@@ -49,7 +49,7 @@ namespace MudDesigner.Scripts.Default.Commands
 
 
                 //Make sure we have a valid save path
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "saves", EngineSettings.Default.PlayerSavePath, player.Username + ".char");
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), EngineSettings.Default.PlayerSavePath, player.Username + ".char");
                 var path = Path.GetDirectoryName(filePath);
 
                 if (!Directory.Exists(path))

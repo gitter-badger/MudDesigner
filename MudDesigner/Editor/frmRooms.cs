@@ -616,7 +616,7 @@ namespace MudDesigner.Editor.Rooms
 
                 if (Editor.CurrentRoom.DoorwayExists(direction))
                 {
-                    Editor.CurrentRoom = Editor.CurrentRoom.GetDoorway(direction).Arrival;
+                    Editor.CurrentRoom.RemoveDoorway(direction, true);
 
                     RefreshDoorwayList();
                 }

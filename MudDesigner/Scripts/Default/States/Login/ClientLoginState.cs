@@ -127,7 +127,7 @@ namespace MudDesigner.Scripts.Default.States.Login
 
             var file = new FileIO();
 
-            IPlayer loadedplayer = (IPlayer)file.Load(Path.Combine("saves", EngineSettings.Default.PlayerSavePath,string.Format("{0}.char", connectedPlayer.Username)), connectedPlayer.GetType());
+            IPlayer loadedplayer = (IPlayer)file.Load(Path.Combine(EngineSettings.Default.PlayerSavePath,string.Format("{0}.char", connectedPlayer.Username)), connectedPlayer.GetType());
             dynamic player = connectedPlayer;
 
             if (loadedplayer != null && loadedplayer.CheckPassword(input))
@@ -172,7 +172,7 @@ namespace MudDesigner.Scripts.Default.States.Login
                 Directory.CreateDirectory(EngineSettings.Default.PlayerSavePath);
 
             //Setup our path to save, including filename
-            string path = Path.Combine("saves",EngineSettings.Default.PlayerSavePath, string.Format("{0}.char", username));
+            string path = Path.Combine(EngineSettings.Default.PlayerSavePath, string.Format("{0}.char", username));
 
             connectedPlayer.Username = username;
             //Return true if the file exists.

@@ -87,7 +87,7 @@ namespace MudDesigner.Scripts.Default.States.CreateCharacter
                     connectedPlayer.Move(room);
 
                     //Make sure we have a valid save path
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "saves", EngineSettings.Default.PlayerSavePath, connectedPlayer.Username + ".char");
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), EngineSettings.Default.PlayerSavePath, connectedPlayer.Username + ".char");
                     var path = Path.GetDirectoryName(filePath);
 
                     if (!Directory.Exists(path))

@@ -56,6 +56,8 @@ namespace MudDesigner.Engine.Scripting
                     assemblyReferences.Add("mscorlib.dll");
                     assemblyReferences.Add("System.dll");
                     assemblyReferences.Add("System.Core.dll");
+                    assemblyReferences.Add("MudDesigner.Engine.dll");
+                    assemblyReferences.Add("log4net.dll");
                 }
 
                 return assemblyReferences;

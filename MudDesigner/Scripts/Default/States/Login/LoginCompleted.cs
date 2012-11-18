@@ -71,14 +71,14 @@ namespace MudDesigner.Scripts.Default.States.Login
                 IZone zone = realm.GetZone(locations[1]);
                 IRoom room = zone.GetRoom(locations[2]);
                 
-                File.Save(connectedPlayer, Path.Combine("saves", EngineSettings.Default.PlayerSavePath, string.Format("{0}.char", connectedPlayer.Username)));
+                File.Save(connectedPlayer, Path.Combine(EngineSettings.Default.PlayerSavePath, string.Format("{0}.char", connectedPlayer.Username)));
                 
                 connectedPlayer.Move(room);
             }
             else
             {
                 
-                File.Save(connectedPlayer, Path.Combine("saves", EngineSettings.Default.PlayerSavePath, string.Format("{0}.char", connectedPlayer.Username)));
+                File.Save(connectedPlayer, Path.Combine(EngineSettings.Default.PlayerSavePath, string.Format("{0}.char", connectedPlayer.Username)));
                 connectedPlayer.Move(connectedPlayer.Location);
                 
                 
