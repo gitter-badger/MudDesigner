@@ -8,16 +8,19 @@ using MudDesigner.Engine.Commands;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Mobs;
 using MudDesigner.Engine.States;
+using MudDesigner.Engine.Directors;
 
 namespace MudDesigner.Scripts.Default.States
 {
     public class LookingState : IState
     {
         IPlayer currentPlayer;
+        IServerDirector director;
 
         public void Render(IPlayer player)
         {
             currentPlayer = player;
+            director = player.Director;
 
             if (!player.Director.Server.Game.HideRoomNames)
                 player.SendMessage(player.Location.Name);

@@ -36,6 +36,8 @@ namespace MudDesigner.Editor
         private static readonly ILog Log = LogManager.GetLogger(typeof(frmMain)); 
         public frmMain()
         {
+            //EngineSettings.Default.Reset();
+
             InitializeComponent();
         }
         
@@ -44,10 +46,6 @@ namespace MudDesigner.Editor
             //Setup our logger so we can access it within the editor.
             //Logger.CacheContent = true;
             //Logger.Enabled = true;
-
-            //Add the engine to the compiler for referencing.
-            CompileEngine.AddAssemblyReference("MudDesigner.Engine.dll");
-            CompileEngine.AddAssemblyReference("log4net.dll");
             
             //Loop through each reference mentioned in the engines properties and add them.
             //This provides support for 3rd party pre-compiled *mods* scripts

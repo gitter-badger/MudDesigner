@@ -25,7 +25,7 @@ namespace MudDesigner.Engine.Scripting
     /// </summary>
     public static class ScriptFactory
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(ScriptFactory)); 
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ScriptFactory));
         //The assembly loaded that will be used.
         private static List<Assembly> assemblyCollection = new List<Assembly>();
 
@@ -35,7 +35,7 @@ namespace MudDesigner.Engine.Scripting
         /// <param name="assembly">provides the name of the assembly, or file name that needs to be loaded.</param>
         public static void AddAssembly(String assembly)
         {
-            Assembly a =null;
+            Assembly a = null;
 
             //See if a file exists first with this assembly name.
             //TODO - why does the following line cause an exception when a file doesn't exist?
@@ -44,7 +44,7 @@ namespace MudDesigner.Engine.Scripting
                 bool f = File.Exists(assembly);
                 a = !File.Exists(assembly) ? Assembly.Load(new AssemblyName(assembly)) : Assembly.Load(assembly);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Log.Fatal(string.Format("{0}", ex.Message));
             }
@@ -98,11 +98,20 @@ namespace MudDesigner.Engine.Scripting
             if (type == null)
                 return null;
 
-            object script;
+            object script = null;
             if (args == null || args.Length == 0)
-                script = Activator.CreateInstance(type);
+            {
+                //Only call Activator if a parameterless constructor exists.
+                if (type.GetType().GetConstructors().All(c => c.GetParameters().Length == 0))
+                    script = Activator.CreateInstance(type);
+                else
+                    Log.Error(string.Format("Tried to instance {0} with a parameterless constructor while one does not exist!", type.Name)); 
+            }
             else
-                script = Activator.CreateInstance(type, args);
+            {
+                if (type.GetType().GetConstructors().All(c => c.GetParameters().Length > 0)) //This ensures we have a constructor that accepts a parameter
+                    script = Activator.CreateInstance(type, args);
+            }
             return script;
         }
 

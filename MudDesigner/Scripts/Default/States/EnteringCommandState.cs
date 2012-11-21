@@ -8,17 +8,19 @@ using MudDesigner.Engine.States;
 using MudDesigner.Engine.Mobs;
 using MudDesigner.Engine.Commands;
 using MudDesigner.Engine.Scripting;
+using MudDesigner.Engine.Directors;
 
 namespace MudDesigner.Scripts.Default.States
 {
     public class EnteringCommandState : IState
     {
         IPlayer currentPlayer;
+        IServerDirector director;
 
         public void Render(IPlayer player)
         {
             currentPlayer = player;
-
+            director = player.Director;
             currentPlayer.SendMessage("Command: ", false);
         }
 

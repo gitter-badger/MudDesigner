@@ -24,7 +24,7 @@ namespace MudDesigner.Scripts.Default.States.Login
 {
     public class LoginCompleted : IState
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(BasePlayer)); 
+        private static readonly ILog Log = LogManager.GetLogger(typeof(IPlayer)); 
 
         private ServerDirector director;
         private IPlayer connectedPlayer;
@@ -46,12 +46,11 @@ namespace MudDesigner.Scripts.Default.States.Login
 
         public void Render(IPlayer player)
         {
+            connectedPlayer = player;
         }
 
         public ICommand GetCommand()
         {
-            
-
             var File = new FileIO();
             if(connectedPlayer.Location == null)
             {
@@ -77,16 +76,26 @@ namespace MudDesigner.Scripts.Default.States.Login
             }
             else
             {
-                
                 File.Save(connectedPlayer, Path.Combine(EngineSettings.Default.PlayerSavePath, string.Format("{0}.char", connectedPlayer.Username)));
-                connectedPlayer.Move(connectedPlayer.Location);
                 
-                
-
-
+                //Shouldn't need to do this, Location has been restored.
+                //connectedPlayer.Move(connectedPlayer.Location);
             }
 
-            return new LookCommand();
+
+
+            IState defaultState = (IState)ScriptFactory.GetScript(EngineSettings.Default.LoginCompletedState);
+            if (defaultState != null)
+            {
+                //Display the current environment to the player.
+                LookCommand cmd = new LookCommand();
+                cmd.Execute(connectedPlayer);
+                connectedPlayer.SwitchState(defaultState);
+
+                return new NoOpCommand();
+            }
+            else
+                return new LookCommand();
         }
     }
 }

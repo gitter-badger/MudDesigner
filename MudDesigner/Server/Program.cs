@@ -17,6 +17,7 @@ using System.Reflection;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Networking;
+using MudDesigner.Engine.Properties;
 using MudDesigner.Engine.Scripting;
 using log4net;
 
@@ -35,43 +36,70 @@ namespace MudDesigner.Server
                 //Perform compilation of scripts.
                 if (args[1].ToLower() == "-compile")
                 {
-                    
+                    //TODO: Build a separate compiler app
                 }
             }
+
             //Setup the engines log system
             Log.Info("Server app starting...");
-            //Logger.LogFilename = "StandardGame.Log";
-            //Logger.Enabled = true;
-            //Logger.ConsoleOutPut = true;
-            //Logger.ClearLog(); //Delete previous file.
-            //Logger.WriteLine("Server app starting...");
 
-            //Compile the game scripts
-            CompileEngine.AddAssemblyReference(Environment.CurrentDirectory + "\\MudDesigner.Engine.dll");
-            CompileEngine.AddAssemblyReference(Environment.CurrentDirectory + "\\log4net.dll");
+            //Loop through each reference mentioned in the engines properties and add them.
+            //This provides support for 3rd party pre-compiled "Mods" scripts
+            foreach (string reference in EngineSettings.Default.ScriptLibrary)
+            {
+                string path = Path.Combine(System.Environment.CurrentDirectory, reference);
+                CompileEngine.AddAssemblyReference(path);
+            }
 
             //Compile the scripts within the engine properties 'ScriptsPath'
-            CompileEngine.Compile(MudDesigner.Engine.Properties.EngineSettings.Default.ScriptsPath);
-            
+            bool results = CompileEngine.Compile(MudDesigner.Engine.Properties.EngineSettings.Default.ScriptsPath);
+            if (!results)
+            {
+                Console.WriteLine(CompileEngine.Errors);
+                Console.WriteLine("Press any key to close.");
+                Console.ReadKey();
+                return;
+            }
+
             //Add the compiled scripts assembly to the Script Factory
             ScriptFactory.AddAssembly(CompileEngine.CompiledAssembly);
 
+            //Now add all of the pre-compiled scripts to the script factory so we
+            //can instance them if we need to.
+            foreach (string reference in EngineSettings.Default.ScriptLibrary)
+            {
+                ScriptFactory.AddAssembly(reference);
+            }
+
             //Instance the server.
+            IGame game = (IGame)ScriptFactory.GetScript(EngineSettings.Default.GameScript, null);
+            if (game == null)
+            {
+                game = (IGame)ScriptFactory.FindInheritedScript("MudDesigner.Engine.Core.Game", null);
+
+                if (game == null)
+                {
+                    Console.WriteLine("Could not locate a Game script to run the server with. Server will not start.");
+                    Log.Error("Failed to locate a Game script to run the server. Server failed to start.");
+                    Console.ReadKey();
+                    return;
+                }
+            }
+
             IServer server = new MudDesigner.Engine.Networking.Server(port: 4000);
-
-            //Pull the custom game info that will be used by this MUD from the engine properties file
-            IGame game = (IGame)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.GameScript, null);
-
-            //Initialize the custom game class, passing along the server.
             game.Initialize(server);
-            
+
+            game.RestoreWorld();
+
             //It does not matter in what order this is performed, however it is best to start the server
             //after the game.initialize() method is called.  This ensures the game is loaded and ready to go
             //prior to clients connecting to the server.
 
             //Start the server.
-            server.Start(maxConnections: 100, maxQueueSize: 20, game: game);
+            server.Start(maxConnections: 500, maxQueueSize: 20, game: game);
 
+            Console.WriteLine("Server running...");
+            Log.Info("Server startup completed.");
             while (server.Enabled)
             {
             }

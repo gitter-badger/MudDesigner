@@ -72,9 +72,12 @@ namespace MudDesigner.Scripts.Default.States.Login
                     //User is entering his/her password
                 case CurrentState.EnteringPassword:
                     {
+                        IState startState = connectedPlayer.CurrentState;
+
                         if(GetUserPassword())
                         {
-                            return new LookCommand();
+                            //Was originally LookCommand() but that was overriding the State specified in GetUserPassword.
+                                return new NoOpCommand(); 
                         }
                         break;
                     }
