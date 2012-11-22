@@ -21,12 +21,15 @@ using MudDesigner.Engine.Scripting;
 
 //Newtonsoft JSon using statement
 using Newtonsoft.Json;
+using log4net;
 
 namespace MudDesigner.Engine.Core
 {
     //This is the base class for all Game Objects in the engine.
     public class GameObject : IGameObject
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(IGameObject));
+
         /// <summary>
         /// Gets or Sets the Name for this object
         /// </summary>
@@ -71,47 +74,20 @@ namespace MudDesigner.Engine.Core
         /// Copies the current values of this object to a new object
         /// </summary>
         /// <param name="copyTo">The object that should have it's properties overwritten with the values of the calling Object</param>
-        public virtual void CopyState(ref dynamic copyTo)
+        public virtual void CopyState(ref IGameObject copyFrom)
         {
-            //Make sure we are dealing with an object that inherits from GameObject
-            if (copyTo is IGameObject)
+            PropertyInfo[] properties = copyFrom.GetType().GetProperties();
+
+            foreach (PropertyInfo prop in properties)
             {
-                /* Could do the following instead, it would be faster.
-                 * However SetProperty ensures that the property exists since a dynamic
-                 * type is used.
+                PropertyInfo info = this.GetType().GetProperty(prop.Name);
 
-                var gameObject = copyTo as IGameObject;
-                gameObject.Name = Name;
-
-                 * I had issues using IGameObject as a parameter with objects.
-                 * It resulted in a ton of casts which I was trying to avoid.
-                 * Might want to look at it anyway, performance between casting
-                 * and using the following SetProperty method are probably equally
-                 * as slow. SetProperty ensures the dynamic objects property exists
-                 * using reflection, but casting from IGameObject would be no different.
-                 * such as:
-                    
-                    calling method:
-                        IPlayer player = FileIO.Load("Player Name.char");
-                        player.CopyState(ref connectedPlayer);
-                 
-                   CopyState method
-                        if (copyTo is IPlayer)
-                        {
-                            var player = copyTo as IPlayer;
-                            player.Name = Name;
-                        }
-                */
-
-                //Wrap the object in a ScriptObject for easy managing
-                ScriptObject newObject = new ScriptObject(copyTo);
-
-                //Set each of the new objects properties to match this object.
-                newObject.SetProperty("Name", Name, null);
-                newObject.SetProperty("Description", Description, null);
-                newObject.SetProperty("Destroyed", Destroyed, null);
-                newObject.SetProperty("Enabled", Enabled, null);
-                newObject.SetProperty("Permanent", Permanent, null);
+                if (info != null)
+                    info.SetValue(this, prop.GetValue(copyFrom, null), null);
+                else
+                {
+                    Log.Error(string.Format("Failed to get property {0} from object {1} within the {2}.CopyState method", prop.Name, copyFrom.Name, this.Name));
+                }
             }
         }
     }

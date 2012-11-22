@@ -145,31 +145,6 @@ namespace MudDesigner.Engine.Mobs
         public abstract void ConsumeMana(int amount);
 
         /// <summary>
-        /// Takes all of this Game Objects properties and copies them over to the argument object.
-        /// </summary>
-        /// <param name="copyTo">The object that will have it's properties replaced with the calling Object</param>
-        public override void CopyState(ref dynamic copyTo)
-        {
-            if (copyTo is IMob)
-            {
-                Scripting.ScriptObject newObject = new Scripting.ScriptObject(copyTo);
-
-                newObject.SetProperty("Gender", Gender, null);
-                newObject.SetProperty("Race", Race, null);
-                newObject.SetProperty("Class", Class, null);
-                newObject.SetProperty("Location", Location, null);
-
-                newObject.SetProperty("CanTalk", CanTalk, null);
-                newObject.SetProperty("MaxInventorySize", MaxInventorySize, null);
-                newObject.SetProperty("Items", Items, null);
-                newObject.SetProperty("Stats", Stats, null);
-                newObject.SetProperty("Appearance", Appearance, null);
-            }
-
-            base.CopyState(ref copyTo);
-        }
-
-        /// <summary>
         /// Adds a specified item to the characters inventory
         /// </summary>
         /// <param name="item"></param>

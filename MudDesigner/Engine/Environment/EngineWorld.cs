@@ -47,33 +47,6 @@ namespace MudDesigner.Engine.Environment
         }
 
         /// <summary>
-        /// Takes all of this Game Objects properties and copies them over to the argument object.
-        /// </summary>
-        /// <param name="copyTo">The object that will have it's properties replaced with the calling Object</param>
-        public override void CopyState(ref dynamic copyTo)
-        {
-            //Make sure we are dealing with an object that implements IWorld
-            if (copyTo is IWorld)
-            {
-                //Wrap the object in a ScriptObject for easier managing
-                Scripting.ScriptObject newObject = new Scripting.ScriptObject(copyTo);
-
-                //Make sure this object has a Realms property.
-                if (newObject.GetProperty("Realms") != null)
-                {
-                    //Set the Realms property to reference the Realms this object is currently referencing
-                    copyTo.Realms = Realms;
-                }
-
-                //Set the rest of the properties to match this object.
-                newObject.SetProperty("IsSafe", IsSafe, null);
-            }
-
-            //This can be called regardless if it's IWorld or not.
-            base.CopyState(ref copyTo);
-        }
-
-        /// <summary>
         /// Adds the supplied Realm to the game world.
         /// </summary>
         /// <param name="realm">The Realm you want to add to the world</param>

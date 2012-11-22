@@ -43,25 +43,6 @@ namespace MudDesigner.Engine.Objects
         public bool IsAdminOnly { get; set; }
 
         /// <summary>
-        /// Takes all of this Game Objects properties and copies them over to the argument object.
-        /// </summary>
-        /// <param name="copyTo">The object that will have it's properties replaced with the calling Object</param>
-        public override void CopyState(ref dynamic copyTo)
-        {
-            if (copyTo is IItem)
-            {
-                Scripting.ScriptObject newObject = new Scripting.ScriptObject(copyTo);
-
-                newObject.SetProperty("Weight", Weight, null);
-                newObject.SetProperty("Health", Health, null);
-                newObject.SetProperty("Indestructible", Indestructible, null);
-                newObject.SetProperty("IsAdminOnly", IsAdminOnly, null);
-            }
-
-            base.CopyState(ref copyTo);
-        }
-
-        /// <summary>
         /// Inspects the item and tells the player what is seen.
         /// </summary>
         /// <param name="player">The player that wants to inspect this item</param>

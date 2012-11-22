@@ -93,22 +93,18 @@ namespace MudDesigner.Engine.Environment
         /// Takes all of this Game Objects properties and copies them over to the argument object.
         /// </summary>
         /// <param name="copyTo">The object that will have it's properties replaced with the calling Object</param>
-        public override void CopyState(ref dynamic copyTo)
+        public override void CopyState(ref IGameObject copyFrom)
         {
-            if (copyTo is IRoom)
+            base.CopyState(ref copyFrom);
+
+            if (copyFrom is IRoom && Doorways != null)
             {
-                ScriptObject newObject = new ScriptObject(copyTo);
-
-                newObject.SetProperty("Zone", Zone, null);
-                newObject.SetProperty("IsSafe", IsSafe, null);
-                newObject.SetProperty("IsAdminOnly", IsAdminOnly, null);
-                newObject.SetProperty("Senses", Sense, null);
-                newObject.SetProperty("Occupants", Occupants, null);
-                newObject.SetProperty("Doorways", Doorways, null);
-                newObject.SetProperty("Items", Items, null);
+                foreach (IDoor door in Doorways.Values)
+                {
+                    PropertyInfo prop = door.GetType().GetProperty("Departure");
+                    prop.SetValue(door, this, null);
+                }
             }
-
-            base.CopyState(ref copyTo);
         }
 
         /// <summary>

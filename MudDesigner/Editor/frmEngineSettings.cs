@@ -204,10 +204,10 @@ namespace MudDesigner.Editor
                 if (EngineSettings.Default.GameScript != selectedValue.Value)
                 {
                     //Save a reference to our current World data.
-                    IGame currentGame = Editor.Game;
+                    IGameObject currentGame = (IGameObject)Editor.Game;
 
                     //Create a instance of the new scripted Type
-                    dynamic newGame = ScriptFactory.GetScript(selectedValue.Value);
+                    IGameObject newGame = (IGameObject)ScriptFactory.GetScript(selectedValue.Value);
 
                     //If we found the script, lets copy the properties of the current IGame
                     //object over to the new one. If we didn't copy the properites, all of the games
@@ -215,10 +215,9 @@ namespace MudDesigner.Editor
                     if (newGame != null)
                     {
                         //Copy the properties from currentGame over to newGame
-                        currentGame.CopyState(ref newGame);
+                        newGame.CopyState(ref currentGame);
 
-                        //set newGame as the new IGame script we are using for the game.
-                        Editor.Game = newGame;
+                        Editor.Game = (IGame)newGame;
                     }
 
                     //Save the new IGame game object to the engine settings.
@@ -279,15 +278,15 @@ namespace MudDesigner.Editor
                 if (EngineSettings.Default.WorldScript != selectedValue.Value)
                 {
                     //Save a reference to our current World data.
-                    IWorld currentWorld = Editor.Game.World;
+                    IGameObject currentWorld = (IGameObject)Editor.Game.World;
 
-                    dynamic newWorld = ScriptFactory.GetScript(selectedValue.Value);
+                    IGameObject newWorld = (IGameObject)ScriptFactory.GetScript(selectedValue.Value);
 
                     if (newWorld != null)
                     {
-                        currentWorld.CopyState(ref newWorld);
+                        newWorld.CopyState(ref currentWorld);
 
-                        Editor.Game.World = newWorld;
+                        Editor.Game.World = (IWorld)newWorld;
                     }
 
                     EngineSettings.Default.WorldScript = selectedValue.Value;
@@ -307,12 +306,13 @@ namespace MudDesigner.Editor
 
                     foreach (IRealm realm in Editor.Game.World.Realms)
                     {
-                        dynamic newRealm = ScriptFactory.GetScript(selectedValue.Value);
+                        IGameObject newRealm = (IGameObject)ScriptFactory.GetScript(selectedValue.Value);
 
                         if (newRealm != null)
                         {
-                            realm.CopyState(ref newRealm);
-                            newRealmCollection.Add(newRealm);
+                            IGameObject tmp = (IGameObject)realm;
+                            newRealm.CopyState(ref tmp);
+                            newRealmCollection.Add((IRealm)newRealm);
                         }
                     }
 
@@ -337,12 +337,13 @@ namespace MudDesigner.Editor
                     {
                         foreach (IZone zone in realm.Zones)
                         {
-                            dynamic newZone = ScriptFactory.GetScript(selectedValue.Value);
+                            IGameObject newZone = (IGameObject)ScriptFactory.GetScript(selectedValue.Value);
 
                             if (newZone != null)
                             {
-                                zone.CopyState(ref newZone);
-                                newZoneCollection.Add(newZone);
+                                IGameObject tmp = (IGameObject)zone;
+                                newZone.CopyState(ref tmp);
+                                newZoneCollection.Add((IZone)newZone);
                             } 
                             
                             realm.Zones = newZoneCollection;
@@ -371,12 +372,13 @@ namespace MudDesigner.Editor
                         {
                             foreach (IRoom room in zone.Rooms)
                             {
-                                dynamic newRoom = ScriptFactory.GetScript(selectedValue.Value);
+                                IGameObject newRoom = (IGameObject)ScriptFactory.GetScript(selectedValue.Value);
 
                                 if (newRoom != null)
                                 {
-                                    room.CopyState(ref newRoom);
-                                    newRoomCollection.Add(newRoom);
+                                    IGameObject tmp = (IGameObject)room;
+                                    newRoom.CopyState(ref tmp);
+                                    newRoomCollection.Add((IRoom)newRoom);
                                 }
                             }
                             zone.Rooms = newRoomCollection;
@@ -407,12 +409,13 @@ namespace MudDesigner.Editor
                             {
                                 foreach (IDoor door in room.Doorways.Values)
                                 {
-                                    dynamic newDoor = ScriptFactory.GetScript(selectedValue.Value);
+                                    IDoor newDoor = (IDoor)ScriptFactory.GetScript(selectedValue.Value);
 
                                     if (newDoor != null)
                                     {
-                                        door.CopyState(ref newDoor);
-                                        newDoorCollection.Add(door.FacingDirection, newDoor);
+                                        IGameObject tmp = (IGameObject)door;
+                                        newDoor.CopyState(ref tmp);
+                                        newDoorCollection.Add(newDoor.FacingDirection, newDoor);
                                     }
                                 }
                                 room.Doorways = newDoorCollection;

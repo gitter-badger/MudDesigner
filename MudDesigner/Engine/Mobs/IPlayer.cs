@@ -91,8 +91,6 @@ namespace MudDesigner.Engine.Mobs
         
         void Disconnect();
 
-        void LoadPlayer(IPlayer player);
-
         /// <summary>
         /// Switches the players State from one, to another
         /// </summary>

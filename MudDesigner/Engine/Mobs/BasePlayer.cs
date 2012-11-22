@@ -106,26 +106,6 @@ namespace MudDesigner.Engine.Mobs
         }
 
         /// <summary>
-        /// Takes all of this Game Objects properties and copies them over to the argument object.
-        /// </summary>
-        /// <param name="copyTo">The object that will have it's properties replaced with the calling Object</param>
-        public override void CopyState(ref dynamic copyTo)
-        {
-            if (copyTo is IPlayer)
-            {
-                Scripting.ScriptObject newObject = new Scripting.ScriptObject(copyTo);
-
-                newObject.SetProperty("Username", Username, null);
-                newObject.SetProperty("Password", Password, null);
-                newObject.SetProperty("CurrentState", CurrentState, null);
-                newObject.SetProperty("Connection", Connection, null);
-                newObject.SetProperty("Buffer", Buffer, null);
-            }
-
-            base.CopyState(ref copyTo);
-        }
-
-        /// <summary>
         /// Initializes the player with a default state and provides its network connection for storage.
         /// </summary>
         /// <param name="initialState"></param>
@@ -241,28 +221,6 @@ namespace MudDesigner.Engine.Mobs
             Salt = Crypt.GenerateSalt(userPassword.Length);
             Password = Crypt.GenerateSaltedHash(userPassword, Salt);
             
-        }
-
-        public void LoadPlayer(IPlayer loadedPlayer)
-        {
-            var player = loadedPlayer as BasePlayer;
-
-            Username = player.Username;
-            Name = player.Name;
-            Password = player.Password;
-            Salt = player.Salt;
-            Location = player.Location;
-            Race = player.Race;
-            Role = player.Role;
-            CanTalk = player.CanTalk;
-            Class = player.Class;
-            Appearance = player.Appearance;
-            Stats = player.Stats;
-            MaxInventorySize = player.MaxInventorySize;
-            Description = player.Description;
-            Gender = player.Gender;
-            Items = player.Items;
-            Permanent = player.Permanent;
         }
 
         /// <summary>

@@ -77,30 +77,7 @@ namespace MudDesigner.Engine.Core
         /// Gets a the last time that the game was saved.
         /// </summary>
         [Browsable(false)]
-        public DateTime LastSave { get; private set; }
-
-        /// <summary>
-        /// Takes all of this Game Objects properties and copies them over to the argument object.
-        /// </summary>
-        /// <param name="copyTo">The object that will have it's properties replaced with the calling Object</param>
-        public override void CopyState(ref dynamic copyTo)
-        {
-            //If the new object is a Game, we can safely copy our properties
-            if (copyTo is IGame)
-            {
-                ScriptObject newObject = new ScriptObject(copyTo);
-
-                newObject.SetProperty("Version", Version, null);
-                newObject.SetProperty("Website", Website, null);
-                newObject.SetProperty("HideRoomNames", HideRoomNames, null);
-                newObject.SetProperty("Autosave", Autosave, null);
-                newObject.SetProperty("SaveFrequency", SaveFrequency, null);
-                newObject.SetProperty("Server", Server, null);
-                newObject.SetProperty("World", World, null);
-            }
-
-            base.CopyState(ref copyTo);
-        }
+        public DateTime LastSave { get; protected set; }
 
         /// <summary>
         /// Sets up all of the game objects for use, loads any saved states, restores the world and links itself to the server.

@@ -62,30 +62,19 @@ namespace MudDesigner.Engine.Environment
         /// Takes all of this Game Objects properties and copies them over to the argument object.
         /// </summary>
         /// <param name="copyTo">The object that will have it's properties replaced with the calling Object</param>
-        public override void CopyState(ref dynamic copyTo)
+        public override void CopyState(ref IGameObject copyFrom)
         {
+            base.CopyState(ref copyFrom);
+
             //Make sure we are dealing with a IRealm object
-            if (copyTo is IRealm)
+            if (copyFrom is IRealm && Zones != null)
             {
-                ScriptObject newObject = new ScriptObject(copyTo);
-
-                newObject.SetProperty("IsAdminOnly", IsAdminOnly, null);
-
-                //Make sure the object has a Zones properties
-                if (newObject.GetProperty("Zones") != null)
+                //Loop through each Zone and update it's Realm property to reference the newObject instead.
+                foreach (IZone zone in Zones)
                 {
-                    //Set the newObjects Zones to reference our current Zone collection.
-                    copyTo.Zones = Zones;
-
-                    //Loop through each Zone and update it's Realm property to reference the newObject instead.
-                    foreach (IZone zone in copyTo.Zones)
-                    {
-                        zone.Realm = this;
-                    }
+                    zone.Realm = this;
                 }
-                
             }
-            base.CopyState(ref copyTo);
         }
 
         /// <summary>

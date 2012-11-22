@@ -60,26 +60,6 @@ namespace MudDesigner.Engine.Environment
         }
 
         /// <summary>
-        /// Takes all of this Game Objects properties and copies them over to the argument object.
-        /// </summary>
-        /// <param name="copyTo">The object that will have it's properties replaced with the calling Object</param>
-        public override void CopyState(ref dynamic copyTo)
-        {
-            if (copyTo is Door)
-            {
-                Scripting.ScriptObject newObject = new Scripting.ScriptObject(copyTo);
-
-                newObject.SetProperty("Locked", Locked, null);
-                newObject.SetProperty("Key", Key, null);
-                newObject.SetProperty("FacingDirection", FacingDirection, null);
-                newObject.SetProperty("Arrival", Arrival, null);
-                newObject.SetProperty("Departure", Departure, null);
-            }
-
-            base.CopyState(ref copyTo);
-        }
-
-        /// <summary>
         /// Locks the doorway with the specified key, preventing access without the key.
         /// </summary>
         /// <param name="key">The key that is required to walk through the doorway.</param>

@@ -66,8 +66,8 @@
             this.btnCancelSettings = new System.Windows.Forms.Button();
             this.scriptProgressBar = new System.Windows.Forms.ProgressBar();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.lblLoginRoom = new System.Windows.Forms.Label();
             this.btnSetLoginRoom = new System.Windows.Forms.Button();
+            this.lblLoginRoom = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -85,26 +85,26 @@
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.scriptLibrary);
             this.groupBox1.ForeColor = System.Drawing.Color.White;
-            this.groupBox1.Location = new System.Drawing.Point(268, 76);
+            this.groupBox1.Location = new System.Drawing.Point(268, 99);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(244, 166);
+            this.groupBox1.Size = new System.Drawing.Size(244, 155);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Script Settings";
             // 
             // label16
             // 
-            this.label16.Location = new System.Drawing.Point(8, 40);
+            this.label16.Location = new System.Drawing.Point(8, 37);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(229, 31);
+            this.label16.Size = new System.Drawing.Size(229, 27);
             this.label16.TabIndex = 20;
-            this.label16.Text = "Note: Leaving blank will result in the compiler starting its script scan from the" +
-    " server root directory.";
+            this.label16.Text = "Note: If left blank, the compiler will scan from the server root directory for sc" +
+    "ripts.";
             // 
             // btnRemoveScriptLibrary
             // 
             this.btnRemoveScriptLibrary.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRemoveScriptLibrary.Location = new System.Drawing.Point(132, 80);
+            this.btnRemoveScriptLibrary.Location = new System.Drawing.Point(130, 67);
             this.btnRemoveScriptLibrary.Name = "btnRemoveScriptLibrary";
             this.btnRemoveScriptLibrary.Size = new System.Drawing.Size(105, 23);
             this.btnRemoveScriptLibrary.TabIndex = 13;
@@ -114,7 +114,7 @@
             // btnAddScriptLibrary
             // 
             this.btnAddScriptLibrary.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddScriptLibrary.Location = new System.Drawing.Point(6, 80);
+            this.btnAddScriptLibrary.Location = new System.Drawing.Point(6, 67);
             this.btnAddScriptLibrary.Name = "btnAddScriptLibrary";
             this.btnAddScriptLibrary.Size = new System.Drawing.Size(105, 23);
             this.btnAddScriptLibrary.TabIndex = 12;
@@ -143,7 +143,7 @@
             // 
             this.scriptLibrary.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.scriptLibrary.FormattingEnabled = true;
-            this.scriptLibrary.Location = new System.Drawing.Point(3, 107);
+            this.scriptLibrary.Location = new System.Drawing.Point(3, 96);
             this.scriptLibrary.Name = "scriptLibrary";
             this.scriptLibrary.Size = new System.Drawing.Size(238, 56);
             this.scriptLibrary.Sorted = true;
@@ -402,9 +402,9 @@
             this.groupBox5.Controls.Add(this.worldFile);
             this.groupBox5.Controls.Add(this.label13);
             this.groupBox5.ForeColor = System.Drawing.Color.White;
-            this.groupBox5.Location = new System.Drawing.Point(268, 248);
+            this.groupBox5.Location = new System.Drawing.Point(268, 260);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(244, 114);
+            this.groupBox5.Size = new System.Drawing.Size(244, 105);
             this.groupBox5.TabIndex = 17;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Save Information";
@@ -491,29 +491,29 @@
             this.groupBox6.ForeColor = System.Drawing.Color.White;
             this.groupBox6.Location = new System.Drawing.Point(268, 9);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(244, 61);
+            this.groupBox6.Size = new System.Drawing.Size(244, 84);
             this.groupBox6.TabIndex = 23;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Game Defaults";
             // 
-            // lblLoginRoom
-            // 
-            this.lblLoginRoom.Location = new System.Drawing.Point(6, 16);
-            this.lblLoginRoom.Name = "lblLoginRoom";
-            this.lblLoginRoom.Size = new System.Drawing.Size(229, 13);
-            this.lblLoginRoom.TabIndex = 17;
-            this.lblLoginRoom.Text = "Login Room: None Set.";
-            // 
             // btnSetLoginRoom
             // 
             this.btnSetLoginRoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSetLoginRoom.Location = new System.Drawing.Point(6, 33);
+            this.btnSetLoginRoom.Location = new System.Drawing.Point(6, 55);
             this.btnSetLoginRoom.Name = "btnSetLoginRoom";
             this.btnSetLoginRoom.Size = new System.Drawing.Size(231, 23);
             this.btnSetLoginRoom.TabIndex = 18;
             this.btnSetLoginRoom.Text = "Set Starting Room";
             this.btnSetLoginRoom.UseVisualStyleBackColor = true;
             this.btnSetLoginRoom.Click += new System.EventHandler(this.btnSetLoginRoom_Click);
+            // 
+            // lblLoginRoom
+            // 
+            this.lblLoginRoom.Location = new System.Drawing.Point(6, 16);
+            this.lblLoginRoom.Name = "lblLoginRoom";
+            this.lblLoginRoom.Size = new System.Drawing.Size(229, 36);
+            this.lblLoginRoom.TabIndex = 17;
+            this.lblLoginRoom.Text = "Login Room: None Set.";
             // 
             // frmEngineSettings
             // 
