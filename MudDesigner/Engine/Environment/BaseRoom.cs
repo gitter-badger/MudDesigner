@@ -93,7 +93,7 @@ namespace MudDesigner.Engine.Environment
         /// Takes all of this Game Objects properties and copies them over to the argument object.
         /// </summary>
         /// <param name="copyTo">The object that will have it's properties replaced with the calling Object</param>
-        public override void CopyState(ref IGameObject copyFrom)
+        public override void CopyState(ref IGameObject copyFrom, bool ignoreNonNullProperties = false)
         {
             base.CopyState(ref copyFrom);
 

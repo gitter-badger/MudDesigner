@@ -36,6 +36,8 @@ namespace MudDesigner.Engine.Environment
         /// </summary>
         List<IRealm> Realms { get; set; }
 
+        bool RoomExists(string path);
+
         /// <summary>
         /// Adds the supplied Realm to the game world.
         /// </summary>

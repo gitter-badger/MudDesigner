@@ -46,6 +46,23 @@ namespace MudDesigner.Engine.Environment
             Name = "World";
         }
 
+        public bool RoomExists(string path)
+        {
+            foreach (IRealm realm in Realms)
+            {
+                foreach (IZone zone in realm.Zones)
+                {
+                    foreach (IRoom room in zone.Rooms)
+                    {
+                        if (room.ToString() == path)
+                            return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Adds the supplied Realm to the game world.
         /// </summary>

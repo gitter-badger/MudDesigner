@@ -49,6 +49,6 @@ namespace MudDesigner.Engine.Core
         /// Copies the current values of this object to a new object
         /// </summary>
         /// <param name="copyTo">The object that should have it's properties overwritten with the values of the calling Object</param>
-        void CopyState(ref IGameObject copyFrom);
+        void CopyState(ref IGameObject copyFrom, bool ignoreNonNullProperties = false);
     }
 }

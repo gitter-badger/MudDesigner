@@ -74,16 +74,30 @@ namespace MudDesigner.Engine.Core
         /// Copies the current values of this object to a new object
         /// </summary>
         /// <param name="copyTo">The object that should have it's properties overwritten with the values of the calling Object</param>
-        public virtual void CopyState(ref IGameObject copyFrom)
+        public virtual void CopyState(ref IGameObject copyFrom, bool ignoreNonNullProperties = false)
         {
-            PropertyInfo[] properties = copyFrom.GetType().GetProperties();
+            PropertyInfo[] properties = copyFrom.GetType().GetProperties(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
 
             foreach (PropertyInfo prop in properties)
             {
-                PropertyInfo info = this.GetType().GetProperty(prop.Name);
+                PropertyInfo info = this.GetType().GetProperty(prop.Name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
 
-                if (info != null)
-                    info.SetValue(this, prop.GetValue(copyFrom, null), null);
+                //Check if this property has State Copy disabled via the custom attribute, if so, don't copy this property.
+                Attribute[] attrib = (Attribute[])info.GetCustomAttributes(typeof(DisableStateCopyAttribute), true);
+                if (attrib.Length > 0)
+                    continue;
+
+                //If info is not null and we can write it without an exception
+                if (info != null && info.CanWrite)
+                {
+                    //Check if this.Property already has a value.
+                    //if it does, then check if the user wants to override it or not.
+                    if (info.GetValue(this, null) != null && !ignoreNonNullProperties)
+                        info.SetValue(this, prop.GetValue(copyFrom, null), null);
+                    //If it does not have a value, then we set it regardless.
+                    else if (info.GetValue(this, null) == null)
+                        info.SetValue(this, prop.GetValue(copyFrom, null), null);
+                }
                 else
                 {
                     Log.Error(string.Format("Failed to get property {0} from object {1} within the {2}.CopyState method", prop.Name, copyFrom.Name, this.Name));

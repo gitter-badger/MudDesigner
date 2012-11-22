@@ -74,7 +74,7 @@ namespace MudDesigner.Scripts.Default.States.Login
                     {
                         IState startState = connectedPlayer.CurrentState;
 
-                        if(GetUserPassword())
+                            if(GetUserPassword())
                         {
                             //Was originally LookCommand() but that was overriding the State specified in GetUserPassword.
                                 return new NoOpCommand(); 
@@ -142,11 +142,11 @@ namespace MudDesigner.Scripts.Default.States.Login
                 //Use IGameObject.CopyState to use a uniform method across the engine
                 //A little slower than the LoadPlayer method, but it can be revised to be quicker.
                 //Notes on revising the method are under GameObject.cs
-                IGameObject tmp = (IGameObject)connectedPlayer;
-                loadedplayer.CopyState(ref tmp); //Copies loadedPlayer state to connectedPlayer.
+                IGameObject tmp = (IGameObject)loadedplayer;
+                connectedPlayer.CopyState(ref tmp); //Copies loadedPlayer state to connectedPlayer.
 
                 Log.Info(string.Format("{0} has just logged in.", connectedPlayer.Name));
-                connectedPlayer.SwitchState(new LoginCompleted(director));
+                connectedPlayer.SwitchState(new LoginCompleted());
 
                 return true;
 

@@ -12,7 +12,7 @@
       <Value Profile="(Default)">MudDesigner.Scripts.Default.Mobs.DefaultPlayer</Value>
     </Setting>
     <Setting Name="LoginCompletedState" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MudDesigner.Scripts.Default.States.MainMenuState</Value>
+      <Value Profile="(Default)">MudDesigner.Scripts.Default.States.LookingState</Value>
     </Setting>
     <Setting Name="ScriptLibrary" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;

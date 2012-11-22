@@ -23,6 +23,7 @@ using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Properties;
 using MudDesigner.Engine.Scripting;
+using MudDesigner.Engine.Mobs;
 
 namespace MudDesigner.Editor.Rooms
 {
@@ -527,6 +528,16 @@ namespace MudDesigner.Editor.Rooms
             {
                 roomsLstExistingRooms.Items[roomsLstExistingRooms.Items.IndexOf(e.OldValue)] = Editor.CurrentRoom.Name;
                 RefreshRoomLabels(Editor.CurrentRealm, Editor.CurrentZone, Editor.CurrentRoom);
+
+                if (Editor.Game.Server.Enabled)
+                {
+                    //Move all of the characters that are within this room to the new room.
+                    //For some reason, their Location property does not get updated when a Name change happens
+                    foreach (IMob mob in Editor.CurrentRoom.Occupants)
+                    {
+                        mob.Move(Editor.CurrentRoom);
+                    }
+                }
             }
         }
 

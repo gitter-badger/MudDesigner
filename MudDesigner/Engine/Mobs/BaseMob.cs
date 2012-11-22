@@ -8,6 +8,7 @@
 //Microsoft .NET using statements
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -79,7 +80,7 @@ namespace MudDesigner.Engine.Mobs
         /// <summary>
         /// Current location this character resides within
         /// </summary>
-        public IRoom Location { get; protected set; }
+        public IRoom Location { get; set; }
 
         /// <summary>
         /// Gets or Sets if this Character can Talk
@@ -107,7 +108,9 @@ namespace MudDesigner.Engine.Mobs
         public List<IAppearanceAttribute> Appearance { get; set; }
 
         [JsonIgnore()] //Don't need to save this with the player.
-        public IServerDirector Director { get; set; }
+        
+        [DisableStateCopy()] //Don't allow BaseMob.CopyState to copy this property
+        public IServerDirector Director { get; protected set; }
 
         public BaseMob()
         {
@@ -395,9 +398,9 @@ namespace MudDesigner.Engine.Mobs
                     door = d;
             }
 
-            if (door == null)
+            if (door == null && !Location.Occupants.Contains(this))
                 Location.AddCharacter(this, AvailableTravelDirections.None);
-            else
+            else if (!Location.Occupants.Contains(this))
                 Location.AddCharacter(this, door.FacingDirection);
         }
 

@@ -54,7 +54,7 @@ namespace MudDesigner.Engine.Mobs
         /// <summary>
         /// Gets the character role for this player in the world
         /// </summary>
-        public CharacterRoles Role { get; private set; }
+        public CharacterRoles Role { get; protected set; }
 
         /// <summary>
         /// Gets the current State that the player is in.
@@ -66,17 +66,21 @@ namespace MudDesigner.Engine.Mobs
         /// Gets the players unlying network connection
         /// </summary>
         [JsonIgnore()]
+        [DisableStateCopy()]
         public Socket Connection { get; private set; }
 
         /// <summary>
         /// Gets the input that the player has entered via their client
         /// </summary>
+        [JsonIgnore()]
+        [DisableStateCopy()]
         public string ReceivedInput { get; protected set; }
 
         /// <summary>
         /// Gets if the player is connected to the server or not.
         /// </summary>
         [JsonIgnore()]
+        [DisableStateCopy()]
         public bool IsConnected
         {
             get
@@ -92,6 +96,7 @@ namespace MudDesigner.Engine.Mobs
         /// Gets or Sets the buffer used by the players network connection.
         /// </summary>
         [JsonIgnore()]
+        [DisableStateCopy()]
         public List<byte> Buffer { get; set; }
      
         private bool lastMessageHadNewLine = true;

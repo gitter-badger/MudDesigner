@@ -24,35 +24,34 @@ namespace MudDesigner.Scripts.Default.States.Login
 {
     public class LoginCompleted : IState
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(IPlayer)); 
+        private static readonly ILog Log = LogManager.GetLogger(typeof(IPlayer));
 
-        private ServerDirector director;
+        private IServerDirector director;
         private IPlayer connectedPlayer;
 
         //Used to manage the state of the Login in a more readable manor
         private enum CurrentState
         {
-            EnteringName,
-            EnteringPassword,
-            CharacterSelection,
+            CompletingLogin,
+            SwitchingToDefaultState,
         }
         private CurrentState currentState;
 
-        public LoginCompleted(ServerDirector serverDirector)
+        public LoginCompleted()
         {
-            director = serverDirector;
-            currentState = CurrentState.EnteringName;
+            currentState = CurrentState.CompletingLogin;
         }
 
         public void Render(IPlayer player)
         {
             connectedPlayer = player;
+            director = player.Director;
         }
 
         public ICommand GetCommand()
         {
             var File = new FileIO();
-            if(connectedPlayer.Location == null)
+            if (connectedPlayer.Location == null)
             {
                 string startRoom = EngineSettings.Default.InitialRoom;
                 string[] locations = startRoom.Split('>');
@@ -66,36 +65,61 @@ namespace MudDesigner.Scripts.Default.States.Login
                 }
 
                 IWorld world = director.Server.Game.World;
+
+                if (world == null)
+                {
+                    Log.Fatal("Failed to get a instance of the game world!");
+                    return new NoOpCommand(); //If this is null, then we should end up in a infinite console spam
+                }
+
                 IRealm realm = world.GetRealm(locations[0]);
+                if (realm == null)
+                {
+                    Log.Fatal(string.Format("Failed to load Realm {0}", locations[0]));
+                    return new NoOpCommand();
+                }
+
                 IZone zone = realm.GetZone(locations[1]);
+                if (zone == null)
+                {
+                    Log.Fatal(string.Format("Failed to load Zone {0}", locations[1]));
+                    return new NoOpCommand();
+                }
+
                 IRoom room = zone.GetRoom(locations[2]);
-                
-                File.Save(connectedPlayer, Path.Combine(EngineSettings.Default.PlayerSavePath, string.Format("{0}.char", connectedPlayer.Username)));
-                
+                if (room == null)
+                {
+                    Log.Fatal(string.Format("Failed to load Room {0}", locations[2]));
+                    return new NoOpCommand();
+                }
+
                 connectedPlayer.Move(room);
+
+                File.Save(connectedPlayer, Path.Combine(EngineSettings.Default.PlayerSavePath, string.Format("{0}.char", connectedPlayer.Username)));
+            }
+            else if (connectedPlayer.Director.Server.Game.World.RoomExists(connectedPlayer.Location.ToString()))
+            {
+                File.Save(connectedPlayer, Path.Combine(EngineSettings.Default.PlayerSavePath, string.Format("{0}.char", connectedPlayer.Username)));
             }
             else
             {
-                File.Save(connectedPlayer, Path.Combine(EngineSettings.Default.PlayerSavePath, string.Format("{0}.char", connectedPlayer.Username)));
-                
-                //Shouldn't need to do this, Location has been restored.
-                //connectedPlayer.Move(connectedPlayer.Location);
+                //Set as null and re-run through this state again.
+                connectedPlayer.Location = null;
+                return new NoOpCommand(); //Dont allow it to finish the setup
             }
 
+            return SetupDefaultState();
+        }
 
-
+        private ICommand SetupDefaultState()
+        {
             IState defaultState = (IState)ScriptFactory.GetScript(EngineSettings.Default.LoginCompletedState);
             if (defaultState != null)
             {
-                //Display the current environment to the player.
-                LookCommand cmd = new LookCommand();
-                cmd.Execute(connectedPlayer);
                 connectedPlayer.SwitchState(defaultState);
-
-                return new NoOpCommand();
             }
-            else
-                return new LookCommand();
+
+            return new NoOpCommand();
         }
     }
 }

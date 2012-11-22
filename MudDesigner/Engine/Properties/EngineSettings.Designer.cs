@@ -61,7 +61,7 @@ namespace MudDesigner.Engine.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.States.MainMenuState")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MudDesigner.Scripts.Default.States.LookingState")]
         public string LoginCompletedState {
             get {
                 return ((string)(this["LoginCompletedState"]));

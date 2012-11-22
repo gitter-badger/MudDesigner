@@ -51,7 +51,7 @@ namespace MudDesigner.Engine.Mobs
         /// <summary>
         /// Current location this character resides within
         /// </summary>
-        IRoom Location { get; }
+        IRoom Location { get; set; }
 
         /// <summary>
         /// Gets or Sets if this Character can Talk
@@ -78,7 +78,7 @@ namespace MudDesigner.Engine.Mobs
         /// </summary>
         List<IAppearanceAttribute> Appearance { get; set; }
 
-        IServerDirector Director { get; set; }
+        IServerDirector Director { get;  }
 
         void SendMessage(string message, bool newLine = true);
 
