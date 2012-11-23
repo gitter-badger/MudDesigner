@@ -288,6 +288,10 @@ namespace MudDesigner.Engine.Mobs
             {
 
             }
+            finally
+            {
+                this.Location.RemoveCharacter(this, AvailableTravelDirections.None);
+            }
         }
 
         /// <summary>

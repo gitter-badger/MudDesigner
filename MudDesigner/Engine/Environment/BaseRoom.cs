@@ -406,7 +406,10 @@ namespace MudDesigner.Engine.Environment
         {
             List<IPlayer> ommitList = new List<IPlayer>();
             ommitList.Add((IPlayer)character);
-            BroadcastMessage(character.Name + " has left going " + direction.ToString(), ommitList);
+            if (direction != AvailableTravelDirections.None)
+                BroadcastMessage(character.Name + " has left going " + direction.ToString(), ommitList);
+            else
+                BroadcastMessage(character.Name + " has left.", ommitList);
         }
 
         #endregion

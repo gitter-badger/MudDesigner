@@ -11,6 +11,7 @@ using MudDesigner.Engine.Directors;
 using MudDesigner.Engine.Mobs;
 using MudDesigner.Engine.Properties;
 using MudDesigner.Engine.States;
+using MudDesigner.Engine.Environment;
 using MudDesigner.Scripts.Default.Commands;
 using MudDesigner.Scripts.Default.States.CreateCharacter;
 using log4net;
@@ -144,6 +145,23 @@ namespace MudDesigner.Scripts.Default.States.Login
                 //Notes on revising the method are under GameObject.cs
                 IGameObject tmp = (IGameObject)loadedplayer;
                 connectedPlayer.CopyState(ref tmp); //Copies loadedPlayer state to connectedPlayer.
+                
+                //Make sure the player is properly added to the world.
+                IWorld world = connectedPlayer.Director.Server.Game.World;
+                IRealm realm = world.GetRealm(connectedPlayer.Location.Zone.Realm.Name);
+
+                if (realm == null)
+                    return false;
+
+                IZone zone = realm.GetZone(connectedPlayer.Location.Zone.Name);
+                if (zone == null)
+                    return false;
+
+                IRoom room = zone.GetRoom(connectedPlayer.Location.Name);
+                if (room == null)
+                    return false;
+
+                connectedPlayer.Move(room);
 
                 Log.Info(string.Format("{0} has just logged in.", connectedPlayer.Name));
                 connectedPlayer.SwitchState(new LoginCompleted());

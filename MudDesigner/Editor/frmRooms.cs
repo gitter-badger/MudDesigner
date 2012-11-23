@@ -179,7 +179,7 @@ namespace MudDesigner.Editor.Rooms
 
             AvailableTravelDirections travelDirection = TravelDirections.GetTravelDirectionValue(direction);
             Editor.CurrentRoom.AddDoorway(travelDirection, room, true, true);
-            
+
             roomsLstExistingRooms.SelectedItem = Editor.CurrentRoom.Name;
 
             RefreshDoorwayList();
@@ -253,9 +253,9 @@ namespace MudDesigner.Editor.Rooms
             if (Editor.CurrentRealm != null && roomsComRealms.SelectedItem.ToString() == Editor.CurrentRealm.Name)
                 realm = Editor.CurrentRealm;
             else
-            //CurrentRealm is not the Realm we have selected, so lets find it.
+                //CurrentRealm is not the Realm we have selected, so lets find it.
                 realm = (IRealm)Editor.Game.World.GetRealm(roomsComRealms.SelectedItem.ToString());
-            
+
             //In the event that GetRealm can't find the Realm selected for some reason, bail.
             if (realm == null)
                 return;
@@ -276,7 +276,7 @@ namespace MudDesigner.Editor.Rooms
             }
             else if (roomsComZones.Items.Count > 0)
                 roomsComZones.SelectedIndex = 0;
-            
+
         }
 
         private void roomsBtnCreateRoom_Click(object sender, EventArgs e)
@@ -395,7 +395,7 @@ namespace MudDesigner.Editor.Rooms
                 MessageBox.Show("You have not selected a Zone to place this Room within. It will not be saved if a Zone is not choosen from the Zone editor!", this.Text);
                 return;
             }
-            
+
             //Add the Room to the selected Zone.
             Editor.CurrentZone.AddRoom(Editor.CurrentRoom);
 
@@ -429,10 +429,10 @@ namespace MudDesigner.Editor.Rooms
                 roomsLstExistingRooms.Items.Add(room.Name);
 
             //Check if EngineEditor.CurrentRoom is one of the Rooms within our List. If so, select it.
-            if(Editor.CurrentRealm == null || Editor.CurrentZone == null || Editor.CurrentRoom == null)
+            if (Editor.CurrentRealm == null || Editor.CurrentZone == null || Editor.CurrentRoom == null)
                 return; //Bail, we don't need to go any further.
 
-            if (Editor.CurrentRealm.Name == roomsComRealms.SelectedItem.ToString() 
+            if (Editor.CurrentRealm.Name == roomsComRealms.SelectedItem.ToString()
                 && Editor.CurrentZone.Name == roomsComZones.SelectedItem.ToString())
             {
                 if (roomsLstExistingRooms.Items.Contains(Editor.CurrentRoom.Name))
@@ -468,7 +468,7 @@ namespace MudDesigner.Editor.Rooms
                 MessageBox.Show(roomsComRealms.SelectedItem.ToString() + " was not found within the games World collection!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-                //If the Realm exists, we need to get a reference to the currently selected Zone too.
+            //If the Realm exists, we need to get a reference to the currently selected Zone too.
             else
                 zone = realm.GetZone(roomsComZones.SelectedItem.ToString());
 
@@ -477,7 +477,7 @@ namespace MudDesigner.Editor.Rooms
                 MessageBox.Show(roomsComZones.SelectedItem.ToString() + " was not found within the " + realm.Name + " zone collection!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-                //If the Zone exists, we need to get a reference to the currently selected Room
+            //If the Zone exists, we need to get a reference to the currently selected Room
             else
                 room = zone.GetRoom(roomsLstExistingRooms.SelectedItem.ToString());
 
@@ -487,8 +487,8 @@ namespace MudDesigner.Editor.Rooms
                 MessageBox.Show("The selected Room '" + roomsLstExistingRooms.SelectedItem.ToString() + "' was not located within the " + zone.Name + " room collection!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-                //Room isn't null, set the static Editor types Current properties. 
-                //Lets us modify them with-out having to call a Get() method again.
+            //Room isn't null, set the static Editor types Current properties. 
+            //Lets us modify them with-out having to call a Get() method again.
             else
             {
                 Editor.CurrentRealm = realm;
@@ -509,14 +509,14 @@ namespace MudDesigner.Editor.Rooms
             //If the room is null, tell the UI
             if (room == null)
                 roomsLblCurrentRoom.Text = "Current Room: None Loaded";
-                //Otherwise, display the room name along with it's Type.
+            //Otherwise, display the room name along with it's Type.
             else
                 roomsLblCurrentRoom.Text = "Current Room: " + room.Name + " (" + room.GetType().Name + ")";
 
             //If the Realm and Zone are null, warn
             if (realm == null || zone == null)
                 roomsLblRealmAndZone.Text = "No Location Loaded! New Rooms will be created within the Zone\nthat is selected under the Environments Tab.";
-                //Otherwise display the current Environment path for the loaded Room
+            //Otherwise display the current Environment path for the loaded Room
             else
                 roomsLblRealmAndZone.Text = "Current Zone: " + realm.Name + "->" + zone.Name;
         }
@@ -536,6 +536,13 @@ namespace MudDesigner.Editor.Rooms
                     foreach (IMob mob in Editor.CurrentRoom.Occupants)
                     {
                         mob.Move(Editor.CurrentRoom);
+                        if (mob is IPlayer)
+                        {
+                            IPlayer p = (IPlayer)mob;
+
+                            FileIO file = new FileIO();
+                            file.Save(p, System.IO.Path.Combine(Environment.CurrentDirectory, EngineSettings.Default.PlayerSavePath, string.Format("{0}.char", p.Username)));
+                        }
                     }
                 }
             }
@@ -668,7 +675,7 @@ namespace MudDesigner.Editor.Rooms
                 MessageBox.Show("There are no doorways for this direction.", this.Text);
                 return;
             }
-                //Otherwise it will be "North\MyRoom"
+            //Otherwise it will be "North\MyRoom"
             else
             {
                 //Get the travel direction for the doorway selected
