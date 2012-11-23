@@ -140,6 +140,9 @@ namespace MudDesigner.Editor
 
             IRoom[] rooms = zone.GetRooms();
 
+            if (rooms.Length == 0 || rooms == null)
+                return;
+
             foreach (IRoom room in rooms)
             {
                 lstRooms.Items.Add(room.Name);
