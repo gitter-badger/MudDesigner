@@ -476,6 +476,9 @@ namespace MudDesigner.Editor
                 {
                     try
                     {
+                        if (!Directory.Exists(Path.Combine(Environment.CurrentDirectory, worldFile.Text)))
+                            Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, worldFile.Text));
+
                         //Save the World with the new location
                         FileIO file = new FileIO();
                         file.Save(Editor.Game.World, Path.Combine(Environment.CurrentDirectory, worldFile.Text));
@@ -499,6 +502,10 @@ namespace MudDesigner.Editor
                 //Only do this if the setting was changed
                 if (EngineSettings.Default.PlayerSavePath != playerSavePath.Text)
                 {
+                    if (!Directory.Exists(Path.Combine(Environment.CurrentDirectory, playerSavePath.Text)))
+                    {
+                        Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, playerSavePath.Text));
+                    }
                     foreach (string file in Directory.GetFiles(Path.Combine(Environment.CurrentDirectory, EngineSettings.Default.PlayerSavePath), "*.char"))
                     {
                         File.Copy(file, Path.Combine(Environment.CurrentDirectory, playerSavePath.Text, Path.GetFileName(file)));
