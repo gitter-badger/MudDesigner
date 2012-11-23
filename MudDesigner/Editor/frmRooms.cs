@@ -95,6 +95,12 @@ namespace MudDesigner.Editor.Rooms
             {
                 Editor.CurrentZone = Editor.CurrentRealm.GetZone(roomsComZones.SelectedItem.ToString());
             }
+
+            if (Editor.CurrentRoom != null && roomsLstExistingRooms.Items.Contains(Editor.CurrentRoom.Name))
+            {
+                roomsLstExistingRooms.SelectedItem = Editor.CurrentRoom.Name;
+                roomsBtnLoadRoom_Click(null, null);
+            }
         }
 
         private void RefreshDoorwayList()
