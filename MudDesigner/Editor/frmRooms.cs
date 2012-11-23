@@ -582,11 +582,15 @@ namespace MudDesigner.Editor.Rooms
             }
 
             //Remove the room from our list collection
+            if (Editor.CurrentRoom.ToString() == string.Format("{0}>{1}>{2}", roomsComRealms.SelectedItem.ToString(), roomsComZones.SelectedItem.ToString(), room.Name))
+                Editor.CurrentRoom = null;
+
             roomsLstExistingRooms.Items.Remove(room.Name);
             //Remove the room from the Zone
             zone.RemoveRoom(room);
             //Null the reference.
             room = null;
+            RefreshRoomLabels(Editor.CurrentRealm, Editor.CurrentZone, Editor.CurrentRoom);
         }
 
         private void roomsBtnCloseEditor_Click(object sender, EventArgs e)

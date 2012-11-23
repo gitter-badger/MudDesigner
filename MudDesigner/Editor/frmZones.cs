@@ -132,31 +132,48 @@ namespace MudDesigner.Editor
             {
                 grpZoneProperties.Text = "Zone Properties (" + Editor.CurrentZone.GetType().Name + ")";
             }
+            if (Editor.CurrentRealm != null)
+            {
+                zonesGrpRealm.Text = string.Format("Zones within the {0} realm", Editor.CurrentRealm.Name) ;
+            }
         }
 
         private void zonesBtnChangeRealm_Click(object sender, EventArgs e)
         {
+            //Creates a new instance of the Realms editor
             frmRealms realms = new frmRealms();
+
+            //We want to make sure and remove this Zone from its current Relam
+            if (Editor.CurrentRealm != null)
+                Editor.CurrentRealm.RemoveZone(Editor.CurrentZone);
+            //Flag changing zone as true so users can double-click and close the editor
             realms.ChangingRealm = true;
+
+            //Show it as a dialog. This prevents other editors from starting at the same time.
+            //Ensures that the static Editor Type will only be accessed by one editor at a time.
             realms.ShowDialog();
+
+            //While the editor is visible, just keep the App responsive.
             while (realms.Visible)
             {
                 Application.DoEvents();
             }
+
+            //Null the reference we have
             realms = null;
 
-            if (Editor.CurrentRealm == null)
-                return;
-            else
-                zonesGrpZones.Text = "Zones within the " + Editor.CurrentRealm.Name + " realm.";
-
-
-            zonesLstExistingZones.Items.Clear();
-
-            foreach (IZone zone in Editor.CurrentRealm.Zones)
+            //if no Realm was selected, warn the user that the Zone will be lost when the editor
+            //is closed or a new room is loaded.
+            if (Editor.CurrentRealm == null && Editor.CurrentZone != null)
             {
-                zonesLstExistingZones.Items.Add(zone.Name);
+                MessageBox.Show("You have not selected a Realm to place this Zone within. It will not be saved if a Realm is not choosen from the Realm editor!", this.Text);
+                return;
             }
+
+            //Add the Room to the selected Zone.
+            Editor.CurrentRealm.AddZone(Editor.CurrentZone, true);
+
+            comRealms.SelectedItem = Editor.CurrentRealm.Name;
         }
 
         private void zonessBtnDeleteZone_Click(object sender, EventArgs e)
@@ -175,13 +192,26 @@ namespace MudDesigner.Editor
 
         private void frmZones_Load(object sender, EventArgs e)
         {
+            IRealm[] realms = Editor.Game.World.GetRealms();
+
+            foreach (IRealm realm in realms)
+            {
+                comRealms.Items.Add(realm.Name);
+            }
+            if (comRealms.Items.Count > 0)
+            {
+                if (comRealms.Items.Contains(Editor.CurrentRealm.Name))
+                    comRealms.SelectedItem = Editor.CurrentRealm.Name;
+                else
+                    comRealms.SelectedIndex = 0;
+            }
             if (Editor.CurrentRealm == null)
             {
-                MessageBox.Show("You will not be able to create or edit any Zones until you load a Realm.  You may Load a Realm from within the Zone editor or use the Realm editor.", "Mud Designer Editor : Zones", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("You will not be able to create or edit any Zones until you create a Realm.  You may create a Realm from the Realm editor.", "Mud Designer Editor : Zones", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             else
-                zonesGrpZones.Text = "Zones within the " + Editor.CurrentRealm.Name + " realm.";
+                zonesGrpRealm.Text = "Zones within the " + Editor.CurrentRealm.Name + " realm.";
 
             foreach (IZone zone in Editor.CurrentRealm.Zones)
             {
@@ -217,6 +247,31 @@ namespace MudDesigner.Editor
                 zonesLstExistingZones_SelectedIndexChanged(sender, e);
                 this.Close();
             }
+        }
+
+        private void comRealms_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            zonesLstExistingZones.Items.Clear();
+
+            IRealm realm = Editor.Game.World.GetRealm(comRealms.SelectedItem.ToString());
+            if (realm == null)
+            {
+                MessageBox.Show("Realm does not exist!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            Editor.CurrentRealm = realm;
+
+            IZone[] zones = realm.GetZones();
+            if (zones != null)
+            {
+
+                foreach (IZone zone in zones)
+                {
+                    zonesLstExistingZones.Items.Add(zone.Name);
+                }
+            }
+
+            UpdateUI();
         }
     }
 }
