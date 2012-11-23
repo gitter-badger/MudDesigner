@@ -29,6 +29,8 @@ using MudDesigner.Engine.Properties;
 using MudDesigner.Engine.Scripting;
 using MudDesigner.Engine.States;
 
+using log4net;
+
 namespace MudDesigner.Editor
 {
     /// <summary>
@@ -37,6 +39,7 @@ namespace MudDesigner.Editor
     /// </summary>
     public partial class frmEngineSettings : Form
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(frmEngineSettings)); 
         /// <summary>
         /// Optional Types that can be used by EngineSettings are stored here. The Combo Box UI controls are bound to each collection added
         /// to the SettingsCollection, allowing for the UI to be updated as Types are added or removed without needing to manually update the UI
@@ -159,13 +162,13 @@ namespace MudDesigner.Editor
             {
                 //Bind our combo box to the object collection
                 box.DataSource = new BindingSource(objectCollection, null); ;
-                
+
                 //Show users the keys
                 box.DisplayMember = "key";
 
                 //Tie what the user sees to the actual full Type path.
                 //Example: user selects "MyRealm". They are really selecting "MudDesigner.Scripts.MyGame.MyRealm".
-                box.ValueMember = "value"; 
+                box.ValueMember = "value";
 
                 //Store this collection into the Settings Collection pool.
                 //A Collection within a Collection is used, so that I don't need to have 12 different
@@ -183,9 +186,9 @@ namespace MudDesigner.Editor
                 box.SelectedValue = defaultObject.FullName;
                 return;
             }
-                //Otherwise select the first object in the combo box.
+            //Otherwise select the first object in the combo box.
             else if (objectCollection.Count > 0)
-                box.SelectedIndex = 0;            
+                box.SelectedIndex = 0;
         }
 
         private void btnSaveSettings_Click(object sender, EventArgs e)
@@ -344,8 +347,8 @@ namespace MudDesigner.Editor
                                 IGameObject tmp = (IGameObject)zone;
                                 newZone.CopyState(ref tmp);
                                 newZoneCollection.Add((IZone)newZone);
-                            } 
-                            
+                            }
+
                             realm.Zones = newZoneCollection;
                             newZoneCollection = new List<IZone>();
                             requiresReset = true;
@@ -443,7 +446,7 @@ namespace MudDesigner.Editor
                     //Copy each file over to the new path.
                     //We only move the libraries, because the library collection will expect
                     //them to exist.
-                    foreach(string file in files)
+                    foreach (string file in files)
                     {
                         string filename = Path.GetFileName(file);
                         File.Copy(file, Path.Combine(newPath, filename), true);
@@ -471,7 +474,21 @@ namespace MudDesigner.Editor
                 //Only do this if the setting was changed
                 if (EngineSettings.Default.WorldSaveFile != worldFile.Text)
                 {
-                    EngineSettings.Default.WorldSaveFile = worldFile.Text;
+                    try
+                    {
+                        //Save the World with the new location
+                        FileIO file = new FileIO();
+                        file.Save(Editor.Game.World, Path.Combine(Environment.CurrentDirectory, worldFile.Text));
+                        //Delete the old file
+                        File.Delete(Path.Combine(Environment.CurrentDirectory, EngineSettings.Default.WorldSaveFile));
+
+                        //Save the Engine Setting.
+                        EngineSettings.Default.WorldSaveFile = worldFile.Text;
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error("Failed to change the settings for the World file.");
+                    }
                 }
             }
 
@@ -482,6 +499,11 @@ namespace MudDesigner.Editor
                 //Only do this if the setting was changed
                 if (EngineSettings.Default.PlayerSavePath != playerSavePath.Text)
                 {
+                    foreach (string file in Directory.GetFiles(Path.Combine(Environment.CurrentDirectory, EngineSettings.Default.PlayerSavePath), "*.char"))
+                    {
+                        File.Copy(file, Path.Combine(Environment.CurrentDirectory, playerSavePath.Text, Path.GetFileName(file)));
+                        File.Delete(file);
+                    }
                     EngineSettings.Default.PlayerSavePath = playerSavePath.Text;
                 }
             }
