@@ -443,11 +443,8 @@
             // roomsPropertiesDoorways
             // 
             this.roomsPropertiesDoorways.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.roomsPropertiesDoorways.CanShowVisualStyleGlyphs = false;
-            this.roomsPropertiesDoorways.CategorySplitterColor = System.Drawing.Color.White;
             this.roomsPropertiesDoorways.CommandsBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.roomsPropertiesDoorways.CommandsForeColor = System.Drawing.Color.White;
-            this.roomsPropertiesDoorways.DisabledItemForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.roomsPropertiesDoorways.Dock = System.Windows.Forms.DockStyle.Fill;
             this.roomsPropertiesDoorways.HelpBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
             this.roomsPropertiesDoorways.HelpForeColor = System.Drawing.Color.White;
@@ -477,11 +474,8 @@
             // roomsPropertiesRoom
             // 
             this.roomsPropertiesRoom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.roomsPropertiesRoom.CanShowVisualStyleGlyphs = false;
-            this.roomsPropertiesRoom.CategorySplitterColor = System.Drawing.Color.White;
             this.roomsPropertiesRoom.CommandsBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.roomsPropertiesRoom.CommandsForeColor = System.Drawing.Color.White;
-            this.roomsPropertiesRoom.DisabledItemForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.roomsPropertiesRoom.Dock = System.Windows.Forms.DockStyle.Fill;
             this.roomsPropertiesRoom.HelpBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
             this.roomsPropertiesRoom.HelpForeColor = System.Drawing.Color.White;

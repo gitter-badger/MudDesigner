@@ -238,11 +238,8 @@
             // mainPropertyGame
             // 
             this.mainPropertyGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.mainPropertyGame.CanShowVisualStyleGlyphs = false;
-            this.mainPropertyGame.CategorySplitterColor = System.Drawing.Color.White;
             this.mainPropertyGame.CommandsBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.mainPropertyGame.CommandsForeColor = System.Drawing.Color.White;
-            this.mainPropertyGame.DisabledItemForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.mainPropertyGame.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainPropertyGame.HelpBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
             this.mainPropertyGame.HelpForeColor = System.Drawing.Color.White;
@@ -272,11 +269,8 @@
             // mainPropertyServer
             // 
             this.mainPropertyServer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.mainPropertyServer.CanShowVisualStyleGlyphs = false;
-            this.mainPropertyServer.CategorySplitterColor = System.Drawing.Color.White;
             this.mainPropertyServer.CommandsBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.mainPropertyServer.CommandsForeColor = System.Drawing.Color.White;
-            this.mainPropertyServer.DisabledItemForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.mainPropertyServer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainPropertyServer.HelpBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
             this.mainPropertyServer.HelpForeColor = System.Drawing.Color.White;

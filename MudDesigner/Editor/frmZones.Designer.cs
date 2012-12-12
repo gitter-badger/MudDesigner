@@ -134,11 +134,8 @@
             // zoneProperties
             // 
             this.zoneProperties.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.zoneProperties.CanShowVisualStyleGlyphs = false;
-            this.zoneProperties.CategorySplitterColor = System.Drawing.Color.White;
             this.zoneProperties.CommandsBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.zoneProperties.CommandsForeColor = System.Drawing.Color.White;
-            this.zoneProperties.DisabledItemForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.zoneProperties.Dock = System.Windows.Forms.DockStyle.Fill;
             this.zoneProperties.HelpBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
             this.zoneProperties.HelpForeColor = System.Drawing.Color.White;

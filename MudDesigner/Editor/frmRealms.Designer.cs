@@ -103,11 +103,8 @@
             // realmsProperties
             // 
             this.realmsProperties.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.realmsProperties.CanShowVisualStyleGlyphs = false;
-            this.realmsProperties.CategorySplitterColor = System.Drawing.Color.White;
             this.realmsProperties.CommandsBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.realmsProperties.CommandsForeColor = System.Drawing.Color.White;
-            this.realmsProperties.DisabledItemForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.realmsProperties.Dock = System.Windows.Forms.DockStyle.Fill;
             this.realmsProperties.HelpBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
             this.realmsProperties.HelpForeColor = System.Drawing.Color.White;
