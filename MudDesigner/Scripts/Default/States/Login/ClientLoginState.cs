@@ -135,6 +135,14 @@ namespace MudDesigner.Scripts.Default.States.Login
 
             if (loadedplayer != null && loadedplayer.CheckPassword(input))
             {
+                /*Make sure we are disconnecting the user if they are connected already.
+                foreach (var connectedUser in director.ConnectedPlayers.Keys)
+                {
+                    if (connectedUser.Name == loadedplayer.Name && connectedUser != loadedplayer)
+                        connectedUser.Disconnect();
+                }
+                */
+
                 connectedPlayer.SendMessage("Success!!");
 
                 //Can use inherited built-in CopyState method instead

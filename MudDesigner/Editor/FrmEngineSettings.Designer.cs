@@ -1,6 +1,6 @@
 ﻿namespace MudDesigner.Editor
 {
-    partial class frmEngineSettings
+    partial class FrmEngineSettings
     {
         /// <summary>
         /// Required designer variable.

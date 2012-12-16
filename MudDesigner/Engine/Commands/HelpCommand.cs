@@ -28,7 +28,7 @@ namespace MudDesigner.Engine.Commands
         public void Execute(IPlayer player)
         {
             Type[] com = null;
-
+            /*
             foreach (Type t in com)
             {
                 if (t.Name == player.ReceivedInput + "Command")
@@ -42,6 +42,8 @@ namespace MudDesigner.Engine.Commands
                     player.SendMessage(help.Description);
                 }
             }
+             */
+            player.SendMessage("This command is not yet implemented.");
         }
     }
 }

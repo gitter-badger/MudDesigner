@@ -43,16 +43,16 @@ namespace MudDesigner.Editor
         
         private void frmMain_Load(object sender, EventArgs e)
         {
-            //Setup our logger so we can access it within the editor.
-            //Logger.CacheContent = true;
-            //Logger.Enabled = true;
+            Log.Info("Mud Designer Toolkit Editor starting.");
+            Log.Info("Loading script references.");
+
             
             //Loop through each reference mentioned in the engines properties and add them.
             //This provides support for 3rd party pre-compiled *mods* scripts
-            foreach(string reference in EngineSettings.Default.ScriptLibrary)
+            foreach (var path in from string reference in EngineSettings.Default.ScriptLibrary select Path.Combine(System.Environment.CurrentDirectory, reference))
             {
-                string path = Path.Combine(System.Environment.CurrentDirectory, reference);
                 CompileEngine.AddAssemblyReference(path);
+                Log.Info(string.Format("Adding assembly reference {0}", path));
             }
 
             //Compile the scripts.
@@ -309,7 +309,7 @@ namespace MudDesigner.Editor
             }
 
             //Create a instance of the Engine Settings editor
-            frmEngineSettings engineSettings = new frmEngineSettings();
+            FrmEngineSettings engineSettings = new FrmEngineSettings();
 
             //Show it as a dialog. This prevents other editors from starting at the same time.
             //Ensures that the static Editor Type will only be accessed by one editor at a time.

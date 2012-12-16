@@ -37,23 +37,23 @@ namespace MudDesigner.Editor
     /// Provides a graphical approach to editing the Mud Designer Engine Settings. Users can assign default Types to
     /// various game engine objects that run during run-time.
     /// </summary>
-    public partial class frmEngineSettings : Form
+    public partial class FrmEngineSettings : Form
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(frmEngineSettings)); 
+        private static readonly ILog Log = LogManager.GetLogger(typeof(FrmEngineSettings)); 
         /// <summary>
         /// Optional Types that can be used by EngineSettings are stored here. The Combo Box UI controls are bound to each collection added
         /// to the SettingsCollection, allowing for the UI to be updated as Types are added or removed without needing to manually update the UI
         /// </summary>
-        Dictionary<string, SortedDictionary<string, string>> settingCollection = new Dictionary<string, SortedDictionary<string, string>>();
+        private Dictionary<string, SortedDictionary<string, string>> settingCollection = new Dictionary<string, SortedDictionary<string, string>>();
 
         /// <summary>
         /// Gets or Sets if the currently selected Game Objects in the static Editor class require resetting.
         /// If true, all Game Objects will be set to null, requiring the user to re-load them from their respective editors.
         /// This will usually be set to true when an object that is loaded was modified due to changing it's script Type.
         /// </summary>
-        bool requiresReset { get; set; }
+        private bool requiresReset = false;
 
-        public frmEngineSettings()
+        public FrmEngineSettings()
         {
             InitializeComponent();
             //EngineSettings.Default.Reset();

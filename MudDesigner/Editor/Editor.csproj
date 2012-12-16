@@ -54,11 +54,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Editor.cs" />
-    <Compile Include="frmEngineSettings.cs">
+    <Compile Include="FrmEngineSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmEngineSettings.Designer.cs">
-      <DependentUpon>frmEngineSettings.cs</DependentUpon>
+    <Compile Include="FrmEngineSettings.Designer.cs">
+      <DependentUpon>FrmEngineSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="frmLoginRoom.cs">
       <SubType>Form</SubType>
@@ -92,8 +92,8 @@
     <Compile Include="frmRooms.Designer.cs">
       <DependentUpon>frmRooms.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="frmEngineSettings.resx">
-      <DependentUpon>frmEngineSettings.cs</DependentUpon>
+    <EmbeddedResource Include="FrmEngineSettings.resx">
+      <DependentUpon>FrmEngineSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmLoginRoom.resx">
       <DependentUpon>frmLoginRoom.cs</DependentUpon>

@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.Collections.Generic;
 using MudDesigner.Engine.Commands;
 using MudDesigner.Engine.Mobs;
-using MudDesigner.Engine.Environment;
-using MudDesigner.Scripts.Default.States;
 
 namespace MudDesigner.Scripts.Default.Commands
 {
@@ -15,10 +8,18 @@ namespace MudDesigner.Scripts.Default.Commands
     {
         public void Execute(IPlayer player)
         {
-            if (String.IsNullOrEmpty(player.ReceivedInput))
-                return;
+            var message = string.Empty;
+            if (player.ReceivedInput.ToLower().StartsWith("say"))
+            {
+                message = player.ReceivedInput.Substring(3).TrimStart();
 
-           // player.SwitchState(new TalkingState());
+                string correctedMessage = string.Format("{0} says '{1}'", player.Name, message);
+
+                player.Location.BroadcastMessage(correctedMessage, new List<IPlayer>() { player });
+
+                correctedMessage = string.Format("You say '{0}'", message);
+                player.SendMessage(correctedMessage);
+            }
         }
     }
 }

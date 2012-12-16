@@ -95,9 +95,29 @@ namespace MudDesigner.Engine.Directors
                 //and ignore, letting the next loop iteration find the disconnect and process.
                 try
                 {
-                    connectedUser.CurrentState.Render(connectedUser);
+                    try
+                    {
+                        connectedUser.CurrentState.Render(connectedUser);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex.Message);
+                    }
+
                     var command = connectedUser.CurrentState.GetCommand();
-                    command.Execute(connectedUser);
+                    if (command == null)
+                        continue;
+                    else
+                    {
+                        try
+                        {
+                            command.Execute(connectedUser);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error(ex.Message);
+                        }
+                    }
                 }
                 catch(Exception ex)
                 {
