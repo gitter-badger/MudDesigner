@@ -102,6 +102,8 @@
     <Compile Include="Default\Mobs\Stats\Health.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Default\Mobs\Stats\Mana.cs" />
+    <Compile Include="Default\Objects\StarterBag.cs" />
     <Compile Include="Default\States\CreateCharacter\CreationManager.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
@@ -130,9 +132,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Default\Objects\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="Default\Game\DefaultGame.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -22,5 +22,12 @@ namespace MudDesigner.Scripts.Default.Mobs.Appearances
             Description = "The persons head.";
             Value = "Thin head with chubby cheeks.";
         }
+                
+        public Head(string description, string value)
+        {
+            Description = description;
+            Name = "Head";
+            Value = value;
+        }
     }
 }

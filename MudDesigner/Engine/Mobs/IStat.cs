@@ -21,7 +21,7 @@ namespace MudDesigner.Engine.Mobs
         /// <summary>
         /// Gets or Sets the name of this stat
         /// </summary>
-        string Name { get; set; }
+        string Name { get; }
         
         /// <summary>
         /// Gets or Sets the maximum amount that this stat can have.

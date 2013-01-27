@@ -27,6 +27,10 @@ namespace MudDesigner.Engine.Objects
         /// </summary>
         public int Weight { get; set; }
 
+        public bool IsStackable { get; set; }
+
+        public int CurrentHealth { get; set; }
+
         /// <summary>
         /// Gets or Sets how much health this item has
         /// </summary>
@@ -48,7 +52,15 @@ namespace MudDesigner.Engine.Objects
         /// <param name="player">The player that wants to inspect this item</param>
         public virtual void Inspect(IPlayer player)
         {
-            throw new NotImplementedException();
+            player.SendMessage(Name);
+            player.SendMessage(Description);
+            player.SendMessage("Weight: " + Weight);
+            player.SendMessage("Durability: " + Health);
+
+            if (Indestructible)
+                player.SendMessage("This item is permanent");
+
+            player.SendMessage(""); // blank line
         }
 
         /// <summary>
@@ -56,8 +68,14 @@ namespace MudDesigner.Engine.Objects
         /// </summary>
         /// <param name="healder">The character that is performing the heal</param>
         /// <param name="amount">The healing amount</param>
-        public void Repair(IMob healder, int amount)
+        public void Repair(IMob healer, int amount)
         {
+            if ((CurrentHealth + amount) > Health)
+                CurrentHealth = Health;
+            else
+                CurrentHealth += amount;
+
+            healer.SendMessage(String.Format("You repair {0} to a durability of {1}", Name, CurrentHealth));
         }
 
         /// <summary>
@@ -67,7 +85,7 @@ namespace MudDesigner.Engine.Objects
         /// <param name="amount">The amount of damage</param>
         public void Damage(IMob dealer, int amount)
         {
-            throw new NotImplementedException();
+
         }
     }
 }

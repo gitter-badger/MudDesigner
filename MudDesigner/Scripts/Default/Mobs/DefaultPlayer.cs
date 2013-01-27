@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using MudDesigner.Engine.Mobs;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Environment;
-
 using MudDesigner.Scripts.Default.Mobs.Appearances;
 using MudDesigner.Scripts.Default.Mobs.Stats;
+using MudDesigner.Scripts.Default.Objects;
 
 namespace MudDesigner.Scripts.Default.Mobs
 {
@@ -17,15 +17,22 @@ namespace MudDesigner.Scripts.Default.Mobs
     {
         public DefaultPlayer()
         {
-            AddAppearanceDescription(new Head());
-            AddAppearanceDescription(new Hair());
+            AddAppearanceDescription(new Head("The head of the body", "The head is normal sized without any outstanding features."));
+            AddAppearanceDescription(new Hair("The hair on the head.", "The hair is combed nicely, parted down the middle."));
             Health hp = new Health();
+            Mana mp = new Mana();
+
             hp.Amount = 100;
+            mp.Amount = 50;
 
             AddStat(hp);
+            AddStat(mp);
 
             CanTalk = true;
             MaxInventorySize = 12;
+
+            StarterBag bag = new StarterBag();
+            Items.Add(bag);
 
             OnEnterEvent += new OnEnterHandler(OnEnterRoom);
         }

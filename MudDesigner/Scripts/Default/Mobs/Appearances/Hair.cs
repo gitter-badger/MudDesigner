@@ -22,5 +22,12 @@ namespace MudDesigner.Scripts.Default.Mobs.Appearances
             Description = "The hair on someones head.";
             Value = "Hair is combed neatly.";
         }
+
+        public Hair(string description, string value)
+        {
+            Description = description;
+            Name = "Hair";
+            Value = value;
+        }
     }
 }

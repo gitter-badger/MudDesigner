@@ -7,6 +7,7 @@
  */
 //Microsoft .NET Using statements
 using System.IO;
+using System.Collections.Generic;
 
 //AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Core;
@@ -18,6 +19,5 @@ namespace MudDesigner.Engine.Objects
     /// </summary>
     public interface IUsable : IItem
     {
-         
     }
 }

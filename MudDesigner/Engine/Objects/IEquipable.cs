@@ -23,6 +23,13 @@ namespace MudDesigner.Engine.Objects
     public interface IEquipable : IItem
     {
         /// <summary>
+        /// Can place 'stackable' items within this equipable item.
+        /// Can be a Weapon with a "Rune of +5 Endurance" or
+        /// if can be a bag with a bunch of item stacks within it.
+        /// </summary>
+        Dictionary<IItem, int> Components { get; }
+
+        /// <summary>
         /// Equips this item to the specified player
         /// </summary>
         /// <param name="player">The player to equip to</param>
@@ -34,5 +41,8 @@ namespace MudDesigner.Engine.Objects
         /// <param name="player">The player to unequip from</param>
         void Unequip(IPlayer player);
 
+        void AddComponent(IItem equipment);
+
+        void RemoveComponent(IItem equipment);
     }
 }

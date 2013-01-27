@@ -24,6 +24,8 @@ namespace MudDesigner.Engine.Objects
         /// </summary>
         bool IsAdminOnly { get; set; }
 
+        bool IsStackable { get; set; }
+
         /// <summary>
         /// Gets or Sets the weight of this object
         /// </summary>
@@ -33,6 +35,8 @@ namespace MudDesigner.Engine.Objects
         /// Gets or Sets how much health this item has
         /// </summary>
         int Health { get; set; }
+
+        int CurrentHealth { get; set; }
 
         /// <summary>
         /// Gets or Sets if this item is indestructible
@@ -50,7 +54,7 @@ namespace MudDesigner.Engine.Objects
         /// </summary>
         /// <param name="healder">The character that is performing the heal</param>
         /// <param name="amount">The healing amount</param>
-        void Repair(IMob healder, int amount);
+        void Repair(IMob healer, int amount);
 
         /// <summary>
         /// Deals damage to this item
