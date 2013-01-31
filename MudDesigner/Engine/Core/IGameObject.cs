@@ -39,6 +39,8 @@ namespace MudDesigner.Engine.Core
         /// Gets if this GameObject has been destroyed.  If True, Save() code is ignored.
         /// </summary>
         bool Destroyed { get; }
+
+        Guid ID { get; set; }
         
         /// <summary>
         /// Called when the object is no longer needed.

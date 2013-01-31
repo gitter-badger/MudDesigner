@@ -51,6 +51,11 @@ namespace MudDesigner.Engine.Core
         public bool Permanent { get; set; }
 
         /// <summary>
+        /// Gets or Sets the unique ID for this object.
+        /// </summary>
+        public Guid ID { get; set; }
+
+        /// <summary>
         /// Gets if this object has been destroyed and should no longer be used.
         /// </summary>
         [Browsable(false)]
@@ -58,7 +63,8 @@ namespace MudDesigner.Engine.Core
 
         public GameObject() 
         { 
-            Enabled = true; 
+            Enabled = true;
+            ID = new Guid();
         }
 
         /// <summary>
