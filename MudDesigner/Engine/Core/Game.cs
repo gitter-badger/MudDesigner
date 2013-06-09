@@ -171,13 +171,14 @@ namespace MudDesigner.Engine.Core
         public void SaveWorld()
         {
             Log.Info("Saving World....");
-            LastSave = DateTime.Now;
 
             var fileAndPathToSave = Path.Combine(Directory.GetCurrentDirectory(),
                                                  MudDesigner.Engine.Properties.EngineSettings.Default.WorldSaveFile);
 
             FileIO fileSave = new FileIO();
             fileSave.Save(World, fileAndPathToSave);
+
+            LastSave = DateTime.Now;
         }
     }
 }

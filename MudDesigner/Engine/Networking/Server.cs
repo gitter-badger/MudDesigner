@@ -78,7 +78,7 @@ namespace MudDesigner.Engine.Networking
         /// Gets the owner of the server.
         /// </summary>
         [DisplayName("Server Owner")]
-        public string ServerOwner { get; private set; }
+        public string ServerOwner { get; set; }
 
         /// <summary>
         /// Gets a reference to the Game that the server belongs to.
@@ -110,7 +110,7 @@ namespace MudDesigner.Engine.Networking
             MaxConnections = 100;
             MaxQueuedConnections = 10;
             MOTD = "MUD Designer based game.";
-            ServerOwner = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+
             var file = new FileInfo(Path.Combine(Directory.GetCurrentDirectory(),"log4net.config"));
             if (file.Exists)
             {

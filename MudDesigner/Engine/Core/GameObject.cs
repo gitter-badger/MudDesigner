@@ -64,7 +64,7 @@ namespace MudDesigner.Engine.Core
         public GameObject() 
         { 
             Enabled = true;
-            ID = new Guid();
+            ID = Guid.NewGuid();
         }
 
         /// <summary>

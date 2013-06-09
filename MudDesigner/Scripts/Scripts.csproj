@@ -102,8 +102,12 @@
     <Compile Include="Default\Mobs\Stats\Health.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Default\Mobs\Stats\Mana.cs" />
-    <Compile Include="Default\Objects\StarterBag.cs" />
+    <Compile Include="Default\Mobs\Stats\Mana.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Default\Objects\StarterBag.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Default\States\CreateCharacter\CreationManager.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>

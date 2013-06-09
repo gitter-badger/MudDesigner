@@ -67,7 +67,7 @@ namespace MudDesigner.Engine.Environment
         /// </summary>
         public List<IItem> Items { get; set; }
 
-        public BaseRoom()
+        public BaseRoom() : base()
         {
             Doorways = new Dictionary<AvailableTravelDirections, IDoor>();
             Occupants = new List<IMob>();
