@@ -74,8 +74,7 @@ namespace MudEngine.Engine.Core
         {            
             // The itemType is used for determining what sub-folder to store the object in.
             Type itemType = typeof(T);
-            PropertyInfo property = itemType.GetProperties()
-                .FirstOrDefault(prop => Attribute.IsDefined(prop, typeof(StorageFilenameAttribute)));
+            PropertyInfo property = this.FindAttribute<StorageFilenameAttribute>(itemType);
 
             // If the object does not have any properties with the StorageFilename attribute
             // we throw an exception. The attribute is required to determine the filename.
@@ -112,8 +111,8 @@ namespace MudEngine.Engine.Core
         {
             // The itemType is used for determining what sub-folder to store the object in.
             Type itemType = typeof(T);
-            PropertyInfo property = itemType.GetProperties()
-                .FirstOrDefault(prop => Attribute.IsDefined(prop, typeof(StorageFilenameAttribute)));
+            PropertyInfo property = this.FindAttribute<StorageFilenameAttribute>(itemType);
+            var val = property.GetValue(item);
 
             // If the object does not have any properties with the StorageFilename attribute
             // we throw an exception. The attribute is required to determine the filename.
@@ -138,6 +137,10 @@ namespace MudEngine.Engine.Core
             {
                 Directory.CreateDirectory(savePath);
             }
+            else if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
 
             try
             {
@@ -145,6 +148,7 @@ namespace MudEngine.Engine.Core
                 var serializer = new XmlSerializer(itemType, "MudEngine");
                 TextWriter writer = new StreamWriter(filePath);
                 serializer.Serialize(writer, item);
+                writer.Close();
             }
             catch (Exception)
             {
@@ -169,12 +173,13 @@ namespace MudEngine.Engine.Core
             // Save each item in the collection.
             foreach(T item in items.AsParallel().AsOrdered())
             {
+                var currentItem = item;
                 try
                 {
                     // Since we are not modifying the object, we just return the item.
                     // This is cheaper than casting the return value of Save back to T 
                     // over each iteration and adding to a new collection.
-                    this.Save<T>(item);
+                    this.Save<T>(currentItem);
                 }
                 catch(Exception)
                 {
@@ -217,13 +222,56 @@ namespace MudEngine.Engine.Core
         /// </summary>
         /// <typeparam name="T">The type that the item is of.</typeparam>
         /// <param name="item">The item.</param>
-        /// <returns>
-        /// Returns true if the item was deleted.
-        /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public bool Delete<T>(T item) where T : class
+        public void Delete<T>(T item) where T : class
         {
-            throw new NotImplementedException();
+            string filePath = this.GetStoragePath<T>(item);
+
+            // If the file exists, we delete.
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+        }
+
+        /// <summary>
+        /// Deletes the specified items.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="items">The items.</param>
+        public void Delete<T>(T[] items) where T : class
+        {
+            // TODO: Should do a performance check. 
+            // If items.Count < n than perform a traditional foreach loop.
+            // Spawning threads to delete a handful of files is more taxing than a sequential delete.
+            // There's only benefits for a large number of files.
+            Parallel.ForEach<T>(items, (item, loopState) =>
+            {
+                string file = this.GetStoragePath<T>(item);
+
+                // If a file exists, we 
+                if (File.Exists(file))
+                {
+                    File.Delete(file);
+                }
+            });
+        }
+
+        private PropertyInfo FindAttribute<T>(Type itemType) where T : Attribute
+        {
+            PropertyInfo[] properties = itemType.GetProperties()
+                .Where(property => Attribute.IsDefined(property, typeof(T)))
+                .ToArray();
+
+            // if we have any properties that contains the attribute specified
+            // we return it.
+            if (properties.Any())
+            {
+                return properties.FirstOrDefault();
+            }
+            
+            // If none are found, then we hit the base type up next.
+            // Crawl up the tree until we find what we want.
+            return (itemType.BaseType != null) ? FindAttribute<T>(itemType.BaseType) : null;
         }
     }
 }

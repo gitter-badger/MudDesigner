@@ -75,7 +75,13 @@ namespace MudEngine.Engine.Core
         /// </summary>
         /// <typeparam name="T">The type that the item is of.</typeparam>
         /// <param name="item">The item.</param>
-        /// <returns>Returns true if the item was deleted.</returns>
-        bool Delete<T>(T item) where T : class;
+        void Delete<T>(T item) where T : class;
+
+        /// <summary>
+        /// Deletes the specified items.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="items">The items.</param>
+        void Delete<T>(T[] items) where T : class;
     }
 }

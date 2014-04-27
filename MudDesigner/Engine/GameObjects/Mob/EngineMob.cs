@@ -4,6 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
+using System.Xml.Serialization;
 using MudEngine.Engine.Core;
 
 namespace MudEngine.Engine.GameObjects.Mob
@@ -11,21 +12,25 @@ namespace MudEngine.Engine.GameObjects.Mob
     /// <summary>
     /// The base engine mob object that all Mob related objects inherit from.
     /// </summary>
-    public class EngineMob : IMob
+    [Serializable]
+    public class EngineMob : GameObject, IMob
     {
         /// <summary>
         /// Gets or Sets the currently running game.
         /// </summary>
+        [XmlIgnore]
         public IGame Game { get; set; }
 
         /// <summary>
         /// Gets or sets the gender for this character.
         /// </summary>
+        [XmlIgnore]
         public IGender Gender { get; set; }
 
         /// <summary>
         /// Gets or sets this characters current location in the world.
         /// </summary>
+        [XmlIgnore]
         public Environment.IRoom Location { get; set; }
 
         /// <summary>

@@ -4,32 +4,38 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
+using System.Xml.Serialization;
 
 namespace MudEngine.Engine.GameObjects.Mob
 {
     /// <summary>
     /// The engine player. This class can be used in any game.
     /// </summary>
+    [Serializable]
     public class EnginePlayer : EngineMob, IPlayer
     {
         /// <summary>
         /// Gets or sets the buffer.
         /// </summary>
+        [XmlIgnore]
         public byte[] Buffer { get; protected set; }
 
         /// <summary>
         /// Gets or sets the connection.
         /// </summary>
+        [XmlIgnore]
         public System.Net.Sockets.Socket Connection { get; set; }
 
         /// <summary>
         /// Gets or sets the size of the buffer.
         /// </summary>
+        [XmlIgnore]
         public int BufferSize { get; set; }
 
         /// <summary>
         /// Gets or sets the received input.
         /// </summary>
+        [XmlIgnore]
         public string ReceivedInput { get; set; }
 
         /// <summary>

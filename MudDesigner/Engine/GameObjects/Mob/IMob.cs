@@ -11,7 +11,7 @@ namespace MudEngine.Engine.GameObjects.Mob
     /// <summary>
     /// Provides a contract for objects that need to be a Mob.
     /// </summary>
-    public interface IMob
+    public interface IMob : IGameObject
     {
         /// <summary>
         /// Gets or Sets the currently running game.
