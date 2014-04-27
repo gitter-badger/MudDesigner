@@ -1,18 +1,13 @@
-﻿/* BaseRoom
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: The Base class for all Room classes.
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="BaseRoom.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Scripting;
@@ -67,6 +62,9 @@ namespace MudDesigner.Engine.Environment
         /// </summary>
         public List<IItem> Items { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseRoom"/> class.
+        /// </summary>
         public BaseRoom() : base()
         {
             Doorways = new Dictionary<AvailableTravelDirections, IDoor>();
@@ -77,11 +75,22 @@ namespace MudDesigner.Engine.Environment
             OnLeaveEvent += new OnLeaveHandler(OnLeave);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseRoom"/> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="zone">The zone.</param>
         public BaseRoom(string name, IZone zone) : this()
         {
             Zone = zone;
             Name = name;
         }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseRoom"/> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="zone">The zone.</param>
+        /// <param name="safe">if set to <c>true</c> [safe].</param>
         public BaseRoom(string name, IZone zone, bool safe = false) : this()
         {
             IsSafe = safe;
@@ -125,31 +134,31 @@ namespace MudDesigner.Engine.Environment
             this.BroadcastMessage("Room is being destroyed!  You will be teleported to a new location.",
                 playerCollection.ToList());
 
-            //Trace back up through the environment path to get the World
+            // Trace back up through the environment path to get the World
             IWorld world = Zone.Realm.World;
             //Get the initial Room location, and split it up into an array so we can parse it
             string[] roomPath = EngineSettings.Default.InitialRoom.Split('>');
 
-            //Make sure we have three entries, Realm, Zone and Room
+            // Make sure we have three entries, Realm, Zone and Room
             if (roomPath.Length != 3)
                 return;
 
-            //Get the Realm
+            // Get the Realm
             IRealm realm = world.GetRealm(roomPath[0]);
             if (realm == null)
                 return;
 
-            //Get our Zone
+            // Get our Zone
             IZone zone = realm.GetZone(roomPath[1]);
             if (zone == null)
                 return;
 
-            //Get the initial Room
+            // Get the initial Room
             IRoom room = zone.GetRoom(roomPath[2]);
             if (room == null)
                 return;
 
-            //Loop through each player in this Room and move them to the initial Room.
+            // Loop through each player in this Room and move them to the initial Room.
             foreach (IPlayer player in Occupants)
             {
                 player.Move(room);
@@ -157,6 +166,11 @@ namespace MudDesigner.Engine.Environment
             }
         }
 
+        /// <summary>
+        /// Adds the character.
+        /// </summary>
+        /// <param name="character">The character.</param>
+        /// <param name="entryDirection">The entry direction.</param>
         public virtual void AddCharacter(IMob character, AvailableTravelDirections entryDirection)
         {
             if (Occupants.Contains(character))
@@ -168,6 +182,11 @@ namespace MudDesigner.Engine.Environment
             }
         }
 
+        /// <summary>
+        /// Removes the character.
+        /// </summary>
+        /// <param name="character">The character.</param>
+        /// <param name="leavingDirection">The leaving direction.</param>
         public virtual void RemoveCharacter(IMob character, AvailableTravelDirections leavingDirection)
         {
             if (Occupants.Contains(character))
@@ -187,17 +206,17 @@ namespace MudDesigner.Engine.Environment
         /// <param name="forceOverwrite">If true, if a doorway already exists for the specified direction, it will overwrite it.</param>
         public virtual void AddDoorway(AvailableTravelDirections direction, IRoom arrivalRoom, bool autoAddReverseDirection = true, bool forceOverwrite = true)
         {
-            //Check if room is null.
+            // Check if room is null.
             if (arrivalRoom == null)
-                return; //No null references within our collections!
+                return; // No null references within our collections!
 
-            //If this direction already exists, overwrite it
-            //but only if 'forceOverwrite' is true
+            // If this direction already exists, overwrite it
+            // but only if 'forceOverwrite' is true
             if (Doorways.ContainsKey(direction))
             {
-                //Remove the old door
+                // Remove the old door
                 RemoveDoorway(direction);
-                //Get a scripted Door instance to add back to the collection
+                // Get a scripted Door instance to add back to the collection
                 var door = (Door)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.DoorScript);
                 door.SetArrivalRoom(arrivalRoom);
                 door.SetDepartingRoom(this);
@@ -205,20 +224,20 @@ namespace MudDesigner.Engine.Environment
 
                 Doorways.Add(direction, door);
             }
-            //Direction does not exist, so lets add a new doorway
+            // Direction does not exist, so lets add a new doorway
             else
             {
-                //Get a scripted instance of a Door.
+                // Get a scripted instance of a Door.
                 var door = (Door)ScriptFactory.GetScript(MudDesigner.Engine.Properties.EngineSettings.Default.DoorScript);
                 door.SetFacingDirection(direction);
                 door.SetArrivalRoom(arrivalRoom);
                 door.SetDepartingRoom(this);
 
 
-                //Add the new doorway to this rooms collection.
+                // Add the new doorway to this rooms collection.
                 Doorways.Add(direction, door);
 
-                //If autoreverse is enabled, add the doorway to the arrival room too.
+                // If autoreverse is enabled, add the doorway to the arrival room too.
                 if (autoAddReverseDirection)
                 {
                     arrivalRoom.AddDoorway(TravelDirections.GetReverseDirection(direction), this, false, forceOverwrite);
@@ -233,9 +252,9 @@ namespace MudDesigner.Engine.Environment
         /// <returns></returns>
         public IDoor GetDoorway(AvailableTravelDirections direction)
         {
-            //Check if the doorway collection has the specified direction
+            // Check if the doorway collection has the specified direction
             if (Doorways.ContainsKey(direction))
-                return Doorways[direction]; //return it
+                return Doorways[direction]; // return it
             else
                 return null;
         }
@@ -339,56 +358,107 @@ namespace MudDesigner.Engine.Environment
                 if (playersToOmmit != null)
                 {
                     if (playersToOmmit.Contains(player))
-                        continue; //Skip this player if it's in the list.
+                        continue; // Skip this player if it's in the list.
                     else
-                        //Send the message
+                        // Send the message
                         player.SendMessage(message);
                 }
                 else
                 {
-                    //Send the message
+                    // Send the message
                     player.SendMessage(message);
                 }
             }
         }
 
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
             return Zone.Realm.Name + ">" + Zone.Name + ">" + Name;
         }
 
+        /// <summary>
+        /// Adds the decoration.
+        /// </summary>
+        /// <param name="decoration">The decoration.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
         public void AddDecoration(string decoration)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Gets the items.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
         public IItem[] GetItems()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Gets the item.
+        /// </summary>
+        /// <param name="itemName">Name of the item.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
         public IItem GetItem(string itemName)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Gets the decorations.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
         public string[] GetDecorations()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Removes the decoration.
+        /// </summary>
+        /// <param name="decoration">The decoration.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
         public void RemoveDecoration(string decoration)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Clears the decorations.
+        /// </summary>
+        /// <exception cref="System.NotImplementedException"></exception>
         public void ClearDecorations()
         {
             throw new NotImplementedException();
         }
-        #region == Events ==
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="character">The character.</param>
+        /// <param name="enteredDirection">The entered direction.</param>
         public delegate void OnEnterHandler(IMob character, AvailableTravelDirections enteredDirection);
+
+        /// <summary>
+        /// Occurs when [on enter event].
+        /// </summary>
         public event OnEnterHandler OnEnterEvent;
+
+        /// <summary>
+        /// Called when [enter].
+        /// </summary>
+        /// <param name="character">The character.</param>
+        /// <param name="enteredDirection">The entered direction.</param>
         public virtual void OnEnter(IMob character, AvailableTravelDirections enteredDirection)
         {
             List<IPlayer> ommitList = new List<IPlayer>();
@@ -400,8 +470,23 @@ namespace MudDesigner.Engine.Environment
                 BroadcastMessage(character.Name + " has entered from the " + enteredDirection.ToString(), ommitList);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="character">The character.</param>
+        /// <param name="leavingDirection">The leaving direction.</param>
         public delegate void OnLeaveHandler(IMob character, AvailableTravelDirections leavingDirection);
+
+        /// <summary>
+        /// Occurs when [on leave event].
+        /// </summary>
         public event OnLeaveHandler OnLeaveEvent;
+
+        /// <summary>
+        /// Called when [leave].
+        /// </summary>
+        /// <param name="character">The character.</param>
+        /// <param name="direction">The direction.</param>
         public void OnLeave(IMob character, AvailableTravelDirections direction)
         {
             List<IPlayer> ommitList = new List<IPlayer>();
@@ -411,7 +496,5 @@ namespace MudDesigner.Engine.Environment
             else
                 BroadcastMessage(character.Name + " has left.", ommitList);
         }
-
-        #endregion
     }
 }

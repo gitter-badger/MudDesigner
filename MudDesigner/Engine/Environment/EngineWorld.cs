@@ -1,11 +1,8 @@
-﻿/* EngineWorld
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: The EngineWorld class contains the game world. All Realms, Zones and Rooms are held within the World..
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="EngineWorld.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -14,12 +11,8 @@ using System.Text;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Core;
-
-//Newtonsoft JSon using statements
 using Newtonsoft.Json;
 
 namespace MudDesigner.Engine.Environment
@@ -40,12 +33,20 @@ namespace MudDesigner.Engine.Environment
         /// </summary>
         public bool IsSafe { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EngineWorld"/> class.
+        /// </summary>
         public EngineWorld()
         {
             Realms = new List<IRealm>();
             Name = "World";
         }
 
+        /// <summary>
+        /// Rooms the exists.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns></returns>
         public bool RoomExists(string path)
         {
             foreach (IRealm realm in Realms)

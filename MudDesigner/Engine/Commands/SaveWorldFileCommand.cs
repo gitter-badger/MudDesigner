@@ -1,15 +1,9 @@
-﻿/* SaveWorldFileCommand
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: Saves the current state of the Game world.  This is an admin only command
- */
-
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="SaveWorldFileCommand.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System.IO;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Mobs;
 using log4net;
@@ -21,15 +15,23 @@ namespace MudDesigner.Engine.Commands
     /// </summary>
     public class SaveWorldFileCommand : ICommand
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(SaveWorldFileCommand)); 
+        /// <summary>
+        /// The logger
+        /// </summary>
+        private static readonly ILog Log = LogManager.GetLogger(typeof(SaveWorldFileCommand));
+
+        /// <summary>
+        /// Executes the command.
+        /// </summary>
+        /// <param name="player">The player who sent the command.</param>
         public void Execute(IPlayer player)
         {
-            //if the player exists and has the proper role...
+            // if the player exists and has the proper role...
             if (player != null && (player.Role == CharacterRoles.Admin || player.Role == CharacterRoles.Owner))
             {
                 if (player.Director.Server.Game != null)
                 {
-                    //Save the world.
+                    // Save the world.
                     player.Director.Server.Game.SaveWorld();
                     player.SendMessage("Save completed.");
                     Log.Info("Save completed.");

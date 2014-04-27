@@ -1,11 +1,8 @@
-﻿/* BaseRealm
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: The Base class for all Realm classes.
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="BaseRealm.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,14 +10,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Scripting;
 using MudDesigner.Engine.Mobs;
-
-//Newtonsoft JSon using statement
 using Newtonsoft.Json;
 
 namespace MudDesigner.Engine.Environment
@@ -46,11 +39,18 @@ namespace MudDesigner.Engine.Environment
         /// </summary>
         public bool IsAdminOnly { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseRealm"/> class.
+        /// </summary>
         public BaseRealm()
         {
             Zones = new List<IZone>();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseRealm"/> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
         public BaseRealm(string name)
             : base()
         {
@@ -66,10 +66,10 @@ namespace MudDesigner.Engine.Environment
         {
             base.CopyState(ref copyFrom);
 
-            //Make sure we are dealing with a IRealm object
+            // Make sure we are dealing with a IRealm object
             if (copyFrom is IRealm && Zones != null)
             {
-                //Loop through each Zone and update it's Realm property to reference the newObject instead.
+                // Loop through each Zone and update it's Realm property to reference the newObject instead.
                 foreach (IZone zone in Zones)
                 {
                     zone.Realm = this;
@@ -107,7 +107,7 @@ namespace MudDesigner.Engine.Environment
         /// <param name="forceOverwrite">If true, it will overwrite the Zone if it already exists within the collection.</param>
         public virtual void AddZones(IZone[] zones, bool forceOverwrite = true)
         {
-            //Loop through each Zone provided and add it via our AddZone() method.
+            // Loop through each Zone provided and add it via our AddZone() method.
             foreach (IZone zone in zones)
             {
                 AddZone(zone, forceOverwrite);
@@ -121,10 +121,10 @@ namespace MudDesigner.Engine.Environment
         /// <returns></returns>
         public virtual IZone GetZone(string zoneName)
         {
-            //Loop through each Zone until we find one that matches.
+            // Loop through each Zone until we find one that matches.
             foreach (IZone zone in Zones)
             {
-                //If it matches, return it.
+                // If it matches, return it.
                 if (zone.Name == zoneName)
                     return zone;
             }
@@ -156,7 +156,7 @@ namespace MudDesigner.Engine.Environment
         /// <param name="playersToOmmit">A list of players that you want to hide the message from.</param>
         public virtual void BroadcastMessage(string message, List<IPlayer> playersToOmmit = null)
         {
-            //Loop through each zone in the Realm.
+            // Loop through each zone in the Realm.
             foreach (IZone zone in Zones)
             {
                 //Broadcast to the Zone.
@@ -167,14 +167,48 @@ namespace MudDesigner.Engine.Environment
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="occupant">The occupant.</param>
+        /// <param name="departureEnvironment">The departure environment.</param>
+        /// <param name="directions">The directions.</param>
         public delegate void OnEnterHandler(IMob occupant, IEnvironment departureEnvironment, AvailableTravelDirections directions);
+
+        /// <summary>
+        /// Occurs when [on enter event].
+        /// </summary>
         public event OnEnterHandler OnEnterEvent;
+
+        /// <summary>
+        /// Called when [enter].
+        /// </summary>
+        /// <param name="occupant">The occupant.</param>
+        /// <param name="departureEnvironment">The departure environment.</param>
+        /// <param name="direction">The direction.</param>
         public virtual void OnEnter(IMob occupant, IEnvironment departureEnvironment, AvailableTravelDirections direction)
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="occupant">The occupant.</param>
+        /// <param name="arrivalEnvironment">The arrival environment.</param>
+        /// <param name="directions">The directions.</param>
         public delegate void OnLeaveHandler(IMob occupant, IEnvironment arrivalEnvironment, AvailableTravelDirections directions);
+
+        /// <summary>
+        /// Occurs when [on leave event].
+        /// </summary>
         public event OnLeaveHandler OnLeaveEvent;
+
+        /// <summary>
+        /// Called when [leave].
+        /// </summary>
+        /// <param name="occupant">The occupant.</param>
+        /// <param name="arrivalEnvironment">The arrival environment.</param>
+        /// <param name="direction">The direction.</param>
         public void OnLeave(IMob occupant, IEnvironment arrivalEnvironment, AvailableTravelDirections direction)
         {
         }

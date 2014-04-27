@@ -1,19 +1,13 @@
-﻿/* ServerDirector
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: Server Director is responsible for managing the user connections.
- */
-
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="ServerDirector.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading;
 using System.Linq;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Directors;
 using MudDesigner.Engine.Networking;
 using MudDesigner.Engine.Core;
@@ -29,7 +23,11 @@ namespace MudDesigner.Engine.Directors
     /// </summary>
     public class ServerDirector : IServerDirector
     {
+        /// <summary>
+        /// The logger
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(ServerDirector)); 
+
         /// <summary>
         /// Gets a reference to the collection of players that are currently connected
         /// </summary>
@@ -52,6 +50,10 @@ namespace MudDesigner.Engine.Directors
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServerDirector"/> class.
+        /// </summary>
+        /// <param name="server">The server.</param>
         public ServerDirector(IServer server)
         {
             Server = server;
@@ -90,9 +92,9 @@ namespace MudDesigner.Engine.Directors
                     break;
                 }
 
-                //When a user closes the telnet terminal, an exception can be generated
-                //due to accessing a connection that no longer exists.  This will catch that
-                //and ignore, letting the next loop iteration find the disconnect and process.
+                // When a user closes the telnet terminal, an exception can be generated
+                // due to accessing a connection that no longer exists.  This will catch that
+                // and ignore, letting the next loop iteration find the disconnect and process.
                 try
                 {
                     try
@@ -123,7 +125,7 @@ namespace MudDesigner.Engine.Directors
                 {
                     Log.Info(string.Format("{0} disconnected", connectedUser.Name));
                     Log.Error(string.Format("Exception occured! {0}", ex.Message));
-                    //Logger.WriteLine(connectedUser.Name + " disconnected.");
+                    // Logger.WriteLine(connectedUser.Name + " disconnected.");
                     DisconnectPlayer(connectedUser);
                 }
             }
@@ -151,6 +153,9 @@ namespace MudDesigner.Engine.Directors
             }
         }
 
+        /// <summary>
+        /// Disconnects all players from the server
+        /// </summary>
         public void DisconnectAll()
         {
             Log.Info("Disconnecting all users");

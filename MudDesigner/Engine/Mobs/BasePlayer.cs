@@ -1,25 +1,18 @@
-﻿/* BasePlayer
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: The Base class for all Players in the game world.
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="BasePlayer.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.States;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Directors;
 using MudDesigner.Engine.Objects;
-
-//Newtonsoft JSon using statements
 using Newtonsoft.Json;
 using log4net;
 
@@ -30,9 +23,12 @@ namespace MudDesigner.Engine.Mobs
     /// </summary>
     public abstract class BasePlayer : BaseMob, IPlayer
     {
+        /// <summary>
+        /// The logger
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(BasePlayer)); 
 
-        //TODO - IPlayer.Username and Password need to be protected with a IPlayer.Validate(username, password) method. - JS
+        // TODO - IPlayer.Username and Password need to be protected with a IPlayer.Validate(username, password) method. - JS
         /// <summary>
         /// Gets or Sets the username for this player
         /// </summary>
@@ -98,9 +94,15 @@ namespace MudDesigner.Engine.Mobs
         [JsonIgnore()]
         [DisableStateCopy()]
         public List<byte> Buffer { get; set; }
-     
+
+        /// <summary>
+        /// The last message had new line
+        /// </summary>
         private bool lastMessageHadNewLine = true;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BasePlayer"/> class.
+        /// </summary>
         public BasePlayer()
         {
             Buffer = new List<byte>();
@@ -120,14 +122,14 @@ namespace MudDesigner.Engine.Mobs
             this.Connection = connection;
             Director = director;
 
-            //Store reference to the initial state.
+            // Store reference to the initial state.
             CurrentState = initialState;
 
-            //Call the login event.
+            // Call the login event.
             OnLoginEvent();
 
-            //Render the state after the login event.  This allows scripts to replace the initialState
-            //if they want with something custom and have the engine render it.
+            // Render the state after the login event.  This allows scripts to replace the initialState
+            // if they want with something custom and have the engine render it.
 
             if (CurrentState == null)
             {
@@ -144,25 +146,25 @@ namespace MudDesigner.Engine.Mobs
         /// <returns></returns>
         public String ReceiveInput()
         {
-            //The input s tring
+            // The input s tring
             string input = String.Empty;
             ReceivedInput = String.Empty;
 
-            //This loop will forever run until we have received \n from the player
+            // This loop will forever run until we have received \n from the player
             while (true && Connection != null)
             {
                 try
                 {
                     byte[] buf = new byte[1];
 
-                    //Make sure we are still connected
+                    // Make sure we are still connected
                     if (!Connection.Connected)
                         return "Disconnected.";
 
-                    //Receive input from the socket connection
+                    // Receive input from the socket connection
                     Int32 recved = Connection.Receive(buf);
 
-                    //If we have received data, prep it for use
+                    // If we have received data, prep it for use
                     if (recved > 0)
                     {
                         if (buf[0] == '\n' && Buffer.Count > 0)
@@ -170,24 +172,24 @@ namespace MudDesigner.Engine.Mobs
                             if (Buffer[Buffer.Count - 1] == '\r')
                                 Buffer.RemoveAt(Buffer.Count - 1);
 
-                            //Format the input
+                            // Format the input
                             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
 
-                            //Convert the bytes into a s tring
+                            // Convert the bytes into a s tring
                             input = enc.GetString(Buffer.ToArray());
 
-                            //Clear out our buffer
+                            // Clear out our buffer
                             Buffer.Clear();
 
-                            //Return a trimmed string.
+                            // Return a trimmed string.
                             ReceivedInput = input;
                             return input;
                         }
                         else
-                            //otherwise keep adding the input to our bufer
+                            // otherwise keep adding the input to our bufer
                             Buffer.Add(buf[0]);
                     }
-                    else if (recved == 0) //Disconnected
+                    else if (recved == 0) // Disconnected
                     {
                         //   ConnectedPlayers[index]. Connected = false;
                         //  this.LoggedIn = false;
@@ -196,7 +198,7 @@ namespace MudDesigner.Engine.Mobs
                 }
                 catch (Exception e)
                 {
-                    //Flag as disabled 
+                    // Flag as disabled 
                     //  this.Connected = false;
                     //  this.LoggedIn = false;
                     return e.Message;
@@ -217,9 +219,9 @@ namespace MudDesigner.Engine.Mobs
                 Log.Error(string.Format("User password was null for player {0}!",Name));
                 throw new ArgumentNullException("userPassword");
             }
-            //Only set them if the password is not empty.
-            //To reset the password, we will require the user to enter the
-            //original password using ChangePassword()
+            // Only set them if the password is not empty.
+            // To reset the password, we will require the user to enter the
+            // original password using ChangePassword()
             if (Password != null) 
                 return;
             
@@ -277,7 +279,7 @@ namespace MudDesigner.Engine.Mobs
             try
             {
                 if (IsConnected)
-                { } //TODO - Move to OnDisconnect event.
+                { } // TODO - Move to OnDisconnect event.
                 if (Connection != null)
                 {
                     Connection.Close();
@@ -310,8 +312,8 @@ namespace MudDesigner.Engine.Mobs
         /// <param name="newLine">If false, no no line will be printed and the next message will be printed on the same line.</param>
         public override void SendMessage(string message, bool newLine = true)
         {
-            //When printing properties that don't have values, they'll
-            //be null.
+            // When printing properties that don't have values, they'll
+            // be null.
             if (message == null)
                 return;
 
@@ -326,7 +328,7 @@ namespace MudDesigner.Engine.Mobs
             else
                 this.lastMessageHadNewLine = false;
 
-            //Make sure we are still connected
+            // Make sure we are still connected
             try
             {
                 if (IsConnected)
@@ -334,7 +336,7 @@ namespace MudDesigner.Engine.Mobs
             }
             catch (Exception ex)
             {
-                //No connection was made, so make sure we clean up
+                // No connection was made, so make sure we clean up
                 if (!IsConnected)
                     Disconnect();
             }
@@ -349,81 +351,239 @@ namespace MudDesigner.Engine.Mobs
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
             return Name;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="player">The player.</param>
         public delegate void OnLevelHandler(IPlayer player);
+
+        /// <summary>
+        /// Occurs when [on level event].
+        /// </summary>
         public event OnLevelHandler OnLevelEvent;
+
+        /// <summary>
+        /// Called when [level].
+        /// </summary>
+        /// <param name="player">The player.</param>
         public virtual void OnLevel(IPlayer player)
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public delegate void OnLoginHandler();
+
+        /// <summary>
+        /// Occurs when [on login event].
+        /// </summary>
         public event OnLoginHandler OnLoginEvent;
+
+        /// <summary>
+        /// Called when [login].
+        /// </summary>
         public virtual void OnLogin()
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="initialState">The initial state.</param>
         public delegate void OnConnectHandler(IState initialState);
+
+        /// <summary>
+        /// Occurs when [on connect event].
+        /// </summary>
         public event OnConnectHandler OnConnectEvent;
+
+        /// <summary>
+        /// Called when [connect].
+        /// </summary>
+        /// <param name="initialState">The initial state.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
         public void OnConnect(IState initialState)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public delegate void OnDisconnectHandler();
+
+        /// <summary>
+        /// Occurs when [on disconnect event].
+        /// </summary>
         public event OnDisconnectHandler OnDisconnectEvent;
+
+        /// <summary>
+        /// Disconnects the player from the server.
+        /// </summary>
+        /// <exception cref="System.NotImplementedException"></exception>
         public void OnDisconnect()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="charName">Name of the character.</param>
+        /// <param name="location">The location.</param>
         public delegate void OnCreateHandler(string charName, IRoom location);
+
+        /// <summary>
+        /// Occurs when [on create event].
+        /// </summary>
         public event OnCreateHandler OnCreateEvent;
+
+        /// <summary>
+        /// Called when [create].
+        /// </summary>
+        /// <param name="charName">Name of the character.</param>
+        /// <param name="location">The location.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
         public void OnCreate(string charName, IRoom location)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="arrivalRoom">The arrival room.</param>
+        /// <param name="cancel">if set to <c>true</c> [cancel].</param>
         public delegate void OnLeaveHandler(IRoom arrivalRoom, bool cancel = false);
+
+        /// <summary>
+        /// Occurs when [on leave event].
+        /// </summary>
         public event OnLeaveHandler OnLeaveEvent;
+
+        /// <summary>
+        /// Called when [leave].
+        /// </summary>
+        /// <param name="arrivalRoom">The arrival room.</param>
+        /// <param name="cancel">if set to <c>true</c> [cancel].</param>
+        /// <exception cref="System.NotImplementedException"></exception>
         public void OnLeave(IRoom arrivalRoom, bool cancel = false)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="departingRoom">The departing room.</param>
         public delegate void OnEnterHandler(IRoom departingRoom);
+
+        /// <summary>
+        /// Occurs when [on enter event].
+        /// </summary>
         public event OnEnterHandler OnEnterEvent;
+
+        /// <summary>
+        /// Called when [enter].
+        /// </summary>
+        /// <param name="departingRoom">The departing room.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
         public void OnEnter(IRoom departingRoom)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target">The target.</param>
         public delegate void OnAttackHandler(IMob[] target);
+
+        /// <summary>
+        /// Occurs when [on attack event].
+        /// </summary>
         public event OnAttackHandler OnAttackEvent;
+
+        /// <summary>
+        /// Called when [attack].
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
         public void OnAttack(IMob[] target)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target">The target.</param>
         public delegate void OnDealDamageHandler(IMob[] target);
+
+        /// <summary>
+        /// Occurs when [on deal damage event].
+        /// </summary>
         public event OnDealDamageHandler OnDealDamageEvent;
+
+        /// <summary>
+        /// Called when [deal damage].
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
         public void OnDealDamage(IMob[] target)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target">The target.</param>
         public delegate void OnRecieveDamageHandler(IGameObject target);
+
+        /// <summary>
+        /// Occurs when [on recieve damage event].
+        /// </summary>
         public event OnRecieveDamageHandler OnRecieveDamageEvent;
+
+        /// <summary>
+        /// Called when [recieve damage].
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
         public void OnRecieveDamage(IGameObject target)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target">The target.</param>
         public delegate void OnDeathHandler(IGameObject target);
+
+        /// <summary>
+        /// Occurs when [on death event].
+        /// </summary>
         public event OnDeathHandler OnDeathEvent;
+
+        /// <summary>
+        /// Called when [death].
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
         public void OnDeath(IGameObject target)
         {
             throw new NotImplementedException();

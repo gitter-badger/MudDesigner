@@ -1,16 +1,11 @@
-﻿/* IRoom
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: Contract for implementing game Rooms for players to traverse.
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="IRoom.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System.Collections.Generic;
 using System;
 using System.Collections;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Core;
 using MudDesigner;
 using MudDesigner.Engine.Mobs;
@@ -23,10 +18,44 @@ namespace MudDesigner.Engine.Environment
     /// </summary>
     public struct Senses
     {
+        /// <summary>
+        /// Gets or sets the see.
+        /// </summary>
+        /// <value>
+        /// The see.
+        /// </value>
         public string See { get; set; }
+
+        /// <summary>
+        /// Gets or sets the hear.
+        /// </summary>
+        /// <value>
+        /// The hear.
+        /// </value>
         public string Hear { get; set; }
+
+        /// <summary>
+        /// Gets or sets the smell.
+        /// </summary>
+        /// <value>
+        /// The smell.
+        /// </value>
         public string Smell { get; set; }
+
+        /// <summary>
+        /// Gets or sets the feel.
+        /// </summary>
+        /// <value>
+        /// The feel.
+        /// </value>
         public string Feel { get; set; }
+
+        /// <summary>
+        /// Gets or sets the taste.
+        /// </summary>
+        /// <value>
+        /// The taste.
+        /// </value>
         public string Taste { get; set; }
     }
 
@@ -60,8 +89,18 @@ namespace MudDesigner.Engine.Environment
         /// </summary>
         List<IItem> Items { get; set; }
 
+        /// <summary>
+        /// Adds the character.
+        /// </summary>
+        /// <param name="character">The character.</param>
+        /// <param name="entryDirection">The entry direction.</param>
         void AddCharacter(IMob character, AvailableTravelDirections entryDirection);
 
+        /// <summary>
+        /// Removes the character.
+        /// </summary>
+        /// <param name="character">The character.</param>
+        /// <param name="leavingDireciton">The leaving direciton.</param>
         void RemoveCharacter(IMob character, AvailableTravelDirections leavingDireciton);
 
         /// <summary>
@@ -80,6 +119,11 @@ namespace MudDesigner.Engine.Environment
         /// <returns></returns>
         IDoor GetDoorway(AvailableTravelDirections direction);
 
+        /// <summary>
+        /// Doorways the exists.
+        /// </summary>
+        /// <param name="direction">The direction.</param>
+        /// <returns></returns>
         bool DoorwayExists(AvailableTravelDirections direction);
 
         /// <summary>
@@ -100,13 +144,30 @@ namespace MudDesigner.Engine.Environment
         /// </summary>
         /// <param name="item">The item you want to add.</param>
         void AddItem(IItem item);
-        
+
+        /// <summary>
+        /// Adds the decoration.
+        /// </summary>
+        /// <param name="decoration">The decoration.</param>
         void AddDecoration(string decoration);
 
+        /// <summary>
+        /// Gets the items.
+        /// </summary>
+        /// <returns></returns>
         IItem[] GetItems();
-        
+
+        /// <summary>
+        /// Gets the item.
+        /// </summary>
+        /// <param name="itemName">Name of the item.</param>
+        /// <returns></returns>
         IItem GetItem(string itemName);
-        
+
+        /// <summary>
+        /// Gets the decorations.
+        /// </summary>
+        /// <returns></returns>
         string[] GetDecorations();
 
         /// <summary>
@@ -114,14 +175,21 @@ namespace MudDesigner.Engine.Environment
         /// </summary>
         /// <param name="item">The item you want to remove</param>
         void RemoveItem(IItem item);
-        
+
+        /// <summary>
+        /// Removes the decoration.
+        /// </summary>
+        /// <param name="decoration">The decoration.</param>
         void RemoveDecoration(string decoration);
 
         /// <summary>
         /// Clears the Room of all items.
         /// </summary>
         void ClearItems();
-        
+
+        /// <summary>
+        /// Clears the decorations.
+        /// </summary>
         void ClearDecorations();
     }
 }

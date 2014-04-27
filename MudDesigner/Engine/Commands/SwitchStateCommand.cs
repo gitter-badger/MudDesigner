@@ -1,12 +1,8 @@
-﻿/* SwitchStateCommand
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: This command switches the state of a player.
- */
-
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="SwitchStateCommand.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Directors;
 using MudDesigner.Engine.States;
@@ -19,6 +15,10 @@ namespace MudDesigner.Engine.Commands
     /// </summary>
     public class SwitchStateCommand : ICommand
     {
+        /// <summary>
+        /// Executes the command.
+        /// </summary>
+        /// <param name="player">The player who sent the command.</param>
         public void Execute(IPlayer player)
         {
             //Switch the players state.

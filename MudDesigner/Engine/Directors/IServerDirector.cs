@@ -1,18 +1,12 @@
-﻿/* IServerDirector
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: Server Director is responsible for managing the user connections.
- */
-
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="IServerDirector.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Mobs;
 using MudDesigner.Engine.Networking;

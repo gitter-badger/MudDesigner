@@ -1,17 +1,11 @@
-﻿/* LoadFileCommand
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: Provides support for loading the game world.  This is an admin only command.
- */
-
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="LoadFileCommand.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.IO;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Scripting;
@@ -25,20 +19,26 @@ namespace MudDesigner.Engine.Commands
     /// </summary>
     public class LoadFileCommand : ICommand
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(LoadFileCommand)); 
+        /// <summary>
+        /// The logger
+        /// </summary>
+        private static readonly ILog Log = LogManager.GetLogger(typeof(LoadFileCommand));
 
+        /// <summary>
+        /// Executes the command.
+        /// </summary>
+        /// <param name="player">The player who sent the command.</param>
         public void Execute(IPlayer player)
         {
-            //if the player has the correct role..
+            // if the player has the correct role..
             if (player != null && (player.Role == CharacterRoles.Owner || player.Role == CharacterRoles.Admin))
             {
                 if (player.Director.Server.Game != null)
                 {
-                    //Restore the world to the state it was in prior to the last save.
+                    // Restore the world to the state it was in prior to the last save.
                     player.Director.Server.Game.RestoreWorld();
                     player.SendMessage("World restoration completed.");
                     Log.Info("World restoration completed.");
-
                 }
             }
         }

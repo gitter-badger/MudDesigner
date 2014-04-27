@@ -1,22 +1,15 @@
-﻿/* IWorld
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: The EngineWorld interface contains the methods and properties needed to implement the game world. All Realms, Zones and Rooms are held within the World.
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="IWorld.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Mobs;
-
-//Newtonsoft JSon using statements
 using Newtonsoft.Json;
 
 namespace MudDesigner.Engine.Environment
@@ -36,6 +29,11 @@ namespace MudDesigner.Engine.Environment
         /// </summary>
         List<IRealm> Realms { get; set; }
 
+        /// <summary>
+        /// Rooms the exists.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns></returns>
         bool RoomExists(string path);
 
         /// <summary>

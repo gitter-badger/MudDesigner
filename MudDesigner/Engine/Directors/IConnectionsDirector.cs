@@ -1,13 +1,13 @@
-﻿/* IConnectionsDirector
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: This file currently has no use.
- */
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="IConnectionsDirector.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace MudDesigner.Engine.Directors
 {
+    /// <summary>
+    /// Interface for connections.
+    /// </summary>
     public interface IConnectionsDirector
     {
          

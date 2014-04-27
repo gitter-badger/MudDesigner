@@ -3,11 +3,20 @@ using System.Text;
 
 namespace MudDesigner.Engine.Core
 {
+    /// <summary>
+    /// Cryptography class for encrypting data.
+    /// </summary>
     public class Crypt
     {
+        /// <summary>
+        /// Generates the salted hash.
+        /// </summary>
+        /// <param name="password">The password.</param>
+        /// <param name="salt">The salt.</param>
+        /// <returns></returns>
         public static byte[] GenerateSaltedHash(string password, byte[] salt)
         {
-            var plainText = Encoding.UTF8.GetBytes(password);
+            byte[] plainText = Encoding.UTF8.GetBytes(password);
             HashAlgorithm algorithm = new SHA256Managed();
             var plainTextWithSaltBytes = new byte[plainText.Length+salt.Length];
 
@@ -15,15 +24,22 @@ namespace MudDesigner.Engine.Core
             {
                 plainTextWithSaltBytes[i] = plainText[i];
             }
+
             for(var i =0; i < salt.Length; i++)
             {
                 plainTextWithSaltBytes[plainText.Length + i] = salt[i];
             }
-            var hash = algorithm.ComputeHash(plainTextWithSaltBytes);
+
+            byte[] hash = algorithm.ComputeHash(plainTextWithSaltBytes);
 
             return hash;
         }
 
+        /// <summary>
+        /// Generates the salt.
+        /// </summary>
+        /// <param name="length">The length.</param>
+        /// <returns></returns>
         public static byte[] GenerateSalt(int length)
         {
             var salt = new byte[length];
@@ -33,6 +49,12 @@ namespace MudDesigner.Engine.Core
             return salt;
         }
 
+        /// <summary>
+        /// Cryps the compare.
+        /// </summary>
+        /// <param name="array1">The array1.</param>
+        /// <param name="array2">The array2.</param>
+        /// <returns></returns>
         public static bool CrypCompare(byte[] array1, byte[] array2)
         {
             const byte zero = 0;

@@ -1,26 +1,22 @@
-﻿/* IZone
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: The interface contract for Zone classes. Provides all of the property and method implementation requirements.
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="IZone.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Mobs;
-
-//Newtonsoft JSon using statements
 using Newtonsoft.Json;
 
 namespace MudDesigner.Engine.Environment
 {
+    /// <summary>
+    /// The interface contract for Zone objects.
+    /// </summary>
     public interface IZone : IEnvironment
     {
         /// <summary>
@@ -35,9 +31,9 @@ namespace MudDesigner.Engine.Environment
         [JsonProperty(TypeNameHandling = TypeNameHandling.All)]
         List<IRoom> Rooms { get; set; }
 
-        //TODO - Add a general collection of monsters that populate the entire Zone.
-        //Helps you not having to insert Monsters into every room you make
-        //List<IMonster> Monsters {get;}
+        // TODO - Add a general collection of monsters that populate the entire Zone.
+        // Helps you not having to insert Monsters into every room you make
+        // List<IMonster> Monsters {get;}
 
         /// <summary>
         /// Adds a Room to the Zone. This is the preferred method for adding Rooms. It ensures that a null Room is never added to the collection
@@ -61,6 +57,10 @@ namespace MudDesigner.Engine.Environment
         /// <returns></returns>
         IRoom GetRoom(string roomName);
 
+        /// <summary>
+        /// Gets the rooms.
+        /// </summary>
+        /// <returns></returns>
         IRoom[] GetRooms();
 
         /// <summary>

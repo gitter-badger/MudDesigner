@@ -1,11 +1,8 @@
-﻿/* CharacterRoles
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: An enumeration of Roles that the player can have on the server.
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="CharacterRoles.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +15,24 @@ namespace MudDesigner.Engine.Mobs
     /// </summary>
     public enum CharacterRoles
     {
+        /// <summary>
+        /// The standard
+        /// </summary>
         Standard,
+
+        /// <summary>
+        /// The builder
+        /// </summary>
         Builder,
+
+        /// <summary>
+        /// The admin
+        /// </summary>
         Admin,
+
+        /// <summary>
+        /// The owner
+        /// </summary>
         Owner
     }
 }

@@ -1,21 +1,13 @@
-﻿/* FileIO
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: Provides methods for saving and loading game objects. Most game objects can be loaded after saving with no special requirements, however any
- *                   object that contains a circular referencing property, must have a JSonProperty(ReferenceLoopHandling = Serialize) attribute applied
- *                   to the offending circular referenced property.
- */
-
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="FileIO.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-
-//Newtonsoft JSon using statement
 using Newtonsoft.Json;
 using log4net;
 
@@ -28,6 +20,9 @@ namespace MudDesigner.Engine.Core
     /// </summary>
     public class FileIO : ISavable, ILoadable
     {
+        /// <summary>
+        /// The logger
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(FileIO)); 
 
         /// <summary>
@@ -40,34 +35,34 @@ namespace MudDesigner.Engine.Core
         public void Save(object objectToSave, string fullFilePath)
         {
 
-            //Get the directory path without filename
+            // Get the directory path without filename
             var path = Path.GetDirectoryName(fullFilePath);
 
-            //Check if the path exists. If not, create it.
+            // Check if the path exists. If not, create it.
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
 
-            //Check if the file already exists. If so, delete it
+            // Check if the file already exists. If so, delete it
             if (File.Exists(fullFilePath))
                 File.Delete(fullFilePath);
 
-            //Setup our binary writer
+            // Setup our binary writer
             using (var writer = new BinaryWriter(File.Open(fullFilePath, FileMode.OpenOrCreate)))
             {
                 var settings = new JsonSerializerSettings();
-                //Must use the custom SerializationContracts contract to ensure
-                //that public read-only properties have their values restored later.
+                // Must use the custom SerializationContracts contract to ensure
+                // that public read-only properties have their values restored later.
                 var contract = new SerializationContracts();
 
                 settings.TypeNameHandling = TypeNameHandling.All;
                 settings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
 
-                //Serialize the object to text.
+                // Serialize the object to text.
                 var serialziedObject = JsonConvert.SerializeObject(objectToSave, Formatting.Indented, settings);
 
-                //Write the text to file.
+                // Write the text to file.
                 writer.Write(serialziedObject);
             }
         }
@@ -82,7 +77,7 @@ namespace MudDesigner.Engine.Core
         /// <returns></returns>
         public object Load(string fullFilePath, Type t)
         {
-            //Get the directory path without filename
+            // Get the directory path without filename
             var path = Path.GetDirectoryName(fullFilePath);
 
             if (path == null)
@@ -90,32 +85,32 @@ namespace MudDesigner.Engine.Core
                 return null;
             }
 
-            //Check if the path exists. If not, create it.
+            // Check if the path exists. If not, create it.
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
 
-            //if the file doesn't exist, abort.
+            // if the file doesn't exist, abort.
             if (!File.Exists(fullFilePath)) return null;
 
-            //Setup our binary reader.
+            // Setup our binary reader.
             using (var br = new BinaryReader(File.Open(fullFilePath, FileMode.Open)))
             {
-                //Read the contents of the file and store them
+                // Read the contents of the file and store them
                 var objectToLoad = br.ReadString();
 
                 var settings = new JsonSerializerSettings();
 
-                //Must use the custom SerializationContracts contract to ensure
-                //that public read-only properties have their values restored later.
+                // Must use the custom SerializationContracts contract to ensure
+                // that public read-only properties have their values restored later.
                 var contract = new SerializationContracts();
 
                 settings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
                 settings.TypeNameHandling = TypeNameHandling.All;
                 settings.ContractResolver = contract;
 
-                //Deserialize the object and return it.
+                // Deserialize the object and return it.
                 return JsonConvert.DeserializeObject<Object>(objectToLoad, settings);
             }
         }

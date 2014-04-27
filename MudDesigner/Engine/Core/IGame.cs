@@ -1,17 +1,10 @@
-﻿/* IGame
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: Provides Methods and Properties for adding objects to the game world, managing the server and maintaining the state of the game,
- *                   thereby serving as a base class for all Types that run and manage the MUD Game.
- */
-
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="IGame.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Networking;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Objects;

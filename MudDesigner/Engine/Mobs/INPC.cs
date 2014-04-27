@@ -1,17 +1,12 @@
-﻿/* INPC
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: A interface contract that provides properties and methods for creating custom NPC Characters
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="INPC.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Environment;
 
 namespace MudDesigner.Engine.Mobs
@@ -63,10 +58,25 @@ namespace MudDesigner.Engine.Mobs
         /// </summary>
         Alignments Alignment { get; set; }
 
+        /// <summary>
+        /// Updates this instance.
+        /// </summary>
         void Update();
 
+        /// <summary>
+        /// Called when [talk].
+        /// </summary>
+        /// <param name="initiator">The initiator.</param>
         void OnTalk(IPlayer initiator);
+        /// <summary>
+        /// Called when [control].
+        /// </summary>
+        /// <param name="owner">The owner.</param>
         void OnControl(IPlayer owner); //Called when the IPlayer takes control of this object. Such as marraige or a pet that can recieve commands.
+        /// <summary>
+        /// Called when [mob enter].
+        /// </summary>
+        /// <param name="initiator">The initiator.</param>
         void OnMobEnter(IMob initiator);
     }
 }

@@ -1,19 +1,13 @@
-﻿/* SerializationContracts
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: Used by the FileIO.Save and Load() methods. Ensures that read-only properties will have their values restored during loading.
- */
-
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="SerializationContracts.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-
-//NewtonSoft JSon using statements
 using MudDesigner.Engine.Scripting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -26,8 +20,21 @@ namespace MudDesigner.Engine.Core
     /// </summary>
     public class SerializationContracts : DefaultContractResolver
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(SerializationContracts)); 
+        /// <summary>
+        /// The logger
+        /// </summary>
+        private static readonly ILog Log = LogManager.GetLogger(typeof(SerializationContracts));
 
+        /// <summary>
+        /// Creates a 
+        /// <see cref="T:Newtonsoft.Json.Serialization.JsonProperty" /> for the given 
+        /// <see cref="T:System.Reflection.MemberInfo" />.
+        /// </summary>
+        /// <param name="member">The member to create a <see cref="T:Newtonsoft.Json.Serialization.JsonProperty" /> for.</param>
+        /// <param name="memberSerialization">The member's parent <see cref="T:Newtonsoft.Json.MemberSerialization" />.</param>
+        /// <returns>
+        /// A created <see cref="T:Newtonsoft.Json.Serialization.JsonProperty" /> for the given <see cref="T:System.Reflection.MemberInfo" />.
+        /// </returns>
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
             try

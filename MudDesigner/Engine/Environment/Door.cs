@@ -1,17 +1,12 @@
-﻿/* Door
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: The Doorway class links Rooms together, allowing players to traverse the game world.
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="Door.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-//AllocateThis! Mud Designer using statements.
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Objects;
 
@@ -47,11 +42,20 @@ namespace MudDesigner.Engine.Environment
         /// </summary>
         public IRoom Departure { get; protected  set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Door"/> class.
+        /// </summary>
         public Door()
         {
 
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Door"/> class.
+        /// </summary>
+        /// <param name="direction">The direction.</param>
+        /// <param name="departingRoom">The departing room.</param>
+        /// <param name="arrivingRoom">The arriving room.</param>
         public Door(AvailableTravelDirections direction, IRoom departingRoom, IRoom arrivingRoom)
         {
             FacingDirection = direction;

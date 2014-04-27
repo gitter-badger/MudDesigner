@@ -1,15 +1,10 @@
-﻿/* IPlayer
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: The interface contract allows for implementing properties and methods for creating player classes.
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="IPlayer.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System.Net.Sockets;
 using System.Collections.Generic;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.States;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Core;
@@ -85,10 +80,22 @@ namespace MudDesigner.Engine.Mobs
         /// <returns></returns>
         bool ChangePassword(string oldPassword, string newPassword);
 
+        /// <summary>
+        /// Checks the password.
+        /// </summary>
+        /// <param name="password">The password.</param>
+        /// <returns></returns>
         bool CheckPassword(string password);
 
+        /// <summary>
+        /// Connects the specified initial state.
+        /// </summary>
+        /// <param name="initialState">The initial state.</param>
         void Connect(IState initialState);
-        
+
+        /// <summary>
+        /// Disconnects this instance.
+        /// </summary>
         void Disconnect();
 
         /// <summary>
@@ -96,14 +103,22 @@ namespace MudDesigner.Engine.Mobs
         /// </summary>
         /// <param name="state">The state to switch to.</param>
         void SwitchState(IState state);
-        
+
+        /// <summary>
+        /// Called when [connect].
+        /// </summary>
+        /// <param name="initialState">The initial state.</param>
         void OnConnect(IState initialState);
 
         /// <summary>
         /// Disconnects the player from the server.
         /// </summary>
         void OnDisconnect();
-        
+
+        /// <summary>
+        /// Called when [level].
+        /// </summary>
+        /// <param name="player">The player.</param>
         void OnLevel(IPlayer player);
     }
 }

@@ -1,11 +1,8 @@
-﻿/* Alignments
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: Alignment enumerator that provides various alignments that a character can have.
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="Alignments.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +15,19 @@ namespace MudDesigner.Engine.Mobs
     /// </summary>
     public enum Alignments
     {
+        /// <summary>
+        /// The hostile
+        /// </summary>
         Hostile,
+
+        /// <summary>
+        /// The friendly
+        /// </summary>
         Friendly,
+
+        /// <summary>
+        /// The neutral
+        /// </summary>
         Neutral
     }
 }

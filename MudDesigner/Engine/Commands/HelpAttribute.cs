@@ -1,12 +1,9 @@
-﻿/* HelpAttributes
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: Allows for attaching helpful information related to a game command. Attribute can only be attached to the class and not its members
- */
+﻿//-----------------------------------------------------------------------
+// <copyright file="HelpAttribute.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 
-//Microsoft .NET using statements
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
@@ -22,11 +19,21 @@ namespace MudDesigner.Engine.Commands
     [AttributeUsage(AttributeTargets.Class)]
     public class HelpAttribute : Attribute
     {
-        public string Description { get; set; }
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HelpAttribute"/> class.
+        /// </summary>
+        /// <param name="description">The description.</param>
         public HelpAttribute(string description)
         {
-            Description = description;
+            this.Description = description;
         }
+
+        /// <summary>
+        /// Gets or sets the description.
+        /// </summary>
+        /// <value>
+        /// The description.
+        /// </value>
+        public string Description { get; set; }
     }
 }

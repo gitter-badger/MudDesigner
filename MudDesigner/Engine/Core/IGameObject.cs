@@ -1,18 +1,17 @@
-﻿/* IGameObject
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: This is the base class for all Game Objects in the engine.
- */
-
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="IGameObject.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.ComponentModel;
 using System.Globalization;
 
 namespace MudDesigner.Engine.Core
 {
+    /// <summary>
+    /// The interface contract for GameObjects.
+    /// </summary>
     public interface IGameObject
     {
         /// <summary>
@@ -40,6 +39,12 @@ namespace MudDesigner.Engine.Core
         /// </summary>
         bool Destroyed { get; }
 
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
         Guid ID { get; set; }
         
         /// <summary>

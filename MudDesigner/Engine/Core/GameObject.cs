@@ -1,12 +1,8 @@
-﻿/* GameObject
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: This is the base class for all Game Objects in the engine.
- */
-
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="GameObject.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -14,20 +10,21 @@ using System.Linq;
 using System.IO;
 using System.Reflection;
 using System.Text;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Scripting;
-
-//Newtonsoft JSon using statement
 using Newtonsoft.Json;
 using log4net;
 
 namespace MudDesigner.Engine.Core
 {
-    //This is the base class for all Game Objects in the engine.
+    /// <summary>
+    /// This is the base class for all Game Objects in the engine.
+    /// </summary>
     public class GameObject : IGameObject
     {
+        /// <summary>
+        /// The logger
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(IGameObject));
 
         /// <summary>
@@ -61,6 +58,9 @@ namespace MudDesigner.Engine.Core
         [Browsable(false)]
         public bool Destroyed { get; protected set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GameObject"/> class.
+        /// </summary>
         public GameObject() 
         { 
             Enabled = true;
@@ -88,19 +88,19 @@ namespace MudDesigner.Engine.Core
             {
                 PropertyInfo info = this.GetType().GetProperty(prop.Name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
 
-                //Check if this property has State Copy disabled via the custom attribute, if so, don't copy this property.
+                // Check if this property has State Copy disabled via the custom attribute, if so, don't copy this property.
                 Attribute[] attrib = (Attribute[])info.GetCustomAttributes(typeof(DisableStateCopyAttribute), true);
                 if (attrib.Length > 0)
                     continue;
 
-                //If info is not null and we can write it without an exception
+                // If info is not null and we can write it without an exception
                 if (info != null && info.CanWrite)
                 {
-                    //Check if this.Property already has a value.
-                    //if it does, then check if the user wants to override it or not.
+                    // Check if this.Property already has a value.
+                    // if it does, then check if the user wants to override it or not.
                     if (info.GetValue(this, null) != null && !ignoreNonNullProperties)
                         info.SetValue(this, prop.GetValue(copyFrom, null), null);
-                    //If it does not have a value, then we set it regardless.
+                    // If it does not have a value, then we set it regardless.
                     else if (info.GetValue(this, null) == null)
                         info.SetValue(this, prop.GetValue(copyFrom, null), null);
                 }

@@ -1,15 +1,15 @@
-﻿/* IRuleDirector
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: This file currently has no use.
- */
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="IRulesDirector.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace MudDesigner.Engine.Directors
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IRuleDirector
     {
-         
+         // TODO: Delete Me.
     }
 }

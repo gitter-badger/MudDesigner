@@ -1,17 +1,12 @@
-﻿/* IMob
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: A interface contract that provides properties and methods for creating custom characters
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="IMob.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Environment;
 using MudDesigner.Engine.Core;
@@ -24,7 +19,14 @@ namespace MudDesigner.Engine.Mobs
     /// </summary>
     public enum MessageBroadcastLevels
     {
+        /// <summary>
+        /// The zone
+        /// </summary>
         Zone,
+
+        /// <summary>
+        /// The room
+        /// </summary>
         Room,
     }
 
@@ -78,8 +80,19 @@ namespace MudDesigner.Engine.Mobs
         /// </summary>
         List<IAppearanceAttribute> Appearance { get; set; }
 
+        /// <summary>
+        /// Gets the director.
+        /// </summary>
+        /// <value>
+        /// The director.
+        /// </value>
         IServerDirector Director { get;  }
 
+        /// <summary>
+        /// Sends the message.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="newLine">if set to <c>true</c> [new line].</param>
         void SendMessage(string message, bool newLine = true);
 
         /// <summary>
@@ -177,16 +190,43 @@ namespace MudDesigner.Engine.Mobs
         /// </summary>
         void ClearItems();
 
+        /// <summary>
+        /// Attacks the specified target.
+        /// </summary>
+        /// <param name="target">The target.</param>
         void Attack(IMob target);
 
+        /// <summary>
+        /// Attacks the specified targets.
+        /// </summary>
+        /// <param name="targets">The targets.</param>
         void Attack(IMob[] targets); //Array for AOE attacks
 
+        /// <summary>
+        /// Damages the specified dealer.
+        /// </summary>
+        /// <param name="dealer">The dealer.</param>
+        /// <param name="amount">The amount.</param>
         void Damage(IGameObject dealer, int amount);
 
+        /// <summary>
+        /// Heals the specified dealer.
+        /// </summary>
+        /// <param name="dealer">The dealer.</param>
+        /// <param name="amount">The amount.</param>
         void Heal(IGameObject dealer, int amount);
 
+        /// <summary>
+        /// Restores the mana.
+        /// </summary>
+        /// <param name="dealer">The dealer.</param>
+        /// <param name="amount">The amount.</param>
         void RestoreMana(IGameObject dealer, int amount);
 
+        /// <summary>
+        /// Consumes the mana.
+        /// </summary>
+        /// <param name="amount">The amount.</param>
         void ConsumeMana(int amount);
     }
 }

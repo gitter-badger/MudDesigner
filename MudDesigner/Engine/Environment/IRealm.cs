@@ -1,17 +1,12 @@
-﻿/* IRealm
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: Implements properties and methods for creating Realm Objects.
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="IRealm.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using MudDesigner.Engine.Mobs;
 using MudDesigner.Engine.Objects;
-
-//Newtonsoft JSon using statements
 using Newtonsoft.Json;
 
 namespace MudDesigner.Engine.Environment
@@ -54,6 +49,10 @@ namespace MudDesigner.Engine.Environment
         /// <returns></returns>
         IZone GetZone(string zoneName);
 
+        /// <summary>
+        /// Gets the zones.
+        /// </summary>
+        /// <returns></returns>
         IZone[] GetZones();
 
         /// <summary>
