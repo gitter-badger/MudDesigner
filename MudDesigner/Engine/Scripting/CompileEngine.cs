@@ -1,11 +1,8 @@
-﻿/* CompileEngine
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: The compiler engine is used to compile user scripts so that they may be used by the game. The compiler currently only supports C# syntax.
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="CompileEngine.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -41,6 +38,10 @@ namespace MudDesigner.Engine.Scripting
                     scriptExtension = "." + value;
             }
         }
+
+        /// <summary>
+        /// The script extension
+        /// </summary>
         private static String scriptExtension;
 
         /// <summary>
@@ -63,6 +64,10 @@ namespace MudDesigner.Engine.Scripting
                 return assemblyReferences;
             }
         }
+
+        /// <summary>
+        /// The assembly references
+        /// </summary>
         private static List<string> assemblyReferences;
 
         /// <summary>
@@ -86,6 +91,10 @@ namespace MudDesigner.Engine.Scripting
                 compiler = value;
             }
         }
+
+        /// <summary>
+        /// The compiler
+        /// </summary>
         private static string compiler;
 
         /// <summary>
@@ -120,10 +129,17 @@ namespace MudDesigner.Engine.Scripting
             }
         }
 
-        //Messages stored from the compilers CompilerResults property.
+        /// <summary>
+        /// Messages stored from the compilers CompilerResults property.
+        /// </summary>
         private static String[] _CompileMessages = new string[] { "No compiler messages available." };
 
-        //Returns all of the assemblies currently loaded in the current domain.
+        /// <summary>
+        /// Returns all of the assemblies currently loaded in the current domain.
+        /// </summary>
+        /// <value>
+        /// The _ assemblies.
+        /// </value>
         private static Assembly[] _Assemblies
         {
             get
@@ -177,36 +193,36 @@ namespace MudDesigner.Engine.Scripting
         /// <returns>Returns true if compilation was completed without any errors.</returns>
         public static Boolean Compile(String scriptRepository)
         {
-            //Get the compiler that the developer has selected.
-            //If the developer chooses a compiler that is not part of the engine, the GetCompiler() method
-            //will check all the currently loaded assemblies in memory for a custom compiler implementing
-            //the ICompiler interface.
+            // Get the compiler that the developer has selected.
+            // If the developer chooses a compiler that is not part of the engine, the GetCompiler() method
+            // will check all the currently loaded assemblies in memory for a custom compiler implementing
+            // the ICompiler interface.
             Type compiler = GetCompiler();
 
-            //Incase a non-default compiler was specified and we could not find it in memory, fail.
+            // Incase a non-default compiler was specified and we could not find it in memory, fail.
             if (compiler.Name == "ICompiler")
             {
                 _CompileMessages = new[] { "Compilation Failed.", "Unable to locate the specified compiler of Type '" + Compiler + "'." };
                 return false;
             }
 
-            //Get the compiler parameters.
+            // Get the compiler parameters.
             CompilerParameters param = GetParameters();
 
-            //Create a Instance of the compiler, either custom or internal.
+            // Create a Instance of the compiler, either custom or internal.
             ICompiler com = (ICompiler)Activator.CreateInstance(compiler);
 
-            //Setup it's properties to match that of our CompileEngine.
+            // Setup it's properties to match that of our CompileEngine.
             com.AssemblyReferences = AssemblyReferences;
             com.ScriptExtension = ScriptExtension;
             com.CompilerOptions = CompilerOptions;
 
-            //Compile the scripts.
+            // Compile the scripts.
             Boolean isSuccess = com.Compile(param, scriptRepository);
             HasErrors = !isSuccess;
 
-            //If the compilation failed, store all of the compiler errors
-            //into our _CompileMessages string.
+            // If the compilation failed, store all of the compiler errors
+            // into our _CompileMessages string.
             if (!isSuccess)
             {
                 _CompileMessages = com.Results.Output.Cast<string>().ToArray();
@@ -214,8 +230,8 @@ namespace MudDesigner.Engine.Scripting
             }
             else
             {
-                //Compiling completed without error, so we need to save 
-                //a reference to the compiled assembly.
+                // Compiling completed without error, so we need to save 
+                // a reference to the compiled assembly.
                 CompiledAssembly = com.Results.CompiledAssembly;
                 return true;
             }
@@ -234,36 +250,36 @@ namespace MudDesigner.Engine.Scripting
                 return false;
             }
 
-            //Get the compiler that the developer has selected.
-            //If the developer chooses a compiler that is not part of the engine, the GetCompiler() method
-            //will check all the currently loaded assemblies in memory for a custom compiler implementing
-            //the ICompiler interface.
+            // Get the compiler that the developer has selected.
+            // If the developer chooses a compiler that is not part of the engine, the GetCompiler() method
+            // will check all the currently loaded assemblies in memory for a custom compiler implementing
+            // the ICompiler interface.
             Type compiler = GetCompiler();
 
-            //Incase a non-default compiler was specified and we could not find it in memory, fail.
+            // Incase a non-default compiler was specified and we could not find it in memory, fail.
             if (compiler.Name == "ICompiler")
             {
                 _CompileMessages = new[] { "Compilation Failed.", "Unable to locate the specified compiler of Type '" + Compiler + "'." };
                 return false;
             }
 
-            //Get the compiler parameters.
+            // Get the compiler parameters.
             CompilerParameters param = GetParameters();
 
-            //Create a Instance of the compiler, either custom or internal.
+            // Create a Instance of the compiler, either custom or internal.
             ICompiler com = (ICompiler)Activator.CreateInstance(compiler);
 
-            //Setup it's properties to match that of our CompileEngine.
+            // Setup it's properties to match that of our CompileEngine.
             com.AssemblyReferences = AssemblyReferences;
             com.ScriptExtension = ScriptExtension;
             com.CompilerOptions = CompilerOptions;
 
-            //Compile the script.
+            // Compile the script.
             Boolean isSuccess = com.Compile(param, sourceFile);
             HasErrors = !isSuccess;
 
-            //If the compilation failed, store all of the compiler errors
-            //into our _CompileMessages string.
+            // If the compilation failed, store all of the compiler errors
+            // into our _CompileMessages string.
             if (!isSuccess)
             {
                 _CompileMessages = com.Results.Output.Cast<string>().ToArray();
@@ -271,8 +287,8 @@ namespace MudDesigner.Engine.Scripting
             }
             else
             {
-                //Compiling completed without error, so we need to save 
-                //a reference to the compiled assembly.
+                // Compiling completed without error, so we need to save 
+                // a reference to the compiled assembly.
                 CompiledAssembly = com.Results.CompiledAssembly;
                 return true;
             }
@@ -286,36 +302,36 @@ namespace MudDesigner.Engine.Scripting
         /// <returns>Returns true if compilation was completed without any errors.</returns>
         public static Boolean Compile(String[] sourceCode)
         {
-            //Get the compiler that the developer has selected.
-            //If the developer chooses a compiler that is not part of the engine, the GetCompiler() method
-            //will check all the currently loaded assemblies in memory for a custom compiler implementing
-            //the ICompiler interface.
+            // Get the compiler that the developer has selected.
+            // If the developer chooses a compiler that is not part of the engine, the GetCompiler() method
+            // will check all the currently loaded assemblies in memory for a custom compiler implementing
+            // the ICompiler interface.
             Type compiler = GetCompiler();
 
-            //Incase a non-default compiler was specified and we could not find it in memory, fail.
+            // Incase a non-default compiler was specified and we could not find it in memory, fail.
             if (compiler.Name == "ICompiler")
             {
                 _CompileMessages = new[] { "Compilation Failed.", "Unable to locate the specified compiler of Type '" + Compiler + "'." };
                 return false;
             }
 
-            //Get the compiler parameters.
+            // Get the compiler parameters.
             var param = GetParameters();
 
-            //Create a Instance of the compiler, either custom or internal.
+            // Create a Instance of the compiler, either custom or internal.
             var com = (ICompiler)Activator.CreateInstance(compiler);
 
-            //Setup it's properties to match that of our CompileEngine.
+            // Setup it's properties to match that of our CompileEngine.
             com.AssemblyReferences = AssemblyReferences;
             com.ScriptExtension = ScriptExtension;
             com.CompilerOptions = CompilerOptions;
 
-            //Compile the scripts.
+            // Compile the scripts.
             var isSuccess = com.Compile(param, sourceCode);
             HasErrors = !isSuccess;
 
-            //If the compilation failed, store all of the compiler errors
-            //into our _CompileMessages string.
+            // If the compilation failed, store all of the compiler errors
+            // into our _CompileMessages string.
             if (!isSuccess)
             {
                 _CompileMessages = com.Results.Output.Cast<string>().ToArray();
@@ -323,8 +339,8 @@ namespace MudDesigner.Engine.Scripting
             }
             else
             {
-                //Compiling completed without error, so we need to save 
-                //a reference to the compiled assembly.
+                // Compiling completed without error, so we need to save 
+                // a reference to the compiled assembly.
                 CompiledAssembly = com.Results.CompiledAssembly;
                 return true;
             }
@@ -336,16 +352,16 @@ namespace MudDesigner.Engine.Scripting
         /// <returns></returns>
         private static CompilerParameters GetParameters()
         {
-            //Setup some default parameters that will be used by the compilers.
+            // Setup some default parameters that will be used by the compilers.
             CompilerParameters param = new CompilerParameters(AssemblyReferences.ToArray());
             param.GenerateExecutable = false;
             param.GenerateInMemory = true;
             param.OutputAssembly = "MudDesigner.Compiled.dll";
 
-            //Left out, Add as CompileEngine properties in the future.
-            //param.TreatWarningsAsErrors = true;
-            //param.WarningLevel = 0;
-            //param.IncludeDebugInformation = true;
+            // Left out, Add as CompileEngine properties in the future.
+            // param.TreatWarningsAsErrors = true;
+            // param.WarningLevel = 0;
+            // param.IncludeDebugInformation = true;
             return param;
         }
 
@@ -360,36 +376,36 @@ namespace MudDesigner.Engine.Scripting
         {
             Type compiler = typeof(ICompiler);
 
-            //Internal CSharpRaw compiler Type specified, so we'll use that.
+            // Internal CSharpRaw compiler Type specified, so we'll use that.
             if ((Compiler.ToLower() == "c#") || (Compiler.ToLower() == "csharp"))
             {
                 compiler = typeof(CSharp);
                 return compiler;
             }
 
-            //Build a collection of available compilers by scanning all the assemblies loaded in memory.
-            //If any of the assemblies contain a Type that uses the ICompiler interface, we will assume that the
-            //assembly is a add-on assembly for rScript, adding a new compiler to the CompileEngine.
-            //Only used if a non-internal compiler is specified
+            // Build a collection of available compilers by scanning all the assemblies loaded in memory.
+            // If any of the assemblies contain a Type that uses the ICompiler interface, we will assume that the
+            // assembly is a add-on assembly for rScript, adding a new compiler to the CompileEngine.
+            // Only used if a non-internal compiler is specified
             else
-            {   //Non-internal compiler supplied, so loop through every assembly loaded in memory
+            {   // Non-internal compiler supplied, so loop through every assembly loaded in memory
                 foreach (var a in _Assemblies)
                 {
                     var isCompiler = false;
 
-                    //Create an array of all Types within this assembly
+                    // Create an array of all Types within this assembly
                     var types = a.GetTypes();
 
-                    //Itterate through each Type; See if any implement the ICompiler interface.
+                    // Itterate through each Type; See if any implement the ICompiler interface.
                     foreach (var t in a.GetTypes().Where(t => (t.GetInterface("ICompiler") != null) && (t.Name.ToLower() == Compiler.ToLower())))
                     {
-                        //compiler needs to reference this custom compiler Type.
+                        // compiler needs to reference this custom compiler Type.
                         compiler = t;
                         isCompiler = true;
                         break;
                     }
 
-                    //If we found a matching compiler, then exit this loop.
+                    // If we found a matching compiler, then exit this loop.
                     if (isCompiler)
                         break;
                 }

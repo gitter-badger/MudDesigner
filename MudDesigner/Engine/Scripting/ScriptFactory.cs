@@ -1,18 +1,13 @@
-﻿/* ScriptFactory
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: The ScriptFactory provides helper methods for instancing scripted game objects
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="ScriptFactory.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Networking;
 using MudDesigner.Engine.Objects;
@@ -25,7 +20,11 @@ namespace MudDesigner.Engine.Scripting
     /// </summary>
     public static class ScriptFactory
     {
+        /// <summary>
+        /// The logger
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(ScriptFactory));
+
         //The assembly loaded that will be used.
         private static List<Assembly> assemblyCollection = new List<Assembly>();
 
@@ -37,8 +36,8 @@ namespace MudDesigner.Engine.Scripting
         {
             Assembly a = null;
 
-            //See if a file exists first with this assembly name.
-            //TODO - why does the following line cause an exception when a file doesn't exist?
+            // See if a file exists first with this assembly name.
+            // TODO - why does the following line cause an exception when a file doesn't exist?
             try
             {
                 bool f = File.Exists(assembly);
@@ -51,7 +50,7 @@ namespace MudDesigner.Engine.Scripting
             if (a == null)
                 return;
 
-            //Add the assembly to our assembly collection.
+            // Add the assembly to our assembly collection.
             assemblyCollection.Add(a);
         }
 
@@ -61,7 +60,7 @@ namespace MudDesigner.Engine.Scripting
         /// <param name="assembly">Provides a reference to the assembly that will be added to the collection.</param>
         public static void AddAssembly(Assembly assembly)
         {
-            //Add the supplied assembly to our AssemblyCollection
+            // Add the supplied assembly to our AssemblyCollection
             if (assembly != null)
                 assemblyCollection.Add(assembly);
         }
@@ -101,7 +100,7 @@ namespace MudDesigner.Engine.Scripting
             object script = null;
             if (args == null || args.Length == 0)
             {
-                //Only call Activator if a parameterless constructor exists.
+                // Only call Activator if a parameterless constructor exists.
                 if (type.GetType().GetConstructors().All(c => c.GetParameters().Length == 0))
                     script = Activator.CreateInstance(type);
                 else
@@ -137,7 +136,7 @@ namespace MudDesigner.Engine.Scripting
                     foreach (Type t in types)
                     {
                         Type type = GetParentType(baseScript, t);
-                        if (type != null) //If the returned object is not null, then 't' inherits.
+                        if (type != null) // If the returned object is not null, then 't' inherits.
                         {
                             foundScript = true;
                             script = t;
@@ -188,8 +187,8 @@ namespace MudDesigner.Engine.Scripting
                     foreach (Type t in types)
                     {
                         Type type = GetParentType(baseScript, t);
-                        if (type != null) //If the returned object is not null, then 't' inherits.
-                            collection.Add(t); //This type inherits from baseScript, so add the object
+                        if (type != null) // If the returned object is not null, then 't' inherits.
+                            collection.Add(t); // This type inherits from baseScript, so add the object
                     }
                 }
             }

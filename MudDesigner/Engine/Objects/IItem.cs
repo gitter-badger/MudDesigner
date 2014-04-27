@@ -1,14 +1,9 @@
-﻿/* IItem
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: The interface contract supplies properties and methods for creating custom game items.
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="IItem.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Mobs;
 using MudDesigner.Engine.Core;
 
@@ -24,6 +19,12 @@ namespace MudDesigner.Engine.Objects
         /// </summary>
         bool IsAdminOnly { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is stackable.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is stackable; otherwise, <c>false</c>.
+        /// </value>
         bool IsStackable { get; set; }
 
         /// <summary>
@@ -36,6 +37,12 @@ namespace MudDesigner.Engine.Objects
         /// </summary>
         int Health { get; set; }
 
+        /// <summary>
+        /// Gets or sets the current health.
+        /// </summary>
+        /// <value>
+        /// The current health.
+        /// </value>
         int CurrentHealth { get; set; }
 
         /// <summary>

@@ -5,11 +5,8 @@
  *  
  * File Description: Defines a series of methods that allow a object to be used within the game.
  */
-//Microsoft .NET Using statements
 using System.IO;
 using System.Collections.Generic;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Core;
 
 namespace MudDesigner.Engine.Objects

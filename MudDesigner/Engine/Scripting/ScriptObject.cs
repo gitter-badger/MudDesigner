@@ -1,11 +1,8 @@
-﻿/* ScriptObject
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: Wraps an instance of any class into a Object with helper methods for invoking methods and accessing properties.
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="ScriptObject.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Reflection;
 using System.Text;
@@ -22,11 +19,18 @@ namespace MudDesigner.Engine.Scripting
         /// </summary>
         public Object Instance { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScriptObject"/> class.
+        /// </summary>
+        /// <param name="instance">The instance.</param>
         public ScriptObject(Object instance)
         {
             Instance = instance ?? new Object();
         }
 
+        /// <summary>
+        /// Finalizes an instance of the <see cref="ScriptObject"/> class.
+        /// </summary>
         ~ScriptObject()
         {
             //TODO: Add ability to call a Shutdown() method within this Instance.

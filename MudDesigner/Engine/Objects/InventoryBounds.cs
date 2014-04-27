@@ -1,11 +1,8 @@
-﻿/* InventoryBounds
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: An enumerator for determining if items can be moved from character to character or not.
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="InventoryBounds.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +15,19 @@ namespace MudDesigner.Engine.Objects
     /// </summary>
     public enum InventoryBounds
     {
+        /// <summary>
+        /// The none
+        /// </summary>
         None,
+
+        /// <summary>
+        /// The account bound
+        /// </summary>
         AccountBound,
+
+        /// <summary>
+        /// The character bound
+        /// </summary>
         CharacterBound
     }
 }

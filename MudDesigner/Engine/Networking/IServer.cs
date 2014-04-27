@@ -1,15 +1,10 @@
-﻿/* IServer
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: Provides an interface contract for creating a Server with all the required properties and methods.
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="IServer.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Net.Sockets;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Core;
 
 namespace MudDesigner.Engine.Networking
@@ -19,8 +14,19 @@ namespace MudDesigner.Engine.Networking
     /// </summary>
     public enum ServerStatus
     {
+        /// <summary>
+        /// The stopped
+        /// </summary>
         Stopped = 0,
+
+        /// <summary>
+        /// The starting
+        /// </summary>
         Starting = 1,
+
+        /// <summary>
+        /// The running
+        /// </summary>
         Running = 2
     }
 

@@ -1,11 +1,8 @@
-﻿/* CSharp
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: The C# Compiler used by the CompileEngine
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="CSharp.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -47,22 +44,22 @@ namespace MudDesigner.Engine.Scripting
         /// <returns>Returns true if the compilation was completed without error.</returns>
         public Boolean Compile(CompilerParameters param, String scriptRepository)
         {
-            //Make sure we have a compiler version supplied.
+            // Make sure we have a compiler version supplied.
             if (!CompilerOptions.ContainsKey("CompilerVersion"))
                 CompilerOptions.Add("CompilerVersion", "v4.0");
 
-            //Instance a reference to the C# code provider, this is what will perform the compiling.
+            // Instance a reference to the C# code provider, this is what will perform the compiling.
             CSharpCodeProvider provider = new CSharpCodeProvider(CompilerOptions);
-            //Create an array of script files found within the ScriptRepository matching the ScriptExtension properties.
+            // Create an array of script files found within the ScriptRepository matching the ScriptExtension properties.
             if (!Directory.Exists(scriptRepository))
                 Directory.CreateDirectory(scriptRepository);
             String[] scripts = Directory.GetFiles(scriptRepository, "*" + this.ScriptExtension, SearchOption.AllDirectories);
 
             if (scripts.Length > 0)
             {
-                //Compile the scripts and provide the Results property with a reference to the compilation results.
+                // Compile the scripts and provide the Results property with a reference to the compilation results.
                 Results = provider.CompileAssemblyFromFile(param, scripts);
-                //if the compiler has errors, return false.
+                // if the compiler has errors, return false.
                 if (Results.Errors.HasErrors)
                     return false;
                 else
@@ -83,16 +80,16 @@ namespace MudDesigner.Engine.Scripting
         /// <returns></returns>
         public Boolean Compile(CompilerParameters param, FileInfo scriptFile)
         {
-            //Make sure we have a compiler version supplied.
+            // Make sure we have a compiler version supplied.
             if (!CompilerOptions.ContainsKey("CompilerVersion"))
                 CompilerOptions.Add("CompilerVersion", "v4.0");
 
             CSharpCodeProvider provider = new CSharpCodeProvider(CompilerOptions);
 
-            //Make sure the file exists prior to attempting to compile it.
+            // Make sure the file exists prior to attempting to compile it.
             if (scriptFile.Exists)
             {
-                //Compile the script and provide the Results property with a referece to the compilation results.
+                // Compile the script and provide the Results property with a referece to the compilation results.
                 Results = provider.CompileAssemblyFromFile(param, scriptFile.FullName);
             }
             else

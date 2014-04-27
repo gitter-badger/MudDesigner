@@ -1,11 +1,8 @@
-﻿/* Server
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: The game engines server. The Server listens for incoming connections and then hands them off to the Server Director
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="Server.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,8 +10,6 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Networking;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Directors;
@@ -29,7 +24,11 @@ namespace MudDesigner.Engine.Networking
     /// </summary>
     public class Server : IServer
     {
+        /// <summary>
+        /// The logger
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(Server)); 
+
         /// <summary>
         /// Gets a reference to the current status of the server.
         /// </summary>
@@ -98,12 +97,18 @@ namespace MudDesigner.Engine.Networking
         [Browsable(false)]
         private Socket Socket { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Server"/> class.
+        /// </summary>
         public Server() : this(4000) { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Server"/> class.
+        /// </summary>
+        /// <param name="port">The port.</param>
         [Category("Networking")]
         public Server(int port)
-        {
-            
+        {   
             Port = port;
             Enabled = false;
             Status = ServerStatus.Stopped;
@@ -123,7 +128,6 @@ namespace MudDesigner.Engine.Networking
             
         }
 
-
         /// <summary>
         /// Starts the server. Once completed, it will listen for incoming connections
         /// </summary>
@@ -135,47 +139,47 @@ namespace MudDesigner.Engine.Networking
             Log.Info(string.Format("Game Server System Starting on port {0}",Port));
 //            Logger.WriteLine("Game Server System Starting on port " + Port.ToString());
 
-            //If the server is already running, abort.
+            // If the server is already running, abort.
             if (Status != ServerStatus.Stopped)
                 return;
 
-            //Set the status to starting
+            // Set the status to starting
             Status = ServerStatus.Starting;
 
-            //Store our reference to the Game
+            // Store our reference to the Game
             Game = game;
             
-            //Instance a new copy of ServerDirector
+            // Instance a new copy of ServerDirector
             ServerDirector = new ServerDirector(this);
 
             try
             {
-                //Setup our network socket.
+                // Setup our network socket.
                 Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 IPEndPoint ip = new IPEndPoint(IPAddress.Any, this.Port);
 
-                //Bind to the host and listen for incoming connections
+                // Bind to the host and listen for incoming connections
                 Socket.Bind(ip);
                 Socket.Listen(this.MaxQueuedConnections);
 
-                //Set the status to running
+                // Set the status to running
                 this.Status = ServerStatus.Running;
                 this.Enabled = true;
 
-                //Pass the new client off onto a new thread and allow it to run.
+                // Pass the new client off onto a new thread and allow it to run.
                 ServerThread = new Thread(Running);
                 ServerThread.Start();
                 Log.Info("Server status: Running");
-                //Logger.WriteLine("Server status: Running");
+                // Logger.WriteLine("Server status: Running");
             }
             catch
             {
              
                 Log.Fatal("Failed to start the Engines Networking Server!");
-                //Logger.WriteLine("Failed to star the Engines Networking Server!");
+                // Logger.WriteLine("Failed to star the Engines Networking Server!");
                 this.Status = ServerStatus.Stopped;
                 Log.Fatal("Server status: Stopped");
-                //Logger.WriteLine("Server status: Stopped");
+                // Logger.WriteLine("Server status: Stopped");
             }
         }
 
@@ -187,14 +191,14 @@ namespace MudDesigner.Engine.Networking
             Status = ServerStatus.Stopped;
             Enabled = false;
 
-            //Disconnect all of the players
+            // Disconnect all of the players
             ServerDirector.DisconnectAll();
 
-            //Close our network connection
+            // Close our network connection
             Socket.Close();
-            //Socket = null;
+            // Socket = null;
 
-            //Kill the server thread
+            // Kill the server thread
             ServerThread.Abort();
         }
 
@@ -207,18 +211,18 @@ namespace MudDesigner.Engine.Networking
             {
                 try
                 {
-                    //Don't allow anymore connections if we have hit our limit.
+                    // Don't allow anymore connections if we have hit our limit.
                     if (ServerDirector.ConnectedPlayers.Count < MaxConnections)
                         ServerDirector.AddConnection(Socket.Accept());
                 }
                 catch
                 {
-                    //Swallow for now.
+                    // Swallow for now.
                 }
                 // Let's add the Auto-Save feature while the server is running. - MC
-                //TODO I removed this due to being hard-coded to a internal engine Type.
-                //If a developer creates a custom copy (as we will for our game as well) then the game won't ever have this called. - JS
-                //var eGame = Game as EngineGame;
+                // TODO I removed this due to being hard-coded to a internal engine Type.
+                // If a developer creates a custom copy (as we will for our game as well) then the game won't ever have this called. - JS
+                // var eGame = Game as EngineGame;
 
                 if(Game != null)
                 {

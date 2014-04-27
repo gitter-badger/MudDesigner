@@ -1,11 +1,8 @@
-﻿/* ICompiler
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: The compiler interface that can be used to implement additional compiler to the engine
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="ICompiler.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -41,8 +38,20 @@ namespace MudDesigner.Engine.Scripting
         /// <returns>Returns true if the compilation was completed without error.</returns>
         Boolean Compile(CompilerParameters param, String scriptRepository);
 
+        /// <summary>
+        /// Compiles the specified parameter.
+        /// </summary>
+        /// <param name="param">The parameter.</param>
+        /// <param name="scriptFile">The script file.</param>
+        /// <returns></returns>
         Boolean Compile(CompilerParameters param, System.IO.FileInfo scriptFile);
 
+        /// <summary>
+        /// Compiles the specified parameter.
+        /// </summary>
+        /// <param name="param">The parameter.</param>
+        /// <param name="scriptSource">The script source.</param>
+        /// <returns></returns>
         Boolean Compile(CompilerParameters param, String[] scriptSource);
     }
 }

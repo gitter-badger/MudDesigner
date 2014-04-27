@@ -1,17 +1,12 @@
-﻿/* IEquipable
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: The interface contract supplies properties and methods for creating custom equipable items.
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="IEquipable.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-//AllocateThis! Mud Designer using statements
 using MudDesigner.Engine.Objects;
 using MudDesigner.Engine.Mobs;
 
@@ -41,8 +36,16 @@ namespace MudDesigner.Engine.Objects
         /// <param name="player">The player to unequip from</param>
         void Unequip(IPlayer player);
 
+        /// <summary>
+        /// Adds the component.
+        /// </summary>
+        /// <param name="equipment">The equipment.</param>
         void AddComponent(IItem equipment);
 
+        /// <summary>
+        /// Removes the component.
+        /// </summary>
+        /// <param name="equipment">The equipment.</param>
         void RemoveComponent(IItem equipment);
     }
 }

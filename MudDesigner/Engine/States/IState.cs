@@ -1,12 +1,8 @@
-﻿/* IState
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: Allows for the creation of States that control the characters in the game
- */
-
-//AllocateThis! Mud Designer using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="IState.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using MudDesigner.Engine.Commands;
 using MudDesigner.Engine.Core;
 using MudDesigner.Engine.Mobs;
