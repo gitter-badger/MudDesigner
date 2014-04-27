@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
@@ -27,6 +28,17 @@ namespace MudEngine.Engine.Core
         /// Gets or sets the root path for the data storage.
         /// </summary>
         public string RootPath { get; set; }
+
+        /// <summary>
+        /// Gets the file extension.
+        /// </summary>
+        public string FileExtension
+        {
+            get
+            {
+                return ".xml";
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineXmlStorage"/> class.
@@ -50,27 +62,88 @@ namespace MudEngine.Engine.Core
         }
 
         /// <summary>
+        /// Gets the storage path for the supplied item.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="item">The item.</param>
+        /// <returns>
+        /// Returns the full path for the item type.
+        /// </returns>
+        /// <exception cref="System.NullReferenceException"></exception>
+        public string GetStoragePath<T>(T item = null) where T : class
+        {            
+            // The itemType is used for determining what sub-folder to store the object in.
+            Type itemType = typeof(T);
+            PropertyInfo property = itemType.GetProperties()
+                .FirstOrDefault(prop => Attribute.IsDefined(prop, typeof(StorageFilenameAttribute)));
+
+            // If the object does not have any properties with the StorageFilename attribute
+            // we throw an exception. The attribute is required to determine the filename.
+            if (property == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(
+                        "The {0} item does not have a property defined with the {1} property attribute."
+                        + "\nThis should be a uniquely identifying property, such as a Name or Id.",
+                        itemType.Name, typeof(StorageFilenameAttribute).Name));
+            }
+
+            // RootPath\ItemType
+            string savePath = Path.Combine(this.RootPath, itemType.Name);
+            // Item.xml - Only if item is not null. Otherwise fetching the value throws an exception.
+            string filename = (item == null) ? 
+                string.Empty : 
+                string.Format("{0}{1}", property.GetValue(item).ToString(), this.FileExtension);
+            // RootPath\ItemType\Item.xml
+            string filePath = Path.Combine(savePath, filename);
+
+            return (item == null) ? savePath : filePath;
+        }
+
+        /// <summary>
         /// Saves the specified item.
         /// </summary>
+        /// <typeparam name="T">The Type that the item is of</typeparam>
         /// <param name="item">The item.</param>
-        /// <param name="itemType">Type of the item.</param>
         /// <returns>
         /// Returns the item along with any updates, such as primary key information.
         /// </returns>
-        public IGameObject Save(IGameObject item, Type itemType = null)
+        public T Save<T>(T item) where T : class
         {
-            // Get the item's Type and save path.
-            if (itemType == null)
-            {
-                itemType = item.GetType();
-            }
-            string savePath = Path.Combine(this.RootPath, itemType.Name);
+            // The itemType is used for determining what sub-folder to store the object in.
+            Type itemType = typeof(T);
+            PropertyInfo property = itemType.GetProperties()
+                .FirstOrDefault(prop => Attribute.IsDefined(prop, typeof(StorageFilenameAttribute)));
 
-            var serializer = new XmlSerializer(itemType, "MudEngine");
-            TextWriter writer = new StreamWriter(savePath);
+            // If the object does not have any properties with the StorageFilename attribute
+            // we throw an exception. The attribute is required to determine the filename.
+            if (property == null || property.GetValue(item) == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(
+                        "The {0} item does not have a property defined with the {1} property attribute." 
+                        + "\nThis should be a uniquely identifying property, such as a Name or Id.",
+                        itemType.Name, typeof(StorageFilenameAttribute).Name));
+            }
+
+            // RootPath\ItemType
+            string savePath = Path.Combine(this.RootPath, itemType.Name);
+            // Item.xml
+            string filename = string.Format("{0}.xml", property.GetValue(item).ToString());
+            // RootPath\ItemType\Item.xml
+            string filePath = Path.Combine(savePath, filename);
+
+            // Prepare the directory.
+            if (!Directory.Exists(savePath))
+            {
+                Directory.CreateDirectory(savePath);
+            }
 
             try
             {
+                // Serialize the object to disk.
+                var serializer = new XmlSerializer(itemType, "MudEngine");
+                TextWriter writer = new StreamWriter(filePath);
                 serializer.Serialize(writer, item);
             }
             catch (Exception)
@@ -84,31 +157,6 @@ namespace MudEngine.Engine.Core
         }
 
         /// <summary>
-        /// Saves the specified item.
-        /// </summary>
-        /// <typeparam name="T">The Type that the item is of</typeparam>
-        /// <param name="item">The item.</param>
-        /// <returns>
-        /// Returns the item along with any updates, such as primary key information.
-        /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public T Save<T>(T item) where T : IGameObject
-        {
-            try
-            {
-                this.Save(item, typeof(T));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
-            // Since we are not modifying the object, we just return the item.
-            // This is cheaper than casting the return value of Save back to T.
-            return item;
-        }
-
-        /// <summary>
         /// Saves all of the items in the collection provided.
         /// </summary>
         /// <typeparam name="T">The type that the items are of.</typeparam>
@@ -116,7 +164,7 @@ namespace MudEngine.Engine.Core
         /// <returns>
         /// Returns a updated collection of items.
         /// </returns>
-        public IEnumerable<T> SaveAll<T>(T[] items) where T : IGameObject
+        public IEnumerable<T> Save<T>(T[] items) where T : class
         {
             // Save each item in the collection.
             foreach(T item in items.AsParallel().AsOrdered())
@@ -126,7 +174,7 @@ namespace MudEngine.Engine.Core
                     // Since we are not modifying the object, we just return the item.
                     // This is cheaper than casting the return value of Save back to T 
                     // over each iteration and adding to a new collection.
-                    this.Save(item, typeof(T));
+                    this.Save<T>(item);
                 }
                 catch(Exception)
                 {
@@ -146,7 +194,7 @@ namespace MudEngine.Engine.Core
         /// Returns the fully loaded item.
         /// </returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public T Load<T>(T item) where T : IGameObject, new()
+        public T Load<T>(T item) where T : class, new()
         {
             throw new NotImplementedException();
         }
@@ -159,20 +207,7 @@ namespace MudEngine.Engine.Core
         /// Returns a collection of all items matching T.
         /// </returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public IEnumerable<T> Load<T>() where T : IGameObject, new()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Deletes the specified item.
-        /// </summary>
-        /// <param name="item">The item.</param>
-        /// <returns>
-        /// Returns true if the item was deleted.
-        /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public bool Delete(IGameObject item)
+        public IEnumerable<T> Load<T>() where T : class, new()
         {
             throw new NotImplementedException();
         }
@@ -186,7 +221,7 @@ namespace MudEngine.Engine.Core
         /// Returns true if the item was deleted.
         /// </returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public bool Delete<T>(T item) where T : IGameObject
+        public bool Delete<T>(T item) where T : class
         {
             throw new NotImplementedException();
         }

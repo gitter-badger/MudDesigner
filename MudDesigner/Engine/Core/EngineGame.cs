@@ -4,17 +4,38 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
+using System.Xml.Serialization;
 
 namespace MudEngine.Engine.Core
 {
     /// <summary>
     /// The Core Game that can be used across any game built on the Mud Engine.
     /// </summary>
+    [Serializable]
     public class EngineGame : IGame
     {
         /// <summary>
+        /// Gets or sets a value indicating whether this instance is multiplayer.
+        /// </summary>
+        [XmlIgnore]
+        public bool IsMultiplayer { get; protected set; }
+
+        /// <summary>
+        /// Gets if the game (online or offline) is currently running.
+        /// </summary>
+        [XmlIgnore]
+        public bool IsRunning { get; protected set; }
+
+        /// <summary>
+        /// Gets the storage source.
+        /// </summary>
+        [XmlIgnore]
+        public IPersistedStorage StorageSource { get; protected set; }
+
+        /// <summary>
         /// Gets or Sets the name of the game being played.
         /// </summary>
+        [StorageFilenameAttribute]
         public string Name { get; set; }
 
         /// <summary>
@@ -48,29 +69,16 @@ namespace MudEngine.Engine.Core
         public DateTime LastSaved { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is multiplayer.
-        /// </summary>
-        public bool IsMultiplayer { get; protected set; }
-
-        /// <summary>
         /// Gets or Sets the current World for the game. Contains all of the Realms, Zones and Rooms.
         /// </summary>
+        [XmlIgnore]
         public IWorld World { get; set; }
 
         /// <summary>
         /// Gets or Sets the current Server for the game.
         /// </summary>
+        [XmlIgnore]
         public IServer Server { get; set; }
-
-        /// <summary>
-        /// Gets if the game (online or offline) is currently running.
-        /// </summary>
-        public bool IsRunning { get; protected set; }
-
-        /// <summary>
-        /// Gets the storage source.
-        /// </summary>
-        public IPersistedStorage StorageSource { get; protected set; }
 
         /// <summary>
         /// Initializes the specified storage source and server.

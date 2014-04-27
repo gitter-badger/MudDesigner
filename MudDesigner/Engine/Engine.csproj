@@ -48,6 +48,7 @@
     <Compile Include="Core\EngineServer.cs" />
     <Compile Include="Core\EngineXmlStorage.cs" />
     <Compile Include="Core\ExtensionMethods.cs" />
+    <Compile Include="Core\StorageFilenameAttribute.cs" />
     <Compile Include="Core\ILog.cs" />
     <Compile Include="GameObjects\IGameObject.cs" />
     <Compile Include="Core\IgnoreAttribute.cs" />

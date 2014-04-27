@@ -27,21 +27,25 @@ namespace MudEngine.Engine.Core
         void InitializeStorage();
 
         /// <summary>
-        /// Saves the specified item.
+        /// Gets the storage path for the supplied item.
         /// </summary>
+        /// <typeparam name="T"></typeparam>
         /// <param name="item">The item.</param>
         /// <returns>
-        /// Returns the item along with any updates, such as primary key information.
+        /// Returns the full path for the item type.
         /// </returns>
-        IGameObject Save(IGameObject item, Type itemType = null);
+        string GetStoragePath<T>(T item = null) where T : class;
 
         /// <summary>
         /// Saves the specified item.
         /// </summary>
         /// <typeparam name="T">The Type that the item is of</typeparam>
         /// <param name="item">The item.</param>
-        /// <returns>Returns the item along with any updates, such as primary key information.</returns>
-        T Save<T>(T item) where T : IGameObject;
+        /// <param name="propertyForFilename">The property used to base the filename on.</param>
+        /// <returns>
+        /// Returns the item along with any updates, such as primary key information.
+        /// </returns>
+        T Save<T>(T item) where T : class;
 
         /// <summary>
         /// Saves all of the items in the collection provided.
@@ -49,7 +53,7 @@ namespace MudEngine.Engine.Core
         /// <typeparam name="T">The type that the items are of.</typeparam>
         /// <param name="items">The items.</param>
         /// <returns>Returns a updated collection of items.</returns>
-        IEnumerable<T> SaveAll<T>(T[] items) where T : IGameObject;
+        IEnumerable<T> Save<T>(T[] items) where T : class;
 
         /// <summary>
         /// Loads the specified item.
@@ -57,21 +61,14 @@ namespace MudEngine.Engine.Core
         /// <typeparam name="T">The type that the item is of.</typeparam>
         /// <param name="item">The item.</param>
         /// <returns>Returns the fully loaded item.</returns>
-        T Load<T>(T item) where T : IGameObject, new();
+        T Load<T>(T item) where T : class, new();
 
         /// <summary>
         /// Loads all items of type T..
         /// </summary>
         /// <typeparam name="T">The type that the items are of.</typeparam>
         /// <returns>Returns a collection of all items matching T.</returns>
-        IEnumerable<T> Load<T>() where T : IGameObject, new();
-
-        /// <summary>
-        /// Deletes the specified item.
-        /// </summary>
-        /// <param name="item">The item.</param>
-        /// <returns>Returns true if the item was deleted.</returns>
-        bool Delete(IGameObject item);
+        IEnumerable<T> Load<T>() where T : class, new();
 
         /// <summary>
         /// Deletes the specified item.
@@ -79,6 +76,6 @@ namespace MudEngine.Engine.Core
         /// <typeparam name="T">The type that the item is of.</typeparam>
         /// <param name="item">The item.</param>
         /// <returns>Returns true if the item was deleted.</returns>
-        bool Delete<T>(T item) where T : IGameObject;
+        bool Delete<T>(T item) where T : class;
     }
 }

@@ -37,9 +37,9 @@ namespace MudEngine.Tests.Win
             {
                 game.Initialize(storage);
             }
-            catch
+            catch(Exception e)
             {
-                Assert.Fail(string.Format("IGame.Initialize for {0} failed.", game.GetType().Name));
+                Assert.Fail(string.Format("IGame.Initialize for {0} failed.\n{1}", game.GetType().Name, e.Message));
             }
             finally
             {

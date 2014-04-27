@@ -13,6 +13,21 @@ namespace MudEngine.Engine.Core
     public interface IGame
     {
         /// <summary>
+        /// Gets or sets a value indicating whether this instance is multiplayer.
+        /// </summary>
+        bool IsMultiplayer { get; }
+
+        /// <summary>
+        /// Gets if the game (online or offline) is currently running.
+        /// </summary>
+        bool IsRunning { get; }
+
+        /// <summary>
+        /// Gets the storage source.
+        /// </summary>
+        IPersistedStorage StorageSource { get; }
+
+        /// <summary>
         /// Gets or Sets the name of the game being played.
         /// </summary>
         string Name { get; set; }
@@ -48,11 +63,6 @@ namespace MudEngine.Engine.Core
         DateTime LastSaved { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is multiplayer.
-        /// </summary>
-        bool IsMultiplayer { get; }
-
-        /// <summary>
         /// Gets or Sets the current World for the game. Contains all of the Realms, Zones and Rooms.
         /// </summary>
         IWorld World { get; set; }
@@ -61,16 +71,6 @@ namespace MudEngine.Engine.Core
         /// Gets or Sets the current Server for the game.
         /// </summary>
         IServer Server { get; set; }
-
-        /// <summary>
-        /// Gets if the game (online or offline) is currently running.
-        /// </summary>
-        bool IsRunning { get; }
-
-        /// <summary>
-        /// Gets the storage source.
-        /// </summary>
-        IPersistedStorage StorageSource { get; }
 
         /// <summary>
         /// Initializes the specified storage source and server.
