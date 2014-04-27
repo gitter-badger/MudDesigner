@@ -6,7 +6,7 @@
 using System;
 using MudEngine.Engine.Core;
 
-namespace MudEngine.Engine.Mob
+namespace MudEngine.Engine.GameObjects.Mob
 {
     /// <summary>
     /// The base engine mob object that all Mob related objects inherit from.
@@ -70,7 +70,7 @@ namespace MudEngine.Engine.Mob
         /// <param name="message">The message.</param>
         /// <param name="broadcastLevel">The broadcast level.</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        public void Talk(string message, MessageBroadcastLevels broadcastLevel = MessageBroadcastLevels.Room)
+        public virtual void Talk(string message, MessageBroadcastLevels broadcastLevel = MessageBroadcastLevels.Room)
         {
             throw new NotImplementedException();
         }
@@ -81,7 +81,7 @@ namespace MudEngine.Engine.Mob
         /// <param name="message">The message.</param>
         /// <param name="target">The target.</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        public void Talk(string message, IMob target)
+        public virtual void Talk(string message, IMob target)
         {
             throw new NotImplementedException();
         }
@@ -92,7 +92,7 @@ namespace MudEngine.Engine.Mob
         /// <param name="message">The message.</param>
         /// <param name="group">The group.</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        public void Talk(string message, IMob[] group)
+        public virtual void Talk(string message, IMob[] group)
         {
             throw new NotImplementedException();
         }

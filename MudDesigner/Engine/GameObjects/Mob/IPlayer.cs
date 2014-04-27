@@ -6,7 +6,7 @@
 using System.Net.Sockets;
 using MudEngine.Engine.Core;
 
-namespace MudEngine.Engine.Mob
+namespace MudEngine.Engine.GameObjects.Mob
 {
     /// <summary>
     /// Creates a contract for objects whom want to implement IPlayer

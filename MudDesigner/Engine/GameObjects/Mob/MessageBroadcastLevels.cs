@@ -3,7 +3,7 @@
 //     Copyright (c) AllocateThis! Studio's. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-namespace MudEngine.Engine.Mob
+namespace MudEngine.Engine.GameObjects.Mob
 {
     /// <summary>
     /// Determines how far a message can be broadcasted by a mob object.

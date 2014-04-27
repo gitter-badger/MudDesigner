@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MudEngine.Engine.Core;
 using MudEngine.Engine.Factories;
-using MudEngine.Engine.Mob;
+using MudEngine.Engine.GameObjects.Mob;
 
 namespace MudEngine.Tests.Win.Engine.Factories
 {

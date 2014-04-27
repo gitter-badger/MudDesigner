@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------
 using System;
 
-namespace MudEngine.Engine.Mob
+namespace MudEngine.Engine.GameObjects.Mob
 {
     /// <summary>
     /// The engine player. This class can be used in any game.

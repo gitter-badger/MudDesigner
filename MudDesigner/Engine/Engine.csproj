@@ -43,11 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\ShorthandNameAttribute.cs" />
     <Compile Include="Core\EngineGame.cs" />
     <Compile Include="Core\EngineServer.cs" />
     <Compile Include="Core\EngineXmlStorage.cs" />
     <Compile Include="Core\ExtensionMethods.cs" />
-    <Compile Include="Core\IGameObject.cs" />
+    <Compile Include="GameObjects\IGameObject.cs" />
+    <Compile Include="Core\IgnoreAttribute.cs" />
     <Compile Include="Core\IServerConnectionState.cs" />
     <Compile Include="Core\IPersistedStorage.cs" />
     <Compile Include="Core\IGame.cs" />
@@ -55,7 +57,7 @@
     <Compile Include="Core\IWorld.cs" />
     <Compile Include="Core\PlatformSupportAttribute.cs" />
     <Compile Include="Core\ServerStatus.cs" />
-    <Compile Include="Environment\IRoom.cs" />
+    <Compile Include="GameObjects\Environment\IRoom.cs" />
     <Compile Include="Factories\PersistedStorageFactory.cs" />
     <Compile Include="Factories\MobFactory.cs" />
     <Compile Include="Factories\StorageFactory.cs" />
@@ -66,12 +68,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>GameProperties.settings</DependentUpon>
     </Compile>
-    <Compile Include="Mob\EngineMob.cs" />
-    <Compile Include="Mob\EnginePlayer.cs" />
-    <Compile Include="Mob\IGender.cs" />
-    <Compile Include="Mob\IMob.cs" />
-    <Compile Include="Mob\IPlayer.cs" />
-    <Compile Include="Mob\MessageBroadcastLevels.cs" />
+    <Compile Include="GameObjects\Mob\EngineMob.cs" />
+    <Compile Include="GameObjects\Mob\EnginePlayer.cs" />
+    <Compile Include="GameObjects\Mob\IGender.cs" />
+    <Compile Include="GameObjects\Mob\IMob.cs" />
+    <Compile Include="GameObjects\Mob\IPlayer.cs" />
+    <Compile Include="GameObjects\Mob\MessageBroadcastLevels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerProperties.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -90,6 +92,7 @@
       <LastGenOutput>ServerProperties.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

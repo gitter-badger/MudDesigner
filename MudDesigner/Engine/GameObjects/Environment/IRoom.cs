@@ -1,14 +1,14 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="IGameObject.cs" company="AllocateThis!">
+// <copyright file="IRoom.cs" company="AllocateThis!">
 //     Copyright (c) AllocateThis! Studio's. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-namespace MudEngine.Engine.Core
+namespace MudEngine.Engine.GameObjects.Environment
 {
     /// <summary>
-    /// Provides a contract to objects wanting to implement IGameObject
+    /// Provides a contract to objects wanting to implement IRoom
     /// </summary>
-    public interface IGameObject
+    public interface IRoom
     {
     }
 }

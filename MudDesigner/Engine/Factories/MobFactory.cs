@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using MudEngine.Engine.Mob;
+using MudEngine.Engine.GameObjects.Mob;
 
 namespace MudEngine.Engine.Factories
 {

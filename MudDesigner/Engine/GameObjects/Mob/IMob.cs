@@ -4,9 +4,9 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using MudEngine.Engine.Core;
-using MudEngine.Engine.Environment;
+using MudEngine.Engine.GameObjects.Environment;
 
-namespace MudEngine.Engine.Mob
+namespace MudEngine.Engine.GameObjects.Mob
 {
     /// <summary>
     /// Provides a contract for objects that need to be a Mob.
@@ -33,6 +33,12 @@ namespace MudEngine.Engine.Mob
         /// </summary>
         bool IsMute { get; set; }
 
+        /// <summary>
+        /// Gets or sets the maximum size of the inventory.
+        /// </summary>
+        /// <value>
+        /// The maximum size of the inventory.
+        /// </value>
         int MaximumInventorySize { get; set; }
 
         /// <summary>
@@ -43,6 +49,11 @@ namespace MudEngine.Engine.Mob
         /// <returns></returns>
         bool ProcessCommand(byte[] data);
 
+        /// <summary>
+        /// Processes the command.
+        /// </summary>
+        /// <param name="command">The command.</param>
+        /// <returns></returns>
         bool ProcessCommand(string command);
 
         // TODO: Move all of the Talk methods into a TalkCommand class.

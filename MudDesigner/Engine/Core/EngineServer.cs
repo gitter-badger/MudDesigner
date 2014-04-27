@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using MudEngine.Engine.GameObjects.Mob;
 
 namespace MudEngine.Engine.Core
 {
@@ -275,7 +276,7 @@ namespace MudEngine.Engine.Core
             // Set up a default player object if one is not done so already.
             if (Factories.MobFactory.DefaultPlayer == null)
             {
-                var enginePlayer = new Mob.EnginePlayer { Game = this.Game };
+                var enginePlayer = new EnginePlayer { Game = this.Game };
                 Factories.MobFactory.DefaultPlayer = enginePlayer;
             }
 
