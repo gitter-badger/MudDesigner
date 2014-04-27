@@ -46,9 +46,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Engine\Engine.csproj">
+    <ProjectReference Include="..\Engine.old\Engine.Old.csproj">
       <Project>{9d9e8cac-8876-4725-9a65-2077de4322dd}</Project>
-      <Name>MudDesigner.Engine</Name>
+      <Name>Engine.Old</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

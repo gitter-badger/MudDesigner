@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{9D9E8CAC-8876-4725-9A65-2077DE4322DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine.Old", "Engine.old\Engine.Old.csproj", "{9D9E8CAC-8876-4725-9A65-2077DE4322DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{161E78DB-10C5-43A6-BC15-0945BC6F941F}"
 EndProject
@@ -17,18 +17,18 @@ Global
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs03
 		SccLocalPath0 = .
-		SccProjectUniqueName1 = Engine\\Engine.csproj
-		SccProjectName1 = Engine
-		SccLocalPath1 = Engine
-		SccProjectUniqueName2 = Server\\Server.csproj
-		SccProjectName2 = Server
-		SccLocalPath2 = Server
-		SccProjectUniqueName3 = Scripts\\Scripts.csproj
-		SccProjectName3 = Scripts
-		SccLocalPath3 = Scripts
-		SccProjectUniqueName4 = Editor\\Editor.csproj
-		SccProjectName4 = Editor
-		SccLocalPath4 = Editor
+		SccProjectUniqueName1 = Server\\Server.csproj
+		SccProjectName1 = Server
+		SccLocalPath1 = Server
+		SccProjectUniqueName2 = Scripts\\Scripts.csproj
+		SccProjectName2 = Scripts
+		SccLocalPath2 = Scripts
+		SccProjectUniqueName3 = Editor\\Editor.csproj
+		SccProjectName3 = Editor
+		SccLocalPath3 = Editor
+		SccProjectUniqueName4 = Engine\\Engine.Old.csproj
+		SccProjectName4 = Engine
+		SccLocalPath4 = Engine
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

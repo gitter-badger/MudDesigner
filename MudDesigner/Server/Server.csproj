@@ -59,9 +59,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Engine\Engine.csproj">
+    <ProjectReference Include="..\Engine.old\Engine.Old.csproj">
       <Project>{9D9E8CAC-8876-4725-9A65-2077DE4322DD}</Project>
-      <Name>MudDesigner.Engine</Name>
+      <Name>Engine.Old</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
