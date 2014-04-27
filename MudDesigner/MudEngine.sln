@@ -11,9 +11,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scripts", "Scripts\Scripts.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor", "Editor\Editor.csproj", "{84D17981-44C6-40C6-BC05-15819154E7F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudEngine.Tests.Win", "MudEngine.Tests.Win\MudEngine.Tests.Win.csproj", "{55E551E8-1A67-498F-8CEE-E525A656F3A7}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
+		SccNumberOfProjects = 7
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs03
 		SccLocalPath0 = .
@@ -26,9 +30,15 @@ Global
 		SccProjectUniqueName3 = Editor\\Editor.csproj
 		SccProjectName3 = Editor
 		SccLocalPath3 = Editor
-		SccProjectUniqueName4 = Engine\\Engine.Old.csproj
-		SccProjectName4 = Engine
-		SccLocalPath4 = Engine
+		SccProjectUniqueName4 = Engine.old\\Engine.Old.csproj
+		SccProjectName4 = Engine.old
+		SccLocalPath4 = Engine.old
+		SccProjectUniqueName5 = Engine\\Engine.csproj
+		SccProjectName5 = Engine
+		SccLocalPath5 = Engine
+		SccProjectUniqueName6 = MudEngine.Tests.Win\\MudEngine.Tests.Win.csproj
+		SccProjectName6 = MudEngine.Tests.Win
+		SccLocalPath6 = MudEngine.Tests.Win
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +135,46 @@ Global
 		{84D17981-44C6-40C6-BC05-15819154E7F0}.Server (Debug)|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{84D17981-44C6-40C6-BC05-15819154E7F0}.Server (Debug)|Mixed Platforms.Build.0 = Debug|Any CPU
 		{84D17981-44C6-40C6-BC05-15819154E7F0}.Server (Debug)|x86.ActiveCfg = Debug|Any CPU
+		{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}.Editor (Debug)|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}.Editor (Debug)|Any CPU.Build.0 = Debug|Any CPU
+		{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}.Editor (Debug)|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}.Editor (Debug)|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}.Editor (Debug)|x86.ActiveCfg = Debug|Any CPU
+		{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}.Release|x86.ActiveCfg = Release|Any CPU
+		{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}.Server (Debug)|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}.Server (Debug)|Any CPU.Build.0 = Debug|Any CPU
+		{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}.Server (Debug)|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}.Server (Debug)|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}.Server (Debug)|x86.ActiveCfg = Debug|Any CPU
+		{55E551E8-1A67-498F-8CEE-E525A656F3A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55E551E8-1A67-498F-8CEE-E525A656F3A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55E551E8-1A67-498F-8CEE-E525A656F3A7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{55E551E8-1A67-498F-8CEE-E525A656F3A7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{55E551E8-1A67-498F-8CEE-E525A656F3A7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{55E551E8-1A67-498F-8CEE-E525A656F3A7}.Editor (Debug)|Any CPU.ActiveCfg = Debug|Any CPU
+		{55E551E8-1A67-498F-8CEE-E525A656F3A7}.Editor (Debug)|Any CPU.Build.0 = Debug|Any CPU
+		{55E551E8-1A67-498F-8CEE-E525A656F3A7}.Editor (Debug)|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{55E551E8-1A67-498F-8CEE-E525A656F3A7}.Editor (Debug)|Mixed Platforms.Build.0 = Debug|Any CPU
+		{55E551E8-1A67-498F-8CEE-E525A656F3A7}.Editor (Debug)|x86.ActiveCfg = Debug|Any CPU
+		{55E551E8-1A67-498F-8CEE-E525A656F3A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55E551E8-1A67-498F-8CEE-E525A656F3A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55E551E8-1A67-498F-8CEE-E525A656F3A7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{55E551E8-1A67-498F-8CEE-E525A656F3A7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{55E551E8-1A67-498F-8CEE-E525A656F3A7}.Release|x86.ActiveCfg = Release|Any CPU
+		{55E551E8-1A67-498F-8CEE-E525A656F3A7}.Server (Debug)|Any CPU.ActiveCfg = Debug|Any CPU
+		{55E551E8-1A67-498F-8CEE-E525A656F3A7}.Server (Debug)|Any CPU.Build.0 = Debug|Any CPU
+		{55E551E8-1A67-498F-8CEE-E525A656F3A7}.Server (Debug)|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{55E551E8-1A67-498F-8CEE-E525A656F3A7}.Server (Debug)|Mixed Platforms.Build.0 = Debug|Any CPU
+		{55E551E8-1A67-498F-8CEE-E525A656F3A7}.Server (Debug)|x86.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
