@@ -201,7 +201,53 @@ namespace MudEngine.Engine.Core
         /// <exception cref="System.NotImplementedException"></exception>
         public T Load<T>(T item) where T : class, new()
         {
-            throw new NotImplementedException();
+            // The itemType is used for determining what sub-folder to store the object in.
+            Type itemType = typeof(T);
+            PropertyInfo property = this.FindAttribute<StorageFilenameAttribute>(itemType);
+            var val = property.GetValue(item);
+
+            // If the object does not have any properties with the StorageFilename attribute
+            // we throw an exception. The attribute is required to determine the filename.
+            if (property == null || property.GetValue(item) == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(
+                        "The {0} item does not have a property defined with the {1} property attribute."
+                        + "\nThis should be a uniquely identifying property, such as a Name or Id.",
+                        itemType.Name, typeof(StorageFilenameAttribute).Name));
+            }
+
+            // RootPath\ItemType
+            string savePath = Path.Combine(this.RootPath, itemType.Name);
+            // Item.xml
+            string filename = string.Format("{0}.xml", property.GetValue(item).ToString());
+            // RootPath\ItemType\Item.xml
+            string filePath = Path.Combine(savePath, filename);
+
+            // Prepare the directory.
+            if (!Directory.Exists(savePath))
+            {
+                Directory.CreateDirectory(savePath);
+            }
+
+            // The object we deserialize in to.
+            T newItem = null;
+            try
+            {
+                // Serialize the object to disk.
+                var serializer = new XmlSerializer(itemType, "MudEngine");
+                TextReader writer = new StreamReader(filePath);
+                newItem = (T)serializer.Deserialize(writer);
+                writer.Close();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            // When saving to Xml, there are no adjustments that are made to the object.
+            // We just return a unmodified object.
+            return newItem;
         }
 
         /// <summary>
@@ -214,7 +260,40 @@ namespace MudEngine.Engine.Core
         /// <exception cref="System.NotImplementedException"></exception>
         public IEnumerable<T> Load<T>() where T : class, new()
         {
-            throw new NotImplementedException();
+            // The itemType is used for determining what sub-folder to store the object in.
+            Type itemType = typeof(T);
+
+            // RootPath\ItemType
+            string savePath = Path.Combine(this.RootPath, itemType.Name);
+
+            // Prepare the directory.
+            if (!Directory.Exists(savePath))
+            {
+                Directory.CreateDirectory(savePath);
+            }
+
+            var itemsLoaded = new List<T>();
+            try
+            {
+                // Serialize the object to disk.
+                foreach (string file in Directory.GetFiles(savePath).AsParallel())
+                {
+                    var serializer = new XmlSerializer(itemType, "MudEngine");
+                    TextReader writer = new StreamReader(file);
+                    T currentItem = (T)serializer.Deserialize(writer);
+                    writer.Close();
+
+                    itemsLoaded.Add(currentItem);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            // When saving to Xml, there are no adjustments that are made to the object.
+            // We just return a unmodified object.
+            return itemsLoaded;
         }
 
         /// <summary>
@@ -248,7 +327,7 @@ namespace MudEngine.Engine.Core
             {
                 string file = this.GetStoragePath<T>(item);
 
-                // If a file exists, we 
+                // If a file exists, we delete it.
                 if (File.Exists(file))
                 {
                     File.Delete(file);

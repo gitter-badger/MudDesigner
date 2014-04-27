@@ -123,6 +123,96 @@ namespace MudEngine.Tests.Win.Engine.Core
         }
 
         /// <summary>
+        /// Loads a single object using the engines XML storage.
+        /// </summary>
+        [TestMethod]
+        public void LoadEngineGame()
+        {
+            // Arrange  
+            // Fetch the MudEngine.dll assembly from memory
+            var mudEngineAssembly = new List<Assembly>(AppDomain.CurrentDomain.GetAssemblies())
+                .Where(assembly => assembly.ManifestModule.Name == "MudEngine.dll")
+                .ToArray();
+
+            // Instance a EngineGame object to test saving to disk.
+            EngineGame game = (EngineGame)GameFactory.GetGame<EngineGame>(mudEngineAssembly);
+            EngineGame game2 = (EngineGame)GameFactory.GetGame<EngineGame>(mudEngineAssembly);
+            game.Name = "TestGame";
+
+            // Instance storage for testing.
+            IPersistedStorage storage = StorageFactory.GetStorage<EngineXmlStorage>(mudEngineAssembly);
+            storage.InitializeStorage();
+
+            string filePath = Path.Combine(storage.RootPath, game.GetType().Name);
+
+            // Act
+            try
+            {
+                storage.Save<EngineGame>(game);
+                game2 = storage.Load<EngineGame>(game);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(string.Format("Failed to initialize EngineXmlStorage.\n{0}", e.Message));
+            }
+
+            // Assert
+            Assert.IsNotNull(game2);
+            Assert.IsTrue(game2.Name == game.Name);
+
+            // Clean up
+            File.Delete(storage.GetStoragePath<EngineGame>(game));
+        }
+
+        /// <summary>
+        /// Loads collection of objects using the engines XML storage.
+        /// </summary>
+        [TestMethod]
+        public void LoadEnginePlayers()
+        {
+            // Arrange  
+            // Fetch the MudEngine.dll assembly from memory
+            var mudEngineAssembly = new List<Assembly>(AppDomain.CurrentDomain.GetAssemblies())
+                .Where(assembly => assembly.ManifestModule.Name == "MudEngine.dll")
+                .ToArray();
+
+            // Instance a EngineGame object to test saving to disk.
+            IPersistedStorage storage = StorageFactory.GetStorage<EngineXmlStorage>(mudEngineAssembly);
+            storage.InitializeStorage();
+
+            // Create 20 instances.
+            var players = new List<EnginePlayer>();
+            for (int count = 0; count < 20; count++)
+            {
+                EnginePlayer player = (EnginePlayer)MobFactory.GetPlayer<EnginePlayer>(mudEngineAssembly);
+                player.Name = "Player" + count;
+                players.Add(player);
+            }
+
+            // Act
+            try
+            {
+                // Save players
+                storage.Save<EnginePlayer>(players.ToArray());
+
+                // Load all players.
+                players.Clear();
+                players = storage.Load<EnginePlayer>().ToList();
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(string.Format("Failed to initialize EngineXmlStorage.\n{0}", e.Message));
+            }
+
+            // Assert
+            Assert.IsNotNull(players);
+            Assert.IsTrue(players.Count == 20);
+
+            // Cleanup
+            Directory.Delete(storage.GetStoragePath<EnginePlayer>(), true);
+        }
+
+        /// <summary>
         /// Deletes a single object using the engines XML storage.
         /// </summary>
         [TestMethod]
