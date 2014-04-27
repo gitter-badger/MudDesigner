@@ -90,31 +90,39 @@ namespace MudEngine.Engine.Core
             // If we have a server, we need to start it.
             if (server != null)
             {
-                this.Server = server;
-                this.IsMultiplayer = true;
-
-                // Make sure the server status is stopped.
-                if (this.Server.Status == ServerStatus.Running)
-                {
-                    this.Server.Stop();
-                }
-
-
-                // Start the server.
-                try
-                {
-                    this.Server.Start(this);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                StartServer(server);
             }
 
             // this.World = new CoreWorld(this);
 
-            // We made it to the end, we're good to start.
+            // We made it to the end, we're good to go.
             this.IsRunning = true;
+        }
+
+        /// <summary>
+        /// Starts the server.
+        /// </summary>
+        /// <param name="server">The server object.</param>
+        private void StartServer(IServer server)
+        {
+            this.Server = server;
+            this.IsMultiplayer = true;
+
+            // Make sure the server status is stopped.
+            if (this.Server.Status == ServerStatus.Running)
+            {
+                this.Server.Stop();
+            }
+
+            // Start the server.
+            try
+            {
+                this.Server.Start(this);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

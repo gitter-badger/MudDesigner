@@ -18,15 +18,21 @@ namespace MudEngine.Engine.Core
         /// </summary>
         private readonly ServerProperties properties = ServerProperties.Default;
 
+        /// <summary>
+        /// The server socket
+        /// </summary>
         private Socket serverSocket;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EngineServer"/> class.
+        /// </summary>
         public EngineServer()
         {
             this.Status = ServerStatus.Stopped;
             this.Connections = new List<IServerConnectionState>();
             
             // The server is enabled for use. Does not indicate that it is running.
-            this.IsEnabled = false;
+            this.IsEnabled = true;
         }
 
         /// <summary>
@@ -193,28 +199,33 @@ namespace MudEngine.Engine.Core
             IPHostEntry serverHost = Dns.GetHostEntry(Dns.GetHostName());
             var serverEndPoint = new IPEndPoint(IPAddress.Any, this.Port);
 
-            // Instance the server socket, bind it to a port and begin listening for connections.
+            // Instance the server socket, bind it to a port.
             this.serverSocket = new Socket(serverEndPoint.Address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             this.serverSocket.Bind(serverEndPoint);
             this.serverSocket.Listen(this.MaxQueuedConnections);
 
+            // Begin listening for connections.
             IAsyncResult result = this.serverSocket.BeginAccept(new AsyncCallback(this.ConnectClient), this.serverSocket);
 
             this.Status = ServerStatus.Running;
         }
 
         /// <summary>
-        /// Stops server, shutting down the network connection.
+        /// Stops the server, shutting down the network connection.
         /// All IServerConnectionState objects will be disconnected.
         /// </summary>
         /// <exception cref="System.NotImplementedException"></exception>
         public void Stop()
         {
-            foreach(IServerConnectionState connection in this.Connections)
+            // Loop through each connection in parallel and disconnect them.
+            foreach(IServerConnectionState connection in this.Connections.AsParallel())
             {
-                connection.Disconnect();
+                // Hold a locally scoped reference to avoid parallel issues.
+                IServerConnectionState client = connection;
+                client.Disconnect();
             }
 
+            // If the server socket is still connected, we shut it down.
             if (this.serverSocket.Connected)
             {
                 this.serverSocket.Shutdown(SocketShutdown.Both);
@@ -247,9 +258,10 @@ namespace MudEngine.Engine.Core
             // Disconnect every client from the server.
             foreach(IServerConnectionState connection in this.Connections.AsParallel())
             {
-                if (connection != null && connection.Connection != null && connection.Connection.Connected)
+                IServerConnectionState client = connection;
+                if (client != null && client.Connection != null && client.Connection.Connected)
                 {
-                    connection.Connection.Disconnect(false);
+                    client.Connection.Disconnect(false);
                 }
             }
         }
@@ -263,8 +275,7 @@ namespace MudEngine.Engine.Core
             // Set up a default player object if one is not done so already.
             if (Factories.MobFactory.DefaultPlayer == null)
             {
-                var enginePlayer = new Mob.EnginePlayer();
-                enginePlayer.Game = this.Game;
+                var enginePlayer = new Mob.EnginePlayer { Game = this.Game };
                 Factories.MobFactory.DefaultPlayer = enginePlayer;
             }
 

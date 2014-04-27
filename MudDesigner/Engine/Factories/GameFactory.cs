@@ -27,17 +27,12 @@ namespace MudEngine.Engine.Factories
         /// <returns>A collection of objects in memory implementing IGame</returns>
         public static List<IGame> GetGames(Assembly[] fromAssemblies = null)
         {
-            // If we are not provided with assemblies, we fetch all of them from the current domain.
-            if (fromAssemblies == null)
-            {
-                fromAssemblies = AppDomain.CurrentDomain.GetAssemblies();
-            }
-
             var types = new List<Type>();
 
             // Loop through each assembly in our current app domain
             // generating a collection of Types that implement IGame
-            foreach (Assembly assembly in fromAssemblies)
+            // If we are not provided with assemblies, we fetch all of them from the current domain.
+            foreach (Assembly assembly in fromAssemblies ?? AppDomain.CurrentDomain.GetAssemblies())
             {
                 types.AddRange(assembly.GetTypes().Where(
                     type => type.GetInterface(typeof(IGame).Name) != null &&
@@ -45,6 +40,8 @@ namespace MudEngine.Engine.Factories
                     !type.IsInterface)); // Do not add interfaces. Concrete Types only.
             }
 
+            // Convert our collection or Types into instances of IGame
+            // then return the IGame collection.
             return new List<IGame>(
                 (from type in types
                  select Activator.CreateInstance(type) as IGame));
@@ -84,7 +81,8 @@ namespace MudEngine.Engine.Factories
                 throw new NullReferenceException("DefaultGame must not be null.");
             }
 
-            return GameFactory.GetGames(fromAssemblies).FirstOrDefault(game => game.GetType() == GameFactory.DefaultGame.GetType());
+            return GameFactory.GetGames(fromAssemblies)
+                .FirstOrDefault(game => game.GetType() == GameFactory.DefaultGame.GetType());
         }
     }
 }

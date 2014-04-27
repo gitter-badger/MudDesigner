@@ -32,17 +32,12 @@ namespace MudEngine.Engine.Factories
         /// <returns>A collection of objects in memory implementing IMob</returns>
         public static List<IMob> GetMobs(Assembly[] fromAssemblies = null)
         {
-            // If we are not provided with assemblies, we fetch all of them from the current domain.
-            if (fromAssemblies == null)
-            {
-                fromAssemblies = AppDomain.CurrentDomain.GetAssemblies();
-            }
-
             var types = new List<Type>();
 
             // Loop through each assembly in our current app domain
             // generating a collection of Types that implement IMob
-            foreach (Assembly assembly in fromAssemblies)
+            // If we are not provided with assemblies, we fetch all of them from the current domain.
+            foreach (Assembly assembly in fromAssemblies ?? AppDomain.CurrentDomain.GetAssemblies())
             {
                 types.AddRange(assembly.GetTypes().Where(
                     type => type.GetInterface(typeof(IMob).Name) != null &&
@@ -77,7 +72,8 @@ namespace MudEngine.Engine.Factories
         /// <returns>Returns an instance matching the default game object.</returns>
         public static IMob GetDefaultMob(Assembly[] fromAssemblies = null)
         {
-            return MobFactory.GetMobs(fromAssemblies).FirstOrDefault(mob => mob.GetType() == MobFactory.DefaultMob.GetType());
+            return MobFactory.GetMobs(fromAssemblies)
+                .FirstOrDefault(mob => mob.GetType() == MobFactory.DefaultMob.GetType());
         }
 
         /// <summary>
@@ -86,17 +82,12 @@ namespace MudEngine.Engine.Factories
         /// <returns>A collection of objects in memory implementing IPlayer</returns>
         public static List<IPlayer> GetPlayers(Assembly[] fromAssemblies = null)
         {
-            // If we are not provided with assemblies, we fetch all of them from the current domain.
-            if (fromAssemblies == null)
-            {
-                fromAssemblies = AppDomain.CurrentDomain.GetAssemblies();
-            }
-
             var types = new List<Type>();
 
             // Loop through each assembly in our current app domain
             // generating a collection of Types that implement IPlayer
-            foreach (Assembly assembly in fromAssemblies)
+            // If we are not provided with assemblies, we fetch all of them from the current domain.
+            foreach (Assembly assembly in fromAssemblies ?? AppDomain.CurrentDomain.GetAssemblies())
             {
                 types.AddRange(assembly.GetTypes().Where(
                     type => type.GetInterface(typeof(IPlayer).Name) != null &&
