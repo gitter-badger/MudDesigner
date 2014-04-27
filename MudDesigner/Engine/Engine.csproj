@@ -46,14 +46,17 @@
     <Compile Include="Core\EngineGame.cs" />
     <Compile Include="Core\EngineServer.cs" />
     <Compile Include="Core\EngineXmlStorage.cs" />
+    <Compile Include="Core\ExtensionMethods.cs" />
     <Compile Include="Core\IGameObject.cs" />
     <Compile Include="Core\IServerConnectionState.cs" />
     <Compile Include="Core\IPersistedStorage.cs" />
     <Compile Include="Core\IGame.cs" />
     <Compile Include="Core\IServer.cs" />
     <Compile Include="Core\IWorld.cs" />
+    <Compile Include="Core\PlatformSupportAttribute.cs" />
     <Compile Include="Core\ServerStatus.cs" />
     <Compile Include="Environment\IRoom.cs" />
+    <Compile Include="Factories\PersistedStorageFactory.cs" />
     <Compile Include="Factories\MobFactory.cs" />
     <Compile Include="Factories\StorageFactory.cs" />
     <Compile Include="Factories\GameFactory.cs" />
