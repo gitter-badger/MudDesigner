@@ -27,6 +27,7 @@ namespace MudEngine.Tests.Win.Engine.Core
                 .Where(assembly => assembly.ManifestModule.Name == "MudEngine.dll")
                 .ToArray();
             IServer server = ServerFactory.GetServer<EngineServer>(mudEngineAssembly);
+            server.Port = 1001;
             IGame game = GameFactory.GetGame<EngineGame>(mudEngineAssembly);
 
             // Act
@@ -45,6 +46,7 @@ namespace MudEngine.Tests.Win.Engine.Core
                 .Where(assembly => assembly.ManifestModule.Name == "MudEngine.dll")
                 .ToArray();
             IServer server = ServerFactory.GetServer<EngineServer>(mudEngineAssembly);
+            server.Port = 1000;
             IGame game = GameFactory.GetGame<EngineGame>(mudEngineAssembly);
 
             // Act

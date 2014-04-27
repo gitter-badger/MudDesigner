@@ -103,8 +103,8 @@ namespace MudEngine.Engine.Core
 
             // this.World = new CoreWorld(this);
 
-            // We made it to the end, we're good to go.
-            this.IsRunning = (this.Server.Status == ServerStatus.Running);
+            // If a server exists and is running, we are good to go. If no server, then we default to Running = true;
+            this.IsRunning = (this.Server != null) ? (this.Server.Status == ServerStatus.Running) : true;
         }
 
         /// <summary>

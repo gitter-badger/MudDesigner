@@ -20,7 +20,7 @@ namespace MudEngine.Engine.Core
         /// <summary>
         /// Gets the port that the server is running on.
         /// </summary>
-        int Port { get; }
+        int Port { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum connections.
