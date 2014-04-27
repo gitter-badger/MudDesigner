@@ -23,7 +23,7 @@ namespace MudEngine.Tests.Win
         [TestMethod]
         public void InitializeGameWithoutServer()
         {
-            // Arrange            
+            // Arrange
             // Fetch the MudEngine.dll assembly from memory
             var mudEngineAssembly = new List<Assembly>(AppDomain.CurrentDomain.GetAssemblies())
                 .Where(assembly => assembly.ManifestModule.Name == "MudEngine.dll")

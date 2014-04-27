@@ -1,25 +1,17 @@
-﻿/* Program
- * Product: Mud Designer Engine
- * Copyright (c) 2012 AllocateThis! Studios. All rights reserved.
- * http://MudDesigner.Codeplex.com
- *  
- * File Description: A stand-alone server that will run the Mud Game Engine when configured properly.
- */
-//Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="Program.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Reflection;
-
-//AllocateThis! Mud Designer using statements
-using MudDesigner.Engine.Core;
-using MudDesigner.Engine.Environment;
-using MudDesigner.Engine.Networking;
-using MudDesigner.Engine.Properties;
-using MudDesigner.Engine.Scripting;
-using log4net;
+using MudEngine.Engine.Core;
+using MudEngine.Engine.Factories;
+using MudEngine.Engine.GameObjects.Environment;
 
 namespace MudDesigner.Server
 {
@@ -28,23 +20,26 @@ namespace MudDesigner.Server
     /// </summary>
     class Program
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(Program)); 
+        /// <summary>
+        /// The main entry point of the server.
+        /// </summary>
+        /// <param name="args">The server arguments.</param>
         static void Main(string[] args)
         {
             if (args.Length == 2)
             {
-                //Perform compilation of scripts.
+                // Perform compilation of scripts.
                 if (args[1].ToLower() == "-compile")
                 {
-                    //TODO: Build a separate compiler app
+                    // TODO: Build a separate compiler app
                 }
             }
 
-            //Setup the engines log system
-            Log.Info("Server app starting...");
+            Console.WriteLine("Server app starting...");
 
-            //Loop through each reference mentioned in the engines properties and add them.
-            //This provides support for 3rd party pre-compiled "Mods" scripts
+            // Loop through each reference mentioned in the engines properties and add them.
+            // This provides support for 3rd party pre-compiled "Mods" scripts
+            /*
             foreach (string reference in EngineSettings.Default.ScriptLibrary)
             {
                 string path = Path.Combine(System.Environment.CurrentDirectory, reference);
@@ -70,9 +65,12 @@ namespace MudDesigner.Server
             {
                 ScriptFactory.AddAssembly(reference);
             }
+            */
 
-            //Instance the server.
-            IGame game = (IGame)ScriptFactory.GetScript(EngineSettings.Default.GameScript, null);
+            // Instance the server.
+            // IGame game = (IGame)ScriptFactory.GetScript(EngineSettings.Default.GameScript, null);
+            IGame game = GameFactory.GetGame<EngineGame>();
+            /*
             if (game == null)
             {
                 game = (IGame)ScriptFactory.FindInheritedScript("MudDesigner.Engine.Core.Game", null);
@@ -85,22 +83,31 @@ namespace MudDesigner.Server
                     return;
                 }
             }
+            */
+            IServer server = ServerFactory.GetServer<EngineServer>();
+            IPersistedStorage storage = null;
+            try
+            {
+                storage = StorageFactory.GetStorage<EngineXmlStorage>();
+            }
+            catch
+            {
 
-            IServer server = new MudDesigner.Engine.Networking.Server(port: 4000);
-            game.Initialize(server);
+            }
 
-            game.RestoreWorld();
+            game.Initialize(storage, server);
+
+            // game.RestoreWorld();
 
             //It does not matter in what order this is performed, however it is best to start the server
             //after the game.initialize() method is called.  This ensures the game is loaded and ready to go
             //prior to clients connecting to the server.
 
             //Start the server.
-            server.Start(maxConnections: 500, maxQueueSize: 20, game: game);
+            // server.Start(maxConnections: 500, maxQueueSize: 20, game: game);
 
             Console.WriteLine("Server running...");
-            Log.Info("Server startup completed.");
-            while (server.Enabled)
+            while (game.IsRunning)
             {
             }
 

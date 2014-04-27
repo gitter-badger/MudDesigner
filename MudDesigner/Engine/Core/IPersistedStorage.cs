@@ -3,6 +3,7 @@
 //     Copyright (c) AllocateThis! Studio's. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
+using System;
 using System.Collections.Generic;
 using MudEngine.Engine.GameObjects;
 
@@ -32,7 +33,7 @@ namespace MudEngine.Engine.Core
         /// <returns>
         /// Returns the item along with any updates, such as primary key information.
         /// </returns>
-        IGameObject Save(IGameObject item);
+        IGameObject Save(IGameObject item, Type itemType = null);
 
         /// <summary>
         /// Saves the specified item.

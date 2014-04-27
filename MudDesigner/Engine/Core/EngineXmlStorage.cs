@@ -5,14 +5,23 @@
 //-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
+using System.Xml.Linq;
 using MudEngine.Engine.GameObjects;
 
 namespace MudEngine.Engine.Core
 {
     /// <summary>
     /// The core storage class for the Mud engine. Serializes objects into Xml.
+    /// IPersistedStorage objects are not inheritable. 
+    /// Each custom storage object must fully implement IPersistedStorage themselves
+    /// in order to ensure data integrity.
     /// </summary>
-    public class EngineXmlStorage : IPersistedStorage
+    public sealed class EngineXmlStorage : IPersistedStorage
     {
         /// <summary>
         /// Gets or sets the root path for the data storage.
@@ -20,25 +29,58 @@ namespace MudEngine.Engine.Core
         public string RootPath { get; set; }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="EngineXmlStorage"/> class.
+        /// </summary>
+        public EngineXmlStorage()
+        {
+            this.RootPath = Path.Combine(Directory.GetCurrentDirectory(), "Data");
+        }
+
+        /// <summary>
         /// Initializes the Persisted Storage.
         /// </summary>
         /// <exception cref="System.NotImplementedException"></exception>
         public void InitializeStorage()
         {
-            throw new NotImplementedException();
+            // Makes sure our save path exists.
+            if (!Directory.Exists(this.RootPath))
+            {
+                Directory.CreateDirectory(this.RootPath);
+            }
         }
 
         /// <summary>
         /// Saves the specified item.
         /// </summary>
         /// <param name="item">The item.</param>
+        /// <param name="itemType">Type of the item.</param>
         /// <returns>
         /// Returns the item along with any updates, such as primary key information.
         /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public IGameObject Save(IGameObject item)
+        public IGameObject Save(IGameObject item, Type itemType = null)
         {
-            throw new NotImplementedException();
+            // Get the item's Type and save path.
+            if (itemType == null)
+            {
+                itemType = item.GetType();
+            }
+            string savePath = Path.Combine(this.RootPath, itemType.Name);
+
+            var serializer = new XmlSerializer(itemType, "MudEngine");
+            TextWriter writer = new StreamWriter(savePath);
+
+            try
+            {
+                serializer.Serialize(writer, item);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            // When saving to Xml, there are no adjustments that are made to the object.
+            // We just return a unmodified object.
+            return item;
         }
 
         /// <summary>
@@ -52,7 +94,18 @@ namespace MudEngine.Engine.Core
         /// <exception cref="System.NotImplementedException"></exception>
         public T Save<T>(T item) where T : IGameObject
         {
-            throw new NotImplementedException();
+            try
+            {
+                this.Save(item, typeof(T));
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            // Since we are not modifying the object, we just return the item.
+            // This is cheaper than casting the return value of Save back to T.
+            return item;
         }
 
         /// <summary>
@@ -63,10 +116,25 @@ namespace MudEngine.Engine.Core
         /// <returns>
         /// Returns a updated collection of items.
         /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public IEnumerable<T> SaveAll<T>(T[] items) where T : IGameObject
         {
-            throw new NotImplementedException();
+            // Save each item in the collection.
+            foreach(T item in items.AsParallel().AsOrdered())
+            {
+                try
+                {
+                    // Since we are not modifying the object, we just return the item.
+                    // This is cheaper than casting the return value of Save back to T 
+                    // over each iteration and adding to a new collection.
+                    this.Save(item, typeof(T));
+                }
+                catch(Exception)
+                {
+                    throw;
+                }
+            }
+
+            return items;
         }
 
         /// <summary>

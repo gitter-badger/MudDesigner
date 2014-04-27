@@ -96,7 +96,7 @@ namespace MudEngine.Engine.Core
             // this.World = new CoreWorld(this);
 
             // We made it to the end, we're good to go.
-            this.IsRunning = true;
+            this.IsRunning = (this.Server.Status == ServerStatus.Running);
         }
 
         /// <summary>
