@@ -57,7 +57,7 @@
     <Compile Include="Core\IPersistedStorage.cs" />
     <Compile Include="Core\IGame.cs" />
     <Compile Include="Core\IServer.cs" />
-    <Compile Include="Core\IWorld.cs" />
+    <Compile Include="GameObjects\Environment\IWorld.cs" />
     <Compile Include="Core\PlatformSupportAttribute.cs" />
     <Compile Include="Core\ServerStatus.cs" />
     <Compile Include="GameObjects\Environment\IRoom.cs" />

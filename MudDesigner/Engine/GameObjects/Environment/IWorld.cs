@@ -4,12 +4,16 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace MudEngine.Engine.Core
+namespace MudEngine.Engine.GameObjects.Environment
 {
     /// <summary>
     /// Provides a contract for objects that want to implement a World
     /// </summary>
-    public interface IWorld
+    public interface IWorld : IGameObject
     {
+        /// <summary>
+        /// Gets or sets a value indicating whether the world is safe.
+        /// </summary>
+        bool IsSafe { get; set; }
     }
 }

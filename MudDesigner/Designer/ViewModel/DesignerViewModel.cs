@@ -21,6 +21,11 @@ namespace Designer.ViewModel
         private IGame game;
 
         /// <summary>
+        /// The IsDirty backing variable
+        /// </summary>
+        private bool isDirty;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DesignerViewModel"/> class.
         /// </summary>
         public DesignerViewModel()
@@ -32,6 +37,24 @@ namespace Designer.ViewModel
             else
             {
                 this.game = GameFactory.GetGame<EngineGame>();
+            }
+
+            this.IsDirty = false;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is dirty.
+        /// </summary>
+        public bool IsDirty
+        {
+            get
+            {
+                return this.isDirty;
+            }
+            set
+            {
+                this.isDirty = value;
+                this.RaisePropertyChanged();
             }
         }
 
@@ -62,6 +85,11 @@ namespace Designer.ViewModel
         /// </remarks>
         protected override void RaisePropertyChanged([CallerMemberName] string propertyName = "")
         {
+            if (propertyName != "IsDirty")
+            {
+                this.IsDirty = true;
+            }
+
             base.RaisePropertyChanged(propertyName);
         }
 

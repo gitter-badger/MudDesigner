@@ -4,6 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
+using MudEngine.Engine.GameObjects.Environment;
 
 namespace MudEngine.Engine.Core
 {

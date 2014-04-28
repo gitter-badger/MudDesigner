@@ -34,6 +34,11 @@ namespace MudEngine.Engine.GameObjects
         bool IsEditable { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this instance is enabled.
+        /// </summary>
+        bool IsEnabled { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether this instance is permanent.
         /// </summary>
         bool IsPermanent { get; set; }

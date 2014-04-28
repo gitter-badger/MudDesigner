@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 using System;
 using System.Xml.Serialization;
+using MudEngine.Engine.GameObjects.Environment;
 
 namespace MudEngine.Engine.Core
 {
