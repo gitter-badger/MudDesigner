@@ -22,6 +22,11 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
             <DockPanel Grid.Column="0">
                 <StackPanel DockPanel.Dock="Top">
                     <TextBlock Text="{Binding Path=Name}"
@@ -134,15 +139,16 @@
                                                           FlowDirection="RightToLeft"
                                                           IsChecked="{Binding Path=Game.World.IsEnabled}" />
                                             </WrapPanel>
-                                            <GroupBox Header="World Description"
-                                                      Margin="10 20, 10, 0">
-                                                <TextBox controls:TextboxHelper.Watermark="Enter the world name."
-                                                         MinHeight="100"
-                                                         AcceptsReturn="True"
-                                                         TextWrapping="Wrap"
-                                                         Text="{Binding Path=Game.World.Name}">
-                                                </TextBox>
-                                            </GroupBox>
+                                            <Label Content="World Description" 
+                                                   DockPanel.Dock="Top"
+                                                   FontWeight="Bold"
+                                                   Margin="0 20 0 0" />
+                                            <TextBox controls:TextboxHelper.Watermark="Provide a description for the world. This will be displayed to the user when they inspect the world."
+                                                     MinHeight="100"
+                                                     AcceptsReturn="True"
+                                                     TextWrapping="Wrap"
+                                                     Text="{Binding Path=Game.World.Name}">
+                                            </TextBox>
                                         </DockPanel>
                                     </ScrollViewer>
                                 </GroupBox>
@@ -173,6 +179,16 @@
                     <TabItem Header="Quests"></TabItem>
                 </TabControl>
             </controls:MetroContentControl>
+            <Grid Background="#CC119EDA"
+                  Grid.Row="1"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2">
+                <TextBlock Text="Ready"
+                           FontSize="12"
+                           Margin="10 2" 
+                           Foreground="White"
+                           FontWeight="Light"/>
+            </Grid>
         </Grid>
     </Border>
 </controls:MetroWindow>
