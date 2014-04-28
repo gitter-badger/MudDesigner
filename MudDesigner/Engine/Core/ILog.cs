@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//-----------------------------------------------------------------------
+// <copyright file="ILog.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 
 namespace MudEngine.Engine.Core
 {

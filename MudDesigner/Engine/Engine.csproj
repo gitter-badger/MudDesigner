@@ -63,7 +63,6 @@
     <Compile Include="GameObjects\Environment\IRoom.cs" />
     <Compile Include="Factories\PersistedStorageFactory.cs" />
     <Compile Include="Factories\MobFactory.cs" />
-    <Compile Include="Factories\StorageFactory.cs" />
     <Compile Include="Factories\GameFactory.cs" />
     <Compile Include="Factories\ServerFactory.cs" />
     <Compile Include="GameProperties.Designer.cs">
@@ -78,6 +77,11 @@
     <Compile Include="GameObjects\Mob\IPlayer.cs" />
     <Compile Include="GameObjects\Mob\MessageBroadcastLevels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripting\ScriptCompiler.cs" />
+    <Compile Include="Scripting\CSharp.cs" />
+    <Compile Include="Scripting\IScriptCompiler.cs" />
+    <Compile Include="Scripting\ScriptFactory.cs" />
+    <Compile Include="Scripting\ScriptObject.cs" />
     <Compile Include="ServerProperties.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

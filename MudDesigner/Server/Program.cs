@@ -88,7 +88,7 @@ namespace MudDesigner.Server
             IPersistedStorage storage = null;
             try
             {
-                storage = StorageFactory.GetStorage<EngineXmlStorage>();
+                storage = PersistedStorageFactory.GetStorageContainer<EngineXmlStorage>();
             }
             catch
             {

@@ -27,7 +27,7 @@ namespace MudEngine.Tests.Win.Engine.Core
             var mudEngineAssembly = new List<Assembly>(AppDomain.CurrentDomain.GetAssemblies())
                 .Where(assembly => assembly.ManifestModule.Name == "MudEngine.dll")
                 .ToArray();
-            IPersistedStorage storage = StorageFactory.GetStorage<EngineXmlStorage>(mudEngineAssembly);
+            IPersistedStorage storage = PersistedStorageFactory.GetStorageContainer<EngineXmlStorage>(mudEngineAssembly);
 
             // Act
             try
@@ -58,7 +58,7 @@ namespace MudEngine.Tests.Win.Engine.Core
             // Instance a EngineGame object to test saving to disk.
             EngineGame game = (EngineGame)GameFactory.GetGame<EngineGame>(mudEngineAssembly);
             game.Name = "EngineGame Unit Test";
-            IPersistedStorage storage = StorageFactory.GetStorage<EngineXmlStorage>(mudEngineAssembly);
+            IPersistedStorage storage = PersistedStorageFactory.GetStorageContainer<EngineXmlStorage>(mudEngineAssembly);
             storage.InitializeStorage();
 
             string filePath = Path.Combine(storage.RootPath, game.GetType().Name);
@@ -93,7 +93,7 @@ namespace MudEngine.Tests.Win.Engine.Core
                 .ToArray();
 
             // Instance a EngineGame object to test saving to disk.
-            IPersistedStorage storage = StorageFactory.GetStorage<EngineXmlStorage>(mudEngineAssembly);
+            IPersistedStorage storage = PersistedStorageFactory.GetStorageContainer<EngineXmlStorage>(mudEngineAssembly);
             storage.InitializeStorage();
 
             // Create 20 instances.
@@ -140,7 +140,7 @@ namespace MudEngine.Tests.Win.Engine.Core
             game.Name = "TestGame";
 
             // Instance storage for testing.
-            IPersistedStorage storage = StorageFactory.GetStorage<EngineXmlStorage>(mudEngineAssembly);
+            IPersistedStorage storage = PersistedStorageFactory.GetStorageContainer<EngineXmlStorage>(mudEngineAssembly);
             storage.InitializeStorage();
 
             string filePath = Path.Combine(storage.RootPath, game.GetType().Name);
@@ -177,7 +177,7 @@ namespace MudEngine.Tests.Win.Engine.Core
                 .ToArray();
 
             // Instance a EngineGame object to test saving to disk.
-            IPersistedStorage storage = StorageFactory.GetStorage<EngineXmlStorage>(mudEngineAssembly);
+            IPersistedStorage storage = PersistedStorageFactory.GetStorageContainer<EngineXmlStorage>(mudEngineAssembly);
             storage.InitializeStorage();
 
             // Create 20 instances.
@@ -227,7 +227,7 @@ namespace MudEngine.Tests.Win.Engine.Core
             // Instance a EngineGame object to test saving to disk.
             EngineGame game = (EngineGame)GameFactory.GetGame<EngineGame>(mudEngineAssembly);
             game.Name = "EngineGame Unit Test";
-            IPersistedStorage storage = StorageFactory.GetStorage<EngineXmlStorage>(mudEngineAssembly);
+            IPersistedStorage storage = PersistedStorageFactory.GetStorageContainer<EngineXmlStorage>(mudEngineAssembly);
             storage.InitializeStorage();
 
             string filePath = Path.Combine(storage.RootPath, game.GetType().Name);
@@ -260,7 +260,7 @@ namespace MudEngine.Tests.Win.Engine.Core
                 .ToArray();
 
             // Instance a EngineGame object to test saving to disk.
-            IPersistedStorage storage = StorageFactory.GetStorage<EngineXmlStorage>(mudEngineAssembly);
+            IPersistedStorage storage = PersistedStorageFactory.GetStorageContainer<EngineXmlStorage>(mudEngineAssembly);
             storage.InitializeStorage();
 
             // Create 20 instances.

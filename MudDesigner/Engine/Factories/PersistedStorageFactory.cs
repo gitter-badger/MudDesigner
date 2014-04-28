@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="PersistedStorageFactory.cs" company="AllocateThis!">
+// <copyright file="PersistedPersistedStorageFactory.cs" company="AllocateThis!">
 //     Copyright (c) AllocateThis! Studio's. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
@@ -29,7 +29,7 @@ namespace MudEngine.Engine.Factories
         /// </summary>
         /// <param name="restrictToCurrentPlatform">If true, then only IPersistedStorage objects that are marked as compatible with the current OS are returned.</param>
         /// <returns>Returns an array of Types that can be instantiated for use for data persistance.</returns>
-        public static List<IPersistedStorage> GetAvailableContext(Assembly[] fromAssemblies = null, bool restrictToCurrentPlatform = true)
+        public static List<IPersistedStorage> GetStorageContainers(Assembly[] fromAssemblies = null, bool restrictToCurrentPlatform = true)
         {
             if (fromAssemblies == null || fromAssemblies.Length == 0)
             {
@@ -83,6 +83,31 @@ namespace MudEngine.Engine.Factories
         }
 
         /// <summary>
+        /// Gets the storage container specified.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="fromAssemblies">From assemblies.</param>
+        /// <returns>Returns a storage container matching T</returns>
+        public static IPersistedStorage GetStorageContainer<T>(Assembly[] fromAssemblies = null) where T : IPersistedStorage
+        {
+            // If the DefaultStorage has not been set, we will set it the first time a specific Type is passed.
+            // It is assumed since a specific Type is provided, it will be re-used.
+            if (PersistedStorageFactory.DefaultStorage == null)
+            {
+                PersistedStorageFactory.DefaultStorage = default(T);
+            }
+
+            // This isn't the most efficient.
+            // Considering that GetStorageContainers should really only be returning a few (1-5?) IPersistedStorage objects
+            // Filtering the list a second time (filtered once in GetStorageContainers) shouldn't hurt much.
+            // If users start loading dozens of IPersistedStorage (bad practice!) in their scripts folder, then
+            // this needs to be revisited.
+            // We fetch all container regardless if it is on a supported platform or not. Since it is strongly specified, we assume 
+            // the user knows if it is compatible or not.
+            return PersistedStorageFactory.GetStorageContainers(fromAssemblies, false).FirstOrDefault(storage => storage.GetType() == typeof(T));
+        }
+
+        /// <summary>
         /// Gets the default storage.
         /// </summary>
         /// <param name="fromAssemblies">From assemblies.</param>
@@ -95,8 +120,7 @@ namespace MudEngine.Engine.Factories
                 throw new NullReferenceException("DefaultStorage can not be null.");
             }
 
-            return PersistedStorageFactory.GetAvailableContext(fromAssemblies, true)
-                .FirstOrDefault(storage => storage.GetType() == PersistedStorageFactory.DefaultStorage.GetType());
+            return (IPersistedStorage)Activator.CreateInstance(PersistedStorageFactory.DefaultStorage.GetType());
         }
     }
 }

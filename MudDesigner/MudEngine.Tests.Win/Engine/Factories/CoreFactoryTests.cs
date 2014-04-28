@@ -166,7 +166,7 @@ namespace MudEngine.Tests.Win.Engine.Factories
                 .ToArray();
 
             // Act
-            storage = StorageFactory.GetStorageCollection(mudEngineAssembly);
+            storage = PersistedStorageFactory.GetStorageContainers(mudEngineAssembly);
 
             // Assert
             Assert.IsTrue(storage.Count == 1); // Should pick up CoreServer.
@@ -186,7 +186,7 @@ namespace MudEngine.Tests.Win.Engine.Factories
                 .ToArray();
 
             // Act
-            xmlStorage = StorageFactory.GetStorage<EngineXmlStorage>(mudEngineAssembly);
+            xmlStorage = PersistedStorageFactory.GetStorageContainer<EngineXmlStorage>(mudEngineAssembly);
 
             // Assert
             Assert.IsNotNull(xmlStorage);
@@ -204,10 +204,10 @@ namespace MudEngine.Tests.Win.Engine.Factories
             var mudEngineAssembly = new List<Assembly>(AppDomain.CurrentDomain.GetAssemblies())
                 .Where(assembly => assembly.ManifestModule.Name == "MudEngine.dll")
                 .ToArray();
-            StorageFactory.DefaultStorage = new EngineXmlStorage();
+            PersistedStorageFactory.DefaultStorage = new EngineXmlStorage();
 
             // Act
-            defaultStorage = StorageFactory.GetDefaultStorage(mudEngineAssembly);
+            defaultStorage = PersistedStorageFactory.GetDefaultStorage(mudEngineAssembly);
 
             // Assert
             Assert.IsNotNull(defaultStorage);

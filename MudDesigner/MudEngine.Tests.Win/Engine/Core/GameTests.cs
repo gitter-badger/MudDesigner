@@ -30,7 +30,7 @@ namespace MudEngine.Tests.Win
                 .ToList();
 
             IGame game = GameFactory.GetGame<EngineGame>();
-            IPersistedStorage storage = StorageFactory.GetStorage<EngineXmlStorage>(mudEngineAssembly.ToArray());
+            IPersistedStorage storage = PersistedStorageFactory.GetStorageContainer<EngineXmlStorage>(mudEngineAssembly.ToArray());
 
             // Act
             try
@@ -62,7 +62,7 @@ namespace MudEngine.Tests.Win
 
             // Fetch our objects from the factories.
             IGame game = GameFactory.GetGame<EngineGame>();
-            IPersistedStorage storage = StorageFactory.GetStorage<EngineXmlStorage>(mudEngineAssembly.ToArray());
+            IPersistedStorage storage = PersistedStorageFactory.GetStorageContainer<EngineXmlStorage>(mudEngineAssembly.ToArray());
             IServer server = ServerFactory.GetServer<EngineServer>(mudEngineAssembly.ToArray());
 
             // Act

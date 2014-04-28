@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -22,6 +23,11 @@ namespace MudEngine.Engine.Core
     /// Each custom storage object must fully implement IPersistedStorage themselves
     /// in order to ensure data integrity.
     /// </summary>
+    [PlatformSupport("Windows Vista", 6, 0)]
+    [PlatformSupport("Windows 7", 6, 1)]
+    [PlatformSupport("Windows 8", 6, 2)]
+    [PlatformSupport("Windows 8.1", 6, 3)]
+    [DisplayName("Xml Storage Container")]
     public sealed class EngineXmlStorage : IPersistedStorage
     {
         /// <summary>

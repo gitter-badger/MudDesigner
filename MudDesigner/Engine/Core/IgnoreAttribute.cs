@@ -1,4 +1,9 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="IgnoreAttribute.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+using System;
 
 namespace MudEngine.Engine.Core
 {
