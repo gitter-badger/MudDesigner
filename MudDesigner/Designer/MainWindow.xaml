@@ -152,8 +152,8 @@
                                             HorizontalAlignment="Right"
                                             Margin="0, 10, 10 0"
                                             MinWidth="80"
-                                            Style="{StaticResource AccentedSquareButtonStyle}"
-                                            IsEnabled="{Binding Path=IsDirty}">
+                                            Style="{StaticResource AccentedSquareButtonStyle}">
+                                            <!-- IsEnabled="{Binding Path=IsDirty}" -->
                                     </Button>
                                     <Button Content="Cancel"
                                             HorizontalAlignment="Right"
