@@ -1,5 +1,8 @@
-﻿// Microsoft .NET using statements
-using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="IScriptCompiler.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 
@@ -10,7 +13,14 @@ namespace MudEngine.Engine.Scripting
     /// </summary>
     public interface ICompiler
     {
+        /// <summary>
+        /// Gets or sets the results.
+        /// </summary>
+        /// <value>
+        /// The results.
+        /// </value>
         CompilerResults Results { get; set; }
+
         /// <summary>
         /// The file extension used for the script files.
         /// </summary>
@@ -34,8 +44,20 @@ namespace MudEngine.Engine.Scripting
         /// <returns>Returns true if the compilation was completed without error.</returns>
         bool Compile(CompilerParameters param, string scriptRepository);
 
+        /// <summary>
+        /// Compiles the specified FileInfo object.
+        /// </summary>
+        /// <param name="param">The parameter.</param>
+        /// <param name="scriptFile">The script file.</param>
+        /// <returns></returns>
         bool Compile(CompilerParameters param, System.IO.FileInfo scriptFile);
 
+        /// <summary>
+        /// Compiles the raw source code.
+        /// </summary>
+        /// <param name="param">The parameter.</param>
+        /// <param name="scriptSource">The script source.</param>
+        /// <returns></returns>
         bool Compile(CompilerParameters param, string[] scriptSource);
     }
 }

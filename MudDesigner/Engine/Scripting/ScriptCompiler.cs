@@ -1,4 +1,8 @@
-﻿// Microsoft .NET using statements
+﻿//-----------------------------------------------------------------------
+// <copyright file="ScriptCompiler.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -6,7 +10,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Microsoft.CSharp;
 
 namespace MudEngine.Engine.Scripting
 {
@@ -15,6 +18,29 @@ namespace MudEngine.Engine.Scripting
     /// </summary>
     public static class CompileEngine
     {
+        /// <summary>
+        /// The script extension backing field.
+        /// </summary>
+        private static string scriptExtension;
+
+        /// <summary>
+        /// The assembly references backing field.
+        /// </summary>
+        private static List<string> assemblyReferences;
+
+        /// <summary>
+        /// The compiler backing field.
+        /// </summary>
+        private static string compiler;
+
+        // Messages stored from the compilers CompilerResults property.
+        private static string[] _CompileMessages = new string[] { "No compiler messages available." };
+
+        /// <summary>
+        /// Used to supply compiling options to various compilers if they support this feature.
+        /// </summary>
+        private static Dictionary<string, string> CompilerOptions = new Dictionary<string, string>();
+
         /// <summary>
         /// The file extension used for the script files.
         /// </summary>
@@ -41,7 +67,6 @@ namespace MudEngine.Engine.Scripting
                 }
             }
         }
-        private static string scriptExtension;
 
         /// <summary>
         /// Provides a collection of Assemblies that the compiler will add to its reference list.
@@ -63,7 +88,6 @@ namespace MudEngine.Engine.Scripting
                 return assemblyReferences;
             }
         }
-        private static List<string> assemblyReferences;
 
         /// <summary>
         /// Provides a reference to the assembly generated during script compilation.
@@ -89,12 +113,7 @@ namespace MudEngine.Engine.Scripting
                 compiler = value;
             }
         }
-        private static string compiler;
 
-        /// <summary>
-        /// Used to supply compiling options to various compilers if they support this feature.
-        /// </summary>
-        private static Dictionary<string, string> CompilerOptions = new Dictionary<string, string>();
 
         /// <summary>
         /// Used to check if the compilation contained any errors.
@@ -124,9 +143,6 @@ namespace MudEngine.Engine.Scripting
                 }
             }
         }
-
-        // Messages stored from the compilers CompilerResults property.
-        private static string[] _CompileMessages = new string[] { "No compiler messages available." };
 
         // Returns all of the assemblies currently loaded in the current domain.
         private static Assembly[] _Assemblies

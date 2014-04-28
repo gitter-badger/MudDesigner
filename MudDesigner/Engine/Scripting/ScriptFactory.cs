@@ -1,12 +1,13 @@
-﻿// Microsoft .NET Framework
+﻿//-----------------------------------------------------------------------
+// <copyright file="ScriptFactory.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-
-// Mud Designer Framework
-using MudEngine.Engine.Core;
 
 namespace MudEngine.Engine.Scripting
 {
@@ -15,7 +16,9 @@ namespace MudEngine.Engine.Scripting
     /// </summary>
     public static class ScriptFactory
     {
-        // The assembly loaded that will be used.
+        /// <summary>
+        /// The assembly loaded that will be used.
+        /// </summary>
         private static List<Assembly> assemblyCollection = new List<Assembly>();
 
         /// <summary>

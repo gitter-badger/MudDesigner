@@ -1,4 +1,8 @@
-﻿// Microsoft .NET Framework
+﻿//-----------------------------------------------------------------------
+// <copyright file="ScriptObject.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Reflection;
 using System.Text;

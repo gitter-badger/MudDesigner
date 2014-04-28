@@ -1,5 +1,8 @@
-﻿// Microsoft .NET using statements
-using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="CSharp.cs" company="AllocateThis!">
+//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +11,7 @@ using Microsoft.CSharp;
 namespace MudEngine.Engine.Scripting
 {
     /// <summary>
-    /// The C# Compiler used by the CompileEngine
+    /// The C# Compiler used by the ScriptCompiler
     /// </summary>
     internal class CSharp : ICompiler
     {
@@ -48,6 +51,7 @@ namespace MudEngine.Engine.Scripting
 
             // Instance a reference to the C# code provider, this is what will perform the compiling.
             CSharpCodeProvider provider = new CSharpCodeProvider(this.CompilerOptions);
+
             // Create an array of script files found within the ScriptRepository matching the ScriptExtension properties.
             if (!Directory.Exists(scriptRepository))
             { 
@@ -60,6 +64,7 @@ namespace MudEngine.Engine.Scripting
             {
                 // Compile the scripts and provide the Results property with a reference to the compilation results.
                 this.Results = provider.CompileAssemblyFromFile(param, scripts);
+
                 // if the compiler has errors, return false.
                 if (this.Results.Errors.HasErrors)
                 {
