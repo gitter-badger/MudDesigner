@@ -13,7 +13,7 @@ namespace MudEngine.Engine {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
-    internal sealed partial class GameProperties : global::System.Configuration.ApplicationSettingsBase {
+    public sealed partial class GameProperties : global::System.Configuration.ApplicationSettingsBase {
         
         private static GameProperties defaultInstance = ((GameProperties)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new GameProperties())));
         
@@ -76,6 +76,30 @@ namespace MudEngine.Engine {
             }
             set {
                 this["Multiplayer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Sample Game")]
+        public string Name {
+            get {
+                return ((string)(this["Name"]));
+            }
+            set {
+                this["Name"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.0.0.0")]
+        public string Version {
+            get {
+                return ((string)(this["Version"]));
+            }
+            set {
+                this["Version"] = value;
             }
         }
     }

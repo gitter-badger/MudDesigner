@@ -52,13 +52,13 @@ namespace MudEngine.Engine.Factories
         /// </summary>
         /// <typeparam name="T">The Type implementing IGame that you want to find</typeparam>
         /// <returns>Returns the game specified.</returns>
-        public static IGame GetGame<T>(Assembly[] fromAssemblies = null) where T : IGame
+        public static IGame GetGame<T>(Assembly[] fromAssemblies = null) where T : IGame, new()
         {
             // If the DefaultGame has not been set, we will set it the first time a specific Type is passed.
             // It is assumed since a specific Type is provided, it will be re-used.
             if (GameFactory.DefaultGame == null)
             {
-                GameFactory.DefaultGame = default(T);
+                GameFactory.DefaultGame = new T();
             }
 
             // This isn't the most efficient.

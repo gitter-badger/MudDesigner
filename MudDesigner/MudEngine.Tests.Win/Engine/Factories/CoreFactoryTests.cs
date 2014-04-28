@@ -21,7 +21,7 @@ namespace MudEngine.Tests.Win.Engine.Factories
     [TestClass]
     public class CoreFactoryTests
     {
-        #region GameFactory unit tests
+        #region GameFactory
 
         /// <summary>
         /// Tests Fetching all IGame objects from the loaded assemblies.
@@ -86,7 +86,7 @@ namespace MudEngine.Tests.Win.Engine.Factories
 
         #endregion
 
-        #region ServerFactory unit tests
+        #region ServerFactory
         /// <summary>
         /// Tests Fetching all IServer objects from the loaded assemblies.
         /// </summary>
@@ -150,7 +150,7 @@ namespace MudEngine.Tests.Win.Engine.Factories
 
         #endregion
 
-        #region StorageFactory unit tests
+        #region StorageFactory
 
         /// <summary>
         /// Tests Fetching all IPersistedStorage objects from the loaded assemblies.
@@ -215,7 +215,7 @@ namespace MudEngine.Tests.Win.Engine.Factories
 
         #endregion
 
-        #region MobFactory unit tests
+        #region MobFactory
 
         /// <summary>
         /// Tests Fetching all IMob objects from the loaded assemblies.

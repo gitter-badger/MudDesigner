@@ -85,7 +85,7 @@ namespace MudEngine.Engine.Core
         /// </summary>
         /// <param name="storageSource">The storage source.</param>
         /// <param name="server">The server.</param>
-        public void Initialize(IPersistedStorage storageSource, IServer server = null)
+        public virtual void Initialize(IPersistedStorage storageSource, IServer server = null)
         {
             if (storageSource == null)
             {

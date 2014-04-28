@@ -88,13 +88,13 @@ namespace MudEngine.Engine.Factories
         /// <typeparam name="T"></typeparam>
         /// <param name="fromAssemblies">From assemblies.</param>
         /// <returns>Returns a storage container matching T</returns>
-        public static IPersistedStorage GetStorageContainer<T>(Assembly[] fromAssemblies = null) where T : IPersistedStorage
+        public static IPersistedStorage GetStorageContainer<T>(Assembly[] fromAssemblies = null) where T : IPersistedStorage, new()
         {
             // If the DefaultStorage has not been set, we will set it the first time a specific Type is passed.
             // It is assumed since a specific Type is provided, it will be re-used.
             if (PersistedStorageFactory.DefaultStorage == null)
             {
-                PersistedStorageFactory.DefaultStorage = default(T);
+                PersistedStorageFactory.DefaultStorage = new T();
             }
 
             // This isn't the most efficient.

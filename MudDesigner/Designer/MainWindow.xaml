@@ -1,0 +1,131 @@
+﻿<controls:MetroWindow x:Class="Designer.MainWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:local="clr-namespace:Designer.ViewModel"
+                      Title="Mud Designer"
+                      Height="600"
+                      Width="835"
+                      ResizeMode="CanResizeWithGrip"
+                      SizeToContent="Width"
+                      DataContext="{Binding Source={StaticResource Locator}, Path=Game}">
+
+    <controls:MetroWindow.WindowCommands>
+        <controls:WindowCommands>
+            <Button Content="Designer Settings" />
+        </controls:WindowCommands>
+    </controls:MetroWindow.WindowCommands>
+    <Border BorderBrush="#CC119EDA"
+            BorderThickness="1">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <DockPanel Grid.Column="0">
+                <StackPanel DockPanel.Dock="Top">
+                    <TextBlock Text="{Binding Path=Name}"
+                               Margin="10 5 10 0"
+                               FontSize="14"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center" />
+                    <TextBlock Text="{Binding Path=Version}"
+                               Margin="10 0"
+                               FontSize="11"
+                               HorizontalAlignment="Center" />
+                </StackPanel>
+
+                <Button Content="Start Server"
+                        DockPanel.Dock="Top"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Margin="20,20,20,0"
+                        Padding="20 10" />
+                <Button Content="Game Settings"
+                        DockPanel.Dock="Top"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Margin="20,5,20,0"
+                        Padding="20 10" />
+            </DockPanel>
+            <controls:MetroContentControl Grid.Column="1">
+                <TabControl DataContext="{Binding Source={StaticResource Locator}, Path=Designer}">
+                    <TabItem Header="Environment">
+                        <TabControl>
+                            <StackPanel>
+                                <WrapPanel>
+                                    <controls:Tile Title="Edit the Environment Settings"
+                                                   TitleFontSize="12"
+                                                   Height="100"
+                                                   VerticalAlignment="Top"
+                                                   VerticalContentAlignment="Top">
+                                        <TextBlock Text="World"
+                                                   TextAlignment="Center"
+                                                   FontSize="26"
+                                                   Foreground="White"
+                                                   FontWeight="SemiBold"
+                                                   TextWrapping="Wrap"
+                                                   MaxWidth="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType=controls:Tile, Mode=FindAncestor}, Path=ActualWidth}" />
+                                    </controls:Tile>
+
+                                    <controls:Tile Title="Add Realms to the world"
+                                                   TitleFontSize="12"
+                                                   Height="100"
+                                                   VerticalAlignment="Top"
+                                                   VerticalContentAlignment="Top">
+                                        <TextBlock Text="Realms"
+                                                   TextAlignment="Center"
+                                                   FontSize="26"
+                                                   Foreground="White"
+                                                   FontWeight="SemiBold"
+                                                   TextWrapping="Wrap"
+                                                   MaxWidth="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType=controls:Tile, Mode=FindAncestor}, Path=ActualWidth}" />
+                                    </controls:Tile>
+
+                                    <controls:Tile Title="Add Zones to an existing Realm"
+                                                   TitleFontSize="12"
+                                                   Height="100"
+                                                   VerticalAlignment="Top"
+                                                   VerticalContentAlignment="Top">
+                                        <TextBlock Text="Zones"
+                                                   TextAlignment="Center"
+                                                   FontSize="26"
+                                                   Foreground="White"
+                                                   FontWeight="SemiBold"
+                                                   TextWrapping="Wrap"
+                                                   Padding="5 0"
+                                                   MaxWidth="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType=controls:Tile, Mode=FindAncestor}, Path=ActualWidth}" />
+                                    </controls:Tile>
+
+                                    <controls:Tile Title="Link Rooms to each other."
+                                                   TitleFontSize="12"
+                                                   Height="100"
+                                                   VerticalAlignment="Top"
+                                                   VerticalContentAlignment="Top">
+                                        <TextBlock Text="Rooms"
+                                                   TextAlignment="Center"
+                                                   FontSize="26"
+                                                   Foreground="White"
+                                                   FontWeight="SemiBold"
+                                                   TextWrapping="Wrap"
+                                                   MaxWidth="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType=controls:Tile, Mode=FindAncestor}, Path=ActualWidth}" />
+                                    </controls:Tile>
+                                </WrapPanel>
+                                <GroupBox Header="World Explorer">
+
+                                </GroupBox>
+                            </StackPanel>
+                        </TabControl>
+                    </TabItem>
+                    <TabItem Header="Mobs">
+
+                    </TabItem>
+                    <TabItem Header="Items">
+
+                    </TabItem>
+                    <TabItem Header="Quests"></TabItem>
+                </TabControl>
+            </controls:MetroContentControl>
+        </Grid>
+    </Border>
+</controls:MetroWindow>
