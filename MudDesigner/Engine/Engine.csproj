@@ -80,7 +80,7 @@
     <Compile Include="Scripting\ScriptCompiler.cs" />
     <Compile Include="Scripting\CSharp.cs" />
     <Compile Include="Scripting\IScriptCompiler.cs" />
-    <Compile Include="Scripting\ScriptFactory.cs" />
+    <Compile Include="Factories\ScriptFactory.cs" />
     <Compile Include="Scripting\ScriptObject.cs" />
     <Compile Include="ServerProperties.Designer.cs">
       <AutoGen>True</AutoGen>

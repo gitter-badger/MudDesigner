@@ -9,7 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace MudEngine.Engine.Scripting
+namespace MudEngine.Engine.Factories
 {
     /// <summary>
     /// The ScriptFactory provides helper methods for instancing scripted game objects
