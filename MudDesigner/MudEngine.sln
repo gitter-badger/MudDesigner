@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine.Old", "Engine.old\Engine.Old.csproj", "{9D9E8CAC-8876-4725-9A65-2077DE4322DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Old.Engine", "Engine.old\Old.Engine.csproj", "{9D9E8CAC-8876-4725-9A65-2077DE4322DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{161E78DB-10C5-43A6-BC15-0945BC6F941F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scripts", "Scripts\Scripts.csproj", "{DB190BE6-A73B-4C59-B939-4A8B1825A658}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor", "Editor\Editor.csproj", "{84D17981-44C6-40C6-BC05-15819154E7F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Old.Editor", "Editor\Old.Editor.csproj", "{84D17981-44C6-40C6-BC05-15819154E7F0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}"
 EndProject
@@ -17,9 +17,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudEngine.Tests.Win", "MudE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Designer", "Designer\Designer.csproj", "{9FE86E93-884C-4897-A328-7ECFBAE42754}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{243A9E86-52F4-4205-843C-5EC7A81561A5}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptEngine", "ScriptEngine\ScriptEngine.csproj", "{17B471AD-3A65-4CB8-A26D-779A270F8C8F}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
+		SccNumberOfProjects = 9
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs03
 		SccLocalPath0 = .
@@ -29,21 +38,24 @@ Global
 		SccProjectUniqueName2 = Scripts\\Scripts.csproj
 		SccProjectName2 = Scripts
 		SccLocalPath2 = Scripts
-		SccProjectUniqueName3 = Editor\\Editor.csproj
-		SccProjectName3 = Editor
-		SccLocalPath3 = Editor
-		SccProjectUniqueName4 = Engine.old\\Engine.Old.csproj
-		SccProjectName4 = Engine.old
-		SccLocalPath4 = Engine.old
-		SccProjectUniqueName5 = Engine\\Engine.csproj
-		SccProjectName5 = Engine
-		SccLocalPath5 = Engine
-		SccProjectUniqueName6 = MudEngine.Tests.Win\\MudEngine.Tests.Win.csproj
-		SccProjectName6 = MudEngine.Tests.Win
-		SccLocalPath6 = MudEngine.Tests.Win
-		SccProjectUniqueName7 = Designer\\Designer.csproj
-		SccProjectName7 = Designer
-		SccLocalPath7 = Designer
+		SccProjectUniqueName3 = Engine\\Engine.csproj
+		SccProjectName3 = Engine
+		SccLocalPath3 = Engine
+		SccProjectUniqueName4 = MudEngine.Tests.Win\\MudEngine.Tests.Win.csproj
+		SccProjectName4 = MudEngine.Tests.Win
+		SccLocalPath4 = MudEngine.Tests.Win
+		SccProjectUniqueName5 = Designer\\Designer.csproj
+		SccProjectName5 = Designer
+		SccLocalPath5 = Designer
+		SccProjectUniqueName6 = ScriptEngine\\ScriptEngine.csproj
+		SccProjectName6 = ScriptEngine
+		SccLocalPath6 = ScriptEngine
+		SccProjectUniqueName7 = Editor\\Old.Editor.csproj
+		SccProjectName7 = Editor
+		SccLocalPath7 = Editor
+		SccProjectUniqueName8 = Engine.old\\Old.Engine.csproj
+		SccProjectName8 = Engine.old
+		SccLocalPath8 = Engine.old
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -200,6 +212,26 @@ Global
 		{9FE86E93-884C-4897-A328-7ECFBAE42754}.Server (Debug)|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{9FE86E93-884C-4897-A328-7ECFBAE42754}.Server (Debug)|Mixed Platforms.Build.0 = Debug|Any CPU
 		{9FE86E93-884C-4897-A328-7ECFBAE42754}.Server (Debug)|x86.ActiveCfg = Debug|Any CPU
+		{17B471AD-3A65-4CB8-A26D-779A270F8C8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17B471AD-3A65-4CB8-A26D-779A270F8C8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17B471AD-3A65-4CB8-A26D-779A270F8C8F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{17B471AD-3A65-4CB8-A26D-779A270F8C8F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{17B471AD-3A65-4CB8-A26D-779A270F8C8F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{17B471AD-3A65-4CB8-A26D-779A270F8C8F}.Editor (Debug)|Any CPU.ActiveCfg = Debug|Any CPU
+		{17B471AD-3A65-4CB8-A26D-779A270F8C8F}.Editor (Debug)|Any CPU.Build.0 = Debug|Any CPU
+		{17B471AD-3A65-4CB8-A26D-779A270F8C8F}.Editor (Debug)|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{17B471AD-3A65-4CB8-A26D-779A270F8C8F}.Editor (Debug)|Mixed Platforms.Build.0 = Debug|Any CPU
+		{17B471AD-3A65-4CB8-A26D-779A270F8C8F}.Editor (Debug)|x86.ActiveCfg = Debug|Any CPU
+		{17B471AD-3A65-4CB8-A26D-779A270F8C8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17B471AD-3A65-4CB8-A26D-779A270F8C8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17B471AD-3A65-4CB8-A26D-779A270F8C8F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{17B471AD-3A65-4CB8-A26D-779A270F8C8F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{17B471AD-3A65-4CB8-A26D-779A270F8C8F}.Release|x86.ActiveCfg = Release|Any CPU
+		{17B471AD-3A65-4CB8-A26D-779A270F8C8F}.Server (Debug)|Any CPU.ActiveCfg = Debug|Any CPU
+		{17B471AD-3A65-4CB8-A26D-779A270F8C8F}.Server (Debug)|Any CPU.Build.0 = Debug|Any CPU
+		{17B471AD-3A65-4CB8-A26D-779A270F8C8F}.Server (Debug)|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{17B471AD-3A65-4CB8-A26D-779A270F8C8F}.Server (Debug)|Mixed Platforms.Build.0 = Debug|Any CPU
+		{17B471AD-3A65-4CB8-A26D-779A270F8C8F}.Server (Debug)|x86.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

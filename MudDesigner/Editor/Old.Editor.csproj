@@ -139,9 +139,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Engine.old\Engine.Old.csproj">
+    <ProjectReference Include="..\Engine.old\Old.Engine.csproj">
       <Project>{9d9e8cac-8876-4725-9a65-2077de4322dd}</Project>
-      <Name>Engine.Old</Name>
+      <Name>Old.Engine</Name>
     </ProjectReference>
     <ProjectReference Include="..\Scripts\Scripts.csproj">
       <Project>{db190be6-a73b-4c59-b939-4a8b1825a658}</Project>

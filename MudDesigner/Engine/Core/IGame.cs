@@ -69,15 +69,9 @@ namespace MudEngine.Engine.Core
         IWorld World { get; set; }
 
         /// <summary>
-        /// Gets or Sets the current Server for the game.
-        /// </summary>
-        IServer Server { get; set; }
-
-        /// <summary>
         /// Initializes the specified storage source and server.
         /// </summary>
         /// <param name="storageSource">The storage source.</param>
-        /// <param name="server">The server.</param>
-        void Initialize(IPersistedStorage storageSource, IServer server = null);
+        void Initialize(IPersistedStorage storageSource);
     }
 }

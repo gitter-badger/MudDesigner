@@ -50,10 +50,15 @@
     <Compile Include="Core\ExtensionMethods.cs" />
     <Compile Include="Core\StorageFilenameAttribute.cs" />
     <Compile Include="Core\ILog.cs" />
+    <Compile Include="Factories\EngineFactory.cs" />
+    <Compile Include="GameObjects\Environment\DayState.cs" />
+    <Compile Include="GameObjects\Environment\EngineWorld.cs" />
+    <Compile Include="GameObjects\Environment\WeatherState.cs" />
+    <Compile Include="GameObjects\Environment\WorldEventArgs.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\IGameObject.cs" />
     <Compile Include="Core\IgnoreAttribute.cs" />
-    <Compile Include="Core\IServerConnectionState.cs" />
+    <Compile Include="Core\IServerObject.cs" />
     <Compile Include="Core\IPersistedStorage.cs" />
     <Compile Include="Core\IGame.cs" />
     <Compile Include="Core\IServer.cs" />
@@ -77,11 +82,7 @@
     <Compile Include="GameObjects\Mob\IPlayer.cs" />
     <Compile Include="GameObjects\Mob\MessageBroadcastLevels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scripting\ScriptCompiler.cs" />
-    <Compile Include="Scripting\CSharp.cs" />
-    <Compile Include="Scripting\IScriptCompiler.cs" />
     <Compile Include="Factories\ScriptFactory.cs" />
-    <Compile Include="Scripting\ScriptObject.cs" />
     <Compile Include="ServerProperties.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

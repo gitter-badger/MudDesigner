@@ -11,7 +11,7 @@ namespace MudEngine.Engine.GameObjects.Mob
     /// <summary>
     /// Creates a contract for objects whom want to implement IPlayer
     /// </summary>
-    public interface IPlayer : IMob, IServerConnectionState
+    public interface IPlayer : IMob, IServerObject
     {
         /// <summary>
         /// Connects the user via the specified socket.

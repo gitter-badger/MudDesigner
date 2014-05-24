@@ -30,16 +30,16 @@ namespace MudEngine.Engine.Core
         public EngineServer()
         {
             this.Status = ServerStatus.Stopped;
-            this.Connections = new List<IServerConnectionState>();
+            this.Connections = new List<IServerObject>();
             
             // The server is enabled for use. Does not indicate that it is running.
-            this.IsEnabled = true;
+            this.IsEnabled = true;            
         }
 
         /// <summary>
         /// Gets a collection of current user connections.
         /// </summary>
-        public List<IServerConnectionState> Connections { get; protected set; }
+        public List<IServerObject> Connections { get; protected set; }
 
         /// <summary>
         /// Gets or Sets the port that the server is running on.
@@ -219,10 +219,10 @@ namespace MudEngine.Engine.Core
         public void Stop()
         {
             // Loop through each connection in parallel and disconnect them.
-            foreach(IServerConnectionState connection in this.Connections.AsParallel())
+            foreach(IServerObject connection in this.Connections.AsParallel())
             {
                 // Hold a locally scoped reference to avoid parallel issues.
-                IServerConnectionState client = connection;
+                IServerObject client = connection;
                 client.Disconnect();
             }
 
@@ -241,7 +241,7 @@ namespace MudEngine.Engine.Core
         /// </summary>
         /// <param name="connection">The connection.</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        public void Disconnect(IServerConnectionState connection)
+        public void Disconnect(IServerObject connection)
         {
             // Ensure the connection is still valid.
             if (connection != null && connection.Connection != null && connection.Connection.Connected)
@@ -257,9 +257,9 @@ namespace MudEngine.Engine.Core
         public void DisconnectAll()
         {
             // Disconnect every client from the server.
-            foreach(IServerConnectionState connection in this.Connections.AsParallel())
+            foreach(IServerObject connection in this.Connections.AsParallel())
             {
-                IServerConnectionState client = connection;
+                IServerObject client = connection;
                 if (client != null && client.Connection != null && client.Connection.Connected)
                 {
                     client.Connection.Disconnect(false);

@@ -15,7 +15,7 @@ namespace MudEngine.Engine.Core
         /// <summary>
         /// Gets a collection of current user connections.
         /// </summary>
-        List<IServerConnectionState> Connections { get; }
+        List<IServerObject> Connections { get; }
 
         /// <summary>
         /// Gets the port that the server is running on.
@@ -84,7 +84,7 @@ namespace MudEngine.Engine.Core
         /// Disconnects the specified IServerConnectionState object.
         /// </summary>
         /// <param name="connection">The connection.</param>
-        void Disconnect(IServerConnectionState connection);
+        void Disconnect(IServerObject connection);
 
         /// <summary>
         /// Disconnects everyone from the server..

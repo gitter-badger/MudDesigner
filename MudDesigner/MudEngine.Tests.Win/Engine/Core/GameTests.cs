@@ -69,7 +69,7 @@ namespace MudEngine.Tests.Win
             try
             {
                 // Attempt to initialize the game.
-                game.Initialize(storage, server);
+                game.Initialize(storage);
             }
             catch (Exception e)
             {

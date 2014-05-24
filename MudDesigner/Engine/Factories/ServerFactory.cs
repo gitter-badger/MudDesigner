@@ -57,7 +57,7 @@ namespace MudEngine.Engine.Factories
         /// </summary>
         /// <typeparam name="T">The Type implementing IServer that you want to find</typeparam>
         /// <returns>Returns the server specified.</returns>
-        public static IServer GetServer<T>(Assembly[] fromAssemblies = null) where T : IServer, new()
+        public static IServer GetServer<T>(Assembly[] fromAssemblies = null) where T : class, IServer, new()
         {
             // If the DefaultServer has not been set, we will set it the first time a specific Type is passed.
             // It is assumed since a specific Type is provided, it will be re-used.

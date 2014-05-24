@@ -48,9 +48,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Engine.old\Engine.Old.csproj">
+    <ProjectReference Include="..\Engine.old\Old.Engine.csproj">
       <Project>{9d9e8cac-8876-4725-9a65-2077de4322dd}</Project>
-      <Name>Engine.Old</Name>
+      <Name>Old.Engine</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

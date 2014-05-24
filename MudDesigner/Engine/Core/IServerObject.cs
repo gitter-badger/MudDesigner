@@ -11,7 +11,7 @@ namespace MudEngine.Engine.Core
     /// <summary>
     /// Provides a contract to objects wanting to communicate with the server.
     /// </summary>
-    public interface IServerConnectionState
+    public interface IServerObject
     {
         /// <summary>
         /// Gets or sets the connection.

@@ -76,17 +76,11 @@ namespace MudEngine.Engine.Core
         public IWorld World { get; set; }
 
         /// <summary>
-        /// Gets or Sets the current Server for the game.
-        /// </summary>
-        [XmlIgnore]
-        public IServer Server { get; set; }
-
-        /// <summary>
         /// Initializes the specified storage source and server.
         /// </summary>
         /// <param name="storageSource">The storage source.</param>
-        /// <param name="server">The server.</param>
-        public virtual void Initialize(IPersistedStorage storageSource, IServer server = null)
+        /// <exception cref="System.NullReferenceException">The storageSource parameter can not be null.</exception>
+        public virtual void Initialize(IPersistedStorage storageSource)
         {
             if (storageSource == null)
             {
@@ -96,42 +90,12 @@ namespace MudEngine.Engine.Core
             this.StorageSource = storageSource;
             this.StorageSource.InitializeStorage();
 
-            // If we have a server, we need to start it.
-            if (server != null)
-            {
-                StartServer(server);
-            }
-
-            // this.World = new CoreWorld(this);
+            this.World = new Factories.EngineFactory<EngineWorld>().GetObject();
+            this.World.Loaded += (sender, args) => Console.WriteLine(args.World.WeatherStates.Count);
+            this.World.Initialize();
 
             // If a server exists and is running, we are good to go. If no server, then we default to Running = true;
-            this.IsRunning = (this.Server != null) ? (this.Server.Status == ServerStatus.Running) : true;
-        }
-
-        /// <summary>
-        /// Starts the server.
-        /// </summary>
-        /// <param name="server">The server object.</param>
-        private void StartServer(IServer server)
-        {
-            this.Server = server;
-            this.IsMultiplayer = true;
-
-            // Make sure the server status is stopped.
-            if (this.Server.Status == ServerStatus.Running)
-            {
-                this.Server.Stop();
-            }
-
-            // Start the server.
-            try
-            {
-                this.Server.Start(this);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            this.IsRunning = this.World != null;
         }
     }
 }

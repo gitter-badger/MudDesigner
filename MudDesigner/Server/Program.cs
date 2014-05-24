@@ -69,7 +69,8 @@ namespace MudDesigner.Server
 
             // Instance the server.
             // IGame game = (IGame)ScriptFactory.GetScript(EngineSettings.Default.GameScript, null);
-            IGame game = GameFactory.GetGame<EngineGame>();
+            IGame game = new EngineFactory<EngineGame>().GetObject();
+
             /*
             if (game == null)
             {
@@ -84,7 +85,8 @@ namespace MudDesigner.Server
                 }
             }
             */
-            IServer server = ServerFactory.GetServer<EngineServer>();
+
+            IServer server = new EngineFactory<EngineServer>().GetObject();
             IPersistedStorage storage = null;
             try
             {
@@ -95,7 +97,8 @@ namespace MudDesigner.Server
 
             }
 
-            game.Initialize(storage, server);
+            game.Initialize(storage);
+            server.Start(game);
 
             // game.RestoreWorld();
 
@@ -109,6 +112,7 @@ namespace MudDesigner.Server
             Console.WriteLine("Server running...");
             while (game.IsRunning)
             {
+                System.Threading.Thread.Sleep(100);
             }
 
             server = null;
