@@ -55,6 +55,11 @@ namespace MudEngine.Engine.GameObjects.Environment
         bool IsSafe { get; set; }
 
         /// <summary>
+        /// Gets the occupants of the world.
+        /// </summary>
+        List<IMob> Occupants { get; }
+
+        /// <summary>
         /// Occurs after the World is loaded.
         /// </summary>
         event EventHandler<WorldEventArgs> Loaded;

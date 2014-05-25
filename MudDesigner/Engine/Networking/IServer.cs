@@ -3,9 +3,13 @@
 //     Copyright (c) AllocateThis! Studio's. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
+using System;
 using System.Collections.Generic;
+using MudEngine.Engine.Core;
+using MudEngine.Engine.GameObjects;
+using MudEngine.Engine.GameObjects.Mob;
 
-namespace MudEngine.Engine.Core
+namespace MudEngine.Engine.Networking
 {
     /// <summary>
     /// Provides a contract for objects that want to implement a game server.
@@ -64,15 +68,10 @@ namespace MudEngine.Engine.Core
         ServerStatus Status { get; }
 
         /// <summary>
-        /// Gets the currently running game.
-        /// </summary>
-        IGame Game { get; }
-
-        /// <summary>
         /// Starts the server using the specified game.
         /// </summary>
         /// <param name="game">The game.</param>
-        void Start(IGame game);
+        void Start<T>() where T : class, IServerObject, new();
 
         /// <summary>
         /// Stops server, shutting down the network connection.

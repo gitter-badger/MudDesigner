@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MudEngine.Engine.GameObjects.Mob;
 
 namespace MudEngine.Engine.GameObjects.Environment
 {
-    public class EngineWorld : IWorld
+    public class DefaultWorld : IWorld
     {
         /// <summary>
         /// Gets or sets the number of hours since original creation that this world has been alive.
@@ -114,8 +115,10 @@ namespace MudEngine.Engine.GameObjects.Environment
             {
                 throw new NotImplementedException();
             }
-        } 
-        
+        }
+
+        public List<IMob> Occupants { get; protected set; }
+
         /// <summary>
         /// Occurs after the World is loaded.
         /// </summary>
@@ -152,6 +155,7 @@ namespace MudEngine.Engine.GameObjects.Environment
             // TODO: Restore from data access layer.
             this.DayStates = new List<DayState>();
             this.WeatherStates = new List<WeatherState>();
+            this.Occupants = new List<IMob>();
 
             this.OnLoaded(new WorldEventArgs(this));
         }

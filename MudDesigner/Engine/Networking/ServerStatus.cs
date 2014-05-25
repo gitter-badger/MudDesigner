@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace MudEngine.Engine.Core
+namespace MudEngine.Engine.Networking
 {
     /// <summary>
     /// Provides different statuses for a server.

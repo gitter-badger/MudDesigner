@@ -18,6 +18,7 @@ namespace MudEngine.Tests.Win.Engine.Core
     [TestClass]
     public class ServerTests
     {
+        /*
         [TestMethod]
         public void StarServer()
         {
@@ -58,5 +59,6 @@ namespace MudEngine.Tests.Win.Engine.Core
             Assert.IsTrue(server.IsEnabled == false);
             Assert.IsTrue(server.Connections.Count == 0);
         }
+         */
     }
 }

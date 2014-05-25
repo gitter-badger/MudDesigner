@@ -12,6 +12,8 @@ using System.Reflection;
 using MudEngine.Engine.Core;
 using MudEngine.Engine.Factories;
 using MudEngine.Engine.GameObjects.Environment;
+using MudEngine.Engine.GameObjects.Mob;
+using MudEngine.Engine.Networking;
 
 namespace MudDesigner.Server
 {
@@ -26,96 +28,23 @@ namespace MudDesigner.Server
         /// <param name="args">The server arguments.</param>
         static void Main(string[] args)
         {
-            if (args.Length == 2)
-            {
-                // Perform compilation of scripts.
-                if (args[1].ToLower() == "-compile")
-                {
-                    // TODO: Build a separate compiler app
-                }
-            }
+            // Prepare our Progress object so the game can push messages back to the server console.
+            var handler = new Progress<IMessage>((message) => Console.WriteLine(message.Message));
 
             Console.WriteLine("Server app starting...");
 
-            // Loop through each reference mentioned in the engines properties and add them.
-            // This provides support for 3rd party pre-compiled "Mods" scripts
-            /*
-            foreach (string reference in EngineSettings.Default.ScriptLibrary)
-            {
-                string path = Path.Combine(System.Environment.CurrentDirectory, reference);
-                CompileEngine.AddAssemblyReference(path);
-            }
-
-            //Compile the scripts within the engine properties 'ScriptsPath'
-            bool results = CompileEngine.Compile(MudDesigner.Engine.Properties.EngineSettings.Default.ScriptsPath);
-            if (!results)
-            {
-                Console.WriteLine(CompileEngine.Errors);
-                Console.WriteLine("Press any key to close.");
-                Console.ReadKey();
-                return;
-            }
-
-            //Add the compiled scripts assembly to the Script Factory
-            ScriptFactory.AddAssembly(CompileEngine.CompiledAssembly);
-
-            //Now add all of the pre-compiled scripts to the script factory so we
-            //can instance them if we need to.
-            foreach (string reference in EngineSettings.Default.ScriptLibrary)
-            {
-                ScriptFactory.AddAssembly(reference);
-            }
-            */
-
             // Instance the server.
             // IGame game = (IGame)ScriptFactory.GetScript(EngineSettings.Default.GameScript, null);
-            IGame game = new EngineFactory<EngineGame>().GetObject();
+            MultiplayerGame game = new EngineFactory<MultiplayerGame>().GetObject();
+            game.Logger = handler;
 
-            /*
-            if (game == null)
-            {
-                game = (IGame)ScriptFactory.FindInheritedScript("MudDesigner.Engine.Core.Game", null);
-
-                if (game == null)
-                {
-                    Console.WriteLine("Could not locate a Game script to run the server with. Server will not start.");
-                    Log.Error("Failed to locate a Game script to run the server. Server failed to start.");
-                    Console.ReadKey();
-                    return;
-                }
-            }
-            */
-
-            IServer server = new EngineFactory<EngineServer>().GetObject();
-            IPersistedStorage storage = null;
-            try
-            {
-                storage = PersistedStorageFactory.GetStorageContainer<EngineXmlStorage>();
-            }
-            catch
-            {
-
-            }
-
-            game.Initialize(storage);
-            server.Start(game);
-
-            // game.RestoreWorld();
-
-            //It does not matter in what order this is performed, however it is best to start the server
-            //after the game.initialize() method is called.  This ensures the game is loaded and ready to go
-            //prior to clients connecting to the server.
-
-            //Start the server.
-            // server.Start(maxConnections: 500, maxQueueSize: 20, game: game);
+            game.Initialize<MMOPlayer>(null);
+            game.Start<MMOPlayer>();
 
             Console.WriteLine("Server running...");
             while (game.IsRunning)
             {
-                System.Threading.Thread.Sleep(100);
             }
-
-            server = null;
         }
     }
 }

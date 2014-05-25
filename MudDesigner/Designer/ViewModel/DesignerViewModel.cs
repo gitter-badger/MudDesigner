@@ -32,11 +32,9 @@ namespace Designer.ViewModel
         {
             if (IsInDesignMode)
             {
-                this.game = new EngineGame();
             }
             else
             {
-                this.game = GameFactory.GetGame<EngineGame>();
             }
 
             this.IsDirty = false;

@@ -15,6 +15,7 @@ namespace Designer.Repositories
     /// </summary>
     public class GameRepository
     {
+        /*
         /// <summary>
         /// The storage container
         /// </summary>
@@ -54,6 +55,6 @@ namespace Designer.Repositories
 
             // If we found a file, we restore it and return it.
             return storageContainer.Load<T>((T)game);
-        }
+        }*/
     }
 }

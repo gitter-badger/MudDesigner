@@ -39,7 +39,7 @@ namespace MudEngine.Engine.Factories
             // then return the T collection.
             return new List<T>(
                 (from type in types
-                 select Activator.CreateInstance(type) as T));
+                 select Activator.CreateInstance<T>()));
         }
 
         /// <summary>

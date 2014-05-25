@@ -4,8 +4,11 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 using MudEngine.Engine.GameObjects.Environment;
+using MudEngine.Engine.GameObjects.Mob;
 
 namespace MudEngine.Engine.Core
 {
@@ -13,8 +16,10 @@ namespace MudEngine.Engine.Core
     /// The Core Game that can be used across any game built on the Mud Engine.
     /// </summary>
     [Serializable]
-    public class EngineGame : IGame
+    public class DefaultGame : IGame
     {
+        private IPlayer player;
+
         /// <summary>
         /// Gets or sets a value indicating whether this instance is multiplayer.
         /// </summary>
@@ -73,29 +78,99 @@ namespace MudEngine.Engine.Core
         /// Gets or Sets the current World for the game. Contains all of the Realms, Zones and Rooms.
         /// </summary>
         [XmlIgnore]
-        public IWorld World { get; set; }
+        public List<IWorld> Worlds { get; set; }
+
+        /// <summary>
+        /// Gets or sets the player.
+        /// </summary>
+        public IPlayer Player { get; set; }
+
+        /// <summary>
+        /// Gets or sets the logger.
+        /// </summary>
+        public IProgress<IMessage> Logger { get; set; }
 
         /// <summary>
         /// Initializes the specified storage source and server.
         /// </summary>
         /// <param name="storageSource">The storage source.</param>
         /// <exception cref="System.NullReferenceException">The storageSource parameter can not be null.</exception>
-        public virtual void Initialize(IPersistedStorage storageSource)
+        public virtual void Initialize<T>(IPersistedStorage storageSource) where T : class, IPlayer, new()
         {
             if (storageSource == null)
             {
-                throw new NullReferenceException("The storageSource parameter can not be null.");
+                this.LogMessage("initializing the persisted storage system failed! No data will be restored.");
+            }
+            else
+            {
+                this.StorageSource = storageSource;
+                // this.StorageSource.InitializeStorage();
             }
 
-            this.StorageSource = storageSource;
-            this.StorageSource.InitializeStorage();
-
-            this.World = new Factories.EngineFactory<EngineWorld>().GetObject();
-            this.World.Loaded += (sender, args) => Console.WriteLine(args.World.WeatherStates.Count);
-            this.World.Initialize();
+            this.SetupWorlds();
 
             // If a server exists and is running, we are good to go. If no server, then we default to Running = true;
-            this.IsRunning = this.World != null;
+            this.IsRunning = this.Worlds != null && this.StorageSource != null;
+
+            if (!this.IsRunning)
+            {
+                this.LogMessage("Failed to start the game.");
+                return;
+            }
+
+            this.LogMessage("Setting up the player.");
+            this.Player = new T();
+            this.Player.SendMessage += (target, message) => this.BroadcastToPlayer(target as IMob, message);
+
+            Task.Run(() =>
+            {
+                while(this.IsRunning)
+                {
+                    string input = Console.ReadLine();
+                    this.Player.ReceiveInput(new InputMessage(input));
+                }
+            });
+        }
+
+        /// <summary>
+        /// Setups the worlds up by restoring them from the storage source.
+        /// </summary>
+        protected virtual void SetupWorlds()
+        {
+            this.LogMessage("Setting up the game world.");
+            this.Worlds = new List<IWorld>();
+            this.LogMessage("Game world set up.");
+        }
+
+        /// <summary>
+        /// Broadcasts the specified message to the user.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="message">The message.</param>
+        public virtual void BroadcastToPlayer(IMob sender, IMessage message)
+        {
+            Console.WriteLine(string.Format("Message => {0}", message.Message));
+        }
+
+        public virtual string FormatMessageForBroadcasting(IMessage message)
+        {
+            string[] messageContent = message.Message.Split('\n');
+            string formattedMessage = string.Empty;
+
+            foreach (string line in messageContent)
+            {
+                formattedMessage += line + Environment.NewLine;
+            }
+
+            return formattedMessage;
+        }
+
+        protected virtual void LogMessage(string message)
+        {
+            if (this.Logger != null)
+            {
+                this.Logger.Report(new InputMessage(message));
+            }
         }
     }
 }

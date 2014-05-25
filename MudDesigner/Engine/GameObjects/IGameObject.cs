@@ -4,6 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
+using MudEngine.Engine.Core;
 using MudEngine.Engine.GameObjects.Mob;
 
 namespace MudEngine.Engine.GameObjects
@@ -58,25 +59,13 @@ namespace MudEngine.Engine.GameObjects
         /// </summary>
         DateTime CreatedDate { get; set; }
 
+        void Initialize(IGame game);
+
         /// <summary>
         /// Copies the state of one IGameObject to this one..
         /// </summary>
         /// <param name="copyFrom">The object to copy from.</param>
         /// <param name="ignoreExistingPropertyValues">if set to <c>true</c> [ignore existing property values].</param>
         void CopyState(IGameObject copyFrom, bool ignoreExistingPropertyValues = false);
-
-        /// <summary>
-        /// Broadcasts a message to a player, regardless of its location.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        /// <param name="player">The player.</param>
-        void BroadcastMessage(string message, IPlayer player);
-
-        /// <summary>
-        /// Broadcasts a message to a group of players, regardless of their location.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        /// <param name="players">The players.</param>
-        void BroadcastMessage(string message, IPlayer[] players);
     }
 }

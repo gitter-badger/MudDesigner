@@ -16,7 +16,7 @@ namespace MudEngine.Tests.Win
 {
     [TestClass]
     public class GameTests
-    {
+    {/*
         /// <summary>
         /// Initializes the game without a server.
         /// </summary>
@@ -103,6 +103,6 @@ namespace MudEngine.Tests.Win
 
             // Assert
             Assert.Fail("Test failed to throw the appropriate exception.");
-        }
+        }*/
     }
 }

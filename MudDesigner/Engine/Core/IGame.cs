@@ -4,7 +4,10 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using MudEngine.Engine.GameObjects.Environment;
+using MudEngine.Engine.GameObjects.Mob;
 
 namespace MudEngine.Engine.Core
 {
@@ -13,11 +16,6 @@ namespace MudEngine.Engine.Core
     /// </summary>
     public interface IGame
     {
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is multiplayer.
-        /// </summary>
-        bool IsMultiplayer { get; }
-
         /// <summary>
         /// Gets if the game (online or offline) is currently running.
         /// </summary>
@@ -66,12 +64,31 @@ namespace MudEngine.Engine.Core
         /// <summary>
         /// Gets or Sets the current World for the game. Contains all of the Realms, Zones and Rooms.
         /// </summary>
-        IWorld World { get; set; }
+        List<IWorld> Worlds { get; set; }
+
+        /// <summary>
+        /// Gets or sets the logger.
+        /// </summary>
+        IProgress<IMessage> Logger { get; set; }
 
         /// <summary>
         /// Initializes the specified storage source and server.
         /// </summary>
         /// <param name="storageSource">The storage source.</param>
-        void Initialize(IPersistedStorage storageSource);
+        void Initialize<T>(IPersistedStorage storageSource) where T : class, IPlayer, new();
+
+        /// <summary>
+        /// Broadcasts the specified message to the user.
+        /// </summary>
+        /// <param name="target">The target the message is intended for.</param>
+        /// <param name="message">The message.</param>
+        void BroadcastToPlayer(IMob target, IMessage message);
+
+        /// <summary>
+        /// Formats the message for broadcasting.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <returns></returns>
+        string FormatMessageForBroadcasting(IMessage message);
     }
 }

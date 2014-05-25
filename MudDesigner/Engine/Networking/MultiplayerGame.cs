@@ -1,18 +1,20 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="CoreServer.cs" company="AllocateThis!">
-//     Copyright (c) AllocateThis! Studio's. All rights reserved.
-// </copyright>
-//-----------------------------------------------------------------------
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+using MudEngine.Engine.GameObjects.Environment;
+using MudEngine.Engine.Core;
+using MudEngine.Engine.Factories;
 using MudEngine.Engine.GameObjects.Mob;
 
-namespace MudEngine.Engine.Core
+namespace MudEngine.Engine.Networking
 {
-    public class EngineServer : IServer
+    public class MultiplayerGame : DefaultGame, IServer
     {
         /// <summary>
         /// The Server properties object.
@@ -27,19 +29,23 @@ namespace MudEngine.Engine.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineServer"/> class.
         /// </summary>
-        public EngineServer()
+        public MultiplayerGame()
         {
             this.Status = ServerStatus.Stopped;
             this.Connections = new List<IServerObject>();
-            
+
             // The server is enabled for use. Does not indicate that it is running.
-            this.IsEnabled = true;            
+            this.IsEnabled = true;
         }
 
         /// <summary>
         /// Gets a collection of current user connections.
         /// </summary>
         public List<IServerObject> Connections { get; protected set; }
+
+        public bool IsEnabled { get; protected set; }
+
+        public ServerStatus Status { get; protected set; }
 
         /// <summary>
         /// Gets or Sets the port that the server is running on.
@@ -155,28 +161,82 @@ namespace MudEngine.Engine.Core
         }
 
         /// <summary>
-        /// Gets a value indicating whether this <see cref="IServer" /> is enabled.
+        /// Initializes the specified storage source and server.
         /// </summary>
-        public bool IsEnabled { get; protected set; }
+        /// <param name="storageSource">The storage source.</param>
+        /// <exception cref="System.NullReferenceException">The storageSource parameter can not be null.</exception>
+        public override void Initialize<T>(IPersistedStorage storageSource)
+        {
+            // We don't invoke our base.Initialize(storageSource) because we want to
+            // handle setting up the player using our server.
+
+            // Check if the storage source is null.
+            if (storageSource == null)
+            {
+                // throw new NullReferenceException("The storageSource parameter can not be null.");
+            }
+
+            //this.StorageSource = storageSource;
+            //this.StorageSource.InitializeStorage();
+
+            this.SetupWorlds();
+
+            // If a server exists and is running, we are good to go. If no server, then we default to Running = true;
+            this.IsRunning = this.Worlds != null; // && this.Worlds.Count > 0;
+        }
 
         /// <summary>
-        /// Gets the current server status.
+        /// Broadcasts the specified message to the user.
         /// </summary>
-        public ServerStatus Status { get; protected set; }
+        /// <param name="sender">The sender.</param>
+        /// <param name="message">The message.</param>
+        public override void BroadcastToPlayer(IMob sender, IMessage message)
+        {
+            if (sender != null && sender is MMOPlayer)
+            {
+                var player = sender as MMOPlayer;
 
-        /// <summary>
-        /// Gets the currently running game.
-        /// </summary>
-        public IGame Game { get; protected set; }
+                // When printing properties that don't have values, they'll
+                // be null.
+                if (message == null || string.IsNullOrWhiteSpace(message.Message))
+                {
+                    return;
+                }
+
+                // Make sure we are still connected
+                try
+                {
+                    string formattedMessage = this.FormatMessageForBroadcasting(message);
+
+                    if (player.Connection.Connected)
+                    {
+                        player.Connection.Send(new ASCIIEncoding().GetBytes(string.Format("Message => {0}", formattedMessage)));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // No connection was made, so make sure we clean up
+                    if (!player.Connection.Connected)
+                        player.Disconnect();
+                }
+            }
+        }
 
         /// <summary>
         /// Starts the server using the specified game.
         /// </summary>
+        /// <typeparam name="T">The IPlayer Type used to instance new objects upon a player connecting to the server.</typeparam>
         /// <param name="game">The game.</param>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public void Start(IGame game)
+        /// <exception cref="System.Exception">
+        /// Invalid Port number used. Recommended number is 23 or 4000
+        /// or
+        /// Invalid MaxConnections number used. Must be greater than 1.
+        /// </exception>
+        /// <exception cref="System.NullReferenceException">The game parameter can not be null. Provide a valid IGame object.</exception>
+        public void Start<T>() where T : class, IServerObject, new()
         {
             this.Status = ServerStatus.Starting;
+            this.LogMessage("Starting network server.");
 
             // Validate our settings.
             if (this.Port <= 0)
@@ -189,13 +249,6 @@ namespace MudEngine.Engine.Core
                 throw new Exception("Invalid MaxConnections number used. Must be greater than 1.");
             }
 
-            if (game == null)
-            {
-                throw new NullReferenceException("The game parameter can not be null. Provide a valid IGame object.");
-            }
-
-            this.Game = game;
-
             // Get our server address information
             IPHostEntry serverHost = Dns.GetHostEntry(Dns.GetHostName());
             var serverEndPoint = new IPEndPoint(IPAddress.Any, this.Port);
@@ -206,7 +259,7 @@ namespace MudEngine.Engine.Core
             this.serverSocket.Listen(this.MaxQueuedConnections);
 
             // Begin listening for connections.
-            IAsyncResult result = this.serverSocket.BeginAccept(new AsyncCallback(this.ConnectClient), this.serverSocket);
+            IAsyncResult result = this.serverSocket.BeginAccept(new AsyncCallback(this.ConnectClient<T>), this.serverSocket);
 
             this.Status = ServerStatus.Running;
         }
@@ -218,8 +271,10 @@ namespace MudEngine.Engine.Core
         /// <exception cref="System.NotImplementedException"></exception>
         public void Stop()
         {
+            this.LogMessage("Stopping the network server.");
+
             // Loop through each connection in parallel and disconnect them.
-            foreach(IServerObject connection in this.Connections.AsParallel())
+            foreach (IServerObject connection in this.Connections.AsParallel())
             {
                 // Hold a locally scoped reference to avoid parallel issues.
                 IServerObject client = connection;
@@ -257,7 +312,7 @@ namespace MudEngine.Engine.Core
         public void DisconnectAll()
         {
             // Disconnect every client from the server.
-            foreach(IServerObject connection in this.Connections.AsParallel())
+            foreach (IServerObject connection in this.Connections.AsParallel())
             {
                 IServerObject client = connection;
                 if (client != null && client.Connection != null && client.Connection.Connected)
@@ -270,40 +325,39 @@ namespace MudEngine.Engine.Core
         /// <summary>
         /// Connects the client to the server and then passes the connection responsibilities to the client object.
         /// </summary>
+        /// <typeparam name="T">The IPlayer Type used to instance new objects upon a player connecting to the server.</typeparam>
         /// <param name="result">The async result.</param>
-        private void ConnectClient(IAsyncResult result)
+        private void ConnectClient<T>(IAsyncResult result) where T : class, IServerObject, new()
         {
-            // Set up a default player object if one is not done so already.
-            if (Factories.MobFactory.DefaultPlayer == null)
-            {
-                var enginePlayer = new EnginePlayer { Game = this.Game };
-                Factories.MobFactory.DefaultPlayer = enginePlayer;
-            }
+            var factory = new EngineFactory<T>();
 
             // Fetch the defualt player class.
-            var player = Factories.MobFactory.GetDefaultPlayer();
-            player.Game = this.Game;
+            IServerObject player = factory.GetObject();
 
             try
             {
                 // Connect the player to the server.
                 player.Connect(this.serverSocket.EndAccept(result));
+                player.SendMessage += (sender, message) => this.BroadcastToPlayer(sender as IMob, message);
 
                 lock (this.Connections)
                 {
                     this.Connections.Add(player);
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw;
             }
 
+            this.LogMessage("Player connected.");
+            player.Initialize(this);
+
             // Pass all of the incoming data handling for the players connection, to the player object itself.
-            player.Connection.BeginReceive(player.Buffer, 0, player.BufferSize, SocketFlags.None, new AsyncCallback(player.ReceiveData), player);
+            player.Connection.BeginReceive(player.Buffer.ToArray(), 0, player.BufferSize, SocketFlags.None, new AsyncCallback(player.ReceiveData), player);
 
             // Fetch the next incoming connection.
-            this.serverSocket.BeginAccept(new AsyncCallback(this.ConnectClient), this.serverSocket);
+            this.serverSocket.BeginAccept(new AsyncCallback(this.ConnectClient<T>), this.serverSocket);
         }
     }
 }

@@ -55,7 +55,7 @@ namespace MudEngine.Engine.GameObjects
         /// <summary>
         /// Gets or sets the created date.
         /// </summary>
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }        
 
         /// <summary>
         /// Copies the state of one IGameObject to this one..
@@ -68,24 +68,7 @@ namespace MudEngine.Engine.GameObjects
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Broadcasts a message to a player, regardless of its location.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        /// <param name="player">The player.</param>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public void BroadcastMessage(string message, Mob.IPlayer player)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Broadcasts a message to a group of players, regardless of their location.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        /// <param name="players">The players.</param>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public void BroadcastMessage(string message, Mob.IPlayer[] players)
+        public void Initialize(IGame game)
         {
             throw new NotImplementedException();
         }

@@ -15,7 +15,7 @@ namespace MudEngine.Tests.Win.Engine.Core
     /// </summary>
     [TestClass]
     public class PersistedStorageTests
-    {
+    {/*
         /// <summary>
         /// Initializes the engine XML storage.
         /// </summary>
@@ -285,6 +285,6 @@ namespace MudEngine.Tests.Win.Engine.Core
 
             // Assert
             Assert.IsFalse(Directory.GetFiles(storage.GetStoragePath<EnginePlayer>()).Length > 0);
-        }
+        }*/
     }
 }

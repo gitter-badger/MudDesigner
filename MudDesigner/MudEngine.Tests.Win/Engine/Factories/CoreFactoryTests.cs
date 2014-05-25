@@ -20,7 +20,7 @@ namespace MudEngine.Tests.Win.Engine.Factories
     /// </summary>
     [TestClass]
     public class CoreFactoryTests
-    {
+    {/*
         #region GameFactory
 
         /// <summary>
@@ -342,5 +342,6 @@ namespace MudEngine.Tests.Win.Engine.Factories
         }
 
         #endregion
+      */
     }
 }

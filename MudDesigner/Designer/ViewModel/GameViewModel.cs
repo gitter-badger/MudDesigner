@@ -28,14 +28,9 @@ namespace Designer.ViewModel
         {
             if (IsInDesignMode)
             {
-                this.game = new EngineGame();
-                this.Name = "Sample Game";
-                this.Version = new Version(1, 0, 0, 0);
             }
             else
             {
-                var repository = new GameRepository(new EngineXmlStorage());
-                this.game = repository.GetGame<EngineGame>();
             }
         }
 

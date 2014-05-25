@@ -101,5 +101,22 @@ namespace MudEngine.Engine.GameObjects.Mob
         {
             throw new NotImplementedException();
         }
+
+
+        public event EventHandler<MovementEventArgs> Move;
+
+        public event EventHandler<IMessage> SendMessage;
+
+        public event EventHandler<IMessage> ReceivedMessage;
+
+        public void ReceiveInput(IMessage message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Send(IMessage message)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
