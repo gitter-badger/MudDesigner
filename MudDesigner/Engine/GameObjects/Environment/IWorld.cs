@@ -30,6 +30,11 @@ namespace MudEngine.Engine.GameObjects.Environment
         event EventHandler<WorldEventArgs> DayStateChanged;
 
         /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        string Name { get; set; }
+
+        /// <summary>
         /// Gets the number of hours since original creation that this world has been alive.
         /// </summary>
         int HoursAlive { get; }

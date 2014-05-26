@@ -60,7 +60,12 @@ namespace MudEngine.Engine.GameObjects
         /// <summary>
         /// Gets or sets the created date.
         /// </summary>
-        public DateTime CreatedDate { get; set; }        
+        public DateTime CreatedDate { get; set; }
+
+        /// <summary>
+        /// Gets the current game.
+        /// </summary>
+        public IGame Game { get; protected set; }
 
         /// <summary>
         /// Copies the state of one IGameObject to this one..
@@ -73,9 +78,9 @@ namespace MudEngine.Engine.GameObjects
             throw new NotImplementedException();
         }
 
-        public void Initialize(IGame game)
+        public virtual void Initialize(IGame game)
         {
-            throw new NotImplementedException();
+            this.Game = game;
         }
     }
 }

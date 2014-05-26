@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using MudEngine.Engine.Core;
 using MudEngine.Engine.GameObjects;
 using MudEngine.Engine.GameObjects.Mob;
+using MudEngine.Engine.GameObjects.Mob.States;
+using MudEngine.Engine.GameObjects.Mob.States.MultiplayerStates;
 
 namespace MudEngine.Engine.Networking
 {
@@ -71,6 +73,9 @@ namespace MudEngine.Engine.Networking
         {
             this.Connection = socket;
             this.Player = player;
+
+            IState connectState = new ConnectState();
+            connectState.Render(player);
 
             this.OnConnect();
         }

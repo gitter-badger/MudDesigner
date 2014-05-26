@@ -59,6 +59,11 @@ namespace MudEngine.Engine.GameObjects
         /// </summary>
         DateTime CreatedDate { get; set; }
 
+        /// <summary>
+        /// Gets the current game.
+        /// </summary>
+        IGame Game { get; }
+
         void Initialize(IGame game);
 
         /// <summary>

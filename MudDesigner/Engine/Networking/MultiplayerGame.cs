@@ -21,11 +21,6 @@ namespace MudEngine.Engine.Networking
     public class MultiplayerGame : DefaultGame, IServer
     {
         /// <summary>
-        /// The Server properties object.
-        /// </summary>
-        private readonly ServerProperties properties = ServerProperties.Default;
-
-        /// <summary>
         /// The server socket
         /// </summary>
         private Socket serverSocket;
@@ -35,12 +30,23 @@ namespace MudEngine.Engine.Networking
         /// </summary>
         public MultiplayerGame()
         {
-            this.Status = ServerStatus.Stopped;
             this.Connections = new List<IServerPlayer>();
+            this.MessageOfTheDay = new List<string>();
 
             // The server is enabled for use. Does not indicate that it is running.
             this.IsEnabled = true;
             this.IsMultiplayer = true;
+            this.Port = 23;
+            this.Status = ServerStatus.Stopped;
+            this.MaxConnections = 100;
+            this.Owner = "Sully";
+
+            // Defaults
+            this.Version = new Version(3, 0, 0);
+            this.Name = "Sample Multiplayer MUD Game";
+            this.Description = "This game provides a simple example of what can be done using the Mud Designer game engine.";
+            this.MessageOfTheDay.Add("Welcome to the MUD Designer Multiplayer Sample Game!");
+            this.MessageOfTheDay.Add(string.Format("We are currently working on version {0}.", this.Version.ToString()));
         }
 
         /// <summary>
@@ -61,122 +67,36 @@ namespace MudEngine.Engine.Networking
         /// <summary>
         /// Gets or sets the port that the server is running on.
         /// </summary>
-        public int Port
-        {
-            get
-            {
-                return this.properties.Port;
-            }
-
-            set
-            {
-                this.properties.Port = value;
-                ServerProperties.Synchronized(this.properties);
-            }
-        }
+        public int Port { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum connections.
         /// </summary>
-        public int MaxConnections
-        {
-            get
-            {
-                return this.properties.MaxConnections;
-            }
-
-            set
-            {
-                this.properties.MaxConnections = value;
-                ServerProperties.Synchronized(this.properties);
-            }
-        }
+        public int MaxConnections { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum queued connections.
         /// </summary>
-        public int MaxQueuedConnections
-        {
-            get
-            {
-                return this.properties.MaxQueuedConnections;
-            }
-
-            set
-            {
-                this.properties.MaxQueuedConnections = value;
-                ServerProperties.Synchronized(this.properties);
-            }
-        }
+        public int MaxQueuedConnections { get; set; }
 
         /// <summary>
         /// Gets or sets the minimum size of the password.
         /// </summary>
-        public int MinimumPasswordSize
-        {
-            get
-            {
-                return this.properties.MinimumPasswordSize;
-            }
-
-            set
-            {
-                this.properties.MinimumPasswordSize = value;
-                ServerProperties.Synchronized(this.properties);
-            }
-        }
-
+        public int MinimumPasswordSize { get; set; }
         /// <summary>
         /// Gets or sets the maximum size of the password.
         /// </summary>
-        public int MaximumPasswordSize
-        {
-            get
-            {
-                return this.properties.MaximumPasswordSize;
-            }
-
-            set
-            {
-                this.properties.MaximumPasswordSize = value;
-                ServerProperties.Synchronized(this.properties);
-            }
-        }
+        public int MaximumPasswordSize { get; set; }
 
         /// <summary>
         /// Gets or sets the message of the day.
         /// </summary>
-        public List<string> MessageOfTheDay
-        {
-            get
-            {
-                return this.properties.MessageOfTheDay.Cast<string>().ToList();
-            }
-
-            set
-            {
-                this.properties.MessageOfTheDay.Clear();
-                this.properties.MessageOfTheDay.AddRange(value.ToArray());
-                ServerProperties.Synchronized(this.properties);
-            }
-        }
+        public List<string> MessageOfTheDay { get; set; }
 
         /// <summary>
         /// Gets or sets the owner.
         /// </summary>
-        public string Owner
-        {
-            get
-            {
-                return this.properties.Owner;
-            }
-
-            set
-            {
-                this.properties.Owner = value;
-                ServerProperties.Synchronized(this.properties);
-            }
-        }
+        public string Owner { get; set; }
 
         /// <summary>
         /// Initializes the specified storage source and server.
@@ -213,9 +133,15 @@ namespace MudEngine.Engine.Networking
         /// <param name="message">The message.</param>
         public override void BroadcastToPlayer(IMob sender, IMessage message)
         {
-            if (sender != null && sender is ServerPlayer)
+            if ((sender != null && sender is IServerPlayer) || sender != null && this.Connections.Any(serverPlayer => serverPlayer.Player == sender))
             {
-                var player = sender as ServerPlayer;
+                var player = sender as IServerPlayer;
+
+                // We know we have one in our connection collection thanks to our if condition check above.
+                if (player == null)
+                {
+                    player = this.Connections.FirstOrDefault(connection => connection.Player == sender) as IServerPlayer;
+                }
 
                 // When printing properties that don't have values, they'll
                 // be null.
@@ -360,21 +286,27 @@ namespace MudEngine.Engine.Networking
             // Fetch the next incoming connection.
             this.serverSocket.BeginAccept(new AsyncCallback(this.ConnectClient<TServerObject, UPlayerObject>), this.serverSocket);
 
-            var factory = new EngineFactory<TServerObject>();
-
             // Fetch the defualt player class.
-            IServerPlayer serverObject = factory.GetObject();
+            IServerPlayer serverObject = new TServerObject();
 
             try
             {
                 // Connect the player to the server.
-                serverObject.Connect(this.serverSocket.EndAccept(result), new UPlayerObject());
+                var player = new UPlayerObject();    
+        
+                // Register for the events we need to now of and initialize the player.
+                player.SendMessage += (sender, message) => this.BroadcastToPlayer(sender as IMob, message);
+                player.Initialize(this);
 
                 lock (this.Connections)
                 {
                     this.Connections.Add(serverObject);
-                    serverObject.Player.Name = string.Format("Player {0}", this.Connections.Count);
+                    player.Name = string.Format("Player {0}", this.Connections.Count);
                 }
+
+                // Connect and register for network related events.
+                serverObject.Connect(this.serverSocket.EndAccept(result), player);
+                serverObject.Disconnected += (sender, args) => this.LogMessage(string.Format("{0} disconnected. ", (sender as IServerPlayer).Player.Name)); 
             }
             catch (Exception)
             {
@@ -382,11 +314,6 @@ namespace MudEngine.Engine.Networking
             }
 
             this.LogMessage(string.Format("{0} connected.", serverObject.Player.Name));
-
-            // Register for the events we need to now of.
-            serverObject.Player.SendMessage += (sender, message) => this.BroadcastToPlayer(sender as IMob, message);
-            serverObject.Disconnected += (sender, args) => this.LogMessage(string.Format("{0} disconnected. ", (sender as IServerPlayer).Player.Name)); 
-            serverObject.Player.Initialize(this);
 
             // Pass all of the incoming data handling for the players connection, to the player object itself.
             serverObject.Connection.BeginReceive(serverObject.Buffer.ToArray(), 0, serverObject.BufferSize, SocketFlags.None, new AsyncCallback(serverObject.ReceiveData), serverObject);

@@ -37,6 +37,11 @@ namespace MudEngine.Engine.Core
         string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the description of the game.
+        /// </summary>
+        string Description { get; set; }
+
+        /// <summary>
         /// Gets or Sets the current version of the game.
         /// </summary>
         Version Version { get; set; }

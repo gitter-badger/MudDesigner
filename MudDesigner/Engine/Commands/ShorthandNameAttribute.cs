@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------
 using System;
 
-namespace MudEngine.Engine.Core
+namespace MudEngine.Engine.Commands
 {
     /// <summary>
     /// Provides metadata for determining a shortcut for the supplied command.

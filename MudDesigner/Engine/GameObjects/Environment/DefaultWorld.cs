@@ -17,6 +17,28 @@ namespace MudEngine.Engine.GameObjects.Environment
     /// </summary>
     public class DefaultWorld : IWorld
     {
+        public List<IMob> Occupants { get; protected set; }
+
+        /// <summary>
+        /// Occurs after the World is loaded.
+        /// </summary>
+        public event EventHandler<WorldEventArgs> Loaded;
+
+        /// <summary>
+        /// Occurs after the weather changes.
+        /// </summary>
+        public event EventHandler<WorldEventArgs> WeatherChanged;
+
+        /// <summary>
+        /// Occurs after the day state has changed.
+        /// </summary>
+        public event EventHandler<WorldEventArgs> DayStateChanged;
+
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        public string Name { get; set; }
+
         /// <summary>
         /// Gets or sets the number of hours since original creation that this world has been alive.
         /// </summary>
@@ -124,23 +146,6 @@ namespace MudEngine.Engine.GameObjects.Environment
                 throw new NotImplementedException();
             }
         }
-
-        public List<IMob> Occupants { get; protected set; }
-
-        /// <summary>
-        /// Occurs after the World is loaded.
-        /// </summary>
-        public event EventHandler<WorldEventArgs> Loaded;
-
-        /// <summary>
-        /// Occurs after the weather changes.
-        /// </summary>
-        public event EventHandler<WorldEventArgs> WeatherChanged;
-
-        /// <summary>
-        /// Occurs after the day state has changed.
-        /// </summary>
-        public event EventHandler<WorldEventArgs> DayStateChanged;
 
         /// <summary>
         /// Raises the <see cref="E:Loaded" /> event.

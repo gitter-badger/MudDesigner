@@ -43,15 +43,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ShorthandNameAttribute.cs" />
     <Compile Include="Core\DefaultGame.cs" />
     <Compile Include="Core\IMessage.cs" />
+    <Compile Include="Factories\CommandFactory.cs" />
+    <Compile Include="Factories\GameFactory.cs" />
+    <Compile Include="Factories\MobFactory.cs" />
+    <Compile Include="Factories\PersistedStorageFactory.cs" />
+    <Compile Include="Factories\ScriptFactory.cs" />
+    <Compile Include="Factories\ServerFactory.cs" />
     <Compile Include="GameObjects\MessengerArgs.cs" />
     <Compile Include="Core\EngineXmlStorage.cs" />
     <Compile Include="Core\ExtensionMethods.cs" />
     <Compile Include="Core\StorageFilenameAttribute.cs" />
     <Compile Include="Core\ILog.cs" />
-    <Compile Include="Factories\EngineFactory.cs" />
     <Compile Include="GameObjects\Environment\DayState.cs" />
     <Compile Include="GameObjects\Environment\DefaultWorld.cs" />
     <Compile Include="GameObjects\Environment\WeatherState.cs" />
@@ -60,6 +66,9 @@
     <Compile Include="GameObjects\IGameObject.cs" />
     <Compile Include="Core\IgnoreAttribute.cs" />
     <Compile Include="GameObjects\Mob\DefaultPlayer.cs" />
+    <Compile Include="GameObjects\Mob\States\IState.cs" />
+    <Compile Include="GameObjects\Mob\States\MultiplayerStates\ConnectState.cs" />
+    <Compile Include="GameObjects\Mob\States\MultiplayerStates\LoginState.cs" />
     <Compile Include="GameObjects\MovementEventArgs.cs" />
     <Compile Include="Networking\IServerPlayer.cs" />
     <Compile Include="Core\IPersistedStorage.cs" />
@@ -72,33 +81,15 @@
     <Compile Include="Core\InputMessage.cs" />
     <Compile Include="Networking\ServerStatus.cs" />
     <Compile Include="GameObjects\Environment\IRoom.cs" />
-    <Compile Include="GameProperties.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>GameProperties.settings</DependentUpon>
-    </Compile>
     <Compile Include="GameObjects\Mob\EngineMob.cs" />
     <Compile Include="GameObjects\Mob\IGender.cs" />
     <Compile Include="GameObjects\Mob\IMob.cs" />
     <Compile Include="GameObjects\Mob\IPlayer.cs" />
     <Compile Include="GameObjects\Mob\MessageBroadcastLevels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerProperties.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>ServerProperties.settings</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="GameProperties.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>GameProperties.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="ServerProperties.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>ServerProperties.Designer.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Repositories\" />

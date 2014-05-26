@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 using System;
 using MudEngine.Engine.Core;
+using MudEngine.Engine.GameObjects.Mob.States;
 using MudEngine.Engine.GameObjects.Environment;
 
 namespace MudEngine.Engine.GameObjects.Mob
@@ -14,10 +15,11 @@ namespace MudEngine.Engine.GameObjects.Mob
     /// </summary>
     public interface IMob : IGameObject
     {
-        /// <summary>
-        /// Gets or Sets the currently running game.
-        /// </summary>
-        IGame Game { get; set; }
+        event EventHandler<MovementEventArgs> Move;
+
+        event EventHandler<IMessage> SendMessage;
+
+        event EventHandler<IMessage> ReceivedMessage;
 
         /// <summary>
         /// Gets or sets the gender for this character.
@@ -42,14 +44,19 @@ namespace MudEngine.Engine.GameObjects.Mob
         /// </value>
         int MaximumInventorySize { get; set; }
 
-        event EventHandler<MovementEventArgs> Move;
-
-        event EventHandler<IMessage> SendMessage;
-
-        event EventHandler<IMessage> ReceivedMessage;
+        /// <summary>
+        /// Gets the state of the current mob object.
+        /// </summary>
+        IState CurrentState { get; }
 
         void ReceiveInput(IMessage message);
 
         void Send(IMessage message);
+
+        /// <summary>
+        /// Switches the players State from one, to another
+        /// </summary>
+        /// <param name="state">The state to switch to.</param>
+        void SwitchState(IState state);
     }
 }

@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using MudEngine.Engine.GameObjects.Environment;
@@ -41,6 +42,11 @@ namespace MudEngine.Engine.Core
         /// </summary>
         [StorageFilenameAttribute]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the description of the game.
+        /// </summary>
+        public string Description { get; set; }
 
         /// <summary>
         /// Gets or Sets the current version of the game.
@@ -108,7 +114,7 @@ namespace MudEngine.Engine.Core
             this.SetupWorlds();
 
             // If a server exists and is running, we are good to go. If no server, then we default to Running = true;
-            this.IsRunning = this.Worlds != null && this.StorageSource != null;
+            this.IsRunning = this.Worlds != null && this.StorageSource != null && this.Worlds.Count > 0;
 
             if (!this.IsRunning)
             {
@@ -120,6 +126,12 @@ namespace MudEngine.Engine.Core
             this.Player = new T();
             this.Player.Initialize(this);
             this.Player.SendMessage += (target, message) => this.BroadcastToPlayer(target as IMob, message);
+
+            // TODO: Replace string literal.
+            if (this.Worlds.Any(world => world.Name == "Sample World"))
+            {
+                
+            }
 
             Task.Run(() =>
             {

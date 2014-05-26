@@ -144,7 +144,7 @@ namespace MudDesigner.Engine.Mobs
         /// Receives player input through the network
         /// </summary>
         /// <returns></returns>
-        public String ReceiveInput()
+        public string ReceiveInput()
         {
             // The input s tring
             string input = String.Empty;

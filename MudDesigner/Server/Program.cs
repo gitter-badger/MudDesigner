@@ -4,6 +4,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using MudEngine.Engine.Core;
 using MudEngine.Engine.Factories;
 using MudEngine.Engine.GameObjects.Mob;
@@ -28,7 +30,7 @@ namespace MudDesigner.Server
             Console.WriteLine("Server app starting...");
 
             // Instance the server.
-            var game = new EngineFactory<MultiplayerGame>().GetObject();
+            var game = GameFactory.GetGame<MultiplayerGame>() as MultiplayerGame;
             game.Logger = handler;
 
             // Initialize the game
