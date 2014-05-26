@@ -108,10 +108,17 @@ namespace MudEngine.Engine.Core
             else
             {
                 this.StorageSource = storageSource;
-                // this.StorageSource.InitializeStorage();
+                this.StorageSource.InitializeStorage();
             }
 
-            this.SetupWorlds();
+            try
+            {
+                this.SetupWorlds();
+            }
+            catch(Exception e)
+            {
+                this.LogMessage(string.Format("Error setting up the worlds.\n{0}", e.Message));
+            }
 
             // If a server exists and is running, we are good to go. If no server, then we default to Running = true;
             this.IsRunning = this.Worlds != null && this.StorageSource != null && this.Worlds.Count > 0;
@@ -126,12 +133,6 @@ namespace MudEngine.Engine.Core
             this.Player = new T();
             this.Player.Initialize(this);
             this.Player.SendMessage += (target, message) => this.BroadcastToPlayer(target as IMob, message);
-
-            // TODO: Replace string literal.
-            if (this.Worlds.Any(world => world.Name == "Sample World"))
-            {
-                
-            }
 
             Task.Run(() =>
             {
@@ -150,6 +151,10 @@ namespace MudEngine.Engine.Core
         {
             this.LogMessage("Setting up the game world.");
             this.Worlds = new List<IWorld>();
+
+            this.Worlds = this.StorageSource.Load<IWorld>().ToList();
+            this.Worlds.ForEach(world => world.Initialize());
+
             this.LogMessage("Game world set up.");
         }
 

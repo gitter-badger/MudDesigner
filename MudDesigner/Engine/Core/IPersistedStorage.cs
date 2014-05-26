@@ -18,7 +18,7 @@ namespace MudEngine.Engine.Core
         /// <summary>
         /// Gets or sets the root path for the data storage.
         /// </summary>
-        string RootPath { get; set; }
+        string StoragePath { get; set; }
 
         /// <summary>
         /// Initializes the Persisted Storage.
@@ -67,7 +67,7 @@ namespace MudEngine.Engine.Core
         /// </summary>
         /// <typeparam name="T">The type that the items are of.</typeparam>
         /// <returns>Returns a collection of all items matching T.</returns>
-        IEnumerable<T> Load<T>() where T : class, new();
+        IEnumerable<T> Load<T>() where T : class;
 
         /// <summary>
         /// Deletes the specified item.

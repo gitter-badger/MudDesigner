@@ -28,12 +28,12 @@ namespace MudEngine.Engine.Core
     [PlatformSupport("Windows 8", 6, 2)]
     [PlatformSupport("Windows 8.1", 6, 3)]
     [DisplayName("Xml Storage Container")]
-    public sealed class EngineXmlStorage : IPersistedStorage
+    public sealed class EngineXmlStorage // : IPersistedStorage
     {
         /// <summary>
         /// Gets or sets the root path for the data storage.
         /// </summary>
-        public string RootPath { get; set; }
+        public string StoragePath { get; set; }
 
         /// <summary>
         /// Gets the file extension.
@@ -51,7 +51,7 @@ namespace MudEngine.Engine.Core
         /// </summary>
         public EngineXmlStorage()
         {
-            this.RootPath = Path.Combine(Directory.GetCurrentDirectory(), "Data");
+            this.StoragePath = Path.Combine(Directory.GetCurrentDirectory(), "Data");
         }
 
         /// <summary>
@@ -61,9 +61,9 @@ namespace MudEngine.Engine.Core
         public void InitializeStorage()
         {
             // Makes sure our save path exists.
-            if (!Directory.Exists(this.RootPath))
+            if (!Directory.Exists(this.StoragePath))
             {
-                Directory.CreateDirectory(this.RootPath);
+                Directory.CreateDirectory(this.StoragePath);
             }
         }
 
@@ -94,7 +94,7 @@ namespace MudEngine.Engine.Core
             }
 
             // RootPath\ItemType
-            string savePath = Path.Combine(this.RootPath, itemType.Name);
+            string savePath = Path.Combine(this.StoragePath, itemType.Name);
             // Item.xml - Only if item is not null. Otherwise fetching the value throws an exception.
             string filename = (item == null) ? 
                 string.Empty : 
@@ -132,7 +132,7 @@ namespace MudEngine.Engine.Core
             }
 
             // RootPath\ItemType
-            string savePath = Path.Combine(this.RootPath, itemType.Name);
+            string savePath = Path.Combine(this.StoragePath, itemType.Name);
             // Item.xml
             string filename = string.Format("{0}.xml", property.GetValue(item).ToString());
             // RootPath\ItemType\Item.xml
@@ -224,7 +224,7 @@ namespace MudEngine.Engine.Core
             }
 
             // RootPath\ItemType
-            string savePath = Path.Combine(this.RootPath, itemType.Name);
+            string savePath = Path.Combine(this.StoragePath, itemType.Name);
             // Item.xml
             string filename = string.Format("{0}.xml", property.GetValue(item).ToString());
             // RootPath\ItemType\Item.xml
@@ -270,7 +270,7 @@ namespace MudEngine.Engine.Core
             Type itemType = typeof(T);
 
             // RootPath\ItemType
-            string savePath = Path.Combine(this.RootPath, itemType.Name);
+            string savePath = Path.Combine(this.StoragePath, itemType.Name);
 
             // Prepare the directory.
             if (!Directory.Exists(savePath))

@@ -51,6 +51,8 @@
     <Compile Include="Core\IMessage.cs" />
     <Compile Include="Core\InformationalMessage.cs" />
     <Compile Include="Factories\CommandFactory.cs" />
+    <Compile Include="Factories\EngineFactory.cs" />
+    <Compile Include="Factories\WorldFactory.cs" />
     <Compile Include="Factories\GameFactory.cs" />
     <Compile Include="Factories\MobFactory.cs" />
     <Compile Include="Factories\PersistedStorageFactory.cs" />

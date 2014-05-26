@@ -108,21 +108,24 @@ namespace MudEngine.Engine.Networking
         /// <exception cref="System.NullReferenceException">The storageSource parameter can not be null.</exception>
         public override void Initialize<T>(IPersistedStorage storageSource)
         {
-            // We don't invoke our base.Initialize(storageSource) because we want to
-            // handle setting up the player using our server.
-
-            // Check if the storage source is null.
             if (storageSource == null)
             {
-                // throw new NullReferenceException("The storageSource parameter can not be null.");
+                this.LogMessage("initializing the persisted storage system failed! No data will be restored.");
+            }
+            else
+            {
+                this.StorageSource = storageSource;
+                this.StorageSource.InitializeStorage();
             }
 
-            /*
-            this.StorageSource = storageSource;
-            this.StorageSource.InitializeStorage();
-            */
-
-            this.SetupWorlds();
+            try
+            {
+                this.SetupWorlds();
+            }
+            catch (Exception e)
+            {
+                this.LogMessage(string.Format("Error setting up the worlds.\n{0}", e.Message));
+            }
 
             // If a server exists and is running, we are good to go. If no server, then we default to Running = true;
             this.IsRunning = this.Worlds != null; // && this.Worlds.Count > 0;

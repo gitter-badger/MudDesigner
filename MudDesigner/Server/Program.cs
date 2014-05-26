@@ -10,6 +10,7 @@ using MudEngine.Engine.Core;
 using MudEngine.Engine.Factories;
 using MudEngine.Engine.GameObjects.Mob;
 using MudEngine.Engine.Networking;
+using Engine.XmlPersistedStorage;
 
 namespace MudDesigner.Server
 {
@@ -31,10 +32,11 @@ namespace MudDesigner.Server
 
             // Instance the server.
             var game = GameFactory.GetGame<MultiplayerGame>() as MultiplayerGame;
+            var storage = PersistedStorageFactory.GetStorageContainer<XmlPersistedStorage>();
             game.Logger = handler;
 
             // Initialize the game
-            game.Initialize<DefaultPlayer>(null);
+            game.Initialize<DefaultPlayer>(storage);
 
             // Start the server.
             game.Start<ServerPlayer, DefaultPlayer>();
