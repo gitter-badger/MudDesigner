@@ -18,8 +18,6 @@ namespace MudEngine.Engine.Core
     [Serializable]
     public class DefaultGame : IGame
     {
-        private IPlayer player;
-
         /// <summary>
         /// Gets or sets a value indicating whether this instance is multiplayer.
         /// </summary>
@@ -120,6 +118,7 @@ namespace MudEngine.Engine.Core
 
             this.LogMessage("Setting up the player.");
             this.Player = new T();
+            this.Player.Initialize(this);
             this.Player.SendMessage += (target, message) => this.BroadcastToPlayer(target as IMob, message);
 
             Task.Run(() =>

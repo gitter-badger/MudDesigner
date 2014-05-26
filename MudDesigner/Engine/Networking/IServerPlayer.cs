@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
+using MudEngine.Engine.Core;
 using MudEngine.Engine.GameObjects.Mob;
 
 namespace MudEngine.Engine.Networking
@@ -39,6 +40,11 @@ namespace MudEngine.Engine.Networking
         /// Gets the player.
         /// </summary>
         IPlayer Player { get; }
+
+        /// <summary>
+        /// Occurs when [connected].
+        /// </summary>
+        event EventHandler Connected;
 
         event EventHandler Disconnected;
 

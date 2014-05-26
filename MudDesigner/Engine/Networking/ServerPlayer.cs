@@ -14,6 +14,11 @@ namespace MudEngine.Engine.Networking
     /// </summary>
     public class ServerPlayer : IServerPlayer
     {
+        public ServerPlayer()
+        {
+            this.Buffer = new List<byte>();
+        }
+
         /// <summary>
         /// Gets or sets the connection.
         /// </summary>
@@ -39,6 +44,8 @@ namespace MudEngine.Engine.Networking
         /// </summary>
         public IPlayer Player { get; protected set; }
 
+        public event EventHandler Connected;
+
         /// <summary>
         /// Occurs when disconnected from the server.
         /// </summary>
@@ -53,7 +60,8 @@ namespace MudEngine.Engine.Networking
         {
             this.Connection = socket;
             this.Player = player;
-            this.Buffer = new List<byte>();
+
+            this.OnConnect();
         }
 
         /// <summary>
@@ -126,9 +134,17 @@ namespace MudEngine.Engine.Networking
             if (this.Connection != null && this.Connection.Connected)
             {
                 this.Connection.Shutdown(System.Net.Sockets.SocketShutdown.Both);
+                this.OnDisconnect();
             }
+        }
 
-            this.OnDisconnect();
+        protected virtual void OnConnect()
+        {
+            EventHandler handler = Connected;
+            if (handler != null)
+            {
+                handler(this, new EventArgs());
+            }
         }
 
         /// <summary>

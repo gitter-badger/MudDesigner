@@ -36,6 +36,7 @@ namespace MudEngine.Engine.Networking
 
             // The server is enabled for use. Does not indicate that it is running.
             this.IsEnabled = true;
+            this.IsMultiplayer = true;
         }
 
         /// <summary>
@@ -216,7 +217,7 @@ namespace MudEngine.Engine.Networking
 
                     if (player.Connection.Connected)
                     {
-                        player.Connection.Send(new ASCIIEncoding().GetBytes(string.Format("Message => {0}", formattedMessage)));
+                        player.Connection.Send(new ASCIIEncoding().GetBytes(string.Format("{0}: {1}", DateTime.Now, formattedMessage)));
                     }
                 }
                 catch (Exception ex)
@@ -300,14 +301,19 @@ namespace MudEngine.Engine.Networking
         /// <summary>
         /// Disconnects the specified IServerConnectionState object.
         /// </summary>
-        /// <param name="connection">The connection.</param>
+        /// <param name="serverPlayer">The connection.</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        public void Disconnect(IServerPlayer connection)
+        public void Disconnect(IServerPlayer serverPlayer)
         {
             // Ensure the connection is still valid.
-            if (connection != null && connection.Connection != null && connection.Connection.Connected)
+            if (serverPlayer != null && serverPlayer.Connection != null && serverPlayer.Connection.Connected)
             {
-                connection.Connection.Disconnect(true);
+                serverPlayer.Disconnect();
+            }
+            
+            if (this.Connections.Contains(serverPlayer))
+            {
+                this.Connections.Remove(serverPlayer);
             }
         }
 
@@ -318,14 +324,16 @@ namespace MudEngine.Engine.Networking
         public void DisconnectAll()
         {
             // Disconnect every client from the server.
-            foreach (IServerPlayer connection in this.Connections.AsParallel())
+            foreach (IServerPlayer serverPlayer in this.Connections.AsParallel())
             {
-                IServerPlayer client = connection;
-                if (client != null && client.Connection != null && client.Connection.Connected)
+                IServerPlayer player = serverPlayer;
+                if (player != null && player.Connection != null && player.Connection.Connected)
                 {
-                    client.Connection.Disconnect(false);
+                    player.Disconnect();
                 }
             }
+
+            this.Connections.Clear();
         }
 
         /// <summary>
@@ -335,6 +343,9 @@ namespace MudEngine.Engine.Networking
         /// <param name="result">The async result.</param>
         private void ConnectClient<TServerObject, UPlayerObject>(IAsyncResult result) where TServerObject : class, IServerPlayer, new() where UPlayerObject : class, IPlayer, new()
         {
+            // Fetch the next incoming connection.
+            this.serverSocket.BeginAccept(new AsyncCallback(this.ConnectClient<TServerObject, UPlayerObject>), this.serverSocket);
+
             var factory = new EngineFactory<TServerObject>();
 
             // Fetch the defualt player class.
@@ -348,6 +359,7 @@ namespace MudEngine.Engine.Networking
                 lock (this.Connections)
                 {
                     this.Connections.Add(serverObject);
+                    serverObject.Player.Name = string.Format("Player {0}", this.Connections.Count);
                 }
             }
             catch (Exception)
@@ -355,19 +367,15 @@ namespace MudEngine.Engine.Networking
                 throw;
             }
 
-            serverObject.Player.Name = string.Format("Player {0}", this.Connections.Count);
             this.LogMessage(string.Format("{0} connected.", serverObject.Player.Name));
 
-            // IPlayer player                 
+            // Register for the events we need to now of.
             serverObject.Player.SendMessage += (sender, message) => this.BroadcastToPlayer(sender as IMob, message);
             serverObject.Disconnected += (sender, args) => this.LogMessage(string.Format("{0} disconnected. ", (sender as IServerPlayer).Player.Name)); 
             serverObject.Player.Initialize(this);
 
             // Pass all of the incoming data handling for the players connection, to the player object itself.
             serverObject.Connection.BeginReceive(serverObject.Buffer.ToArray(), 0, serverObject.BufferSize, SocketFlags.None, new AsyncCallback(serverObject.ReceiveData), serverObject);
-
-            // Fetch the next incoming connection.
-            this.serverSocket.BeginAccept(new AsyncCallback(this.ConnectClient<TServerObject, UPlayerObject>), this.serverSocket);
         }
     }
 }

@@ -17,6 +17,11 @@ namespace MudEngine.Engine.Core
     public interface IGame
     {
         /// <summary>
+        /// Gets a value indicating whether this instance is multiplayer.
+        /// </summary>
+        public bool IsMultiplayer { get; }
+
+        /// <summary>
         /// Gets if the game (online or offline) is currently running.
         /// </summary>
         bool IsRunning { get; }
