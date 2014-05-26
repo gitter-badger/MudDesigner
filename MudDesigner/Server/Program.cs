@@ -38,8 +38,8 @@ namespace MudDesigner.Server
             MultiplayerGame game = new EngineFactory<MultiplayerGame>().GetObject();
             game.Logger = handler;
 
-            game.Initialize<MMOPlayer>(null);
-            game.Start<MMOPlayer>();
+            game.Initialize<DefaultPlayer>(null);
+            game.Start<ServerPlayer, DefaultPlayer>();
 
             Console.WriteLine("Server running...");
             while (game.IsRunning)

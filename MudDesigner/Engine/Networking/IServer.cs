@@ -19,7 +19,7 @@ namespace MudEngine.Engine.Networking
         /// <summary>
         /// Gets a collection of current user connections.
         /// </summary>
-        List<IServerObject> Connections { get; }
+        List<IServerPlayer> Connections { get; }
 
         /// <summary>
         /// Gets the port that the server is running on.
@@ -71,7 +71,7 @@ namespace MudEngine.Engine.Networking
         /// Starts the server using the specified game.
         /// </summary>
         /// <param name="game">The game.</param>
-        void Start<T>() where T : class, IServerObject, new();
+        void Start<TServerObject, UPlayerObject>() where TServerObject : class, IServerPlayer, new() where UPlayerObject : class, IPlayer, new();
 
         /// <summary>
         /// Stops server, shutting down the network connection.
@@ -83,7 +83,7 @@ namespace MudEngine.Engine.Networking
         /// Disconnects the specified IServerConnectionState object.
         /// </summary>
         /// <param name="connection">The connection.</param>
-        void Disconnect(IServerObject connection);
+        void Disconnect(IServerPlayer connection);
 
         /// <summary>
         /// Disconnects everyone from the server..

@@ -61,13 +61,13 @@
     <Compile Include="Core\IgnoreAttribute.cs" />
     <Compile Include="GameObjects\Mob\DefaultPlayer.cs" />
     <Compile Include="GameObjects\MovementEventArgs.cs" />
-    <Compile Include="Networking\IServerObject.cs" />
+    <Compile Include="Networking\IServerPlayer.cs" />
     <Compile Include="Core\IPersistedStorage.cs" />
     <Compile Include="Core\IGame.cs" />
     <Compile Include="Networking\IServer.cs" />
     <Compile Include="GameObjects\Environment\IWorld.cs" />
     <Compile Include="Core\PlatformSupportAttribute.cs" />
-    <Compile Include="Networking\MMOPlayer.cs" />
+    <Compile Include="Networking\ServerPlayer.cs" />
     <Compile Include="Networking\MultiplayerGame.cs" />
     <Compile Include="Core\InputMessage.cs" />
     <Compile Include="Networking\ServerStatus.cs" />

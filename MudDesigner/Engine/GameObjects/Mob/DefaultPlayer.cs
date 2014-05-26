@@ -9,6 +9,11 @@ namespace MudEngine.Engine.GameObjects.Mob
 {
     public class DefaultPlayer : IPlayer
     {
+        public DefaultPlayer()
+        {
+            this.Name = "New Player";
+        }
+
         public Core.IGame Game { get; set; }
 
         public IGender Gender
@@ -166,7 +171,6 @@ namespace MudEngine.Engine.GameObjects.Mob
         public virtual void Initialize(IGame game)
         {
             this.Game = game;
-            this.Name = "New Player";
         }
 
         public void CopyState(IGameObject copyFrom, bool ignoreExistingPropertyValues = false)
