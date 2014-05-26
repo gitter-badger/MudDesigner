@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="IgnoreAttribute.cs" company="AllocateThis!">
-//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// <copyright file="IgnoreAttribute.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
 using System;

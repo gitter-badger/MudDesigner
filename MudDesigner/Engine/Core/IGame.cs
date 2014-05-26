@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="IGame.cs" company="AllocateThis!">
-//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// <copyright file="IGame.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
@@ -19,7 +19,7 @@ namespace MudEngine.Engine.Core
         /// <summary>
         /// Gets a value indicating whether this instance is multiplayer.
         /// </summary>
-        public bool IsMultiplayer { get; }
+        bool IsMultiplayer { get; }
 
         /// <summary>
         /// Gets if the game (online or offline) is currently running.

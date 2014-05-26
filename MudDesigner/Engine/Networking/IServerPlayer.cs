@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="IServerConnectionState.cs" company="AllocateThis!">
-//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// <copyright file="IServerPlayer.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
@@ -16,6 +16,16 @@ namespace MudEngine.Engine.Networking
     /// </summary>
     public interface IServerPlayer
     {
+        /// <summary>
+        /// Occurs when the player is connected.
+        /// </summary>
+        event EventHandler Connected;
+
+        /// <summary>
+        /// Occurs when the player is disconnected.
+        /// </summary>
+        event EventHandler Disconnected;
+
         /// <summary>
         /// Gets or sets the connection.
         /// </summary>
@@ -42,16 +52,10 @@ namespace MudEngine.Engine.Networking
         IPlayer Player { get; }
 
         /// <summary>
-        /// Occurs when [connected].
-        /// </summary>
-        event EventHandler Connected;
-
-        event EventHandler Disconnected;
-
-        /// <summary>
         /// Connects the user via the specified socket.
         /// </summary>
         /// <param name="socket">The socket.</param>
+        /// <param name="player">The player.</param>
         void Connect(Socket socket, IPlayer player);
 
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="PlatformSupportAttribute.cs" company="AllocateThis!">
-//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// <copyright file="PlatformSupportAttribute.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
@@ -16,31 +16,31 @@ namespace MudEngine.Engine.Core
     public class PlatformSupportAttribute : Attribute
     {
         /// <summary>
-        /// Gets or Sets the name of the OS. This is just for information; it should not be used for OS support checks.
+        /// Initializes a new instance of the <see cref="PlatformSupportAttribute"/> class.
         /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or Sets the Major version of the OS that this attribute is targeted for.
-        /// </summary>
-        public int MajorVersion { get; set; }
-
-        /// <summary>
-        /// Gets or Sets the minor version of the OS that this attribute is targeted for.
-        /// </summary>
-        public int MinorVersion { get; set; }
-
-        /// <summary>
-        /// Constructs the attribute with information meant to specify which OS the class is being targeted for.
-        /// </summary>
-        /// <param name="name">Gets or Sets the name of the OS. This is just for information; it should not be used for OS support checks.</param>
-        /// <param name="majorVersion">Gets or Sets the Major version of the OS that this attribute is targeted for.</param>
-        /// <param name="minorVersion"> Gets or Sets the minor version of the OS that this attribute is targeted for.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="majorVersion">The major version.</param>
+        /// <param name="minorVersion">The minor version.</param>
         public PlatformSupportAttribute(string name, int majorVersion, int minorVersion)
         {
             this.Name = name;
             this.MajorVersion = majorVersion;
             this.MinorVersion = minorVersion;
         }
+
+        /// <summary>
+        /// Gets or sets the name of the OS. This is just for information; it should not be used for OS support checks.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Major version of the OS that this attribute is targeted for.
+        /// </summary>
+        public int MajorVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets the minor version of the OS that this attribute is targeted for.
+        /// </summary>
+        public int MinorVersion { get; set; }
     }
 }

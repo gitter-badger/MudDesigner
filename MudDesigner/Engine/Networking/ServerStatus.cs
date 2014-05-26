@@ -1,9 +1,8 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="ServerStatus.cs" company="AllocateThis!">
-//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// <copyright file="ServerStatus.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-
 namespace MudEngine.Engine.Networking
 {
     /// <summary>

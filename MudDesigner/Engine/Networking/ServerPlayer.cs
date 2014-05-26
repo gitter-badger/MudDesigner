@@ -1,4 +1,9 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="ServerPlayer.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,14 +15,27 @@ using MudEngine.Engine.GameObjects.Mob;
 namespace MudEngine.Engine.Networking
 {
     /// <summary>
-    /// 
+    /// Exposes networking functionality to objects that need to interact with an implementation of IPlayer over the network.
     /// </summary>
     public class ServerPlayer : IServerPlayer
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServerPlayer"/> class.
+        /// </summary>
         public ServerPlayer()
         {
             this.Buffer = new List<byte>();
         }
+
+        /// <summary>
+        /// Occurs when the user connects to the server.
+        /// </summary>
+        public event EventHandler Connected;
+
+        /// <summary>
+        /// Occurs when disconnected from the server.
+        /// </summary>
+        public event EventHandler Disconnected;
 
         /// <summary>
         /// Gets or sets the connection.
@@ -40,22 +58,15 @@ namespace MudEngine.Engine.Networking
         public string ReceivedInput { get; set; }
 
         /// <summary>
-        /// Gets the player.
+        /// Gets or sets the player.
         /// </summary>
         public IPlayer Player { get; protected set; }
-
-        public event EventHandler Connected;
-
-        /// <summary>
-        /// Occurs when disconnected from the server.
-        /// </summary>
-        public event EventHandler Disconnected;
 
         /// <summary>
         /// Connects the user via the specified socket.
         /// </summary>
         /// <param name="socket">The socket.</param>
-        /// <param name="player"></param>
+        /// <param name="player">The player that will needs to have networking functionality</param>
         public virtual void Connect(System.Net.Sockets.Socket socket, IPlayer player)
         {
             this.Connection = socket;
@@ -71,8 +82,8 @@ namespace MudEngine.Engine.Networking
         public virtual void ReceiveData(IAsyncResult result)
         {
             // The input s tring
-            string input = String.Empty;
-            ReceivedInput = String.Empty;
+            string input = string.Empty;
+            this.ReceivedInput = string.Empty;
 
             // This loop will forever run until we have received \n from the player
             while (true && this.Connection != null && this.Connection.Connected)
@@ -88,15 +99,17 @@ namespace MudEngine.Engine.Networking
                     }
 
                     // Receive input from the socket connection
-                    Int32 recved = this.Connection.Receive(buf);
+                    int recved = this.Connection.Receive(buf);
 
                     // If we have received data, prep it for use
                     if (recved > 0)
                     {
                         if (buf[0] == '\n' && this.Buffer.Count > 0)
                         {
-                            if (this.Buffer[Buffer.Count - 1] == '\r')
-                                this.Buffer.RemoveAt(Buffer.Count - 1);
+                            if (this.Buffer[this.Buffer.Count - 1] == '\r')
+                            {
+                                this.Buffer.RemoveAt(this.Buffer.Count - 1);
+                            }
 
                             // Format the input
                             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
@@ -111,15 +124,18 @@ namespace MudEngine.Engine.Networking
                             this.Player.ReceiveInput(new InputMessage(input));
                         }
                         else
+                        {
                             // otherwise keep adding the input to our bufer
                             this.Buffer.Add(buf[0]);
+                        }
                     }
-                    else if (recved == 0) // Disconnected
+                    else if (recved == 0)
                     {
+                        // Disconnected
                         this.Disconnect();
                     }
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     this.Disconnect();
                 }
@@ -138,9 +154,12 @@ namespace MudEngine.Engine.Networking
             }
         }
 
+        /// <summary>
+        /// Called when a user connects to the server.
+        /// </summary>
         protected virtual void OnConnect()
         {
-            EventHandler handler = Connected;
+            EventHandler handler = this.Connected;
             if (handler != null)
             {
                 handler(this, new EventArgs());
@@ -153,7 +172,7 @@ namespace MudEngine.Engine.Networking
         /// <param name="result">The result.</param>
         protected virtual void OnDisconnect(IAsyncResult result = null)
         {
-            EventHandler handler = Disconnected;
+            EventHandler handler = this.Disconnected;
             if (handler != null)
             {
                 handler(this, new EventArgs());

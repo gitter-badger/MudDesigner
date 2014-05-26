@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="IServer.cs" company="AllocateThis!">
-//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// <copyright file="IServer.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
@@ -22,7 +22,7 @@ namespace MudEngine.Engine.Networking
         List<IServerPlayer> Connections { get; }
 
         /// <summary>
-        /// Gets the port that the server is running on.
+        /// Gets or sets the port that the server is running on.
         /// </summary>
         int Port { get; set; }
 
@@ -54,7 +54,6 @@ namespace MudEngine.Engine.Networking
         /// <summary>
         /// Gets or sets the server owner.
         /// </summary>
-        /// <value>
         string Owner { get; set; }
 
         /// <summary>
@@ -70,17 +69,17 @@ namespace MudEngine.Engine.Networking
         /// <summary>
         /// Starts the server using the specified game.
         /// </summary>
-        /// <param name="game">The game.</param>
+        /// <typeparam name="TServerObject">The type of the server player object.</typeparam>
+        /// <typeparam name="UPlayerObject">The type of the player object.</typeparam>
         void Start<TServerObject, UPlayerObject>() where TServerObject : class, IServerPlayer, new() where UPlayerObject : class, IPlayer, new();
 
         /// <summary>
-        /// Stops server, shutting down the network connection.
-        /// All IServerConnectionState objects will be disconnected.
+        /// Stops the server.
         /// </summary>
         void Stop();
 
         /// <summary>
-        /// Disconnects the specified IServerConnectionState object.
+        /// Disconnects the specified IServerPlayer object.
         /// </summary>
         /// <param name="connection">The connection.</param>
         void Disconnect(IServerPlayer connection);

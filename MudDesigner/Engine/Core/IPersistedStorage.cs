@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="IPersistedStorage.cs" company="AllocateThis!">
-//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// <copyright file="IPersistedStorage.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
@@ -23,13 +23,12 @@ namespace MudEngine.Engine.Core
         /// <summary>
         /// Initializes the Persisted Storage.
         /// </summary>
-        /// <returns>Returns true if the storage is valid and ready for use.</returns>
         void InitializeStorage();
 
         /// <summary>
         /// Gets the storage path for the supplied item.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The Type that the path is requested for.</typeparam>
         /// <param name="item">The item.</param>
         /// <returns>
         /// Returns the full path for the item type.

@@ -1,4 +1,9 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="MessengerArgs.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +21,7 @@ namespace MudEngine.Engine.GameObjects
         /// </summary>
         /// <param name="messenger">The messenger.</param>
         /// <param name="message">The message.</param>
+        /// <param name="target">The target.</param>
         public MessengerArgs(IGameObject messenger, string message, IEnumerable<IGameObject> target)
         {
             this.Messenger = messenger;

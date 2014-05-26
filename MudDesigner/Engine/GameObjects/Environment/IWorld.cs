@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="IWorld.cs" company="AllocateThis!">
-//     Copyright (c) AllocateThis! Studio's. All rights reserved.
+// <copyright file="IWorld.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
@@ -15,7 +15,22 @@ namespace MudEngine.Engine.GameObjects.Environment
     public interface IWorld
     {
         /// <summary>
-        /// Gets or sets the number of hours since original creation that this world has been alive.
+        /// Occurs after the World is loaded.
+        /// </summary>
+        event EventHandler<WorldEventArgs> Loaded;
+
+        /// <summary>
+        /// Occurs after the weather changes.
+        /// </summary>
+        event EventHandler<WorldEventArgs> WeatherChanged;
+
+        /// <summary>
+        /// Occurs after the day state has changed.
+        /// </summary>
+        event EventHandler<WorldEventArgs> DayStateChanged;
+
+        /// <summary>
+        /// Gets the number of hours since original creation that this world has been alive.
         /// </summary>
         int HoursAlive { get; }
 
@@ -60,20 +75,8 @@ namespace MudEngine.Engine.GameObjects.Environment
         List<IMob> Occupants { get; }
 
         /// <summary>
-        /// Occurs after the World is loaded.
+        /// Initializes this instance.
         /// </summary>
-        event EventHandler<WorldEventArgs> Loaded;
-
-        /// <summary>
-        /// Occurs after the weather changes.
-        /// </summary>
-        event EventHandler<WorldEventArgs> WeatherChanged;
-
-        /// <summary>
-        /// Occurs after the day state has changed.
-        /// </summary>
-        event EventHandler<WorldEventArgs> DayStateChanged;
-
         void Initialize();
 
         /// <summary>

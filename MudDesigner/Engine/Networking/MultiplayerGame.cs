@@ -1,19 +1,23 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="MultiplayerGame.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Net;
 using System.Net.Sockets;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-using MudEngine.Engine.GameObjects.Environment;
+using System.Text;
 using MudEngine.Engine.Core;
 using MudEngine.Engine.Factories;
 using MudEngine.Engine.GameObjects.Mob;
 
 namespace MudEngine.Engine.Networking
 {
+    /// <summary>
+    /// An implementation of IGame and IServer, providing a game that supports networking with more than one player.
+    /// </summary>
     public class MultiplayerGame : DefaultGame, IServer
     {
         /// <summary>
@@ -27,7 +31,7 @@ namespace MudEngine.Engine.Networking
         private Socket serverSocket;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EngineServer"/> class.
+        /// Initializes a new instance of the <see cref="MultiplayerGame"/> class.
         /// </summary>
         public MultiplayerGame()
         {
@@ -40,33 +44,34 @@ namespace MudEngine.Engine.Networking
         }
 
         /// <summary>
-        /// Gets a collection of current user connections.
+        /// Gets or sets a collection of current user connections.
         /// </summary>
         public List<IServerPlayer> Connections { get; protected set; }
 
         /// <summary>
-        /// Gets a value indicating whether this <see cref="IServer" /> is enabled.
+        /// Gets or sets a value indicating whether this <see cref="IServer" /> is enabled.
         /// </summary>
         public bool IsEnabled { get; protected set; }
 
         /// <summary>
-        /// Gets the current server status.
+        /// Gets or sets the current server status.
         /// </summary>
         public ServerStatus Status { get; protected set; }
 
         /// <summary>
-        /// Gets or Sets the port that the server is running on.
+        /// Gets or sets the port that the server is running on.
         /// </summary>
         public int Port
         {
             get
             {
-                return properties.Port;
+                return this.properties.Port;
             }
+
             set
             {
-                properties.Port = value;
-                ServerProperties.Synchronized(properties);
+                this.properties.Port = value;
+                ServerProperties.Synchronized(this.properties);
             }
         }
 
@@ -77,12 +82,13 @@ namespace MudEngine.Engine.Networking
         {
             get
             {
-                return properties.MaxConnections;
+                return this.properties.MaxConnections;
             }
+
             set
             {
-                properties.MaxConnections = value;
-                ServerProperties.Synchronized(properties);
+                this.properties.MaxConnections = value;
+                ServerProperties.Synchronized(this.properties);
             }
         }
 
@@ -93,12 +99,13 @@ namespace MudEngine.Engine.Networking
         {
             get
             {
-                return properties.MaxQueuedConnections;
+                return this.properties.MaxQueuedConnections;
             }
+
             set
             {
-                properties.MaxQueuedConnections = value;
-                ServerProperties.Synchronized(properties);
+                this.properties.MaxQueuedConnections = value;
+                ServerProperties.Synchronized(this.properties);
             }
         }
 
@@ -109,12 +116,13 @@ namespace MudEngine.Engine.Networking
         {
             get
             {
-                return properties.MinimumPasswordSize;
+                return this.properties.MinimumPasswordSize;
             }
+
             set
             {
-                properties.MinimumPasswordSize = value;
-                ServerProperties.Synchronized(properties);
+                this.properties.MinimumPasswordSize = value;
+                ServerProperties.Synchronized(this.properties);
             }
         }
 
@@ -125,12 +133,13 @@ namespace MudEngine.Engine.Networking
         {
             get
             {
-                return properties.MaximumPasswordSize;
+                return this.properties.MaximumPasswordSize;
             }
+
             set
             {
-                properties.MaximumPasswordSize = value;
-                ServerProperties.Synchronized(properties);
+                this.properties.MaximumPasswordSize = value;
+                ServerProperties.Synchronized(this.properties);
             }
         }
 
@@ -141,13 +150,14 @@ namespace MudEngine.Engine.Networking
         {
             get
             {
-                return properties.MessageOfTheDay.Cast<string>().ToList();
+                return this.properties.MessageOfTheDay.Cast<string>().ToList();
             }
+
             set
             {
-                properties.MessageOfTheDay.Clear();
-                properties.MessageOfTheDay.AddRange(value.ToArray());
-                ServerProperties.Synchronized(properties);
+                this.properties.MessageOfTheDay.Clear();
+                this.properties.MessageOfTheDay.AddRange(value.ToArray());
+                ServerProperties.Synchronized(this.properties);
             }
         }
 
@@ -158,18 +168,20 @@ namespace MudEngine.Engine.Networking
         {
             get
             {
-                return properties.Owner;
+                return this.properties.Owner;
             }
+
             set
             {
-                properties.Owner = value;
-                ServerProperties.Synchronized(properties);
+                this.properties.Owner = value;
+                ServerProperties.Synchronized(this.properties);
             }
         }
 
         /// <summary>
         /// Initializes the specified storage source and server.
         /// </summary>
+        /// <typeparam name="T">A Type that implements IPlayer</typeparam>
         /// <param name="storageSource">The storage source.</param>
         /// <exception cref="System.NullReferenceException">The storageSource parameter can not be null.</exception>
         public override void Initialize<T>(IPersistedStorage storageSource)
@@ -183,8 +195,10 @@ namespace MudEngine.Engine.Networking
                 // throw new NullReferenceException("The storageSource parameter can not be null.");
             }
 
-            //this.StorageSource = storageSource;
-            //this.StorageSource.InitializeStorage();
+            /*
+            this.StorageSource = storageSource;
+            this.StorageSource.InitializeStorage();
+            */
 
             this.SetupWorlds();
 
@@ -224,21 +238,22 @@ namespace MudEngine.Engine.Networking
                 {
                     // No connection was made, so make sure we clean up
                     if (!player.Connection.Connected)
+                    {
                         player.Disconnect();
+                    }
                 }
             }
         }
 
         /// <summary>
-        /// Starts the server using the specified game.
+        /// Starts the server with support for the supplied IPlayer object. 
+        /// The IPlayer object will be wrapped within the supplied IServerPlayer object.
         /// </summary>
-        /// <typeparam name="T">The IPlayer Type used to instance new objects upon a player connecting to the server.</typeparam>
-        /// <param name="game">The game.</param>
-        /// <exception cref="System.Exception">
-        /// Invalid Port number used. Recommended number is 23 or 4000
+        /// <typeparam name="TServerObject">A Type that implements IServerPlayer</typeparam>
+        /// <typeparam name="UPlayerObject">A Type that implements IPlayer</typeparam>
+        /// <exception cref="System.Exception">Invalid Port number used. Recommended number is 23 or 4000
         /// or
-        /// Invalid MaxConnections number used. Must be greater than 1.
-        /// </exception>
+        /// Invalid MaxConnections number used. Must be greater than 1.</exception>
         /// <exception cref="System.NullReferenceException">The game parameter can not be null. Provide a valid IGame object.</exception>
         public void Start<TServerObject, UPlayerObject>() where TServerObject : class, IServerPlayer, new() where UPlayerObject : class, IPlayer, new()
         {
@@ -273,9 +288,8 @@ namespace MudEngine.Engine.Networking
 
         /// <summary>
         /// Stops the server, shutting down the network connection.
-        /// All IServerConnectionState objects will be disconnected.
+        /// All IServerPlayer objects will be disconnected.
         /// </summary>
-        /// <exception cref="System.NotImplementedException"></exception>
         public void Stop()
         {
             this.LogMessage("Stopping the network server.");
@@ -299,10 +313,9 @@ namespace MudEngine.Engine.Networking
         }
 
         /// <summary>
-        /// Disconnects the specified IServerConnectionState object.
+        /// Disconnects the specified server player.
         /// </summary>
-        /// <param name="serverPlayer">The connection.</param>
-        /// <exception cref="System.NotImplementedException"></exception>
+        /// <param name="serverPlayer">The server player.</param>
         public void Disconnect(IServerPlayer serverPlayer)
         {
             // Ensure the connection is still valid.
@@ -320,7 +333,7 @@ namespace MudEngine.Engine.Networking
         /// <summary>
         /// Disconnects everyone from the server.
         /// </summary>
-        /// <exception cref="System.NotImplementedException"></exception>
+        /// <exception cref="System.NotImplementedException">Throws an exception if the player is null</exception>
         public void DisconnectAll()
         {
             // Disconnect every client from the server.
@@ -339,7 +352,8 @@ namespace MudEngine.Engine.Networking
         /// <summary>
         /// Connects the client to the server and then passes the connection responsibilities to the client object.
         /// </summary>
-        /// <typeparam name="T">The IPlayer Type used to instance new objects upon a player connecting to the server.</typeparam>
+        /// <typeparam name="TServerObject">The type of the server object.</typeparam>
+        /// <typeparam name="UPlayerObject">The type of the player object.</typeparam>
         /// <param name="result">The async result.</param>
         private void ConnectClient<TServerObject, UPlayerObject>(IAsyncResult result) where TServerObject : class, IServerPlayer, new() where UPlayerObject : class, IPlayer, new()
         {
