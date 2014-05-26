@@ -160,25 +160,7 @@ namespace MudEngine.Engine.Core
         /// <param name="message">The message.</param>
         public virtual void BroadcastToPlayer(IMob sender, IMessage message)
         {
-            Console.WriteLine(string.Format("Message => {0}", message.Message));
-        }
-
-        /// <summary>
-        /// Formats the message for broadcasting.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        /// <returns>Returns a string formatted.</returns>
-        public virtual string FormatMessageForBroadcasting(IMessage message)
-        {
-            string[] messageContent = message.Message.Split('\n');
-            string formattedMessage = string.Empty;
-
-            foreach (string line in messageContent)
-            {
-                formattedMessage += line + Environment.NewLine;
-            }
-
-            return formattedMessage;
+            Console.WriteLine(message.FormatMessage());
         }
 
         /// <summary>

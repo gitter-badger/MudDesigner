@@ -24,6 +24,6 @@ namespace MudEngine.Engine.GameObjects.Mob.States
         /// Gets the Command that the player entered and preps it for execution.
         /// </summary>
         /// <returns></returns>
-        ICommand GetCommand();
+        ICommand GetCommand(IMessage command);
     }
 }

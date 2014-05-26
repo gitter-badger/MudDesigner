@@ -11,6 +11,8 @@ using System.Net.Sockets;
 using System.Text;
 using MudEngine.Engine.Core;
 using MudEngine.Engine.Factories;
+using MudEngine.Engine.GameObjects.Mob.States;
+using MudEngine.Engine.GameObjects.Mob.States.MultiplayerStates;
 using MudEngine.Engine.GameObjects.Mob;
 
 namespace MudEngine.Engine.Networking
@@ -153,11 +155,11 @@ namespace MudEngine.Engine.Networking
                 // Make sure we are still connected
                 try
                 {
-                    string formattedMessage = this.FormatMessageForBroadcasting(message);
+                    string formattedMessage = message.FormatMessage();
 
                     if (player.Connection.Connected)
                     {
-                        player.Connection.Send(new ASCIIEncoding().GetBytes(string.Format("{0}: {1}", DateTime.Now, formattedMessage)));
+                        player.Connection.Send(new ASCIIEncoding().GetBytes(formattedMessage));
                     }
                 }
                 catch (Exception ex)

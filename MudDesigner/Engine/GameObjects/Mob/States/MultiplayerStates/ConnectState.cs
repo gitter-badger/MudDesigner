@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MudEngine.Engine.Core;
+using MudEngine.Engine.Commands;
 using MudEngine.Engine.GameObjects.Mob.States;
 using MudEngine.Engine.GameObjects.Mob;
 using MudEngine.Engine.Networking;
@@ -37,20 +38,24 @@ namespace MudEngine.Engine.GameObjects.Mob.States.MultiplayerStates
             }
 
             //Output the game information
-            this.connectedPlayer.Send(new InputMessage(this.connectedPlayer.Game.Name));
-            this.connectedPlayer.Send(new InputMessage(this.connectedPlayer.Game.Description));
+            this.connectedPlayer.Send(new InformationalMessage(this.connectedPlayer.Game.Name));
+            this.connectedPlayer.Send(new InformationalMessage(this.connectedPlayer.Game.Description));
 
             //Output the server MOTD
-            server.MessageOfTheDay.ForEach(message => this.connectedPlayer.Send(new InputMessage(message)));
-            this.connectedPlayer.Send(new InputMessage(string.Empty)); //blank line
+            server.MessageOfTheDay.ForEach(message => this.connectedPlayer.Send(new InformationalMessage(message)));
+            this.connectedPlayer.Send(new InformationalMessage(string.Empty)); //blank line
 
-            //Switch the the Login state for the player
-            this.connectedPlayer.SwitchState(new LoginState());
+            this.connectedPlayer.StateManager.SwitchState(new LoginState());
         }
 
-        public Commands.ICommand GetCommand()
+        /// <summary>
+        /// Gets the command.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <returns>Returns no operation required.</returns>
+        public Commands.ICommand GetCommand(IMessage message)
         {
-            throw new NotImplementedException();
+            return new NoOpCommand();
         }
     }
 }

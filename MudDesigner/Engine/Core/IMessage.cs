@@ -20,5 +20,11 @@ namespace MudEngine.Engine.Core
         /// Gets or sets the message.
         /// </summary>
         string Message { get; set; }
+
+        /// <summary>
+        /// Formats the message.
+        /// </summary>
+        /// <returns>Returns a formatted message.</returns>
+        string FormatMessage();
     }
 }

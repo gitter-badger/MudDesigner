@@ -73,28 +73,19 @@ namespace MudEngine.Engine.GameObjects.Mob
         /// <summary>
         /// Gets the state of the current mob object.
         /// </summary>
-        public IState CurrentState { get; protected set; }
+        public StateManager StateManager { get; private set; }
 
         public override void Initialize(IGame game)
         {
             base.Initialize(game);
-        }
 
-        /// <summary>
-        /// Switches the players State from one, to another
-        /// </summary>
-        /// <param name="state">The state to switch to.</param>
-        public void SwitchState(IState state)
-        {
-            this.CurrentState = state;
+            this.StateManager = new StateManager();
+            this.StateManager.Initialize(this);
         }
 
         public virtual void ReceiveInput(IMessage message)
         {
-            if (message.Message.StartsWith("hello"))
-            {
-                this.Send(message);
-            }
+            this.StateManager.PerformCommand(message);
 
             this.OnMessageReceived(message);
         }

@@ -45,18 +45,12 @@ namespace MudEngine.Engine.GameObjects.Mob
         int MaximumInventorySize { get; set; }
 
         /// <summary>
-        /// Gets the state of the current mob object.
+        /// Gets the state manager.
         /// </summary>
-        IState CurrentState { get; }
+        StateManager StateManager { get; }
 
         void ReceiveInput(IMessage message);
 
         void Send(IMessage message);
-
-        /// <summary>
-        /// Switches the players State from one, to another
-        /// </summary>
-        /// <param name="state">The state to switch to.</param>
-        void SwitchState(IState state);
     }
 }

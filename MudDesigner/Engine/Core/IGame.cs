@@ -93,12 +93,5 @@ namespace MudEngine.Engine.Core
         /// <param name="target">The target the message is intended for.</param>
         /// <param name="message">The message.</param>
         void BroadcastToPlayer(IMob target, IMessage message);
-
-        /// <summary>
-        /// Formats the message for broadcasting.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        /// <returns></returns>
-        string FormatMessageForBroadcasting(IMessage message);
     }
 }

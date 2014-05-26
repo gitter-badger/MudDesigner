@@ -74,8 +74,8 @@ namespace MudEngine.Engine.Networking
             this.Connection = socket;
             this.Player = player;
 
-            IState connectState = new ConnectState();
-            connectState.Render(player);
+            // Set the users initial state.
+            this.Player.StateManager.SwitchState(new ConnectState());
 
             this.OnConnect();
         }

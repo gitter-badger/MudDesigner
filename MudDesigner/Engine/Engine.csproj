@@ -44,9 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\InvalidCommand.cs" />
+    <Compile Include="Commands\NoOpCommand.cs" />
     <Compile Include="Commands\ShorthandNameAttribute.cs" />
     <Compile Include="Core\DefaultGame.cs" />
     <Compile Include="Core\IMessage.cs" />
+    <Compile Include="Core\InformationalMessage.cs" />
     <Compile Include="Factories\CommandFactory.cs" />
     <Compile Include="Factories\GameFactory.cs" />
     <Compile Include="Factories\MobFactory.cs" />
@@ -69,6 +72,7 @@
     <Compile Include="GameObjects\Mob\States\IState.cs" />
     <Compile Include="GameObjects\Mob\States\MultiplayerStates\ConnectState.cs" />
     <Compile Include="GameObjects\Mob\States\MultiplayerStates\LoginState.cs" />
+    <Compile Include="GameObjects\Mob\States\StateManager.cs" />
     <Compile Include="GameObjects\MovementEventArgs.cs" />
     <Compile Include="Networking\IServerPlayer.cs" />
     <Compile Include="Core\IPersistedStorage.cs" />
