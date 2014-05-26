@@ -152,6 +152,11 @@ namespace MudEngine.Engine.Core
             Console.WriteLine(string.Format("Message => {0}", message.Message));
         }
 
+        /// <summary>
+        /// Formats the message for broadcasting.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <returns>Returns a string formatted.</returns>
         public virtual string FormatMessageForBroadcasting(IMessage message)
         {
             string[] messageContent = message.Message.Split('\n');
@@ -165,6 +170,10 @@ namespace MudEngine.Engine.Core
             return formattedMessage;
         }
 
+        /// <summary>
+        /// Logs the message.
+        /// </summary>
+        /// <param name="message">The message.</param>
         protected virtual void LogMessage(string message)
         {
             if (this.Logger != null)

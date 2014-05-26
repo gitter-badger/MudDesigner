@@ -9,14 +9,29 @@ using MudEngine.Engine.GameObjects.Mob;
 
 namespace MudEngine.Engine.Networking
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ServerPlayer : IServerPlayer
     {
+        /// <summary>
+        /// Gets or sets the connection.
+        /// </summary>
         public System.Net.Sockets.Socket Connection { get; set; }
 
+        /// <summary>
+        /// Gets the buffer.
+        /// </summary>
         public List<byte> Buffer { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the size of the buffer.
+        /// </summary>
         public int BufferSize { get; set; }
 
+        /// <summary>
+        /// Gets or sets the received input.
+        /// </summary>
         public string ReceivedInput { get; set; }
 
         /// <summary>
@@ -29,6 +44,11 @@ namespace MudEngine.Engine.Networking
         /// </summary>
         public event EventHandler Disconnected;
 
+        /// <summary>
+        /// Connects the user via the specified socket.
+        /// </summary>
+        /// <param name="socket">The socket.</param>
+        /// <param name="player"></param>
         public virtual void Connect(System.Net.Sockets.Socket socket, IPlayer player)
         {
             this.Connection = socket;
@@ -36,6 +56,10 @@ namespace MudEngine.Engine.Networking
             this.Buffer = new List<byte>();
         }
 
+        /// <summary>
+        /// Receives the data from the network.
+        /// </summary>
+        /// <param name="result">The result.</param>
         public virtual void ReceiveData(IAsyncResult result)
         {
             // The input s tring
@@ -107,6 +131,10 @@ namespace MudEngine.Engine.Networking
             this.OnDisconnect();
         }
 
+        /// <summary>
+        /// Called when the player is disconnected.
+        /// </summary>
+        /// <param name="result">The result.</param>
         protected virtual void OnDisconnect(IAsyncResult result = null)
         {
             EventHandler handler = Disconnected;

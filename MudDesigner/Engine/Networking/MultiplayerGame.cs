@@ -43,8 +43,14 @@ namespace MudEngine.Engine.Networking
         /// </summary>
         public List<IServerPlayer> Connections { get; protected set; }
 
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="IServer" /> is enabled.
+        /// </summary>
         public bool IsEnabled { get; protected set; }
 
+        /// <summary>
+        /// Gets the current server status.
+        /// </summary>
         public ServerStatus Status { get; protected set; }
 
         /// <summary>

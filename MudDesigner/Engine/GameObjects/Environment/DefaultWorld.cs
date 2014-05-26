@@ -7,6 +7,9 @@ using MudEngine.Engine.GameObjects.Mob;
 
 namespace MudEngine.Engine.GameObjects.Environment
 {
+    /// <summary>
+    /// The default game world.
+    /// </summary>
     public class DefaultWorld : IWorld
     {
         /// <summary>

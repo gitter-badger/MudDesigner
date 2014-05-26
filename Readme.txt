@@ -1,19 +1,14 @@
 * Introduction *
 =======================================================================
 Mud Designer Game Engine
-Version: Alpha 1.3
+Version: Alpha 3.0
 Website: http://MudDesigner.Codeplex.com
-
-Team:
-Lead Developer: Scionwest
-Networking: u8sand
-Concept Ideas: genericperson
 
 
 * About *
 =======================================================================
 The Mud Designer Game Engine is a complete MUD engine developed from
-scratch using Microsofts C# and .NET Framework 4.0.
+scratch using Microsofts C# and .NET Framework 4.5.
 The project includes several components, including the game engine
 library itself, a script compiler and a server/client executable.
 

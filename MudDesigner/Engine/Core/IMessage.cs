@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MudEngine.Engine.Core
 {
+    /// <summary>
+    /// Defines a contract for sharing messages with objects.
+    /// </summary>
     public interface IMessage
     {
         /// <summary>

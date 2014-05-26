@@ -4,14 +4,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Reflection;
 using MudEngine.Engine.Core;
 using MudEngine.Engine.Factories;
-using MudEngine.Engine.GameObjects.Environment;
 using MudEngine.Engine.GameObjects.Mob;
 using MudEngine.Engine.Networking;
 
@@ -34,11 +28,13 @@ namespace MudDesigner.Server
             Console.WriteLine("Server app starting...");
 
             // Instance the server.
-            // IGame game = (IGame)ScriptFactory.GetScript(EngineSettings.Default.GameScript, null);
-            MultiplayerGame game = new EngineFactory<MultiplayerGame>().GetObject();
+            var game = new EngineFactory<MultiplayerGame>().GetObject();
             game.Logger = handler;
 
+            // Initialize the game
             game.Initialize<DefaultPlayer>(null);
+
+            // Start the server.
             game.Start<ServerPlayer, DefaultPlayer>();
 
             Console.WriteLine("Server running...");
