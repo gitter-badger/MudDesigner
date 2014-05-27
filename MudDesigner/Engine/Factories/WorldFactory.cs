@@ -15,37 +15,33 @@ namespace MudEngine.Engine.Factories
     /// <summary>
     /// Provides a means to fetch objects that implement the IWorld interface
     /// </summary>
-    public static class WorldFactory
+    public class WorldFactory<T> : IFactory<T> where T : class, IWorld
     {
-        /// <summary>
-        /// Gets or sets the default World.
-        /// </summary>
-        public static IWorld DefaultWorld { get; set; }
-
         /// <summary>
         /// Gets a collection objects implementing IWorld.
         /// </summary>
         /// <returns>A collection of objects in memory implementing IWorld</returns>
-        public static List<IWorld> GetWorlds(Assembly[] fromAssemblies = null)
+        public List<T> GetObjects(Assembly[] fromAssemblies = null) 
         {
             var types = new List<Type>();
+
 
             // Loop through each assembly in our current app domain
             // generating a collection of Types that implement IWorld
             // If we are not provided with assemblies, we fetch all of them from the current domain.
-            foreach (Assembly assembly in fromAssemblies ?? AppDomain.CurrentDomain.GetAssemblies())
-            {
-                types.AddRange(assembly.GetTypes().Where(
-                    type => type.GetInterface(typeof(IWorld).Name) != null &&
-                    !type.IsAbstract && // Do not add abstract classes
-                    !type.IsInterface)); // Do not add interfaces. Concrete Types only.
-            }
+    foreach (Assembly assembly in fromAssemblies ?? AppDomain.CurrentDomain.GetAssemblies())
+    {
+        types.AddRange(assembly.GetTypes().Where(
+            type => type.GetInterface(typeof(T).Name) != null &&
+            !type.IsAbstract && // Do not add abstract classes
+            !type.IsInterface)); // Do not add interfaces. Concrete Types only.
+    }
 
             // Convert our collection or Types into instances of IWorld
             // then return the IWorld collection.
-            return new List<IWorld>(
+            return new List<T>(
                 (from type in types
-                 select Activator.CreateInstance(type) as IWorld));
+                 select Activator.CreateInstance(type) as T));
         }
 
         /// <summary>
@@ -53,37 +49,26 @@ namespace MudEngine.Engine.Factories
         /// </summary>
         /// <typeparam name="T">The Type implementing IWorld that you want to find</typeparam>
         /// <returns>Returns the World specified.</returns>
-        public static IWorld GetWorld<T>(Assembly[] fromAssemblies = null) where T : IWorld, new()
-        {
-            // If the DefaultWorld has not been set, we will set it the first time a specific Type is passed.
-            // It is assumed since a specific Type is provided, it will be re-used.
-            if (WorldFactory.DefaultWorld == null)
-            {
-                WorldFactory.DefaultWorld = new T();
-            }
+    public T GetObject<UTypeToFetch>(Assembly[] fromAssemblies = null, string compatibleType = null)
+    {
+        // This isn't the most efficient.
+        // Considering that GetWorlds should really only be returning a few (1-5?) IWorld objects
+        // Filtering the list a second time (filtered once in GetWorlds) shouldn't hurt much.
+        // If users start loading dozens of IWorlds (bad practice!) in their scripts folder, then
+        // this needs to be revisited.
+        List<T> results = this.GetObjects(fromAssemblies);
+        T selectedType = null;
 
-            // This isn't the most efficient.
-            // Considering that GetWorlds should really only be returning a few (1-5?) IWorld objects
-            // Filtering the list a second time (filtered once in GetWorlds) shouldn't hurt much.
-            // If users start loading dozens of IWorlds (bad practice!) in their scripts folder, then
-            // this needs to be revisited.
-            return WorldFactory.GetWorlds(fromAssemblies).FirstOrDefault(World => World.GetType() == typeof(T));
+        if (compatibleType != null)
+        {
+            selectedType = results.FirstOrDefault(World => World.GetType().Name == compatibleType);
+        }
+        else
+        {
+            selectedType = results.FirstOrDefault(World => World.GetType() == typeof(UTypeToFetch));
         }
 
-        /// <summary>
-        /// Gets the default World.
-        /// </summary>
-        /// <param name="fromAssemblies">From assemblies.</param>
-        /// <returns>Returns an instance matching the default World object.</returns>
-        public static IWorld GetDefaultWorld(Assembly[] fromAssemblies = null)
-        {
-            if (WorldFactory.DefaultWorld == null)
-            {
-                throw new NullReferenceException("DefaultWorld must not be null.");
-            }
-
-            return WorldFactory.GetWorlds(fromAssemblies)
-                .FirstOrDefault(World => World.GetType() == WorldFactory.DefaultWorld.GetType());
-        }
+        return selectedType;
+    }
     }
 }

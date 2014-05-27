@@ -151,9 +151,15 @@ namespace MudEngine.Engine.Core
         {
             this.LogMessage("Setting up the game world.");
             this.Worlds = new List<IWorld>();
-
-            this.Worlds = this.StorageSource.Load<IWorld>().ToList();
+            
+    this.Worlds = this.StorageSource.Load<IWorld>().ToList();
             this.Worlds.ForEach(world => world.Initialize());
+
+            // If no worlds exist, we create a temporary world.
+            if (this.Worlds.Count == 0)
+            {
+                this.CreateTemporaryWorld();
+            }
 
             this.LogMessage("Game world set up.");
         }
@@ -178,6 +184,19 @@ namespace MudEngine.Engine.Core
             {
                 this.Logger.Report(new InputMessage(message));
             }
+        }
+
+        /// <summary>
+        /// Creates a temporary world.
+        /// </summary>
+        private void CreateTemporaryWorld()
+        {
+            var world = new DefaultWorld();
+            world.Initialize();
+
+            this.Worlds.Add(world);
+
+            // TODO: Create DefaultRealm, DefaultZone and DefaultRoom.
         }
     }
 }

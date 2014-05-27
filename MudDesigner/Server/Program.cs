@@ -30,6 +30,8 @@ namespace MudDesigner.Server
 
             Console.WriteLine("Server app starting...");
 
+
+
             // Instance the server.
             var game = GameFactory.GetGame<MultiplayerGame>() as MultiplayerGame;
             var storage = PersistedStorageFactory.GetStorageContainer<XmlPersistedStorage>();

@@ -39,15 +39,32 @@ namespace Engine.XmlPersistedStorage
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> Load<T>() where T : class
-        {
-            // Need a EngineFactory resolver. Call EngineFactory.GetFactoryForType<T>() to return a factory that can be used with <T>.
-            // Then we can call resolvedFactory.GetObjects<T>() to instance all of the Types in the engine.
-            // Then start scanning the HDD and deserializing each file into the Type associated with them.
-            List<IWorld> worldTypes = WorldFactory.GetWorlds();
+    public IEnumerable<T> Load<T>() where T : class
+    {
+        // Attempt to find a factory that supports <T>
+        Type factoryType = EngineFactory.FindFactory<T>();
 
-            return worldTypes as IEnumerable<T>;
+        // Create an instance of the Factory found, and provide it with <T> as its constraint.
+        IFactory<T> factoryInstance = Activator.CreateInstance(factoryType.MakeGenericType(typeof(T))) as IFactory<T>;
+
+        // Instance the objects associated with <T>
+        var objectsToLoad = factoryInstance.GetObjects();
+
+        string pathToObjects = this.GetStoragePath<T>();
+
+        if (!Directory.Exists(pathToObjects))
+        {
+            return new List<T>() as IEnumerable<T>;
         }
+
+        objectsToLoad.ForEach(item =>
+        {
+            
+        });
+
+        // Return our collection of <T>.
+        return objectsToLoad as IEnumerable<T>;
+    }
 
         public void Delete<T>(T item) where T : class
         {
