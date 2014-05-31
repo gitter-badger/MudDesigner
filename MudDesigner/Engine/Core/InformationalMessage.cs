@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MudEngine.Engine.Core
 {
     /// <summary>
-    /// Leaves the original message intact, un-formatted.
+    /// Leaves the original message intact, un-formatted with a new line appended.
     /// </summary>
     public class InformationalMessage : IMessage
     {
@@ -24,9 +24,6 @@ namespace MudEngine.Engine.Core
         /// <summary>
         /// Formats the message.
         /// </summary>
-        /// <returns>
-        /// Returns a formatted message.
-        /// </returns>
         public string FormatMessage()
         {
             return this.Message += Environment.NewLine;

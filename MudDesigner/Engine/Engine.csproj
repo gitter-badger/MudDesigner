@@ -59,6 +59,7 @@
     <Compile Include="Factories\PersistedStorageFactory.cs" />
     <Compile Include="Factories\ScriptFactory.cs" />
     <Compile Include="Factories\ServerFactory.cs" />
+    <Compile Include="GameObjects\Environment\IRealm.cs" />
     <Compile Include="GameObjects\MessengerArgs.cs" />
     <Compile Include="Core\EngineXmlStorage.cs" />
     <Compile Include="Core\ExtensionMethods.cs" />

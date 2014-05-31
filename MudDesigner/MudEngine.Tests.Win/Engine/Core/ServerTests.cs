@@ -18,6 +18,20 @@ namespace MudEngine.Tests.Win.Engine.Core
     [TestClass]
     public class ServerTests
     {
+
+        [TestMethod]
+        public void TestMessageOfTheDay()
+        {
+            // Arrange
+            var list = new List<string> { "Test 1", "Test 2", "Test 3" };
+
+            // Act
+            var result = string.Join("\n", list);
+
+            // Assert
+            Assert.IsTrue(result == "Test 1\nTest 2\nTest 3");
+        }
+
         /*
         [TestMethod]
         public void StarServer()

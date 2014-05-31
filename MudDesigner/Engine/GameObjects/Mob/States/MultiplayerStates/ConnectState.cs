@@ -31,19 +31,22 @@ namespace MudEngine.Engine.GameObjects.Mob.States.MultiplayerStates
             //Store a reference for the GetCommand() method to use.
             this.connectedPlayer = mob as IPlayer;
             var server = mob.Game as IServer;
+            var game = mob.Game as IGame;
 
+            // It is not guaranteed that mob.Game will implement IServer. We are only guaranteed that it will implement IGame.
             if (server == null)
             {
                 throw new NullReferenceException("LoginState can only be set to a player object that is part of a server.");
             }
 
             //Output the game information
-            this.connectedPlayer.Send(new InformationalMessage(this.connectedPlayer.Game.Name));
-            this.connectedPlayer.Send(new InformationalMessage(this.connectedPlayer.Game.Description));
-
-            //Output the server MOTD
-            server.MessageOfTheDay.ForEach(message => this.connectedPlayer.Send(new InformationalMessage(message)));
-            this.connectedPlayer.Send(new InformationalMessage(string.Empty)); //blank line
+            mob.Send(new InformationalMessage(game.Name));
+            mob.Send(new InformationalMessage(game.Description));
+            mob.Send(new InformationalMessage(string.Empty)); //blank line
+            
+            //Output the server MOTD information
+            mob.Send(new InformationalMessage(string.Join("\n", server.MessageOfTheDay)));
+            mob.Send(new InformationalMessage(string.Empty)); //blank line
 
             this.connectedPlayer.StateManager.SwitchState(new LoginState());
         }

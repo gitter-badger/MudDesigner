@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace MudEngine.Engine.Core
 {
     /// <summary>
-    /// 
+    /// Appends an input symbol before the message, to indicate that user input is required.
     /// </summary>
     public class InputMessage : IMessage
     {
@@ -34,9 +34,6 @@ namespace MudEngine.Engine.Core
         /// <summary>
         /// Formats the message.
         /// </summary>
-        /// <returns>
-        /// Returns a formatted message.
-        /// </returns>
         public string FormatMessage()
         {
             return string.Format("{0}>: ", this.Message);

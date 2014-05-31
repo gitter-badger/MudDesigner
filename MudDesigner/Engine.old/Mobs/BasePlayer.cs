@@ -310,37 +310,37 @@ namespace MudDesigner.Engine.Mobs
         /// </summary>
         /// <param name="message">The message you want to send</param>
         /// <param name="newLine">If false, no no line will be printed and the next message will be printed on the same line.</param>
-        public override void SendMessage(string message, bool newLine = true)
+    public override void SendMessage(string message, bool newLine = true)
+    {
+        // When printing properties that don't have values, they'll
+        // be null.
+        if (message == null)
+            return;
+
+        if (newLine && !lastMessageHadNewLine)
+            message = message.Insert(0, System.Environment.NewLine);
+
+        if (newLine)
         {
-            // When printing properties that don't have values, they'll
-            // be null.
-            if (message == null)
-                return;
-
-            if (newLine && !lastMessageHadNewLine)
-                message = message.Insert(0, System.Environment.NewLine);
-
-            if (newLine)
-            {
-                message += System.Environment.NewLine;
-                lastMessageHadNewLine = true;
-            }
-            else
-                this.lastMessageHadNewLine = false;
-
-            // Make sure we are still connected
-            try
-            {
-                if (IsConnected)
-                    Connection.Send(new ASCIIEncoding().GetBytes(message));
-            }
-            catch (Exception ex)
-            {
-                // No connection was made, so make sure we clean up
-                if (!IsConnected)
-                    Disconnect();
-            }
+            message += System.Environment.NewLine;
+            lastMessageHadNewLine = true;
         }
+        else
+            this.lastMessageHadNewLine = false;
+
+        // Make sure we are still connected
+        try
+        {
+            if (IsConnected)
+                Connection.Send(new ASCIIEncoding().GetBytes(message));
+        }
+        catch (Exception ex)
+        {
+            // No connection was made, so make sure we clean up
+            if (!IsConnected)
+                Disconnect();
+        }
+    }
 
         /// <summary>
         /// Called when the player connects to the server.
