@@ -14,35 +14,29 @@ namespace MudEngine.Engine.GameObjects.Mob.States
     public class StateManager
     {
         /// <summary>
-        /// Gets the current state.
+        /// Gets the states.
+        /// </summary>
+        public Stack<IState> States { get; private set; }
+
+        /// <summary>
+        /// Gets the state of the current.
         /// </summary>
         public IState CurrentState { get; private set; }
-
-        /// <summary>
-        /// Gets the states available for use.
-        /// </summary>
-        /// <value>
-        public List<IState> States { get; private set; }
-
-        /// <summary>
-        /// Gets the commands available.
-        /// </summary>
-        public List<ICommand> Commands { get; private set; }
 
         /// <summary>
         /// Gets the mob that this manager controls the state of.
         /// </summary>
         public IMob Mob { get; private set; }
 
-        public void Initialize(IMob mob, IState initialState = null)
+        /// <summary>
+        /// Initializes the specified mob.
+        /// </summary>
+        /// <param name="mob">The mob.</param>
+        /// <param name="initialState">The initial state.</param>
+        public void Initialize(IMob mob)
         {
             this.Mob = mob;
-
-            if (initialState != null)
-            {
-                this.CurrentState = initialState;
-                this.CurrentState.Render(this.Mob);
-            }
+            this.States = new Stack<IState>();
         }
 
         /// <summary>
@@ -53,26 +47,37 @@ namespace MudEngine.Engine.GameObjects.Mob.States
         {
             if (this.CurrentState != null)
             {
-                ICommand command = this.CurrentState.GetCommand(message);
-                if (command is NoOpCommand)
+                this.CurrentState.UpdateState(message);
+
+                if (!this.CurrentState.IsCompleted)
                 {
-                    // NoOperation commands indicate that the current state is not finished yet.
                     this.CurrentState.Render(this.Mob);
                 }
-                else if (command != null)
+                else
                 {
-                    command.Execute(this.Mob);
-                }
-                else if (command == null)
-                {
-                    new InvalidCommand().Execute(this.Mob);
+                    // Restore the previous state.
+                    this.CurrentState = this.States.Pop();
                 }
             }
         }
 
-        public void SwitchState(IState state)
+        /// <summary>
+        /// Switches the state.
+        /// </summary>
+        /// <param name="state">The state.</param>
+        public void SwitchState<T>(bool preserveCurrentState = false) where T : class, IState, new()
         {
-            this.CurrentState = state;
+            if (this.CurrentState != null)
+            {
+                this.CurrentState.Cleanup();
+
+                if (preserveCurrentState)
+                {
+                    this.States.Push(this.CurrentState);
+                }
+            }
+
+            this.CurrentState = new T();
             this.CurrentState.Render(this.Mob);
         }
     }

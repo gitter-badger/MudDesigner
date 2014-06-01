@@ -21,6 +21,11 @@ namespace MudEngine.Engine.GameObjects.Mob.States.MultiplayerStates
         /// </summary>
         private IMob connectedPlayer;
 
+        /// <summary>
+        /// Gets the state of the current.
+        /// </summary>
+        public bool IsCompleted { get; set; }
+
         public void Render(IMob mob)
         {
             if (!(mob is IPlayer))
@@ -48,7 +53,7 @@ namespace MudEngine.Engine.GameObjects.Mob.States.MultiplayerStates
             mob.Send(new InformationalMessage(string.Join("\n", server.MessageOfTheDay)));
             mob.Send(new InformationalMessage(string.Empty)); //blank line
 
-            this.connectedPlayer.StateManager.SwitchState(new LoginState());
+            this.connectedPlayer.StateManager.SwitchState<LoginState>();
         }
 
         /// <summary>
@@ -56,9 +61,18 @@ namespace MudEngine.Engine.GameObjects.Mob.States.MultiplayerStates
         /// </summary>
         /// <param name="message">The message.</param>
         /// <returns>Returns no operation required.</returns>
-        public Commands.ICommand GetCommand(IMessage message)
+        public Commands.ICommand UpdateState(IMessage message)
         {
             return new NoOpCommand();
+        }
+
+        /// <summary>
+        /// Cleanups this instance during a state change.
+        /// </summary>
+        public void Cleanup()
+        {
+            // We have nothing to clean up.
+            return;
         }
     }
 }
