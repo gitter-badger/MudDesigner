@@ -76,6 +76,7 @@
     <Compile Include="GameObjects\Mob\States\IState.cs" />
     <Compile Include="GameObjects\Mob\States\MultiplayerStates\ConnectState.cs" />
     <Compile Include="GameObjects\Mob\States\MultiplayerStates\LoginState.cs" />
+    <Compile Include="GameObjects\Mob\States\ReceivingInputState.cs" />
     <Compile Include="GameObjects\Mob\States\StateManager.cs" />
     <Compile Include="GameObjects\MovementEventArgs.cs" />
     <Compile Include="Networking\IServerPlayer.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Networking\IServer.cs" />
     <Compile Include="GameObjects\Environment\IWorld.cs" />
     <Compile Include="Core\PlatformSupportAttribute.cs" />
+    <Compile Include="GameObjects\Mob\ReceivedInputMessage.cs" />
     <Compile Include="Networking\ServerPlayer.cs" />
     <Compile Include="Networking\MultiplayerGame.cs" />
     <Compile Include="Core\InputMessage.cs" />

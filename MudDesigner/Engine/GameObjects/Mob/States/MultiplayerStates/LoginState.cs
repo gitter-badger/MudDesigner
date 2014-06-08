@@ -103,6 +103,13 @@ namespace MudEngine.Engine.GameObjects.Mob.States.MultiplayerStates
         /// <returns>Returns the ICommand specified.</returns>
         public Commands.ICommand UpdateState(IMessage command)
         {
+            ICommand foundCommand = MudEngine.Engine.Factories.CommandFactory.GetCommand(command.Message);
+
+            if (foundCommand != null)
+            {
+                foundCommand.Execute(this.connectedPlayer, "");
+            }
+
             if (this.currentState == CurrentState.FetchUserName)
             {
                 this.connectedPlayer.Name = command.Message;

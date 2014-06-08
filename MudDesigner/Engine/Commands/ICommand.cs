@@ -14,9 +14,20 @@ namespace MudEngine.Engine.Commands
     public interface ICommand
     {
         /// <summary>
+        /// Gets the command inpupt.
+        /// </summary>
+        string CommandInput { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether this command is incomplete and needs to continue running.
+        /// </summary>
+        bool IsIncomplete { get; }
+
+        /// <summary>
         /// Executes the command.
         /// </summary>
         /// <param name="mob">The mob.</param>
-        void Execute(IMob mob);
+        /// <param name="input">The input.</param>
+        void Execute(IMob mob, string input);
     }
 }

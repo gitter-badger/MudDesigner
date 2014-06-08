@@ -151,17 +151,20 @@ namespace MudEngine.Engine.Core
         {
             this.LogMessage("Setting up the game world.");
             this.Worlds = new List<IWorld>();
-            
-    this.Worlds = this.StorageSource.Load<IWorld>().ToList();
-            this.Worlds.ForEach(world => world.Initialize());
 
-            // If no worlds exist, we create a temporary world.
-            if (this.Worlds.Count == 0)
+            if (this.StorageSource != null)
             {
-                this.CreateTemporaryWorld();
-            }
+                this.Worlds = this.StorageSource.Load<IWorld>().ToList();
+                this.Worlds.ForEach(world => world.Initialize());
 
-            this.LogMessage("Game world set up.");
+                // If no worlds exist, we create a temporary world.
+                if (this.Worlds.Count == 0)
+                {
+                    this.CreateTemporaryWorld();
+                }
+
+                this.LogMessage("Game world set up.");
+            }
         }
 
         /// <summary>

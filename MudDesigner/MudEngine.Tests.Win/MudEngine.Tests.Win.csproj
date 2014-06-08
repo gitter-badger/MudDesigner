@@ -59,6 +59,11 @@
     <Compile Include="Engine\Core\PersistedStorageTests.cs" />
     <Compile Include="Engine\Factories\CoreFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="States\CommandForTesting.cs" />
+    <Compile Include="States\CommandWithInputForTesting.cs" />
+    <Compile Include="States\StateManagerTests.cs" />
+    <Compile Include="States\TestState.cs" />
+    <Compile Include="TestGameImplementation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.csproj">

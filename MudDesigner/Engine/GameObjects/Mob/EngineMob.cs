@@ -79,8 +79,11 @@ namespace MudEngine.Engine.GameObjects.Mob
         {
             base.Initialize(game);
 
+            // Get all commands
+            var commands = Factories.CommandFactory.GetCommands();
+
             this.StateManager = new StateManager();
-            this.StateManager.Initialize(this);
+            this.StateManager.Initialize(this, commands);
         }
 
         public virtual void ReceiveInput(IMessage message)

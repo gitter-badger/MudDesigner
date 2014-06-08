@@ -126,7 +126,7 @@ namespace MudEngine.Engine.Networking
                             this.Buffer.Clear();
 
                             // Return a trimmed string.
-                            this.Player.ReceiveInput(new InputMessage(input));
+                            this.Player.ReceiveInput(new ReceivedInputMessage(input));
                         }
                         else
                         {

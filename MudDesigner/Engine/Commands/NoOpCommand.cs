@@ -14,19 +14,23 @@ namespace MudEngine.Engine.Commands
     public class NoOpCommand : ICommand
     {
         /// <summary>
-        /// Executes the command.
+        /// Gets the command inpupt.
         /// </summary>
-        /// <param name="player">The player who sent the command.</param>
-        public void Execute(IPlayer player)
-        {
-            // We are doing nothing on purpose.
-            // This is a No operation command, aka do nothing.
-            // good for silently changing states or modes.
-        }
+        public string CommandInput { get; private set; }
 
-        public void Execute(IMob mob)
+        /// <summary>
+        /// Gets a value indicating whether this command is incomplete and needs to continue running.
+        /// </summary>
+        public bool IsIncomplete { get; private set; }
+
+        /// <summary>
+        /// Executes the specified mob.
+        /// </summary>
+        /// <param name="mob">The mob.</param>
+        /// <param name="input">The input.</param>
+        public void Execute(IMob mob, string input)
         {
-            throw new System.NotImplementedException();
+            return; // No operation performed.
         }
     }
 }

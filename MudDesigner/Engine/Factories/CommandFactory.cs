@@ -21,7 +21,7 @@ namespace MudEngine.Engine.Factories
         /// Gets a collection objects implementing ICommand.
         /// </summary>
         /// <returns>A collection of objects in memory implementing ICommand</returns>
-        public static List<ICommand> GetCommands(Assembly[] fromAssemblies = null)
+        public static IEnumerable<ICommand> GetCommands(Assembly[] fromAssemblies = null)
         {
             var types = new List<Type>();
 
@@ -48,16 +48,38 @@ namespace MudEngine.Engine.Factories
         /// </summary>
         /// <typeparam name="T">The Type implementing ICommand that you want to find</typeparam>
         /// <returns>Returns the command specified.</returns>
-        public static ICommand GetCommand<T>(string name, Assembly[] fromAssemblies = null) where T : ICommand, new()
+        public static ICommand GetCommand<T>(Assembly[] fromAssemblies = null) where T : ICommand, new()
         {
             // This isn't the most efficient.
             // Considering that GetCommands should really only be returning a few (1-5?) ICommand objects
             // Filtering the list a second time (filtered once in GetCommands) shouldn't hurt much.
             // If users start loading dozens of ICommand (bad practice!) in their scripts folder, then
             // this needs to be revisited.
-            List<ICommand> commands = CommandFactory.GetCommands(fromAssemblies);
+            IEnumerable<ICommand> commands = CommandFactory.GetCommands(fromAssemblies);
 
             foreach(ICommand command in commands)
+            {
+                Type type = command.GetType();
+
+                if (type == typeof(T))
+                {
+                    return command;
+                }
+            }
+
+            return null;
+        }
+
+        public static ICommand GetCommand(string name, Assembly[] fromAssemblies = null)
+        {
+            // This isn't the most efficient.
+            // Considering that GetCommands should really only be returning a few (1-5?) ICommand objects
+            // Filtering the list a second time (filtered once in GetCommands) shouldn't hurt much.
+            // If users start loading dozens of ICommand (bad practice!) in their scripts folder, then
+            // this needs to be revisited.
+            IEnumerable<ICommand> commands = CommandFactory.GetCommands(fromAssemblies);
+
+            foreach (ICommand command in commands)
             {
                 Type type = command.GetType();
 
@@ -87,5 +109,6 @@ namespace MudEngine.Engine.Factories
 
             return null;
         }
+
     }
 }
