@@ -94,6 +94,9 @@ namespace MudEngine.Engine.GameObjects.Mob.States
                 command.GetType().Name.ToLower().StartsWith(inputCommand)).ToList();
             ICommand validCommand = null;
 
+            // We do not care about this anymore. If a command does not have a ShorthandNameAttribute
+            // it can not be executed by the user. Only the engine can execute non-attribute decorated commands.
+            /*
             if (commands.Count != 0)
             {
                 // See if we can find the command by naming convention
@@ -106,7 +109,8 @@ namespace MudEngine.Engine.GameObjects.Mob.States
                     throw;
                 }
             }
-            else if (this.shorthandCommands.Keys.Any(key => 
+            else */
+            if (this.shorthandCommands.Keys.Any(key => 
                 key.Shorthand.ToLower() == inputCommand ||
                 key.Command.ToLower() == inputCommand))
             {

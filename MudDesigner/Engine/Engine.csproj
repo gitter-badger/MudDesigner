@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\DisconnectCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\InvalidCommand.cs" />
     <Compile Include="Commands\NoOpCommand.cs" />
