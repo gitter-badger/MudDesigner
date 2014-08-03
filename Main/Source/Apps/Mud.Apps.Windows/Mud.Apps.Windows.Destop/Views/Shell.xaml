@@ -1,0 +1,13 @@
+﻿<Window x:Class="Mud.Apps.WinDesktop.Views.Shell"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:prism="http://www.codeplex.com/prism"
+        Title="Mud Designer">
+    
+    <DockPanel LastChildFill="True">
+        <ContentControl DockPanel.Dock="Top"
+                        prism:RegionManager.RegionName="ToolbarRegion"/>
+        <ContentControl prism:RegionManager.RegionName="ContentRegion" />
+    </DockPanel>
+    
+</Window>
