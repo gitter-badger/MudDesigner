@@ -7,6 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using System.Windows;
+using Microsoft.Practices.Prism.Regions;
+using Mud.Apps.Windows.Infrastructure.RegionAdapters;
+using Microsoft.Practices.Prism.Modularity;
+using System.IO;
 
 namespace Mud.Apps.WinDesktop
 {
@@ -39,6 +43,32 @@ namespace Mud.Apps.WinDesktop
 
             App.Current.MainWindow = (Window)Shell;
             App.Current.MainWindow.Show();
+        }
+
+        /// <summary>
+        /// Configures the default region adapter mappings to use in the application, in order
+        /// to adapt UI controls defined in XAML to use a region and register it automatically.
+        /// May be overwritten in a derived class to add specific mappings required by the application.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="T:Microsoft.Practices.Prism.Regions.RegionAdapterMappings" /> instance containing all the mappings.
+        /// </returns>
+        protected override RegionAdapterMappings ConfigureRegionAdapterMappings()
+        {
+            RegionAdapterMappings mappings = base.ConfigureRegionAdapterMappings();
+            mappings.RegisterMapping(typeof(StackPanelRegionAdapter), Container.Resolve<StackPanelRegionAdapter>());
+
+            return mappings;
+        }
+
+        protected override Microsoft.Practices.Prism.Modularity.IModuleCatalog CreateModuleCatalog()
+        {
+            if (!Directory.Exists(@".\Plugins"))
+            {
+                Directory.CreateDirectory(@".\Plugins");
+            }
+
+            return new DirectoryModuleCatalog { ModulePath = @".\Plugins" };
         }
     }
 }
