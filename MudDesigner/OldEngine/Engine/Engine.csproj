@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9B0441DD-0DE4-42A9-A2B2-4BEE7D3DC241}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MudEngine.Engine</RootNamespace>
+    <AssemblyName>MudEngine</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands\DisconnectCommand.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\InvalidCommand.cs" />
+    <Compile Include="Commands\NoOpCommand.cs" />
+    <Compile Include="Commands\ShorthandNameAttribute.cs" />
+    <Compile Include="Core\DefaultGame.cs" />
+    <Compile Include="Core\IMessage.cs" />
+    <Compile Include="Core\InformationalMessage.cs" />
+    <Compile Include="Core\UniqueStorageIdentifierAttribute.cs" />
+    <Compile Include="Factories\CommandFactory.cs" />
+    <Compile Include="Factories\EngineFactory.cs" />
+    <Compile Include="Factories\IFactory.cs" />
+    <Compile Include="Factories\WorldFactory.cs" />
+    <Compile Include="Factories\GameFactory.cs" />
+    <Compile Include="Factories\MobFactory.cs" />
+    <Compile Include="Factories\PersistedStorageFactory.cs" />
+    <Compile Include="Factories\ScriptFactory.cs" />
+    <Compile Include="Factories\ServerFactory.cs" />
+    <Compile Include="GameObjects\Environment\IEnvironment.cs" />
+    <Compile Include="GameObjects\Environment\IRealm.cs" />
+    <Compile Include="GameObjects\Environment\IZone.cs" />
+    <Compile Include="GameObjects\MessengerArgs.cs" />
+    <Compile Include="Core\ExtensionMethods.cs" />
+    <Compile Include="Core\ILog.cs" />
+    <Compile Include="GameObjects\Environment\DayState.cs" />
+    <Compile Include="GameObjects\Environment\DefaultWorld.cs" />
+    <Compile Include="GameObjects\Environment\WeatherState.cs" />
+    <Compile Include="GameObjects\Environment\WorldEventArgs.cs" />
+    <Compile Include="GameObjects\GameObject.cs" />
+    <Compile Include="GameObjects\IGameObject.cs" />
+    <Compile Include="Core\IgnoreAttribute.cs" />
+    <Compile Include="GameObjects\Mob\DefaultPlayer.cs" />
+    <Compile Include="GameObjects\Mob\Roles\IRole.cs" />
+    <Compile Include="GameObjects\Mob\States\IState.cs" />
+    <Compile Include="GameObjects\Mob\States\MultiplayerStates\ConnectState.cs" />
+    <Compile Include="GameObjects\Mob\States\MultiplayerStates\LoginState.cs" />
+    <Compile Include="GameObjects\Mob\States\ReceivingInputState.cs" />
+    <Compile Include="GameObjects\Mob\States\StateManager.cs" />
+    <Compile Include="GameObjects\MovementEventArgs.cs" />
+    <Compile Include="Networking\IServerPlayer.cs" />
+    <Compile Include="Core\IPersistedStorage.cs" />
+    <Compile Include="Core\IGame.cs" />
+    <Compile Include="Networking\IServer.cs" />
+    <Compile Include="GameObjects\Environment\IWorld.cs" />
+    <Compile Include="Core\PlatformSupportAttribute.cs" />
+    <Compile Include="GameObjects\Mob\ReceivedInputMessage.cs" />
+    <Compile Include="Networking\ServerPlayer.cs" />
+    <Compile Include="Networking\MultiplayerGame.cs" />
+    <Compile Include="Core\InputMessage.cs" />
+    <Compile Include="Networking\ServerStatus.cs" />
+    <Compile Include="GameObjects\Environment\IRoom.cs" />
+    <Compile Include="GameObjects\Mob\EngineMob.cs" />
+    <Compile Include="GameObjects\Mob\IGender.cs" />
+    <Compile Include="GameObjects\Mob\IMob.cs" />
+    <Compile Include="GameObjects\Mob\IPlayer.cs" />
+    <Compile Include="GameObjects\Mob\MessageBroadcastLevels.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
