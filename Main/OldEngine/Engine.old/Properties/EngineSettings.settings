@@ -1,0 +1,52 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MudDesigner.Engine.Properties" GeneratedClassName="EngineSettings">
+  <Profiles />
+  <Settings>
+    <Setting Name="GameScript" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MudDesigner.Scripts.Default.Game.DefaultGame</Value>
+    </Setting>
+    <Setting Name="WorldScript" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MudDesigner.Scripts.Default.Environment.DefaultWorld</Value>
+    </Setting>
+    <Setting Name="PlayerScript" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MudDesigner.Scripts.Default.Mobs.DefaultPlayer</Value>
+    </Setting>
+    <Setting Name="LoginCompletedState" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MudDesigner.Scripts.Default.States.LookingState</Value>
+    </Setting>
+    <Setting Name="ScriptLibrary" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;</Value>
+    </Setting>
+    <Setting Name="ScriptsPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Scripts</Value>
+    </Setting>
+    <Setting Name="InitialRoom" Type="System.String" Scope="User">
+      <Value Profile="(Default)">New Realm1&gt;New Zone1&gt;New Room1</Value>
+    </Setting>
+    <Setting Name="DoorScript" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MudDesigner.Scripts.Default.Environment.DefaultDoor</Value>
+    </Setting>
+    <Setting Name="RealmScript" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MudDesigner.Scripts.Default.Environment.DefaultRealm</Value>
+    </Setting>
+    <Setting Name="ZoneScript" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MudDesigner.Scripts.Default.Environment.DefaultZone</Value>
+    </Setting>
+    <Setting Name="RoomScript" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MudDesigner.Scripts.Default.Environment.DefaultRoom</Value>
+    </Setting>
+    <Setting Name="WorldSaveFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">World.sav</Value>
+    </Setting>
+    <Setting Name="LoginState" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MudDesigner.Scripts.Default.States.Login.ClientConnectState</Value>
+    </Setting>
+    <Setting Name="PlayerSavePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Players</Value>
+    </Setting>
+    <Setting Name="Version" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">0.0.2.0</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
