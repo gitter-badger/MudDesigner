@@ -23,8 +23,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Repositories.Shared", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engine", "Engine", "{91D32ADD-0DC6-4E37-832D-CA6B9C3D7E95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Engine.Core.Portable", "Engine\Mud.Engine.Core\Mud.Engine.Core.Portable.csproj", "{F27C159B-6412-46DC-8239-F0841C6801DC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Engine.Networking.Desktop", "Engine\Mud.Engine.Networking.Desktop\Mud.Engine.Networking.Desktop.csproj", "{A5BD79FF-5556-47E8-92E1-E12EC2B7DE27}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Engine.Networking.Portable", "Engine\Mud.Engine.Networking.Portable\Mud.Engine.Networking.Portable.csproj", "{9AAA3563-0089-4C5B-A12C-D1B47E9DDF66}"
@@ -43,7 +41,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Apps.Windows.Modules.Pr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Services.ParseDesktop", "Services\Mud.Services.ParseDesktop\Mud.Services.ParseDesktop.csproj", "{904BD3D0-E83B-410C-93F7-B97FA29ABC68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Engine.DefaultDesktop", "Engine\Mud.Engine.DefaultDesktop\Mud.Engine.DefaultDesktop.csproj", "{EFCD4F40-A2CB-440B-A1C1-BAD78B784471}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Engine.Core.Portable", "Engine\Mud.Engine.Core.Portable\Mud.Engine.Core.Portable.csproj", "{F27C159B-6412-46DC-8239-F0841C6801DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Engine.Default.Desktop", "Engine\Mud.Engine.Default.Desktop\Mud.Engine.Default.Desktop.csproj", "{EFCD4F40-A2CB-440B-A1C1-BAD78B784471}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -104,14 +104,14 @@ Global
 		SccProjectTopLevelParentUniqueName12 = MudEngine.sln
 		SccProjectName12 = Services/Mud.Services.ParseDesktop
 		SccLocalPath12 = Services\\Mud.Services.ParseDesktop
-		SccProjectUniqueName13 = Engine\\Mud.Engine.DefaultDesktop\\Mud.Engine.DefaultDesktop.csproj
+		SccProjectUniqueName13 = Engine\\Mud.Engine.Core.Portable\\Mud.Engine.Core.Portable.csproj
 		SccProjectTopLevelParentUniqueName13 = MudEngine.sln
-		SccProjectName13 = Engine/Mud.Engine.DefaultDesktop
-		SccLocalPath13 = Engine\\Mud.Engine.DefaultDesktop
-		SccProjectUniqueName14 = Engine\\Mud.Engine.Core\\Mud.Engine.Core.Portable.csproj
+		SccProjectName13 = Engine/Mud.Engine.Core.Portable
+		SccLocalPath13 = Engine\\Mud.Engine.Core.Portable
+		SccProjectUniqueName14 = Engine\\Mud.Engine.Default.Desktop\\Mud.Engine.Default.Desktop.csproj
 		SccProjectTopLevelParentUniqueName14 = MudEngine.sln
-		SccProjectName14 = Engine/Mud.Engine.Core
-		SccLocalPath14 = Engine\\Mud.Engine.Core
+		SccProjectName14 = Engine/Mud.Engine.Default.Desktop
+		SccLocalPath14 = Engine\\Mud.Engine.Default.Desktop
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -196,20 +196,6 @@ Global
 		{1E50F1A9-B51A-4084-9293-0DBA1A14C92C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1E50F1A9-B51A-4084-9293-0DBA1A14C92C}.Release|x64.ActiveCfg = Release|Any CPU
 		{1E50F1A9-B51A-4084-9293-0DBA1A14C92C}.Release|x86.ActiveCfg = Release|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Release|ARM.ActiveCfg = Release|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Release|x64.ActiveCfg = Release|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Release|x86.ActiveCfg = Release|Any CPU
 		{A5BD79FF-5556-47E8-92E1-E12EC2B7DE27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A5BD79FF-5556-47E8-92E1-E12EC2B7DE27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5BD79FF-5556-47E8-92E1-E12EC2B7DE27}.Debug|ARM.ActiveCfg = Debug|Any CPU
@@ -308,6 +294,20 @@ Global
 		{904BD3D0-E83B-410C-93F7-B97FA29ABC68}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{904BD3D0-E83B-410C-93F7-B97FA29ABC68}.Release|x64.ActiveCfg = Release|Any CPU
 		{904BD3D0-E83B-410C-93F7-B97FA29ABC68}.Release|x86.ActiveCfg = Release|Any CPU
+		{F27C159B-6412-46DC-8239-F0841C6801DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F27C159B-6412-46DC-8239-F0841C6801DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F27C159B-6412-46DC-8239-F0841C6801DC}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{F27C159B-6412-46DC-8239-F0841C6801DC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F27C159B-6412-46DC-8239-F0841C6801DC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F27C159B-6412-46DC-8239-F0841C6801DC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F27C159B-6412-46DC-8239-F0841C6801DC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F27C159B-6412-46DC-8239-F0841C6801DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F27C159B-6412-46DC-8239-F0841C6801DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F27C159B-6412-46DC-8239-F0841C6801DC}.Release|ARM.ActiveCfg = Release|Any CPU
+		{F27C159B-6412-46DC-8239-F0841C6801DC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F27C159B-6412-46DC-8239-F0841C6801DC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F27C159B-6412-46DC-8239-F0841C6801DC}.Release|x64.ActiveCfg = Release|Any CPU
+		{F27C159B-6412-46DC-8239-F0841C6801DC}.Release|x86.ActiveCfg = Release|Any CPU
 		{EFCD4F40-A2CB-440B-A1C1-BAD78B784471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EFCD4F40-A2CB-440B-A1C1-BAD78B784471}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFCD4F40-A2CB-440B-A1C1-BAD78B784471}.Debug|ARM.ActiveCfg = Debug|Any CPU
@@ -332,7 +332,6 @@ Global
 		{3B5A796D-87B2-40A6-ABF6-0F0BCB0B770C} = {22A6D826-E2FA-4ED3-A130-0F653DBE9885}
 		{F88C8CE0-782A-4838-A239-3577AA302CA1} = {22A6D826-E2FA-4ED3-A130-0F653DBE9885}
 		{1E50F1A9-B51A-4084-9293-0DBA1A14C92C} = {F1E65688-C9D7-4B4A-8E74-7EA1EA975560}
-		{F27C159B-6412-46DC-8239-F0841C6801DC} = {91D32ADD-0DC6-4E37-832D-CA6B9C3D7E95}
 		{A5BD79FF-5556-47E8-92E1-E12EC2B7DE27} = {91D32ADD-0DC6-4E37-832D-CA6B9C3D7E95}
 		{9AAA3563-0089-4C5B-A12C-D1B47E9DDF66} = {91D32ADD-0DC6-4E37-832D-CA6B9C3D7E95}
 		{A0D6C3BE-0814-4A27-80B2-FD34033C006A} = {129B37F8-9FFA-4B8C-80B0-F571D1B6C24E}
@@ -342,6 +341,7 @@ Global
 		{854E29B7-5AAD-4A0C-A226-936693155605} = {237F5CBB-4EFD-4150-8AD2-99B438AC3A61}
 		{2158886E-73A6-448B-BC2C-DE1E8D9B2017} = {237F5CBB-4EFD-4150-8AD2-99B438AC3A61}
 		{904BD3D0-E83B-410C-93F7-B97FA29ABC68} = {3AB818F4-9336-486A-8F58-E58F4C16FF1C}
+		{F27C159B-6412-46DC-8239-F0841C6801DC} = {91D32ADD-0DC6-4E37-832D-CA6B9C3D7E95}
 		{EFCD4F40-A2CB-440B-A1C1-BAD78B784471} = {91D32ADD-0DC6-4E37-832D-CA6B9C3D7E95}
 	EndGlobalSection
 EndGlobal

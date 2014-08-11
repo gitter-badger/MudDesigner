@@ -45,12 +45,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Mud.Engine.Core\Mud.Engine.Core.Portable.csproj">
-      <Project>{f27c159b-6412-46dc-8239-f0841c6801dc}</Project>
-      <Name>Mud.Engine.Core.Portable</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
