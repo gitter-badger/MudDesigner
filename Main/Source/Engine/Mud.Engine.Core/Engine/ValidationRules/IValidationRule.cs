@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Mud.Engine.Core.Engine.ValidationRules
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IValidationRule
     {
         Type ValidationMessageType { get; set; }

@@ -17,7 +17,9 @@ namespace Mud.Engine.Core.Engine
         /// <summary>
         /// The ValidationMessages backing field.
         /// </summary>
-        private Dictionary<string, ObservableCollection<IValidationMessage>> validationMessages;
+        private Dictionary<string, ICollection<IValidationMessage>> validationMessages;
+
+        private readonly Type validationStorageContainer;
 
         /// <summary>
         /// The property validation cache
@@ -28,9 +30,11 @@ namespace Mud.Engine.Core.Engine
         /// <summary>
         /// Initializes a new instance of the <see cref="AttributeValidationBase"/> class.
         /// </summary>
-        public AttributeValidationBase()
+        /// <param name="storageContainer">The storage container type to use for validation messages.</param>
+        public AttributeValidationBase(ICollection<IValidationMessage> validationStorageContainer)
         {
-            this.validationMessages = new Dictionary<string, ObservableCollection<IValidationMessage>>();
+            this.validationMessages = new Dictionary<string, ICollection<IValidationMessage>>();
+            this.validationStorageContainer = validationStorageContainer.GetType();
 
             this.SetupValidation();
         }
@@ -46,7 +50,7 @@ namespace Mud.Engine.Core.Engine
         /// <value>
         /// The validation messages.
         /// </value>
-        public Dictionary<string, ObservableCollection<IValidationMessage>> ValidationMessages
+        public Dictionary<string, ICollection<IValidationMessage>> ValidationMessages
         {
             get
             {
@@ -71,7 +75,7 @@ namespace Mud.Engine.Core.Engine
             {
                 if (!this.ValidationMessages.ContainsKey(property))
                 {
-                    this.ValidationMessages[property] = new ObservableCollection<IValidationMessage>();
+                    this.ValidationMessages[property] = Activator.CreateInstance(this.validationStorageContainer.GetType()) as ICollection<IValidationMessage>;
                 }
             }
         }
@@ -149,7 +153,7 @@ namespace Mud.Engine.Core.Engine
             // If the key does not exist, then we create one.
             if (!this.ValidationMessages.ContainsKey(property))
             {
-                this.ValidationMessages[property] = new ObservableCollection<IValidationMessage>();
+                this.ValidationMessages[property] = Activator.CreateInstance(this.validationStorageContainer.GetType()) as ICollection<IValidationMessage>;
             }
 
             if (this.ValidationMessages[property].Any(msg => msg.Message.Equals(message.Message) || msg == message))
@@ -165,7 +169,7 @@ namespace Mud.Engine.Core.Engine
         /// </summary>
         public void RemoveValidationMessages()
         {
-            foreach (KeyValuePair<string, ObservableCollection<IValidationMessage>> pair in this.ValidationMessages)
+            foreach (KeyValuePair<string, ICollection<IValidationMessage>> pair in this.ValidationMessages)
             {
                 pair.Value.Clear();
             }

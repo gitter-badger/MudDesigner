@@ -62,7 +62,7 @@ namespace Mud.Engine.Core.Engine
         /// <summary>
         /// Gets or Sets the current World for the game. Contains all of the Realms, Zones and Rooms.
         /// </summary>
-        IEnumerable<IWorld> Worlds { get; set; }
+        ICollection<IWorld> Worlds { get; set; }
 
         /// <summary>
         /// Initializes this instance.

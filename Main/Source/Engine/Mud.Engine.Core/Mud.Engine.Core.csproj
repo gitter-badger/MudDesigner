@@ -13,7 +13,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile24</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile344</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -45,7 +45,18 @@
     <Compile Include="Engine\ValidatableBase.cs" />
     <Compile Include="Engine\ValidationErrorMessage.cs" />
     <Compile Include="Engine\ValidationRules\IValidationRule.cs" />
+    <Compile Include="Engine\ValidationRules\ValidateNumberHasMaximumValueAttribute.cs" />
+    <Compile Include="Engine\ValidationRules\ValidateNumberHasMinimumValueAttribute.cs" />
+    <Compile Include="Engine\ValidationRules\ValidateNumberInRangeAtribute.cs" />
+    <Compile Include="Engine\ValidationRules\ValidateNumberIsGreaterThanAtribute.cs" />
+    <Compile Include="Engine\ValidationRules\ValidateNumberIsLessThanAtribute.cs" />
+    <Compile Include="Engine\ValidationRules\ValidateStringIsGreaterThanAttribute.cs" />
+    <Compile Include="Engine\ValidationRules\ValidateStringIsLessThanAttribute.cs" />
+    <Compile Include="Engine\ValidationRules\ValidateValueIsNotNullAttribute.cs" />
+    <Compile Include="Engine\ValidationRules\ValidateWithCustomHandleAttribute.cs" />
     <Compile Include="Engine\ValidationRules\ValidationAttribute.cs" />
+    <Compile Include="Engine\ValidationRules\ValidationCustomHandlerDelegate.cs" />
+    <Compile Include="Engine\ValidationRules\ValidationNumberDataTypes.cs" />
     <Compile Include="Engine\ValidationWarningMessage.cs" />
     <Compile Include="Environment\IEnvironment.cs" />
     <Compile Include="Environment\IRealm.cs" />

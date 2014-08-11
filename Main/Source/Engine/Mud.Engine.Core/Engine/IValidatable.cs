@@ -15,7 +15,7 @@ namespace Mud.Engine.Core.Engine
         /// <value>
         /// The validation messages.
         /// </value>
-        Dictionary<string, ObservableCollection<IValidationMessage>> ValidationMessages { get; }
+        Dictionary<string, ICollection<IValidationMessage>> ValidationMessages { get; }
 
         /// <summary>
         /// Registers an objects properties so that its validation Messages are accessible for observers to access.

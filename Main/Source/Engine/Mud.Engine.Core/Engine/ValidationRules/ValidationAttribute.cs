@@ -33,7 +33,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <value>
         /// The enable validation from property boolean.
         /// </value>
-        public string ValidateIfPropertyIsTrue { get; set; }
+        public string ValidateIfPropertyValueValid { get; set; }
 
         /// <summary>
         /// Validates the specified property.
@@ -51,18 +51,25 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <exception cref="System.ArgumentException">Can not base validation off of a non-boolean property.</exception>
         protected bool CanValidate(object sender)
         {
-            if (string.IsNullOrEmpty(this.ValidateIfPropertyIsTrue))
+            if (string.IsNullOrEmpty(this.ValidateIfPropertyValueValid))
             {
                 return true;
             }
 
+            // Try to parse as bool first.
             string valueToParse = string.Empty;
             bool evaluateInverseValue = false;
-            if (this.ValidateIfPropertyIsTrue.StartsWith("!"))
+            if (this.ValidateIfPropertyValueValid.StartsWith("!"))
             {
                 evaluateInverseValue = true;
-                valueToParse = this.ValidateIfPropertyIsTrue.Substring(1);
+                valueToParse = this.ValidateIfPropertyValueValid.Substring(1);
             }
+            else
+            {
+                valueToParse = this.ValidateIfPropertyValueValid;
+            }
+
+            // TODO: Attempt to validate non-bool values, such as 0, empty string and null.
 
             bool result = false;
             if (!bool.TryParse(this.GetComparisonValue(sender, valueToParse).ToString(), out result))
@@ -97,9 +104,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
 
                 try
                 {
-                    comparisonProperty = sender
-                        .GetType()
-                        .GetProperty(pathToProperty[0]);
+                    comparisonProperty = sender.GetType().GetProperty(pathToProperty[0]);
                 }
                 catch (Exception)
                 {
@@ -119,9 +124,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
                         try
                         {
                             childSender = comparisonProperty.GetValue(sender, null);
-                            comparisonProperty = childSender
-                                .GetType()
-                                .GetProperty(pathToProperty[index]);
+                            comparisonProperty = childSender.GetType().GetProperty(pathToProperty[index]);
                         }
                         catch (Exception)
                         {
