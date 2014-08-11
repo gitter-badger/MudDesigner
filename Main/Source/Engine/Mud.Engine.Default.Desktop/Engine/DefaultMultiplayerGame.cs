@@ -2,6 +2,7 @@
 using Mud.Engine.Core.Environment;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -72,7 +73,7 @@ namespace Mud.Engine.DefaultDesktop.Engine
         /// <summary>
         /// Gets or Sets the current World for the game. Contains all of the Realms, Zones and Rooms.
         /// </summary>
-        public ICollection<IWorld> Worlds { get; set; }
+        public ObservableCollection<IWorld> Worlds { get; set; }
 
         public void Initialize()
         {
