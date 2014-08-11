@@ -38,7 +38,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Engine\AttributeValidationBase.cs" />
     <Compile Include="Engine\IGame.cs" />
+    <Compile Include="Engine\IValidatable.cs" />
+    <Compile Include="Engine\IValidationMessage.cs" />
+    <Compile Include="Engine\ValidatableBase.cs" />
+    <Compile Include="Engine\ValidationErrorMessage.cs" />
+    <Compile Include="Engine\ValidationRules\IValidationRule.cs" />
+    <Compile Include="Engine\ValidationRules\ValidationAttribute.cs" />
+    <Compile Include="Engine\ValidationWarningMessage.cs" />
     <Compile Include="Environment\IEnvironment.cs" />
     <Compile Include="Environment\IRealm.cs" />
     <Compile Include="Environment\IRoom.cs" />

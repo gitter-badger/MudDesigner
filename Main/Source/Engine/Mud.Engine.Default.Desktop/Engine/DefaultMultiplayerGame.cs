@@ -73,7 +73,7 @@ namespace Mud.Engine.DefaultDesktop.Engine
         /// <summary>
         /// Gets or Sets the current World for the game. Contains all of the Realms, Zones and Rooms.
         /// </summary>
-        public ObservableCollection<IWorld> Worlds { get; set; }
+        public IEnumerable<IWorld> Worlds { get; set; }
 
         public void Initialize()
         {
