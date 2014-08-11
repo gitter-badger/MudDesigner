@@ -41,8 +41,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Apps.Windows.Modules.Pr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Services.ParseDesktop", "Services\Mud.Services.ParseDesktop\Mud.Services.ParseDesktop.csproj", "{904BD3D0-E83B-410C-93F7-B97FA29ABC68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Engine.Core.Portable", "Engine\Mud.Engine.Core.Portable\Mud.Engine.Core.Portable.csproj", "{F27C159B-6412-46DC-8239-F0841C6801DC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Engine.Default.Desktop", "Engine\Mud.Engine.Default.Desktop\Mud.Engine.Default.Desktop.csproj", "{EFCD4F40-A2CB-440B-A1C1-BAD78B784471}"
 EndProject
 Global
@@ -52,7 +50,7 @@ Global
 		Apps\Mud.Apps.Universal\Mud.Apps.Universal.Shared\Mud.Apps.Universal.Shared.projitems*{f88c8ce0-782a-4838-a239-3577aa302ca1}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 15
+		SccNumberOfProjects = 14
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs03
 		SccLocalPath0 = .
@@ -104,14 +102,10 @@ Global
 		SccProjectTopLevelParentUniqueName12 = MudEngine.sln
 		SccProjectName12 = Services/Mud.Services.ParseDesktop
 		SccLocalPath12 = Services\\Mud.Services.ParseDesktop
-		SccProjectUniqueName13 = Engine\\Mud.Engine.Core.Portable\\Mud.Engine.Core.Portable.csproj
+		SccProjectUniqueName13 = Engine\\Mud.Engine.Default.Desktop\\Mud.Engine.Default.Desktop.csproj
 		SccProjectTopLevelParentUniqueName13 = MudEngine.sln
-		SccProjectName13 = Engine/Mud.Engine.Core.Portable
-		SccLocalPath13 = Engine\\Mud.Engine.Core.Portable
-		SccProjectUniqueName14 = Engine\\Mud.Engine.Default.Desktop\\Mud.Engine.Default.Desktop.csproj
-		SccProjectTopLevelParentUniqueName14 = MudEngine.sln
-		SccProjectName14 = Engine/Mud.Engine.Default.Desktop
-		SccLocalPath14 = Engine\\Mud.Engine.Default.Desktop
+		SccProjectName13 = Engine/Mud.Engine.Default.Desktop
+		SccLocalPath13 = Engine\\Mud.Engine.Default.Desktop
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -294,20 +288,6 @@ Global
 		{904BD3D0-E83B-410C-93F7-B97FA29ABC68}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{904BD3D0-E83B-410C-93F7-B97FA29ABC68}.Release|x64.ActiveCfg = Release|Any CPU
 		{904BD3D0-E83B-410C-93F7-B97FA29ABC68}.Release|x86.ActiveCfg = Release|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Release|ARM.ActiveCfg = Release|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Release|x64.ActiveCfg = Release|Any CPU
-		{F27C159B-6412-46DC-8239-F0841C6801DC}.Release|x86.ActiveCfg = Release|Any CPU
 		{EFCD4F40-A2CB-440B-A1C1-BAD78B784471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EFCD4F40-A2CB-440B-A1C1-BAD78B784471}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFCD4F40-A2CB-440B-A1C1-BAD78B784471}.Debug|ARM.ActiveCfg = Debug|Any CPU
@@ -341,7 +321,6 @@ Global
 		{854E29B7-5AAD-4A0C-A226-936693155605} = {237F5CBB-4EFD-4150-8AD2-99B438AC3A61}
 		{2158886E-73A6-448B-BC2C-DE1E8D9B2017} = {237F5CBB-4EFD-4150-8AD2-99B438AC3A61}
 		{904BD3D0-E83B-410C-93F7-B97FA29ABC68} = {3AB818F4-9336-486A-8F58-E58F4C16FF1C}
-		{F27C159B-6412-46DC-8239-F0841C6801DC} = {91D32ADD-0DC6-4E37-832D-CA6B9C3D7E95}
 		{EFCD4F40-A2CB-440B-A1C1-BAD78B784471} = {91D32ADD-0DC6-4E37-832D-CA6B9C3D7E95}
 	EndGlobalSection
 EndGlobal
