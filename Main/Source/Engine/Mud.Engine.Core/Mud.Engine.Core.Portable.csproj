@@ -13,7 +13,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile344</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile24</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -39,9 +39,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Engine\IGame.cs" />
+    <Compile Include="Environment\IEnvironment.cs" />
+    <Compile Include="Environment\IRealm.cs" />
+    <Compile Include="Environment\IRoom.cs" />
+    <Compile Include="Environment\ITimeOfDayState.cs" />
+    <Compile Include="Environment\IWeatherState.cs" />
     <Compile Include="Environment\IWorld.cs" />
+    <Compile Include="Environment\IZone.cs" />
     <Compile Include="Mob\IMob.cs" />
     <Compile Include="Mob\IPlayer.cs" />
+    <Compile Include="Networking\IConnectionContext.cs" />
+    <Compile Include="Networking\IServer.cs" />
+    <Compile Include="Networking\IServerPlayer.cs" />
     <Compile Include="Networking\ServerStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

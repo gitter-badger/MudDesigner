@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A5BD79FF-5556-47E8-92E1-E12EC2B7DE27}</ProjectGuid>
+    <ProjectGuid>{EFCD4F40-A2CB-440B-A1C1-BAD78B784471}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mud.Engine.Core.Networking</RootNamespace>
-    <AssemblyName>Mud.Engine.Networking.Desktop</AssemblyName>
+    <RootNamespace>Mud.Engine.DefaultDesktop</RootNamespace>
+    <AssemblyName>Mud.Engine.DefaultDesktop</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
@@ -43,12 +43,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\DefaultMultiplayerGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Repositories\Mud.Repositories.Shared\Mud.Repositories.Shared.csproj">
+      <Project>{1e50f1a9-b51a-4084-9293-0dba1a14c92c}</Project>
+      <Name>Mud.Repositories.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Mud.Engine.Core\Mud.Engine.Core.Portable.csproj">
       <Project>{f27c159b-6412-46dc-8239-f0841c6801dc}</Project>
       <Name>Mud.Engine.Core.Portable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mud.Engine.Networking.Desktop\Mud.Engine.Networking.Desktop.csproj">
+      <Project>{a5bd79ff-5556-47e8-92e1-e12ec2b7de27}</Project>
+      <Name>Mud.Engine.Networking.Desktop</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

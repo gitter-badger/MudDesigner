@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Sockets;
 using System.Text;
 
 namespace Mud.Engine.Core.Networking
@@ -22,7 +21,7 @@ namespace Mud.Engine.Core.Networking
         /// <summary>
         /// Gets or sets the connection.
         /// </summary>
-        Socket Connection { get; set; }
+        IConnectionContext Connection { get; set; }
 
         /// <summary>
         /// Gets the buffer.
@@ -47,9 +46,9 @@ namespace Mud.Engine.Core.Networking
         /// <summary>
         /// Connects the user via the specified socket.
         /// </summary>
-        /// <param name="socket">The socket.</param>
+        /// <param name="connectionContext">The connection context.</param>
         /// <param name="player">The player.</param>
-        void Connect(Socket socket, IPlayer player);
+        void Connect(IConnectionContext connectionContext, IPlayer player);
 
         /// <summary>
         /// Receives the data.
