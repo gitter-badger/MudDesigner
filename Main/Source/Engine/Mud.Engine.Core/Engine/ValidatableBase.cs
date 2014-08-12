@@ -261,21 +261,6 @@ namespace Mud.Engine.Core.Engine
             }
 
             this.OnValidationChanged(new ValidationChangedEventArgs(propertyName, this.validationMessages[propertyName]));
-
-            IMessage result = this.ValidateProperty(
-                () =>
-                {
-                    if (this.validationMessages == null)
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                },
-            new ErrorMessage("Validation collection must not be null."),
-            "ValidationMessages");
         }
 
         /// <summary>
