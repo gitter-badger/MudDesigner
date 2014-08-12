@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mud.Engine.Core.Engine.ValidationRules;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -27,7 +28,7 @@ namespace Mud.Engine.Core.Engine
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="property">The property this validation was performed against.</param>
-        void RemoveValidationMessage(string message, string property = "");
+        void RemoveValidationMessage(IMessage message, string property = "");
 
         /// <summary>
         /// Removes all of the validation messages associated to the supplied property from the ValidationMessages collection.
@@ -50,7 +51,7 @@ namespace Mud.Engine.Core.Engine
         /// <typeparam name="T">A Type implementing IValidationMessage</typeparam>
         /// <param name="property">The property this validation was performed against.</param>
         /// <returns></returns>
-        bool HasValidationMessageType<T>(string property = "") where T : IMessage, new();
+        bool HasValidationMessages<T>(string property = "") where T : IMessage, new();
 
         /// <summary>
         /// Determines whether the object has any validation message matching the type specified for the the given property.
@@ -61,7 +62,7 @@ namespace Mud.Engine.Core.Engine
         /// <returns>
         /// Returns true if this instance's ValidationMessages collection contains the Type specified.
         /// </returns>
-        bool HasValidationMessageType(Type messageType, string property = "");
+        bool HasValidationMessages(Type messageType, string property = "");
 
         /// <summary>
         /// Gets the validation messages for a given property.
@@ -75,14 +76,19 @@ namespace Mud.Engine.Core.Engine
         /// </summary>
         /// <returns>Returns a key-value dictionary. The key represents the property and the value represents a collection of validation messages.</returns>
         Dictionary<string, IEnumerable<IMessage>> GetValidationMessages();
+        
+        void PerformValidation(IValidationRule rule, string property, IValidatable validationProxy = null);
 
         /// <summary>
         /// Validates the specified property.
         /// </summary>
         /// <param name="validationDelegate">The validation delegate.</param>
         /// <param name="failureMessage">The failure message.</param>
-        /// <param name="property">The property this validation was performed against.</param>
-        /// <returns>Returns a validation message if the validation failed. Otherwise, null is returned.</returns>
-        IMessage ValidateProperty(Func<string, IMessage> validationDelegate, string failureMessage, string propertyName = "");
+        /// <param name="propertyName">Name of the property.</param>
+        /// <param name="validationProxy">The validation proxy.</param>
+        /// <returns>
+        /// Returns a validation message if the validation failed. Otherwise, null is returned.
+        /// </returns>
+        IMessage ValidateProperty(Func<bool> validationDelegate, IMessage failureMessage, string propertyName = "", IValidatable validationProxy = null);
     }
 }
