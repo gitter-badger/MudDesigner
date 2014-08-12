@@ -86,7 +86,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
             }
             else
             {
-                var numberGreaterThanRule = new ValidateNumberIsGreaterThanAtribute();
+                var numberGreaterThanRule = new ValidateNumberIsGreaterThanAttribute();
                 numberGreaterThanRule.GreaterThanValue = "0";
                 PropertyInfo property = this.GetAlternatePropertyInfo(sender, ValidateIfMemberValueIsValid);
                 IMessage validationMessage = numberGreaterThanRule.Validate(property, sender);

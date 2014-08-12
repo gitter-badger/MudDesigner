@@ -49,13 +49,13 @@
     <Compile Include="Engine\ValidationRules\IValidationRule.cs" />
     <Compile Include="Engine\ValidationRules\ValidateNumberHasMaximumValueAttribute.cs" />
     <Compile Include="Engine\ValidationRules\ValidateNumberHasMinimumValueAttribute.cs" />
-    <Compile Include="Engine\ValidationRules\ValidateNumberInRangeAtribute.cs" />
-    <Compile Include="Engine\ValidationRules\ValidateNumberIsGreaterThanAtribute.cs" />
-    <Compile Include="Engine\ValidationRules\ValidateNumberIsLessThanAtribute.cs" />
+    <Compile Include="Engine\ValidationRules\ValidateNumberInRangeAttribute.cs" />
+    <Compile Include="Engine\ValidationRules\ValidateNumberIsGreaterThanAttribute.cs" />
+    <Compile Include="Engine\ValidationRules\ValidateNumberIsLessThanAttribute.cs" />
     <Compile Include="Engine\ValidationRules\ValidateStringIsGreaterThanAttribute.cs" />
     <Compile Include="Engine\ValidationRules\ValidateStringIsLessThanAttribute.cs" />
     <Compile Include="Engine\ValidationRules\ValidateValueIsNotNullAttribute.cs" />
-    <Compile Include="Engine\ValidationRules\ValidateWithCustomHandleAttribute.cs" />
+    <Compile Include="Engine\ValidationRules\ValidateWithCustomHandlerAttribute.cs" />
     <Compile Include="Engine\ValidationRules\ValidationAttribute.cs" />
     <Compile Include="Engine\ValidationRules\ValidationCustomHandlerDelegate.cs" />
     <Compile Include="Engine\ValidationRules\ValidationNumberDataTypes.cs" />

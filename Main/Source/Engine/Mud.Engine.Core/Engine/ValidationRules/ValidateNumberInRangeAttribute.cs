@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Mud.Engine.Core.Engine.ValidationRules
 {
-    public class ValidateNumberInRangeAtribute : ValidationAttribute
+    public class ValidateNumberInRangeAttribute : ValidationAttribute
     {
         /// <summary>
         /// Gets or sets the maximum value.

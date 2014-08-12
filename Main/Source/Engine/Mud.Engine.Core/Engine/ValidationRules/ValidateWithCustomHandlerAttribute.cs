@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Mud.Engine.Core.Engine.ValidationRules
 {
-    public class ValidateWithCustomHandleAttribute : ValidationAttribute
+    public class ValidateWithCustomHandlerAttribute : ValidationAttribute
     {
         /// <summary>
         /// Gets or sets the name of the delegate.
