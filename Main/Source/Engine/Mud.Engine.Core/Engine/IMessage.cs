@@ -3,7 +3,7 @@
     /// <summary>
     /// Provides a contract for different message types to be stored during validation
     /// </summary>
-    public interface IValidationMessage
+    public interface IMessage
     {
         /// <summary>
         /// Gets the message.

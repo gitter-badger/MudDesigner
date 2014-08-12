@@ -36,14 +36,14 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <returns>
         /// Returns a validation message if validation failed. Otherwise null is returned to indicate a passing validation.
         /// </returns>
-        public override IValidationMessage Validate(PropertyInfo property, IValidatable sender)
+        public override IMessage Validate(PropertyInfo property, IValidatable sender)
         {
             if (!this.CanValidate(sender))
             {
                 return null;
             }
 
-            var validationMessage = Activator.CreateInstance(this.ValidationMessageType, this.FailureMessage) as IValidationMessage;
+            var validationMessage = Activator.CreateInstance(this.ValidationMessageType, this.FailureMessage) as IMessage;
             var value = property.GetValue(sender, null);
 
             // Check if we need to compare against another property.

@@ -14,7 +14,7 @@ namespace Mud.Engine.Core.Engine
         /// <summary>
         /// The ValidationMessages backing field.
         /// </summary>
-        private Dictionary<string, ICollection<IValidationMessage>> validationMessages;
+        private Dictionary<string, ICollection<IMessage>> validationMessages;
 
         private readonly Type storageContainer;
 
@@ -23,10 +23,10 @@ namespace Mud.Engine.Core.Engine
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ValidatableBase(ICollection<IValidationMessage> validationStorageContainer)
+        public ValidatableBase(ICollection<IMessage> validationStorageContainer)
         {
             this.storageContainer = validationStorageContainer.GetType();
-            this.validationMessages = new Dictionary<string, ICollection<IValidationMessage>>();
+            this.validationMessages = new Dictionary<string, ICollection<IMessage>>();
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Mud.Engine.Core.Engine
         /// <value>
         /// The validation messages.
         /// </value>
-        public Dictionary<string, ICollection<IValidationMessage>> ValidationMessages
+        public Dictionary<string, ICollection<IMessage>> ValidationMessages
         {
             get
             {
@@ -59,9 +59,47 @@ namespace Mud.Engine.Core.Engine
             {
                 if (!this.ValidationMessages.ContainsKey(property))
                 {
-                    this.ValidationMessages[property] = Activator.CreateInstance(this.storageContainer) as ICollection<IValidationMessage>;
+                    this.ValidationMessages[property] = Activator.CreateInstance(this.storageContainer) as ICollection<IMessage>;
                 }
             }
+        }
+
+        /// <summary>
+        /// Determines whether the object has any validation message matching the type specified for the the given property.
+        /// If no property is specified, then the method will check all properties and return true if the instance has any validation messages of given Type
+        /// </summary>
+        /// <param name="messageType">Type of the message.</param>
+        /// <param name="property">The property this validation was performed against.</param>
+        /// <returns>
+        /// Returns true if this instance's ValidationMessages collection contains the Type specified.
+        /// </returns>
+        public bool HasValidationMessageType(Type messageType, string property = "")
+        {
+            if (string.IsNullOrEmpty(property) || !this.validationMessages.ContainsKey(property))
+            {
+                return this.validationMessages.Values.Any(collection => collection.Any(item => item.GetType() == messageType));
+            }
+
+            return this.validationMessages.ContainsKey(property) &&
+                this.validationMessages[property].Any(collection => collection.GetType() == messageType);
+        }
+
+        /// <summary>
+        /// Determines whether the specified property contains any validation messages.
+        /// If no property is specified, then the method will check all properties and return true if the instance has any validation messages, regardless of type.
+        /// </summary>
+        /// <param name="property">The property.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">You must specify a property name when invoking HasValidationMessages.</exception>
+        public bool HasValidationMessages(string property = "")
+        {
+            if (string.IsNullOrEmpty(property) || !this.validationMessages.ContainsKey(property))
+            {
+                return this.validationMessages.Values.Any(collection => collection.Any());
+            }
+
+            return this.validationMessages.ContainsKey(property) &&
+                this.validationMessages[property].Any();
         }
 
         /// <summary>
@@ -70,7 +108,7 @@ namespace Mud.Engine.Core.Engine
         /// <typeparam name="T">A Type implementing IValidationMessage</typeparam>
         /// <param name="property">The property this validation was performed against.</param>
         /// <returns></returns>
-        public bool HasValidationMessageType<T>(string property = "") where T : IValidationMessage, new()
+        public bool HasValidationMessageType<T>(string property = "") where T : IMessage, new()
         {
             if (string.IsNullOrEmpty(property))
             {
@@ -82,11 +120,49 @@ namespace Mud.Engine.Core.Engine
         }
 
         /// <summary>
+        /// Gets the validation messages for a given property.
+        /// </summary>
+        /// <param name="property">The property.</param>
+        /// <returns>
+        /// Returns a collection of validation messages for the given property.
+        /// </returns>
+        public IEnumerable<IMessage> GetValidationMessages(string property)
+        {
+            if (this.validationMessages.ContainsKey(property))
+            {
+                return this.validationMessages[property].ToArray();
+            }
+
+            // If no validation messages exist, return an empty collection.
+            return new Collection<IMessage>();
+        }
+
+        /// <summary>
+        /// Gets the validation messages for all of the properties..
+        /// </summary>
+        /// <returns>
+        /// Returns a key-value dictionary. The key represents the property and the value represents a collection of validation messages.
+        /// </returns>
+        public Dictionary<string, IEnumerable<IMessage>> GetValidationMessages()
+        {
+            var messages = new Dictionary<string, IEnumerable<IMessage>>();
+
+            // We have to iterate over the collection in order to conver the messages collection
+            // from a ICollection type to an IEnumerable type.
+            foreach (KeyValuePair<string, ICollection<IMessage>> pair in this.validationMessages)
+            {
+                messages.Add(pair.Key, pair.Value);
+            }
+
+            return messages;
+        }
+
+        /// <summary>
         /// Adds the supplied validation message to the ValidationMessages collection.
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="property">The property this validation was performed against.</param>
-        public void AddValidationMessage(IValidationMessage message, string property = "")
+        public void AddValidationMessage(IMessage message, string property = "")
         {
             if (string.IsNullOrEmpty(property))
             {
@@ -96,7 +172,7 @@ namespace Mud.Engine.Core.Engine
             // If the key does not exist, then we create one.
             if (!this.validationMessages.ContainsKey(property))
             {
-                this.validationMessages[property] = Activator.CreateInstance(this.storageContainer) as ICollection<IValidationMessage>;
+                this.validationMessages[property] = Activator.CreateInstance(this.storageContainer) as ICollection<IMessage>;
             }
 
             if (this.validationMessages[property].Any(msg => msg.Message.Equals(message.Message) || msg == message))
@@ -169,9 +245,9 @@ namespace Mud.Engine.Core.Engine
         /// <returns>
         /// Returns a validation message if the validation failed. Otherwise, null is returned.
         /// </returns>
-        public IValidationMessage ValidateProperty(Func<string, IValidationMessage> validationDelegate, string failureMessage, string propertyName = "")
+        public IMessage ValidateProperty(Func<string, IMessage> validationDelegate, string failureMessage, string propertyName = "")
         {
-            IValidationMessage result = validationDelegate(failureMessage);
+            IMessage result = validationDelegate(failureMessage);
             if (result != null)
             {
                 this.AddValidationMessage(result, propertyName);

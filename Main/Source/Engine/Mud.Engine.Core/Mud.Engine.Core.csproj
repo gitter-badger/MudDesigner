@@ -39,11 +39,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Engine\AttributeValidationBase.cs" />
+    <Compile Include="Engine\DefaultGame.cs" />
     <Compile Include="Engine\IGame.cs" />
+    <Compile Include="Engine\ILogger.cs" />
     <Compile Include="Engine\IValidatable.cs" />
-    <Compile Include="Engine\IValidationMessage.cs" />
+    <Compile Include="Engine\IMessage.cs" />
     <Compile Include="Engine\ValidatableBase.cs" />
-    <Compile Include="Engine\ValidationErrorMessage.cs" />
+    <Compile Include="Engine\ErrorMessage.cs" />
+    <Compile Include="Engine\ValidationChangedEventArgs.cs" />
     <Compile Include="Engine\ValidationRules\IValidationRule.cs" />
     <Compile Include="Engine\ValidationRules\ValidateNumberHasMaximumValueAttribute.cs" />
     <Compile Include="Engine\ValidationRules\ValidateNumberHasMinimumValueAttribute.cs" />
@@ -57,7 +60,7 @@
     <Compile Include="Engine\ValidationRules\ValidationAttribute.cs" />
     <Compile Include="Engine\ValidationRules\ValidationCustomHandlerDelegate.cs" />
     <Compile Include="Engine\ValidationRules\ValidationNumberDataTypes.cs" />
-    <Compile Include="Engine\ValidationWarningMessage.cs" />
+    <Compile Include="Engine\WarningMessage.cs" />
     <Compile Include="Environment\IEnvironment.cs" />
     <Compile Include="Environment\IRealm.cs" />
     <Compile Include="Environment\IRoom.cs" />
@@ -72,11 +75,6 @@
     <Compile Include="Networking\IServerPlayer.cs" />
     <Compile Include="Networking\ServerStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.Practices.Prism.PubSubEvents">
-      <HintPath>..\..\..\Resources\Prism\Microsoft.Practices.Prism.PubSubEvents.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

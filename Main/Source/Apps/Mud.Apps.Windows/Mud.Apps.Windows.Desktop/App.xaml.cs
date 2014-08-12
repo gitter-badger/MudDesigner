@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Microsoft.Practices.Prism.PubSubEvents;
+using Microsoft.Practices.Unity;
+using Mud.Engine.Core.Engine;
+using Mud.Engine.Default.Desktop.Engine;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -16,6 +20,8 @@ namespace Mud.Apps.WinDesktop
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            var t = new DefaultMultiplayerGame(null, null);
 
             var bootstrapper = new Bootstrapper();
             bootstrapper.Run();

@@ -40,7 +40,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <returns>
         /// Returns a validation message if validation failed. Otherwise null is returned to indicate a passing validation.
         /// </returns>
-        public override IValidationMessage Validate(System.Reflection.PropertyInfo property, IValidatable sender)
+        public override IMessage Validate(System.Reflection.PropertyInfo property, IValidatable sender)
         {
             if (!this.CanValidate(sender))
             {
@@ -48,7 +48,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
             }
 
             var validationMessage =
-                Activator.CreateInstance(this.ValidationMessageType, this.FailureMessage) as IValidationMessage;
+                Activator.CreateInstance(this.ValidationMessageType, this.FailureMessage) as IMessage;
 
             // Get the property value.
             var propertyValue = property.GetValue(sender, null);
@@ -174,7 +174,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
         /// <returns></returns>
-        private IValidationMessage ValidateMinimumShortValue(object propertyValue, object alternateProperty, IValidationMessage validationMessage)
+        private IMessage ValidateMinimumShortValue(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             short convertedValueFromProperty = 0;
             short convertedComparisonValue = 0;
@@ -207,7 +207,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
         /// <returns></returns>
-        private IValidationMessage ValidateMinimumIntegerValue(object propertyValue, object alternateProperty, IValidationMessage validationMessage)
+        private IMessage ValidateMinimumIntegerValue(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             int convertedValueFromProperty = 0;
             int convertedComparisonValue = 0;
@@ -240,7 +240,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
         /// <returns></returns>
-        private IValidationMessage ValidateMinimumLongValue(object propertyValue, object alternateProperty, IValidationMessage validationMessage)
+        private IMessage ValidateMinimumLongValue(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             long convertedValueFromProperty = 0;
             long convertedComparisonValue = 0;
@@ -273,7 +273,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
         /// <returns></returns>
-        private IValidationMessage ValidateMinimumFloatValue(object propertyValue, object alternateProperty, IValidationMessage validationMessage)
+        private IMessage ValidateMinimumFloatValue(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             float convertedValueFromProperty = 0;
             float convertedComparisonValue = 0;
@@ -306,7 +306,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
         /// <returns></returns>
-        private IValidationMessage ValidateMinimumDoubleValue(object propertyValue, object alternateProperty, IValidationMessage validationMessage)
+        private IMessage ValidateMinimumDoubleValue(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             double convertedValueFromProperty = 0;
             double convertedComparisonValue = 0;
@@ -339,7 +339,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
         /// <returns></returns>
-        private IValidationMessage ValidateMinimumDecimalValue(object propertyValue, object alternateProperty, IValidationMessage validationMessage)
+        private IMessage ValidateMinimumDecimalValue(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             decimal convertedValueFromProperty = 0;
             decimal convertedComparisonValue = 0;

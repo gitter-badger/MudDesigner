@@ -15,27 +15,23 @@ namespace Mud.Engine.Core.Engine
     public class AttributeValidationBase : IValidatable
     {
         /// <summary>
-        /// The ValidationMessages backing field.
-        /// </summary>
-        private Dictionary<string, ICollection<IValidationMessage>> validationMessages;
-
-        private readonly Type validationStorageContainer;
-
-        /// <summary>
-        /// The property validation cache
+        /// The property validation reflection cache
         /// </summary>
         private static readonly Dictionary<Type, Dictionary<PropertyInfo, IEnumerable<IValidationRule>>> PropertyValidationCache
             = new Dictionary<Type, Dictionary<PropertyInfo, IEnumerable<IValidationRule>>>();
 
         /// <summary>
+        /// The ValidationMessages backing field.
+        /// </summary>
+        private Dictionary<string, ICollection<IMessage>> validationMessages;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AttributeValidationBase"/> class.
         /// </summary>
         /// <param name="storageContainer">The storage container type to use for validation messages.</param>
-        public AttributeValidationBase(ICollection<IValidationMessage> validationStorageContainer)
+        public AttributeValidationBase()
         {
-            this.validationMessages = new Dictionary<string, ICollection<IValidationMessage>>();
-            this.validationStorageContainer = validationStorageContainer.GetType();
-
+            this.validationMessages = new Dictionary<string, ICollection<IMessage>>();
             this.SetupValidation();
         }
 
@@ -45,24 +41,9 @@ namespace Mud.Engine.Core.Engine
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Gets the validation messages.
+        /// Raised when this instance has its validation state changed.
         /// </summary>
-        /// <value>
-        /// The validation messages.
-        /// </value>
-        public Dictionary<string, ICollection<IValidationMessage>> ValidationMessages
-        {
-            get
-            {
-                return this.validationMessages;
-            }
-
-            private set
-            {
-                this.validationMessages = value;
-                this.OnPropertyChanged();
-            }
-        }
+        public event EventHandler<ValidationChangedEventArgs> ValidationChanged;
 
         /// <summary>
         /// Registers a property so observers can accessing its ValidationMessages, even when zero exist.
@@ -73,9 +54,9 @@ namespace Mud.Engine.Core.Engine
         {
             foreach (string property in propertyName)
             {
-                if (!this.ValidationMessages.ContainsKey(property))
+                if (!this.validationMessages.ContainsKey(property))
                 {
-                    this.ValidationMessages[property] = Activator.CreateInstance(this.validationStorageContainer.GetType()) as ICollection<IValidationMessage>;
+                    this.validationMessages[property] = new List<IMessage>();
                 }
             }
         }
@@ -89,15 +70,15 @@ namespace Mud.Engine.Core.Engine
         /// <returns>
         /// Returns true if this instance's ValidationMessages collection contains the Type specified.
         /// </returns>
-        public bool HasValidationMessageType<T>(string property = "") where T : IValidationMessage, new()
+        public bool HasValidationMessageType<T>(string property = "") where T : IMessage, new()
         {
-            if (string.IsNullOrEmpty(property) || !this.ValidationMessages.ContainsKey(property))
+            if (string.IsNullOrEmpty(property) || !this.validationMessages.ContainsKey(property))
             {
-                return this.ValidationMessages.Values.Any(collection => collection.Any(item => item is T));
+                return this.validationMessages.Values.Any(collection => collection.Any(item => item is T));
             }
 
-            return this.ValidationMessages.ContainsKey(property) &&
-                this.ValidationMessages[property].Any(collection => collection is T);
+            return this.validationMessages.ContainsKey(property) &&
+                this.validationMessages[property].Any(collection => collection is T);
         }
 
         /// <summary>
@@ -111,13 +92,13 @@ namespace Mud.Engine.Core.Engine
         /// </returns>
         public bool HasValidationMessageType(Type messageType, string property = "")
         {
-            if (string.IsNullOrEmpty(property) || !this.ValidationMessages.ContainsKey(property))
+            if (string.IsNullOrEmpty(property) || !this.validationMessages.ContainsKey(property))
             {
-                return this.ValidationMessages.Values.Any(collection => collection.Any(item => item.GetType() == messageType));
+                return this.validationMessages.Values.Any(collection => collection.Any(item => item.GetType() == messageType));
             }
 
-            return this.ValidationMessages.ContainsKey(property) &&
-                this.ValidationMessages[property].Any(collection => collection.GetType() == messageType);
+            return this.validationMessages.ContainsKey(property) &&
+                this.validationMessages[property].Any(collection => collection.GetType() == messageType);
         }
 
         /// <summary>
@@ -129,13 +110,51 @@ namespace Mud.Engine.Core.Engine
         /// <exception cref="System.ArgumentOutOfRangeException">You must specify a property name when invoking HasValidationMessages.</exception>
         public bool HasValidationMessages(string property = "")
         {
-            if (string.IsNullOrEmpty(property) || !this.ValidationMessages.ContainsKey(property))
+            if (string.IsNullOrEmpty(property) || !this.validationMessages.ContainsKey(property))
             {
-                return this.ValidationMessages.Values.Any(collection => collection.Any());
+                return this.validationMessages.Values.Any(collection => collection.Any());
             }
 
-            return this.ValidationMessages.ContainsKey(property) &&
-                this.ValidationMessages[property].Any();
+            return this.validationMessages.ContainsKey(property) &&
+                this.validationMessages[property].Any();
+        }
+
+        /// <summary>
+        /// Gets the validation messages for a given property.
+        /// </summary>
+        /// <param name="property">The property.</param>
+        /// <returns>
+        /// Returns a collection of validation messages for the given property.
+        /// </returns>
+        public IEnumerable<IMessage> GetValidationMessages(string property)
+        {
+            if (this.validationMessages.ContainsKey(property))
+            {
+                return this.validationMessages[property].ToArray();
+            }
+
+            // If no validation messages exist, return an empty collection.
+            return new Collection<IMessage>();
+        }
+
+        /// <summary>
+        /// Gets the validation messages for all of the properties..
+        /// </summary>
+        /// <returns>
+        /// Returns a key-value dictionary. The key represents the property and the value represents a collection of validation messages.
+        /// </returns>
+        public Dictionary<string, IEnumerable<IMessage>> GetValidationMessages()
+        {
+            var messages = new Dictionary<string, IEnumerable<IMessage>>();
+
+            // We have to iterate over the collection in order to conver the messages collection
+            // from a ICollection type to an IEnumerable type.
+            foreach (KeyValuePair<string, ICollection<IMessage>> pair in this.validationMessages)
+            {
+                messages.Add(pair.Key, pair.Value);
+            }
+
+            return messages;
         }
 
         /// <summary>
@@ -143,7 +162,7 @@ namespace Mud.Engine.Core.Engine
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="property">The property this validation was performed against.</param>
-        public void AddValidationMessage(IValidationMessage message, string property)
+        public void AddValidationMessage(IMessage message, string property)
         {
             if (string.IsNullOrEmpty(property))
             {
@@ -151,17 +170,17 @@ namespace Mud.Engine.Core.Engine
             }
 
             // If the key does not exist, then we create one.
-            if (!this.ValidationMessages.ContainsKey(property))
+            if (!this.validationMessages.ContainsKey(property))
             {
-                this.ValidationMessages[property] = Activator.CreateInstance(this.validationStorageContainer.GetType()) as ICollection<IValidationMessage>;
+                this.validationMessages[property] = new List<IMessage>();
             }
 
-            if (this.ValidationMessages[property].Any(msg => msg.Message.Equals(message.Message) || msg == message))
+            if (this.validationMessages[property].Any(msg => msg.Message.Equals(message.Message) || msg == message))
             {
                 return;
             }
 
-            this.ValidationMessages[property].Add(message);
+            this.validationMessages[property].Add(message);
         }
 
         /// <summary>
@@ -169,9 +188,12 @@ namespace Mud.Engine.Core.Engine
         /// </summary>
         public void RemoveValidationMessages()
         {
-            foreach (KeyValuePair<string, ICollection<IValidationMessage>> pair in this.ValidationMessages)
+            foreach (KeyValuePair<string, ICollection<IMessage>> pair in this.validationMessages)
             {
                 pair.Value.Clear();
+
+                // Publish our new validation collection for this property.
+                this.OnValidationChanged(new ValidationChangedEventArgs(pair.Key, this.validationMessages[pair.Key]));
             }
         }
 
@@ -197,6 +219,8 @@ namespace Mud.Engine.Core.Engine
                 // Remove the error from the key's collection.
                 this.validationMessages[property].Remove(
                     this.validationMessages[property].FirstOrDefault(msg => msg.Message.Equals(message)));
+
+                this.OnValidationChanged(new ValidationChangedEventArgs(property, this.validationMessages[property]));
             }
         }
 
@@ -206,10 +230,11 @@ namespace Mud.Engine.Core.Engine
         /// <param name="property">The property this validation was performed against.</param>
         public void RemoveValidationMessages(string property)
         {
-            if (!string.IsNullOrEmpty(property) && this.ValidationMessages.ContainsKey(property))
+            if (!string.IsNullOrEmpty(property) && this.validationMessages.ContainsKey(property))
             {
                 // Remove all validation messages for the property if a message isn't specified.
-                this.ValidationMessages[property].Clear();
+                this.validationMessages[property].Clear();
+                this.OnValidationChanged(new ValidationChangedEventArgs(property, this.validationMessages[property]));
             }
         }
 
@@ -222,12 +247,15 @@ namespace Mud.Engine.Core.Engine
             this.RemoveValidationMessages();
             Dictionary<PropertyInfo, IEnumerable<IValidationRule>> cache = PropertyValidationCache[this.GetType()];
 
-            foreach(KeyValuePair<PropertyInfo, IEnumerable<IValidationRule>> pair in cache)
+            foreach (KeyValuePair<PropertyInfo, IEnumerable<IValidationRule>> pair in cache)
             {
-                foreach(IValidationRule rule in pair.Value)
+                foreach (IValidationRule rule in pair.Value)
                 {
                     this.PerformValidation(rule, pair.Key, validationProxy);
                 }
+
+                // Publish our new validation collection for this property.
+                this.OnValidationChanged(new ValidationChangedEventArgs(pair.Key.Name, this.validationMessages[pair.Key.Name]));
             }
 
             this.OnPropertyChanged(string.Empty);
@@ -241,6 +269,12 @@ namespace Mud.Engine.Core.Engine
         /// <param name="validationProxy">The validation proxy.</param>
         public void ValidateProperty(string propertyName = "", IValidatable validationProxy = null)
         {
+            // TODO: Need to provide proxy validation support. Currently the AttributeValidationBase validation methods are not part of IValidatable
+            if (validationProxy != null)
+            {
+                //validationProxy.ValidateProperty(propertyName, null);
+            }
+
             // If no property is provided, we assume we are to validate everything.
             if (string.IsNullOrEmpty(propertyName))
             {
@@ -252,19 +286,15 @@ namespace Mud.Engine.Core.Engine
             var cache = AttributeValidationBase.PropertyValidationCache[this.GetType()];
             PropertyInfo property = cache.Keys.FirstOrDefault(p => p.Name.Equals(propertyName));
 
-            if (property == null)
-            {
-                return;
-            }
-
-            foreach(IValidationRule rule in cache[property])
+            foreach (IValidationRule rule in cache[property])
             {
                 this.PerformValidation(rule, property, validationProxy);
             }
 
+            this.OnValidationChanged(new ValidationChangedEventArgs(propertyName, this.validationMessages[propertyName].ToList()));
             this.OnPropertyChanged(string.Empty);
-        }        
-        
+        }
+
         /// <summary>
         /// Validates the specified property.
         /// </summary>
@@ -274,9 +304,9 @@ namespace Mud.Engine.Core.Engine
         /// <returns>
         /// Returns a validation message if the validation failed. Otherwise, null is returned.
         /// </returns>
-        public IValidationMessage ValidateProperty(Func<string, IValidationMessage> validationDelegate, string failureMessage, string propertyName = "")
+        public IMessage ValidateProperty(Func<string, IMessage> validationDelegate, string failureMessage, string propertyName = "")
         {
-            IValidationMessage result = validationDelegate(failureMessage);
+            IMessage result = validationDelegate(failureMessage);
             if (result != null)
             {
                 this.AddValidationMessage(result, propertyName);
@@ -318,7 +348,7 @@ namespace Mud.Engine.Core.Engine
                 var proxy = validationProxy as AttributeValidationBase;
                 proxy.PerformValidation(rule, propertyInfo);
             }
-            IValidationMessage result = rule.Validate(propertyInfo, this);
+            IMessage result = rule.Validate(propertyInfo, this);
             if (result != null)
             {
                 this.AddValidationMessage(result, propertyInfo.Name);
@@ -381,6 +411,22 @@ namespace Mud.Engine.Core.Engine
         }
 
         /// <summary>
+        /// Raises the <see cref="E:ValidationChanged" /> event.
+        /// </summary>
+        /// <param name="args">The <see cref="ValidationChangedEventArgs"/> instance containing the event data.</param>
+        public virtual void OnValidationChanged(ValidationChangedEventArgs args)
+        {
+            EventHandler<ValidationChangedEventArgs> handler = this.ValidationChanged;
+
+            if (handler == null)
+            {
+                return;
+            }
+
+            handler(this, args);
+        }
+
+        /// <summary>
         /// Executes the validation rule supplied for the specified property.
         /// </summary>
         /// <param name="rule">The rule.</param>
@@ -394,7 +440,7 @@ namespace Mud.Engine.Core.Engine
                 proxy.PerformValidation(rule, property);
             }
 
-            IValidationMessage result = null;
+            IMessage result = null;
             try
             {
                 result = rule.Validate(property, this);
@@ -441,7 +487,7 @@ namespace Mud.Engine.Core.Engine
             }
 
             // Register each property for this instance once we are done caching.
-            foreach(PropertyInfo property in cache.Keys)
+            foreach (PropertyInfo property in cache.Keys)
             {
                 this.RegisterProperty(property.Name);
             }

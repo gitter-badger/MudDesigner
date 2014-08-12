@@ -1,4 +1,5 @@
-﻿using Mud.Engine.Core.Mob;
+﻿using Mud.Engine.Core.Engine;
+using Mud.Engine.Core.Mob;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,14 @@ namespace Mud.Engine.Core.Networking
 {
     public interface IServer
     {
+        /// <summary>
+        /// Gets the game.
+        /// </summary>
+        /// <value>
+        /// The game.
+        /// </value>
+        IGame Game { get; }
+
         /// <summary>
         /// Gets a collection of current user connections.
         /// </summary>

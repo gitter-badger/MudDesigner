@@ -1,32 +1,32 @@
 ﻿namespace Mud.Engine.Core.Engine
 {
     /// <summary>
-    /// An implementation of IValidationMessage that can be used for error messages
+    /// An implementation of IValidationMessage that can be used for warning messages
     /// </summary>
-    public class ValidationErrorMessage : IValidationMessage
+    public class WarningMessage : IMessage
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ValidationErrorMessage"/> class.
+        /// Initializes a new instance of the <see cref="WarningMessage"/> class.
         /// </summary>
-        public ValidationErrorMessage() : this (string.Empty)
+        public WarningMessage() : this(string.Empty)
         { }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ValidationErrorMessage"/> class.
+        /// Initializes a new instance of the <see cref="WarningMessage"/> class.
         /// </summary>
         /// <param name="message">The message.</param>
-        public ValidationErrorMessage(string message)
+        public WarningMessage(string message)
         {
             this.Message = message;
         }
 
         /// <summary>
-        /// Gets the message.
+        /// Gets or sets the message.
         /// </summary>
         /// <value>
         /// The message.
         /// </value>
-        public string Message { get; private set; }
+        public string Message { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that contains Message for this instance.

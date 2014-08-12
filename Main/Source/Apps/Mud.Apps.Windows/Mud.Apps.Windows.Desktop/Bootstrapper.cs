@@ -11,6 +11,8 @@ using Microsoft.Practices.Prism.Regions;
 using Mud.Apps.Windows.Infrastructure.RegionAdapters;
 using Microsoft.Practices.Prism.Modularity;
 using System.IO;
+using Microsoft.Practices.Prism.PubSubEvents;
+using Mud.Engine.Core.Engine;
 
 namespace Mud.Apps.WinDesktop
 {
@@ -43,6 +45,13 @@ namespace Mud.Apps.WinDesktop
 
             App.Current.MainWindow = (Window)Shell;
             App.Current.MainWindow.Show();
+        }
+
+        protected override void ConfigureContainer()
+        {
+            base.ConfigureContainer();
+
+            this.Container.RegisterType<IEventAggregator>(new ContainerControlledLifetimeManager());
         }
 
         /// <summary>

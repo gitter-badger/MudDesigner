@@ -43,5 +43,10 @@ namespace Mud.Engine.Core.Environment
         /// The time of day states.
         /// </value>
         IEnumerable<ITimeOfDayState> TimeOfDayStates { get; set; }
+
+        /// <summary>
+        /// Initializes this instance. The environment time and states are set up.
+        /// </summary>
+        void Initialize();
     }
 }

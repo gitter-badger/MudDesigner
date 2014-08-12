@@ -1,83 +1,50 @@
 ﻿using Mud.Engine.Core.Engine;
 using Mud.Engine.Core.Environment;
-using System;
+using Mud.Repositories.Shared;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Mud.Engine.Core.Engine.ValidationRules;
 
-namespace Mud.Engine.DefaultDesktop.Engine
+namespace Mud.Engine.Default.Desktop.Engine
 {
     /// <summary>
     /// The default implementation of the IGame interface for the Mud Engine.
     /// </summary>
-    public class DefaultMultiplayerGame : IGame
+    public class DefaultMultiplayerGame : DefaultGame
     {
+        [ValidateValueIsNotNull(FailureMessage = "Name can not be left blank.", ValidationMessageType = typeof(ErrorMessage))]
+        public new string Name { get; set; }
+
         /// <summary>
-        /// Gets a value indicating whether this instance is multiplayer.
+        /// The environment factory
         /// </summary>
-        public bool IsMultiplayer
+        private readonly IEnvironmentFactory environmentFactory;
+
+        public DefaultMultiplayerGame(IEnvironmentFactory environmentFactory, ILogger logger)
+            : base()
         {
-            get
-            {
-                return true;
-            }
+            this.environmentFactory = environmentFactory;
+            this.Logger = logger;
         }
 
         /// <summary>
-        /// Gets if the game (online or offline) is currently running.
+        /// The initialize method is responsible for restoring the world and state.
         /// </summary>
-        public bool IsRunning { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets the name of the game being played.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the description of the game.
-        /// </summary>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Gets or Sets the current version of the game.
-        /// </summary>
-        public Version Version { get; set; }
-
-        /// <summary>
-        /// Gets or Sets the website that users can visit to get information on the game.
-        /// </summary>
-        public string Website { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [hide room names].
-        /// </summary>
-        public bool HideRoomNames { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [enable automatic save].
-        /// </summary>
-        public bool EnableAutoSave { get; set; }
-
-        /// <summary>
-        /// Gets or sets the automatic save frequency.
-        /// </summary>
-        public int AutoSaveFrequency { get; set; }
-
-        /// <summary>
-        /// Gets or sets the last saved.
-        /// </summary>
-        public DateTime LastSaved { get; set; }
-
-        /// <summary>
-        /// Gets or Sets the current World for the game. Contains all of the Realms, Zones and Rooms.
-        /// </summary>
-        public ICollection<IWorld> Worlds { get; set; }
-
-        public void Initialize()
+        public async override void Initialize()
         {
-            Worlds = new System.Collections.ObjectModel.ObservableCollection<IWorld>();
+            // Restore our previously saved worlds.
+            IWorldRepository worldRepository = this.environmentFactory.CreateWorldRepository();
+            IEnumerable<IWorld> result = await worldRepository.GetWorlds();
+
+            foreach (IWorld world in result)
+            {
+                world.Initialize();
+            }
+
+            this.Worlds = new ObservableCollection<IWorld>(result);
+
+            this.IsRunning = this.Worlds != null && this.Worlds.Any();
         }
     }
 }

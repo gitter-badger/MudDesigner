@@ -33,7 +33,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <value>
         /// The enable validation from property boolean.
         /// </value>
-        public string ValidateIfPropertyValueValid { get; set; }
+        public string ValidateIfMemberValueIsValid { get; set; }
 
         /// <summary>
         /// Validates the specified property.
@@ -41,7 +41,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="property">The property that will its value validated.</param>
         /// <param name="sender">The sender who owns the property.</param>
         /// <returns>Returns a validation message if validation failed. Otherwise null is returned to indicate a passing validation.</returns>
-        public abstract IValidationMessage Validate(PropertyInfo property, IValidatable sender);
+        public abstract IMessage Validate(PropertyInfo property, IValidatable sender);
 
         /// <summary>
         /// Determines if the value passed in to it is a valid boolean.
@@ -49,42 +49,53 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="sender">The sender.</param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentException">Can not base validation off of a non-boolean property.</exception>
-        protected bool CanValidate(object sender)
+        protected bool CanValidate(IValidatable sender)
         {
-            if (string.IsNullOrEmpty(this.ValidateIfPropertyValueValid))
+            if (string.IsNullOrEmpty(this.ValidateIfMemberValueIsValid))
             {
                 return true;
             }
 
-            // Try to parse as bool first.
             string valueToParse = string.Empty;
             bool evaluateInverseValue = false;
-            if (this.ValidateIfPropertyValueValid.StartsWith("!"))
+            if (this.ValidateIfMemberValueIsValid.StartsWith("!"))
             {
                 evaluateInverseValue = true;
-                valueToParse = this.ValidateIfPropertyValueValid.Substring(1);
+                valueToParse = this.ValidateIfMemberValueIsValid.Substring(1);
             }
             else
             {
-                valueToParse = this.ValidateIfPropertyValueValid;
+                valueToParse = this.ValidateIfMemberValueIsValid;
             }
-
-            // TODO: Attempt to validate non-bool values, such as 0, empty string and null.
 
             bool result = false;
-            if (!bool.TryParse(this.GetComparisonValue(sender, valueToParse).ToString(), out result))
+            object valueToCompare = this.GetComparisonValue(sender, valueToParse);
+            if (valueToCompare is bool)
             {
-                throw new ArgumentException("Can not base validation off of a non-boolean property.");
+                bool.TryParse(valueToCompare.ToString(), out result);
             }
-
-            if (evaluateInverseValue)
+            else if (valueToCompare is string)
             {
-                return !result;
+                // We can not validate if the string is empty.
+                result = !string.IsNullOrWhiteSpace(valueToCompare.ToString());
+            }
+            else if (valueToCompare == null)
+            {
+                // We can not validate if the object is null.
+                result = false;
             }
             else
             {
-                return result;
+                var numberGreaterThanRule = new ValidateNumberIsGreaterThanAtribute();
+                numberGreaterThanRule.GreaterThanValue = "0";
+                PropertyInfo property = this.GetAlternatePropertyInfo(sender, ValidateIfMemberValueIsValid);
+                IMessage validationMessage = numberGreaterThanRule.Validate(property, sender);
+
+                // if we are greater than 0, then we hav a valid value and can validate.
+                result = validationMessage == null;
             }
+
+            return evaluateInverseValue ? !result : result;
         }
 
         /// <summary>
@@ -134,6 +145,51 @@ namespace Mud.Engine.Core.Engine.ValidationRules
 
                     // Grab the length of this string.
                     return comparisonProperty.GetValue(childSender, null);
+                }
+            }
+
+            return null;
+        }
+
+        protected PropertyInfo GetAlternatePropertyInfo(object sender, string alternateProperty)
+        {
+            if (!string.IsNullOrEmpty(alternateProperty))
+            {
+                string[] pathToProperty = alternateProperty.Split('.');
+                PropertyInfo comparisonProperty = null;
+
+                try
+                {
+                    comparisonProperty = sender.GetType().GetProperty(pathToProperty[0]);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
+                if (pathToProperty.Length == 1)
+                {
+                    return comparisonProperty;
+                }
+                else if (pathToProperty.Length > 1)
+                {
+                    // Walk down the tree to find the final value we are evaluating against.
+                    object childSender = null;
+                    for (int index = 1; index < pathToProperty.Length; index++)
+                    {
+                        try
+                        {
+                            childSender = comparisonProperty.GetValue(sender, null);
+                            comparisonProperty = childSender.GetType().GetProperty(pathToProperty[index]);
+                        }
+                        catch (Exception)
+                        {
+                            throw;
+                        }
+                    }
+
+                    // Grab the length of this string.
+                    return comparisonProperty;
                 }
             }
 

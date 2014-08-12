@@ -24,7 +24,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// Returns a validation message if validation failed. Otherwise null is returned to indicate a passing validation.
         /// </returns>
         /// <exception cref="System.MissingMethodException"></exception>
-        public override IValidationMessage Validate(System.Reflection.PropertyInfo property, IValidatable sender)
+        public override IMessage Validate(System.Reflection.PropertyInfo property, IValidatable sender)
         {
             if (!this.CanValidate(sender))
             {
@@ -32,7 +32,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
             }
 
             // Create an instance of our validation message and return it if there is not a delegate specified.
-            IValidationMessage validationMessage = Activator.CreateInstance(this.ValidationMessageType, this.FailureMessage) as IValidationMessage;
+            IMessage validationMessage = Activator.CreateInstance(this.ValidationMessageType, this.FailureMessage) as IMessage;
             if (string.IsNullOrEmpty(this.DelegateName))
             {
                 return validationMessage;
@@ -61,9 +61,9 @@ namespace Mud.Engine.Core.Engine.ValidationRules
             }
 
             // Return the results of the delegate method.
-            if (result != null && result is IValidationMessage)
+            if (result != null && result is IMessage)
             {
-                return result as IValidationMessage;
+                return result as IMessage;
             }
             else if (result == null)
             {

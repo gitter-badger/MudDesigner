@@ -40,7 +40,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <returns>
         /// Returns a validation message if validation failed. Otherwise null is returned to indicate a passing validation.
         /// </returns>
-        public override IValidationMessage Validate(System.Reflection.PropertyInfo property, IValidatable sender)
+        public override IMessage Validate(System.Reflection.PropertyInfo property, IValidatable sender)
         {
             if (!this.CanValidate(sender))
             {
@@ -48,7 +48,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
             }
 
             var validationMessage =
-                Activator.CreateInstance(this.ValidationMessageType, this.FailureMessage) as IValidationMessage;
+                Activator.CreateInstance(this.ValidationMessageType, this.FailureMessage) as IMessage;
 
             // Get the property value.
             var propertyValue = property.GetValue(sender, null);
@@ -174,7 +174,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
         /// <returns></returns>
-        private IValidationMessage ValidateShortValueIsGreaterThan(object propertyValue, object alternateProperty, IValidationMessage validationMessage)
+        private IMessage ValidateShortValueIsGreaterThan(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             short convertedValueFromProperty = 0;
             short maximumConvertedValue = 0;
@@ -207,7 +207,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
         /// <returns></returns>
-        private IValidationMessage ValidateIntegerValueIsGreaterThan(object propertyValue, object alternateProperty, IValidationMessage validationMessage)
+        private IMessage ValidateIntegerValueIsGreaterThan(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             int convertedValueFromProperty = 0;
             int maximumConvertedValue = 0;
@@ -240,7 +240,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
         /// <returns></returns>
-        private IValidationMessage ValidateLongValueIsGreaterThan(object propertyValue, object alternateProperty, IValidationMessage validationMessage)
+        private IMessage ValidateLongValueIsGreaterThan(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             long convertedValueFromProperty = 0;
             long maximumConvertedValue = 0;
@@ -273,7 +273,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
         /// <returns></returns>
-        private IValidationMessage ValidateFloatValueIsGreaterThan(object propertyValue, object alternateProperty, IValidationMessage validationMessage)
+        private IMessage ValidateFloatValueIsGreaterThan(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             float convertedValueFromProperty = 0;
             float maximumConvertedValue = 0;
@@ -306,7 +306,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
         /// <returns></returns>
-        private IValidationMessage ValidateDoubleValueIsGreaterThan(object propertyValue, object alternateProperty, IValidationMessage validationMessage)
+        private IMessage ValidateDoubleValueIsGreaterThan(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             double convertedValueFromProperty = 0;
             double maximumConvertedValue = 0;
@@ -339,7 +339,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
         /// <returns></returns>
-        private IValidationMessage ValidateDecimalValueIsGreaterThan(object propertyValue, object alternateProperty, IValidationMessage validationMessage)
+        private IMessage ValidateDecimalValueIsGreaterThan(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             decimal convertedValueFromProperty = 0;
             decimal maximumConvertedValue = 0;

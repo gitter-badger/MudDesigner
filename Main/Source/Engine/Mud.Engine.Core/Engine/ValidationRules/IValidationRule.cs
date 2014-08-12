@@ -17,6 +17,6 @@ namespace Mud.Engine.Core.Engine.ValidationRules
 
         string FailureMessage { get; set; }
 
-        IValidationMessage Validate(PropertyInfo property, IValidatable sender);
+        IMessage Validate(PropertyInfo property, IValidatable sender);
     }
 }

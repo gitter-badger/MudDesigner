@@ -56,7 +56,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <returns>
         /// Returns a validation message if validation failed. Otherwise null is returned to indicate a passing validation.
         /// </returns>
-        public override IValidationMessage Validate(System.Reflection.PropertyInfo property, IValidatable sender)
+        public override IMessage Validate(System.Reflection.PropertyInfo property, IValidatable sender)
         {
             if (!this.CanValidate(sender))
             {
@@ -64,7 +64,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
             }
 
             var validationMessage =
-                Activator.CreateInstance(this.ValidationMessageType, this.FailureMessage) as IValidationMessage;
+                Activator.CreateInstance(this.ValidationMessageType, this.FailureMessage) as IMessage;
 
             // Get the property value.
             var propertyValue = property.GetValue(sender, null);
@@ -198,7 +198,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="validationMessage">The validation message.</param>
         /// <returns></returns>
         /// <exception cref="InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
-        private IValidationMessage ValidateShortValueInRange(object propertyValue, object alternateMaxProperty, object alternateMinProperty, IValidationMessage validationMessage)
+        private IMessage ValidateShortValueInRange(object propertyValue, object alternateMaxProperty, object alternateMinProperty, IMessage validationMessage)
         {
             short convertedValueFromProperty = 0;
             short convertedMaximumValue = 0;
@@ -256,7 +256,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="validationMessage">The validation message.</param>
         /// <returns></returns>
         /// <exception cref="InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
-        private IValidationMessage ValidateIntegerInRange(object propertyValue, object alternateMaxProperty, object alternateMinProperty, IValidationMessage validationMessage)
+        private IMessage ValidateIntegerInRange(object propertyValue, object alternateMaxProperty, object alternateMinProperty, IMessage validationMessage)
         {
             int convertedValueFromProperty = 0;
             int convertedMaximumValue = 0;
@@ -314,7 +314,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="validationMessage">The validation message.</param>
         /// <returns></returns>
         /// <exception cref="InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
-        private IValidationMessage ValidateLongInRange(object propertyValue, object alternateMaxProperty, object alternateMinProperty, IValidationMessage validationMessage)
+        private IMessage ValidateLongInRange(object propertyValue, object alternateMaxProperty, object alternateMinProperty, IMessage validationMessage)
         {
             long convertedValueFromProperty = 0;
             long convertedMaximumValue = 0;
@@ -372,7 +372,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="validationMessage">The validation message.</param>
         /// <returns></returns>
         /// <exception cref="InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
-        private IValidationMessage ValidateFloatInRange(object propertyValue, object alternateMaxProperty, object alternateMinProperty, IValidationMessage validationMessage)
+        private IMessage ValidateFloatInRange(object propertyValue, object alternateMaxProperty, object alternateMinProperty, IMessage validationMessage)
         {
             float convertedValueFromProperty = 0;
             float convertedMaximumValue = 0;
@@ -430,7 +430,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="validationMessage">The validation message.</param>
         /// <returns></returns>
         /// <exception cref="InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
-        private IValidationMessage ValidateDoubleInRange(object propertyValue, object alternateMaxProperty, object alternateMinProperty, IValidationMessage validationMessage)
+        private IMessage ValidateDoubleInRange(object propertyValue, object alternateMaxProperty, object alternateMinProperty, IMessage validationMessage)
         {
             double convertedValueFromProperty = 0;
             double convertedMaximumValue = 0;
@@ -488,7 +488,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="validationMessage">The validation message.</param>
         /// <returns></returns>
         /// <exception cref="InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
-        private IValidationMessage ValidateDecimalInRange(object propertyValue, object alternateMaxProperty, object alternateMinProperty, IValidationMessage validationMessage)
+        private IMessage ValidateDecimalInRange(object propertyValue, object alternateMaxProperty, object alternateMinProperty, IMessage validationMessage)
         {
             decimal convertedValueFromProperty = 0;
             decimal convertedMaximumValue = 0;

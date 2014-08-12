@@ -62,6 +62,10 @@
       <Project>{f27c159b-6412-46dc-8239-f0841c6801dc}</Project>
       <Name>Mud.Engine.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Engine\Mud.Engine.Default.Desktop\Mud.Engine.Default.Desktop.csproj">
+      <Project>{efcd4f40-a2cb-440b-a1c1-bad78b784471}</Project>
+      <Name>Mud.Engine.Default.Desktop</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
