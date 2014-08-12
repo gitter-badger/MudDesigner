@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Mud.Engine.Core.Engine
 {
-    public abstract class DefaultGame : AttributeValidationBase, IGame
+    public abstract class DefaultGame : ValidatableBase, IGame
     {        
         /// <summary>
         /// Gets a value indicating whether this instance is multiplayer.

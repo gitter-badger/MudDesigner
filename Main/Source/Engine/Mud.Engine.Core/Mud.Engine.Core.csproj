@@ -38,9 +38,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Engine\AttributeValidationBase.cs" />
+    <Compile Include="Engine\ValidatableBase.cs" />
     <Compile Include="Engine\DefaultGame.cs" />
-    <Compile Include="Engine\IAttributeValidationBase.cs" />
+    <Compile Include="Engine\IValidatable.cs" />
     <Compile Include="Engine\IGame.cs" />
     <Compile Include="Engine\ILogger.cs" />
     <Compile Include="Engine\IMessage.cs" />
