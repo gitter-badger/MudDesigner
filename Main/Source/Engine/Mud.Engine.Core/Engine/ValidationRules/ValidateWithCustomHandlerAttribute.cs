@@ -5,6 +5,10 @@ using System.Reflection;
 
 namespace Mud.Engine.Core.Engine.ValidationRules
 {
+    /// <summary>
+    /// Executes the delegate method specified. 
+    /// The rule expects a method signature of Func<IMessage, IMessage>
+    /// </summary>
     public class ValidateWithCustomHandlerAttribute : ValidationAttribute
     {
         /// <summary>
@@ -44,15 +48,15 @@ namespace Mud.Engine.Core.Engine.ValidationRules
                 .GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic)
                 .Where(m => m.GetCustomAttributes(typeof(ValidationCustomHandlerDelegate), true).Any());
 
-            MethodInfo validationDelegate = validationMethods.FirstOrDefault(m => m
-                    .GetCustomAttributes(typeof(ValidationCustomHandlerDelegate), true)
+            MethodInfo validationDelegate = validationMethods
+                .FirstOrDefault(m => m.GetCustomAttributes(typeof(ValidationCustomHandlerDelegate), true)
                     .FirstOrDefault(del => (del as ValidationCustomHandlerDelegate).DelegateName == this.DelegateName) != null);
 
             // Attempt to invoke our delegate method.
             object result = null;
             try
             {
-                 result = validationDelegate.Invoke(sender, new object[] { property, sender, validationMessage });
+                 result = validationDelegate.Invoke(sender, new object[] { validationMessage });
 
             }
             catch (Exception)

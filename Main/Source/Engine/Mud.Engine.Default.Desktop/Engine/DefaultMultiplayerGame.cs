@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Mud.Engine.Core.Engine.ValidationRules;
+using System.Threading.Tasks;
 
 namespace Mud.Engine.Default.Desktop.Engine
 {
@@ -31,8 +32,10 @@ namespace Mud.Engine.Default.Desktop.Engine
         /// <summary>
         /// The initialize method is responsible for restoring the world and state.
         /// </summary>
-        public async override void Initialize()
+        public async override Task Initialize()
         {
+            this.ValidateProperty("Name");
+
             // Restore our previously saved worlds.
             IWorldRepository worldRepository = this.environmentFactory.CreateWorldRepository();
             IEnumerable<IWorld> result = await worldRepository.GetWorlds();

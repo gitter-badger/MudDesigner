@@ -17,11 +17,12 @@ namespace Mud.Apps.WinDesktop
     /// </summary>
     public partial class App : Application
     {
-        protected override void OnStartup(StartupEventArgs e)
+        protected async override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
             var t = new DefaultMultiplayerGame(null, null);
+            await t.Initialize();
 
             var bootstrapper = new Bootstrapper();
             bootstrapper.Run();

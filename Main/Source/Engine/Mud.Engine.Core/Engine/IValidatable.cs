@@ -117,17 +117,5 @@ namespace Mud.Engine.Core.Engine
         /// When supplied, the validation rule and any errors associated with it will be stored within the proxy object instead of this instance.
         /// </param>
         void PerformValidation(IValidationRule rule, string property, IValidatable validationProxy = null);
-
-        /// <summary>
-        /// Sets the property by reference.
-        /// </summary>
-        /// <typeparam name="T">The type of the property</typeparam>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        /// <param name="propertyName">Name of the property.</param>
-        /// <returns>
-        /// Returns true if the reference property was set.
-        /// </returns>
-        bool SetPropertyByReference<T>(ref T oldValue, T newValue, string propertyName) where T : class;
     }
 }

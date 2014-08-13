@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Mud.Engine.Core.Engine
 {
@@ -69,6 +70,6 @@ namespace Mud.Engine.Core.Engine
         /// <summary>
         /// The initialize method is responsible for restoring the world and state.
         /// </summary>
-        void Initialize();
+        Task Initialize();
     }
 }

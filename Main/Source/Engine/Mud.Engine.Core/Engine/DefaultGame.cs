@@ -1,8 +1,10 @@
-﻿using Mud.Engine.Core.Environment;
+﻿using Mud.Engine.Core.Engine.ValidationRules;
+using Mud.Engine.Core.Environment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Mud.Engine.Core.Engine
 {
@@ -21,7 +23,7 @@ namespace Mud.Engine.Core.Engine
         /// <summary>
         /// Gets or Sets the name of the game being played.
         /// </summary>
-        [ValidationRules.ValidateStringIsLessThan(LessThanValue = 5, FailureMessage = "Length must be greater than 5.", ValidationMessageType = typeof(ErrorMessage))]
+        [ValidateStringIsLessThan(LessThanValue = 5, FailureMessage = "Length must be greater than 5.", ValidationMessageType = typeof(ErrorMessage))]
         public string Name { get; set; }
 
         /// <summary>
@@ -69,6 +71,6 @@ namespace Mud.Engine.Core.Engine
         /// <summary>
         /// The initialize method is responsible for restoring the world and state.
         /// </summary>
-        public abstract void Initialize();
+        public abstract Task Initialize();
     }
 }

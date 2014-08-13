@@ -118,7 +118,7 @@ namespace Mud.Engine.Core.Engine
             {
                 // Remove the error from the key's collection.
                 this.validationMessages[property].Remove(
-                    this.validationMessages[property].FirstOrDefault(msg => msg.Message.Equals(message)));
+                    this.validationMessages[property].FirstOrDefault(msg => msg == msg || msg.Message.Equals(message.Message)));
 
                 this.OnValidationChanged(new ValidationChangedEventArgs(property, this.validationMessages[property]));
             }
@@ -349,28 +349,6 @@ namespace Mud.Engine.Core.Engine
         }
 
         /// <summary>
-        /// Sets the property by reference.
-        /// </summary>
-        /// <typeparam name="T">The Type of the property to be set.</typeparam>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="newValue">The new value.</param>
-        /// <param name="propertyName">Name of the property.</param>
-        /// <returns>
-        /// Returns true if the reference property was set.
-        /// </returns>
-        public bool SetPropertyByReference<T>(ref T oldValue, T newValue, string propertyName) where T : class
-        {
-            if (oldValue != null && oldValue.Equals(newValue))
-            {
-                return false;
-            }
-
-            oldValue = newValue;
-
-            return true;
-        }
-
-        /// <summary>
         /// Raises the <see cref="E:ValidationChanged" /> event.
         /// </summary>
         /// <param name="args">The <see cref="ValidationChangedEventArgs"/> instance containing the event data.</param>
@@ -449,9 +427,9 @@ namespace Mud.Engine.Core.Engine
                 // Loop through all property info's and build a collection of validation rules for each property.
                 foreach (PropertyInfo property in propertiesToValidate)
                 {
-                    cache.Add(
-                        property,
-                        property.GetCustomAttributes(typeof(ValidationAttribute), true).Select(a => a) as IEnumerable<ValidationAttribute>);
+                    IEnumerable<ValidationAttribute> rules = property
+                        .GetCustomAttributes(typeof(ValidationAttribute), true) as IEnumerable<ValidationAttribute>;
+                    cache.Add(property, rules);
                 }
 
                 ValidatableBase.PropertyValidationCache[this.GetType()] =
