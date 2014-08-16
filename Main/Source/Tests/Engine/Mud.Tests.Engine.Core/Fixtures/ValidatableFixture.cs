@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Mud.Engine.Core.Engine.ValidationRules;
+using System.Reflection;
 
 namespace Mud.Tests.Engine.Core.Fixtures
 {
@@ -30,7 +31,7 @@ namespace Mud.Tests.Engine.Core.Fixtures
         public string PasswordConfirmation { get; set; }
 
         [ValidationCustomHandlerDelegate(DelegateName = PasswordConfirmationDelegateName)]
-        public IMessage PasswordConfirmationValidation(IMessage message)
+        public IMessage PasswordConfirmationValidation(IMessage message, PropertyInfo property)
         {
             return this.PasswordConfirmation.Equals(this.Password) ?
                 null :

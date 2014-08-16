@@ -56,7 +56,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
             object result = null;
             try
             {
-                 result = validationDelegate.Invoke(sender, new object[] { validationMessage });
+                 result = validationDelegate.Invoke(sender, new object[] { validationMessage, property });
 
             }
             catch (Exception)
