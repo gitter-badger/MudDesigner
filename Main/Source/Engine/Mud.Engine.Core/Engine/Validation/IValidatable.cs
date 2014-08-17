@@ -3,11 +3,10 @@
 //     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-namespace Mud.Engine.Core.Engine
+namespace Mud.Engine.Core.Engine.Validation
 {
     using System;
     using System.Collections.Generic;
-    using Mud.Engine.Core.Engine.ValidationRules;
 
     /// <summary>
     /// Provides methods for creating a validatable concrete Type.

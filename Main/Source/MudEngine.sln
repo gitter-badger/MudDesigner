@@ -407,4 +407,7 @@ Global
 		{F0CCAC7F-FFB3-4681-981C-FD98BEFF4796} = {A0D6C3BE-0814-4A27-80B2-FD34033C006A}
 		{B792147A-4B0C-4D57-A18E-623EE79DA575} = {3B2E05B4-DAC5-4A13-977E-193F3045B2F2}
 	EndGlobalSection
+	GlobalSection(NDepend) = preSolution
+		Project = ".\MudEngine.ndproj"
+	EndGlobalSection
 EndGlobal

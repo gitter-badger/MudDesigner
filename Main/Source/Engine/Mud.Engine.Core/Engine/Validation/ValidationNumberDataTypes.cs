@@ -3,7 +3,7 @@
 //     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-namespace Mud.Engine.Core.Engine.ValidationRules
+namespace Mud.Engine.Core.Engine.Validation
 {
     /// <summary>
     /// The available number types that can be validated with the Max/Min, Greater/Lesser and Range attributes.

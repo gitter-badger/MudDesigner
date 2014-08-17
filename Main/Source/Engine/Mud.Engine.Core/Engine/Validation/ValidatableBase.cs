@@ -3,14 +3,13 @@
 //     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-namespace Mud.Engine.Core.Engine
+namespace Mud.Engine.Core.Engine.Validation
 {
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Reflection;
-    using Mud.Engine.Core.Engine.ValidationRules;
 
     /// <summary>
     /// An implementation of IValidatable that provides a base class for validating instances with property attributes implementing IValidationRule.

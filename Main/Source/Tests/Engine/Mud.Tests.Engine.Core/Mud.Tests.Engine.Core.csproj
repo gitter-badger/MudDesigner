@@ -57,7 +57,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Engine\ValidatableBaseTests.cs" />
+    <Compile Include="Engine\Validation\ValidatableBaseTests.cs" />
     <Compile Include="Fixtures\MessageFixture.cs" />
     <Compile Include="Fixtures\ValidatableFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

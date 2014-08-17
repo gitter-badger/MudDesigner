@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Mud.Engine.Core.Engine.ValidationRules;
+using Mud.Engine.Core.Engine.Validation;
 using System.Reflection;
 
 namespace Mud.Tests.Engine.Core.Fixtures

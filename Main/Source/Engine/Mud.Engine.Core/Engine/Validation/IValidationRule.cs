@@ -3,11 +3,10 @@
 //     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-namespace Mud.Engine.Core.Engine.ValidationRules
+namespace Mud.Engine.Core.Engine.Validation
 {
     using System;
     using System.Reflection;
-    using Mud.Engine.Core.Engine;
 
     /// <summary>
     /// Objects implementing IValidationRule can be used to perform validation on an object.

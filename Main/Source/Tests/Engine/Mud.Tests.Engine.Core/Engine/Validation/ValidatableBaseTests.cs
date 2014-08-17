@@ -1,18 +1,21 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Mud.Engine.Core.Engine;
-using Mud.Engine.Core.Engine.ValidationRules;
-using System.Collections.ObjectModel;
-using System.Linq;
-using Moq;
-using System.Collections.Generic;
-using Mud.Tests.Engine.Core.Fixtures;
-
-namespace Mud.Tests.Engine.Core.Engine
+﻿namespace Mud.Tests.Engine.Core.Engine.Validation
 {
+    using System.Linq;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Moq;
+    using Mud.Engine.Core.Engine;
+    using Mud.Engine.Core.Engine.Validation;
+    using Mud.Tests.Engine.Core.Fixtures;
+
+    /// <summary>
+    /// Tests against the ValidatableBase class.
+    /// </summary>
     [TestClass]
     public class ValidatableBaseTests
     {
+        /// <summary>
+        /// Tests that the ValidatableBase can add validation message to its internal collection.
+        /// </summary>
         [TestMethod]
         [TestCategory("Engine Validation")]
         public void ValidatableBase_CanAddValidationMessage_ReturnsCollection()
@@ -37,6 +40,9 @@ namespace Mud.Tests.Engine.Core.Engine
 
         }
 
+        /// <summary>
+        /// Validates that the ValidatableBase can remove all validation messages from its internal collection.
+        /// </summary>
         [TestMethod]
         [TestCategory("Engine Validation")]
         public void ValidatableBase_CanRemoveAllMessages_ReturnsEmptyCollection()
@@ -60,6 +66,9 @@ namespace Mud.Tests.Engine.Core.Engine
                 "Validation message collection returned elements when it should not have.");
         }
 
+        /// <summary>
+        /// Validates that the ValidatableBase can remove validation messages for a specific property from its internal collection.
+        /// </summary>
         [TestMethod]
         [TestCategory("Engine Validation")]
         public void ValidatableBase_CanRemoveAllMessagesFromProperty_ReturnsCollection()

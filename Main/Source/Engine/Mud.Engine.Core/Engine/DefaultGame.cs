@@ -8,7 +8,7 @@ namespace Mud.Engine.Core.Engine
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Mud.Engine.Core.Engine.ValidationRules;
+    using Mud.Engine.Core.Engine.Validation;
     using Mud.Engine.Core.Environment;
 
     /// <summary>

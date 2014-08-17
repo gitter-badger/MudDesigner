@@ -1,17 +1,17 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="ValidateNumberHasMaximumValueAttribute.cs" company="Sully">
+// <copyright file="ValidateNumberIsLessThanAttribute.cs" company="Sully">
 //     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-namespace Mud.Engine.Core.Engine.ValidationRules
+namespace Mud.Engine.Core.Engine.Validation
 {
     using System;
     using System.Globalization;
 
     /// <summary>
-    /// Validates that a number does not exceed a maximum value.
+    /// Validates that a number is less than a given value.
     /// </summary>
-    public class ValidateNumberHasMaximumValueAttribute : ValidationAttribute
+    public class ValidateNumberIsLessThanAttribute : ValidationAttribute
     {
         /// <summary>
         /// Gets or sets the type of the number data.
@@ -20,14 +20,14 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// The type of the number data.
         /// </value>
         private ValidationNumberDataTypes numberDataType;
-
+            
         /// <summary>
         /// Gets or sets the maximum value.
         /// </summary>
         /// <value>
         /// The maximum value.
         /// </value>
-        public string MaximumValue { get; set; }
+        public string LessThanValue { get; set; }
 
         /// <summary>
         /// Gets or sets the optional comparison property.
@@ -48,7 +48,6 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <returns>
         /// Returns a validation message if validation failed. Otherwise null is returned to indicate a passing validation.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException">The property data type is not the same as the data type specified for validation checks. They must be the same Type.</exception>
         public override IMessage Validate(System.Reflection.PropertyInfo property, IValidatable sender)
         {
             if (!this.CanValidate(sender))
@@ -82,27 +81,27 @@ namespace Mud.Engine.Core.Engine.ValidationRules
 
             if (this.numberDataType == ValidationNumberDataTypes.Short)
             {
-                return this.ValidateMinimumShortValue(propertyValue, alternateProperty, validationMessage);
+                return this.ValidateShortValueIsGreaterThan(propertyValue, alternateProperty, validationMessage);
             }
             else if (this.numberDataType == ValidationNumberDataTypes.Int)
             {
-                return this.ValidateMinimumIntegerValue(propertyValue, alternateProperty, validationMessage);
+                return this.ValidateIntegerValueIsGreaterThan(propertyValue, alternateProperty, validationMessage);
             }
             else if (this.numberDataType == ValidationNumberDataTypes.Long)
             {
-                return this.ValidateMinimumLongValue(propertyValue, alternateProperty, validationMessage);
+                return this.ValidateLongValueIsGreaterThan(propertyValue, alternateProperty, validationMessage);
             }
             else if (this.numberDataType == ValidationNumberDataTypes.Float)
             {
-                return this.ValidateMinimumFloatValue(propertyValue, alternateProperty, validationMessage);
+                return this.ValidateFloatValueIsGreaterThan(propertyValue, alternateProperty, validationMessage);
             }
             else if (this.numberDataType == ValidationNumberDataTypes.Double)
             {
-                return this.ValidateMinimumDoubleValue(propertyValue, alternateProperty, validationMessage);
+                return this.ValidateDoubleValueIsGreaterThan(propertyValue, alternateProperty, validationMessage);
             }
             else if (this.numberDataType == ValidationNumberDataTypes.Decimal)
             {
-                return this.ValidateMinimumDecimalValue(propertyValue, alternateProperty, validationMessage);
+                return this.ValidateDecimalValueIsGreaterThan(propertyValue, alternateProperty, validationMessage);
             }
 
             return validationMessage;
@@ -182,14 +181,15 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="propertyValue">The property value.</param>
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns>Returns a Validation message if it fails</returns>
-        private IMessage ValidateMinimumShortValue(object propertyValue, object alternateProperty, IMessage validationMessage)
+        /// <returns>Returns a Validation message if it fails </returns>        
+        /// <exception cref="System.InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
+        private IMessage ValidateShortValueIsGreaterThan(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             short convertedValueFromProperty = 0;
-            short convertedComparisonValue = 0;
+            short maximumConvertedValue = 0;
             bool propertyConversionSucceeded = short.TryParse(propertyValue.ToString(), NumberStyles.Integer, null, out convertedValueFromProperty);
-            bool valueComparisonConversionSucceeded = short.TryParse(this.MaximumValue, NumberStyles.Integer, null, out convertedComparisonValue);
-            
+            bool valueComparisonConversionSucceeded = short.TryParse(this.LessThanValue, NumberStyles.Integer, null, out maximumConvertedValue);
+
             if (!propertyConversionSucceeded && !valueComparisonConversionSucceeded && alternateProperty == null)
             {
                 throw new InvalidCastException("Validation failed due to invalid data being provided to the validator for conversion.");
@@ -200,12 +200,12 @@ namespace Mud.Engine.Core.Engine.ValidationRules
             if (alternateProperty != null &&
                 short.TryParse(alternateProperty.ToString(), NumberStyles.Integer, null, out alternateValue))
             {
-                return alternateValue >= convertedValueFromProperty ? null : validationMessage;
+                return alternateValue > convertedValueFromProperty ? null : validationMessage;
             }
             else
             {
                 // Compare the value to the maximum allowed by the attribute. 
-                return convertedComparisonValue >= convertedValueFromProperty ? null : validationMessage;
+                return maximumConvertedValue > convertedValueFromProperty ? null : validationMessage;
             } 
         }
 
@@ -215,13 +215,16 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="propertyValue">The property value.</param>
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns>Returns a Validation message if it fails</returns>
-        private IMessage ValidateMinimumIntegerValue(object propertyValue, object alternateProperty, IMessage validationMessage)
+        /// <returns>
+        /// Returns a Validation message if it fails
+        /// </returns>
+        /// <exception cref="System.InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
+        private IMessage ValidateIntegerValueIsGreaterThan(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             int convertedValueFromProperty = 0;
-            int convertedComparisonValue = 0;
+            int maximumConvertedValue = 0;
             bool propertyConversionSucceeded = int.TryParse(propertyValue.ToString(), NumberStyles.Integer, null, out convertedValueFromProperty);
-            bool valueComparisonConversionSucceeded = int.TryParse(this.MaximumValue, NumberStyles.Integer, null, out convertedComparisonValue);
+            bool valueComparisonConversionSucceeded = int.TryParse(this.LessThanValue, NumberStyles.Integer, null, out maximumConvertedValue);
 
             if (!propertyConversionSucceeded && !valueComparisonConversionSucceeded && alternateProperty == null)
             {
@@ -233,12 +236,12 @@ namespace Mud.Engine.Core.Engine.ValidationRules
             if (alternateProperty != null &&
                 int.TryParse(alternateProperty.ToString(), NumberStyles.Integer, null, out alternateValue))
             {
-                return alternateValue >= convertedValueFromProperty ? null : validationMessage;
+                return alternateValue > convertedValueFromProperty ? null : validationMessage;
             }
             else
             {
                 // Compare the value to the maximum allowed by the attribute. 
-                return convertedComparisonValue >= convertedValueFromProperty ? null : validationMessage;
+                return maximumConvertedValue > convertedValueFromProperty ? null : validationMessage;
             } 
         }
 
@@ -248,13 +251,16 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="propertyValue">The property value.</param>
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns>Returns a Validation message if it fails</returns>
-        private IMessage ValidateMinimumLongValue(object propertyValue, object alternateProperty, IMessage validationMessage)
+        /// <returns>
+        /// Returns a Validation message if it fails
+        /// </returns>
+        /// <exception cref="System.InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
+        private IMessage ValidateLongValueIsGreaterThan(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             long convertedValueFromProperty = 0;
-            long convertedComparisonValue = 0;
+            long maximumConvertedValue = 0;
             bool propertyConversionSucceeded = long.TryParse(propertyValue.ToString(), NumberStyles.Integer, null, out convertedValueFromProperty);
-            bool valueComparisonConversionSucceeded = long.TryParse(this.MaximumValue, NumberStyles.Integer, null, out convertedComparisonValue);
+            bool valueComparisonConversionSucceeded = long.TryParse(this.LessThanValue, NumberStyles.Integer, null, out maximumConvertedValue);
 
             if (!propertyConversionSucceeded && !valueComparisonConversionSucceeded && alternateProperty == null)
             {
@@ -266,12 +272,12 @@ namespace Mud.Engine.Core.Engine.ValidationRules
             if (alternateProperty != null &&
                 long.TryParse(alternateProperty.ToString(), NumberStyles.Integer, null, out alternateValue))
             {
-                return alternateValue >= convertedValueFromProperty ? null : validationMessage;
+                return alternateValue > convertedValueFromProperty ? null : validationMessage;
             }
             else
             {
                 // Compare the value to the maximum allowed by the attribute. 
-                return convertedComparisonValue >= convertedValueFromProperty ? null : validationMessage;
+                return maximumConvertedValue > convertedValueFromProperty ? null : validationMessage;
             } 
         }
 
@@ -281,13 +287,16 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="propertyValue">The property value.</param>
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns>Returns a Validation message if it fails</returns>
-        private IMessage ValidateMinimumFloatValue(object propertyValue, object alternateProperty, IMessage validationMessage)
+        /// <returns>
+        /// Returns a Validation message if it fails
+        /// </returns>
+        /// <exception cref="System.InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
+        private IMessage ValidateFloatValueIsGreaterThan(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             float convertedValueFromProperty = 0;
-            float convertedComparisonValue = 0;
+            float maximumConvertedValue = 0;
             bool propertyConversionSucceeded = float.TryParse(propertyValue.ToString(), NumberStyles.Float, null, out convertedValueFromProperty);
-            bool valueComparisonConversionSucceeded = float.TryParse(this.MaximumValue, NumberStyles.Float, null, out convertedComparisonValue);
+            bool valueComparisonConversionSucceeded = float.TryParse(this.LessThanValue, NumberStyles.Float, null, out maximumConvertedValue);
 
             if (!propertyConversionSucceeded && !valueComparisonConversionSucceeded && alternateProperty == null)
             {
@@ -299,12 +308,12 @@ namespace Mud.Engine.Core.Engine.ValidationRules
             if (alternateProperty != null &&
                 float.TryParse(alternateProperty.ToString(), NumberStyles.Float, null, out alternateValue))
             {
-                return alternateValue >= convertedValueFromProperty ? null : validationMessage;
+                return alternateValue > convertedValueFromProperty ? null : validationMessage;
             }
             else
             {
                 // Compare the value to the maximum allowed by the attribute. 
-                return convertedComparisonValue >= convertedValueFromProperty ? null : validationMessage;
+                return maximumConvertedValue > convertedValueFromProperty ? null : validationMessage;
             } 
         }
 
@@ -314,13 +323,16 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="propertyValue">The property value.</param>
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns>Returns a Validation message if it fails</returns>
-        private IMessage ValidateMinimumDoubleValue(object propertyValue, object alternateProperty, IMessage validationMessage)
+        /// <returns>
+        /// Returns a Validation message if it fails
+        /// </returns>
+        /// <exception cref="System.InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
+        private IMessage ValidateDoubleValueIsGreaterThan(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             double convertedValueFromProperty = 0;
-            double convertedComparisonValue = 0;
+            double maximumConvertedValue = 0;
             bool propertyConversionSucceeded = double.TryParse(propertyValue.ToString(), NumberStyles.Number, null, out convertedValueFromProperty);
-            bool valueComparisonConversionSucceeded = double.TryParse(this.MaximumValue, NumberStyles.Number, null, out convertedComparisonValue);
+            bool valueComparisonConversionSucceeded = double.TryParse(this.LessThanValue, NumberStyles.Number, null, out maximumConvertedValue);
 
             if (!propertyConversionSucceeded && !valueComparisonConversionSucceeded && alternateProperty == null)
             {
@@ -332,12 +344,12 @@ namespace Mud.Engine.Core.Engine.ValidationRules
             if (alternateProperty != null &&
                 double.TryParse(alternateProperty.ToString(), NumberStyles.Number, null, out alternateValue))
             {
-                return alternateValue >= convertedValueFromProperty ? null : validationMessage;
+                return alternateValue > convertedValueFromProperty ? null : validationMessage;
             }
             else
             {
                 // Compare the value to the maximum allowed by the attribute. 
-                return convertedComparisonValue >= convertedValueFromProperty ? null : validationMessage;
+                return maximumConvertedValue > convertedValueFromProperty ? null : validationMessage;
             } 
         }
 
@@ -347,13 +359,16 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="propertyValue">The property value.</param>
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns>Returns a Validation message if it fails</returns>
-        private IMessage ValidateMinimumDecimalValue(object propertyValue, object alternateProperty, IMessage validationMessage)
+        /// <returns>
+        /// Returns a Validation message if it fails
+        /// </returns>
+        /// <exception cref="System.InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
+        private IMessage ValidateDecimalValueIsGreaterThan(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             decimal convertedValueFromProperty = 0;
-            decimal convertedComparisonValue = 0;
+            decimal maximumConvertedValue = 0;
             bool propertyConversionSucceeded = decimal.TryParse(propertyValue.ToString(), NumberStyles.Number, null, out convertedValueFromProperty);
-            bool valueComparisonConversionSucceeded = decimal.TryParse(this.MaximumValue, NumberStyles.Number, null, out convertedComparisonValue);
+            bool valueComparisonConversionSucceeded = decimal.TryParse(this.LessThanValue, NumberStyles.Number, null, out maximumConvertedValue);
 
             if (!propertyConversionSucceeded && !valueComparisonConversionSucceeded && alternateProperty == null)
             {
@@ -365,12 +380,12 @@ namespace Mud.Engine.Core.Engine.ValidationRules
             if (alternateProperty != null &&
                 decimal.TryParse(alternateProperty.ToString(), NumberStyles.Number, null, out alternateValue))
             {
-                return alternateValue >= convertedValueFromProperty ? null : validationMessage;
+                return alternateValue > convertedValueFromProperty ? null : validationMessage;
             }
             else
             {
                 // Compare the value to the maximum allowed by the attribute. 
-                return convertedComparisonValue >= convertedValueFromProperty ? null : validationMessage;
+                return maximumConvertedValue > convertedValueFromProperty ? null : validationMessage;
             } 
         }
     }

@@ -3,7 +3,7 @@
 //     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-namespace Mud.Engine.Core.Engine.ValidationRules
+namespace Mud.Engine.Core.Engine.Validation
 {
     using System;
     using System.Collections.Generic;
