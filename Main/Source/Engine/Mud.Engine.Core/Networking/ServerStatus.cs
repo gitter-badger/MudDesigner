@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="ServerStatus.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Networking
 {
+    /// <summary>
+    /// Provides status values for the server to use, indicating its current state.
+    /// </summary>
     public enum ServerStatus
     {
         /// <summary>

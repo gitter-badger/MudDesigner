@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="IWeatherState.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Environment
 {
     /// <summary>
@@ -11,12 +11,12 @@ namespace Mud.Engine.Core.Environment
     public interface IWeatherState
     {
         /// <summary>
-        /// Gets or sets the occurance probability of this weather state occuring in an environment.
-        /// The higher the probability relative to other weather states, the more likely it is going to occure.
+        /// Gets or sets the occurrence probability of this weather state occurring in an environment.
+        /// The higher the probability relative to other weather states, the more likely it is going to occur.
         /// </summary>
         /// <value>
-        /// The occurance probability.
+        /// The occurrence probability.
         /// </value>
-        int OccuranceProbability { get; set; }
+        int OccurrenceProbability { get; set; }
     }
 }

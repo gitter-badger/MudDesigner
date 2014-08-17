@@ -1,13 +1,16 @@
-﻿using Mud.Engine.Core.Engine;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="ValidationAttribute.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Engine.ValidationRules
 {
+    using System;
+    using System.Reflection;
+
+    /// <summary>
+    /// The base class for all IValidationRule implementations.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true, Inherited = true)]
     public abstract class ValidationAttribute : Attribute, IValidationRule
     {
@@ -47,7 +50,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// Determines if the value passed in to it is a valid boolean.
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <returns></returns>
+        /// <returns>Returns true if the rule can perform validation.</returns>
         /// <exception cref="System.ArgumentException">Can not base validation off of a non-boolean property.</exception>
         protected bool CanValidate(IValidatable sender)
         {
@@ -88,7 +91,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
             {
                 var numberGreaterThanRule = new ValidateNumberIsGreaterThanAttribute();
                 numberGreaterThanRule.GreaterThanValue = "0";
-                PropertyInfo property = this.GetAlternatePropertyInfo(sender, ValidateIfMemberValueIsValid);
+                PropertyInfo property = this.GetAlternatePropertyInfo(sender, this.ValidateIfMemberValueIsValid);
                 IMessage validationMessage = numberGreaterThanRule.Validate(property, sender);
 
                 // if we are greater than 0, then we hav a valid value and can validate.
@@ -151,6 +154,12 @@ namespace Mud.Engine.Core.Engine.ValidationRules
             return null;
         }
 
+        /// <summary>
+        /// Gets the alternate property information.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="alternateProperty">The alternate property.</param>
+        /// <returns>Returns the property info associated with the alternate property given.</returns>
         protected PropertyInfo GetAlternatePropertyInfo(object sender, string alternateProperty)
         {
             if (!string.IsNullOrEmpty(alternateProperty))

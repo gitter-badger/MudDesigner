@@ -21,9 +21,6 @@ namespace Mud.Apps.WinDesktop
         {
             base.OnStartup(e);
 
-            var t = new DefaultMultiplayerGame(null, null);
-            await t.Initialize();
-
             var bootstrapper = new Bootstrapper();
             bootstrapper.Run();
         }

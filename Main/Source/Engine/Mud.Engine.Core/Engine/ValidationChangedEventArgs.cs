@@ -1,11 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="ValidationChangedEventArgs.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Engine
 {
+    using System;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// Arguments that are provided when an objects validation has changed.
+    /// </summary>
     public class ValidationChangedEventArgs : EventArgs
     {
         /// <summary>

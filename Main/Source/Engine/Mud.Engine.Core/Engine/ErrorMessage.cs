@@ -1,4 +1,9 @@
-﻿namespace Mud.Engine.Core.Engine
+﻿//-----------------------------------------------------------------------
+// <copyright file="ErrorMessage.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace Mud.Engine.Core.Engine
 {
     /// <summary>
     /// An implementation of IValidationMessage that can be used for error messages
@@ -8,8 +13,9 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ErrorMessage"/> class.
         /// </summary>
-        public ErrorMessage() : this (string.Empty)
-        { }
+        public ErrorMessage() : this(string.Empty)
+        { 
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ErrorMessage"/> class.

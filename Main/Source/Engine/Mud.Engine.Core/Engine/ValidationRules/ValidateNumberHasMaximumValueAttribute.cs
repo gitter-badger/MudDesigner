@@ -1,18 +1,18 @@
-﻿using System;
-using System.Globalization;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="ValidateNumberHasMaximumValueAttribute.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Engine.ValidationRules
 {
+    using System;
+    using System.Globalization;
+
+    /// <summary>
+    /// Validates that a number does not exceed a maximum value.
+    /// </summary>
     public class ValidateNumberHasMaximumValueAttribute : ValidationAttribute
     {
-        /// <summary>
-        /// Gets or sets the maximum value.
-        /// </summary>
-        /// <value>
-        /// The maximum value.
-        /// </value>
-        public string MaximumValue { get; set; }
-
         /// <summary>
         /// Gets or sets the type of the number data.
         /// </summary>
@@ -20,6 +20,14 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// The type of the number data.
         /// </value>
         private ValidationNumberDataTypes numberDataType;
+
+        /// <summary>
+        /// Gets or sets the maximum value.
+        /// </summary>
+        /// <value>
+        /// The maximum value.
+        /// </value>
+        public string MaximumValue { get; set; }
 
         /// <summary>
         /// Gets or sets the optional comparison property.
@@ -40,6 +48,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <returns>
         /// Returns a validation message if validation failed. Otherwise null is returned to indicate a passing validation.
         /// </returns>
+        /// <exception cref="System.ArgumentNullException">The property data type is not the same as the data type specified for validation checks. They must be the same Type.</exception>
         public override IMessage Validate(System.Reflection.PropertyInfo property, IValidatable sender)
         {
             if (!this.CanValidate(sender))
@@ -73,7 +82,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
 
             if (this.numberDataType == ValidationNumberDataTypes.Short)
             {
-                return ValidateMinimumShortValue(propertyValue, alternateProperty, validationMessage);
+                return this.ValidateMinimumShortValue(propertyValue, alternateProperty, validationMessage);
             }
             else if (this.numberDataType == ValidationNumberDataTypes.Int)
             {
@@ -173,7 +182,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="propertyValue">The property value.</param>
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns></returns>
+        /// <returns>Returns a Validation message if it fails</returns>
         private IMessage ValidateMinimumShortValue(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             short convertedValueFromProperty = 0;
@@ -206,7 +215,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="propertyValue">The property value.</param>
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns></returns>
+        /// <returns>Returns a Validation message if it fails</returns>
         private IMessage ValidateMinimumIntegerValue(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             int convertedValueFromProperty = 0;
@@ -239,7 +248,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="propertyValue">The property value.</param>
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns></returns>
+        /// <returns>Returns a Validation message if it fails</returns>
         private IMessage ValidateMinimumLongValue(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             long convertedValueFromProperty = 0;
@@ -272,7 +281,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="propertyValue">The property value.</param>
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns></returns>
+        /// <returns>Returns a Validation message if it fails</returns>
         private IMessage ValidateMinimumFloatValue(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             float convertedValueFromProperty = 0;
@@ -305,7 +314,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="propertyValue">The property value.</param>
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns></returns>
+        /// <returns>Returns a Validation message if it fails</returns>
         private IMessage ValidateMinimumDoubleValue(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             double convertedValueFromProperty = 0;
@@ -338,7 +347,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="propertyValue">The property value.</param>
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns></returns>
+        /// <returns>Returns a Validation message if it fails</returns>
         private IMessage ValidateMinimumDecimalValue(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             decimal convertedValueFromProperty = 0;

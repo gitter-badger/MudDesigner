@@ -1,15 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="IEnvironment.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Environment
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Defines properties that are used across various environments such as worlds, realms and zones.
     /// </summary>
     public interface IEnvironment
     {
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
         string Name { get; set; }
 
         /// <summary>

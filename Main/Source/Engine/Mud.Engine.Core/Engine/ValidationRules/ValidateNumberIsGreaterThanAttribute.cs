@@ -1,8 +1,16 @@
-﻿using System;
-using System.Globalization;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="ValidateNumberIsGreaterThanAttribute.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Engine.ValidationRules
 {
+    using System;
+    using System.Globalization;
+
+    /// <summary>
+    /// Validates that if a number is greater than a given value.
+    /// </summary>
     public class ValidateNumberIsGreaterThanAttribute : ValidationAttribute
     {
         /// <summary>
@@ -73,7 +81,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
 
             if (this.numberDataType == ValidationNumberDataTypes.Short)
             {
-                return ValidateShortValueIsGreaterThan(propertyValue, alternateProperty, validationMessage);
+                return this.ValidateShortValueIsGreaterThan(propertyValue, alternateProperty, validationMessage);
             }
             else if (this.numberDataType == ValidationNumberDataTypes.Int)
             {
@@ -173,7 +181,10 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="propertyValue">The property value.</param>
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// Returns a Validation message if it fails
+        /// </returns>
+        /// <exception cref="System.InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
         private IMessage ValidateShortValueIsGreaterThan(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             short convertedValueFromProperty = 0;
@@ -206,7 +217,10 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="propertyValue">The property value.</param>
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// Returns a Validation message if it fails
+        /// </returns>
+        /// <exception cref="System.InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
         private IMessage ValidateIntegerValueIsGreaterThan(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             int convertedValueFromProperty = 0;
@@ -239,7 +253,8 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="propertyValue">The property value.</param>
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns></returns>
+        /// <returns>Returns a Validation message if it fails</returns>
+        /// <exception cref="System.InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
         private IMessage ValidateLongValueIsGreaterThan(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             long convertedValueFromProperty = 0;
@@ -272,7 +287,10 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="propertyValue">The property value.</param>
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// Returns a Validation message if it fails
+        /// </returns>
+        /// <exception cref="System.InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
         private IMessage ValidateFloatValueIsGreaterThan(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             float convertedValueFromProperty = 0;
@@ -305,7 +323,10 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="propertyValue">The property value.</param>
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// Returns a Validation message if it fails
+        /// </returns>
+        /// <exception cref="System.InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
         private IMessage ValidateDoubleValueIsGreaterThan(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             double convertedValueFromProperty = 0;
@@ -338,7 +359,10 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="propertyValue">The property value.</param>
         /// <param name="alternateProperty">The alternate property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// Returns a Validation message if it fails
+        /// </returns>
+        /// <exception cref="System.InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
         private IMessage ValidateDecimalValueIsGreaterThan(object propertyValue, object alternateProperty, IMessage validationMessage)
         {
             decimal convertedValueFromProperty = 0;

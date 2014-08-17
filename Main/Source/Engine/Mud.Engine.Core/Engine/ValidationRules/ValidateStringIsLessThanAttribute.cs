@@ -1,9 +1,14 @@
-﻿using System;
-using System.Globalization;
-using System.Reflection;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="ValidateStringIsLessThanAttribute.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Engine.ValidationRules
 {
+    using System;
+    using System.Globalization;
+    using System.Reflection;
+
     /// <summary>
     /// Validates if the string is longer than the maximum specified.
     /// </summary>
@@ -69,11 +74,11 @@ namespace Mud.Engine.Core.Engine.ValidationRules
 
             // While we do convert it to a string below, we want to make sure that the actual Type is a string
             // so that we are not doing a string length comparison check on ToString() of a concrete Type that is not a string.
-
             if (value is string)
             {
                 return value.ToString().Length > this.LessThanValue ? validationMessage : null;
             }
+
             return validationMessage;
         }
     }

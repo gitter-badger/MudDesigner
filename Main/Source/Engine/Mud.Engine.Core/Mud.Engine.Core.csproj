@@ -38,6 +38,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Engine\SystemMessage.cs" />
     <Compile Include="Engine\ValidatableBase.cs" />
     <Compile Include="Engine\DefaultGame.cs" />
     <Compile Include="Engine\IValidatable.cs" />
@@ -54,7 +55,7 @@
     <Compile Include="Engine\ValidationRules\ValidateNumberIsLessThanAttribute.cs" />
     <Compile Include="Engine\ValidationRules\ValidateStringIsGreaterThanAttribute.cs" />
     <Compile Include="Engine\ValidationRules\ValidateStringIsLessThanAttribute.cs" />
-    <Compile Include="Engine\ValidationRules\ValidateValueIsNotNullAttribute.cs" />
+    <Compile Include="Engine\ValidationRules\ValidateValueIsNotNullOrEmptyAttribute.cs" />
     <Compile Include="Engine\ValidationRules\ValidateWithCustomHandlerAttribute.cs" />
     <Compile Include="Engine\ValidationRules\ValidationAttribute.cs" />
     <Compile Include="Engine\ValidationRules\ValidationCustomHandlerDelegate.cs" />
@@ -66,12 +67,15 @@
     <Compile Include="Environment\ITimeOfDayState.cs" />
     <Compile Include="Environment\IWeatherState.cs" />
     <Compile Include="Environment\IWorld.cs" />
-    <Compile Include="Environment\IZone.cs" />
+    <Compile Include="Environment\IZone.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="Mob\DefaultPlayer.cs" />
     <Compile Include="Mob\IMob.cs" />
+    <Compile Include="Mob\InputArgs.cs" />
     <Compile Include="Mob\IPlayer.cs" />
-    <Compile Include="Networking\IConnectionContext.cs" />
     <Compile Include="Networking\IServer.cs" />
-    <Compile Include="Networking\IServerPlayer.cs" />
+    <Compile Include="Networking\ServerConnectionEventArgs.cs" />
     <Compile Include="Networking\ServerStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

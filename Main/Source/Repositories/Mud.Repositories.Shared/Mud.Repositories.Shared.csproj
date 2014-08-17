@@ -45,7 +45,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IEnvironmentFactory.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IWorldRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,4 +1,9 @@
-﻿namespace Mud.Engine.Core.Engine
+﻿//-----------------------------------------------------------------------
+// <copyright file="IMessage.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace Mud.Engine.Core.Engine
 {
     /// <summary>
     /// Provides a contract for different message types to be stored during validation

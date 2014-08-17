@@ -1,9 +1,14 @@
-﻿using System;
-using System.Globalization;
-using System.Reflection;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="ValidateStringIsGreaterThanAttribute.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Engine.ValidationRules
 {
+    using System;
+    using System.Globalization;
+    using System.Reflection;
+
     /// <summary>
     /// Validates if the length of a string is greater than the minimum length specified.
     /// </summary>

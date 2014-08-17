@@ -1,4 +1,9 @@
-﻿namespace Mud.Engine.Core.Engine
+﻿//-----------------------------------------------------------------------
+// <copyright file="WarningMessage.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace Mud.Engine.Core.Engine
 {
     /// <summary>
     /// An implementation of IValidationMessage that can be used for warning messages
@@ -6,10 +11,11 @@
     public class WarningMessage : IMessage
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="WarningMessage"/> class.
+        /// Initializes a new instance of the <see cref="WarningMessage" /> class.
         /// </summary>
         public WarningMessage() : this(string.Empty)
-        { }
+        { 
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WarningMessage"/> class.

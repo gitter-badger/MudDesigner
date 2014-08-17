@@ -20,10 +20,10 @@ namespace Mud.Tests.Engine.Core.Fixtures
             this.PasswordConfirmation = string.Empty;
         }
 
-        [ValidateValueIsNotNull(ValidationMessageType = typeof(MessageFixture), FailureMessage = "Name must be set.")]
+        [ValidateValueIsNotNullOrEmpty(ValidationMessageType = typeof(MessageFixture), FailureMessage = "Name must be set.")]
         public string Name { get; set; }
 
-        [ValidateValueIsNotNull(ValidationMessageType = typeof(MessageFixture), FailureMessage = "Password must be set.")]
+        [ValidateValueIsNotNullOrEmpty(ValidationMessageType = typeof(MessageFixture), FailureMessage = "Password must be set.")]
         [ValidateStringIsGreaterThan(GreaterThanValue = 4, ValidationMessageType = typeof(MessageFixture), FailureMessage = "Password must be greater than 4 characters.")]
         public string Password { get; set; }
 

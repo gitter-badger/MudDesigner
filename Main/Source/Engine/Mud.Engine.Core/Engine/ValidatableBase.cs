@@ -118,7 +118,7 @@ namespace Mud.Engine.Core.Engine
             {
                 // Remove the error from the key's collection.
                 this.validationMessages[property].Remove(
-                    this.validationMessages[property].FirstOrDefault(msg => msg == msg || msg.Message.Equals(message.Message)));
+                    this.validationMessages[property].FirstOrDefault(msg => msg == message || msg.Message.Equals(message.Message)));
 
                 this.OnValidationChanged(new ValidationChangedEventArgs(property, this.validationMessages[property]));
             }

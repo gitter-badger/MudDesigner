@@ -1,13 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="ValidateWithCustomHandlerAttribute.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Engine.ValidationRules
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+
     /// <summary>
     /// Executes the delegate method specified. 
-    /// The rule expects a method signature of Func<IMessage, IMessage>
     /// </summary>
     public class ValidateWithCustomHandlerAttribute : ValidationAttribute
     {
@@ -27,7 +31,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <returns>
         /// Returns a validation message if validation failed. Otherwise null is returned to indicate a passing validation.
         /// </returns>
-        /// <exception cref="System.MissingMethodException"></exception>
+        /// <exception cref="System.MissingMethodException">Throws an exception if a failure occurred while invoking the delegate method.</exception>
         public override IMessage Validate(System.Reflection.PropertyInfo property, IValidatable sender)
         {
             if (!this.CanValidate(sender))
@@ -57,7 +61,6 @@ namespace Mud.Engine.Core.Engine.ValidationRules
             try
             {
                  result = validationDelegate.Invoke(sender, new object[] { validationMessage, property });
-
             }
             catch (Exception)
             {

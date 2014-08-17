@@ -1,10 +1,26 @@
-﻿using System;
-using System.Globalization;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="ValidateNumberInRangeAttribute.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Engine.ValidationRules
 {
+    using System;
+    using System.Globalization;
+
+    /// <summary>
+    /// Validates that a number is within a given range.
+    /// </summary>
     public class ValidateNumberInRangeAttribute : ValidationAttribute
     {
+        /// <summary>
+        /// Gets or sets the type of the number data.
+        /// </summary>
+        /// <value>
+        /// The type of the number data.
+        /// </value>
+        private ValidationNumberDataTypes numberDataType;
+
         /// <summary>
         /// Gets or sets the maximum value.
         /// </summary>
@@ -20,14 +36,6 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// The minimum value.
         /// </value>
         public string MinimumValue { get; set; }
-
-        /// <summary>
-        /// Gets or sets the type of the number data.
-        /// </summary>
-        /// <value>
-        /// The type of the number data.
-        /// </value>
-        private ValidationNumberDataTypes numberDataType;
 
         /// <summary>
         /// Gets or sets the optional comparison property.
@@ -95,7 +103,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
 
             if (this.numberDataType == ValidationNumberDataTypes.Short)
             {
-                return ValidateShortValueInRange(propertyValue, alternateMaxProperty, alternateMinProperty, validationMessage);
+                return this.ValidateShortValueInRange(propertyValue, alternateMaxProperty, alternateMinProperty, validationMessage);
             }
             else if (this.numberDataType == ValidationNumberDataTypes.Int)
             {
@@ -196,7 +204,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="alternateMaxProperty">The alternate property.</param>
         /// <param name="alternateMinProperty">The alternate minimum property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns></returns>
+        /// <returns>Returns a Validation message if it fails</returns>
         /// <exception cref="InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
         private IMessage ValidateShortValueInRange(object propertyValue, object alternateMaxProperty, object alternateMinProperty, IMessage validationMessage)
         {
@@ -254,7 +262,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="alternateMaxProperty">The alternate property.</param>
         /// <param name="alternateMinProperty">The alternate minimum property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns></returns>
+        /// <returns>Returns a Validation message if it fails</returns>
         /// <exception cref="InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
         private IMessage ValidateIntegerInRange(object propertyValue, object alternateMaxProperty, object alternateMinProperty, IMessage validationMessage)
         {
@@ -300,8 +308,8 @@ namespace Mud.Engine.Core.Engine.ValidationRules
             }
 
             // Compare the value to the maximum allowed by the attribute.
-            return ((minValue <= convertedValueFromProperty) && (maxValue >= convertedValueFromProperty) )
-                ?  null
+            return ((minValue <= convertedValueFromProperty) && (maxValue >= convertedValueFromProperty))
+                ? null
                 : validationMessage;
         }
 
@@ -312,7 +320,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="alternateMaxProperty">The alternate property.</param>
         /// <param name="alternateMinProperty">The alternate minimum property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns></returns>
+        /// <returns>Returns a Validation message if it fails</returns>
         /// <exception cref="InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
         private IMessage ValidateLongInRange(object propertyValue, object alternateMaxProperty, object alternateMinProperty, IMessage validationMessage)
         {
@@ -370,7 +378,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="alternateMaxProperty">The alternate property.</param>
         /// <param name="alternateMinProperty">The alternate minimum property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns></returns>
+        /// <returns>Returns a Validation message if it fails</returns>
         /// <exception cref="InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
         private IMessage ValidateFloatInRange(object propertyValue, object alternateMaxProperty, object alternateMinProperty, IMessage validationMessage)
         {
@@ -428,7 +436,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="alternateMaxProperty">The alternate property.</param>
         /// <param name="alternateMinProperty">The alternate minimum property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns></returns>
+        /// <returns>Returns a Validation message if it fails</returns>
         /// <exception cref="InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
         private IMessage ValidateDoubleInRange(object propertyValue, object alternateMaxProperty, object alternateMinProperty, IMessage validationMessage)
         {
@@ -486,7 +494,7 @@ namespace Mud.Engine.Core.Engine.ValidationRules
         /// <param name="alternateMaxProperty">The alternate property.</param>
         /// <param name="alternateMinProperty">The alternate minimum property.</param>
         /// <param name="validationMessage">The validation message.</param>
-        /// <returns></returns>
+        /// <returns>Returns a Validation message if it fails</returns>
         /// <exception cref="InvalidCastException">Validation failed due to invalid data being provided to the validator for conversion.</exception>
         private IMessage ValidateDecimalInRange(object propertyValue, object alternateMaxProperty, object alternateMinProperty, IMessage validationMessage)
         {

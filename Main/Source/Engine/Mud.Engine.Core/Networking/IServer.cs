@@ -1,14 +1,30 @@
-﻿using Mud.Engine.Core.Engine;
-using Mud.Engine.Core.Mob;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="IServer.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Networking
 {
+    using System;
+    using System.Collections.Generic;
+    using Mud.Engine.Core.Engine;
+    using Mud.Engine.Core.Mob;
+
+    /// <summary>
+    /// Provides a contract for objects wanting to implement a server.
+    /// </summary>
     public interface IServer
     {
+        /// <summary>
+        /// Occurs when a player connects to the server.
+        /// </summary>
+        event EventHandler<ServerConnectionEventArgs> PlayerConnected;
+
+        /// <summary>
+        /// Occurs when a player disconnects from the server.
+        /// </summary>
+        event EventHandler<ServerConnectionEventArgs> PlayerDisconnected;
+
         /// <summary>
         /// Gets the game.
         /// </summary>
@@ -20,7 +36,7 @@ namespace Mud.Engine.Core.Networking
         /// <summary>
         /// Gets a collection of current user connections.
         /// </summary>
-        List<IServerPlayer> Connections { get; }
+        ICollection<IPlayer> ConnectedPlayers { get; }
 
         /// <summary>
         /// Gets or sets the port that the server is running on.
@@ -50,7 +66,7 @@ namespace Mud.Engine.Core.Networking
         /// <summary>
         /// Gets or sets the message of the day.
         /// </summary>
-        List<string> MessageOfTheDay { get; set; }
+        ICollection<string> MessageOfTheDay { get; set; }
 
         /// <summary>
         /// Gets or sets the server owner.
@@ -70,11 +86,9 @@ namespace Mud.Engine.Core.Networking
         /// <summary>
         /// Starts the server using the specified game.
         /// </summary>
-        /// <typeparam name="TServerObject">The type of the server player object.</typeparam>
-        /// <typeparam name="UPlayerObject">The type of the player object.</typeparam>
-        void Start<TServerObject, UPlayerObject>()
-            where TServerObject : class, IServerPlayer, new()
-            where UPlayerObject : class, IPlayer, new();
+        /// <typeparam name="TPlayer">The type of the player.</typeparam>
+        /// <param name="game">The game.</param>
+        void Start<TPlayer>(IGame game) where TPlayer : class, IPlayer, new();
 
         /// <summary>
         /// Stops the server.
@@ -84,8 +98,8 @@ namespace Mud.Engine.Core.Networking
         /// <summary>
         /// Disconnects the specified IServerPlayer object.
         /// </summary>
-        /// <param name="connection">The connection.</param>
-        void Disconnect(IServerPlayer connection);
+        /// <param name="player">The player.</param>
+        void Disconnect(IPlayer player);
 
         /// <summary>
         /// Disconnects everyone from the server..
