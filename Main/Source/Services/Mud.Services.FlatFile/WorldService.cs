@@ -39,9 +39,23 @@ namespace Mud.Services.FlatFile
                 List<string> lines = await Task.Run(() => File.ReadAllLines(file).ToList());
                 var world = new DefaultWorld();
 
-                if (lines.Any(l => l.Equals(world.GetPropertyName(p => p.Name))))
+                if (lines.Any(line => line.StartsWith(world.GetPropertyName(p => p.Name))))
                 {
-                    world.Name = lines.FirstOrDefault(line => line.Equals(world.GetPropertyName(p => p.Name)));
+                    world.Name = lines.FirstOrDefault(line => line.StartsWith(world.GetPropertyName(p => p.Name)));
+                }
+                
+                if (lines.Any(line => line.StartsWith(world.GetPropertyName(p => p.Id))))
+                {
+                    string idAsString = lines.FirstOrDefault(line => line.StartsWith(world.GetPropertyName(p => p.Id)));
+                    Guid id = Guid.Empty;
+                    if (Guid.TryParse(idAsString, out id))
+                    {
+                        world.Id = id;
+                    }
+                    else
+                    {
+                        throw new InvalidCastException("Unable to restore the Id for the world.");
+                    }
                 }
 
                 worlds.Add(world);
@@ -50,7 +64,7 @@ namespace Mud.Services.FlatFile
             return worlds;
         }
 
-        public Task<IWorld> GetWorldForRealm()
+        public Task<IWorld> GetWorldForRealm(IRealm realm)
         {
             throw new NotImplementedException();
         }

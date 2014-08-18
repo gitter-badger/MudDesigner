@@ -26,16 +26,19 @@ namespace Mud.Repositories.Shared
         /// <summary>
         /// Gets the world for the given realm.
         /// </summary>
+        /// <param name="realm">The realm.</param>
         /// <param name="includeAllChildrenObjects">if set to <c>true</c> [include all children objects].</param>
-        /// <returns>Returns the World associated with the supplied Realm.</returns>
-        Task<IWorld> GetWorldForRealm(bool includeAllChildrenObjects = false);
+        /// <returns>
+        /// Returns the World associated with the supplied Realm.
+        /// </returns>
+        Task<IWorld> GetWorldForRealm(IRealm realm, bool includeAllChildrenObjects = false);
 
         /// <summary>
         /// Gets the world by identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Returns the World with the given Id.</returns>
-        Task<IWorld> GetWorldById(Guid id);
+        Task<IWorld> GetWorldById(Guid id, bool includeAllChildrenObjects = false);
 
         /// <summary>
         /// Saves the world.

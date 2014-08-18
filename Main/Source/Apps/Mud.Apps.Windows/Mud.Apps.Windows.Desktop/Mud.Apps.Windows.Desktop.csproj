@@ -142,6 +142,10 @@
       <Project>{efcd4f40-a2cb-440b-a1c1-bad78b784471}</Project>
       <Name>Mud.Engine.Default.Desktop</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Repositories\Mud.Repositories.Engine.DefaultDesktop\Mud.Repositories.Engine.DefaultDesktop.csproj">
+      <Project>{8fa627f4-29dd-4246-9012-47fec363a372}</Project>
+      <Name>Mud.Repositories.Engine.DefaultDesktop</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Repositories\Mud.Repositories.Shared\Mud.Repositories.Shared.csproj">
       <Project>{1e50f1a9-b51a-4084-9293-0dba1a14c92c}</Project>
       <Name>Mud.Repositories.Shared</Name>

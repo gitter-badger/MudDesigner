@@ -13,6 +13,9 @@ using Microsoft.Practices.Prism.Modularity;
 using System.IO;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Mud.Engine.Core.Engine;
+using Mud.Engine.Core.Environment;
+using Mud.Repositories.Shared;
+using Mud.Repositories.Engine.DefaultDesktop;
 
 namespace Mud.Apps.WinDesktop
 {
@@ -52,6 +55,8 @@ namespace Mud.Apps.WinDesktop
             base.ConfigureContainer();
 
             this.Container.RegisterType<IEventAggregator>(new ContainerControlledLifetimeManager());
+            this.Container.RegisterType<IWorld, DefaultWorld>();
+            this.Container.RegisterType<IWorldRepository, WorldRepository>(new ContainerControlledLifetimeManager());
         }
 
         /// <summary>

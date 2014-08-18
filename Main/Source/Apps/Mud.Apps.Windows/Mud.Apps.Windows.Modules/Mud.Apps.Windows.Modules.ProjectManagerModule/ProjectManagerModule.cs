@@ -1,5 +1,6 @@
 ﻿using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
+using Mud.Apps.Windows.Modules.ProjectManagerModule.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace Mud.Apps.Windows.Modules.ProjectManagerModule
 
         public void Initialize()
         {
+            container.RegisterType<ProjectList>();
         }
     }
 }

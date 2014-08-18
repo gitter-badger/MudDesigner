@@ -24,7 +24,7 @@ namespace Mud.Services.Shared
         /// <returns>
         /// Returns the World associated with the supplied Realm.
         /// </returns>
-        Task<IWorld> GetWorldForRealm();
+        Task<IWorld> GetWorldForRealm(IRealm realm);
 
         /// <summary>
         /// Gets the world by identifier.

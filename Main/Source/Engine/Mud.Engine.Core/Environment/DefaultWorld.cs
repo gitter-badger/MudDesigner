@@ -7,115 +7,45 @@ namespace Mud.Engine.Core.Environment
 {
     public class DefaultWorld : IWorld
     {
-        public long TimeFromCreation
+        public DefaultWorld()
         {
-            get { throw new NotImplementedException(); }
+            this.Id = Guid.NewGuid();
+            this.CreationDate = DateTime.Now;
         }
 
-        public DateTime CreationDate
-        {
-            get { throw new NotImplementedException(); }
+        public Guid Id { get; set; }
+
+        public double TimeFromCreation 
+        { 
+            get 
+            { 
+                return this.CreationDate.Subtract(DateTime.Now).TotalSeconds; 
+            } 
         }
 
-        public int HoursPerDay
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public DateTime CreationDate { get; protected set; }
 
-        public float HoursRatio
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public int HoursPerDay { get; set; }
 
-        public IEnumerable<IRealm> Realms
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public float HoursRatio { get; set; }
 
-        public string Name
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public IEnumerable<IRealm> Realms { get; set; }
 
-        public IWeatherState CurrentWeather
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public string Name { get; set; }
 
-        public IEnumerable<IWeatherState> WeatherStates
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public IWeatherState CurrentWeather { get; set; }
 
-        public ITimeOfDayState CurrentTimeOfDay
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public IEnumerable<IWeatherState> WeatherStates { get; set; }
 
-        public IEnumerable<ITimeOfDayState> TimeOfDayStates
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public ITimeOfDayState CurrentTimeOfDay { get; set; }
+
+        public IEnumerable<ITimeOfDayState> TimeOfDayStates { get; set; }
 
         public void Initialize()
         {
-            throw new NotImplementedException();
+            this.TimeOfDayStates = new List<ITimeOfDayState>();
+            this.WeatherStates = new List<IWeatherState>();
+            this.Realms = new List<IRealm>();
         }
     }
 }

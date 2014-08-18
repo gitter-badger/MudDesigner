@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Environment
 {
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -12,6 +13,14 @@ namespace Mud.Engine.Core.Environment
     /// </summary>
     public interface IEnvironment
     {
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        Guid Id { get; set; }
+
         /// <summary>
         /// Gets or sets the name.
         /// </summary>

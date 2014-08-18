@@ -19,7 +19,7 @@ namespace Mud.Engine.Core.Environment
         /// <value>
         /// The time from creation.
         /// </value>
-        long TimeFromCreation { get; }
+        double TimeFromCreation { get; }
 
         /// <summary>
         /// Gets the creation date.
