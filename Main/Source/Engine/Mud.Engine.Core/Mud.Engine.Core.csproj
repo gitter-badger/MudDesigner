@@ -38,6 +38,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Engine\ObjectExtensions.cs" />
     <Compile Include="Engine\SystemMessage.cs" />
     <Compile Include="Engine\Validation\ValidatableBase.cs" />
     <Compile Include="Engine\DefaultGame.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Engine\Validation\ValidationCustomHandlerDelegate.cs" />
     <Compile Include="Engine\Validation\ValidationNumberDataTypes.cs" />
     <Compile Include="Engine\WarningMessage.cs" />
+    <Compile Include="Environment\DefaultWorld.cs" />
     <Compile Include="Environment\IEnvironment.cs" />
     <Compile Include="Environment\IRealm.cs" />
     <Compile Include="Environment\IRoom.cs" />

@@ -57,6 +57,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Engine\Validation\ValidateNumberHasMaximumValueTests.cs" />
     <Compile Include="Engine\Validation\ValidatableBaseTests.cs" />
     <Compile Include="Fixtures\MessageFixture.cs" />
     <Compile Include="Fixtures\ValidatableFixture.cs" />

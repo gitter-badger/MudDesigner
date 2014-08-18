@@ -37,8 +37,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectPropertiesModule", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Apps.Windows.Modules.ProjectManagerModule", "Apps\Mud.Apps.Windows\Mud.Apps.Windows.Modules\Mud.Apps.Windows.Modules.ProjectManagerModule\Mud.Apps.Windows.Modules.ProjectManagerModule.csproj", "{2158886E-73A6-448B-BC2C-DE1E8D9B2017}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Services.ParseDesktop", "Services\Mud.Services.ParseDesktop\Mud.Services.ParseDesktop.csproj", "{904BD3D0-E83B-410C-93F7-B97FA29ABC68}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Engine.Default.Desktop", "Engine\Mud.Engine.Default.Desktop\Mud.Engine.Default.Desktop.csproj", "{EFCD4F40-A2CB-440B-A1C1-BAD78B784471}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Engine.Core", "Engine\Mud.Engine.Core\Mud.Engine.Core.csproj", "{F27C159B-6412-46DC-8239-F0841C6801DC}"
@@ -51,6 +49,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Apps.Windows.Shared", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Tests.Engine.Default.Desktop", "Tests\Engine\Mud.Tests.Engine.Default.Desktop\Mud.Tests.Engine.Default.Desktop.csproj", "{B792147A-4B0C-4D57-A18E-623EE79DA575}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Services.Shared", "Services\Mud.Services.Shared\Mud.Services.Shared.csproj", "{C9405E3B-F861-4C7E-B891-3E87B6D028C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Repositories.Engine.DefaultDesktop", "Repositories\Mud.Repositories.Engine.DefaultDesktop\Mud.Repositories.Engine.DefaultDesktop.csproj", "{8FA627F4-29DD-4246-9012-47FEC363A372}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mud.Services.FlatFile", "Services\Mud.Services.FlatFile\Mud.Services.FlatFile.csproj", "{D2C8C943-4788-4F6F-BF45-BD2CC8EC1BC4}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Apps\Mud.Apps.Universal\Mud.Apps.Universal.Shared\Mud.Apps.Universal.Shared.projitems*{91b002c3-4da5-4977-8635-488ffd2ccf3a}*SharedItemsImports = 13
@@ -58,7 +62,7 @@ Global
 		Apps\Mud.Apps.Universal\Mud.Apps.Universal.Shared\Mud.Apps.Universal.Shared.projitems*{f88c8ce0-782a-4838-a239-3577aa302ca1}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 18
+		SccNumberOfProjects = 20
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs03
 		SccLocalPath0 = .
@@ -102,34 +106,42 @@ Global
 		SccProjectTopLevelParentUniqueName10 = MudEngine.sln
 		SccProjectName10 = Apps/Mud.Apps.Windows/Mud.Apps.Windows.Modules/Mud.Apps.Windows.Modules.ProjectManagerModule
 		SccLocalPath10 = Apps\\Mud.Apps.Windows\\Mud.Apps.Windows.Modules\\Mud.Apps.Windows.Modules.ProjectManagerModule
-		SccProjectUniqueName11 = Services\\Mud.Services.ParseDesktop\\Mud.Services.ParseDesktop.csproj
+		SccProjectUniqueName11 = Engine\\Mud.Engine.Default.Desktop\\Mud.Engine.Default.Desktop.csproj
 		SccProjectTopLevelParentUniqueName11 = MudEngine.sln
-		SccProjectName11 = Services/Mud.Services.ParseDesktop
-		SccLocalPath11 = Services\\Mud.Services.ParseDesktop
-		SccProjectUniqueName12 = Engine\\Mud.Engine.Default.Desktop\\Mud.Engine.Default.Desktop.csproj
+		SccProjectName11 = Engine/Mud.Engine.Default.Desktop
+		SccLocalPath11 = Engine\\Mud.Engine.Default.Desktop
+		SccProjectUniqueName12 = Engine\\Mud.Engine.Core\\Mud.Engine.Core.csproj
 		SccProjectTopLevelParentUniqueName12 = MudEngine.sln
-		SccProjectName12 = Engine/Mud.Engine.Default.Desktop
-		SccLocalPath12 = Engine\\Mud.Engine.Default.Desktop
-		SccProjectUniqueName13 = Engine\\Mud.Engine.Core\\Mud.Engine.Core.csproj
+		SccProjectName12 = Engine/Mud.Engine.Core
+		SccLocalPath12 = Engine\\Mud.Engine.Core
+		SccProjectUniqueName13 = Tests\\Engine\\Mud.Tests.Engine.Core\\Mud.Tests.Engine.Core.csproj
 		SccProjectTopLevelParentUniqueName13 = MudEngine.sln
-		SccProjectName13 = Engine/Mud.Engine.Core
-		SccLocalPath13 = Engine\\Mud.Engine.Core
-		SccProjectUniqueName14 = Tests\\Engine\\Mud.Tests.Engine.Core\\Mud.Tests.Engine.Core.csproj
+		SccProjectName13 = Tests/Engine/Mud.Tests.Engine.Core
+		SccLocalPath13 = Tests\\Engine\\Mud.Tests.Engine.Core
+		SccProjectUniqueName14 = Apps\\Mud.Apps.Windows\\Mud.Apps.Windows.Server\\Mud.Apps.Windows.Server.csproj
 		SccProjectTopLevelParentUniqueName14 = MudEngine.sln
-		SccProjectName14 = Tests/Engine/Mud.Tests.Engine.Core
-		SccLocalPath14 = Tests\\Engine\\Mud.Tests.Engine.Core
-		SccProjectUniqueName15 = Apps\\Mud.Apps.Windows\\Mud.Apps.Windows.Server\\Mud.Apps.Windows.Server.csproj
+		SccProjectName14 = Apps/Mud.Apps.Windows/Mud.Apps.Windows.Server
+		SccLocalPath14 = Apps\\Mud.Apps.Windows\\Mud.Apps.Windows.Server
+		SccProjectUniqueName15 = Apps\\Mud.Apps.Windows\\Mud.Apps.Windows.Shared\\Mud.Apps.Windows.Shared.csproj
 		SccProjectTopLevelParentUniqueName15 = MudEngine.sln
-		SccProjectName15 = Apps/Mud.Apps.Windows/Mud.Apps.Windows.Server
-		SccLocalPath15 = Apps\\Mud.Apps.Windows\\Mud.Apps.Windows.Server
-		SccProjectUniqueName16 = Apps\\Mud.Apps.Windows\\Mud.Apps.Windows.Shared\\Mud.Apps.Windows.Shared.csproj
+		SccProjectName15 = Apps/Mud.Apps.Windows/Mud.Apps.Windows.Shared
+		SccLocalPath15 = Apps\\Mud.Apps.Windows\\Mud.Apps.Windows.Shared
+		SccProjectUniqueName16 = Tests\\Engine\\Mud.Tests.Engine.Default.Desktop\\Mud.Tests.Engine.Default.Desktop.csproj
 		SccProjectTopLevelParentUniqueName16 = MudEngine.sln
-		SccProjectName16 = Apps/Mud.Apps.Windows/Mud.Apps.Windows.Shared
-		SccLocalPath16 = Apps\\Mud.Apps.Windows\\Mud.Apps.Windows.Shared
-		SccProjectUniqueName17 = Tests\\Engine\\Mud.Tests.Engine.Default.Desktop\\Mud.Tests.Engine.Default.Desktop.csproj
+		SccProjectName16 = Tests/Engine/Mud.Tests.Engine.Default.Desktop
+		SccLocalPath16 = Tests\\Engine\\Mud.Tests.Engine.Default.Desktop
+		SccProjectUniqueName17 = Services\\Mud.Services.Shared\\Mud.Services.Shared.csproj
 		SccProjectTopLevelParentUniqueName17 = MudEngine.sln
-		SccProjectName17 = Tests/Engine/Mud.Tests.Engine.Default.Desktop
-		SccLocalPath17 = Tests\\Engine\\Mud.Tests.Engine.Default.Desktop
+		SccProjectName17 = Services/Mud.Services.Shared
+		SccLocalPath17 = Services\\Mud.Services.Shared
+		SccProjectUniqueName18 = Repositories\\Mud.Repositories.Engine.DefaultDesktop\\Mud.Repositories.Engine.DefaultDesktop.csproj
+		SccProjectTopLevelParentUniqueName18 = MudEngine.sln
+		SccProjectName18 = Repositories/Mud.Repositories.Engine.DefaultDesktop
+		SccLocalPath18 = Repositories\\Mud.Repositories.Engine.DefaultDesktop
+		SccProjectUniqueName19 = Services\\Mud.Services.FlatFile\\Mud.Services.FlatFile.csproj
+		SccProjectTopLevelParentUniqueName19 = MudEngine.sln
+		SccProjectName19 = Services/Mud.Services.FlatFile
+		SccLocalPath19 = Services\\Mud.Services.FlatFile
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -284,20 +296,6 @@ Global
 		{2158886E-73A6-448B-BC2C-DE1E8D9B2017}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{2158886E-73A6-448B-BC2C-DE1E8D9B2017}.Release|x64.ActiveCfg = Release|Any CPU
 		{2158886E-73A6-448B-BC2C-DE1E8D9B2017}.Release|x86.ActiveCfg = Release|Any CPU
-		{904BD3D0-E83B-410C-93F7-B97FA29ABC68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{904BD3D0-E83B-410C-93F7-B97FA29ABC68}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{904BD3D0-E83B-410C-93F7-B97FA29ABC68}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{904BD3D0-E83B-410C-93F7-B97FA29ABC68}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{904BD3D0-E83B-410C-93F7-B97FA29ABC68}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{904BD3D0-E83B-410C-93F7-B97FA29ABC68}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{904BD3D0-E83B-410C-93F7-B97FA29ABC68}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{904BD3D0-E83B-410C-93F7-B97FA29ABC68}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{904BD3D0-E83B-410C-93F7-B97FA29ABC68}.Release|Any CPU.Build.0 = Release|Any CPU
-		{904BD3D0-E83B-410C-93F7-B97FA29ABC68}.Release|ARM.ActiveCfg = Release|Any CPU
-		{904BD3D0-E83B-410C-93F7-B97FA29ABC68}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{904BD3D0-E83B-410C-93F7-B97FA29ABC68}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{904BD3D0-E83B-410C-93F7-B97FA29ABC68}.Release|x64.ActiveCfg = Release|Any CPU
-		{904BD3D0-E83B-410C-93F7-B97FA29ABC68}.Release|x86.ActiveCfg = Release|Any CPU
 		{EFCD4F40-A2CB-440B-A1C1-BAD78B784471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EFCD4F40-A2CB-440B-A1C1-BAD78B784471}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFCD4F40-A2CB-440B-A1C1-BAD78B784471}.Debug|ARM.ActiveCfg = Debug|Any CPU
@@ -382,6 +380,48 @@ Global
 		{B792147A-4B0C-4D57-A18E-623EE79DA575}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B792147A-4B0C-4D57-A18E-623EE79DA575}.Release|x64.ActiveCfg = Release|Any CPU
 		{B792147A-4B0C-4D57-A18E-623EE79DA575}.Release|x86.ActiveCfg = Release|Any CPU
+		{C9405E3B-F861-4C7E-B891-3E87B6D028C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9405E3B-F861-4C7E-B891-3E87B6D028C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9405E3B-F861-4C7E-B891-3E87B6D028C9}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{C9405E3B-F861-4C7E-B891-3E87B6D028C9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C9405E3B-F861-4C7E-B891-3E87B6D028C9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C9405E3B-F861-4C7E-B891-3E87B6D028C9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C9405E3B-F861-4C7E-B891-3E87B6D028C9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C9405E3B-F861-4C7E-B891-3E87B6D028C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9405E3B-F861-4C7E-B891-3E87B6D028C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9405E3B-F861-4C7E-B891-3E87B6D028C9}.Release|ARM.ActiveCfg = Release|Any CPU
+		{C9405E3B-F861-4C7E-B891-3E87B6D028C9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C9405E3B-F861-4C7E-B891-3E87B6D028C9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C9405E3B-F861-4C7E-B891-3E87B6D028C9}.Release|x64.ActiveCfg = Release|Any CPU
+		{C9405E3B-F861-4C7E-B891-3E87B6D028C9}.Release|x86.ActiveCfg = Release|Any CPU
+		{8FA627F4-29DD-4246-9012-47FEC363A372}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FA627F4-29DD-4246-9012-47FEC363A372}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FA627F4-29DD-4246-9012-47FEC363A372}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{8FA627F4-29DD-4246-9012-47FEC363A372}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8FA627F4-29DD-4246-9012-47FEC363A372}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8FA627F4-29DD-4246-9012-47FEC363A372}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8FA627F4-29DD-4246-9012-47FEC363A372}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8FA627F4-29DD-4246-9012-47FEC363A372}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FA627F4-29DD-4246-9012-47FEC363A372}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FA627F4-29DD-4246-9012-47FEC363A372}.Release|ARM.ActiveCfg = Release|Any CPU
+		{8FA627F4-29DD-4246-9012-47FEC363A372}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8FA627F4-29DD-4246-9012-47FEC363A372}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8FA627F4-29DD-4246-9012-47FEC363A372}.Release|x64.ActiveCfg = Release|Any CPU
+		{8FA627F4-29DD-4246-9012-47FEC363A372}.Release|x86.ActiveCfg = Release|Any CPU
+		{D2C8C943-4788-4F6F-BF45-BD2CC8EC1BC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2C8C943-4788-4F6F-BF45-BD2CC8EC1BC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2C8C943-4788-4F6F-BF45-BD2CC8EC1BC4}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{D2C8C943-4788-4F6F-BF45-BD2CC8EC1BC4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D2C8C943-4788-4F6F-BF45-BD2CC8EC1BC4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D2C8C943-4788-4F6F-BF45-BD2CC8EC1BC4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D2C8C943-4788-4F6F-BF45-BD2CC8EC1BC4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D2C8C943-4788-4F6F-BF45-BD2CC8EC1BC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2C8C943-4788-4F6F-BF45-BD2CC8EC1BC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2C8C943-4788-4F6F-BF45-BD2CC8EC1BC4}.Release|ARM.ActiveCfg = Release|Any CPU
+		{D2C8C943-4788-4F6F-BF45-BD2CC8EC1BC4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D2C8C943-4788-4F6F-BF45-BD2CC8EC1BC4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D2C8C943-4788-4F6F-BF45-BD2CC8EC1BC4}.Release|x64.ActiveCfg = Release|Any CPU
+		{D2C8C943-4788-4F6F-BF45-BD2CC8EC1BC4}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -399,15 +439,14 @@ Global
 		{237F5CBB-4EFD-4150-8AD2-99B438AC3A61} = {A0D6C3BE-0814-4A27-80B2-FD34033C006A}
 		{854E29B7-5AAD-4A0C-A226-936693155605} = {237F5CBB-4EFD-4150-8AD2-99B438AC3A61}
 		{2158886E-73A6-448B-BC2C-DE1E8D9B2017} = {237F5CBB-4EFD-4150-8AD2-99B438AC3A61}
-		{904BD3D0-E83B-410C-93F7-B97FA29ABC68} = {3AB818F4-9336-486A-8F58-E58F4C16FF1C}
 		{EFCD4F40-A2CB-440B-A1C1-BAD78B784471} = {91D32ADD-0DC6-4E37-832D-CA6B9C3D7E95}
 		{F27C159B-6412-46DC-8239-F0841C6801DC} = {91D32ADD-0DC6-4E37-832D-CA6B9C3D7E95}
 		{56A25D24-238D-4A5F-BFAB-0FEB31637B4F} = {3B2E05B4-DAC5-4A13-977E-193F3045B2F2}
 		{B0DD6155-8DB6-46AE-ADC2-C8A002C2AEAA} = {A0D6C3BE-0814-4A27-80B2-FD34033C006A}
 		{F0CCAC7F-FFB3-4681-981C-FD98BEFF4796} = {A0D6C3BE-0814-4A27-80B2-FD34033C006A}
 		{B792147A-4B0C-4D57-A18E-623EE79DA575} = {3B2E05B4-DAC5-4A13-977E-193F3045B2F2}
-	EndGlobalSection
-	GlobalSection(NDepend) = preSolution
-		Project = ".\MudEngine.ndproj"
+		{C9405E3B-F861-4C7E-B891-3E87B6D028C9} = {3AB818F4-9336-486A-8F58-E58F4C16FF1C}
+		{8FA627F4-29DD-4246-9012-47FEC363A372} = {F1E65688-C9D7-4B4A-8E74-7EA1EA975560}
+		{D2C8C943-4788-4F6F-BF45-BD2CC8EC1BC4} = {3AB818F4-9336-486A-8F58-E58F4C16FF1C}
 	EndGlobalSection
 EndGlobal

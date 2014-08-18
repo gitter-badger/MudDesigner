@@ -15,7 +15,17 @@ namespace Mud.Engine.Core.Engine
     /// The Default engine implementation of the IGame interface. This implementation provides validation support via ValidationBase.
     /// </summary>
     public abstract class DefaultGame : ValidatableBase, IGame
-    {        
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultGame"/> class.
+        /// </summary>
+        /// <param name="logger">The logger.</param>
+        public DefaultGame(ILogger logger)
+        {
+            this.Logger = logger;
+            this.Version = new Version("0.0.0.1");
+        }
+
         /// <summary>
         /// Gets or sets a value indicating whether this instance is multiplayer.
         /// </summary>

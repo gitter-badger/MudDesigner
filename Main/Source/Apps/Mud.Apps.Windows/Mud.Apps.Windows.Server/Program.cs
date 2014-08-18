@@ -11,6 +11,12 @@ namespace Mud.Apps.Windows.Server
     using Mud.Engine.Core.Networking;
     using Mud.Engine.Default.Desktop.Engine;
     using Mud.Engine.DefaultDesktop.Networking;
+    using Mud.Engine.Core.Engine;
+    using Mud.Repositories.Shared;
+    using Mud.Repositories.Engine.DefaultDesktop;
+    using Mud.Services.Shared;
+using Mud.Engine.Core.Environment;
+    using Mud.Services.FlatFile;
 
     /// <summary>
     /// The Mud Designer Telnet Server.
@@ -20,7 +26,7 @@ namespace Mud.Apps.Windows.Server
         /// <summary>
         /// The Dependency Injection container
         /// </summary>
-        private static IUnityContainer container;
+        private static IUnityContainer container = new UnityContainer();
 
         /// <summary>
         /// The engine game server
@@ -33,8 +39,10 @@ namespace Mud.Apps.Windows.Server
         /// <param name="args">The arguments.</param>
         public static void Main(string[] args)
         {
+            RegisterContainerTypes();
+
             // Instance a new DesktopGame and try to initialize it.
-            var game = new DesktopGame(null, null);
+            var game = container.Resolve<IGame>();
             try
             {
                 game.Initialize();
@@ -51,7 +59,7 @@ namespace Mud.Apps.Windows.Server
 
             // Register to be notified when a player connects and disconnects.
             server.PlayerConnected += Server_PlayerConnected;
-            server.PlayerDisconnected += Server_PlayerDisconnected;
+            server.PlayerDisconnected += Server_PlayerDisconnected; 
 
             // Start the server. The DefaultPlayer Type will be instanced when each new player connects.
             server.Start<DefaultPlayer>(game);
@@ -112,7 +120,10 @@ namespace Mud.Apps.Windows.Server
         /// </summary>
         private static void RegisterContainerTypes()
         {
-            // container.RegisterType<IWorldRepository, WorldRepository>();
+            container.RegisterType<IWorld, DefaultWorld>();
+            container.RegisterType<IGame, DesktopGame>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IWorldRepository, WorldRepository>();
+            container.RegisterType<IWorldService, WorldService>();
         }
     }
 }

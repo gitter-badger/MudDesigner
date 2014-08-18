@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B0DD6155-8DB6-46AE-ADC2-C8A002C2AEAA}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{8FA627F4-29DD-4246-9012-47FEC363A372}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mud.Apps.Windows.Server</RootNamespace>
-    <AssemblyName>Mud.Apps.Windows.Server</AssemblyName>
+    <RootNamespace>Mud.Repositories.Engine.DefaultDesktop</RootNamespace>
+    <AssemblyName>Mud.Repositories.Engine.DefaultDesktop</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
@@ -17,7 +17,6 @@
     <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -27,7 +26,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -37,13 +35,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Practices.Unity">
-      <HintPath>..\..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+      <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity.Configuration">
-      <HintPath>..\..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+      <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
-      <HintPath>..\..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+      <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -54,38 +52,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="WorldRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Engine\Mud.Engine.Core\Mud.Engine.Core.csproj">
+    <ProjectReference Include="..\..\Engine\Mud.Engine.Core\Mud.Engine.Core.csproj">
       <Project>{f27c159b-6412-46dc-8239-f0841c6801dc}</Project>
       <Name>Mud.Engine.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Engine\Mud.Engine.Default.Desktop\Mud.Engine.Default.Desktop.csproj">
-      <Project>{efcd4f40-a2cb-440b-a1c1-bad78b784471}</Project>
-      <Name>Mud.Engine.Default.Desktop</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Repositories\Mud.Repositories.Engine.DefaultDesktop\Mud.Repositories.Engine.DefaultDesktop.csproj">
-      <Project>{8fa627f4-29dd-4246-9012-47fec363a372}</Project>
-      <Name>Mud.Repositories.Engine.DefaultDesktop</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Repositories\Mud.Repositories.Shared\Mud.Repositories.Shared.csproj">
-      <Project>{1e50f1a9-b51a-4084-9293-0dba1a14c92c}</Project>
-      <Name>Mud.Repositories.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Services\Mud.Services.FlatFile\Mud.Services.FlatFile.csproj">
-      <Project>{d2c8c943-4788-4f6f-bf45-bd2cc8ec1bc4}</Project>
-      <Name>Mud.Services.FlatFile</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Services\Mud.Services.Shared\Mud.Services.Shared.csproj">
+    <ProjectReference Include="..\..\Services\Mud.Services.Shared\Mud.Services.Shared.csproj">
       <Project>{c9405e3b-f861-4c7e-b891-3e87b6d028c9}</Project>
       <Name>Mud.Services.Shared</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Mud.Repositories.Shared\Mud.Repositories.Shared.csproj">
+      <Project>{1e50f1a9-b51a-4084-9293-0dba1a14c92c}</Project>
+      <Name>Mud.Repositories.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

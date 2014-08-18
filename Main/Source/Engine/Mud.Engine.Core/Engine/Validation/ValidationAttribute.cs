@@ -89,6 +89,7 @@ namespace Mud.Engine.Core.Engine.Validation
             }
             else
             {
+                // TODO: This should not use a derived class within itself.
                 var numberGreaterThanRule = new ValidateNumberIsGreaterThanAttribute();
                 numberGreaterThanRule.GreaterThanValue = "0";
                 PropertyInfo property = this.GetAlternatePropertyInfo(sender, this.ValidateIfMemberValueIsValid);

@@ -27,10 +27,9 @@ namespace Mud.Engine.Default.Desktop.Engine
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <param name="worldRepository">The world repository.</param>
-        public DesktopGame(ILogger logger, IWorldRepository worldRepository) 
-            : base()
+        public DesktopGame(IWorldRepository worldRepository) 
+            : base(null)
         {
-            this.Logger = logger;
             this.worldRepository = worldRepository;
         }
 
@@ -49,7 +48,7 @@ namespace Mud.Engine.Default.Desktop.Engine
             }
 
             // Restore our previously saved worlds.
-            IEnumerable<IWorld> result = await this.worldRepository.GetWorlds();
+            IEnumerable<IWorld> result = await this.worldRepository.GetAllWorlds(true);
 
             this.Worlds = new List<IWorld>(result);
         }
