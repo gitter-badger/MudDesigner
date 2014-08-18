@@ -192,8 +192,6 @@ namespace Mud.Engine.DefaultDesktop.Networking
             {
                 this.Status = ServerStatus.Stopped;
                 this.IsEnabled = false;
-                this.ConnectedPlayers.Clear();
-                this.playerConnections.Clear();
             }
         }
 
@@ -226,15 +224,15 @@ namespace Mud.Engine.DefaultDesktop.Networking
                 Socket connection = playerConnection.Value;
                 IPlayer player = playerConnection.Key;
 
-                this.playerConnections.Remove(player);
-                this.ConnectedPlayers.Remove(player);
-
                 if (connection != null && connection.Connected)
                 {
                     connection.Shutdown(System.Net.Sockets.SocketShutdown.Both);
                     this.OnPlayerDisconnected(player);
                 }
             }
+
+            this.playerConnections.Clear();
+            this.ConnectedPlayers.Clear();
         }
 
         /// <summary>
