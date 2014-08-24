@@ -18,7 +18,7 @@ namespace Mud.Engine.Core.Environment
             this.HoursPerDay = 24;
             this.HoursFactor = 0.25;
 
-            this.timeOfDayStates = new List<ITimeOfDayState>{new MorningState(), new AfternoonState(), new NightState()};
+            this.timeOfDayStates = new List<ITimeOfDayState> { new MorningState(), new AfternoonState(), new NightState() };
             this.Realms = new List<IRealm>();
 
             // Must be in the constructor. If assigned within the Initialization method
@@ -29,7 +29,7 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Occurs when [time of day changed].
         /// </summary>
-        public event EventHandler<ITimeOfDayState> TimeOfDayChanged;
+        public event EventHandler<TimeOfDayChangedEventArgs> TimeOfDayChanged;
 
         /// <summary>
         /// Gets or sets the identifier.
@@ -118,68 +118,81 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Initializes the world by starting the world clock and the associated Realm clocks.
         /// </summary>
-        public virtual void Initialize()
+        public virtual void Initialize(ITimeOfDayState initialState = null)
         {
             // Set up our time of day clock.
-            if (this.timeOfDayStates.Count == 0)
+            if (this.timeOfDayStates.Count > 0 && initialState == null)
             {
-                return;
+                this.SetupWorldClock(this.GetTimeOfDayState(DateTime.Now));
             }
-            else if (this.timeOfDayStates.Count == 1)
+            else if (initialState != null)
             {
-                this.CurrentTimeOfDay = this.TimeOfDayStates.FirstOrDefault();
+                SetupWorldClock(initialState);
             }
-            else
-            {
-                this.CurrentTimeOfDay = this.GetTimeOfDayState(new DateTime(2014, 1, 1, 10, 0, 0));
-                this.CurrentTimeOfDay.TimeUpdated += this.CurrentTimeOfDay_TimeUpdated;
-                this.CurrentTimeOfDay.Initialize(this.HoursFactor / this.HoursPerDay, this.HoursPerDay);
-                this.CurrentTimeOfDay.CurrentTime.Hour = 10;
-            }
+
+            this.OnTimeOfDayChanged(null, this.CurrentTimeOfDay);
         }
 
-        protected virtual void OnTimeOfDayChanged(ITimeOfDayState timeOfDayChanged)
+        protected virtual void OnTimeOfDayChanged(ITimeOfDayState oldTimeOfDay, ITimeOfDayState newTimeOfDay)
         {
-            EventHandler<ITimeOfDayState> handler = this.TimeOfDayChanged;
+            EventHandler<TimeOfDayChangedEventArgs> handler = this.TimeOfDayChanged;
             if (handler == null)
             {
                 return;
             }
 
-            handler(this, timeOfDayChanged);
+            handler(this, new TimeOfDayChangedEventArgs(oldTimeOfDay, newTimeOfDay));
+        }
+
+        private void SetupWorldClock(ITimeOfDayState initialState)
+        {
+            // We want to reset our current state before we set up the next state
+            // The next state starts on a background thread and can cause listeners to access
+            // the old state before the new state is assigned preventing a proper reset.
+            if (this.CurrentTimeOfDay != null)
+            {
+                this.CurrentTimeOfDay.TimeUpdated -= this.CurrentTimeOfDay_TimeUpdated;
+                this.CurrentTimeOfDay.Reset();
+            }
+
+            initialState.TimeUpdated += this.CurrentTimeOfDay_TimeUpdated;
+            initialState.Initialize(this.HoursFactor / this.HoursPerDay, this.HoursPerDay);
+
+            this.CurrentTimeOfDay = initialState;
         }
 
         private void CurrentTimeOfDay_TimeUpdated(object sender, TimeOfDay e)
         {
-            Debug.WriteLine("Minute incremented.");
+            // We need to check if we have exceeded the time available in a given day.
+            if (e.Hour > this.HoursPerDay)
+            {
+                e.Hour = 0;
+                e.Minute = e.Minute;
+            }
 
-            ITimeOfDayState timeOfDay = this.GetTimeOfDayState();
-            if (this.CurrentTimeOfDay == timeOfDay)
+            // Check the current in-game time and see if we need to move to a new state or not.
+            ITimeOfDayState newTimeOfDay = this.GetTimeOfDayState(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, e.Hour, e.Minute, 0));
+            if (this.CurrentTimeOfDay == newTimeOfDay)
             {
                 return;
             }
 
-            this.CurrentTimeOfDay = timeOfDay;
-            this.OnTimeOfDayChanged(timeOfDay);
+            Debug.WriteLine(String.Format("Transitioned to {0} state.", newTimeOfDay.Name));
+
+            var currentTimeOfDay = this.CurrentTimeOfDay;
+            this.SetupWorldClock(newTimeOfDay);
+            this.OnTimeOfDayChanged(currentTimeOfDay, newTimeOfDay);
         }
 
 
-        private ITimeOfDayState GetTimeOfDayState(DateTime? initialTime = null)
+        private ITimeOfDayState GetTimeOfDayState(DateTime? currentTime = null)
         {
             ITimeOfDayState inProgressState = null;
             ITimeOfDayState nextState = null;
 
             TimeOfDay time = new TimeOfDay();
-            if (initialTime == null && this.CurrentTimeOfDay != null)
-            {
-                time.Hour = this.CurrentTimeOfDay.CurrentTime.Hour;
-                time.Minute = this.CurrentTimeOfDay.CurrentTime.Minute;
-            }
-            else if (initialTime != null)
-            {
-                time.Hour = initialTime.Value.Hour;
-                time.Minute = initialTime.Value.Minute;
-            }
+            time.Hour = currentTime.Value.Hour;
+            time.Minute = currentTime.Value.Minute;
 
             foreach (ITimeOfDayState state in this.TimeOfDayStates)
             {
@@ -227,12 +240,22 @@ namespace Mud.Engine.Core.Environment
             {
                 return inProgressState;
             }
-            else if (nextState != null)
+            else if (nextState != null && nextState.StateStartTime.Hour <= time.Hour && nextState.StateStartTime.Minute <= time.Minute)
             {
-                 return nextState;
+                return nextState;
             }
 
-            return null;
+            return this.CurrentTimeOfDay;
+        }
+
+        public void Dispose()
+        {
+            // These should all have their clocks disabled, but we ensure they are anyway.
+            // This will also pick up our Current state during the process.
+            foreach (ITimeOfDayState state in this.TimeOfDayStates)
+            {
+                state.Reset();
+            }
         }
     }
 }

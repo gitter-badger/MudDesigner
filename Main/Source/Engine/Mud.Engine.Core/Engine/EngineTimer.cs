@@ -66,7 +66,10 @@ namespace Mud.Engine.Core.Engine
 
         public void Stop()
         {
-            this.Cancel();
+            if (!this.IsCancellationRequested)
+            {
+                this.Cancel();
+            }
         }
 
         protected override void Dispose(bool disposing)

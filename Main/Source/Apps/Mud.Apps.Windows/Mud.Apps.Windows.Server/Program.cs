@@ -68,7 +68,7 @@ using Mud.Engine.Core.Environment;
 
             foreach(IWorld world in game.Worlds)
             {
-                world.TimeOfDayChanged += (sender, timeOfDay) => Console.WriteLine(string.Format("It is now {0}", timeOfDay.Name));
+                world.TimeOfDayChanged += (sender, timeOfDay) => Console.WriteLine(string.Format("It is now {0}", timeOfDay.TransitioningTo.Name));
             }
 
             // Our game loop.

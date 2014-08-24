@@ -47,6 +47,11 @@ namespace Mud.Engine.Core.Environment
         /// <param name="hoursPerDay">The hours per day.</param>
         void Initialize(double worldTimeFactor, int hoursPerDay);
 
+        /// <summary>
+        /// Resets this instance current time to that if its start time.
+        /// </summary>
+        void Reset();
+
         // TODO: Need to add events for when we transition out of a ITimeOfDayState.
     }
 }

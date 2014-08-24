@@ -44,10 +44,5 @@ namespace Mud.Engine.Core.Environment
         /// The creation date.
         /// </value>
         DateTime CreationDate { get; set; }
-
-        /// <summary>
-        /// Initializes this instance. The environment time and states are set up.
-        /// </summary>
-        void Initialize();
     }
 }

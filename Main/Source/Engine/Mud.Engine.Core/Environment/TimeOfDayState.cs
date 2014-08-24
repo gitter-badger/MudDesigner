@@ -9,6 +9,12 @@ namespace Mud.Engine.Core.Environment
 {
     public abstract class TimeOfDayState : ITimeOfDayState
     {
+        private EngineTimer<TimeOfDay> timeOfDayClock;
+
+        public TimeOfDayState()
+        {
+        }
+
         /// <summary>
         /// Occurs when the state's time is changed.
         /// </summary>
@@ -51,35 +57,33 @@ namespace Mud.Engine.Core.Environment
             // Calculate how many seconds in real-world it takes to pass 1 minute in-game.
             double minuteInterval = 60 * worldTimeFactor;
 
+            this.StateStartTime.HoursPerDay = hoursPerDay;
+            this.Reset();
+
             // Update the state every in-game hour, which represents n number of minutes in real-world.
-            EngineTimer<TimeOfDay> timeOfDayClock = null;
-            if (minuteInterval < 1)
+            if (minuteInterval < 0.4)
             {
                 // If the minute interval is less than 1 second,
                 // then we increment by the hour to reduce excess update calls.
-                timeOfDayClock = new EngineTimer<TimeOfDay>((state, clock) =>
+                this.timeOfDayClock = new EngineTimer<TimeOfDay>((state, clock) =>
                 {
                     this.CurrentTime.IncrementByHour(1);
                     this.OnTimeUpdated();
                 },
                 this.CurrentTime);
-
-                this.CurrentTime = this.StateStartTime;
-                timeOfDayClock.Start(
+                this.timeOfDayClock.Start(
                     TimeSpan.FromMinutes(hourInterval).TotalMilliseconds,
                     TimeSpan.FromMinutes(hourInterval).TotalMilliseconds);
             }
             else
             {
-                timeOfDayClock = new EngineTimer<TimeOfDay>((state, clock) =>
+                this.timeOfDayClock = new EngineTimer<TimeOfDay>((state, clock) =>
                 {
                     this.CurrentTime.IncrementByMinute(1);
                     this.OnTimeUpdated();
                 },
                 this.CurrentTime);
-
-                this.CurrentTime = this.StateStartTime;
-                timeOfDayClock.Start(
+                this.timeOfDayClock.Start(
                     TimeSpan.FromSeconds(minuteInterval).TotalMilliseconds, 
                     TimeSpan.FromSeconds(minuteInterval).TotalMilliseconds);
             }
@@ -97,6 +101,32 @@ namespace Mud.Engine.Core.Environment
             }
 
             handler(this, this.CurrentTime);
+        }
+
+        public void Reset()
+        {
+            if (this.timeOfDayClock != null)
+            {
+                this.timeOfDayClock.Stop();
+            }
+
+            this.CurrentTime = new TimeOfDay
+            {
+                Hour = this.StateStartTime.Hour,
+                Minute = this.StateStartTime.Minute,
+                HoursPerDay = this.StateStartTime.HoursPerDay
+            };
+        }
+
+        public override string ToString()
+        {
+            return string.Format(
+                "{0} starting at {1}:{2} with a curent time of {3}:{4}",
+                this.Name,
+                this.StateStartTime.Hour,
+                this.StateStartTime.Minute,
+                this.CurrentTime.Hour,
+                this.CurrentTime.Minute);
         }
     }
 }

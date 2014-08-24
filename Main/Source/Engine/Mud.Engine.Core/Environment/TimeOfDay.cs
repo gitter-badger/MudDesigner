@@ -24,6 +24,8 @@ namespace Mud.Engine.Core.Environment
         /// </value>
         public int Minute { get; set; }
 
+        public int HoursPerDay { get; set; }
+
         /// <summary>
         /// Increments instance by the number of minutes specified.
         /// </summary>
@@ -33,12 +35,15 @@ namespace Mud.Engine.Core.Environment
             if (this.Minute + minutes > 59)
             {
                 // We have to many minutes provided, so we must increase by an hour
-                this.Hour++;
+                this.IncrementByHour(1);
                 int deductedValue = Math.Abs(this.Minute - 59);
                 this.Minute = 0;
 
                 // Now that we have increased by an hour, lets continue to increment the minutes.
-                this.IncrementByMinute(minutes - deductedValue);
+                if (deductedValue > 0)
+                {
+                    this.IncrementByMinute(minutes - deductedValue);
+                }
             }
             else
             {
@@ -53,12 +58,15 @@ namespace Mud.Engine.Core.Environment
         public void IncrementByHour(int hours)
         {
             // We can't increment more than 23 hours. Next hour is rolled over to 0.
-            if (this.Hour + hours > 23)
+            if (this.Hour + hours > this.HoursPerDay)
             {
-                int deductedValue = Math.Abs(this.Hour - 23);
+                int deductedValue = Math.Abs(this.Hour - this.HoursPerDay);
                 this.Hour = 0;
 
-                this.IncrementByHour(hours - deductedValue);
+                if (deductedValue > 0)
+                {
+                    this.IncrementByHour(hours - deductedValue);
+                }
             }
             else
             {

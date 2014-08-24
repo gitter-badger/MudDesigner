@@ -11,9 +11,9 @@ namespace Mud.Engine.Core.Environment
     /// <summary>
     /// Defines a world 
     /// </summary>
-    public interface IWorld : IEnvironment
+    public interface IWorld : IEnvironment, IDisposable
     {
-        event EventHandler<ITimeOfDayState> TimeOfDayChanged;
+        event EventHandler<TimeOfDayChangedEventArgs> TimeOfDayChanged;
 
         /// <summary>
         /// Gets or sets the current time of day.
@@ -54,5 +54,10 @@ namespace Mud.Engine.Core.Environment
         /// The realms.
         /// </value>
         IEnumerable<IRealm> Realms { get; set; }
+
+        /// <summary>
+        /// Initializes this instance. The environment time and states are set up.
+        /// </summary>
+        void Initialize(ITimeOfDayState initialState = null);
     }
 }
