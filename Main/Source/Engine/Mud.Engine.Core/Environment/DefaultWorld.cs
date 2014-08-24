@@ -123,27 +123,41 @@ namespace Mud.Engine.Core.Environment
             // Set up our time of day clock.
             if (this.timeOfDayStates.Count > 0 && initialState == null)
             {
+                // If we do not have an initial state, then we create a state based on our current real-world time.
                 this.SetupWorldClock(this.GetTimeOfDayState(DateTime.Now));
             }
             else if (initialState != null)
             {
+                // If an initial state is provided, then we hand it off to the setup method.
                 SetupWorldClock(initialState);
             }
 
+            // Notify listeners that our time of day has changed.
             this.OnTimeOfDayChanged(null, this.CurrentTimeOfDay);
         }
 
+        /// <summary>
+        /// Called when the current time of day has changed and a new one is transitioning in.
+        /// </summary>
+        /// <param name="oldTimeOfDay">The old time of day.</param>
+        /// <param name="newTimeOfDay">The new time of day.</param>
         protected virtual void OnTimeOfDayChanged(ITimeOfDayState oldTimeOfDay, ITimeOfDayState newTimeOfDay)
         {
+            // Our event handler
             EventHandler<TimeOfDayChangedEventArgs> handler = this.TimeOfDayChanged;
             if (handler == null)
             {
                 return;
             }
 
+            // Invoke the handler
             handler(this, new TimeOfDayChangedEventArgs(oldTimeOfDay, newTimeOfDay));
         }
 
+        /// <summary>
+        /// Sets up the world clock.
+        /// </summary>
+        /// <param name="initialState">The initial state.</param>
         private void SetupWorldClock(ITimeOfDayState initialState)
         {
             // We want to reset our current state before we set up the next state
@@ -155,12 +169,20 @@ namespace Mud.Engine.Core.Environment
                 this.CurrentTimeOfDay.Reset();
             }
 
+            // Register for event updates
             initialState.TimeUpdated += this.CurrentTimeOfDay_TimeUpdated;
+
+            // Initialize the state.
             initialState.Initialize(this.HoursFactor / this.HoursPerDay, this.HoursPerDay);
 
             this.CurrentTimeOfDay = initialState;
         }
 
+        /// <summary>
+        /// Event handler method fired when the Current TimeOfDay state has its time changed.
+        /// </summary>
+        /// <param name="sender">The TimeOfDayState that caused the time change.</param>
+        /// <param name="e">The new time of day.</param>
         private void CurrentTimeOfDay_TimeUpdated(object sender, TimeOfDay e)
         {
             // We need to check if we have exceeded the time available in a given day.
@@ -174,17 +196,28 @@ namespace Mud.Engine.Core.Environment
             ITimeOfDayState newTimeOfDay = this.GetTimeOfDayState(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, e.Hour, e.Minute, 0));
             if (this.CurrentTimeOfDay == newTimeOfDay)
             {
+                // State is the same, so we just return.
                 return;
             }
 
             Debug.WriteLine(String.Format("Transitioned to {0} state.", newTimeOfDay.Name));
 
+            // We need to store a reference to the current state, since the Setup method overwrites it.
             var currentTimeOfDay = this.CurrentTimeOfDay;
+
+            // Set up the new state.
             this.SetupWorldClock(newTimeOfDay);
+
+            // Invoke our event handler with the old state and the new state.
             this.OnTimeOfDayChanged(currentTimeOfDay, newTimeOfDay);
         }
 
 
+        /// <summary>
+        /// Looks at a supplied time of day and figures out what TimeOfDayState needs to be returned that matches the time of day.
+        /// </summary>
+        /// <param name="currentTime">The current time.</param>
+        /// <returns></returns>
         private ITimeOfDayState GetTimeOfDayState(DateTime? currentTime = null)
         {
             ITimeOfDayState inProgressState = null;
@@ -217,6 +250,7 @@ namespace Mud.Engine.Core.Environment
                     }
                 }
 
+                // If the state is already in progress, w
                 if (state.StateStartTime.Hour <= time.Hour ||
                     (state.StateStartTime.Hour <= time.Hour && state.StateStartTime.Minute <= time.Minute))
                 {
