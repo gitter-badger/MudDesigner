@@ -420,7 +420,7 @@ namespace Mud.Engine.Core.Engine.Validation
 
             if (!ValidatableBase.PropertyValidationCache.ContainsKey(this.GetType()))
             {
-                IEnumerable<PropertyInfo> propertiesToValidate = this.GetType().GetProperties()
+                IEnumerable<PropertyInfo> propertiesToValidate = this.GetType().GetRuntimeProperties()
                     .Where(p => p.GetCustomAttributes(typeof(ValidationAttribute), true).Any());
 
                 // Loop through all property info's and build a collection of validation rules for each property.

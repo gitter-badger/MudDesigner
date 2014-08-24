@@ -29,6 +29,13 @@ namespace Mud.Services.FlatFile
             }
         }
 
+        /// <summary>
+        /// Gets the worlds from the data store.
+        /// </summary>
+        /// <returns>
+        /// Returns a collection of IWorld implementations.
+        /// </returns>
+        /// <exception cref="System.InvalidCastException">Unable to restore the Id for the world.</exception>
         public async Task<IEnumerable<IWorld>> GetAllWorlds()
         {
             string[] files = Directory.GetFiles(this.worldPath, "*.txt");
@@ -39,11 +46,13 @@ namespace Mud.Services.FlatFile
                 List<string> lines = await Task.Run(() => File.ReadAllLines(file).ToList());
                 var world = new DefaultWorld();
 
+                // Restore the name
                 if (lines.Any(line => line.StartsWith(world.GetPropertyName(p => p.Name))))
                 {
                     world.Name = lines.FirstOrDefault(line => line.StartsWith(world.GetPropertyName(p => p.Name)));
                 }
                 
+                // Restore the id
                 if (lines.Any(line => line.StartsWith(world.GetPropertyName(p => p.Id))))
                 {
                     string idAsString = lines.FirstOrDefault(line => line.StartsWith(world.GetPropertyName(p => p.Id)));
@@ -57,6 +66,7 @@ namespace Mud.Services.FlatFile
                         throw new InvalidCastException("Unable to restore the Id for the world.");
                     }
                 }
+
 
                 worlds.Add(world);
             }

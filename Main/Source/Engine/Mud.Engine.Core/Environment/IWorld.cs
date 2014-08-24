@@ -13,24 +13,26 @@ namespace Mud.Engine.Core.Environment
     /// </summary>
     public interface IWorld : IEnvironment
     {
-        /// <summary>
-        /// Gets how many seconds have passed since the creation date.
-        /// </summary>
-        /// <value>
-        /// The time from creation.
-        /// </value>
-        double TimeFromCreation { get; }
+        event EventHandler<ITimeOfDayState> TimeOfDayChanged;
 
         /// <summary>
-        /// Gets the creation date.
+        /// Gets or sets the current time of day.
         /// </summary>
         /// <value>
-        /// The creation date.
+        /// The current time of day.
         /// </value>
-        DateTime CreationDate { get; }
+        ITimeOfDayState CurrentTimeOfDay { get; set; }
 
         /// <summary>
-        /// Gets or sets hour many hours it takes in-game to complete 1 day.
+        /// Gets or sets a collection of states that can be used for the time of day.
+        /// </summary>
+        /// <value>
+        /// The time of day states.
+        /// </value>
+        IEnumerable<ITimeOfDayState> TimeOfDayStates { get; set; }
+
+        /// <summary>
+        /// Gets or sets how many hours it takes in-game to complete 1 day for this world.
         /// </summary>
         /// <value>
         /// The hours per day.
@@ -38,12 +40,12 @@ namespace Mud.Engine.Core.Environment
         int HoursPerDay { get; set; }
 
         /// <summary>
-        /// Gets or sets the hours ratio. If set to 4, it takes 4 in-game hours to equal 1 real-world hour.
+        /// Gets or sets the hours factor. If set to 4, it takes 4 in-game hours to equal 1 real-world hour.
         /// </summary>
         /// <value>
         /// The hours ratio.
         /// </value>
-        float HoursRatio { get; set; }
+        double HoursFactor { get; set; }
 
         /// <summary>
         /// Gets or sets the realms in this world.

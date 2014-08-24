@@ -114,30 +114,41 @@ namespace Mud.Engine.Core.Engine.Validation
         /// <returns>Returns true if the types match.</returns>
         private bool ValidateDataTypesAreEqual(object value)
         {
+            // If no data type was specified, we have to determine it ourself.
+            // We need to identify the data type so that we can attempt to
+            // properly convert the provided value to its associated data type.
             if (this.numberDataType == ValidationNumberDataTypes.None)
             {
+                // Run through the supported data types and assign the numberDataType value
+                // once we identify a supported value. If none is found, we return false.
                 if (value is short)
                 {
+                    // Assign is as Short.
                     this.numberDataType = ValidationNumberDataTypes.Short;
                 }
                 else if (value is int)
                 {
+                    // Assign it as integer.
                     this.numberDataType = ValidationNumberDataTypes.Int;
                 }
                 else if (value is long)
                 {
+                    // Assign it as long
                     this.numberDataType = ValidationNumberDataTypes.Long;
                 }
                 else if (value is float)
                 {
+                    // Assign it as float
                     this.numberDataType = ValidationNumberDataTypes.Float;
                 }
                 else if (value is double)
                 {
+                    // Assign it as double.
                     this.numberDataType = ValidationNumberDataTypes.Double;
                 }
                 else if (value is decimal)
                 {
+                    // Assign it as decimal.
                     this.numberDataType = ValidationNumberDataTypes.Decimal;
                 }
                 else
@@ -149,29 +160,36 @@ namespace Mud.Engine.Core.Engine.Validation
             }
             else if (this.numberDataType == ValidationNumberDataTypes.Short && value is short)
             {
+                // The data type (short) required and the value provided match.
                 return true;
             }
             else if (this.numberDataType == ValidationNumberDataTypes.Int && value is int)
             {
+                // The data type (int) required and the value provided match.
                 return true;
             }
             else if (this.numberDataType == ValidationNumberDataTypes.Long && value is long)
             {
+                // The data type (long) required and the value provided match.
                 return true;
             }
             else if (this.numberDataType == ValidationNumberDataTypes.Float && value is float)
             {
+                // The data type (float) required and the value provided match.
                 return true;
             }
             else if (this.numberDataType == ValidationNumberDataTypes.Double && value is double)
             {
+                // The data type (double) required and the value provided match.
                 return true;
             }
             else if (this.numberDataType == ValidationNumberDataTypes.Decimal && value is decimal)
             {
+                // The data type (decimal) required and the value provided match.
                 return true;
             }
 
+            // We never found a matching data type.
             return false;
         }
 

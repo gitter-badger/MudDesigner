@@ -17,6 +17,7 @@ namespace Mud.Apps.Windows.Server
     using Mud.Services.Shared;
 using Mud.Engine.Core.Environment;
     using Mud.Services.FlatFile;
+    using System.Threading;
 
     /// <summary>
     /// The Mud Designer Telnet Server.
@@ -65,9 +66,15 @@ using Mud.Engine.Core.Environment;
             server.Start<DefaultPlayer>(game);
             game.IsMultiplayer = true;
 
+            foreach(IWorld world in game.Worlds)
+            {
+                world.TimeOfDayChanged += (sender, timeOfDay) => Console.WriteLine(string.Format("It is now {0}", timeOfDay.Name));
+            }
+
             // Our game loop.
             while (server.Status == ServerStatus.Running)
             {
+                Thread.Sleep(2500);
             }
 
             // Check if the server has not stopped. If not, we stop.

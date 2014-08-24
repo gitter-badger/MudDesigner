@@ -449,4 +449,10 @@ Global
 		{8FA627F4-29DD-4246-9012-47FEC363A372} = {F1E65688-C9D7-4B4A-8E74-7EA1EA975560}
 		{D2C8C943-4788-4F6F-BF45-BD2CC8EC1BC4} = {3AB818F4-9336-486A-8F58-E58F4C16FF1C}
 	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(NDepend) = preSolution
+		Project = ".\MudEngine1.ndproj"
+	EndGlobalSection
 EndGlobal

@@ -119,7 +119,7 @@ namespace Mud.Engine.Core.Engine.Validation
 
                 try
                 {
-                    comparisonProperty = sender.GetType().GetProperty(pathToProperty[0]);
+                    comparisonProperty = sender.GetType().GetRuntimeProperty(pathToProperty[0]);
                 }
                 catch (Exception)
                 {
@@ -139,7 +139,7 @@ namespace Mud.Engine.Core.Engine.Validation
                         try
                         {
                             childSender = comparisonProperty.GetValue(sender, null);
-                            comparisonProperty = childSender.GetType().GetProperty(pathToProperty[index]);
+                            comparisonProperty = childSender.GetType().GetRuntimeProperty(pathToProperty[index]);
                         }
                         catch (Exception)
                         {
@@ -170,7 +170,7 @@ namespace Mud.Engine.Core.Engine.Validation
 
                 try
                 {
-                    comparisonProperty = sender.GetType().GetProperty(pathToProperty[0]);
+                    comparisonProperty = sender.GetType().GetRuntimeProperty(pathToProperty[0]);
                 }
                 catch (Exception)
                 {
@@ -190,7 +190,7 @@ namespace Mud.Engine.Core.Engine.Validation
                         try
                         {
                             childSender = comparisonProperty.GetValue(sender, null);
-                            comparisonProperty = childSender.GetType().GetProperty(pathToProperty[index]);
+                            comparisonProperty = childSender.GetType().GetRuntimeProperty(pathToProperty[index]);
                         }
                         catch (Exception)
                         {

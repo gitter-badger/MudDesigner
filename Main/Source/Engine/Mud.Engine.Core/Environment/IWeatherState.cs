@@ -17,6 +17,8 @@ namespace Mud.Engine.Core.Environment
         /// <value>
         /// The occurrence probability.
         /// </value>
-        int OccurrenceProbability { get; set; }
+        double OccurrenceProbability { get; }
+
+        string Name { get; }
     }
 }

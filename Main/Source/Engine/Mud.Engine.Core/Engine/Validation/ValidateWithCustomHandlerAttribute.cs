@@ -49,7 +49,7 @@ namespace Mud.Engine.Core.Engine.Validation
             // Find our delegate method.
             IEnumerable<MethodInfo> validationMethods = sender
                 .GetType()
-                .GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetRuntimeMethods()
                 .Where(m => m.GetCustomAttributes(typeof(ValidationCustomHandlerDelegate), true).Any());
 
             MethodInfo validationDelegate = validationMethods

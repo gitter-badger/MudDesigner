@@ -6,6 +6,8 @@
     using Mud.Engine.Core.Engine;
     using Mud.Engine.Core.Engine.Validation;
     using Mud.Tests.Engine.Core.Fixtures;
+    using System.Collections.Generic;
+    using System.Diagnostics;
 
     /// <summary>
     /// Tests against the ValidatableBase class.
@@ -36,7 +38,7 @@
                 "Validation message collection did not return the correct number of elements.");
             Assert.IsTrue(
                 validatableBase.GetValidationMessages("FakeProperty").Count() == 1,
-                "Validation message collection did not return the correct number of elements for the specified property."); 
+                "Validation message collection did not return the correct number of elements for the specified property.");
 
         }
 
@@ -250,5 +252,36 @@
             // Assert
             Assert.IsNotNull(result, "Validation failed.");
         }
+
+        /// <summary>
+        /// Validatables the base_ custom validation enforced_ returns message.
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Engine Validation")]
+    public void ValidatableBase_ValidationPerformanceTest()
+    {
+        // Arrange
+        var fixtures = new List<ValidatableFixture>();
+        var watch = new Stopwatch();
+        watch.Start();
+        for (int index = 0; index < 100000; index++)
+        {
+            var model = new ValidatableFixture();
+            model.Name = "TestName";
+            model.Password = "pass";
+            model.PasswordConfirmation = "pass";
+            fixtures.Add(model);
+        }
+
+
+        // Act
+        foreach (ValidatableFixture fixture in fixtures)
+        {
+            fixture.ValidateAll();
+        }
+
+        watch.Stop();
+        Debug.WriteLine(watch.Elapsed.TotalMilliseconds);
+    }
     }
 }

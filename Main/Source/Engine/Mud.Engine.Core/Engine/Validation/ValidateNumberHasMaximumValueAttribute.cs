@@ -115,8 +115,11 @@ namespace Mud.Engine.Core.Engine.Validation
         /// <returns>Returns true if the types match.</returns>
         private bool ValidateDataTypesAreEqual(object value)
         {
+            // If no data type was specified, we have to determine it ourself.
             if (this.numberDataType == ValidationNumberDataTypes.None)
             {
+                // Run through the supported data types and assign the numberDataType value
+                // once we identify a supported value. If none is found, we return false.
                 if (value is short)
                 {
                     this.numberDataType = ValidationNumberDataTypes.Short;
@@ -173,6 +176,7 @@ namespace Mud.Engine.Core.Engine.Validation
                 return true;
             }
 
+            // We never found a matching data type.
             return false;
         }
 

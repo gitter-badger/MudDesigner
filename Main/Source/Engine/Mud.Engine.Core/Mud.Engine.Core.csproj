@@ -13,8 +13,8 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile344</TargetFrameworkProfile>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
@@ -38,6 +38,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Engine\EngineTimer.cs" />
+    <Compile Include="Engine\ListExtensions.cs" />
     <Compile Include="Engine\ObjectExtensions.cs" />
     <Compile Include="Engine\SystemMessage.cs" />
     <Compile Include="Engine\Validation\ValidatableBase.cs" />
@@ -62,6 +64,7 @@
     <Compile Include="Engine\Validation\ValidationCustomHandlerDelegate.cs" />
     <Compile Include="Engine\Validation\ValidationNumberDataTypes.cs" />
     <Compile Include="Engine\WarningMessage.cs" />
+    <Compile Include="Environment\AfternoonState.cs" />
     <Compile Include="Environment\DefaultWorld.cs" />
     <Compile Include="Environment\IEnvironment.cs" />
     <Compile Include="Environment\IRealm.cs" />
@@ -72,6 +75,10 @@
     <Compile Include="Environment\IZone.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Environment\MorningState.cs" />
+    <Compile Include="Environment\NightState.cs" />
+    <Compile Include="Environment\TimeOfDay.cs" />
+    <Compile Include="Environment\TimeOfDayState.cs" />
     <Compile Include="Mob\DefaultPlayer.cs" />
     <Compile Include="Mob\IMob.cs" />
     <Compile Include="Mob\InputArgs.cs" />

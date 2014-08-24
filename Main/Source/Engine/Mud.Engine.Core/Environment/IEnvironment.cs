@@ -30,36 +30,20 @@ namespace Mud.Engine.Core.Environment
         string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the current weather.
+        /// Gets how many seconds have passed since the creation date.
         /// </summary>
         /// <value>
-        /// The current weather.
+        /// The time from creation.
         /// </value>
-        IWeatherState CurrentWeather { get; set; }
+        double TimeFromCreation { get; }
 
         /// <summary>
-        /// Gets or sets a collection of states that can be used to determine the current weather.
+        /// Gets the creation date.
         /// </summary>
         /// <value>
-        /// The weather states.
+        /// The creation date.
         /// </value>
-        IEnumerable<IWeatherState> WeatherStates { get; set; }
-
-        /// <summary>
-        /// Gets or sets the current time of day.
-        /// </summary>
-        /// <value>
-        /// The current time of day.
-        /// </value>
-        ITimeOfDayState CurrentTimeOfDay { get; set; }
-
-        /// <summary>
-        /// Gets or sets a collection of states that can be used for the time of day.
-        /// </summary>
-        /// <value>
-        /// The time of day states.
-        /// </value>
-        IEnumerable<ITimeOfDayState> TimeOfDayStates { get; set; }
+        DateTime CreationDate { get; set; }
 
         /// <summary>
         /// Initializes this instance. The environment time and states are set up.

@@ -51,6 +51,11 @@ namespace Mud.Engine.Default.Desktop.Engine
             IEnumerable<IWorld> result = await this.worldRepository.GetAllWorlds(true);
 
             this.Worlds = new List<IWorld>(result);
+
+            var world = new DefaultWorld();
+            world.Initialize();
+
+            this.Worlds.Add(world);
         }
     }
 }

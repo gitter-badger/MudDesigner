@@ -3,6 +3,7 @@
 //     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
+using System;
 namespace Mud.Engine.Core.Environment
 {
     /// <summary>
@@ -10,6 +11,11 @@ namespace Mud.Engine.Core.Environment
     /// </summary>
     public interface ITimeOfDayState
     {
+        /// <summary>
+        /// Occurs when the state's time is changed.
+        /// </summary>
+        event EventHandler<TimeOfDay> TimeUpdated;
+
         /// <summary>
         /// Gets the name of this state.
         /// </summary>
@@ -19,19 +25,28 @@ namespace Mud.Engine.Core.Environment
         string Name { get; }
 
         /// <summary>
+        /// Gets the current time.
+        /// </summary>
+        /// <value>
+        /// The current time.
+        /// </value>
+        TimeOfDay CurrentTime { get; }
+
+        /// <summary>
         /// Gets the time of day in the game that this state begins in hours.
         /// </summary>
         /// <value>
         /// The state start time.
         /// </value>
-        float StateStartTime { get; }
+        TimeOfDay StateStartTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the state transition time.
+        /// Initializes the time of day state with the supplied in-game to real-world hours factor.
         /// </summary>
-        /// <value>
-        /// The state transition time.
-        /// </value>
-        float StateTransitionTime { get; set; }
+        /// <param name="worldTimeFactor">The world time factor.</param>
+        /// <param name="hoursPerDay">The hours per day.</param>
+        void Initialize(double worldTimeFactor, int hoursPerDay);
+
+        // TODO: Need to add events for when we transition out of a ITimeOfDayState.
     }
 }
