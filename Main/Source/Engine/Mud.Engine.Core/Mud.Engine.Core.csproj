@@ -39,7 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Engine\EngineTimer.cs" />
-    <Compile Include="Engine\ListExtensions.cs" />
+    <Compile Include="Engine\ICollectionExtensions.cs" />
     <Compile Include="Engine\ObjectExtensions.cs" />
     <Compile Include="Engine\SystemMessage.cs" />
     <Compile Include="Engine\Validation\ValidatableBase.cs" />
@@ -65,6 +65,7 @@
     <Compile Include="Engine\Validation\ValidationNumberDataTypes.cs" />
     <Compile Include="Engine\WarningMessage.cs" />
     <Compile Include="Environment\AfternoonState.cs" />
+    <Compile Include="Environment\DefaultRealm.cs" />
     <Compile Include="Environment\DefaultWorld.cs" />
     <Compile Include="Environment\IEnvironment.cs" />
     <Compile Include="Environment\IRealm.cs" />
@@ -77,9 +78,11 @@
     </Compile>
     <Compile Include="Environment\MorningState.cs" />
     <Compile Include="Environment\NightState.cs" />
+    <Compile Include="Environment\ClearWeather.cs" />
     <Compile Include="Environment\TimeOfDayChangedEventArgs.cs" />
     <Compile Include="Environment\TimeOfDay.cs" />
     <Compile Include="Environment\TimeOfDayState.cs" />
+    <Compile Include="Environment\WeatherStateChangedEventArgs.cs" />
     <Compile Include="Mob\DefaultPlayer.cs" />
     <Compile Include="Mob\IMob.cs" />
     <Compile Include="Mob\InputArgs.cs" />

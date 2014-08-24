@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Environment
 {
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -12,6 +13,11 @@ namespace Mud.Engine.Core.Environment
     /// </summary>
     public interface IRealm : IEnvironment
     {
+        /// <summary>
+        /// Occurs when the Realms weather has changed.
+        /// </summary>
+        event EventHandler<WeatherStateChangedEventArgs> WeatherChanged;
+
         /// <summary>
         /// Gets or sets the offset from the World's current time for the Realm in hours.
         /// </summary>
@@ -51,5 +57,10 @@ namespace Mud.Engine.Core.Environment
         /// The zones.
         /// </value>
         IEnumerable<IZone> Zones { get; set; }
+
+        /// <summary>
+        /// Initializes this instance.
+        /// </summary>
+        void Initialize();
     }
 }

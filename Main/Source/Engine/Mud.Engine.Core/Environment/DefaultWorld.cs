@@ -1,24 +1,38 @@
-﻿using Mud.Engine.Core.Engine;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="DefaultWorld.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Environment
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// The Default World class used by the engine.
+    /// </summary>
     public class DefaultWorld : IWorld
     {
+        /// <summary>
+        /// The time of day states
+        /// </summary>
         private List<ITimeOfDayState> timeOfDayStates;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultWorld"/> class.
+        /// </summary>
         public DefaultWorld()
         {
             this.Id = Guid.NewGuid();
             this.CreationDate = DateTime.Now;
-            this.HoursPerDay = 24;
-            this.HoursFactor = 0.25;
 
+            // Set the in-game day to be 24 hours, with each day taking 30 real-world minutes to cycle.
+            this.HoursPerDay = 24;
+            this.HoursFactor = 0.5;
+
+            // Set up default states for the time of day.
             this.timeOfDayStates = new List<ITimeOfDayState> { new MorningState(), new AfternoonState(), new NightState() };
             this.Realms = new List<IRealm>();
 
@@ -88,7 +102,11 @@ namespace Mud.Engine.Core.Environment
             set
             {
                 this.timeOfDayStates.Clear();
-                this.timeOfDayStates.AddRange(value);
+
+                if (value != null)
+                {
+                    this.timeOfDayStates.AddRange(value);
+                }
             }
         }
 

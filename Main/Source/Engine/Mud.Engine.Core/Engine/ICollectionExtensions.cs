@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mud.Engine.Core.Engine
 {
-    public static class ListExtensions
+    public static class ICollectionExtensions
     {/// <summary>
         /// return a random element of the list or default if list is empty
         /// </summary>
@@ -16,7 +16,7 @@ namespace Mud.Engine.Core.Engine
         /// If all elements have weight of 0 or less they all have equal chances to be picked.
         /// </param>
         /// <returns></returns>
-        public static T AnyOrDefault<T>(this ICollection<T> e, Func<T, double> weightSelector)
+        public static T AnyOrDefaultFromWeight<T>(this ICollection<T> e, Func<T, double> weightSelector)
         {
             if (e.Count < 1)
             {
