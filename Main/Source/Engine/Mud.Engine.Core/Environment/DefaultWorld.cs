@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Mud.Engine.Core.Environment
 {
@@ -227,11 +228,68 @@ namespace Mud.Engine.Core.Environment
             time.Hour = currentTime.Value.Hour;
             time.Minute = currentTime.Value.Minute;
 
+            Parallel.Invoke(
+                () => inProgressState = this.GetInProgressState(time),
+                () => nextState = this.GetNextState(time));
+
+            if (inProgressState != null)
+            {
+                return inProgressState;
+            }
+            else if (nextState != null && nextState.StateStartTime.Hour <= time.Hour && nextState.StateStartTime.Minute <= time.Minute)
+            {
+                return nextState;
+            }
+
+            return this.CurrentTimeOfDay;
+        }
+
+        /// <summary>
+        /// Gets a state if there is one already in progress.
+        /// </summary>
+        /// <param name="currentTime">The current time.</param>
+        /// <returns></returns>
+        private ITimeOfDayState GetInProgressState(TimeOfDay currentTime)
+        {
+            ITimeOfDayState inProgressState = null;
+            foreach (ITimeOfDayState state in this.TimeOfDayStates)
+            {
+                // If the state is already in progress, w
+                if (state.StateStartTime.Hour <= currentTime.Hour ||
+                    (state.StateStartTime.Hour <= currentTime.Hour && state.StateStartTime.Minute <= currentTime.Minute))
+                {
+                    if (inProgressState == null)
+                    {
+                        inProgressState = state;
+                        continue;
+                    }
+                    else
+                    {
+                        if (inProgressState.StateStartTime.Hour <= currentTime.Hour &&
+                            inProgressState.StateStartTime.Minute <= currentTime.Minute)
+                        {
+                            inProgressState = state;
+                        }
+                    }
+                }
+            }
+
+            return inProgressState;
+        }
+
+        /// <summary>
+        /// Gets the state that is up next.
+        /// </summary>
+        /// <param name="currentTime">The current time.</param>
+        /// <returns></returns>
+        private ITimeOfDayState GetNextState(TimeOfDay currentTime)
+        {
+            ITimeOfDayState nextState = null;
             foreach (ITimeOfDayState state in this.TimeOfDayStates)
             {
                 // If this state is a future state, then preserve it as a possible next state.
-                if (state.StateStartTime.Hour > time.Hour ||
-                    (state.StateStartTime.Hour >= time.Hour && state.StateStartTime.Minute > time.Minute))
+                if (state.StateStartTime.Hour > currentTime.Hour ||
+                    (state.StateStartTime.Hour >= currentTime.Hour && state.StateStartTime.Minute > currentTime.Minute))
                 {
                     // If we do not have a next state, set it.
                     if (nextState == null)
@@ -249,39 +307,14 @@ namespace Mud.Engine.Core.Environment
                         }
                     }
                 }
-
-                // If the state is already in progress, w
-                if (state.StateStartTime.Hour <= time.Hour ||
-                    (state.StateStartTime.Hour <= time.Hour && state.StateStartTime.Minute <= time.Minute))
-                {
-                    if (inProgressState == null)
-                    {
-                        inProgressState = state;
-                        continue;
-                    }
-                    else
-                    {
-                        if (inProgressState.StateStartTime.Hour <= time.Hour &&
-                            inProgressState.StateStartTime.Minute <= time.Minute)
-                        {
-                            inProgressState = state;
-                        }
-                    }
-                }
             }
 
-            if (inProgressState != null)
-            {
-                return inProgressState;
-            }
-            else if (nextState != null && nextState.StateStartTime.Hour <= time.Hour && nextState.StateStartTime.Minute <= time.Minute)
-            {
-                return nextState;
-            }
-
-            return this.CurrentTimeOfDay;
+            return nextState;
         }
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             // These should all have their clocks disabled, but we ensure they are anyway.

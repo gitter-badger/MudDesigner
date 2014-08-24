@@ -19,14 +19,14 @@ namespace Mud.Tests.Engine.Core.Engine
         {
             // Arrange
             world = new DefaultWorld();
-            
+
             // Setting the factor really low allows the unit test to cycle the game-time quickly.
             world.HoursFactor = 0.3;
-            world.HoursPerDay = 12;
+            world.HoursPerDay = 10;
 
-            var morningState = new MorningState { StateStartTime = new TimeOfDay { Hour = 3 } };
-            var afternoonState = new AfternoonState { StateStartTime = new TimeOfDay { Hour = 6 } };
-            var nightState = new NightState { StateStartTime = new TimeOfDay { Hour = 10 } };
+            var morningState = new MorningState { StateStartTime = new TimeOfDay { Hour = 2 } };
+            var afternoonState = new AfternoonState { StateStartTime = new TimeOfDay { Hour = 5 } };
+            var nightState = new NightState { StateStartTime = new TimeOfDay { Hour = 8 } };
 
             world.TimeOfDayStates = new List<ITimeOfDayState> { morningState, afternoonState, nightState };
 
@@ -48,7 +48,7 @@ namespace Mud.Tests.Engine.Core.Engine
                 // then that indicates something is broken and our loop has likely to run forever.
                 // If debugging this unit test, this will result in the world being disposed after 20 seconds
                 // and throwing a null reference exception during the debug session.
-                if (watch.Elapsed.TotalSeconds > 30)
+                if (watch.Elapsed.TotalSeconds > 35)
                 {
                     world.Dispose();
                     Assert.Fail();
@@ -67,12 +67,13 @@ namespace Mud.Tests.Engine.Core.Engine
                 if (e.TransitioningTo.Name == "Morning")
                 {
                     this.isFirstRun = false;
+                    Debug.WriteLine("Full day cycle completed.");
                 }
             }
 
             e.TransitioningTo.TimeUpdated += this.CurrentTimeOfDay_TimeUpdated;
         }
- 
+
         void CurrentTimeOfDay_TimeUpdated(object sender, TimeOfDay e)
         {
             Debug.WriteLine(string.Format("Current World Time: {0}:{1}", e.Hour, e.Minute));

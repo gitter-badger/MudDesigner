@@ -60,33 +60,33 @@ namespace Mud.Engine.Core.Environment
             this.StateStartTime.HoursPerDay = hoursPerDay;
             this.Reset();
 
-            // Update the state every in-game hour, which represents n number of minutes in real-world.
+            // Update the state every in-game hour or minute based on the ratio we have
             if (minuteInterval < 0.4)
             {
-                // If the minute interval is less than 1 second,
-                // then we increment by the hour to reduce excess update calls.
-                this.timeOfDayClock = new EngineTimer<TimeOfDay>((state, clock) =>
-                {
-                    this.CurrentTime.IncrementByHour(1);
-                    this.OnTimeUpdated();
-                },
-                this.CurrentTime);
-                this.timeOfDayClock.Start(
-                    TimeSpan.FromMinutes(hourInterval).TotalMilliseconds,
-                    TimeSpan.FromMinutes(hourInterval).TotalMilliseconds);
+                this.StartStateClock(TimeSpan.FromSeconds(minuteInterval).TotalMilliseconds, (timeOfDay) => timeOfDay.IncrementByHour(1));
             }
             else
             {
-                this.timeOfDayClock = new EngineTimer<TimeOfDay>((state, clock) =>
-                {
-                    this.CurrentTime.IncrementByMinute(1);
-                    this.OnTimeUpdated();
-                },
-                this.CurrentTime);
-                this.timeOfDayClock.Start(
-                    TimeSpan.FromSeconds(minuteInterval).TotalMilliseconds, 
-                    TimeSpan.FromSeconds(minuteInterval).TotalMilliseconds);
+                this.StartStateClock(TimeSpan.FromSeconds(minuteInterval).TotalMilliseconds, (timeOfDay) => timeOfDay.IncrementByMinute(1));
             }
+        }
+
+        /// <summary>
+        /// Starts the state clock at the specified interval, firing the callback provided.
+        /// </summary>
+        /// <param name="interval">The interval.</param>
+        /// <param name="callback">The callback.</param>
+        private void StartStateClock(double interval, Action<TimeOfDay> callback)
+        {
+            // If the minute interval is less than 1 second,
+            // then we increment by the hour to reduce excess update calls.
+            this.timeOfDayClock = new EngineTimer<TimeOfDay>((state, clock) =>
+            {
+                callback(state);
+                this.OnTimeUpdated();
+            },
+            this.CurrentTime);
+            this.timeOfDayClock.Start(interval, interval);
         }
 
         /// <summary>
