@@ -139,8 +139,8 @@ namespace Mud.Apps.Windows.Server
             IRealm realm = new DefaultRealm();
             var weatherStates = new List<IWeatherState> { new ClearWeather(), new RainyWeather(), new ThunderstormWeather() };
             realm.WeatherStates = weatherStates;
+            realm.WeatherUpdateFrequency = 15;
             realm.WeatherChanged += (sender, weatherArgs) => Console.WriteLine(string.Format("Weather has changed to {0}", weatherArgs.CurrentState.Name));
-            realm.Initialize();
 
             IWorld world = new DefaultWorld();
             world.HoursFactor = 0.2;
@@ -151,10 +151,11 @@ namespace Mud.Apps.Windows.Server
             var nightState = new NightState { StateStartTime = new TimeOfDay { Hour = 8 } };
 
             world.TimeOfDayStates = new List<ITimeOfDayState> { morningState, afternoonState, nightState };
-
             world.Realms = new List<IRealm> { realm };
             world.TimeOfDayChanged += world_TimeOfDayChanged;
+
             world.Initialize();
+            world.AddRealmToWorld(realm);
             game.Worlds.Add(world);
         }
 

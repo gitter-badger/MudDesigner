@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Environment
 {
+    using Mud.Engine.Core.Engine;
     using System;
     using System.Collections.Generic;
 
@@ -51,6 +52,15 @@ namespace Mud.Engine.Core.Environment
         IEnumerable<IWeatherState> WeatherStates { get; set; }
 
         /// <summary>
+        /// Gets or sets the weather update frequency.
+        /// When the frequency is hit, the new weather will be determined based on the weathers probability. It is not guaranteed to change.
+        /// </summary>
+        /// <value>
+        /// The weather update frequency.
+        /// </value>
+        int WeatherUpdateFrequency { get; set; }
+
+        /// <summary>
         /// Gets or sets the zones within this Realm.
         /// </summary>
         /// <value>
@@ -61,6 +71,6 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Initializes this instance.
         /// </summary>
-        void Initialize();
+        void Initialize(IWorld world);
     }
 }

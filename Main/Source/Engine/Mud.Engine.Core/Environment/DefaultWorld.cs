@@ -20,6 +20,8 @@ namespace Mud.Engine.Core.Environment
         /// </summary>
         private List<ITimeOfDayState> timeOfDayStates;
 
+        private List<IRealm> realms;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultWorld"/> class.
         /// </summary>
@@ -28,13 +30,13 @@ namespace Mud.Engine.Core.Environment
             this.Id = Guid.NewGuid();
             this.CreationDate = DateTime.Now;
 
-            // Set the in-game day to be 24 hours, with each day taking 30 real-world minutes to cycle.
+            // Set the in-game day to be 24 hours, with each day taking 45 real-world minutes to cycle.
             this.HoursPerDay = 24;
-            this.HoursFactor = 0.5;
+            this.HoursFactor = 0.75;
 
             // Set up default states for the time of day.
             this.timeOfDayStates = new List<ITimeOfDayState> { new MorningState(), new AfternoonState(), new NightState() };
-            this.Realms = new List<IRealm>();
+            this.realms = new List<IRealm>();
 
             // Must be in the constructor. If assigned within the Initialization method
             // the property could potentially never be restored properly from the data store.
@@ -127,12 +129,36 @@ namespace Mud.Engine.Core.Environment
         public double HoursFactor { get; set; }
 
         /// <summary>
+        /// Gets the game time ratio used to convert real-world time to game-time.
+        /// </summary>
+        /// <value>
+        /// The game time ratio.
+        /// </value>
+        public double GameTimeRatio { get { return this.HoursFactor / this.HoursPerDay; } }
+
+        /// <summary>
         /// Gets or sets the realms in this world.
         /// </summary>
         /// <value>
         /// The realms.
         /// </value>
-        public IEnumerable<IRealm> Realms { get; set; }
+        public IEnumerable<IRealm> Realms
+        {
+            get
+            {
+                return this.realms;
+            }
+
+            set
+            {
+                this.realms.Clear();
+
+                if (value != null)
+                {
+                    this.realms.AddRange(value);
+                }
+            }
+        }
 
         /// <summary>
         /// Initializes the world by starting the world clock and the associated Realm clocks.
@@ -153,6 +179,33 @@ namespace Mud.Engine.Core.Environment
 
             // Notify listeners that our time of day has changed.
             this.OnTimeOfDayChanged(null, this.CurrentTimeOfDay);
+        }
+
+        /// <summary>
+        /// Adds the given realm to world and initializes it.
+        /// </summary>
+        /// <param name="realm">The realm.</param>
+        /// <exception cref="System.NullReferenceException">
+        /// Attempted to add a null Realm to the world.
+        /// or
+        /// Adding a Realm to a World with a null Zones collection is not allowed.
+        /// </exception>
+        public void AddRealmToWorld(IRealm realm)
+        {
+            if (realm == null)
+            {
+                throw new NullReferenceException("Attempted to add a null Realm to the world.");
+            }
+
+            if (realm.Zones == null)
+            {
+                throw new NullReferenceException("Adding a Realm to a World with a null Zones collection is not allowed.");
+            }
+
+            realm.CreationDate = DateTime.Now;
+            realm.Initialize(this);
+
+            this.realms.Add(realm);
         }
 
         /// <summary>
@@ -192,7 +245,7 @@ namespace Mud.Engine.Core.Environment
             initialState.TimeUpdated += this.CurrentTimeOfDay_TimeUpdated;
 
             // Initialize the state.
-            initialState.Initialize(this.HoursFactor / this.HoursPerDay, this.HoursPerDay);
+            initialState.Initialize(this.GameTimeRatio, this.HoursPerDay);
 
             this.CurrentTimeOfDay = initialState;
         }

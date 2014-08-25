@@ -19,6 +19,8 @@ namespace Mud.Engine.Core.Environment
     {
         private List<IWeatherState> weatherStates;
 
+        private IWorld world;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultRealm"/> class.
         /// </summary>
@@ -29,6 +31,9 @@ namespace Mud.Engine.Core.Environment
             this.Zones = new List<IZone>();
             this.CreationDate = DateTime.Now;
             this.Id = Guid.NewGuid();
+
+            // By default we update the weather every 15 minutes in the game.
+            this.WeatherUpdateFrequency = 15;
         }
 
         /// <summary>
@@ -85,6 +90,16 @@ namespace Mud.Engine.Core.Environment
         }
 
         /// <summary>
+        /// Gets or sets the weather update frequency.
+        /// When the frequency is hit, the new weather will be determined based on the weathers probability. It is not guaranteed to change.
+        /// This value is represented as in-game minutes
+        /// </summary>
+        /// <value>
+        /// The weather update frequency.
+        /// </value>
+        public int WeatherUpdateFrequency { get; set; }
+
+        /// <summary>
         /// Gets or sets the zones within this Realm.
         /// </summary>
         /// <value>
@@ -124,13 +139,16 @@ namespace Mud.Engine.Core.Environment
         /// </value>
         public DateTime CreationDate { get; set; }
 
-        public virtual void Initialize()
+        public virtual void Initialize(IWorld world)
         {
+            this.world = world;
             if (this.weatherStates.Count > 0)
             {
                 // Set up our weather clock and start performing weather changes.
                 var weatherClock = new EngineTimer<IWeatherState>((state, clock) => this.SetupWeather(), this.CurrentWeather);
-                weatherClock.Start(0, TimeSpan.FromSeconds(2).TotalMilliseconds);
+
+                // Convert the minutes specified with WeatherUpdateFrequency to in-game minutes using the GameTimeRatio.
+                weatherClock.Start(0, TimeSpan.FromMinutes(this.WeatherUpdateFrequency * this.world.GameTimeRatio).TotalMilliseconds);
             }
         }
 

@@ -5,8 +5,9 @@
 //-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Environment
 {
-    using System;
-    using System.Collections.Generic;
+    using Mud.Engine.Core.Engine;
+using System;
+using System.Collections.Generic;
 
     /// <summary>
     /// Defines a world 
@@ -48,6 +49,14 @@ namespace Mud.Engine.Core.Environment
         double HoursFactor { get; set; }
 
         /// <summary>
+        /// Gets the game time ratio used to convert real-world time to game-time.
+        /// </summary>
+        /// <value>
+        /// The game time ratio.
+        /// </value>
+        double GameTimeRatio { get; }
+
+        /// <summary>
         /// Gets or sets the realms in this world.
         /// </summary>
         /// <value>
@@ -59,5 +68,11 @@ namespace Mud.Engine.Core.Environment
         /// Initializes this instance. The environment time and states are set up.
         /// </summary>
         void Initialize(ITimeOfDayState initialState = null);
+
+        /// <summary>
+        /// Adds the given realm to world and initializes it.
+        /// </summary>
+        /// <param name="realm">The realm.</param>
+        void AddRealmToWorld(IRealm realm);
     }
 }
