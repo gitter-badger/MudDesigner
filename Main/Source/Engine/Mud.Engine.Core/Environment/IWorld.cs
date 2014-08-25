@@ -46,7 +46,7 @@ using System.Collections.Generic;
         /// <value>
         /// The hours ratio.
         /// </value>
-        double HoursFactor { get; set; }
+        double GameDayToRealHourRatio { get; set; }
 
         /// <summary>
         /// Gets the game time ratio used to convert real-world time to game-time.
@@ -54,7 +54,7 @@ using System.Collections.Generic;
         /// <value>
         /// The game time ratio.
         /// </value>
-        double GameTimeRatio { get; }
+        double GameTimeAdjustmentFactor { get; }
 
         /// <summary>
         /// Gets or sets the realms in this world.
@@ -74,5 +74,11 @@ using System.Collections.Generic;
         /// </summary>
         /// <param name="realm">The realm.</param>
         void AddRealmToWorld(IRealm realm);
+
+        /// <summary>
+        /// Adds the time of day state to the world.
+        /// </summary>
+        /// <param name="state">The state.</param>
+        void AddTimeOfDayState(ITimeOfDayState state);
     }
 }

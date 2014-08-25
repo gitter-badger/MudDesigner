@@ -148,7 +148,7 @@ namespace Mud.Engine.Core.Environment
                 var weatherClock = new EngineTimer<IWeatherState>((state, clock) => this.SetupWeather(), this.CurrentWeather);
 
                 // Convert the minutes specified with WeatherUpdateFrequency to in-game minutes using the GameTimeRatio.
-                weatherClock.Start(0, TimeSpan.FromMinutes(this.WeatherUpdateFrequency * this.world.GameTimeRatio).TotalMilliseconds);
+                weatherClock.Start(0, TimeSpan.FromMinutes(this.WeatherUpdateFrequency * this.world.GameTimeAdjustmentFactor).TotalMilliseconds);
             }
         }
 

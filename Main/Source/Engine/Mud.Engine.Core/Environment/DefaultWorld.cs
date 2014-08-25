@@ -8,6 +8,7 @@ namespace Mud.Engine.Core.Environment
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -32,7 +33,7 @@ namespace Mud.Engine.Core.Environment
 
             // Set the in-game day to be 24 hours, with each day taking 45 real-world minutes to cycle.
             this.HoursPerDay = 24;
-            this.HoursFactor = 0.75;
+            this.GameDayToRealHourRatio = 0.75;
 
             // Set up default states for the time of day.
             this.timeOfDayStates = new List<ITimeOfDayState> { new MorningState(), new AfternoonState(), new NightState() };
@@ -126,7 +127,7 @@ namespace Mud.Engine.Core.Environment
         /// <value>
         /// The hours ratio.
         /// </value>
-        public double HoursFactor { get; set; }
+        public double GameDayToRealHourRatio { get; set; }
 
         /// <summary>
         /// Gets the game time ratio used to convert real-world time to game-time.
@@ -134,7 +135,7 @@ namespace Mud.Engine.Core.Environment
         /// <value>
         /// The game time ratio.
         /// </value>
-        public double GameTimeRatio { get { return this.HoursFactor / this.HoursPerDay; } }
+        public double GameTimeAdjustmentFactor { get { return this.GameDayToRealHourRatio / this.HoursPerDay; } }
 
         /// <summary>
         /// Gets or sets the realms in this world.
@@ -209,6 +210,29 @@ namespace Mud.Engine.Core.Environment
         }
 
         /// <summary>
+        /// Adds the time of day state to the world.
+        /// </summary>
+        /// <param name="state">The state.</param>
+        /// <exception cref="System.InvalidOperationException">You can not have two states with the same start time in the same world.</exception>
+        /// <exception cref="System.NullReferenceException">State's start time must not be null.</exception>
+        public void AddTimeOfDayState(ITimeOfDayState state)
+        {
+            // We prevent states with the same start time from being added to the world
+            if (this.TimeOfDayStates.Any(s => s.StateStartTime.Equals(state)))
+            {
+                throw new InvalidOperationException("You can not have two states with the same start time in the same world.");
+            }
+
+            // Null start times engine from transitioning to the new state.
+            if (state.StateStartTime == null)
+            {
+                throw new NullReferenceException("State's start time must not be null.");
+            }
+
+            this.timeOfDayStates.Add(state);
+        }
+
+        /// <summary>
         /// Called when the current time of day has changed and a new one is transitioning in.
         /// </summary>
         /// <param name="oldTimeOfDay">The old time of day.</param>
@@ -245,7 +269,7 @@ namespace Mud.Engine.Core.Environment
             initialState.TimeUpdated += this.CurrentTimeOfDay_TimeUpdated;
 
             // Initialize the state.
-            initialState.Initialize(this.GameTimeRatio, this.HoursPerDay);
+            initialState.Initialize(this.GameTimeAdjustmentFactor, this.HoursPerDay);
 
             this.CurrentTimeOfDay = initialState;
         }

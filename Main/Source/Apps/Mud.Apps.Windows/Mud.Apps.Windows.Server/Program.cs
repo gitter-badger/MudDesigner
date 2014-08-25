@@ -143,7 +143,7 @@ namespace Mud.Apps.Windows.Server
             realm.WeatherChanged += (sender, weatherArgs) => Console.WriteLine(string.Format("Weather has changed to {0}", weatherArgs.CurrentState.Name));
 
             IWorld world = new DefaultWorld();
-            world.HoursFactor = 0.2;
+            world.GameDayToRealHourRatio = 0.2;
             world.HoursPerDay = 10;
 
             var morningState = new MorningState { StateStartTime = new TimeOfDay { Hour = 2 } };

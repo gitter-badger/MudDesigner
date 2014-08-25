@@ -21,7 +21,7 @@ namespace Mud.Tests.Engine.Core.Engine
             world = new DefaultWorld();
 
             // Setting the factor really low allows the unit test to cycle the game-time quickly.
-            world.HoursFactor = 0.3;
+            world.GameDayToRealHourRatio = 0.3;
             world.HoursPerDay = 10;
 
             var morningState = new MorningState { StateStartTime = new TimeOfDay { Hour = 2 } };
