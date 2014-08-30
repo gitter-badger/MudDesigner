@@ -3,7 +3,7 @@
 //     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-namespace Mud.Engine.Core.Mob
+namespace Mud.Engine.Core.Character
 {
     using System;
     using Mud.Engine.Core.Engine;
@@ -11,7 +11,7 @@ namespace Mud.Engine.Core.Mob
     /// <summary>
     /// Provides a contract for objects wanting to act as an IMob Type.
     /// </summary>
-    public interface IMob
+    public interface ICharacter
     {
         /// <summary>
         /// Occurs when the object is loaded.

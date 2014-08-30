@@ -42,7 +42,7 @@ namespace Mud.Engine.Core.Engine
                 rnd -= w;
             }
 
-            throw new Exception("Should not happen");
+            throw new Exception("Unable to produce a result from the given collection using the supplied selector.");
         }
     }
 }

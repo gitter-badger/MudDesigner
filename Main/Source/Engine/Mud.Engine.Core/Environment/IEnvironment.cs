@@ -44,5 +44,10 @@ namespace Mud.Engine.Core.Environment
         /// The creation date.
         /// </value>
         DateTime CreationDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is enabled.
+        /// </summary>
+        bool IsEnabled { get; set; }
     }
 }

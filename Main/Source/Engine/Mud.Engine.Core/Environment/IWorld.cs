@@ -65,6 +65,11 @@ using System.Collections.Generic;
         IEnumerable<IRealm> Realms { get; set; }
 
         /// <summary>
+        /// Gets the number of realms.
+        /// </summary>
+        int NumberOfRealms { get; }
+
+        /// <summary>
         /// Initializes this instance. The environment time and states are set up.
         /// </summary>
         void Initialize(ITimeOfDayState initialState = null);
@@ -74,6 +79,18 @@ using System.Collections.Generic;
         /// </summary>
         /// <param name="realm">The realm.</param>
         void AddRealmToWorld(IRealm realm);
+
+        /// <summary>
+        /// Adds a collection of realms to world.
+        /// </summary>
+        /// <param name="realm">The realm.</param>
+        void AddRealmToWorld(IEnumerable<IRealm> realm);
+
+        /// <summary>
+        /// Removes the realm from world.
+        /// </summary>
+        /// <param name="realm">The realm.</param>
+        void RemoveRealmFromWorld(IRealm realm);
 
         /// <summary>
         /// Adds the time of day state to the world.

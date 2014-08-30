@@ -6,8 +6,9 @@
 namespace Mud.Apps.Windows.Server
 {
     using System;
+    using System.Linq;
     using Microsoft.Practices.Unity;
-    using Mud.Engine.Core.Mob;
+    using Mud.Engine.Core.Character;
     using Mud.Engine.Core.Networking;
     using Mud.Engine.Default.Desktop.Engine;
     using Mud.Engine.DefaultDesktop.Networking;
@@ -36,6 +37,8 @@ namespace Mud.Apps.Windows.Server
         /// </summary>
         private static IServer server;
 
+        private static IGame game;
+
         /// <summary>
         /// Mains the specified arguments.
         /// </summary>
@@ -45,7 +48,7 @@ namespace Mud.Apps.Windows.Server
             RegisterContainerTypes();
 
             // Instance a new DesktopGame and try to initialize it.
-            var game = container.Resolve<IGame>();
+            game = container.Resolve<IGame>();
             try
             {
                 game.Initialize();
@@ -68,24 +71,12 @@ namespace Mud.Apps.Windows.Server
             server.Start<DefaultPlayer>(game);
             game.IsMultiplayer = true;
 
-            Thread.Sleep(5000);
-
             SetupGameWorld(game);
 
             // Our game loop.
             while (server.Status == ServerStatus.Running)
             {
                 Thread.Sleep(500);
-                Console.WriteLine("==============");
-                foreach(IWorld world in game.Worlds)
-                {
-                    Console.WriteLine(string.Format("{0} world time is {1} in the {2}", world.Name, world.CurrentTimeOfDay.CurrentTime.ToString(), world.CurrentTimeOfDay.Name));
-                    foreach(IRealm realm in world.Realms)
-                    {
-                        Console.WriteLine(string.Format("{0} world time is {1} in the {2}", realm.Name, realm.CurrentTimeOfDay.ToString(), realm.GetCurrentTimeOfDayState().Name));
-                    }
-                }
-                Console.WriteLine(Environment.NewLine);
             }
 
             // Check if the server has not stopped. If not, we stop.
@@ -146,6 +137,19 @@ namespace Mud.Apps.Windows.Server
 
         private static void SetupGameWorld(IGame game)
         {
+            // Set up the Zone            
+            var weatherStates = new List<IWeatherState> { new ClearWeather(), new RainyWeather(), new ThunderstormWeather() };
+            IZone zone = new DefaultZone();
+            zone.Name = "Country Side";
+            zone.WeatherStates = weatherStates;
+            zone.WeatherUpdateFrequency = 6;
+            zone.WeatherChanged += (sender, weatherArgs) => Console.WriteLine(string.Format("{0} zone weather has changed to {1}", zone.Name, weatherArgs.CurrentState.Name));
+            IZone zone2 = new DefaultZone();
+            zone2.Name = "Castle Rock";
+            zone2.WeatherStates = weatherStates;
+            zone2.WeatherUpdateFrequency = 2;
+            zone2.WeatherChanged += (sender, weatherArgs) => Console.WriteLine(string.Format("{0} zone weather has changed to {1}", zone2.Name, weatherArgs.CurrentState.Name));
+
             // Set up the World.
             IWorld world = new DefaultWorld();
             world.GameDayToRealHourRatio = 0.2;
@@ -161,18 +165,14 @@ namespace Mud.Apps.Windows.Server
 
             // Set up the Realm.
             IRealm realm = new DefaultRealm();
-            var weatherStates = new List<IWeatherState> { new ClearWeather(), new RainyWeather(), new ThunderstormWeather() };
             realm.TimeZoneOffset = new TimeOfDay { Hour = 3, Minute = 10, HoursPerDay = world.HoursPerDay };
-
-            realm.WeatherStates = weatherStates;
-            realm.WeatherUpdateFrequency = 15;
             realm.Name = "Realm 1";
-
-            realm.WeatherChanged += (sender, weatherArgs) => Console.WriteLine(string.Format("Weather has changed to {0}", weatherArgs.CurrentState.Name));
 
             // Initialize the environment.
             world.Initialize();
             world.AddRealmToWorld(realm);
+            realm.AddZoneToRealm(zone);
+            realm.AddZoneToRealm(zone2);
             game.Worlds.Add(world);
         }
 
@@ -190,6 +190,12 @@ namespace Mud.Apps.Windows.Server
 
         static void CurrentTimeOfDay_TimeUpdated(object sender, TimeOfDay e)
         {
+
+            if (!(sender is ITimeOfDayState))
+            {
+                return;
+            }
+
             // Indicates a new hour has passed.
             string hour = string.Empty;
             string minute = string.Empty;
@@ -222,7 +228,15 @@ namespace Mud.Apps.Windows.Server
                 timeOfDay = "PM";
             }
 
-            Console.WriteLine(string.Format("Current World Time: {0}:{1} {2}", hour, minute, timeOfDay));
+            ITimeOfDayState timeOfDayState = (ITimeOfDayState)sender;
+
+            Console.WriteLine(string.Format("World time is {0}:{1} {2} in the {3}", hour, minute, timeOfDay, timeOfDayState.Name));
+            foreach (IRealm realm in game.Worlds.FirstOrDefault().Realms)
+            {
+                Console.WriteLine(string.Format("{0} world time is {1} in the {2}", realm.Name, realm.CurrentTimeOfDay.ToString(), realm.GetCurrentTimeOfDayState().Name));
+            }
+
+            Console.WriteLine(Environment.NewLine);
         }
     }
 }

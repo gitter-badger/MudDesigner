@@ -14,10 +14,6 @@ namespace Mud.Engine.Core.Environment
     /// </summary>
     public interface IRealm : IEnvironment
     {
-        /// <summary>
-        /// Occurs when the Realms weather has changed.
-        /// </summary>
-        event EventHandler<WeatherStateChangedEventArgs> WeatherChanged;
 
         /// <summary>
         /// Gets or sets the offset from the World's current time for the Realm
@@ -36,31 +32,6 @@ namespace Mud.Engine.Core.Environment
         TimeOfDay CurrentTimeOfDay { get; set; }
 
         /// <summary>
-        /// Gets or sets the current weather.
-        /// </summary>
-        /// <value>
-        /// The current weather.
-        /// </value>
-        IWeatherState CurrentWeather { get; set; }
-
-        /// <summary>
-        /// Gets or sets a collection of states that can be used to determine the current weather.
-        /// </summary>
-        /// <value>
-        /// The weather states.
-        /// </value>
-        IEnumerable<IWeatherState> WeatherStates { get; set; }
-
-        /// <summary>
-        /// Gets or sets the weather update frequency.
-        /// When the frequency is hit, the new weather will be determined based on the weathers probability. It is not guaranteed to change.
-        /// </summary>
-        /// <value>
-        /// The weather update frequency.
-        /// </value>
-        int WeatherUpdateFrequency { get; set; }
-
-        /// <summary>
         /// Gets or sets the zones within this Realm.
         /// </summary>
         /// <value>
@@ -69,11 +40,30 @@ namespace Mud.Engine.Core.Environment
         IEnumerable<IZone> Zones { get; set; }
 
         /// <summary>
+        /// Gets the number of zones.
+        /// </summary>
+        int NumberOfZones { get; }
+
+        /// <summary>
+        /// Gets the World that owns this realm..
+        /// </summary>
+        /// <value>
+        /// The World.
+        /// </value>
+        IWorld World { get; }
+
+        /// <summary>
         /// Initializes the realm. Weather states are set up and time zone offset validation.
         /// </summary>
         /// <param name="world">The world this realm belongs to.</param>
         /// <param name="worldTimeOfDay">The world time of day.</param>
         void Initialize(IWorld world, TimeOfDay worldTimeOfDay);
+
+        /// <summary>
+        /// Adds the given zone to this realm.
+        /// </summary>
+        /// <param name="zone">The zone.</param>
+        void AddZoneToRealm(IZone zone);
 
         /// <summary>
         /// Updates the time.

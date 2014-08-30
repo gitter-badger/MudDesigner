@@ -3,7 +3,7 @@
 //     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-namespace Mud.Engine.Core.Mob
+namespace Mud.Engine.Core.Character
 {
     using System;
     using Mud.Engine.Core.Engine;

@@ -183,6 +183,17 @@ namespace Mud.Engine.Core.Environment
         }
 
         /// <summary>
+        /// Gets the number of realms.
+        /// </summary>
+        public int NumberOfRealms 
+        { 
+            get
+            {
+                return this.realms.Count;
+            }
+        }
+
+        /// <summary>
         /// Initializes the world by starting the world clock and the associated Realm clocks.
         /// The world must have all of its associated realms assigned before invoking Initialize.
         /// </summary>
@@ -193,13 +204,18 @@ namespace Mud.Engine.Core.Environment
             if (this.timeOfDayStates.Count > 0 && initialState == null)
             {
                 // If we do not have an initial state, then we create a state based on our current real-world time.
-                this.SetupWorldClock(this.timeOfDayStateManager.GetTimeOfDayState(DateTime.Now));
+                initialState = this.timeOfDayStateManager.GetTimeOfDayState(DateTime.Now);
+                if (initialState == null)
+                {
+                    initialState = this.TimeOfDayStates
+                        .OrderBy(s => s.StateStartTime.Hour)
+                        .ThenBy(s => s.StateStartTime.Minute)
+                        .FirstOrDefault();
+                }
             }
-            else if (initialState != null)
-            {
-                // If an initial state is provided, then we hand it off to the setup method.
-                this.SetupWorldClock(initialState);
-            }
+
+            // If an initial state is provided, then we hand it off to the setup method.
+            this.SetupWorldClock(initialState);
 
             // Notify listeners that our time of day has changed.
             this.OnTimeOfDayChanged(null, this.CurrentTimeOfDay);
@@ -209,11 +225,9 @@ namespace Mud.Engine.Core.Environment
         /// Adds the given realm to world and initializes it.
         /// </summary>
         /// <param name="realm">The realm.</param>
-        /// <exception cref="System.NullReferenceException">
-        /// Attempted to add a null Realm to the world.
+        /// <exception cref="System.NullReferenceException">Attempted to add a null Realm to the world.
         /// or
-        /// Adding a Realm to a World with a null Zones collection is not allowed.
-        /// </exception>
+        /// Adding a Realm to a World with a null Zones collection is not allowed.</exception>
         public void AddRealmToWorld(IRealm realm)
         {
             if (realm == null)
@@ -226,7 +240,11 @@ namespace Mud.Engine.Core.Environment
                 throw new NullReferenceException("Adding a Realm to a World with a null Zones collection is not allowed.");
             }
 
-            realm.CreationDate = DateTime.Now;
+            // We don't attempt to add duplicates.
+            if (this.Realms.Contains(realm))
+            {
+                return;
+            }
 
             try
             {
@@ -236,12 +254,31 @@ namespace Mud.Engine.Core.Environment
             {
                 throw;
             }
-            catch (ArgumentOutOfRangeException)
-            {
-                throw;
-            }
 
             this.realms.Add(realm);
+        }
+
+        /// <summary>
+        /// Adds a collection of realms to world.
+        /// </summary>
+        /// <param name="realm">The realm.</param>
+        public void AddRealmToWorld(IEnumerable<IRealm> realm)
+        {
+            realm.AsParallel().ForAll(r => this.AddRealmToWorld(r));
+        }
+
+        /// <summary>
+        /// Removes the realm from world.
+        /// </summary>
+        /// <param name="realm">The realm.</param>
+        public void RemoveRealmFromWorld(IRealm realm)
+        {
+            if (!this.Realms.Contains(realm))
+            {
+
+            }
+
+            this.realms.Remove(realm);
         }
 
         /// <summary>
@@ -278,6 +315,11 @@ namespace Mud.Engine.Core.Environment
             {
                 state.Reset();
             }
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} - {1} - with {2} realms.", this.Name, this.CurrentTimeOfDay.Name, this.NumberOfRealms);
         }
 
         /// <summary>
@@ -351,6 +393,9 @@ namespace Mud.Engine.Core.Environment
             this.OnTimeOfDayChanged(currentTimeOfDay, newTimeOfDay);
         }
 
+        /// <summary>
+        /// Updates the time of day states for realms.
+        /// </summary>
         private void UpdateTimeOfDayStatesForRealms()
         {
             this.Realms.AsParallel().ForAll(realm =>

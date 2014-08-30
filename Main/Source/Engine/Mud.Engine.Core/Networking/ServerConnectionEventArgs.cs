@@ -6,7 +6,7 @@
 namespace Mud.Engine.Core.Networking
 {
     using System;
-    using Mud.Engine.Core.Mob;
+    using Mud.Engine.Core.Character;
 
     /// <summary>
     /// Used when a Connection event is fired from the server.

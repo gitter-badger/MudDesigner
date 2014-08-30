@@ -17,34 +17,21 @@ namespace Mud.Engine.Core.Environment
     /// </summary>
     public class DefaultRealm : IRealm
     {
-        private List<IWeatherState> weatherStates;
-
-        private IWorld world;
-
         /// <summary>
         /// The time of day state manager
         /// </summary>
         private TimeOfDayStateManager timeOfDayStateManager;
+
+        private List<IZone> zones = new List<IZone>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultRealm"/> class.
         /// </summary>
         public DefaultRealm()
         {
-            this.weatherStates = new List<IWeatherState>();
-
-            this.Zones = new List<IZone>();
             this.CreationDate = DateTime.Now;
             this.Id = Guid.NewGuid();
-
-            // By default we update the weather every 15 minutes in the game.
-            this.WeatherUpdateFrequency = 15;
         }
-
-        /// <summary>
-        /// Occurs when the Realms weather has changed.
-        /// </summary>
-        public event EventHandler<WeatherStateChangedEventArgs> WeatherChanged;
 
         /// <summary>
         /// Gets or sets the offset from the World's current time for the Realm.
@@ -63,54 +50,48 @@ namespace Mud.Engine.Core.Environment
         public TimeOfDay CurrentTimeOfDay { get; set; }
 
         /// <summary>
-        /// Gets or sets the current weather.
-        /// </summary>
-        /// <value>
-        /// The current weather.
-        /// </value>
-        public IWeatherState CurrentWeather { get; set; }
-
-        /// <summary>
-        /// Gets or sets a collection of states that can be used to determine the current weather.
-        /// </summary>
-        /// <value>
-        /// The weather states.
-        /// </value>
-        public IEnumerable<IWeatherState> WeatherStates
-        {
-            get
-            {
-                return this.weatherStates;
-            }
-
-            set
-            {
-                this.weatherStates.Clear();
-
-                if (value != null)
-                {
-                    this.weatherStates.AddRange(value);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the weather update frequency.
-        /// When the frequency is hit, the new weather will be determined based on the weathers probability. It is not guaranteed to change.
-        /// This value is represented as in-game minutes
-        /// </summary>
-        /// <value>
-        /// The weather update frequency.
-        /// </value>
-        public int WeatherUpdateFrequency { get; set; }
-
-        /// <summary>
         /// Gets or sets the zones within this Realm.
         /// </summary>
         /// <value>
         /// The zones.
         /// </value>
-        public IEnumerable<IZone> Zones { get; set; }
+        public IEnumerable<IZone> Zones
+        {
+            get
+            {
+                return this.zones;
+            }
+
+            set
+            {
+                this.zones.Clear();
+
+                if (value != null)
+                {
+                    this.zones.AddRange(value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the number of zones.
+        /// </summary>
+        public int NumberOfZones
+        {
+            get
+            {
+                // This lets users not call the enumerator on the Zones property.
+                return this.zones.Count;
+            }
+        }
+
+        /// <summary>
+        /// Gets the World that owns this realm..
+        /// </summary>
+        /// <value>
+        /// The World.
+        /// </value>
+        public IWorld World { get; protected set; }
 
         /// <summary>
         /// Gets or sets the identifier.
@@ -173,26 +154,47 @@ namespace Mud.Engine.Core.Environment
                 throw new NullReferenceException("A valid TImeOfDay instance is required to initialize a realm.");
             }
 
-            this.world = world;
+            this.World = world;
             this.timeOfDayStateManager = new TimeOfDayStateManager(world.TimeOfDayStates);
 
             this.ApplyTimeZoneOffset(worldTimeOfDay);
-
-            if (this.weatherStates.Count > 0)
-            {
-                // Set up our weather clock and start performing weather changes.
-                var weatherClock = new EngineTimer<IWeatherState>((state, clock) => this.SetupWeather(), this.CurrentWeather);
-
-                // Convert the minutes specified with WeatherUpdateFrequency to in-game minutes using the GameTimeRatio.
-                weatherClock.Start(0, TimeSpan.FromMinutes(this.WeatherUpdateFrequency * this.world.GameTimeAdjustmentFactor).TotalMilliseconds);
-            }
         }
 
+        /// <summary>
+        /// Adds the zone.
+        /// </summary>
+        /// <param name="zone">The zone.</param>
+        /// <exception cref="System.NullReferenceException">
+        /// Attempted to add a null Zone to the Realm.
+        /// or
+        /// Adding a Zone to a Realm with a null Rooms collection is not allowed.
+        /// </exception>
+        public void AddZoneToRealm(IZone zone)
+        {
+            if (zone == null)
+            {
+                throw new NullReferenceException("Attempted to add a null Zone to the Realm.");
+            }
+
+            if (zone.Rooms == null)
+            {
+                throw new NullReferenceException("Adding a Zone to a Realm with a null Rooms collection is not allowed.");
+            }
+
+            zone.Initialize(this);
+            this.zones.Add(zone);
+        }
+
+        /// <summary>
+        /// Updates the time for this realm, applying the realm's time zone offset to the given time.
+        /// </summary>
+        /// <param name="timeOfDay">The time of day.</param>
+        /// <exception cref="System.ArgumentOutOfRangeException">You can not have a negative time-zone for realms. They must all be forward offsets from the world's current time.</exception>
         public void ApplyTimeZoneOffset(TimeOfDay timeOfDay)
         {
             if (this.TimeZoneOffset == null)
             {
-                this.TimeZoneOffset = new TimeOfDay { Hour = 0, Minute = 0, HoursPerDay = this.world.HoursPerDay };
+                this.TimeZoneOffset = new TimeOfDay { Hour = 0, Minute = 0, HoursPerDay = this.World.HoursPerDay };
             }
             else if (this.TimeZoneOffset.Hour < 0 || this.TimeZoneOffset.Minute < 0)
             {
@@ -212,43 +214,22 @@ namespace Mud.Engine.Core.Environment
             this.CurrentTimeOfDay.DecrementByMinute(this.TimeZoneOffset.Minute);
         }
 
+        /// <summary>
+        /// Gets the state of the current time of day.
+        /// </summary>
+        /// <returns>Returns an instance representing the current time of day state.</returns>
         public ITimeOfDayState GetCurrentTimeOfDayState()
         {
             ITimeOfDayState state = this.timeOfDayStateManager.GetTimeOfDayState(this.CurrentTimeOfDay);
 
             if (state == null)
             {
-                return this.world.CurrentTimeOfDay;
+                return this.World.CurrentTimeOfDay;
             }
             else
             {
                 return state;
             }
-        }
-
-        /// <summary>
-        /// Setups the weather up.
-        /// </summary>
-        private void SetupWeather()
-        {
-            // Set the current weather based on the probability of it changing.
-            IWeatherState nextWeatherState = this.weatherStates.AnyOrDefaultFromWeight(weather => weather.OccurrenceProbability);
-            if (nextWeatherState != this.CurrentWeather)
-            {
-                this.CurrentWeather = nextWeatherState;
-                this.OnWeatherChanged(null, this.CurrentWeather);
-            }
-        }
-
-        protected virtual void OnWeatherChanged(IWeatherState oldWeather, IWeatherState newWeather)
-        {
-            EventHandler<WeatherStateChangedEventArgs> handler = this.WeatherChanged;
-            if (handler == null)
-            {
-                return;
-            }
-
-            handler(this, new WeatherStateChangedEventArgs(oldWeather, newWeather));
         }
     }
 }
