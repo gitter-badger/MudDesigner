@@ -9,6 +9,7 @@ namespace Mud.Engine.Core.Environment
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -21,7 +22,12 @@ namespace Mud.Engine.Core.Environment
         /// </summary>
         private List<ITimeOfDayState> timeOfDayStates;
 
-        private List<IRealm> realms;
+        /// <summary>
+        /// The realms
+        /// </summary>
+        private List<IRealm> realms = new List<IRealm>();
+
+        private TimeOfDayStateManager timeOfDayStateManager;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultWorld"/> class.
@@ -37,7 +43,7 @@ namespace Mud.Engine.Core.Environment
 
             // Set up default states for the time of day.
             this.timeOfDayStates = new List<ITimeOfDayState> { new MorningState(), new AfternoonState(), new NightState() };
-            this.realms = new List<IRealm>();
+            this.timeOfDayStateManager = new TimeOfDayStateManager(this.timeOfDayStates);
 
             // Must be in the constructor. If assigned within the Initialization method
             // the property could potentially never be restored properly from the data store.
@@ -71,10 +77,16 @@ namespace Mud.Engine.Core.Environment
         /// <value>
         /// The time from creation.
         /// </value>
-        public double TimeFromCreation { get { return this.CreationDate.Subtract(DateTime.Now).TotalSeconds; } }
+        public double TimeFromCreation
+        {
+            get
+            {
+                return this.CreationDate.Subtract(DateTime.Now).TotalSeconds;
+            }
+        }
 
         /// <summary>
-        /// Gets the creation date.
+        /// Gets or sets the creation date.
         /// </summary>
         /// <value>
         /// The creation date.
@@ -109,6 +121,9 @@ namespace Mud.Engine.Core.Environment
                 if (value != null)
                 {
                     this.timeOfDayStates.AddRange(value);
+
+                    // Reset the state manager with the new collection.
+                    this.timeOfDayStateManager = new TimeOfDayStateManager(value);
                 }
             }
         }
@@ -135,7 +150,13 @@ namespace Mud.Engine.Core.Environment
         /// <value>
         /// The game time ratio.
         /// </value>
-        public double GameTimeAdjustmentFactor { get { return this.GameDayToRealHourRatio / this.HoursPerDay; } }
+        public double GameTimeAdjustmentFactor
+        {
+            get
+            {
+                return this.GameDayToRealHourRatio / this.HoursPerDay;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the realms in this world.
@@ -163,19 +184,21 @@ namespace Mud.Engine.Core.Environment
 
         /// <summary>
         /// Initializes the world by starting the world clock and the associated Realm clocks.
+        /// The world must have all of its associated realms assigned before invoking Initialize.
         /// </summary>
+        /// <param name="initialState">The optional initial state that the world must start with</param>
         public virtual void Initialize(ITimeOfDayState initialState = null)
         {
             // Set up our time of day clock.
             if (this.timeOfDayStates.Count > 0 && initialState == null)
             {
                 // If we do not have an initial state, then we create a state based on our current real-world time.
-                this.SetupWorldClock(this.GetTimeOfDayState(DateTime.Now));
+                this.SetupWorldClock(this.timeOfDayStateManager.GetTimeOfDayState(DateTime.Now));
             }
             else if (initialState != null)
             {
                 // If an initial state is provided, then we hand it off to the setup method.
-                SetupWorldClock(initialState);
+                this.SetupWorldClock(initialState);
             }
 
             // Notify listeners that our time of day has changed.
@@ -204,7 +227,19 @@ namespace Mud.Engine.Core.Environment
             }
 
             realm.CreationDate = DateTime.Now;
-            realm.Initialize(this);
+
+            try
+            {
+                realm.Initialize(this, this.CurrentTimeOfDay.CurrentTime);
+            }
+            catch (NullReferenceException)
+            {
+                throw;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                throw;
+            }
 
             this.realms.Add(realm);
         }
@@ -230,6 +265,19 @@ namespace Mud.Engine.Core.Environment
             }
 
             this.timeOfDayStates.Add(state);
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            // These should all have their clocks disabled, but we ensure they are anyway.
+            // This will also pick up our Current state during the process.
+            foreach (ITimeOfDayState state in this.TimeOfDayStates)
+            {
+                state.Reset();
+            }
         }
 
         /// <summary>
@@ -261,14 +309,14 @@ namespace Mud.Engine.Core.Environment
             // the old state before the new state is assigned preventing a proper reset.
             if (this.CurrentTimeOfDay != null)
             {
-                this.CurrentTimeOfDay.TimeUpdated -= this.CurrentTimeOfDay_TimeUpdated;
-                this.CurrentTimeOfDay.Reset();
+                this.CurrentTimeOfDay.TimeUpdated -= this.CurrentTimeOfDayState_TimeUpdated;
             }
 
             // Register for event updates
-            initialState.TimeUpdated += this.CurrentTimeOfDay_TimeUpdated;
+            initialState.TimeUpdated += this.CurrentTimeOfDayState_TimeUpdated;
 
-            // Initialize the state.
+            // Initialize the state. 
+            // TODO: This could potentially reset an in-use state if a zone has a large time-zone offset. An exception should be thrown if still in-use.
             initialState.Initialize(this.GameTimeAdjustmentFactor, this.HoursPerDay);
 
             this.CurrentTimeOfDay = initialState;
@@ -278,146 +326,37 @@ namespace Mud.Engine.Core.Environment
         /// Event handler method fired when the Current TimeOfDay state has its time changed.
         /// </summary>
         /// <param name="sender">The TimeOfDayState that caused the time change.</param>
-        /// <param name="e">The new time of day.</param>
-        private void CurrentTimeOfDay_TimeUpdated(object sender, TimeOfDay e)
+        /// <param name="updatedTimeOfDay">The new time of day.</param>
+        private void CurrentTimeOfDayState_TimeUpdated(object sender, TimeOfDay updatedTimeOfDay)
         {
-            // We need to check if we have exceeded the time available in a given day.
-            if (e.Hour > this.HoursPerDay)
-            {
-                e.Hour = 0;
-                e.Minute = e.Minute;
-            }
+            // Takes our current time of day within the time of day state, and updates the realms with it.
+            this.UpdateTimeOfDayStatesForRealms();
 
-            // Check the current in-game time and see if we need to move to a new state or not.
-            ITimeOfDayState newTimeOfDay = this.GetTimeOfDayState(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, e.Hour, e.Minute, 0));
+            // Fetch the world time of day.
+            // This acts as +0 GMT in-game. Each realm can have an offset via its own timezone.
+            ITimeOfDayState newTimeOfDay = this.timeOfDayStateManager.GetTimeOfDayState(updatedTimeOfDay);
             if (this.CurrentTimeOfDay == newTimeOfDay)
             {
-                // State is the same, so we just return.
                 return;
             }
 
-            Debug.WriteLine(String.Format("Transitioned to {0} state.", newTimeOfDay.Name));
-
             // We need to store a reference to the current state, since the Setup method overwrites it.
             var currentTimeOfDay = this.CurrentTimeOfDay;
-
-            // Set up the new state.
             this.SetupWorldClock(newTimeOfDay);
+
+            // Since the world time of day state was changed, we need to re-evaluate our realms.
+            this.UpdateTimeOfDayStatesForRealms();
 
             // Invoke our event handler with the old state and the new state.
             this.OnTimeOfDayChanged(currentTimeOfDay, newTimeOfDay);
         }
 
-
-        /// <summary>
-        /// Looks at a supplied time of day and figures out what TimeOfDayState needs to be returned that matches the time of day.
-        /// </summary>
-        /// <param name="currentTime">The current time.</param>
-        /// <returns></returns>
-        private ITimeOfDayState GetTimeOfDayState(DateTime? currentTime = null)
+        private void UpdateTimeOfDayStatesForRealms()
         {
-            ITimeOfDayState inProgressState = null;
-            ITimeOfDayState nextState = null;
-
-            TimeOfDay time = new TimeOfDay();
-            time.Hour = currentTime.Value.Hour;
-            time.Minute = currentTime.Value.Minute;
-
-            Parallel.Invoke(
-                () => inProgressState = this.GetInProgressState(time),
-                () => nextState = this.GetNextState(time));
-
-            if (inProgressState != null)
+            this.Realms.AsParallel().ForAll(realm =>
             {
-                return inProgressState;
-            }
-            else if (nextState != null && nextState.StateStartTime.Hour <= time.Hour && nextState.StateStartTime.Minute <= time.Minute)
-            {
-                return nextState;
-            }
-
-            return this.CurrentTimeOfDay;
-        }
-
-        /// <summary>
-        /// Gets a state if there is one already in progress.
-        /// </summary>
-        /// <param name="currentTime">The current time.</param>
-        /// <returns></returns>
-        private ITimeOfDayState GetInProgressState(TimeOfDay currentTime)
-        {
-            ITimeOfDayState inProgressState = null;
-            foreach (ITimeOfDayState state in this.TimeOfDayStates)
-            {
-                // If the state is already in progress, w
-                if (state.StateStartTime.Hour <= currentTime.Hour ||
-                    (state.StateStartTime.Hour <= currentTime.Hour && state.StateStartTime.Minute <= currentTime.Minute))
-                {
-                    if (inProgressState == null)
-                    {
-                        inProgressState = state;
-                        continue;
-                    }
-                    else
-                    {
-                        if (inProgressState.StateStartTime.Hour <= currentTime.Hour &&
-                            inProgressState.StateStartTime.Minute <= currentTime.Minute)
-                        {
-                            inProgressState = state;
-                        }
-                    }
-                }
-            }
-
-            return inProgressState;
-        }
-
-        /// <summary>
-        /// Gets the state that is up next.
-        /// </summary>
-        /// <param name="currentTime">The current time.</param>
-        /// <returns></returns>
-        private ITimeOfDayState GetNextState(TimeOfDay currentTime)
-        {
-            ITimeOfDayState nextState = null;
-            foreach (ITimeOfDayState state in this.TimeOfDayStates)
-            {
-                // If this state is a future state, then preserve it as a possible next state.
-                if (state.StateStartTime.Hour > currentTime.Hour ||
-                    (state.StateStartTime.Hour >= currentTime.Hour && state.StateStartTime.Minute > currentTime.Minute))
-                {
-                    // If we do not have a next state, set it.
-                    if (nextState == null)
-                    {
-                        nextState = state;
-                        continue;
-                    }
-                    else
-                    {
-                        // We have a next state, so we must check which is sooner.
-                        if (nextState.StateStartTime.Hour > state.StateStartTime.Hour &&
-                            nextState.StateStartTime.Minute >= state.StateStartTime.Minute)
-                        {
-                            nextState = state;
-                        }
-                    }
-                }
-            }
-
-            return nextState;
-        }
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            // These should all have their clocks disabled, but we ensure they are anyway.
-            // This will also pick up our Current state during the process.
-            foreach (ITimeOfDayState state in this.TimeOfDayStates)
-            {
-                state.Reset();
-            }
+                realm.ApplyTimeZoneOffset(this.CurrentTimeOfDay.CurrentTime);
+            });
         }
     }
 }

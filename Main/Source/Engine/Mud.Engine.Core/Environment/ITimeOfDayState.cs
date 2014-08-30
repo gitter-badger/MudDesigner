@@ -51,7 +51,5 @@ namespace Mud.Engine.Core.Environment
         /// Resets this instance current time to that if its start time.
         /// </summary>
         void Reset();
-
-        // TODO: Need to add events for when we transition out of a ITimeOfDayState.
     }
 }

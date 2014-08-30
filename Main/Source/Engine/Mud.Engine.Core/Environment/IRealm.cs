@@ -20,12 +20,12 @@ namespace Mud.Engine.Core.Environment
         event EventHandler<WeatherStateChangedEventArgs> WeatherChanged;
 
         /// <summary>
-        /// Gets or sets the offset from the World's current time for the Realm in hours.
+        /// Gets or sets the offset from the World's current time for the Realm
         /// </summary>
         /// <value>
         /// The time zone offset.
         /// </value>
-        double TimeZoneOffset { get; set; }
+        TimeOfDay TimeZoneOffset { get; set; }
 
         /// <summary>
         /// Gets or sets the time of day for the Realm.
@@ -33,7 +33,7 @@ namespace Mud.Engine.Core.Environment
         /// <value>
         /// The time of day.
         /// </value>
-        ITimeOfDayState TimeOfDay { get; set; }
+        TimeOfDay CurrentTimeOfDay { get; set; }
 
         /// <summary>
         /// Gets or sets the current weather.
@@ -69,8 +69,18 @@ namespace Mud.Engine.Core.Environment
         IEnumerable<IZone> Zones { get; set; }
 
         /// <summary>
-        /// Initializes this instance.
+        /// Initializes the realm. Weather states are set up and time zone offset validation.
         /// </summary>
-        void Initialize(IWorld world);
+        /// <param name="world">The world this realm belongs to.</param>
+        /// <param name="worldTimeOfDay">The world time of day.</param>
+        void Initialize(IWorld world, TimeOfDay worldTimeOfDay);
+
+        /// <summary>
+        /// Updates the time.
+        /// </summary>
+        /// <param name="timeOfDay">The time of day.</param>
+        void ApplyTimeZoneOffset(TimeOfDay timeOfDay);
+
+        ITimeOfDayState GetCurrentTimeOfDayState();
     }
 }

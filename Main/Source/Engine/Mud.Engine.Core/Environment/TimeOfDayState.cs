@@ -129,13 +129,24 @@ namespace Mud.Engine.Core.Environment
         /// </returns>
         public override string ToString()
         {
-            return string.Format(
-                "{0} starting at {1}:{2} with a curent time of {3}:{4}",
-                this.Name,
-                this.StateStartTime.Hour,
-                this.StateStartTime.Minute,
-                this.CurrentTime.Hour,
-                this.CurrentTime.Minute);
+            if (this.CurrentTime != null)
+            {
+                return string.Format(
+                    "{0} starting at {1}:{2} with a curent time of {3}:{4}",
+                    this.Name,
+                    this.StateStartTime.Hour,
+                    this.StateStartTime.Minute,
+                    this.CurrentTime.Hour,
+                    this.CurrentTime.Minute);
+            }
+            else
+            {
+                return string.Format(
+                    "{0} starting at {1}:{2}",
+                    this.Name,
+                    this.StateStartTime.Hour,
+                    this.StateStartTime.Minute);
+            }
         }
 
         /// <summary>

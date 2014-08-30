@@ -75,7 +75,17 @@ namespace Mud.Apps.Windows.Server
             // Our game loop.
             while (server.Status == ServerStatus.Running)
             {
-                Thread.Sleep(2500);
+                Thread.Sleep(500);
+                Console.WriteLine("==============");
+                foreach(IWorld world in game.Worlds)
+                {
+                    Console.WriteLine(string.Format("{0} world time is {1} in the {2}", world.Name, world.CurrentTimeOfDay.CurrentTime.ToString(), world.CurrentTimeOfDay.Name));
+                    foreach(IRealm realm in world.Realms)
+                    {
+                        Console.WriteLine(string.Format("{0} world time is {1} in the {2}", realm.Name, realm.CurrentTimeOfDay.ToString(), realm.GetCurrentTimeOfDayState().Name));
+                    }
+                }
+                Console.WriteLine(Environment.NewLine);
             }
 
             // Check if the server has not stopped. If not, we stop.
@@ -136,24 +146,31 @@ namespace Mud.Apps.Windows.Server
 
         private static void SetupGameWorld(IGame game)
         {
-            IRealm realm = new DefaultRealm();
-            var weatherStates = new List<IWeatherState> { new ClearWeather(), new RainyWeather(), new ThunderstormWeather() };
-            realm.WeatherStates = weatherStates;
-            realm.WeatherUpdateFrequency = 15;
-            realm.WeatherChanged += (sender, weatherArgs) => Console.WriteLine(string.Format("Weather has changed to {0}", weatherArgs.CurrentState.Name));
-
+            // Set up the World.
             IWorld world = new DefaultWorld();
             world.GameDayToRealHourRatio = 0.2;
             world.HoursPerDay = 10;
+            world.Name = "Sample World";
 
             var morningState = new MorningState { StateStartTime = new TimeOfDay { Hour = 2 } };
             var afternoonState = new AfternoonState { StateStartTime = new TimeOfDay { Hour = 5 } };
             var nightState = new NightState { StateStartTime = new TimeOfDay { Hour = 8 } };
 
             world.TimeOfDayStates = new List<ITimeOfDayState> { morningState, afternoonState, nightState };
-            world.Realms = new List<IRealm> { realm };
             world.TimeOfDayChanged += world_TimeOfDayChanged;
 
+            // Set up the Realm.
+            IRealm realm = new DefaultRealm();
+            var weatherStates = new List<IWeatherState> { new ClearWeather(), new RainyWeather(), new ThunderstormWeather() };
+            realm.TimeZoneOffset = new TimeOfDay { Hour = 3, Minute = 10, HoursPerDay = world.HoursPerDay };
+
+            realm.WeatherStates = weatherStates;
+            realm.WeatherUpdateFrequency = 15;
+            realm.Name = "Realm 1";
+
+            realm.WeatherChanged += (sender, weatherArgs) => Console.WriteLine(string.Format("Weather has changed to {0}", weatherArgs.CurrentState.Name));
+
+            // Initialize the environment.
             world.Initialize();
             world.AddRealmToWorld(realm);
             game.Worlds.Add(world);

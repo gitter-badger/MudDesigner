@@ -73,5 +73,73 @@ namespace Mud.Engine.Core.Environment
                 this.Hour += hours;
             }
         }
+
+        /// <summary>
+        /// Decrements instance by the number of minutes specified.
+        /// </summary>
+        /// <param name="minutes">The minutes.</param>
+        public void DecrementByMinute(int minutes)
+        {
+            if (this.Minute - minutes < 0)
+            {
+                // We can not reduce the number of minutes to less than 0, so we decrement an hour and restart from 59 minutes
+                this.DecrementByHour(1);
+                int deductedValue = Math.Abs(this.Minute - minutes);
+                this.Minute = 59;
+
+                // Now that we have increased by an hour, lets continue to increment the minutes.
+                this.DecrementByMinute(deductedValue);
+            }
+            else
+            {
+                this.Minute -= minutes;
+            }
+        }
+
+        /// <summary>
+        /// Decrements the instance by the number of hours specified.
+        /// </summary>
+        /// <param name="hours">The hour.</param>
+        public void DecrementByHour(int hours)
+        {
+            // We can't decrement less than 0 hours. So we reset to the number of hours in a day.
+            if (this.Hour - hours < 0)
+            {
+                int deductedValue = Math.Abs(this.Hour - hours);
+                this.Hour = this.HoursPerDay;
+
+                this.DecrementByHour(deductedValue);
+            }
+            else
+            {
+                this.Hour -= hours;
+            }
+        }
+
+        public override string ToString()
+        {
+            string hour = string.Empty;
+            string minute = string.Empty;
+
+            if (this.Hour < 10)
+            {
+                hour = string.Format("0{0}", this.Hour);
+            }
+            else
+            {
+                hour = this.Hour.ToString();
+            }
+
+            if (this.Minute < 10)
+            {
+                minute = string.Format("0{0}", this.Minute);
+            }
+            else
+            {
+                minute = this.Minute.ToString();
+            }
+
+            return string.Format("{0}:{1}", hour, minute);
+        }
     }
 }

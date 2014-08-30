@@ -82,6 +82,7 @@
     <Compile Include="Environment\TimeOfDayChangedEventArgs.cs" />
     <Compile Include="Environment\TimeOfDay.cs" />
     <Compile Include="Environment\TimeOfDayState.cs" />
+    <Compile Include="Environment\TimeOfDayStateManager.cs" />
     <Compile Include="Environment\WeatherStateChangedEventArgs.cs" />
     <Compile Include="Mob\DefaultPlayer.cs" />
     <Compile Include="Mob\IMob.cs" />
