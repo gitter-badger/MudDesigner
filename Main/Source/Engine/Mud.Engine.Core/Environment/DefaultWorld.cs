@@ -72,6 +72,11 @@ namespace Mud.Engine.Core.Environment
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this instance is enabled.
+        /// </summary>
+        public bool IsEnabled { get; set; }
+
+        /// <summary>
         /// Gets how many seconds have passed since the creation date.
         /// </summary>
         /// <value>

@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine\DesktopGame.cs" />
+    <Compile Include="Engine\TextfileLogger.cs" />
     <Compile Include="Networking\DefaultServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

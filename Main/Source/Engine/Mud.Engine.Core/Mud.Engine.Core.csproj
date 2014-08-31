@@ -67,6 +67,7 @@
     <Compile Include="Engine\WarningMessage.cs" />
     <Compile Include="Environment\AfternoonState.cs" />
     <Compile Include="Environment\DefaultRealm.cs" />
+    <Compile Include="Environment\DefaultRoom.cs" />
     <Compile Include="Environment\DefaultWorld.cs" />
     <Compile Include="Environment\DefaultZone.cs" />
     <Compile Include="Environment\IEnvironment.cs" />
@@ -78,10 +79,12 @@
     <Compile Include="Environment\IZone.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Environment\IZoneExtensions.cs" />
     <Compile Include="Environment\IZoneRule.cs" />
     <Compile Include="Environment\MorningState.cs" />
     <Compile Include="Environment\NightState.cs" />
     <Compile Include="Environment\ClearWeather.cs" />
+    <Compile Include="Environment\OccupancyChangedEventArgs.cs" />
     <Compile Include="Environment\SilenceRule.cs" />
     <Compile Include="Environment\TimeOfDayChangedEventArgs.cs" />
     <Compile Include="Environment\TimeOfDay.cs" />

@@ -58,8 +58,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Engine\DefaultWorldTests.cs" />
+    <Compile Include="Engine\DefaultGameTests.cs" />
     <Compile Include="Engine\Validation\ValidateNumberHasMaximumValueTests.cs" />
     <Compile Include="Engine\Validation\ValidatableBaseTests.cs" />
+    <Compile Include="Environment\DefaultRealmTests.cs" />
     <Compile Include="Fixtures\MessageFixture.cs" />
     <Compile Include="Fixtures\ValidatableFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,6 +74,10 @@
     <ProjectReference Include="..\..\..\Engine\Mud.Engine.Default.Desktop\Mud.Engine.Default.Desktop.csproj">
       <Project>{efcd4f40-a2cb-440b-a1c1-bad78b784471}</Project>
       <Name>Mud.Engine.Default.Desktop</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Repositories\Mud.Repositories.Shared\Mud.Repositories.Shared.csproj">
+      <Project>{1e50f1a9-b51a-4084-9293-0dba1a14c92c}</Project>
+      <Name>Mud.Repositories.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

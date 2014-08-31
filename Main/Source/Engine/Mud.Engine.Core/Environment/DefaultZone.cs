@@ -106,6 +106,11 @@ namespace Mud.Engine.Core.Environment
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is enabled.
+        /// </summary>
+        public bool IsEnabled { get; set; }
+
         public IRealm Realm { get; protected set; }
 
         /// <summary>
@@ -143,6 +148,65 @@ namespace Mud.Engine.Core.Environment
 
                 // Convert the minutes specified with WeatherUpdateFrequency to in-game minutes using the GameTimeRatio.
                 weatherClock.Start(0, TimeSpan.FromMinutes(this.WeatherUpdateFrequency * this.realm.World.GameTimeAdjustmentFactor).TotalMilliseconds);
+            }
+        }
+
+        public void AddRoomToZone(IRoom room)
+        {
+            if (room == null)
+            {
+                throw new NullReferenceException("Attempted to add a null Zone to the Realm.");
+            }
+
+            room.Initialize(this);
+            this.rooms.Add(room);
+
+            room.EnteredRoom += this.RoomOccupancyChanged;
+            room.LeftRoom += this.RoomOccupancyChanged;
+        }
+
+        public void RemoveRoomFromZone(IRoom room)
+        {
+            if (!this.rooms.Contains(room))
+            {
+                return;
+            }
+
+            this.rooms.Remove(room);
+            room.EnteredRoom -= this.RoomOccupancyChanged;
+            room.LeftRoom -= this.RoomOccupancyChanged;
+        }
+
+        /// <summary>
+        /// Handles when an occupant moves around within a zone.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="OccupancyChangedEventArgs" /> instance containing the event data.</param>
+        private void RoomOccupancyChanged(object sender, OccupancyChangedEventArgs e)
+        {
+            // If the departure room is not null, then the character is moving from a room.
+            if (e.DepartureRoom != null)
+            {
+                // Check if the old room was within our zone and the new room is not.
+                if (this.HasRoom(e.DepartureRoom) && !this.HasRoom(e.ArrivalRoom))
+                {
+                    this.OnLeftZone(e.Occupant);
+                }
+                else if (!this.HasRoom(e.DepartureRoom) && this.HasRoom(e.ArrivalRoom))
+                {
+                    // We have left one zone and entered this Zone.
+                    this.OnEnteredZone(e.Occupant);
+                }
+
+                // If none of the aboe criteria was met, it indicates that the occupant is moving
+                // around within the zone, which so we don't need to push events.
+                return;
+            }
+
+            // If the departure room is null, then we know that they are entering this zone for the first time.
+            if (this.HasRoom(e.ArrivalRoom))
+            {
+                this.OnEnteredZone(e.Occupant);
             }
         }
 

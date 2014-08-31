@@ -85,5 +85,17 @@ using System.Collections.Generic;
         /// </summary>
         /// <param name="realm">The realm.</param>
         void Initialize(IRealm realm);
+
+        /// <summary>
+        /// Add and initializes the given room.
+        /// </summary>
+        /// <param name="room">The room.</param>
+        void AddRoomToZone(IRoom room);
+
+        /// <summary>
+        /// Removes the room from zone.
+        /// </summary>
+        /// <param name="room">The room.</param>
+        void RemoveRoomFromZone(IRoom room);
     }
 }

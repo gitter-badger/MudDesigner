@@ -85,10 +85,17 @@ namespace Mud.Engine.Core.Environment
                 // We can not reduce the number of minutes to less than 0, so we decrement an hour and restart from 59 minutes
                 this.DecrementByHour(1);
                 int deductedValue = Math.Abs(this.Minute - minutes);
-                this.Minute = 59;
 
-                // Now that we have increased by an hour, lets continue to increment the minutes.
-                this.DecrementByMinute(deductedValue);
+                if (deductedValue > 0)
+                {
+                    this.Minute = 60;
+                }
+                else
+                {
+                    this.Minute = 59;
+                }
+                    // Now that we have increased by an hour, lets continue to increment the minutes.
+                    this.DecrementByMinute(deductedValue);
             }
             else
             {

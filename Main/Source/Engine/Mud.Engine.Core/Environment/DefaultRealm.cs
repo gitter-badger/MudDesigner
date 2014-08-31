@@ -110,6 +110,11 @@ namespace Mud.Engine.Core.Environment
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this instance is enabled.
+        /// </summary>
+        public bool IsEnabled { get; set; }
+
+        /// <summary>
         /// Gets how many seconds have passed since the creation date.
         /// </summary>
         /// <value>
@@ -192,8 +197,17 @@ namespace Mud.Engine.Core.Environment
         /// <exception cref="System.ArgumentOutOfRangeException">You can not have a negative time-zone for realms. They must all be forward offsets from the world's current time.</exception>
         public void ApplyTimeZoneOffset(TimeOfDay timeOfDay)
         {
+            if (timeOfDay == null)
+            {
+                throw new NullReferenceException("ApplyTimeZoneOffset can not be given a null argument.");
+            }
             if (this.TimeZoneOffset == null)
             {
+                if (this.World == null)
+                {
+                    throw new NullReferenceException("A Time Zone offset can not be applied when both the TimeZoneOffset and World properties are null.");
+                }
+
                 this.TimeZoneOffset = new TimeOfDay { Hour = 0, Minute = 0, HoursPerDay = this.World.HoursPerDay };
             }
             else if (this.TimeZoneOffset.Hour < 0 || this.TimeZoneOffset.Minute < 0)

@@ -7,6 +7,7 @@ namespace Mud.Engine.Core.Character
 {
     using System;
     using Mud.Engine.Core.Engine;
+using Mud.Engine.Core.Environment;
 
     /// <summary>
     /// Provides a contract for objects wanting to act as an IMob Type.
@@ -56,6 +57,11 @@ namespace Mud.Engine.Core.Character
         /// The game.
         /// </value>
         IGame Game { get; }
+
+        /// <summary>
+        /// Gets or sets the current room.
+        /// </summary>
+        IRoom CurrentRoom { get; set; }
 
         /// <summary>
         /// Initializes this instance with the given game.

@@ -7,6 +7,7 @@ namespace Mud.Engine.Core.Character
 {
     using System;
     using Mud.Engine.Core.Engine;
+    using Mud.Engine.Core.Environment;
 
     /// <summary>
     /// The Default Engine implementation of IPlayer.
@@ -64,6 +65,8 @@ namespace Mud.Engine.Core.Character
         /// The game.
         /// </value>
         public IGame Game { get; private set; }
+
+        public IRoom CurrentRoom { get; set; }
 
         /// <summary>
         /// Initializes this instance with the given game.
