@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
-namespace Mud.Engine.Core.Environment
+namespace Mud.Engine.Core.Environment.Time
 {
     /// <summary>
     /// Allows a specific time of day to be given a state.

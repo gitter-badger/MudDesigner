@@ -6,8 +6,9 @@
 namespace Mud.Engine.Core.Environment
 {
     using Mud.Engine.Core.Character;
-using System;
-using System.Collections.Generic;
+    using Mud.Engine.Core.Environment.Weather;
+    using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Provides a contract for creating Zone objects.

@@ -22,6 +22,8 @@ namespace Mud.Engine.Core.Environment
 
         ICollection<ICharacter> Occupants { get; }
 
+        ICollection<IDoorway> Doorways { get; }
+
         void Initialize(IZone zone);
 
         /// <summary>

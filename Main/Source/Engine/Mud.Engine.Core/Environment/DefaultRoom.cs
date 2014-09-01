@@ -25,6 +25,8 @@ namespace Mud.Engine.Core.Environment
 
         public IZone Zone { get; protected set; }
 
+        public ICollection<IDoorway> Doorways { get; protected set; }
+
         public ICollection<ICharacter> Occupants { get; protected set; }
 
         public virtual void Initialize(IZone zone)
@@ -34,6 +36,13 @@ namespace Mud.Engine.Core.Environment
 
         public void AddOccupantToRoom(ICharacter character)
         {
+            // We don't allow the user to enter a disabled room.
+            if (this.IsEnabled)
+            {
+                // TODO: Need to do some kind of communication back to the caller that this can't be traveled to.
+                return;
+            }
+
             if (character == null)
             {
                 throw new NullReferenceException("Attempted to add a null character to the Room.");

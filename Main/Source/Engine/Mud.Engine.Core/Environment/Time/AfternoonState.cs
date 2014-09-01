@@ -4,17 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mud.Engine.Core.Environment
+namespace Mud.Engine.Core.Environment.Time
 {
-    public class NightState : TimeOfDayState
+    public class AfternoonState : TimeOfDayState
     {
-        public NightState()
+        public AfternoonState()
         {
             this.StateStartTime = new TimeOfDay();
-            this.StateStartTime.Hour = 18;
+            this.StateStartTime.Hour = 12;
         }
 
-        public override string Name { get { return "Night"; } }
+        public override string Name { get { return "Afternoon"; } }
 
         public override TimeOfDay StateStartTime { get; set; }
     }

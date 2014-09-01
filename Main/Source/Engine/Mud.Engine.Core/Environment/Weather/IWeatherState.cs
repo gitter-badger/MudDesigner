@@ -3,7 +3,7 @@
 //     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-namespace Mud.Engine.Core.Environment
+namespace Mud.Engine.Core.Environment.Weather
 {
     /// <summary>
     /// Defines a state that weather can be in.

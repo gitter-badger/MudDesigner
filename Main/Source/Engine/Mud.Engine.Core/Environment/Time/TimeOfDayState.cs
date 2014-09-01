@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mud.Engine.Core.Environment
+namespace Mud.Engine.Core.Environment.Time
 {
     public abstract class TimeOfDayState : ITimeOfDayState
     {
