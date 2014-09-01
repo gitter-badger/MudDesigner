@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="EngineTimer.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Engine
 {
+    using System;
+    using System.Diagnostics;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// The Engine  Timer provides a means to start a timer with a callback that can be repeated over a set interval.
     /// </summary>
@@ -52,43 +54,46 @@ namespace Mud.Engine.Core.Engine
         /// <param name="callbackOnWorkerThread">if set to <c>true</c> the callback will be performed on a background thread.</param>
         public void Start(double startDelay, double interval, bool isOneShot = false, bool callbackOnWorkerThread = false)
         {
-            this.timerTask = Task.Delay(TimeSpan.FromMilliseconds(startDelay), Token).ContinueWith(async (task, state) =>
-            {
-                Debug.WriteLine(string.Format(
-                    "Starting engine timer for {0} with an interval of {1}ms",
-                    typeof(T).Name,
-                    interval));
-
-                var tuple = (Tuple<Action<T, EngineTimer<T>>, T>)state;
-                while (!IsCancellationRequested)
+            this.timerTask = Task
+                .Delay(TimeSpan.FromMilliseconds(startDelay), Token)
+                .ContinueWith(
+                async (task, state) =>
                 {
-                    if (callbackOnWorkerThread)
+                    Debug.WriteLine(string.Format(
+                        "Starting engine timer for {0} with an interval of {1}ms",
+                        typeof(T).Name,
+                        interval));
+
+                    var tuple = (Tuple<Action<T, EngineTimer<T>>, T>)state;
+                    while (!IsCancellationRequested)
                     {
-                        Task.Run(() => 
+                        if (callbackOnWorkerThread)
                         {
-                            Debug.WriteLine(string.Format(
-                                "Updating engine timer for {0} with Task Id: {1}",
-                                typeof(T).Name,
-                                task.Id));
+                            Task.Run(() =>
+                            {
+                                Debug.WriteLine(string.Format(
+                                    "Updating engine timer for {0} with Task Id: {1}",
+                                    typeof(T).Name,
+                                    task.Id));
+                                tuple.Item1(tuple.Item2, this);
+                            });
+                        }
+                        else
+                        {
                             tuple.Item1(tuple.Item2, this);
-                        });
-                    }
-                    else
-                    {
-                        tuple.Item1(tuple.Item2, this);
-                    }
+                        }
 
-                    if (isOneShot)
-                    {
-                        this.Cancel();
-                    }
+                        if (isOneShot)
+                        {
+                            this.Cancel();
+                        }
 
-                    await Task.Delay(TimeSpan.FromMilliseconds(interval), Token).ConfigureAwait(false);
-                }
-            }, 
-            Tuple.Create(callback, StateData), 
-            CancellationToken.None, 
-            TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.OnlyOnRanToCompletion, 
+                        await Task.Delay(TimeSpan.FromMilliseconds(interval), Token).ConfigureAwait(false);
+                    }
+                },
+            Tuple.Create(this.callback, this.StateData),
+            CancellationToken.None,
+            TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.OnlyOnRanToCompletion,
             TaskScheduler.Default);
         }
 
@@ -110,7 +115,9 @@ namespace Mud.Engine.Core.Engine
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                Cancel();
+            {
+                this.Cancel();
+            }
 
             base.Dispose(disposing);
         }

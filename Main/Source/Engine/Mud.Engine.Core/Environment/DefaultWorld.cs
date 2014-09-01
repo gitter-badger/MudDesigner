@@ -5,13 +5,10 @@
 //-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Environment
 {
-    using Mud.Engine.Core.Environment.Time;
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
+    using Mud.Engine.Core.Environment.Time;
 
     /// <summary>
     /// The Default World class used by the engine.
@@ -28,6 +25,9 @@ namespace Mud.Engine.Core.Environment
         /// </summary>
         private List<IRealm> realms = new List<IRealm>();
 
+        /// <summary>
+        /// The time of day state manager
+        /// </summary>
         private TimeOfDayStateManager timeOfDayStateManager;
 
         /// <summary>
@@ -59,17 +59,11 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
         public Guid Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
-        /// <value>
-        /// The name.
-        /// </value>
         public string Name { get; set; }
 
         /// <summary>
@@ -80,9 +74,6 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Gets how many seconds have passed since the creation date.
         /// </summary>
-        /// <value>
-        /// The time from creation.
-        /// </value>
         public double TimeFromCreation
         {
             get
@@ -94,25 +85,16 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Gets or sets the creation date.
         /// </summary>
-        /// <value>
-        /// The creation date.
-        /// </value>
         public DateTime CreationDate { get; set; }
 
         /// <summary>
         /// Gets or sets the current time of day.
         /// </summary>
-        /// <value>
-        /// The current time of day.
-        /// </value>
         public ITimeOfDayState CurrentTimeOfDay { get; set; }
 
         /// <summary>
         /// Gets or sets a collection of states that can be used for the time of day.
         /// </summary>
-        /// <value>
-        /// The time of day states.
-        /// </value>
         public IEnumerable<ITimeOfDayState> TimeOfDayStates
         {
             get
@@ -137,25 +119,16 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Gets or sets hour many hours it takes in-game to complete 1 day.
         /// </summary>
-        /// <value>
-        /// The hours per day.
-        /// </value>
         public int HoursPerDay { get; set; }
 
         /// <summary>
         /// Gets or sets the hours ratio. If set to 4, it takes 4 in-game hours to equal 1 real-world hour.
         /// </summary>
-        /// <value>
-        /// The hours ratio.
-        /// </value>
         public double GameDayToRealHourRatio { get; set; }
 
         /// <summary>
         /// Gets the game time ratio used to convert real-world time to game-time.
         /// </summary>
-        /// <value>
-        /// The game time ratio.
-        /// </value>
         public double GameTimeAdjustmentFactor
         {
             get
@@ -167,9 +140,6 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Gets or sets the realms in this world.
         /// </summary>
-        /// <value>
-        /// The realms.
-        /// </value>
         public IEnumerable<IRealm> Realms
         {
             get
@@ -281,7 +251,6 @@ namespace Mud.Engine.Core.Environment
         {
             if (!this.Realms.Contains(realm))
             {
-
             }
 
             this.realms.Remove(realm);
@@ -323,6 +292,12 @@ namespace Mud.Engine.Core.Environment
             }
         }
 
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
             return string.Format("{0} - {1} - with {2} realms.", this.Name, this.CurrentTimeOfDay.Name, this.NumberOfRealms);

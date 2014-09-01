@@ -5,17 +5,14 @@
 //-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Environment
 {
-    using Mud.Engine.Core.Engine;
-    using Mud.Engine.Core.Environment.Time;
-    using System;
     using System.Collections.Generic;
+    using Mud.Engine.Core.Environment.Time;
 
     /// <summary>
     /// IRealm can be implemented to provide Realm support to an object.
     /// </summary>
     public interface IRealm : IEnvironment
     {
-
         /// <summary>
         /// Gets or sets the offset from the World's current time for the Realm
         /// </summary>
@@ -72,6 +69,10 @@ namespace Mud.Engine.Core.Environment
         /// <param name="timeOfDay">The time of day.</param>
         void ApplyTimeZoneOffset(TimeOfDay timeOfDay);
 
+        /// <summary>
+        /// Gets the state of the current time of day.
+        /// </summary>
+        /// <returns>Returns the realms current time of day state.</returns>
         ITimeOfDayState GetCurrentTimeOfDayState();
     }
 }

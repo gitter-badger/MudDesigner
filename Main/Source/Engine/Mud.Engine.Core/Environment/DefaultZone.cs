@@ -1,15 +1,20 @@
-﻿using Mud.Engine.Core.Engine;
-using Mud.Engine.Core.Character;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mud.Engine.Core.Environment.Weather;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="DefaultZone.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Environment
 {
-    public class DefaultZone: IZone
+    using System;
+    using System.Collections.Generic;
+    using Mud.Engine.Core.Character;
+    using Mud.Engine.Core.Engine;
+    using Mud.Engine.Core.Environment.Weather;
+
+    /// <summary>
+    /// The default IZone Type for the engine.
+    /// </summary>
+    public class DefaultZone : IZone
     {
         /// <summary>
         /// The realm that owns this zone.
@@ -40,10 +45,19 @@ namespace Mud.Engine.Core.Environment
         /// </summary>
         public event EventHandler<WeatherStateChangedEventArgs> WeatherChanged;
 
+        /// <summary>
+        /// Occurs when a character enters a zone.
+        /// </summary>
         public event EventHandler<ICharacter> EnteredZone;
 
+        /// <summary>
+        /// Occurs when a character left a zone.
+        /// </summary>
         public event EventHandler<ICharacter> LeftZone;
 
+        /// <summary>
+        /// Gets the number of rooms.
+        /// </summary>
         public int NumberOfRooms
         {
             get
@@ -52,6 +66,9 @@ namespace Mud.Engine.Core.Environment
             }
         }
 
+        /// <summary>
+        /// Gets or sets the rules that must be applied to this zone.
+        /// </summary>
         public ICollection<IZoneRule> Rules { get; set; }
 
         /// <summary>
@@ -112,6 +129,9 @@ namespace Mud.Engine.Core.Environment
         /// </summary>
         public bool IsEnabled { get; set; }
 
+        /// <summary>
+        /// Gets or sets the realm that owns this zone.
+        /// </summary>
         public IRealm Realm { get; protected set; }
 
         /// <summary>
@@ -130,7 +150,7 @@ namespace Mud.Engine.Core.Environment
         public double TimeFromCreation { get; private set; }
 
         /// <summary>
-        /// Gets the creation date.
+        /// Gets or sets the creation date.
         /// </summary>
         public DateTime CreationDate { get; set; }
 
@@ -152,6 +172,11 @@ namespace Mud.Engine.Core.Environment
             }
         }
 
+        /// <summary>
+        /// Add and initializes the given room.
+        /// </summary>
+        /// <param name="room">The room.</param>
+        /// <exception cref="System.NullReferenceException">Attempted to add a null Zone to the Realm.</exception>
         public void AddRoomToZone(IRoom room)
         {
             if (room == null)
@@ -166,6 +191,10 @@ namespace Mud.Engine.Core.Environment
             room.LeftRoom += this.RoomOccupancyChanged;
         }
 
+        /// <summary>
+        /// Removes the room from zone.
+        /// </summary>
+        /// <param name="room">The room.</param>
         public void RemoveRoomFromZone(IRoom room)
         {
             if (!this.rooms.Contains(room))
@@ -176,6 +205,52 @@ namespace Mud.Engine.Core.Environment
             this.rooms.Remove(room);
             room.EnteredRoom -= this.RoomOccupancyChanged;
             room.LeftRoom -= this.RoomOccupancyChanged;
+        }
+
+        /// <summary>
+        /// Called when the zones weather has changed.
+        /// </summary>
+        /// <param name="oldWeather">The old weather prior to the change taking place.</param>
+        /// <param name="newWeather">The new weather once the change is completed.</param>
+        protected virtual void OnWeatherChanged(IWeatherState oldWeather, IWeatherState newWeather)
+        {
+            EventHandler<WeatherStateChangedEventArgs> handler = this.WeatherChanged;
+            if (handler == null)
+            {
+                return;
+            }
+
+            handler(this, new WeatherStateChangedEventArgs(oldWeather, newWeather));
+        }
+
+        /// <summary>
+        /// Called when a character enters an IRoom within this Zone for the first time.
+        /// </summary>
+        /// <param name="character">The character.</param>
+        protected virtual void OnEnteredZone(ICharacter character)
+        {
+            EventHandler<ICharacter> handler = this.EnteredZone;
+            if (handler == null)
+            {
+                return;
+            }
+
+            handler(this, character);
+        }
+
+        /// <summary>
+        /// Called when a character leaves an IRoom within this Zone and enters an IRoom within a different Zone.
+        /// </summary>
+        /// <param name="character">The character.</param>
+        protected virtual void OnLeftZone(ICharacter character)
+        {
+            EventHandler<ICharacter> handler = this.LeftZone;
+            if (handler == null)
+            {
+                return;
+            }
+
+            handler(this, character);
         }
 
         /// <summary>
@@ -223,44 +298,6 @@ namespace Mud.Engine.Core.Environment
                 this.CurrentWeather = nextWeatherState;
                 this.OnWeatherChanged(null, this.CurrentWeather);
             }
-        }
-
-        /// <summary>
-        /// Called when the zones weather has changed.
-        /// </summary>
-        /// <param name="oldWeather">The old weather prior to the change taking place.</param>
-        /// <param name="newWeather">The new weather once the change is completed.</param>
-        protected virtual void OnWeatherChanged(IWeatherState oldWeather, IWeatherState newWeather)
-        {
-            EventHandler<WeatherStateChangedEventArgs> handler = this.WeatherChanged;
-            if (handler == null)
-            {
-                return;
-            }
-
-            handler(this, new WeatherStateChangedEventArgs(oldWeather, newWeather));
-        }
-
-        protected virtual void OnEnteredZone(ICharacter character)
-        {
-            EventHandler<ICharacter> handler = this.EnteredZone;
-            if (handler == null)
-            {
-                return;
-            }
-
-            handler(this, character);
-        }
-
-        protected virtual void OnLeftZone(ICharacter character)
-        {
-            EventHandler<ICharacter> handler = this.LeftZone;
-            if (handler == null)
-            {
-                return;
-            }
-
-            handler(this, character);
         }
     }
 }

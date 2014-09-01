@@ -1,29 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="TimeOfDay.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Environment.Time
 {
+    using System;
+
+    /// <summary>
+    /// Provides a means of representing a specific time of day in hours and minutes.
+    /// Methods are provided to adjust the time of day if needed.
+    /// </summary>
     public class TimeOfDay
     {
         /// <summary>
         /// Gets or sets the hour.
         /// </summary>
-        /// <value>
-        /// The hour.
-        /// </value>
         public int Hour { get; set; }
 
         /// <summary>
         /// Gets or sets the minute.
         /// </summary>
-        /// <value>
-        /// The minute.
-        /// </value>
         public int Minute { get; set; }
 
+        /// <summary>
+        /// Gets or sets the hours per day.
+        /// </summary>
         public int HoursPerDay { get; set; }
 
         /// <summary>
@@ -94,8 +96,9 @@ namespace Mud.Engine.Core.Environment.Time
                 {
                     this.Minute = 59;
                 }
-                    // Now that we have increased by an hour, lets continue to increment the minutes.
-                    this.DecrementByMinute(deductedValue);
+
+                // Now that we have increased by an hour, lets continue to increment the minutes.
+                this.DecrementByMinute(deductedValue);
             }
             else
             {
@@ -123,6 +126,12 @@ namespace Mud.Engine.Core.Environment.Time
             }
         }
 
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
             string hour = string.Empty;

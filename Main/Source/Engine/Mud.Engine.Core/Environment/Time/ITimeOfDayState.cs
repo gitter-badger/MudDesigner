@@ -3,9 +3,10 @@
 //     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-using System;
 namespace Mud.Engine.Core.Environment.Time
 {
+    using System;
+
     /// <summary>
     /// Allows a specific time of day to be given a state.
     /// </summary>
@@ -33,7 +34,7 @@ namespace Mud.Engine.Core.Environment.Time
         TimeOfDay CurrentTime { get; }
 
         /// <summary>
-        /// Gets the time of day in the game that this state begins in hours.
+        /// Gets or sets the time of day in the game that this state begins.
         /// </summary>
         /// <value>
         /// The state start time.

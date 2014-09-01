@@ -5,10 +5,10 @@
 //-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Environment
 {
-    using Mud.Engine.Core.Character;
-    using Mud.Engine.Core.Environment.Weather;
     using System;
     using System.Collections.Generic;
+    using Mud.Engine.Core.Character;
+    using Mud.Engine.Core.Environment.Weather;
 
     /// <summary>
     /// Provides a contract for creating Zone objects.
@@ -33,34 +33,22 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Gets or sets the current weather.
         /// </summary>
-        /// <value>
-        /// The current weather.
-        /// </value>
         IWeatherState CurrentWeather { get; set; }
 
         /// <summary>
         /// Gets or sets a collection of states that can be used to determine the current weather.
         /// </summary>
-        /// <value>
-        /// The weather states.
-        /// </value>
         IEnumerable<IWeatherState> WeatherStates { get; set; }
 
         /// <summary>
         /// Gets or sets the weather update frequency.
         /// When the frequency is hit, the new weather will be determined based on the weathers probability. It is not guaranteed to change.
         /// </summary>
-        /// <value>
-        /// The weather update frequency.
-        /// </value>
         int WeatherUpdateFrequency { get; set; }
 
         /// <summary>
         /// Gets or sets the rooms within this Zone.
         /// </summary>
-        /// <value>
-        /// The rooms.
-        /// </value>
         IEnumerable<IRoom> Rooms { get; set; }
 
         /// <summary>
@@ -71,9 +59,6 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Gets the realm that owns this zone.
         /// </summary>
-        /// <value>
-        /// The realm.
-        /// </value>
         IRealm Realm { get; }
 
         /// <summary>

@@ -3,14 +3,18 @@
 //     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-using System;
 namespace Mud.Engine.Core.Engine
 {
+    using System;
+
     /// <summary>
     /// An implementation of IValidationMessage that can be used for error messages
     /// </summary>
     public class ErrorMessage : IMessage
     {
+        /// <summary>
+        /// The exception
+        /// </summary>
         private Exception exception;
 
         /// <summary>
@@ -22,9 +26,10 @@ namespace Mud.Engine.Core.Engine
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ErrorMessage"/> class.
+        /// Initializes a new instance of the <see cref="ErrorMessage" /> class.
         /// </summary>
         /// <param name="message">The message.</param>
+        /// <param name="exception">The exception.</param>
         public ErrorMessage(string message, Exception exception)
         {
             this.exception = exception;
@@ -39,9 +44,6 @@ namespace Mud.Engine.Core.Engine
         /// <summary>
         /// Gets the message.
         /// </summary>
-        /// <value>
-        /// The message.
-        /// </value>
         public string Message { get; private set; }
 
         /// <summary>

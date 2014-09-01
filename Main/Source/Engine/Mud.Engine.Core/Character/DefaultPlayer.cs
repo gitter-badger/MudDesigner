@@ -66,6 +66,9 @@ namespace Mud.Engine.Core.Character
         /// </value>
         public IGame Game { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the current room that this character occupies.
+        /// </summary>
         public IRoom CurrentRoom { get; set; }
 
         /// <summary>

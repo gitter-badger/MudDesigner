@@ -7,10 +7,6 @@ namespace Mud.Engine.Core.Environment
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Mud.Engine.Core.Engine;
     using Mud.Engine.Core.Environment.Time;
 
     /// <summary>
@@ -23,6 +19,9 @@ namespace Mud.Engine.Core.Environment
         /// </summary>
         private TimeOfDayStateManager timeOfDayStateManager;
 
+        /// <summary>
+        /// The collection of zones for this realm
+        /// </summary>
         private List<IZone> zones = new List<IZone>();
 
         /// <summary>
@@ -37,25 +36,16 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Gets or sets the offset from the World's current time for the Realm.
         /// </summary>
-        /// <value>
-        /// The time zone offset.
-        /// </value>
         public TimeOfDay TimeZoneOffset { get; set; }
 
         /// <summary>
         /// Gets or sets the time of day for the Realm.
         /// </summary>
-        /// <value>
-        /// The time of day.
-        /// </value>
         public TimeOfDay CurrentTimeOfDay { get; set; }
 
         /// <summary>
         /// Gets or sets the zones within this Realm.
         /// </summary>
-        /// <value>
-        /// The zones.
-        /// </value>
         public IEnumerable<IZone> Zones
         {
             get
@@ -87,27 +77,18 @@ namespace Mud.Engine.Core.Environment
         }
 
         /// <summary>
-        /// Gets the World that owns this realm..
+        /// Gets or sets the World that owns this realm..
         /// </summary>
-        /// <value>
-        /// The World.
-        /// </value>
         public IWorld World { get; protected set; }
 
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
         public Guid Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
-        /// <value>
-        /// The name.
-        /// </value>
         public string Name { get; set; }
 
         /// <summary>
@@ -118,9 +99,6 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Gets how many seconds have passed since the creation date.
         /// </summary>
-        /// <value>
-        /// The time from creation.
-        /// </value>
         public double TimeFromCreation
         {
             get
@@ -130,24 +108,20 @@ namespace Mud.Engine.Core.Environment
         }
 
         /// <summary>
-        /// Gets the creation date.
+        /// Gets or sets the creation date.
         /// </summary>
-        /// <value>
-        /// The creation date.
-        /// </value>
         public DateTime CreationDate { get; set; }
 
         /// <summary>
-        /// Initializes the realm. Weather states are set up and time zone offset validation.
+        /// Initializes the realm. Weather states are set up and time zone offsets are applied.
         /// </summary>
         /// <param name="world">The world this realm belongs to.</param>
-        /// <param name="worldTimeOfDay">The world time of day. The Realm offset is applied on-top of this time by the realm itself.</param>
+        /// <param name="worldTimeOfDay">The world time of day.</param>
         /// <exception cref="System.NullReferenceException">
         /// A valid world instance must be supplied.
         /// or
-        /// A valid TImeOfDay instance is required to initialize a realm.
+        /// A valid TimeOfDay instance is required to initialize a realm.
         /// </exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">You can not have a negative time-zone for realms. They must all be forward offsets from the world's current time.</exception>
         public virtual void Initialize(IWorld world, TimeOfDay worldTimeOfDay)
         {
             if (world == null)
@@ -167,14 +141,12 @@ namespace Mud.Engine.Core.Environment
         }
 
         /// <summary>
-        /// Adds the zone.
+        /// Adds the given zone to this instance.
         /// </summary>
         /// <param name="zone">The zone.</param>
-        /// <exception cref="System.NullReferenceException">
-        /// Attempted to add a null Zone to the Realm.
+        /// <exception cref="System.NullReferenceException">Attempted to add a null Zone to the Realm.
         /// or
-        /// Adding a Zone to a Realm with a null Rooms collection is not allowed.
-        /// </exception>
+        /// Adding a Zone to a Realm with a null Rooms collection is not allowed.</exception>
         public void AddZoneToRealm(IZone zone)
         {
             if (zone == null)
@@ -195,6 +167,11 @@ namespace Mud.Engine.Core.Environment
         /// Updates the time for this realm, applying the realm's time zone offset to the given time.
         /// </summary>
         /// <param name="timeOfDay">The time of day.</param>
+        /// <exception cref="System.NullReferenceException">
+        /// ApplyTimeZoneOffset can not be given a null argument.
+        /// or
+        /// A Time Zone offset can not be applied when both the TimeZoneOffset and World properties are null.
+        /// </exception>
         /// <exception cref="System.ArgumentOutOfRangeException">You can not have a negative time-zone for realms. They must all be forward offsets from the world's current time.</exception>
         public void ApplyTimeZoneOffset(TimeOfDay timeOfDay)
         {
@@ -202,6 +179,7 @@ namespace Mud.Engine.Core.Environment
             {
                 throw new NullReferenceException("ApplyTimeZoneOffset can not be given a null argument.");
             }
+
             if (this.TimeZoneOffset == null)
             {
                 if (this.World == null)

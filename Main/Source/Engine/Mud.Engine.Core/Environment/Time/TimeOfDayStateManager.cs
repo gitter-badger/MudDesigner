@@ -1,15 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="TimeOfDayStateManager.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Environment.Time
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// Provides methods for fetching an ITimeOfDayState implementation based on a TimeOfDay instance.
+    /// </summary>
     internal class TimeOfDayStateManager
     {
+        /// <summary>
+        /// The time of day states provided by an external source
+        /// </summary>
         private IEnumerable<ITimeOfDayState> timeOfDayStates;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TimeOfDayStateManager"/> class.
+        /// </summary>
+        /// <param name="states">The states.</param>
         internal TimeOfDayStateManager(IEnumerable<ITimeOfDayState> states)
         {
             this.timeOfDayStates = states;
@@ -74,7 +87,8 @@ namespace Mud.Engine.Core.Environment.Time
             {
                 // If the state is already in progress, w
                 if (state.StateStartTime.Hour <= currentTime.Hour ||
-                    (state.StateStartTime.Hour <= currentTime.Hour && state.StateStartTime.Minute <= currentTime.Minute))
+                    (state.StateStartTime.Hour <= currentTime.Hour && 
+                    state.StateStartTime.Minute <= currentTime.Minute))
                 {
                     if (inProgressState == null)
                     {
@@ -110,7 +124,8 @@ namespace Mud.Engine.Core.Environment.Time
             {
                 // If this state is a future state, then preserve it as a possible next state.
                 if (state.StateStartTime.Hour > currentTime.Hour ||
-                    (state.StateStartTime.Hour >= currentTime.Hour && state.StateStartTime.Minute > currentTime.Minute))
+                    (state.StateStartTime.Hour >= currentTime.Hour && 
+                    state.StateStartTime.Minute > currentTime.Minute))
                 {
                     // If we do not have a next state, set it.
                     if (nextState == null)

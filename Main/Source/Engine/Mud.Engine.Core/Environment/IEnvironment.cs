@@ -6,7 +6,6 @@
 namespace Mud.Engine.Core.Environment
 {
     using System;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Defines properties that are used across various environments such as worlds, realms and zones.
@@ -16,33 +15,21 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
         Guid Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
-        /// <value>
-        /// The name.
-        /// </value>
         string Name { get; set; }
 
         /// <summary>
         /// Gets how many seconds have passed since the creation date.
         /// </summary>
-        /// <value>
-        /// The time from creation.
-        /// </value>
         double TimeFromCreation { get; }
 
         /// <summary>
-        /// Gets the creation date.
+        /// Gets or sets the creation date.
         /// </summary>
-        /// <value>
-        /// The creation date.
-        /// </value>
         DateTime CreationDate { get; set; }
 
         /// <summary>

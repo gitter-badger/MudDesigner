@@ -85,7 +85,6 @@
     <Compile Include="Environment\Time\MorningState.cs" />
     <Compile Include="Environment\Time\NightState.cs" />
     <Compile Include="Environment\OccupancyChangedEventArgs.cs" />
-    <Compile Include="Environment\SilenceRule.cs" />
     <Compile Include="Environment\Time\TimeOfDayChangedEventArgs.cs" />
     <Compile Include="Environment\Time\TimeOfDay.cs" />
     <Compile Include="Environment\Time\TimeOfDayState.cs" />

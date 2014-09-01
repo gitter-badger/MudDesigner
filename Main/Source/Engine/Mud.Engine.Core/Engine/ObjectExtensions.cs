@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="ValidateNumberHasMaximumValueAttribute.cs" company="Sully">
+// <copyright file="ObjectExtensions.cs" company="Sully">
 //     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
@@ -19,7 +19,7 @@ namespace Mud.Engine.Core.Engine
         /// </summary>
         /// <typeparam name="T">The type whose member you want to access.</typeparam>
         /// <param name="obj">The parameters.</param>
-        /// <param name="expr">The expr.</param>
+        /// <param name="expr">The expression.</param>
         /// <returns>
         /// Returns the name of the property provided.
         /// </returns>

@@ -7,8 +7,8 @@ namespace Mud.Engine.Core.Networking
 {
     using System;
     using System.Collections.Generic;
-    using Mud.Engine.Core.Engine;
     using Mud.Engine.Core.Character;
+    using Mud.Engine.Core.Engine;
 
     /// <summary>
     /// Provides a contract for objects wanting to implement a server.

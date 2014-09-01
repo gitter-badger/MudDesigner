@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="IMob.cs" company="Sully">
+// <copyright file="ICharacter.cs" company="Sully">
 //     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
@@ -7,7 +7,7 @@ namespace Mud.Engine.Core.Character
 {
     using System;
     using Mud.Engine.Core.Engine;
-using Mud.Engine.Core.Environment;
+    using Mud.Engine.Core.Environment;
 
     /// <summary>
     /// Provides a contract for objects wanting to act as an IMob Type.
@@ -59,7 +59,7 @@ using Mud.Engine.Core.Environment;
         IGame Game { get; }
 
         /// <summary>
-        /// Gets or sets the current room.
+        /// Gets or sets the current room that this character occupies.
         /// </summary>
         IRoom CurrentRoom { get; set; }
 

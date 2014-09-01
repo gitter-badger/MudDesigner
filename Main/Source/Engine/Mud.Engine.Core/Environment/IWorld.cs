@@ -5,16 +5,19 @@
 //-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Environment
 {
-    using Mud.Engine.Core.Engine;
-    using Mud.Engine.Core.Environment.Time;
     using System;
     using System.Collections.Generic;
+    using Mud.Engine.Core.Engine;
+    using Mud.Engine.Core.Environment.Time;
 
     /// <summary>
     /// Defines a world 
     /// </summary>
     public interface IWorld : IEnvironment, IDisposable
     {
+        /// <summary>
+        /// Occurs when the worlds time of day has changed.
+        /// </summary>
         event EventHandler<TimeOfDayChangedEventArgs> TimeOfDayChanged;
 
         /// <summary>
@@ -73,6 +76,7 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Initializes this instance. The environment time and states are set up.
         /// </summary>
+        /// <param name="initialState">The initial state.</param>
         void Initialize(ITimeOfDayState initialState = null);
 
         /// <summary>
