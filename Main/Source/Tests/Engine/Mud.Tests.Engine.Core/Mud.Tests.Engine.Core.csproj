@@ -62,6 +62,7 @@
     <Compile Include="Engine\Validation\ValidateNumberHasMaximumValueTests.cs" />
     <Compile Include="Engine\Validation\ValidatableBaseTests.cs" />
     <Compile Include="Environment\DefaultRealmTests.cs" />
+    <Compile Include="Environment\DefaultDoorwayTests.cs" />
     <Compile Include="Fixtures\MessageFixture.cs" />
     <Compile Include="Fixtures\ValidatableFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

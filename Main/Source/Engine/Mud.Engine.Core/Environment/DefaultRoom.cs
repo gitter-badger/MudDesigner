@@ -15,6 +15,17 @@ namespace Mud.Engine.Core.Environment
     public class DefaultRoom : IRoom
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultRoom"/> class.
+        /// </summary>
+        public DefaultRoom()
+        {
+            this.Doorways = new List<IDoorway>();
+            this.Occupants = new List<ICharacter>();
+            this.Id = Guid.NewGuid();
+            this.CreationDate = DateTime.Now;
+        }
+
+        /// <summary>
         /// Occurs when a character enters the room.
         /// </summary>
         public event EventHandler<OccupancyChangedEventArgs> EnteredRoom;

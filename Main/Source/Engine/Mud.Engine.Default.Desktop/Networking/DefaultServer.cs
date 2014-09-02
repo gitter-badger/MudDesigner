@@ -10,8 +10,8 @@ namespace Mud.Engine.DefaultDesktop.Networking
     using System.Linq;
     using System.Net;
     using System.Net.Sockets;
-    using Mud.Engine.Core.Engine;
     using Mud.Engine.Core.Character;
+    using Mud.Engine.Core.Engine;
     using Mud.Engine.Core.Networking;
 
     /// <summary>

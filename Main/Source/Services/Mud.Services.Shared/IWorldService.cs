@@ -1,13 +1,18 @@
-﻿using Mud.Engine.Core.Environment;
-using Mud.Repositories.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="IWorldService.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Mud.Services.Shared
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Mud.Engine.Core.Environment;
+
+    /// <summary>
+    /// Provides a contract to objects that want to expose methods for fetching World data from a data store.
+    /// </summary>
     public interface IWorldService
     {
         /// <summary>
@@ -21,6 +26,7 @@ namespace Mud.Services.Shared
         /// <summary>
         /// Gets the world for the given realm.
         /// </summary>
+        /// <param name="realm">The realm.</param>
         /// <returns>
         /// Returns the World associated with the supplied Realm.
         /// </returns>

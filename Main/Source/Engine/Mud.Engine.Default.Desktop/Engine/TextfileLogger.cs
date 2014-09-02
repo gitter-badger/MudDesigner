@@ -1,15 +1,23 @@
-﻿using Mud.Engine.Core.Engine;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="TextfileLogger.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Mud.Engine.DefaultDesktop.Engine
 {
-    public class TextfileLogger: ILogger
+    using System.IO;
+    using Mud.Engine.Core.Engine;
+
+    /// <summary>
+    /// A logger that logs information to a local text file.
+    /// </summary>
+    public class TextfileLogger : ILogger
     {
+        /// <summary>
+        /// Logs the specified message.
+        /// </summary>
+        /// <typeparam name="TMessage">The type of the message.</typeparam>
+        /// <param name="message">The message.</param>
         public void Log<TMessage>(TMessage message) where TMessage : IMessage, new()
         {
             using (var outfile = new StreamWriter(@"\Log.txt"))

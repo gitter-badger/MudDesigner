@@ -35,27 +35,23 @@ namespace Mud.Engine.Core.Character
         event EventHandler<InputArgs> MessageSent;
 
         /// <summary>
+        /// Occurs when the character changes rooms.
+        /// </summary>
+        event EventHandler<OccupancyChangedEventArgs> RoomChanged;
+
+        /// <summary>
         /// Gets or sets the unique identifier.
         /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
         Guid Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
-        /// <value>
-        /// The name.
-        /// </value>
         string Name { get; set; }
 
         /// <summary>
         /// Gets the game.
         /// </summary>
-        /// <value>
-        /// The game.
-        /// </value>
         IGame Game { get; }
 
         /// <summary>

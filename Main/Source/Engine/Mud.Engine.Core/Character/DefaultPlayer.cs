@@ -15,6 +15,11 @@ namespace Mud.Engine.Core.Character
     public class DefaultPlayer : IPlayer
     {
         /// <summary>
+        /// The CurrentRoom property backing field.
+        /// </summary>
+        private IRoom currentRoom;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DefaultPlayer"/> class.
         /// </summary>
         public DefaultPlayer()
@@ -43,33 +48,43 @@ namespace Mud.Engine.Core.Character
         public event EventHandler<InputArgs> MessageSent;
 
         /// <summary>
+        /// Occurs when the character changes rooms.
+        /// </summary>
+        public event EventHandler<OccupancyChangedEventArgs> RoomChanged;
+
+        /// <summary>
         /// Gets or sets the unique identifier.
         /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
         public Guid Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
-        /// <value>
-        /// The name.
-        /// </value>
         public string Name { get; set; }
 
         /// <summary>
         /// Gets the game.
         /// </summary>
-        /// <value>
-        /// The game.
-        /// </value>
         public IGame Game { get; private set; }
 
         /// <summary>
         /// Gets or sets the current room that this character occupies.
         /// </summary>
-        public IRoom CurrentRoom { get; set; }
+        public IRoom CurrentRoom
+        {
+            get
+            {
+                return this.currentRoom;
+            }
+
+            set
+            {
+                IRoom departingRoom = this.currentRoom;
+                this.currentRoom = value;
+
+                this.OnRoomChanged(departingRoom, value);
+            }
+        }
 
         /// <summary>
         /// Initializes this instance with the given game.
@@ -78,6 +93,7 @@ namespace Mud.Engine.Core.Character
         public void Initialize(IGame game)
         {
             this.Game = game;
+            this.OnLoaded();
         }
 
         /// <summary>
@@ -145,6 +161,22 @@ namespace Mud.Engine.Core.Character
             }
 
             handler(this, new InputArgs(message));
+        }
+
+        /// <summary>
+        /// Called when the character changes rooms.
+        /// </summary>
+        /// <param name="departingRoom">The departing room.</param>
+        /// <param name="arrivalRoom">The arrival room.</param>
+        protected virtual void OnRoomChanged(IRoom departingRoom, IRoom arrivalRoom)
+        {
+            EventHandler<OccupancyChangedEventArgs> handler = this.RoomChanged;
+            if (handler == null)
+            {
+                return;
+            }
+
+            handler(this, new OccupancyChangedEventArgs(this, departingRoom, arrivalRoom));
         }
     }
 }

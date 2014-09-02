@@ -28,7 +28,11 @@ namespace Mud.Engine.Core.Environment
         /// </summary>
         /// <param name="departureRoom">The departure room.</param>
         /// <param name="arrivalRoom">The arrival room.</param>
-        void ConnectRooms(IRoom departureRoom, IRoom arrivalRoom);
+        /// <param name="createDoorwayForArrival">
+        /// If set to <c>true</c>, a new doorway will be created for the arrival room that is linked back to the originating departure room.
+        /// Otherwise, a one-way door will be created.
+        /// </param>
+        void ConnectRooms(IRoom departureRoom, IRoom arrivalRoom, bool createDoorwayForArrival = true);
 
         /// <summary>
         /// Disconnects the two connected rooms.

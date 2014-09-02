@@ -6,23 +6,22 @@
 namespace Mud.Apps.Windows.Server
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using Microsoft.Practices.Unity;
     using Mud.Engine.Core.Character;
+    using Mud.Engine.Core.Engine;
+    using Mud.Engine.Core.Environment;
+    using Mud.Engine.Core.Environment.Time;
+    using Mud.Engine.Core.Environment.Weather;
     using Mud.Engine.Core.Networking;
     using Mud.Engine.Default.Desktop.Engine;
     using Mud.Engine.DefaultDesktop.Networking;
-    using Mud.Engine.Core.Engine;
-    using Mud.Repositories.Shared;
     using Mud.Repositories.Engine.DefaultDesktop;
-    using Mud.Services.Shared;
-    using Mud.Engine.Core.Environment;
+    using Mud.Repositories.Shared;
     using Mud.Services.FlatFile;
-    using System.Threading;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using Mud.Engine.Core.Environment.Time;
-    using Mud.Engine.Core.Environment.Weather;
+    using Mud.Services.Shared;
 
     /// <summary>
     /// The Mud Designer Telnet Server.
@@ -39,6 +38,9 @@ namespace Mud.Apps.Windows.Server
         /// </summary>
         private static IServer server;
 
+        /// <summary>
+        /// The game
+        /// </summary>
         private static IGame game;
 
         /// <summary>
@@ -137,6 +139,10 @@ namespace Mud.Apps.Windows.Server
             container.RegisterType<IWorldService, WorldService>();
         }
 
+        /// <summary>
+        /// Sets up the game world.
+        /// </summary>
+        /// <param name="game">The game.</param>
         private static void SetupGameWorld(IGame game)
         {
             // Set up the Zone            
@@ -163,7 +169,7 @@ namespace Mud.Apps.Windows.Server
             var nightState = new NightState { StateStartTime = new TimeOfDay { Hour = 8 } };
 
             world.TimeOfDayStates = new List<ITimeOfDayState> { morningState, afternoonState, nightState };
-            world.TimeOfDayChanged += world_TimeOfDayChanged;
+            world.TimeOfDayChanged += World_TimeOfDayChanged;
 
             // Set up the Realm.
             IRealm realm = new DefaultRealm();
@@ -178,7 +184,12 @@ namespace Mud.Apps.Windows.Server
             game.Worlds.Add(world);
         }
 
-        static void world_TimeOfDayChanged(object sender, TimeOfDayChangedEventArgs e)
+        /// <summary>
+        /// Handles the TimeOfDayChanged event of the world control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="TimeOfDayChangedEventArgs"/> instance containing the event data.</param>
+        private static void World_TimeOfDayChanged(object sender, TimeOfDayChangedEventArgs e)
         {
             // If we have a previous time of day, unregister our event.
             if (e.TransitioningFrom != null)
@@ -190,9 +201,13 @@ namespace Mud.Apps.Windows.Server
             CurrentTimeOfDay_TimeUpdated(sender, e.TransitioningTo.CurrentTime);
         }
 
-        static void CurrentTimeOfDay_TimeUpdated(object sender, TimeOfDay e)
+        /// <summary>
+        /// Handles the TimeChanged event from within a TimeOfDayState.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The current time of day.</param>
+        private static void CurrentTimeOfDay_TimeUpdated(object sender, TimeOfDay e)
         {
-
             if (!(sender is ITimeOfDayState))
             {
                 return;

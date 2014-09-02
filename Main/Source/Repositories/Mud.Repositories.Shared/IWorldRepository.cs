@@ -37,7 +37,10 @@ namespace Mud.Repositories.Shared
         /// Gets the world by identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns>Returns the World with the given Id.</returns>
+        /// <param name="includeAllChildrenObjects">if set to <c>true</c> [include all children objects].</param>
+        /// <returns>
+        /// Returns the World with the given Id.
+        /// </returns>
         Task<IWorld> GetWorldById(Guid id, bool includeAllChildrenObjects = false);
 
         /// <summary>

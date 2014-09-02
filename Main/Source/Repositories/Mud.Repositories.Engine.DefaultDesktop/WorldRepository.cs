@@ -1,15 +1,18 @@
-﻿using Microsoft.Practices.Unity;
-using Mud.Engine.Core.Environment;
-using Mud.Repositories.Shared;
-using Mud.Services.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="WorldRepository.cs" company="Sully">
+//     Copyright (c) Johnathon Sullinger. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Mud.Repositories.Engine.DefaultDesktop
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Mud.Engine.Core.Environment;
+    using Mud.Repositories.Shared;
+    using Mud.Services.Shared;
+
     /// <summary>
     /// Provides methods for fetching Worlds from the data store.
     /// </summary>
@@ -51,7 +54,6 @@ namespace Mud.Repositories.Engine.DefaultDesktop
             return worlds;
         }
 
-
         /// <summary>
         /// Gets the world for the given realm. If the world has previously been fetched, a cached version of it will be returned.
         /// </summary>
@@ -77,7 +79,7 @@ namespace Mud.Repositories.Engine.DefaultDesktop
         /// Gets the world by identifier. If the world has previously been fetched, a cached version of it will be returned.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="includeAllChildrenObjects"></param>
+        /// <param name="includeAllChildrenObjects">providing a true value will return a World with all of it's children fetched from the data store as well.</param>
         /// <returns>
         /// Returns the World with the given Id.
         /// </returns>
@@ -93,16 +95,40 @@ namespace Mud.Repositories.Engine.DefaultDesktop
             }
         }
 
+        /// <summary>
+        /// Saves the world.
+        /// </summary>
+        /// <param name="world">The world.</param>
+        /// <returns>
+        /// Returns the Task associated with the async call.
+        /// </returns>
+        /// <exception cref="System.NotImplementedException">This method is not implemented yet.</exception>
         public Task SaveWorld(IWorld world)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Saves all worlds.
+        /// </summary>
+        /// <param name="worlds">The worlds.</param>
+        /// <returns>
+        /// Returns the Task associated with the async call.
+        /// </returns>
+        /// <exception cref="System.NotImplementedException">This method is not implemented yet.</exception>
         public Task SaveAllWorlds(IEnumerable<IWorld> worlds)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Deletes the world.
+        /// </summary>
+        /// <param name="world">The world.</param>
+        /// <returns>
+        /// Returns the Task associated with the async call.
+        /// </returns>
+        /// <exception cref="System.NotImplementedException">This method is not implemented yet.</exception>
         public Task DeleteWorld(IWorld world)
         {
             throw new NotImplementedException();

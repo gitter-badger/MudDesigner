@@ -23,7 +23,17 @@ namespace Mud.Tests.Engine.Core.Environment
             var realm = new DefaultRealm();
 
             // Act
-            realm.Initialize(null, new TimeOfDay());
+            try
+            {
+                realm.Initialize(null, new TimeOfDay());
+            }
+            catch (NullReferenceException)
+            {   
+                throw;
+            }
+
+            // Assert
+            Assert.Fail();
         }
 
         /// <summary>
@@ -40,7 +50,17 @@ namespace Mud.Tests.Engine.Core.Environment
             IWorld world = worldMock.Object;
 
             // Act
-            realm.Initialize(world, null);
+            try
+            {
+                realm.Initialize(world, null);
+            }
+            catch (NullReferenceException)
+            {
+                throw;
+            }
+
+            // Assert
+            Assert.Fail();
         }
 
         /// <summary>
@@ -82,7 +102,17 @@ namespace Mud.Tests.Engine.Core.Environment
 
             // Act
             // Should throw an exception due to null zone collection.
-            realm.AddZoneToRealm(null);
+            try
+            {
+                realm.AddZoneToRealm(null);
+            }
+            catch (NullReferenceException)
+            {
+                throw;
+            }
+
+            // Assert
+            Assert.Fail();
         }
 
         /// <summary>
@@ -116,7 +146,17 @@ namespace Mud.Tests.Engine.Core.Environment
             var realm = new DefaultRealm();
 
             // Act
-            realm.ApplyTimeZoneOffset(null);
+            try
+            {
+                realm.ApplyTimeZoneOffset(null);
+            }
+            catch (NullReferenceException)
+            {   
+                throw;
+            }
+
+            // Assert
+            Assert.Fail();
         }
 
         /// <summary>
@@ -137,7 +177,17 @@ namespace Mud.Tests.Engine.Core.Environment
             };
 
             // Act
-            realm.ApplyTimeZoneOffset(timeOfDay);
+            try
+            {
+                realm.ApplyTimeZoneOffset(timeOfDay);
+            }
+            catch (NullReferenceException)
+            {   
+                throw;
+            }
+
+            // Assert
+            Assert.Fail();
         }
 
         /// <summary>
@@ -163,7 +213,17 @@ namespace Mud.Tests.Engine.Core.Environment
             realm.TimeZoneOffset = timeZoneOffset;
 
             // Act
-            realm.ApplyTimeZoneOffset(timeOfDay);
+            try
+            {
+                realm.ApplyTimeZoneOffset(timeOfDay);
+            }
+            catch (ArgumentOutOfRangeException)
+            {   
+                throw;
+            }
+
+            // Assert
+            Assert.Fail();
         }
 
         /// <summary>
@@ -202,9 +262,16 @@ namespace Mud.Tests.Engine.Core.Environment
             };
 
             // Act
-            realm.ApplyTimeZoneOffset(timeOfDay);
+            try
+            {
+                realm.ApplyTimeZoneOffset(timeOfDay);
+            }
+            catch (NullReferenceException)
+            {   
+                throw;
+            }
 
-            Assert.IsTrue(realm.CurrentTimeOfDay.Hour == 4, "Hours were not off-set properly.");
+            Assert.Fail();
         }
 
         /// <summary>
@@ -241,9 +308,16 @@ namespace Mud.Tests.Engine.Core.Environment
             };
 
             // Act
-            realm.ApplyTimeZoneOffset(timeOfDay);
+            try
+            {
+                realm.ApplyTimeZoneOffset(timeOfDay);
+            }
+            catch (NullReferenceException)
+            {   
+                throw;
+            }
 
-            Assert.IsTrue(realm.CurrentTimeOfDay.Hour == 3, "Hours were not off-set properly.");
+            Assert.Fail();
         }
 
         [TestMethod]

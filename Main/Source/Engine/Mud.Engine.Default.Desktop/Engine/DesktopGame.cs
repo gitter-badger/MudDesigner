@@ -23,10 +23,10 @@ namespace Mud.Engine.Default.Desktop.Engine
         private IWorldRepository worldRepository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DesktopGame"/> class.
+        /// Initializes a new instance of the <see cref="DesktopGame" /> class.
         /// </summary>
-        /// <param name="logger">The logger.</param>
         /// <param name="worldRepository">The world repository.</param>
+        /// <param name="logger">The logger.</param>
         public DesktopGame(IWorldRepository worldRepository, ILogger logger) 
             : base(logger)
         {
