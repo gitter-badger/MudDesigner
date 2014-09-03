@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{ac03f890-cd7c-421b-9cbc-2c758dcd3a4d}</ProjectGuid>
+    <ArchitectureToolsVersion>2.0.0.0</ArchitectureToolsVersion>
+    <Name>ArchitectureModeling</Name>
+    <RootNamespace>ArchitectureModeling</RootNamespace>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
+  <ItemGroup>
+    <Folder Include="ModelDefinition\" />
+    <Content Include="ModelDefinition\ArchitectureModeling.uml">
+      <SubType>Content</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Validate Include="Engine.layerdiagram">
+      <SubType>Content</SubType>
+    </Validate>
+    <Validate Include="Engine.layerdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Engine.layerdiagram</DependentUpon>
+    </Validate>
+    <Validate Include="Engine.layerdiagram.suppressions">
+      <SubType>Content</SubType>
+      <DependentUpon>Engine.layerdiagram</DependentUpon>
+    </Validate>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Apps\Mud.Apps.Windows\Mud.Apps.Windows.Desktop\Mud.Apps.Windows.Desktop.csproj">
+      <Name>Mud.Apps.Windows.Desktop</Name>
+      <Project>{2bced8be-06f8-4042-b4af-d1ceac754b5e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Apps\Mud.Apps.Windows\Mud.Apps.Windows.Infrastructure\Mud.Apps.Windows.Infrastructure.csproj">
+      <Name>Mud.Apps.Windows.Infrastructure</Name>
+      <Project>{13c2a63c-e51c-458e-9f95-bdd29d901a31}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Apps\Mud.Apps.Windows\Mud.Apps.Windows.Modules\Mud.Apps.Windows.Modules.ProjectManagerModule\Mud.Apps.Windows.Modules.ProjectManagerModule.csproj">
+      <Name>Mud.Apps.Windows.Modules.ProjectManagerModule</Name>
+      <Project>{2158886e-73a6-448b-bc2c-de1e8d9b2017}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Apps\Mud.Apps.Windows\Mud.Apps.Windows.Modules\ProjectPropertiesModule\ProjectPropertiesModule.csproj">
+      <Name>ProjectPropertiesModule</Name>
+      <Project>{854e29b7-5aad-4a0c-a226-936693155605}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Apps\Mud.Apps.Windows\Mud.Apps.Windows.Server\Mud.Apps.Windows.Server.csproj">
+      <Name>Mud.Apps.Windows.Server</Name>
+      <Project>{b0dd6155-8db6-46ae-adc2-c8a002c2aeaa}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Apps\Mud.Apps.Windows\Mud.Apps.Windows.Shared\Mud.Apps.Windows.Shared.csproj">
+      <Name>Mud.Apps.Windows.Shared</Name>
+      <Project>{f0ccac7f-ffb3-4681-981c-fd98beff4796}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Engine\Mud.Engine.Core\Mud.Engine.Core.csproj">
+      <Name>Mud.Engine.Core</Name>
+      <Project>{f27c159b-6412-46dc-8239-f0841c6801dc}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Engine\Mud.Engine.Default.Desktop\Mud.Engine.Default.Desktop.csproj">
+      <Name>Mud.Engine.Default.Desktop</Name>
+      <Project>{efcd4f40-a2cb-440b-a1c1-bad78b784471}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Engine\Mud.Engine.Networking.Portable\Mud.Engine.Networking.Portable.csproj">
+      <Name>Mud.Engine.Networking.Portable</Name>
+      <Project>{9aaa3563-0089-4c5b-a12c-d1b47e9ddf66}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Repositories\Mud.Repositories.Engine.DefaultDesktop\Mud.Repositories.Engine.DefaultDesktop.csproj">
+      <Name>Mud.Repositories.Engine.DefaultDesktop</Name>
+      <Project>{8fa627f4-29dd-4246-9012-47fec363a372}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Repositories\Mud.Repositories.Shared\Mud.Repositories.Shared.csproj">
+      <Name>Mud.Repositories.Shared</Name>
+      <Project>{1e50f1a9-b51a-4084-9293-0dba1a14c92c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Services\Mud.Services.FlatFile\Mud.Services.FlatFile.csproj">
+      <Name>Mud.Services.FlatFile</Name>
+      <Project>{d2c8c943-4788-4f6f-bf45-bd2cc8ec1bc4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Services\Mud.Services.Shared\Mud.Services.Shared.csproj">
+      <Name>Mud.Services.Shared</Name>
+      <Project>{c9405e3b-f861-4c7e-b891-3e87b6d028c9}</Project>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
