@@ -45,6 +45,14 @@
     </Validate>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Apps\Mud.Apps.Universal\Mud.Apps.Universal.WindowsPhone\Mud.Apps.Universal.WindowsPhone.csproj">
+      <Name>Mud.Apps.Universal.WindowsPhone</Name>
+      <Project>{f88c8ce0-782a-4838-a239-3577aa302ca1}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Apps\Mud.Apps.Universal\Mud.Apps.Universal.Windows\Mud.Apps.Universal.Windows.csproj">
+      <Name>Mud.Apps.Universal.Windows</Name>
+      <Project>{3b5a796d-87b2-40a6-abf6-0f0bcb0b770c}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Apps\Mud.Apps.Windows\Mud.Apps.Windows.Desktop\Mud.Apps.Windows.Desktop.csproj">
       <Name>Mud.Apps.Windows.Desktop</Name>
       <Project>{2bced8be-06f8-4042-b4af-d1ceac754b5e}</Project>

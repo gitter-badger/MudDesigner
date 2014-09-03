@@ -219,9 +219,6 @@
                 <dependencyFromLayerToLayer Id="94252577-ca5c-417c-ab37-92798e036506" direction="Forward">
                   <layerMoniker Id="37b8274e-ed1f-41e0-8545-62dac60c7ca1" />
                 </dependencyFromLayerToLayer>
-                <dependencyFromLayerToLayer Id="cdc888e2-3458-426a-98d5-15e2f3ea85f2" direction="Bidirectional">
-                  <layerMoniker Id="b3d2f97c-b056-49dd-875d-65a11a22a26f" />
-                </dependencyFromLayerToLayer>
                 <dependencyFromLayerToLayer Id="7c192729-33cb-4bcb-b8ad-0026b747ea40" direction="Forward">
                   <layerMoniker Id="40df7170-9314-481e-84ca-f69c0eea50d1" />
                 </dependencyFromLayerToLayer>
@@ -307,28 +304,6 @@
             </reference>
           </references>
         </layer>
-        <layer Id="40df7170-9314-481e-84ca-f69c0eea50d1" name="Windows Shared Library">
-          <dependencyToLayers>
-            <dependencyFromLayerToLayer Id="bc4cff5c-cc66-4450-826a-25ca6bc35e99" direction="Forward">
-              <layerMoniker Id="d12436a9-2fd9-41bc-b720-60fa54acc42f" />
-            </dependencyFromLayerToLayer>
-            <dependencyFromLayerToLayer Id="79688e56-1b4b-43b1-b7c0-b1aefa830257" direction="Forward">
-              <layerMoniker Id="3c1e5f03-571a-4b67-87f4-b7e18a13db36" />
-            </dependencyFromLayerToLayer>
-          </dependencyToLayers>
-          <references>
-            <reference Id="c98aada6-423c-4f94-be95-cadc7c95d294" name="Mud.Apps.Windows.Shared">
-              <ArtifactNode Label="Mud.Apps.Windows.Shared" Category="CodeSchema_Project" Id="(Assembly=../Apps/Mud.Apps.Windows/Mud.Apps.Windows.Shared/Mud.Apps.Windows.Shared.csproj)">
-                <Category Ref="File" />
-              </ArtifactNode>
-              <ExpandedNode Id="(Assembly=Mud.Apps.Windows.Shared)" Label="Mud.Apps.Windows.Shared.dll" Category="CodeSchema_Assembly">
-                <Category Ref="FileSystem.Category.FileOfType.dll" />
-                <LinkCategory Ref="Produces" />
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-            </reference>
-          </references>
-        </layer>
       </childLayers>
       <references>
         <reference Id="91151dfc-55df-4020-bbe0-3773ff93c4c6" name="Mud.Apps.Windows.Server">
@@ -337,6 +312,94 @@
           </ArtifactNode>
           <ExpandedNode Id="(Assembly=Mud.Apps.Windows.Server)" Label="Mud.Apps.Windows.Server.exe" Category="CodeSchema_Assembly">
             <Category Ref="FileSystem.Category.FileOfType.exe" />
+            <LinkCategory Ref="Produces" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+      </references>
+    </layer>
+    <layer Id="c0fd0073-e1b7-4db4-8484-3f2cd924b358" name="Windows App Store Apps">
+      <childLayers>
+        <layer Id="9e74115c-6e2a-4c4e-b7c9-0c5a61325894" name="Windows 8 App Store">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="70f6722b-d37d-40df-8f52-27fc5c10d976" direction="Forward">
+              <layerMoniker Id="30972ac1-953d-43f7-a981-38727c9f9c5a" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <references>
+            <reference Id="ce3f1372-71c1-405e-9cb6-de08f35e957a" name="Mud.Apps.Universal.Windows">
+              <ArtifactNode Label="Mud.Apps.Universal.Windows" Category="CodeSchema_Project" Id="(Assembly=../Apps/Mud.Apps.Universal/Mud.Apps.Universal.Windows/Mud.Apps.Universal.Windows.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=Mud.Apps.Universal.Windows)" Label="Mud.Apps.Universal.Windows.exe" Category="CodeSchema_Assembly">
+                <Category Ref="FileSystem.Category.FileOfType.exe" />
+                <LinkCategory Ref="Produces" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="53a311c5-b067-4b3f-8df9-ca385bbb0faa" name="Windows 8 Phone">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="37acf653-56d4-40a2-9fe1-58f53460362f" direction="Forward">
+              <layerMoniker Id="30972ac1-953d-43f7-a981-38727c9f9c5a" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <references>
+            <reference Id="5a496f97-2845-4e09-a782-aee9e8543f88" name="Mud.Apps.Universal.WindowsPhone">
+              <ArtifactNode Label="Mud.Apps.Universal.WindowsPhone" Category="CodeSchema_Project" Id="(Assembly=../Apps/Mud.Apps.Universal/Mud.Apps.Universal.WindowsPhone/Mud.Apps.Universal.WindowsPhone.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+              <ExpandedNode Id="(Assembly=Mud.Apps.Universal.WindowsPhone)" Label="Mud.Apps.Universal.WindowsPhone.exe" Category="CodeSchema_Assembly">
+                <Category Ref="FileSystem.Category.FileOfType.exe" />
+                <LinkCategory Ref="Produces" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="30972ac1-953d-43f7-a981-38727c9f9c5a" name="App Store Shared Library">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="5dc80fec-7ef3-492f-ba09-afb55496d0a3" direction="Forward">
+              <layerMoniker Id="40df7170-9314-481e-84ca-f69c0eea50d1" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <references>
+            <reference Id="fe88f897-ca94-4cbc-a755-f9e994b2b1ee" name="Mud.Apps.Universal.Shared">
+              <ArtifactNode Label="Mud.Apps.Universal.Shared" Category="CodeSchema_Project" Id="(Assembly=../Apps/Mud.Apps.Universal/Mud.Apps.Universal.Shared/Mud.Apps.Universal.Shared.shproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+      </childLayers>
+    </layer>
+    <layer Id="40df7170-9314-481e-84ca-f69c0eea50d1" name="Windows Shared Library">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="bc4cff5c-cc66-4450-826a-25ca6bc35e99" direction="Forward">
+          <layerMoniker Id="d12436a9-2fd9-41bc-b720-60fa54acc42f" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="79688e56-1b4b-43b1-b7c0-b1aefa830257" direction="Forward">
+          <layerMoniker Id="3c1e5f03-571a-4b67-87f4-b7e18a13db36" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <childLayers>
+        <layer Id="f13a0ed2-3956-43f3-ad4a-5286d616598a" name="Factories" />
+        <layer Id="458afdd6-9343-4e2f-9532-36ee97789e66" name="Bootstrapper">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="3a25dd39-9c06-4c69-afbd-b67fb92f3df9" direction="Forward">
+              <layerMoniker Id="f13a0ed2-3956-43f3-ad4a-5286d616598a" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+        </layer>
+      </childLayers>
+      <references>
+        <reference Id="c98aada6-423c-4f94-be95-cadc7c95d294" name="Mud.Apps.Windows.Shared">
+          <ArtifactNode Label="Mud.Apps.Windows.Shared" Category="CodeSchema_Project" Id="(Assembly=../Apps/Mud.Apps.Windows/Mud.Apps.Windows.Shared/Mud.Apps.Windows.Shared.csproj)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=Mud.Apps.Windows.Shared)" Label="Mud.Apps.Windows.Shared.dll" Category="CodeSchema_Assembly">
+            <Category Ref="FileSystem.Category.FileOfType.dll" />
             <LinkCategory Ref="Produces" />
             <LinkCategory Ref="Represents" />
           </ExpandedNode>
