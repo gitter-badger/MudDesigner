@@ -13,6 +13,7 @@ namespace Mud.Engine.DefaultDesktop.Networking
     using Mud.Engine.Core.Character;
     using Mud.Engine.Core.Engine;
     using Mud.Engine.Core.Networking;
+    using Mud.Engine.Core.Commanding;
 
     /// <summary>
     /// The Default Desktop game Server
@@ -111,6 +112,8 @@ namespace Mud.Engine.DefaultDesktop.Networking
         /// </summary>
         public ServerStatus Status { get; private set; }
 
+        public IPlayerConnectCommand ConnectionCommand { get; set; }
+
         /// <summary>
         /// Starts the server for the specified game.
         /// </summary>
@@ -122,12 +125,23 @@ namespace Mud.Engine.DefaultDesktop.Networking
         /// or
         /// Invalid MaxConnections number used. Must be greater than 1.
         /// </exception>
-        public void Start<TPlayer>(IGame game) where TPlayer : class, IPlayer, new()
+        public void Start<TPlayer, TCommand>(IGame game)
+            where TPlayer : class, IPlayer, new()
+            where TCommand : class, IPlayerConnectCommand, new()
         {
             // Ensure we have a valid game.
             if (game == null)
             {
                 throw new NullReferenceException("Server can not start with a null Game.");
+            }
+
+            if (this.ConnectionCommand == null)
+            {
+                throw new NullReferenceException("ConnectionCommand can not be null. A command must be given for execution upon player connection");
+            }
+            else
+            {
+                this.ConnectionCommand.Initialize<TPlayer>();
             }
 
             this.Status = ServerStatus.Starting;
@@ -154,7 +168,7 @@ namespace Mud.Engine.DefaultDesktop.Networking
             this.serverSocket.Listen(this.MaxQueuedConnections);
 
             // Begin listening for connections.
-            IAsyncResult result = this.serverSocket.BeginAccept(new AsyncCallback(this.ConnectClient<TPlayer>), this.serverSocket);
+            IAsyncResult result = this.serverSocket.BeginAccept(new AsyncCallback(this.ConnectClient<TPlayer, TCommand>), this.serverSocket);
 
             this.Status = ServerStatus.Running;
         }
@@ -174,7 +188,7 @@ namespace Mud.Engine.DefaultDesktop.Networking
             try
             {
                 this.serverSocket.Send(new byte[1], 0, 0);
-                
+
                 // Message was received meaning it's still receiving, so we can safely shut it down.
                 this.serverSocket.Shutdown(SocketShutdown.Both);
             }
@@ -270,15 +284,34 @@ namespace Mud.Engine.DefaultDesktop.Networking
         /// </summary>
         /// <typeparam name="TPlayer">The type of the player.</typeparam>
         /// <param name="result">The async result.</param>
-        private void ConnectClient<TPlayer>(IAsyncResult result) where TPlayer : class, IPlayer, new()
+        private void ConnectClient<TPlayer, TCommand>(IAsyncResult result)
+            where TPlayer : class, IPlayer, new()
+            where TCommand : class, IPlayerConnectCommand, new()
         {
             // Fetch the next incoming connection.
-            this.serverSocket.BeginAccept(new AsyncCallback(this.ConnectClient<TPlayer>), this.serverSocket);
+            this.serverSocket.BeginAccept(new AsyncCallback(this.ConnectClient<TPlayer, TCommand>), this.serverSocket);
+
+            IPlayerConnectCommand command = new TCommand();
+            command.Executed += this.OnConnectionCommandExecuted;
 
             try
             {
-                // Connect the player to the server.
-                var player = new TPlayer();
+                command.Execute(null, null);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            // this.LogMessage(string.Format("{0} connected.", serverObject.Player.Name));
+        }
+
+        private void OnConnectionCommandExecuted(object sender, CommandEventHandler args)
+        {
+            if (args.Handled)
+            {
+                // Cast the invoker to IPlayer. If the Invoker is not an IPlayer, we want to throw an exception.
+                IPlayer player = (IPlayer)args.Invoker;
 
                 // Register for the events we need to now of and initialize the player.
                 player.Initialize(this.Game);
@@ -290,7 +323,7 @@ namespace Mud.Engine.DefaultDesktop.Networking
                 }
 
                 // Connect and register for network related events.
-                Socket connection = this.serverSocket.EndAccept(result);
+                Socket connection = null; // this.serverSocket.EndAccept(result);
 
                 lock (this.playerConnections)
                 {
@@ -300,12 +333,6 @@ namespace Mud.Engine.DefaultDesktop.Networking
                 connection.BeginReceive(new byte[UserConnectionBufferSize], 0, UserConnectionBufferSize, SocketFlags.None, new AsyncCallback(this.ReceiveData), player);
                 this.OnPlayerConnected(player);
             }
-            catch (Exception)
-            {
-                throw;
-            }
-
-            // this.LogMessage(string.Format("{0} connected.", serverObject.Player.Name));
         }
 
         /// <summary>
@@ -357,7 +384,7 @@ namespace Mud.Engine.DefaultDesktop.Networking
                             buffer.Clear();
 
                             // Return a trimmed string.
-                            player.SendMessage(input);
+                            player.SendMessage(new SystemMessage(input));
                         }
                         else
                         {

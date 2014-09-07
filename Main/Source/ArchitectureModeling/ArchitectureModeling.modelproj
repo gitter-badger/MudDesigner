@@ -27,9 +27,17 @@
   <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
     <Folder Include="ModelDefinition\" />
+    <Content Include="Components\EngineCommanding.componentdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Components\EngineCommanding.componentdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Components\EngineCommanding.componentdiagram</DependentUpon>
+    </Content>
     <Content Include="ModelDefinition\ArchitectureModeling.uml">
       <SubType>Content</SubType>
     </Content>
+    <Folder Include="Components" />
   </ItemGroup>
   <ItemGroup>
     <Validate Include="Engine.layerdiagram">

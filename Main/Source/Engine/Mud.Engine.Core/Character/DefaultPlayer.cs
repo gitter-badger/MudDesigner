@@ -8,12 +8,13 @@ namespace Mud.Engine.Core.Character
     using System;
     using Mud.Engine.Core.Engine;
     using Mud.Engine.Core.Environment;
+    using Mud.Engine.Core.Commanding;
 
     /// <summary>
     /// The Default Engine implementation of IPlayer.
     /// </summary>
     public class DefaultPlayer : IPlayer
-    {
+    { 
         /// <summary>
         /// The CurrentRoom property backing field.
         /// </summary>
@@ -86,6 +87,17 @@ namespace Mud.Engine.Core.Character
             }
         }
 
+        public IPermission Permission
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+
+        public ICommandManager CommandManager
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         /// <summary>
         /// Initializes this instance with the given game.
         /// </summary>
@@ -93,6 +105,8 @@ namespace Mud.Engine.Core.Character
         public void Initialize(IGame game)
         {
             this.Game = game;
+
+            // TODO: Fetch permissions and handle log-in.
             this.OnLoaded();
         }
 
@@ -103,6 +117,16 @@ namespace Mud.Engine.Core.Character
         public void SendMessage(string message)
         {
             this.OnMessageSent(message);
+        }
+
+        public void SendMessage(IMessage message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AcceptMessage(IMessage message)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

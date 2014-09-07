@@ -9,6 +9,7 @@ namespace Mud.Engine.Core.Networking
     using System.Collections.Generic;
     using Mud.Engine.Core.Character;
     using Mud.Engine.Core.Engine;
+using Mud.Engine.Core.Commanding;
 
     /// <summary>
     /// Provides a contract for objects wanting to implement a server.
@@ -24,6 +25,8 @@ namespace Mud.Engine.Core.Networking
         /// Occurs when a player disconnects from the server.
         /// </summary>
         event EventHandler<ServerConnectionEventArgs> PlayerDisconnected;
+
+        IPlayerConnectCommand ConnectionCommand { get; set; }
 
         /// <summary>
         /// Gets the game.
@@ -88,7 +91,9 @@ namespace Mud.Engine.Core.Networking
         /// </summary>
         /// <typeparam name="TPlayer">The type of the player.</typeparam>
         /// <param name="game">The game.</param>
-        void Start<TPlayer>(IGame game) where TPlayer : class, IPlayer, new();
+        void Start<TPlayer, TCommand>(IGame game)
+            where TPlayer : class, IPlayer, new()
+            where TCommand : class, IPlayerConnectCommand, new();
 
         /// <summary>
         /// Stops the server.

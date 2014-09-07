@@ -3,6 +3,7 @@
 //     Copyright (c) Johnathon Sullinger. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
+using Mud.Engine.Core.Engine;
 namespace Mud.Engine.Core.Character
 {
     /// <summary>
@@ -10,5 +11,6 @@ namespace Mud.Engine.Core.Character
     /// </summary>
     public interface IPlayer : ICharacter
     {
+        IPermission Permission { get; }
     }
 }

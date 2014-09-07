@@ -12,7 +12,7 @@ namespace Mud.Engine.Core.Commanding
     {
         Task Initialize(ICharacter character);
 
-        void ExecuteCommand(IMessage message);
+        Task HandleMessage(IMessage message);
 
         string[] GetCommandHistory();
     }

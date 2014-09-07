@@ -38,11 +38,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Character\INPCCharacter.cs" />
+    <Compile Include="Commanding\CommandEventHandler.cs" />
     <Compile Include="Commanding\CommandSecurity.cs" />
     <Compile Include="Commanding\CommandVariationsAttribute.cs" />
     <Compile Include="Commanding\CharacterCanExecuteAttribute.cs" />
     <Compile Include="Commanding\CommandCategoryAttribute.cs" />
-    <Compile Include="Commanding\CommandManager.cs" />
+    <Compile Include="Commanding\PlayerCommandManager.cs" />
     <Compile Include="Commanding\ICommandManager.cs" />
     <Compile Include="Engine\EngineTimer.cs" />
     <Compile Include="Engine\ICollectionExtensions.cs" />
@@ -111,6 +113,7 @@
     <Compile Include="Environment\Weather\ClearWeather.cs" />
     <Compile Include="Environment\Weather\RainyWeather.cs" />
     <Compile Include="Environment\Weather\ThunderstormWeather.cs" />
+    <Compile Include="Networking\IPlayerConnectCommand.cs" />
     <Compile Include="Networking\IServer.cs" />
     <Compile Include="Networking\ServerConnectionEventArgs.cs" />
     <Compile Include="Networking\ServerStatus.cs" />

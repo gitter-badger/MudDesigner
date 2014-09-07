@@ -8,6 +8,7 @@ namespace Mud.Engine.Core.Character
     using System;
     using Mud.Engine.Core.Engine;
     using Mud.Engine.Core.Environment;
+using Mud.Engine.Core.Commanding;
 
     /// <summary>
     /// Provides a contract for objects wanting to act as an IMob Type.
@@ -60,6 +61,11 @@ namespace Mud.Engine.Core.Character
         IRoom CurrentRoom { get; set; }
 
         /// <summary>
+        /// Gets the command manager.
+        /// </summary>
+        ICommandManager CommandManager { get; }
+
+        /// <summary>
         /// Initializes this instance with the given game.
         /// </summary>
         /// <param name="game">The game.</param>
@@ -69,6 +75,12 @@ namespace Mud.Engine.Core.Character
         /// Sends the message.
         /// </summary>
         /// <param name="message">The message.</param>
-        void SendMessage(string message);
+        void SendMessage(IMessage message);
+
+        /// <summary>
+        /// Accepts a message from another object.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        void AcceptMessage(IMessage message);
     }
 }
