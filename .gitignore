@@ -1,0 +1,22 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Main/Source/Apps/Mud.Apps.Windows/Mud.Apps.Windows.Desktop/obj/Debug
+/Main/Source/Apps/Mud.Apps.Universal/Mud.Apps.Universal.Windows/obj/x86/Debug
+/Main/Source/Apps/Mud.Apps.Universal/Mud.Apps.Universal.WindowsPhone/obj/x86/Debug
+/Main/Source/Apps/Mud.Apps.Windows/Mud.Apps.Windows.Infrastructure/obj/Debug
+/Main/Source/Apps/Mud.Apps.Windows/Mud.Apps.Windows.Modules/Mud.Apps.Windows.Modules.ProjectManagerModule/obj/Debug
+/Main/Source/Apps/Mud.Apps.Windows/Mud.Apps.Windows.Modules/ProjectPropertiesModule/obj/Debug
+/Main/Source/Apps/Mud.Apps.Windows/Mud.Apps.Windows.Server/obj/Debug
+/Main/Source/Engine/Mud.Engine.Core/obj/Debug
+/Main/Source/Apps/Mud.Apps.Windows/Mud.Apps.Windows.Shared/obj/Debug
+/Main/Source/Engine/Mud.Engine.Default.Desktop/obj/Debug
+/Main/Source/Engine/Mud.Engine.Networking.Portable/obj/Debug
+/Main/Source/Repositories/Mud.Repositories.Engine.DefaultDesktop/obj/Debug
+/Main/Source/Repositories/Mud.Repositories.Shared/obj/Debug
+/Main/Source/Services/Mud.Services.FlatFile/obj/Debug
+/Main/Source/Services/Mud.Services.Shared/obj/Debug
+/Main/Source/Tests/Engine/Mud.Tests.Engine.Core/obj/Debug
+/Main/Source/Tests/Engine/Mud.Tests.Engine.Default.Desktop/obj/Debug
+*.suo
