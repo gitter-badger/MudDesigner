@@ -27,8 +27,8 @@ namespace Mud.Engine.Default.Desktop.Engine
         /// </summary>
         /// <param name="worldRepository">The world repository.</param>
         /// <param name="logger">The logger.</param>
-        public DesktopGame(IWorldRepository worldRepository, ILogger logger) 
-            : base(logger)
+        public DesktopGame(IWorldRepository worldRepository) 
+            : base(null)
         {
             this.worldRepository = worldRepository;
         }

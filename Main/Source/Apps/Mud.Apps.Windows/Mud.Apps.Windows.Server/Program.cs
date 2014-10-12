@@ -80,7 +80,7 @@ namespace Mud.Apps.Windows.Server
             // Our game loop.
             while (server.Status == ServerStatus.Running)
             {
-                Thread.Sleep(500);
+                Thread.Sleep(100);
             }
 
             // Check if the server has not stopped. If not, we stop.
