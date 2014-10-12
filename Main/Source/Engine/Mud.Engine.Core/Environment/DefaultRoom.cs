@@ -92,10 +92,10 @@ namespace Mud.Engine.Core.Environment
         public void AddOccupantToRoom(ICharacter character)
         {
             // We don't allow the user to enter a disabled room.
-            if (this.IsEnabled)
+            if (!this.IsEnabled)
             {
                 // TODO: Need to do some kind of communication back to the caller that this can't be traveled to.
-                return;
+                throw new InvalidOperationException("The room is disabled and can not be traveled to.");
             }
 
             if (character == null)
