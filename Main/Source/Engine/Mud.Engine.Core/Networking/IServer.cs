@@ -91,9 +91,8 @@ using Mud.Engine.Core.Commanding;
         /// </summary>
         /// <typeparam name="TPlayer">The type of the player.</typeparam>
         /// <param name="game">The game.</param>
-        void Start<TPlayer, TCommand>(IGame game)
-            where TPlayer : class, IPlayer, new()
-            where TCommand : class, IPlayerConnectCommand, new();
+        void Start<TPlayer>(IGame game)
+            where TPlayer : class, IPlayer, new();
 
         /// <summary>
         /// Stops the server.

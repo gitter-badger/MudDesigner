@@ -72,7 +72,7 @@ namespace Mud.Apps.Windows.Server
             server.PlayerDisconnected += Server_PlayerDisconnected;
 
             // Start the server. The DefaultPlayer Type will be instanced when each new player connects.
-            // server.Start<DefaultPlayer>(game);
+            server.Start<DefaultPlayer>(game);
             game.IsMultiplayer = true;
 
             SetupGameWorld(game);

@@ -125,9 +125,8 @@ namespace Mud.Engine.DefaultDesktop.Networking
         /// or
         /// Invalid MaxConnections number used. Must be greater than 1.
         /// </exception>
-        public void Start<TPlayer, TCommand>(IGame game)
+        public void Start<TPlayer>(IGame game)
             where TPlayer : class, IPlayer, new()
-            where TCommand : class, IPlayerConnectCommand, new()
         {
             // Ensure we have a valid game.
             if (game == null)
@@ -135,14 +134,14 @@ namespace Mud.Engine.DefaultDesktop.Networking
                 throw new NullReferenceException("Server can not start with a null Game.");
             }
 
-            if (this.ConnectionCommand == null)
-            {
-                throw new NullReferenceException("ConnectionCommand can not be null. A command must be given for execution upon player connection");
-            }
-            else
-            {
-                this.ConnectionCommand.Initialize<TPlayer>();
-            }
+            ////if (this.ConnectionCommand == null)
+            ////{
+            ////    throw new NullReferenceException("ConnectionCommand can not be null. A command must be given for execution upon player connection");
+            ////}
+            ////else
+            ////{
+            ////    this.ConnectionCommand.Initialize<TPlayer>();
+            ////}
 
             this.Status = ServerStatus.Starting;
             this.Game = game;
@@ -168,7 +167,7 @@ namespace Mud.Engine.DefaultDesktop.Networking
             this.serverSocket.Listen(this.MaxQueuedConnections);
 
             // Begin listening for connections.
-            IAsyncResult result = this.serverSocket.BeginAccept(new AsyncCallback(this.ConnectClient<TPlayer, TCommand>), this.serverSocket);
+            IAsyncResult result = this.serverSocket.BeginAccept(new AsyncCallback(this.ConnectClient<TPlayer>), this.serverSocket);
 
             this.Status = ServerStatus.Running;
         }
@@ -284,24 +283,23 @@ namespace Mud.Engine.DefaultDesktop.Networking
         /// </summary>
         /// <typeparam name="TPlayer">The type of the player.</typeparam>
         /// <param name="result">The async result.</param>
-        private void ConnectClient<TPlayer, TCommand>(IAsyncResult result)
+        private void ConnectClient<TPlayer>(IAsyncResult result)
             where TPlayer : class, IPlayer, new()
-            where TCommand : class, IPlayerConnectCommand, new()
         {
             // Fetch the next incoming connection.
-            this.serverSocket.BeginAccept(new AsyncCallback(this.ConnectClient<TPlayer, TCommand>), this.serverSocket);
+            this.serverSocket.BeginAccept(new AsyncCallback(this.ConnectClient<TPlayer>), this.serverSocket);
 
-            IPlayerConnectCommand command = new TCommand();
-            command.Executed += this.OnConnectionCommandExecuted;
+            ////IPlayerConnectCommand command = new TCommand();
+            ////command.Executed += this.OnConnectionCommandExecuted;
 
-            try
-            {
-                command.Execute(null, null);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            ////try
+            ////{
+            ////    command.Execute(null, null);
+            ////}
+            ////catch (Exception)
+            ////{
+            ////    throw;
+            ////}
 
             // this.LogMessage(string.Format("{0} connected.", serverObject.Player.Name));
         }

@@ -26,6 +26,13 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
+    <Content Include="SecurityPermissions.activitydiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SecurityPermissions.activitydiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>SecurityPermissions.activitydiagram</DependentUpon>
+    </Content>
     <Folder Include="ModelDefinition\" />
     <Content Include="Components\EngineCommanding.componentdiagram">
       <SubType>Content</SubType>

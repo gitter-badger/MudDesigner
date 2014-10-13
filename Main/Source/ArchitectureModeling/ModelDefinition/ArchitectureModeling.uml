@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner"
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner"
   dslVersion="1.0.0.0"
   Id="86919eeb-b245-4b5c-bc2b-4b7efeb2bea6"
   name="ArchitectureModeling" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
@@ -282,6 +282,163 @@
         name="ExecuteMessage"
         isAbstract="false"
         isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <activity
+        Id="a2c896db-b643-4c54-8028-897c4039776f"
+        name="SecurityPermissions"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false"
+        isReentrant="false"
+        isReadOnly="false"
+        isSingleExecution="false">
+        <nodes>
+          <opaqueAction
+            Id="9eb116a9-7600-411e-83a4-5ea874cf70a1"
+            name="Start Server"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="358ef339-b733-4369-a9ce-bc3dd3019ffc"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="62dd04db-8a54-4d0b-b6f5-b7085e6ef5d0"
+                  LastKnownName="Fetch Security Permissions"
+                  LastKnownLocation="ArchitectureModeling.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="62dd04db-8a54-4d0b-b6f5-b7085e6ef5d0"
+            name="Fetch Security Permissions"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="a8210939-2f47-4d8c-af3a-8f75b818cdfd"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="88ab5d6d-4b19-4873-b05f-1136c7fec07c"
+                  LastKnownName="Cache Permissions"
+                  LastKnownLocation="ArchitectureModeling.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="88ab5d6d-4b19-4873-b05f-1136c7fec07c"
+            name="Cache Permissions"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="ae7f4d34-97bc-4aad-9fc5-9a700c5f7a68"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="1062479b-3bdf-4158-91ff-6716ec642965"
+                  LastKnownName="Open Connections"
+                  LastKnownLocation="ArchitectureModeling.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="1062479b-3bdf-4158-91ff-6716ec642965"
+            name="Open Connections"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="2e306e2a-2833-432e-960a-7267fcff6e8d"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="76a4fb03-60b1-4104-aeb1-1df5e91167d8"
+                  LastKnownName="Player Connects"
+                  LastKnownLocation="ArchitectureModeling.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="76a4fb03-60b1-4104-aeb1-1df5e91167d8"
+            name="Player Connects"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="02050caf-8354-4832-ac69-bf05c2eda8f9"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="8322b9cc-ca6f-463f-b868-1e44addc72ac"
+                  LastKnownName="Get User Permissions"
+                  LastKnownLocation="ArchitectureModeling.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="8322b9cc-ca6f-463f-b868-1e44addc72ac"
+            name="Get User Permissions"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="d14cfd54-908c-404d-aa6a-c0709b02460a"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="8c0c1a6e-7280-4dbb-91b9-85b27f5cb13b"
+                  LastKnownName="Apply Permissions"
+                  LastKnownLocation="ArchitectureModeling.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="8c0c1a6e-7280-4dbb-91b9-85b27f5cb13b"
+            name="Apply Permissions"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="a081382e-ee8d-42d9-ba88-b8e91c93252a"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="ada84307-4a1b-4e6d-8c9b-736472c6264c"
+                  LastKnownName="Provide Commands matching permissions"
+                  LastKnownLocation="ArchitectureModeling.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="ada84307-4a1b-4e6d-8c9b-736472c6264c"
+            name="Provide Commands matching permissions"
+            isLeaf="false" />
+          <opaqueAction
+            Id="49bd0fef-96ac-4edd-891f-51174cf49c45"
+            name="Instance Command Manager"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="a62378d1-61b3-4d10-ac49-30b54ea493eb"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="17dcbe3c-6416-4fd8-9279-aaff8ed3739d"
+                  LastKnownName="Register Command"
+                  LastKnownLocation="ArchitectureModeling.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="17dcbe3c-6416-4fd8-9279-aaff8ed3739d"
+            name="Register Command"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="98866cbc-da22-49bd-811e-b67ce1ca7c26"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="c511e8a5-0124-4f99-9fda-77c96818a449"
+                  LastKnownName="Set Given Permissions"
+                  LastKnownLocation="ArchitectureModeling.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="c511e8a5-0124-4f99-9fda-77c96818a449"
+            name="Set Given Permissions"
+            isLeaf="false" />
+        </nodes>
+      </activity>
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType
