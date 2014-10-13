@@ -55,7 +55,7 @@ namespace Mud.Engine.Core.Engine
         public void Start(double startDelay, double interval, bool isOneShot = false, bool callbackOnWorkerThread = false)
         {
             this.timerTask = Task
-                .Delay(TimeSpan.FromMilliseconds(startDelay), Token)
+                .Delay(TimeSpan.FromMilliseconds(startDelay), this.Token)
                 .ContinueWith(
                 async (task, state) =>
                 {
@@ -65,30 +65,16 @@ namespace Mud.Engine.Core.Engine
                         interval));
 
                     var tuple = (Tuple<Action<T, EngineTimer<T>>, T>)state;
-                    while (!IsCancellationRequested)
+                    while (!this.IsCancellationRequested)
                     {
-                        if (callbackOnWorkerThread)
-                        {
-                            Task.Run(() =>
-                            {
-                                Debug.WriteLine(string.Format(
-                                    "Updating engine timer for {0} with Task Id: {1}",
-                                    typeof(T).Name,
-                                    task.Id));
-                                tuple.Item1(tuple.Item2, this);
-                            });
-                        }
-                        else
-                        {
-                            tuple.Item1(tuple.Item2, this);
-                        }
+                        this.ExecuteCallback(tuple, task, callbackOnWorkerThread);
 
                         if (isOneShot)
                         {
                             this.Cancel();
                         }
 
-                        await Task.Delay(TimeSpan.FromMilliseconds(interval), Token).ConfigureAwait(false);
+                        await Task.Delay(TimeSpan.FromMilliseconds(interval), this.Token).ConfigureAwait(false);
                     }
                 },
             Tuple.Create(this.callback, this.StateData),
@@ -98,7 +84,7 @@ namespace Mud.Engine.Core.Engine
         }
 
         /// <summary>
-        /// Stops the timer for this instance.
+        /// Stops the timer for this instance. It is not 
         /// </summary>
         public void Stop()
         {
@@ -109,7 +95,7 @@ namespace Mud.Engine.Core.Engine
         }
 
         /// <summary>
-        /// Releases the unmanaged resources used by the <see cref="T:System.Threading.CancellationTokenSource" /> class and optionally releases the managed resources.
+        /// Cancels the timer and releases the unmanaged resources used by the <see cref="T:System.Threading.CancellationTokenSource" /> class and optionally releases the managed resources.
         /// </summary>
         /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
         protected override void Dispose(bool disposing)
@@ -120,6 +106,31 @@ namespace Mud.Engine.Core.Engine
             }
 
             base.Dispose(disposing);
+        }
+
+        /// <summary>
+        /// Executes the callback.
+        /// </summary>
+        /// <param name="state">The state.</param>
+        /// <param name="owningTask">The owning task.</param>
+        /// <param name="callbackOnWorkerThread">if set to <c>true</c> [callback on worker thread].</param>
+        private void ExecuteCallback(Tuple<Action<T, EngineTimer<T>>, T> state, Task owningTask, bool callbackOnWorkerThread)
+        {
+            if (callbackOnWorkerThread)
+            {
+                Task.Run(() =>
+                {
+                    Debug.WriteLine(string.Format(
+                        "Updating engine timer for {0} with Task Id: {1}",
+                        typeof(T).Name,
+                        owningTask.Id));
+                    state.Item1(state.Item2, this);
+                });
+            }
+            else
+            {
+                state.Item1(state.Item2, this);
+            }
         }
     }
 }

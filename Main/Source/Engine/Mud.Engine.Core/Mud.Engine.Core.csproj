@@ -52,6 +52,7 @@
     <Compile Include="Engine\IGameRule.cs" />
     <Compile Include="Engine\IPermission.cs" />
     <Compile Include="Engine\ObjectExtensions.cs" />
+    <Compile Include="Engine\PersistValueAttribute.cs" />
     <Compile Include="Engine\SystemMessage.cs" />
     <Compile Include="Engine\Validation\ValidatableBase.cs" />
     <Compile Include="Engine\DefaultGame.cs" />

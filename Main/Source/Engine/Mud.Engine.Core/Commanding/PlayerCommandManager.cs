@@ -18,7 +18,7 @@ namespace Mud.Engine.Core.Commanding
 
         private List<string> History = new List<string>();
 
-        public async Task Initialize(ICharacter character)
+        public Task Initialize(ICharacter character)
         {
             if (!(character is IPlayer))
             {
@@ -32,6 +32,8 @@ namespace Mud.Engine.Core.Commanding
             }
 
             this.commands.AddRange(this.player.Permission.AvailableCommands);
+
+            return Task.FromResult(this);
         }
 
         public async Task HandleMessage(IMessage message)
