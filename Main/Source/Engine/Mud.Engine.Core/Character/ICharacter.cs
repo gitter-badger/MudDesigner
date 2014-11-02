@@ -8,12 +8,12 @@ namespace Mud.Engine.Core.Character
     using System;
     using Mud.Engine.Core.Engine;
     using Mud.Engine.Core.Environment;
-using Mud.Engine.Core.Commanding;
+    using Mud.Engine.Core.Commanding;
 
     /// <summary>
-    /// Provides a contract for objects wanting to act as an IMob Type.
+    /// Provides a contract for objects wanting to act as an character Type.
     /// </summary>
-    public interface ICharacter
+    public interface ICharacter : IPersistedObject
     {
         /// <summary>
         /// Occurs when the object is loaded.
@@ -39,11 +39,6 @@ using Mud.Engine.Core.Commanding;
         /// Occurs when the character changes rooms.
         /// </summary>
         event EventHandler<OccupancyChangedEventArgs> RoomChanged;
-
-        /// <summary>
-        /// Gets or sets the unique identifier.
-        /// </summary>
-        Guid Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name.

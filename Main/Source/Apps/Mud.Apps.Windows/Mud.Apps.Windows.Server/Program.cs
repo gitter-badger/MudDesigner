@@ -136,7 +136,7 @@ namespace Mud.Apps.Windows.Server
             container.RegisterType<IWorld, DefaultWorld>();
             container.RegisterType<IGame, DesktopGame>(new ContainerControlledLifetimeManager());
             container.RegisterType<IWorldRepository, WorldRepository>();
-            container.RegisterType<IWorldService, WorldService>();
+            container.RegisterType<IWorldService, WorldService_Old>();
         }
 
         /// <summary>

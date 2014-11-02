@@ -134,6 +134,9 @@
     <Reference Include="Microsoft.Practices.Prism.PubSubEvents">
       <HintPath>..\..\..\..\Resources\Prism\Microsoft.Practices.Prism.PubSubEvents.dll</HintPath>
     </Reference>
+    <Reference Include="ValidatableBase">
+      <HintPath>..\..\..\..\Resources\ValidatableBase.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

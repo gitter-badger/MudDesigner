@@ -8,6 +8,7 @@ namespace Mud.Engine.Core.Environment
     using System;
     using System.Collections.Generic;
     using Mud.Engine.Core.Character;
+    using Mud.Engine.Core.Engine;
 
     /// <summary>
     /// The Default engine Room Type.
@@ -21,7 +22,6 @@ namespace Mud.Engine.Core.Environment
         {
             this.Doorways = new List<IDoorway>();
             this.Occupants = new List<ICharacter>();
-            this.Id = Guid.NewGuid();
             this.CreationDate = DateTime.Now;
         }
 
@@ -38,11 +38,12 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
+        [PersistValue]
         public string Name { get; set; }
 
         /// <summary>
@@ -53,16 +54,19 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Gets or sets the creation date.
         /// </summary>
+        [PersistValue(PersistValueAttribute.PersistStyle.StringRepresentation)]
         public DateTime CreationDate { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is enabled.
         /// </summary>
+        [PersistValue]
         public bool IsEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets the zone that owns this Room.
         /// </summary>
+        [PersistValue(PersistValueAttribute.PersistStyle.RelatedPersistedObject)]
         public IZone Zone { get; protected set; }
 
         /// <summary>

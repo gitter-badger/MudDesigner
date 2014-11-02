@@ -81,6 +81,9 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="ValidatableBase">
+      <HintPath>..\..\..\..\Resources\ValidatableBase.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -142,13 +145,13 @@
       <Project>{efcd4f40-a2cb-440b-a1c1-bad78b784471}</Project>
       <Name>Mud.Engine.Default.Desktop</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Repositories\Mud.Repositories.Engine.DefaultDesktop\Mud.Repositories.Engine.DefaultDesktop.csproj">
+    <ProjectReference Include="..\..\..\Infrastructure\Mud.Infrastructure.Repositories.DefaultDesktop\Mud.Infrastructure.Repositories.DefaultDesktop.csproj">
       <Project>{8fa627f4-29dd-4246-9012-47fec363a372}</Project>
-      <Name>Mud.Repositories.Engine.DefaultDesktop</Name>
+      <Name>Mud.Infrastructure.Repositories.DefaultDesktop</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Repositories\Mud.Repositories.Shared\Mud.Repositories.Shared.csproj">
+    <ProjectReference Include="..\..\..\Infrastructure\Mud.Infrastructure.Repositories.Shared\Mud.Infrastructure.Repositories.Shared.csproj">
       <Project>{1e50f1a9-b51a-4084-9293-0dba1a14c92c}</Project>
-      <Name>Mud.Repositories.Shared</Name>
+      <Name>Mud.Infrastructure.Repositories.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="..\Mud.Apps.Windows.Infrastructure\Mud.Apps.Windows.Infrastructure.csproj">
       <Project>{13c2a63c-e51c-458e-9f95-bdd29d901a31}</Project>

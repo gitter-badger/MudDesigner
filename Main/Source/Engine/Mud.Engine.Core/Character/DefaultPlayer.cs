@@ -25,7 +25,7 @@ namespace Mud.Engine.Core.Character
         /// </summary>
         public DefaultPlayer()
         {
-            this.Id = Guid.NewGuid();
+            this.Id = 0;
         }
 
         /// <summary>
@@ -56,11 +56,12 @@ namespace Mud.Engine.Core.Character
         /// <summary>
         /// Gets or sets the unique identifier.
         /// </summary>
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
+        [PersistValue]
         public string Name { get; set; }
 
         /// <summary>
@@ -71,6 +72,7 @@ namespace Mud.Engine.Core.Character
         /// <summary>
         /// Gets or sets the current room that this character occupies.
         /// </summary>
+        [PersistValue(PersistValueAttribute.PersistStyle.RelatedPersistedObject)]
         public IRoom CurrentRoom
         {
             get
@@ -87,6 +89,7 @@ namespace Mud.Engine.Core.Character
             }
         }
 
+        // TODO: Need to replace IPlayer.Permission with IPlayer.Role w/ Role containing a collection of IPermission
         public IPermission Permission
         {
             get { throw new NotImplementedException(); }

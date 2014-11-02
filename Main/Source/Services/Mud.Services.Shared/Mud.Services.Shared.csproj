@@ -43,10 +43,6 @@
       <Project>{f27c159b-6412-46dc-8239-f0841c6801dc}</Project>
       <Name>Mud.Engine.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Repositories\Mud.Repositories.Shared\Mud.Repositories.Shared.csproj">
-      <Project>{1e50f1a9-b51a-4084-9293-0dba1a14c92c}</Project>
-      <Name>Mud.Repositories.Shared</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IWorldService.cs" />

@@ -69,16 +69,19 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Gets or sets the rules that must be applied to this zone.
         /// </summary>
+        [PersistValue(PersistValueAttribute.PersistStyle.CollectionRelatedPersistedObject)]
         public ICollection<IZoneRule> Rules { get; set; }
 
         /// <summary>
         /// Gets or sets the current weather.
         /// </summary>
+        [PersistValue(PersistValueAttribute.PersistStyle.RelatedPersistedObject)]
         public IWeatherState CurrentWeather { get; set; }
 
         /// <summary>
         /// Gets or sets a collection of states that can be used to determine the current weather.
         /// </summary>
+        [PersistValue(PersistValueAttribute.PersistStyle.CollectionRelatedPersistedObject)]
         public IEnumerable<IWeatherState> WeatherStates
         {
             get
@@ -102,6 +105,7 @@ namespace Mud.Engine.Core.Environment
         /// When the frequency is hit, the new weather will be determined based on the weathers probability. It is not guaranteed to change.
         /// This value is represented as in-game minutes
         /// </summary>
+        [PersistValue]
         public int WeatherUpdateFrequency { get; set; }
 
         /// <summary>
@@ -127,31 +131,36 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Gets or sets a value indicating whether this instance is enabled.
         /// </summary>
+        [PersistValue]
         public bool IsEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets the realm that owns this zone.
         /// </summary>
+        [PersistValue(PersistValueAttribute.PersistStyle.RelatedPersistedObject)]
         public IRealm Realm { get; protected set; }
 
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
+        [PersistValue]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets how many seconds have passed since the creation date.
         /// </summary>
+        [PersistValue]
         public double TimeFromCreation { get; private set; }
 
         /// <summary>
         /// Gets or sets the creation date.
         /// </summary>
+        [PersistValue(PersistValueAttribute.PersistStyle.StringRepresentation)]
         public DateTime CreationDate { get; set; }
 
         /// <summary>

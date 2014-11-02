@@ -5,18 +5,14 @@
 //-----------------------------------------------------------------------
 namespace Mud.Engine.Core.Environment
 {
+    using Mud.Engine.Core.Engine;
     using System;
 
     /// <summary>
     /// Defines properties that are used across various environments such as worlds, realms and zones.
     /// </summary>
-    public interface IEnvironment
+    public interface IEnvironment : IPersistedObject
     {
-        /// <summary>
-        /// Gets or sets the identifier.
-        /// </summary>
-        Guid Id { get; set; }
-
         /// <summary>
         /// Gets or sets the name.
         /// </summary>

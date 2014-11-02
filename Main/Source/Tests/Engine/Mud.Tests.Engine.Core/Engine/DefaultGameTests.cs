@@ -4,6 +4,7 @@ using Moq;
 using Mud.Repositories.Shared;
 using Mud.Engine.Core.Environment;
 using System.Collections.Generic;
+using Mud.Engine.Core.Engine;
 
 namespace Mud.Tests.Engine.Core.Engine
 {
@@ -17,7 +18,7 @@ namespace Mud.Tests.Engine.Core.Engine
         {
             var worldRepositoryMock = new Mock<IWorldRepository>();
             worldRepositoryMock
-                .Setup(s => s.GetAllWorlds(It.IsAny<bool>()))
+                .Setup(s => s.GetAllWorlds(It.IsAny<bool>(), It.IsAny<IDataStoreContext>()))
                 .ReturnsAsync(new List<IWorld>());
 
             this.worldRepository = worldRepositoryMock.Object;

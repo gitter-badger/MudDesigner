@@ -50,6 +50,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="ValidatableBase">
+      <HintPath>..\..\..\Resources\ValidatableBase.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine\DesktopGame.cs" />
@@ -58,9 +61,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Repositories\Mud.Repositories.Shared\Mud.Repositories.Shared.csproj">
+    <ProjectReference Include="..\..\Infrastructure\Mud.Infrastructure.Repositories.Shared\Mud.Infrastructure.Repositories.Shared.csproj">
       <Project>{1e50f1a9-b51a-4084-9293-0dba1a14c92c}</Project>
-      <Name>Mud.Repositories.Shared</Name>
+      <Name>Mud.Infrastructure.Repositories.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="..\Mud.Engine.Core\Mud.Engine.Core.csproj">
       <Project>{f27c159b-6412-46dc-8239-f0841c6801dc}</Project>

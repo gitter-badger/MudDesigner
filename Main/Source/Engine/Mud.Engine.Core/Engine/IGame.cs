@@ -13,7 +13,7 @@ namespace Mud.Engine.Core.Engine
     /// <summary>
     /// The IGame interface provides all of properties required for a game to run.
     /// </summary>
-    public interface IGame
+    public interface IGame : IPersistedObject
     {
         /// <summary>
         /// Gets or sets a value indicating whether this instance is multiplayer.

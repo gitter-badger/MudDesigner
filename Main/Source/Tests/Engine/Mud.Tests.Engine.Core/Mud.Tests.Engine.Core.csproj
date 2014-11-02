@@ -43,6 +43,9 @@
       <HintPath>..\..\..\packages\Moq.4.2.1408.0717\lib\net40\Moq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="ValidatableBase">
+      <HintPath>..\..\..\..\Resources\ValidatableBase.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -59,12 +62,9 @@
   <ItemGroup>
     <Compile Include="Engine\DefaultWorldTests.cs" />
     <Compile Include="Engine\DefaultGameTests.cs" />
-    <Compile Include="Engine\Validation\ValidateNumberHasMaximumValueTests.cs" />
-    <Compile Include="Engine\Validation\ValidatableBaseTests.cs" />
     <Compile Include="Environment\DefaultRealmTests.cs" />
     <Compile Include="Environment\DefaultDoorwayTests.cs" />
     <Compile Include="Fixtures\MessageFixture.cs" />
-    <Compile Include="Fixtures\ValidatableFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -76,9 +76,9 @@
       <Project>{efcd4f40-a2cb-440b-a1c1-bad78b784471}</Project>
       <Name>Mud.Engine.Default.Desktop</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Repositories\Mud.Repositories.Shared\Mud.Repositories.Shared.csproj">
+    <ProjectReference Include="..\..\..\Infrastructure\Mud.Infrastructure.Repositories.Shared\Mud.Infrastructure.Repositories.Shared.csproj">
       <Project>{1e50f1a9-b51a-4084-9293-0dba1a14c92c}</Project>
-      <Name>Mud.Repositories.Shared</Name>
+      <Name>Mud.Infrastructure.Repositories.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

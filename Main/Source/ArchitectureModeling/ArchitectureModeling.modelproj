@@ -104,14 +104,6 @@
       <Name>Mud.Engine.Networking.Portable</Name>
       <Project>{9aaa3563-0089-4c5b-a12c-d1b47e9ddf66}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Repositories\Mud.Repositories.Engine.DefaultDesktop\Mud.Repositories.Engine.DefaultDesktop.csproj">
-      <Name>Mud.Repositories.Engine.DefaultDesktop</Name>
-      <Project>{8fa627f4-29dd-4246-9012-47fec363a372}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Repositories\Mud.Repositories.Shared\Mud.Repositories.Shared.csproj">
-      <Name>Mud.Repositories.Shared</Name>
-      <Project>{1e50f1a9-b51a-4084-9293-0dba1a14c92c}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Services\Mud.Services.FlatFile\Mud.Services.FlatFile.csproj">
       <Name>Mud.Services.FlatFile</Name>
       <Project>{d2c8c943-4788-4f6f-bf45-bd2cc8ec1bc4}</Project>

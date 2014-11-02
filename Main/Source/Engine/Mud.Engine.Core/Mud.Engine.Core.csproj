@@ -49,32 +49,19 @@
     <Compile Include="Engine\EngineTimer.cs" />
     <Compile Include="Engine\ICollectionExtensions.cs" />
     <Compile Include="Commanding\ICommand.cs" />
+    <Compile Include="Engine\IDataStoreContext.cs" />
     <Compile Include="Engine\IGameRule.cs" />
     <Compile Include="Engine\IPermission.cs" />
+    <Compile Include="Engine\IPersistedObject.cs" />
     <Compile Include="Engine\ObjectExtensions.cs" />
     <Compile Include="Engine\PersistValueAttribute.cs" />
     <Compile Include="Engine\SystemMessage.cs" />
-    <Compile Include="Engine\Validation\ValidatableBase.cs" />
     <Compile Include="Engine\DefaultGame.cs" />
-    <Compile Include="Engine\Validation\IValidatable.cs" />
     <Compile Include="Engine\IGame.cs" />
     <Compile Include="Engine\ILogger.cs" />
     <Compile Include="Engine\IMessage.cs" />
     <Compile Include="Engine\ErrorMessage.cs" />
     <Compile Include="Engine\ValidationChangedEventArgs.cs" />
-    <Compile Include="Engine\Validation\IValidationRule.cs" />
-    <Compile Include="Engine\Validation\ValidateNumberHasMaximumValueAttribute.cs" />
-    <Compile Include="Engine\Validation\ValidateNumberHasMinimumValueAttribute.cs" />
-    <Compile Include="Engine\Validation\ValidateNumberInRangeAttribute.cs" />
-    <Compile Include="Engine\Validation\ValidateNumberIsGreaterThanAttribute.cs" />
-    <Compile Include="Engine\Validation\ValidateNumberIsLessThanAttribute.cs" />
-    <Compile Include="Engine\Validation\ValidateStringIsGreaterThanAttribute.cs" />
-    <Compile Include="Engine\Validation\ValidateStringIsLessThanAttribute.cs" />
-    <Compile Include="Engine\Validation\ValidateValueIsNotNullOrEmptyAttribute.cs" />
-    <Compile Include="Engine\Validation\ValidateWithCustomHandlerAttribute.cs" />
-    <Compile Include="Engine\Validation\ValidationAttribute.cs" />
-    <Compile Include="Engine\Validation\ValidationCustomHandlerDelegate.cs" />
-    <Compile Include="Engine\Validation\ValidationNumberDataTypes.cs" />
     <Compile Include="Engine\WarningMessage.cs" />
     <Compile Include="Environment\DefaultDoorway.cs" />
     <Compile Include="Environment\Time\AfternoonState.cs" />
@@ -119,6 +106,11 @@
     <Compile Include="Networking\ServerConnectionEventArgs.cs" />
     <Compile Include="Networking\ServerStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ValidatableBase">
+      <HintPath>..\..\..\Resources\ValidatableBase.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

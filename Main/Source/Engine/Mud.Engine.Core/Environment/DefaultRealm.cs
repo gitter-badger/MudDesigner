@@ -8,11 +8,12 @@ namespace Mud.Engine.Core.Environment
     using System;
     using System.Collections.Generic;
     using Mud.Engine.Core.Environment.Time;
+    using Mud.Engine.Core.Engine;
 
     /// <summary>
     /// The Default Realm class for the engine.
     /// </summary>
-    public class DefaultRealm : IRealm
+    public class DefaultRealm : IRealm, IPersistedObject
     {
         /// <summary>
         /// The time of day state manager
@@ -30,17 +31,23 @@ namespace Mud.Engine.Core.Environment
         public DefaultRealm()
         {
             this.CreationDate = DateTime.Now;
-            this.Id = Guid.NewGuid();
         }
+
+        /// <summary>
+        /// Gets or sets the unique identifier.
+        /// </summary>
+        public int Id { get; set; }
 
         /// <summary>
         /// Gets or sets the offset from the World's current time for the Realm.
         /// </summary>
+        [PersistValue(PersistValueAttribute.PersistStyle.RelatedPersistedObject)]
         public TimeOfDay TimeZoneOffset { get; set; }
 
         /// <summary>
         /// Gets or sets the time of day for the Realm.
         /// </summary>
+        [PersistValue(PersistValueAttribute.PersistStyle.RelatedPersistedObject)]
         public TimeOfDay CurrentTimeOfDay { get; set; }
 
         /// <summary>
@@ -79,21 +86,19 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Gets or sets the World that owns this realm..
         /// </summary>
+        [PersistValue(PersistValueAttribute.PersistStyle.RelatedPersistedObject)]
         public IWorld World { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets the identifier.
-        /// </summary>
-        public Guid Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
+        [PersistValue]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is enabled.
         /// </summary>
+        [PersistValue]
         public bool IsEnabled { get; set; }
 
         /// <summary>
@@ -110,6 +115,7 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Gets or sets the creation date.
         /// </summary>
+        [PersistValue(PersistValueAttribute.PersistStyle.StringRepresentation)]
         public DateTime CreationDate { get; set; }
 
         /// <summary>

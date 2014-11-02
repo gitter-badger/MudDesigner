@@ -9,6 +9,7 @@ namespace Mud.Engine.Core.Environment
     using System.Collections.Generic;
     using System.Linq;
     using Mud.Engine.Core.Environment.Time;
+    using Mud.Engine.Core.Engine;
 
     /// <summary>
     /// The Default World class used by the engine.
@@ -35,7 +36,6 @@ namespace Mud.Engine.Core.Environment
         /// </summary>
         public DefaultWorld()
         {
-            this.Id = Guid.NewGuid();
             this.CreationDate = DateTime.Now;
 
             // Set the in-game day to be 24 hours, with each day taking 45 real-world minutes to cycle.
@@ -59,16 +59,18 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
+        [PersistValue]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is enabled.
         /// </summary>
+        [PersistValue]
         public bool IsEnabled { get; set; }
 
         /// <summary>
@@ -85,16 +87,19 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Gets or sets the creation date.
         /// </summary>
+        [PersistValue(PersistValueAttribute.PersistStyle.StringRepresentation)]
         public DateTime CreationDate { get; set; }
 
         /// <summary>
         /// Gets or sets the current time of day.
         /// </summary>
+        [PersistValue(PersistValueAttribute.PersistStyle.RelatedPersistedObject)]
         public ITimeOfDayState CurrentTimeOfDay { get; set; }
 
         /// <summary>
         /// Gets or sets a collection of states that can be used for the time of day.
         /// </summary>
+        [PersistValue(PersistValueAttribute.PersistStyle.CollectionRelatedPersistedObject)]
         public IEnumerable<ITimeOfDayState> TimeOfDayStates
         {
             get
@@ -119,16 +124,19 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Gets or sets hour many hours it takes in-game to complete 1 day.
         /// </summary>
+        [PersistValue]
         public int HoursPerDay { get; set; }
 
         /// <summary>
         /// Gets or sets the hours ratio. If set to 4, it takes 4 in-game hours to equal 1 real-world hour.
         /// </summary>
+        [PersistValue]
         public double GameDayToRealHourRatio { get; set; }
 
         /// <summary>
         /// Gets the game time ratio used to convert real-world time to game-time.
         /// </summary>
+        [PersistValue]
         public double GameTimeAdjustmentFactor
         {
             get

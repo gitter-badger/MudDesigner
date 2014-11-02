@@ -9,11 +9,12 @@ namespace Mud.Engine.Core.Environment
     using System.Linq;
     using Mud.Engine.Core.Character;
     using Mud.Engine.Core.Environment.Travel;
+    using Mud.Engine.Core.Engine;
 
     /// <summary>
     /// The default doorway class for the engine. Provides methods for connecting rooms, disconnecting rooms and traveling between rooms.
     /// </summary>
-    public class DefaultDoorway : IDoorway
+    public class DefaultDoorway : IDoorway, IPersistedObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultDoorway"/> class.
@@ -21,6 +22,11 @@ namespace Mud.Engine.Core.Environment
         public DefaultDoorway()
         {
         }
+
+        /// <summary>
+        /// Gets or sets the unique identifier.
+        /// </summary>
+        public int Id { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultDoorway"/> class.
@@ -34,11 +40,13 @@ namespace Mud.Engine.Core.Environment
         /// <summary>
         /// Gets or sets the direction that must be traveled in order to move from the departure room.
         /// </summary>
+        [PersistValue(PersistValueAttribute.PersistStyle.StringRepresentation)]
         public ITravelDirection DepartureDirection { get; set; }
 
         /// <summary>
         /// Gets or sets the arrival room.
         /// </summary>
+        [PersistValue(PersistValueAttribute.PersistStyle.RelatedPersistedObject)]
         public IRoom ArrivalRoom { get; protected set; }
 
         /// <summary>
