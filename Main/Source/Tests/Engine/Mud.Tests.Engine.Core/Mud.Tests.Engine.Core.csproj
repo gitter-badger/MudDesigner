@@ -68,20 +68,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Engine\Mud.Engine.Core\Mud.Engine.Core.csproj">
-      <Project>{f27c159b-6412-46dc-8239-f0841c6801dc}</Project>
-      <Name>Mud.Engine.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Engine\Mud.Engine.Default.Desktop\Mud.Engine.Default.Desktop.csproj">
-      <Project>{efcd4f40-a2cb-440b-a1c1-bad78b784471}</Project>
-      <Name>Mud.Engine.Default.Desktop</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Infrastructure\Mud.Infrastructure.Repositories.Shared\Mud.Infrastructure.Repositories.Shared.csproj">
-      <Project>{1e50f1a9-b51a-4084-9293-0dba1a14c92c}</Project>
-      <Name>Mud.Infrastructure.Repositories.Shared</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>

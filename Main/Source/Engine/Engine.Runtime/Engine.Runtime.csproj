@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F27C159B-6412-46DC-8239-F0841C6801DC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mud.Engine.Runtime</RootNamespace>
+    <AssemblyName>MudDesigner.Engine.Runtime</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Commanding\CommandSecurity.cs" />
+    <Compile Include="Commanding\CommandVariationsAttribute.cs" />
+    <Compile Include="Commanding\CharacterCanExecuteAttribute.cs" />
+    <Compile Include="Commanding\CommandCategoryAttribute.cs" />
+    <Compile Include="Commanding\PlayerCommandManager.cs" />
+    <Compile Include="Core\EngineTimer.cs" />
+    <Compile Include="Core\ExceptionManager.cs" />
+    <Compile Include="Core\ObjectExtensions.cs" />
+    <Compile Include="Core\PersistValueAttribute.cs" />
+    <Compile Include="Core\DefaultGame.cs" />
+    <Compile Include="Core\ErrorMessage.cs" />
+    <Compile Include="Core\ValidationChangedEventArgs.cs" />
+    <Compile Include="Core\WarningMessage.cs" />
+    <Compile Include="Environment\DefaultDoorway.cs" />
+    <Compile Include="Environment\AfternoonState.cs" />
+    <Compile Include="Environment\DefaultRealm.cs" />
+    <Compile Include="Environment\DefaultRoom.cs" />
+    <Compile Include="Environment\DefaultWorld.cs" />
+    <Compile Include="Environment\DefaultZone.cs" />
+    <Compile Include="Environment\MorningState.cs" />
+    <Compile Include="Environment\NightState.cs" />
+    <Compile Include="Environment\TimeOfDay.cs" />
+    <Compile Include="Environment\TimeOfDayState.cs" />
+    <Compile Include="Environment\TimeOfDayStateManager.cs" />
+    <Compile Include="Environment\EastDirection.cs" />
+    <Compile Include="Environment\NorthDirection.cs" />
+    <Compile Include="Environment\SouthDirection.cs" />
+    <Compile Include="Environment\WestDirection.cs" />
+    <Compile Include="Character\DefaultPlayer.cs" />
+    <Compile Include="Environment\ClearWeather.cs" />
+    <Compile Include="Environment\RainyWeather.cs" />
+    <Compile Include="Environment\ThunderstormWeather.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ValidatableBase">
+      <HintPath>..\..\..\Resources\ValidatableBase.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Engine.Shared\Engine.Shared.csproj">
+      <Project>{f00e107c-b42c-47d1-97ed-d4611648b372}</Project>
+      <Name>Engine.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
