@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace Mud.Engine.Components.WindowsServer.Networking
 {
+    using Mud.Engine.Runtime.Core;
     using Mud.Engine.Shared.Character;
     using Mud.Engine.Shared.Commanding;
     using Mud.Engine.Shared.Core;
@@ -44,6 +45,7 @@ namespace Mud.Engine.Components.WindowsServer.Networking
             this.MessageOfTheDay = new List<string>();
             this.Status = new ServerStatus();
 
+            // TODO: 11/3/14 - Change the Type to ConcurrentDictionary for thread-safety.
             this.playerConnections = new Dictionary<IPlayer, Socket>();
         }
 
@@ -129,10 +131,9 @@ namespace Mud.Engine.Components.WindowsServer.Networking
             where TPlayer : class, IPlayer, new()
         {
             // Ensure we have a valid game.
-            if (game == null)
-            {
-                throw new NullReferenceException("Server can not start with a null Game.");
-            }
+            ExceptionFactory
+                .ThrowExceptionIf<ArgumentNullException>(game == null, () => new ArgumentNullException("game", "Game must not be null!"))
+                .ElseDo(() => this.Game = game);
 
             ////if (this.ConnectionCommand == null)
             ////{
@@ -144,18 +145,13 @@ namespace Mud.Engine.Components.WindowsServer.Networking
             ////}
 
             this.Status = ServerStatus.Starting;
-            this.Game = game;
             //// this.Logger("Starting network server.");
 
             // Validate our settings.
-            if (this.Port <= 0)
-            {
-                throw new ArgumentOutOfRangeException("Invalid Port number used. Recommended number is 23 or 4000");
-            }
-            else if (this.MaxConnections < 2)
-            {
-                throw new ArgumentOutOfRangeException("Invalid MaxConnections number used. Must be greater than 1.");
-            }
+            ExceptionFactory
+                .ThrowExceptionIf<InvalidOperationException>(this.Port <= 0, "Invalid Port number used. Recommended number is 23 or 4000");
+            ExceptionFactory
+                .ThrowExceptionIf<InvalidOperationException>(this.MaxConnections < 2, "Invalid MaxConnections number used. Must be greater than 1.");
 
             // Get our server address information
             IPHostEntry serverHost = Dns.GetHostEntry(Dns.GetHostName());

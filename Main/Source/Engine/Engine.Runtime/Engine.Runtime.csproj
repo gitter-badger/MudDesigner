@@ -44,7 +44,8 @@
     <Compile Include="Commanding\CommandCategoryAttribute.cs" />
     <Compile Include="Commanding\PlayerCommandManager.cs" />
     <Compile Include="Core\EngineTimer.cs" />
-    <Compile Include="Core\ExceptionManager.cs" />
+    <Compile Include="Core\ExceptionFactoryResult.cs" />
+    <Compile Include="Core\ExceptionFactory.cs" />
     <Compile Include="Core\ObjectExtensions.cs" />
     <Compile Include="Core\PersistValueAttribute.cs" />
     <Compile Include="Core\DefaultGame.cs" />

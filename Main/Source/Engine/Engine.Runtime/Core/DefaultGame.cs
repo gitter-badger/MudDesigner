@@ -7,6 +7,7 @@ namespace Mud.Engine.Runtime.Core
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Mud.Engine.Runtime.Environment;
     using Sullinger.ValidatableBase.Models;
@@ -31,10 +32,14 @@ namespace Mud.Engine.Runtime.Core
         /// <param name="worldService">The world service.</param>
         public DefaultGame(ILoggingService loggingService, IWorldService worldService)
         {
-            ExceptionManager.ThrowExceptionIf<ArgumentNullException>(loggingService == null || worldService == null);
+            ExceptionFactory
+                .ThrowExceptionIf<ArgumentNullException>(worldService == null, () => new ArgumentNullException("worldService", "World Service must not be null!"))
+                .ElseDo(() => this.worldService = worldService);
 
-            this.loggingService = loggingService;
-            this.worldService = worldService;
+            ExceptionFactory
+                .ThrowExceptionIf<ArgumentNullException>(loggingService == null, () => new ArgumentNullException("loggingService", "Logging Service must not be null!"))
+                .ElseDo(() => this.loggingService = loggingService);
+        
             this.Version = new Version("0.0.0.1");
         }
 
@@ -91,8 +96,8 @@ namespace Mud.Engine.Runtime.Core
         /// </summary>
         [PersistValue]
         [ValidateNumberIsGreaterThan(
-            GreaterThanValue = "59", 
-            FailureMessage = "Having an Auto-Save frequency of less than 60 seconds can have a serious performance impact on servers with large worlds or a large number of players.", 
+            GreaterThanValue = "59",
+            FailureMessage = "Having an Auto-Save frequency of less than 60 seconds can have a serious performance impact on servers with large worlds or a large number of players.",
             ValidationMessageType = typeof(WarningMessage))]
         public int AutoSaveFrequency { get; set; }
 

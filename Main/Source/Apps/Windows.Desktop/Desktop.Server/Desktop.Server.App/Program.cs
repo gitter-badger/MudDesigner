@@ -52,13 +52,15 @@ namespace Mud.Apps.Windows.Desktop.Server.App
 
             // Instance a new DesktopGame and try to initialize it.
             game = container.Resolve<IGame>();
+
             try
             {
                 game.Initialize();
             }
             catch (Exception)
             {
-                // Swallow temporarily.
+                // Temporary
+                throw;
             }
 
             // Instance our Default Server. This server is for Windows Desktop only.
@@ -88,9 +90,6 @@ namespace Mud.Apps.Windows.Desktop.Server.App
             {
                 server.Stop();
             }
-
-            server.PlayerConnected -= Server_PlayerConnected;
-            server.PlayerDisconnected -= Server_PlayerDisconnected;
         }
 
         /// <summary>
