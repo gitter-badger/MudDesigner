@@ -3,6 +3,8 @@ MudDesigner
 
 Development updates can be subscribed to from the developers blog at http://sullinger.us.
 
+The source is also available at http://muddesigner.codeplex.com. This repository and the codeplex repository are always in sync. Development is performed on a private git repository and pushed to both codeplex and github.
+
 About the project
 -------------------
 
