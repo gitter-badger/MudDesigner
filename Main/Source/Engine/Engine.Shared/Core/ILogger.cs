@@ -15,6 +15,6 @@ namespace Mud.Engine.Shared.Core
         /// </summary>
         /// <typeparam name="TMessage">The type of the message.</typeparam>
         /// <param name="message">The message.</param>
-        void Log<TMessage>(TMessage message) where TMessage : IMessage, new();
+        void Log<TMessage>(TMessage message) where TMessage : class, IMessage, new();
     }
 }

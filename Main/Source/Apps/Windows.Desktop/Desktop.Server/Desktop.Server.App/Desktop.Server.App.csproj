@@ -62,10 +62,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Engine\Engine.Components\Engine.Components.DefaultServices\Engine.Components.DefaultServices.csproj">
-      <Project>{92cc2b8e-4689-4286-8eb2-79ddf3536656}</Project>
-      <Name>Engine.Components.DefaultServices</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Engine\Engine.Components\Engine.Components.WindowsServer\Engine.Components.WindowsServer.csproj">
       <Project>{efcd4f40-a2cb-440b-a1c1-bad78b784471}</Project>
       <Name>Engine.Components.WindowsServer</Name>
@@ -77,10 +73,6 @@
     <ProjectReference Include="..\..\..\..\Engine\Engine.Shared\Engine.Shared.csproj">
       <Project>{f00e107c-b42c-47d1-97ed-d4611648b372}</Project>
       <Name>Engine.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Infrastructure\Infrastructure.Repository.TextFile\Infrastructure.Repository.TextFile.csproj">
-      <Project>{a690989f-019d-4ad7-8418-add85371d29b}</Project>
-      <Name>Infrastructure.Repository.TextFile</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

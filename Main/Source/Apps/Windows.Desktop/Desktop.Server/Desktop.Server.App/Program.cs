@@ -19,7 +19,6 @@ namespace Mud.Apps.Windows.Desktop.Server.App
     using Mud.Engine.Runtime.Environment;
     using Mud.Engine.Runtime.Core;
     using System.Threading.Tasks;
-    using Mud.Engine.Components.DefaultServices;
     using Mud.Engine.Shared.Services;
 
     /// <summary>
@@ -134,8 +133,6 @@ namespace Mud.Apps.Windows.Desktop.Server.App
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<DefaultGame>().As<IGame>();
-            builder.RegisterType<WorldService>().As<IWorldService>();
-            builder.RegisterType<LoggingService>().As<ILoggingService>();
             container = builder.Build();
         }
 

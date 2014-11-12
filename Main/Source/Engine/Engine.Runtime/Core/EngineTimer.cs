@@ -46,6 +46,14 @@ namespace Mud.Engine.Runtime.Core
         public T StateData { get; private set; }
 
         /// <summary>
+        /// Gets a value indicating whether the engine timer is currently running.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is running; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsRunning { get; private set; }
+
+        /// <summary>
         /// Starts the specified start delay.
         /// </summary>
         /// <param name="startDelay">The start delay in milliseconds.</param>
@@ -54,6 +62,7 @@ namespace Mud.Engine.Runtime.Core
         /// <param name="callbackOnWorkerThread">if set to <c>true</c> the callback will be performed on a background thread.</param>
         public void Start(double startDelay, double interval, bool isOneShot = false, bool callbackOnWorkerThread = false)
         {
+            this.IsRunning = true;
             this.timerTask = Task
                 .Delay(TimeSpan.FromMilliseconds(startDelay), this.Token)
                 .ContinueWith(
@@ -71,7 +80,7 @@ namespace Mud.Engine.Runtime.Core
 
                         if (isOneShot)
                         {
-                            this.Cancel();
+                            this.Stop();
                         }
 
                         await Task.Delay(TimeSpan.FromMilliseconds(interval), this.Token).ConfigureAwait(false);
@@ -91,7 +100,8 @@ namespace Mud.Engine.Runtime.Core
             if (!this.IsCancellationRequested)
             {
                 this.Cancel();
-            }
+            } 
+            this.IsRunning = false;
         }
 
         /// <summary>
@@ -102,6 +112,7 @@ namespace Mud.Engine.Runtime.Core
         {
             if (disposing)
             {
+                this.IsRunning = false;
                 this.Cancel();
             }
 

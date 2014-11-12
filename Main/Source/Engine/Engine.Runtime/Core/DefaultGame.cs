@@ -19,7 +19,7 @@ namespace Mud.Engine.Runtime.Core
     /// <summary>
     /// The Default engine implementation of the IGame interface. This implementation provides validation support via ValidationBase.
     /// </summary>
-    public class DefaultGame : ValidatableBase, IGame
+    public class DefaultGame : IGame
     {
         private ILoggingService loggingService;
 
@@ -37,7 +37,7 @@ namespace Mud.Engine.Runtime.Core
                 .ElseDo(() => this.worldService = worldService);
 
             ExceptionFactory
-                .ThrowExceptionIf<ArgumentNullException>(loggingService == null, () => new ArgumentNullException("loggingService", "Logging Service must not be null!"))
+                .ThrowExceptionIf<ArgumentNullException>(loggingService == null, () => new ArgumentNullException("loggingService", "Logging ServiBce must not be null!"))
                 .ElseDo(() => this.loggingService = loggingService);
         
             this.Version = new Version("0.0.0.1");
@@ -57,7 +57,6 @@ namespace Mud.Engine.Runtime.Core
         /// <summary>
         /// Gets or sets the name of the game being played.
         /// </summary>
-        [ValidateObjectHasValueAttribute(FailureMessage = "Name can not be left empty.", ValidationMessageType = typeof(ErrorMessage))]
         [PersistValue]
         public string Name { get; set; }
 
@@ -95,10 +94,6 @@ namespace Mud.Engine.Runtime.Core
         /// Gets or sets the automatic save frequency in seconds.
         /// </summary>
         [PersistValue]
-        [ValidateNumberIsGreaterThan(
-            GreaterThanValue = "59",
-            FailureMessage = "Having an Auto-Save frequency of less than 60 seconds can have a serious performance impact on servers with large worlds or a large number of players.",
-            ValidationMessageType = typeof(WarningMessage))]
         public int AutoSaveFrequency { get; set; }
 
         /// <summary>
@@ -119,6 +114,11 @@ namespace Mud.Engine.Runtime.Core
         public virtual async Task Initialize()
         {
             this.Worlds = new List<IWorld>(await this.worldService.GetAllWorlds(true));
+
+            if (this.Worlds.Count == 0)
+            {
+                // Log.
+            }
         }
     }
 }

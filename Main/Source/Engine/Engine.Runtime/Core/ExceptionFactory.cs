@@ -65,7 +65,7 @@ namespace Mud.Engine.Runtime.Core
         /// <param name="data">The data.</param>
         public static ExceptionFactoryResult ThrowExceptionIf<TException>(bool condition, Func<TException> exception, ICharacter character = null, params KeyValuePair<string, string>[] data) where TException : Exception, new()
         {
-            if (condition)
+            if (!condition)
             {
                 return new ExceptionFactoryResult();
             }
