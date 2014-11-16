@@ -1,0 +1,194 @@
+﻿<controls:MetroWindow x:Class="Designer.MainWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:local="clr-namespace:Designer.ViewModel"
+                      Title="Mud Designer"
+                      Height="600"
+                      Width="768"
+                      ResizeMode="CanResizeWithGrip"
+                      SizeToContent="Width"
+                      DataContext="{Binding Source={StaticResource Locator}, Path=Game}">
+
+    <controls:MetroWindow.WindowCommands>
+        <controls:WindowCommands>
+            <Button Content="Designer Settings" />
+        </controls:WindowCommands>
+    </controls:MetroWindow.WindowCommands>
+    <Border BorderBrush="#CC119EDA"
+            BorderThickness="1">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <DockPanel Grid.Column="0">
+                <StackPanel DockPanel.Dock="Top">
+                    <TextBlock Text="{Binding Path=Name}"
+                               Margin="10 5 10 0"
+                               FontSize="14"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center" />
+                    <TextBlock Text="{Binding Path=Version}"
+                               Margin="10 0"
+                               FontSize="11"
+                               HorizontalAlignment="Center" />
+                </StackPanel>
+
+                <Button Content="Start Server"
+                        DockPanel.Dock="Top"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Margin="20,20,20,0"
+                        Padding="20 10" />
+                <Button Content="Game Settings"
+                        DockPanel.Dock="Top"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Margin="20,5,20,0"
+                        Padding="20 10" />
+            </DockPanel>
+            <controls:MetroContentControl Grid.Column="1">
+                <TabControl DataContext="{Binding Source={StaticResource Locator}, Path=Designer}">
+                    <TabItem Header="Environment">
+                        <TabControl>
+                            <StackPanel>
+                                <WrapPanel>
+                                    <controls:Tile Title="Edit the Environment Settings"
+                                                   TitleFontSize="12"
+                                                   Height="100"
+                                                   VerticalAlignment="Top"
+                                                   VerticalContentAlignment="Top">
+                                        <TextBlock Text="World"
+                                                   TextAlignment="Center"
+                                                   FontSize="26"
+                                                   Foreground="White"
+                                                   FontWeight="SemiBold"
+                                                   TextWrapping="Wrap"
+                                                   MaxWidth="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType=controls:Tile, Mode=FindAncestor}, Path=ActualWidth}" />
+                                    </controls:Tile>
+
+                                    <controls:Tile Title="Add Realms to the world"
+                                                   TitleFontSize="12"
+                                                   Height="100"
+                                                   VerticalAlignment="Top"
+                                                   VerticalContentAlignment="Top">
+                                        <TextBlock Text="Realms"
+                                                   TextAlignment="Center"
+                                                   FontSize="26"
+                                                   Foreground="White"
+                                                   FontWeight="SemiBold"
+                                                   TextWrapping="Wrap"
+                                                   MaxWidth="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType=controls:Tile, Mode=FindAncestor}, Path=ActualWidth}" />
+                                    </controls:Tile>
+
+                                    <controls:Tile Title="Add Zones to an existing Realm"
+                                                   TitleFontSize="12"
+                                                   Height="100"
+                                                   VerticalAlignment="Top"
+                                                   VerticalContentAlignment="Top">
+                                        <TextBlock Text="Zones"
+                                                   TextAlignment="Center"
+                                                   FontSize="26"
+                                                   Foreground="White"
+                                                   FontWeight="SemiBold"
+                                                   TextWrapping="Wrap"
+                                                   Padding="5 0"
+                                                   MaxWidth="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType=controls:Tile, Mode=FindAncestor}, Path=ActualWidth}" />
+                                    </controls:Tile>
+
+                                    <controls:Tile Title="Link Rooms to each other."
+                                                   TitleFontSize="12"
+                                                   Height="100"
+                                                   VerticalAlignment="Top"
+                                                   VerticalContentAlignment="Top">
+                                        <TextBlock Text="Rooms"
+                                                   TextAlignment="Center"
+                                                   FontSize="26"
+                                                   Foreground="White"
+                                                   FontWeight="SemiBold"
+                                                   TextWrapping="Wrap"
+                                                   MaxWidth="{Binding RelativeSource={RelativeSource AncestorLevel=1, AncestorType=controls:Tile, Mode=FindAncestor}, Path=ActualWidth}" />
+                                    </controls:Tile>
+                                </WrapPanel>
+                                <GroupBox Header="World Explorer">
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                        <DockPanel LastChildFill="True">
+                                            <WrapPanel DockPanel.Dock="Top"
+                                                       VerticalAlignment="Stretch">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label Content="World Name:" />
+                                                    <TextBox controls:TextboxHelper.ClearTextButton="True"
+                                                             controls:TextboxHelper.Watermark="Enter the world name."
+                                                             MinWidth="150"
+                                                             Text="{Binding Path=Game.World.Name}">
+                                                    </TextBox>
+                                                </StackPanel>
+
+                                                <CheckBox Content="World is safe"
+                                                          FlowDirection="RightToLeft"
+                                                          Margin="20 0"
+                                                          IsChecked="{Binding Path=Game.World.IsSafe}" />
+
+                                                <CheckBox Content="World is Enabled"
+                                                          FlowDirection="RightToLeft"
+                                                          IsChecked="{Binding Path=Game.World.IsEnabled}" />
+                                            </WrapPanel>
+                                            <Label Content="World Description" 
+                                                   DockPanel.Dock="Top"
+                                                   FontWeight="Bold"
+                                                   Margin="0 20 0 0" />
+                                            <TextBox controls:TextboxHelper.Watermark="Provide a description for the world. This will be displayed to the user when they inspect the world."
+                                                     MinHeight="100"
+                                                     AcceptsReturn="True"
+                                                     TextWrapping="Wrap"
+                                                     Text="{Binding Path=Game.World.Name}">
+                                            </TextBox>
+                                        </DockPanel>
+                                    </ScrollViewer>
+                                </GroupBox>
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Right">
+                                    <Button Content="Save"
+                                            HorizontalAlignment="Right"
+                                            Margin="0, 10, 10 0"
+                                            MinWidth="80"
+                                            Style="{StaticResource AccentedSquareButtonStyle}">
+                                            <!-- IsEnabled="{Binding Path=IsDirty}" -->
+                                    </Button>
+                                    <Button Content="Cancel"
+                                            HorizontalAlignment="Right"
+                                            Margin="0, 10, 10 0"
+                                            MinWidth="80"
+                                            Style="{StaticResource SquareButtonStyle}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </TabControl>
+                    </TabItem>
+                    <TabItem Header="Mobs">
+
+                    </TabItem>
+                    <TabItem Header="Items">
+
+                    </TabItem>
+                    <TabItem Header="Quests"></TabItem>
+                </TabControl>
+            </controls:MetroContentControl>
+            <Grid Background="#CC119EDA"
+                  Grid.Row="1"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2">
+                <TextBlock Text="Ready"
+                           FontSize="12"
+                           Margin="10 2" 
+                           Foreground="White"
+                           FontWeight="Light"/>
+            </Grid>
+        </Grid>
+    </Border>
+</controls:MetroWindow>
