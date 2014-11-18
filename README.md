@@ -1,5 +1,6 @@
 MudDesigner
 ===========
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/scionwest/MudDesigner?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Development updates can be subscribed to from the developers blog at http://sullinger.us.
 
